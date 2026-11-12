@@ -1,0 +1,960 @@
+---
+import { getToolById } from '../config/site';
+
+const readingCounterTool = getToolById('reading-time-counter');
+const audiobookTool = getToolById('audiobook-calculator');
+const speechTool = getToolById('speech-time-calculator');
+---
+
+<section
+	id="reading-speed-test-workspace"
+	aria-label="Reading Speed Test and Comprehension Workspace"
+	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
+>
+	<!-- Live Summary Bar -->
+	<div class="whisper-shadow mb-6 grid grid-cols-1 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+		<!-- Stat 1: Your reading speed -->
+		<article class="flex flex-col justify-between p-5">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Your reading speed
+				</span>
+				<span
+					id="rst-status-pill"
+					class="rounded-full bg-hairline-soft px-2.5 py-0.5 text-[12px] font-medium text-mute"
+				>
+					Ready to start
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="rst-metric-wpm"
+					aria-live="polite"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					—
+				</output>
+				<span class="text-[14px] text-body">WPM</span>
+			</div>
+			<p id="rst-metric-wpm-sub" class="text-[12px] text-mute">
+				Press Start Reading to begin timer
+			</p>
+		</article>
+
+		<!-- Stat 2: Elapsed reading time -->
+		<article class="flex flex-col justify-between p-5 sm:border-l sm:border-hairline lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Elapsed time
+				</span>
+				<span
+					id="rst-metric-words-badge"
+					class="text-[12px] text-mute tabular-nums"
+				>
+					152 words
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="rst-metric-timer"
+					aria-live="off"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					00:00.0
+				</output>
+			</div>
+			<p id="rst-metric-timer-sub" class="text-[12px] text-mute">
+				Short passage (~150 words)
+			</p>
+		</article>
+
+		<!-- Stat 3: Comparison vs 238 WPM Average -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-hairline lg:border-t-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Compared to average
+				</span>
+				<span class="text-[12px] text-mute tabular-nums">
+					238 WPM adult avg
+				</span>
+			</div>
+			<div class="my-2.5">
+				<output
+					id="rst-metric-comparison"
+					aria-live="polite"
+					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					238 WPM
+				</output>
+			</div>
+			<p id="rst-metric-comparison-sub" class="text-[12px] text-mute">
+				Standard silent reading benchmark
+			</p>
+		</article>
+
+		<!-- Stat 4: Comprehension score -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-hairline lg:border-t-0 lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Comprehension check
+				</span>
+				<span id="rst-quiz-badge" class="text-[12px] text-mute tabular-nums">
+					3 questions
+				</span>
+			</div>
+			<div class="my-2.5">
+				<output
+					id="rst-metric-comprehension"
+					aria-live="polite"
+					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					— / 3
+				</output>
+			</div>
+			<p id="rst-metric-comprehension-sub" class="text-[12px] text-mute">
+				Unlocks when you finish reading
+			</p>
+		</article>
+	</div>
+
+	<!-- Main Dual-Column Workspace -->
+	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+		<!-- Left Column: Passage Length Selector, Timer Controls & Reading Canvas -->
+		<div class="whisper-shadow flex flex-col justify-between rounded-md border border-hairline bg-canvas-elevated lg:col-span-7">
+			<div>
+				<!-- Top Control Bar: Passage Length Selector -->
+				<div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-5 py-3.5">
+					<div
+						role="tablist"
+						aria-label="Passage length selector"
+						class="inline-flex flex-wrap items-center gap-1.5"
+					>
+						<button
+							type="button"
+							role="tab"
+							aria-selected="true"
+							data-passage-key="short"
+							class="rst-length-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all tabular-nums"
+						>
+							Short ~150 words
+						</button>
+						<button
+							type="button"
+							role="tab"
+							aria-selected="false"
+							data-passage-key="medium"
+							class="rst-length-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink tabular-nums"
+						>
+							Medium ~300 words
+						</button>
+						<button
+							type="button"
+							role="tab"
+							aria-selected="false"
+							data-passage-key="long"
+							class="rst-length-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink tabular-nums"
+						>
+							Long ~500 words
+						</button>
+					</div>
+
+					<button
+						type="button"
+						id="rst-btn-reset"
+						class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
+					>
+						Reset test
+					</button>
+				</div>
+
+				<!-- Passage Header & Action Bar -->
+				<div class="flex flex-wrap items-center justify-between gap-4 border-b border-hairline bg-canvas px-6 py-4">
+					<div>
+						<span id="rst-passage-topic" class="text-[12px] font-medium text-mute">
+							Cognitive science · 152 words
+						</span>
+						<h2 id="rst-passage-title" class="mt-0.5 text-[18px] font-semibold tracking-[-0.3px] text-ink">
+							How the Human Eye Reads Printed Text
+						</h2>
+					</div>
+
+					<div class="flex items-center gap-2.5">
+						<button
+							type="button"
+							id="rst-btn-start"
+							class="cursor-pointer inline-flex h-10 items-center gap-2 rounded-pill bg-primary px-5 text-[14px] font-medium text-on-primary transition-opacity hover:opacity-90"
+						>
+							<span>Start Reading</span>
+						</button>
+						<button
+							type="button"
+							id="rst-btn-finish"
+							disabled
+							class="cursor-pointer hidden h-10 items-center gap-2 rounded-pill bg-vercel-blue px-5 text-[14px] font-medium text-white transition-opacity hover:bg-vercel-blue-deep disabled:cursor-not-allowed disabled:opacity-40"
+						>
+							<span>Finish Reading</span>
+						</button>
+					</div>
+				</div>
+
+				<!-- Passage Text Container -->
+				<div class="relative px-6 py-6 sm:px-8 sm:py-7">
+					<!-- Pre-start Subtle Prompt Banner -->
+					<div
+						id="rst-start-hint"
+						class="mb-5 flex items-center justify-between gap-3 rounded-sm border border-hairline bg-canvas px-4 py-3 text-[13px] text-body"
+					>
+						<span>
+							Click <strong class="font-semibold text-ink">Start Reading</strong> above when you are ready, read at your natural silent pace, and click <strong class="font-semibold text-ink">Finish Reading</strong> as soon as you reach the last word.
+						</span>
+					</div>
+
+					<div
+						id="rst-passage-body"
+						class="space-y-4 text-[16px] leading-[28px] font-normal text-ink select-none"
+					>
+						<p>
+							When you read a page of text, it feels as though your eyes glide smoothly across every line from left to right. In reality, human vision works through a rapid sequence of tiny, darting movements called saccades, separated by brief pauses known as fixations. During each fixation, which lasts roughly a quarter of a second, your eyes focus on a cluster of seven to nine letters while peripheral vision previews the shapes of upcoming words.
+						</p>
+						<p>
+							Skilled readers rarely stop on every single word. Instead, the brain automatically skips predictable short words like "the" or "and" and uses context to fill in the meaning. When a sentence introduces an unfamiliar term or an unexpected grammar shift, the eyes perform a quick backward jump called a regression to verify the phrase. Understanding this natural rhythm explains why clear typography and comfortable line spacing make sustained reading feel effortless.
+						</p>
+					</div>
+
+					<!-- Bottom Finish Button (shown while reading so users can click immediately at the end of the passage) -->
+					<div id="rst-bottom-action" class="mt-6 hidden items-center justify-between border-t border-hairline pt-5">
+						<span class="text-[13px] text-mute tabular-nums">
+							Timer running: <strong id="rst-inline-timer" class="font-semibold text-ink">00:00.0</strong>
+						</span>
+						<button
+							type="button"
+							id="rst-btn-finish-bottom"
+							class="cursor-pointer inline-flex h-10 items-center gap-2 rounded-pill bg-vercel-blue px-6 text-[14px] font-medium text-white transition-colors hover:bg-vercel-blue-deep"
+						>
+							<span>Finish Reading</span>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer Bar Inside Left Card -->
+			<div class="flex flex-wrap items-center justify-between gap-2 border-t border-hairline px-6 py-3.5 text-[13px] text-mute">
+				<span>Read at your normal silent pace without rushing</span>
+				<span id="rst-exact-word-count" class="tabular-nums">Exact passage count: 152 words</span>
+			</div>
+		</div>
+
+		<!-- Right Column: Speed Comparison against 238 WPM & 3-Question Comprehension Check -->
+		<div class="whisper-shadow flex flex-col justify-between divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated lg:col-span-5">
+			<!-- Section A: Benchmark Comparison against 238 WPM Adult Silent Reading Average -->
+			<div class="p-5 sm:p-6">
+				<div class="flex items-baseline justify-between gap-2">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						Comparison vs. 238 WPM adult average
+					</h2>
+					<span id="rst-pace-tier-badge" class="text-[12px] font-medium text-mute">
+						Awaiting test
+					</span>
+				</div>
+				<p class="mt-1 text-[13px] text-body">
+					Research across silent reading studies places the average adult reading speed at <strong>238 words per minute</strong> for non-fiction text.
+				</p>
+
+				<!-- Visual Scale Bar -->
+				<div class="mt-4 rounded-sm border border-hairline bg-canvas p-4">
+					<div class="flex items-center justify-between text-[12px] text-mute tabular-nums">
+						<span>100 WPM</span>
+						<span class="font-medium text-ink">238 WPM Avg</span>
+						<span>450+ WPM</span>
+					</div>
+					<div class="relative mt-2 h-2.5 w-full overflow-hidden rounded-full bg-hairline">
+						<!-- 238 WPM Reference Marker (~39% along 100..450 scale) -->
+						<div
+							class=" absolute top-0 bottom-0 z-10 w-0.5 bg-ink/50"
+							style="left: 39.4%;"
+							title="238 WPM Adult Average"
+						></div>
+						<div
+							id="rst-speed-progress"
+							class="h-full rounded-full bg-primary transition-all duration-300"
+							style="width: 0%;"
+						></div>
+					</div>
+					<p id="rst-comparison-detail" class="mt-3 text-[13px] text-body">
+						Complete the passage to see how your personal silent reading pace compares to the 238 WPM benchmark.
+					</p>
+				</div>
+
+				<!-- Reference Tiers -->
+				<div class="mt-3.5 grid grid-cols-2 gap-2 text-[12px]">
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3 py-2">
+						<span class="text-body">Careful study</span>
+						<strong class="font-semibold text-ink tabular-nums">150–200 WPM</strong>
+					</div>
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3 py-2">
+						<span class="text-body">Adult average</span>
+						<strong class="font-semibold text-ink tabular-nums">238 WPM</strong>
+					</div>
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3 py-2">
+						<span class="text-body">Fast reader</span>
+						<strong class="font-semibold text-ink tabular-nums">300–380 WPM</strong>
+					</div>
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3 py-2">
+						<span class="text-body">Speed skimming</span>
+						<strong class="font-semibold text-ink tabular-nums">400+ WPM</strong>
+					</div>
+				</div>
+			</div>
+
+			<!-- Section B: 3-Question Comprehension Check -->
+			<div class="p-5 sm:p-6">
+				<div class="flex items-baseline justify-between gap-2">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						3-question comprehension check
+					</h2>
+					<span id="rst-quiz-status" class="text-[12px] text-mute tabular-nums">
+						Finish reading first
+					</span>
+				</div>
+				<p class="mt-1 mb-4 text-[13px] text-body">
+					Verify how much you absorbed—true reading speed balances pace with comprehension.
+				</p>
+
+				<!-- Locked state before finishing reading -->
+				<div
+					id="rst-quiz-locked"
+					class="rounded-sm border border-hairline bg-canvas p-4 text-[13px] text-mute"
+				>
+					Questions are hidden while you read so you can focus naturally on the passage. Click <strong class="font-medium text-ink">Start Reading</strong> and <strong class="font-medium text-ink">Finish Reading</strong> to unlock the 3 questions.
+				</div>
+
+				<!-- Active Quiz Questions Container -->
+				<div id="rst-quiz-container" class="hidden space-y-4"></div>
+
+				<!-- Comprehension Summary Callout (shown after answering) -->
+				<div
+					id="rst-quiz-result"
+					class="mt-4 hidden rounded-sm border border-hairline bg-canvas p-4 text-[13px] text-body"
+				></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Related Tools Note (Protected Against Draft Links) -->
+	<aside
+		aria-label="Related reading tools"
+		class="mt-5 flex flex-col items-start justify-between gap-3 pt-2 text-[14px] text-body sm:flex-row sm:items-center"
+	>
+		<p class="leading-[22px]">
+			Now that you know your personal WPM, use it in our{' '}
+			{
+				readingCounterTool?.status === 'live' ? (
+					<a
+						href={readingCounterTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{readingCounterTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{readingCounterTool?.shortName ?? 'Reading Time Counter'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			, plan your next listen with the{' '}
+			{
+				audiobookTool?.status === 'live' ? (
+					<a
+						href={audiobookTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{audiobookTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{audiobookTool?.shortName ?? 'Audiobook Calculator'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			, or pace a presentation with the{' '}
+			{
+				speechTool?.status === 'live' ? (
+					<a
+						href={speechTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{speechTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{speechTool?.shortName ?? 'Speech Time Calculator'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}.
+		</p>
+	</aside>
+</section>
+
+<script>
+	interface QuizQuestion {
+		question: string;
+		options: string[];
+		correctIndex: number;
+	}
+
+	interface PassageData {
+		key: 'short' | 'medium' | 'long';
+		label: string;
+		topic: string;
+		title: string;
+		paragraphs: string[];
+		questions: QuizQuestion[];
+	}
+
+	const PASSAGES: Record<'short' | 'medium' | 'long', PassageData> = {
+		short: {
+			key: 'short',
+			label: 'Short passage (~150 words)',
+			topic: 'Cognitive science',
+			title: 'How the Human Eye Reads Printed Text',
+			paragraphs: [
+				'When you read a page of text, it feels as though your eyes glide smoothly across every line from left to right. In reality, human vision works through a rapid sequence of tiny, darting movements called saccades, separated by brief pauses known as fixations. During each fixation, which lasts roughly a quarter of a second, your eyes focus on a cluster of seven to nine letters while peripheral vision previews the shapes of upcoming words.',
+				'Skilled readers rarely stop on every single word. Instead, the brain automatically skips predictable short words like "the" or "and" and uses context to fill in the meaning. When a sentence introduces an unfamiliar term or an unexpected grammar shift, the eyes perform a quick backward jump called a regression to verify the phrase. Understanding this natural rhythm explains why clear typography and comfortable line spacing make sustained reading feel effortless.',
+			],
+			questions: [
+				{
+					question: 'What are the brief pauses called when your eyes focus on a cluster of letters?',
+					options: ['Fixations', 'Transitions', 'Intervals'],
+					correctIndex: 0,
+				},
+				{
+					question: 'Approximately how long does each pause last while reading?',
+					options: ['Roughly two full seconds', 'Roughly a quarter of a second', 'Roughly ten milliseconds'],
+					correctIndex: 1,
+				},
+				{
+					question: 'What triggers a backward eye jump (a regression) during silent reading?',
+					options: [
+						'Short predictable words like "the" or "and"',
+						'An unfamiliar term or unexpected grammar shift',
+						'Large page margins at the bottom of a book',
+					],
+					correctIndex: 1,
+				},
+			],
+		},
+		medium: {
+			key: 'medium',
+			label: 'Medium passage (~300 words)',
+			topic: 'History of books & media',
+			title: 'Why Silent Reading Was Once Considered Unusual',
+			paragraphs: [
+				'Today we take silent reading for granted—whether browsing an article on a laptop, reviewing notes before a meeting, or reading a novel on a quiet train. Yet for much of early recorded history, reading was predominantly a spoken performance. Ancient Greek and Roman manuscripts were written in continuous streams of capital letters without spaces between words or punctuation marks to signal where a thought ended.',
+				'Because the eye had no visual gaps to separate one word from the next, readers sounded out syllables aloud so their ears could recognize familiar phrases. When fourth-century scholars observed someone reading a page without moving their lips or making a sound, they found the habit remarkable enough to record in their journals. Libraries in the ancient world were not hushed halls; they hummed with the low murmur of dozens of scholars reciting texts to themselves.',
+				'The shift toward effortless silent reading began in the early Middle Ages when scribes in Ireland and Britain started inserting clear blank spaces between words and introducing commas, periods, and paragraph breaks. Once words stood apart as distinct visual shapes on the page, the human brain could recognize whole words at a glance without pronouncing them first. That simple layout breakthrough dramatically accelerated reading speed, enabled private reflection, and laid the foundation for modern publishing.',
+			],
+			questions: [
+				{
+					question: 'Why was reading aloud so helpful with ancient Greek and Roman manuscripts?',
+					options: [
+						'Paper was too dark to see clearly indoors',
+						'Words were written continuously without spaces or punctuation',
+						'Libraries required all visitors to read to an audience',
+					],
+					correctIndex: 1,
+				},
+				{
+					question: 'What were ancient libraries like compared to modern libraries?',
+					options: [
+						'They hummed with the murmur of readers reciting texts aloud',
+						'They enforced strict silence with fines',
+						'They only opened for one hour at sunset',
+					],
+					correctIndex: 0,
+				},
+				{
+					question: 'Who introduced blank spaces between words in the early Middle Ages?',
+					options: [
+						'Roman senate clerks',
+						'Scribes in Ireland and Britain',
+						'Nineteenth-century newspaper printers',
+					],
+					correctIndex: 1,
+				},
+			],
+		},
+		long: {
+			key: 'long',
+			label: 'Long passage (~500 words)',
+			topic: 'Attention & learning',
+			title: 'Deep Reading vs. Rapid Skimming in a Digital World',
+			paragraphs: [
+				'Over the past two decades, the average person’s daily diet of written words has grown substantially. Between emails, messaging apps, documentation, and news feeds, modern readers process thousands of words before lunch. To cope with this volume, our brains naturally develop an adaptive habit known as non-linear skimming: we scan headings, look for bullet points, and jump across paragraphs in an F-shaped pattern to extract key facts as quickly as possible.',
+				'Skimming is a genuinely useful skill when triaging an inbox or searching a technical manual for a specific setting. However, cognitive researchers have found that using a skimming mindset for every piece of writing comes with a subtle trade-off. When we rush past sentences at 400 or 500 words per minute, working memory has less time to connect new ideas with existing knowledge, notice nuanced arguments, or recall details an hour later.',
+				'Deep reading operates on a different cadence. At a comfortable silent pace—typically between 200 and 280 words per minute for most adults—the brain allocates time for inference and mental imagery. Instead of merely decoding surface words, you pause for fractions of a second at the end of clauses to weigh whether a claim makes sense. Studies comparing comprehension across formats consistently show that readers who slow down slightly on dense non-fiction retain significantly more information than those who race to the bottom of the screen.',
+				'Fortunately, switching between rapid scanning and deep focus is a skill anyone can deliberately practice. Giving yourself a distraction-free page, choosing a comfortable column width, and setting aside even fifteen uninterrupted minutes signals to your attention system that there is no need to rush. By matching your reading speed to the purpose of the text—skimming lightly for quick lookups and settling into a steady cadence for complex ideas—you get the best of both worlds: efficiency when you need answers fast, and lasting understanding when depth matters most.',
+			],
+			questions: [
+				{
+					question: 'What reading pattern do people commonly use when quickly scanning digital pages?',
+					options: [
+						'Reading from the bottom paragraph upward',
+						'Non-linear skimming in an F-shaped pattern across headings and bullets',
+						'Reading every word twice out loud',
+					],
+					correctIndex: 1,
+				},
+				{
+					question: 'What happens when a reader rushes through dense non-fiction at 400–500 WPM?',
+					options: [
+						'Working memory has less time to connect ideas and retain details',
+						'Comprehension automatically doubles',
+						'Eye fixations last several seconds per letter',
+					],
+					correctIndex: 0,
+				},
+				{
+					question: 'What typical silent reading range supports strong inference and deep reading for most adults?',
+					options: [
+						'Between 50 and 80 WPM',
+						'Between 200 and 280 WPM',
+						'Over 650 WPM',
+					],
+					correctIndex: 1,
+				},
+			],
+		},
+	};
+
+	function countPassageWords(paragraphs: string[]): number {
+		const joined = paragraphs.join(' ').trim();
+		if (!joined) return 0;
+		return joined.split(/\s+/).length;
+	}
+
+	function initReadingSpeedTest() {
+		let currentKey: 'short' | 'medium' | 'long' = 'short';
+		let testState: 'idle' | 'running' | 'finished' = 'idle';
+		let startTimeMs = 0;
+		let elapsedMs = 0;
+		let timerInterval: number | null = null;
+		let rawWpm = 0;
+		let userAnswers: Array<number | null> = [null, null, null];
+
+		// DOM Elements
+		const lengthBtns = document.querySelectorAll<HTMLButtonElement>('.rst-length-btn');
+		const btnReset = document.getElementById('rst-btn-reset');
+		const btnStart = document.getElementById('rst-btn-start') as HTMLButtonElement | null;
+		const btnFinish = document.getElementById('rst-btn-finish') as HTMLButtonElement | null;
+		const btnFinishBottom = document.getElementById('rst-btn-finish-bottom') as HTMLButtonElement | null;
+		const bottomAction = document.getElementById('rst-bottom-action');
+		const inlineTimer = document.getElementById('rst-inline-timer');
+		const startHint = document.getElementById('rst-start-hint');
+
+		const passageTopic = document.getElementById('rst-passage-topic');
+		const passageTitle = document.getElementById('rst-passage-title');
+		const passageBody = document.getElementById('rst-passage-body');
+		const exactWordCount = document.getElementById('rst-exact-word-count');
+
+		// Summary Metrics
+		const statusPill = document.getElementById('rst-status-pill');
+		const metricWpm = document.getElementById('rst-metric-wpm');
+		const metricWpmSub = document.getElementById('rst-metric-wpm-sub');
+		const metricWordsBadge = document.getElementById('rst-metric-words-badge');
+		const metricTimer = document.getElementById('rst-metric-timer');
+		const metricTimerSub = document.getElementById('rst-metric-timer-sub');
+		const metricComparison = document.getElementById('rst-metric-comparison');
+		const metricComparisonSub = document.getElementById('rst-metric-comparison-sub');
+		const metricComprehension = document.getElementById('rst-metric-comprehension');
+		const metricComprehensionSub = document.getElementById('rst-metric-comprehension-sub');
+
+		// Benchmark & Quiz Elements
+		const paceTierBadge = document.getElementById('rst-pace-tier-badge');
+		const speedProgress = document.getElementById('rst-speed-progress');
+		const comparisonDetail = document.getElementById('rst-comparison-detail');
+		const quizStatus = document.getElementById('rst-quiz-status');
+		const quizLocked = document.getElementById('rst-quiz-locked');
+		const quizContainer = document.getElementById('rst-quiz-container');
+		const quizResult = document.getElementById('rst-quiz-result');
+
+		function formatStopwatch(ms: number): string {
+			const totalTenths = Math.floor(ms / 100);
+			const tenths = totalTenths % 10;
+			const totalSeconds = Math.floor(totalTenths / 10);
+			const minutes = Math.floor(totalSeconds / 60);
+			const seconds = totalSeconds % 60;
+			const mm = String(minutes).padStart(2, '0');
+			const ss = String(seconds).padStart(2, '0');
+			return `${mm}:${ss}.${tenths}`;
+		}
+
+		function stopTimerInterval() {
+			if (timerInterval !== null) {
+				window.clearInterval(timerInterval);
+				timerInterval = null;
+			}
+		}
+
+		function getPaceTier(wpm: number): string {
+			if (wpm < 180) return 'Careful study pace';
+			if (wpm <= 260) return 'Near adult average';
+			if (wpm <= 360) return 'Fast silent reader';
+			return 'Rapid skimming pace';
+		}
+
+		function renderPassageContent() {
+			const data = PASSAGES[currentKey];
+			const wordCount = countPassageWords(data.paragraphs);
+
+			if (passageTopic) passageTopic.textContent = `${data.topic} · ${wordCount} words`;
+			if (passageTitle) passageTitle.textContent = data.title;
+			if (passageBody) {
+				passageBody.innerHTML = data.paragraphs
+					.map((p) => `<p>${p}</p>`)
+					.join('');
+			}
+			if (exactWordCount) exactWordCount.textContent = `Exact passage count: ${wordCount} words`;
+			if (metricWordsBadge) metricWordsBadge.textContent = `${wordCount} words`;
+			if (metricTimerSub) metricTimerSub.textContent = data.label;
+		}
+
+		function renderQuiz() {
+			if (!quizContainer) return;
+			const data = PASSAGES[currentKey];
+			quizContainer.innerHTML = '';
+
+			data.questions.forEach((q, qIdx) => {
+				const block = document.createElement('div');
+				block.className = 'rounded-sm border border-hairline bg-canvas p-3.5';
+
+				const title = document.createElement('p');
+				title.className = 'text-[13px] font-semibold text-ink';
+				title.textContent = `${qIdx + 1}. ${q.question}`;
+				block.appendChild(title);
+
+				const optionsWrap = document.createElement('div');
+				optionsWrap.className = 'mt-2.5 space-y-1.5';
+
+				q.options.forEach((optText, oIdx) => {
+					const btn = document.createElement('button');
+					btn.type = 'button';
+					const selectedAnswer = userAnswers[qIdx];
+					const isChosen = selectedAnswer === oIdx;
+					const isCorrect = q.correctIndex === oIdx;
+
+					let btnClasses =
+						'w-full cursor-pointer rounded-sm border px-3 py-2 text-left text-[13px] transition-colors flex items-center justify-between gap-2 ';
+
+					if (selectedAnswer === null) {
+						btnClasses += 'border-hairline bg-canvas-elevated text-body hover:border-ink hover:text-ink';
+					} else if (isChosen && isCorrect) {
+						btnClasses += 'border-primary bg-primary text-on-primary font-medium';
+					} else if (isChosen && !isCorrect) {
+						btnClasses += 'border-vercel-error bg-canvas-elevated text-vercel-error font-medium';
+					} else if (isCorrect) {
+						btnClasses += 'border-ink bg-hairline-soft text-ink font-medium';
+					} else {
+						btnClasses += 'border-hairline bg-canvas-elevated text-mute opacity-75';
+					}
+
+					btn.className = btnClasses;
+
+					const labelSpan = document.createElement('span');
+					labelSpan.textContent = optText;
+					btn.appendChild(labelSpan);
+
+					if (selectedAnswer !== null) {
+						const tagSpan = document.createElement('span');
+						tagSpan.className = 'text-[11px] shrink-0';
+						if (isCorrect) {
+							tagSpan.textContent = 'Correct';
+						} else if (isChosen) {
+							tagSpan.textContent = 'Your choice';
+						}
+						btn.appendChild(tagSpan);
+					}
+
+					btn.addEventListener('click', () => {
+						userAnswers[qIdx] = oIdx;
+						renderQuiz();
+						updateComprehensionMetrics();
+					});
+
+					optionsWrap.appendChild(btn);
+				});
+
+				block.appendChild(optionsWrap);
+				quizContainer.appendChild(block);
+			});
+		}
+
+		function updateComprehensionMetrics() {
+			const data = PASSAGES[currentKey];
+			const answeredCount = userAnswers.filter((a) => a !== null).length;
+			const correctCount = userAnswers.reduce<number>((acc, ans, idx) => {
+				return acc + (ans === data.questions[idx].correctIndex ? 1 : 0);
+			}, 0);
+
+			if (metricComprehension) {
+				metricComprehension.textContent = `${correctCount} / 3`;
+			}
+			const pct = Math.round((correctCount / 3) * 100);
+			if (quizStatus) {
+				quizStatus.textContent =
+					answeredCount < 3
+						? `${answeredCount} of 3 answered`
+						: `${pct}% accuracy`;
+			}
+			if (metricComprehensionSub) {
+				if (answeredCount < 3) {
+					metricComprehensionSub.textContent = `Answer ${3 - answeredCount} more ${3 - answeredCount === 1 ? 'question' : 'questions'}`;
+				} else {
+					const effectiveWpm = Math.round(rawWpm * (correctCount / 3));
+					metricComprehensionSub.textContent = `${pct}% accuracy · ${effectiveWpm} effective WPM`;
+				}
+			}
+
+			if (quizResult) {
+				if (answeredCount === 3) {
+					const effectiveWpm = Math.round(rawWpm * (correctCount / 3));
+					quizResult.classList.remove('hidden');
+					quizResult.innerHTML = `You answered <strong class="font-semibold text-ink">${correctCount} out of 3</strong> correctly (${pct}% comprehension). At your raw speed of <strong class="font-semibold text-ink tabular-nums">${rawWpm} WPM</strong>, your comprehension-adjusted reading rate is <strong class="font-semibold text-ink tabular-nums">${effectiveWpm} WPM</strong>.`;
+				} else {
+					quizResult.classList.add('hidden');
+				}
+			}
+		}
+
+		function resetTest() {
+			stopTimerInterval();
+			testState = 'idle';
+			startTimeMs = 0;
+			elapsedMs = 0;
+			rawWpm = 0;
+			userAnswers = [null, null, null];
+
+			renderPassageContent();
+
+			if (statusPill) {
+				statusPill.textContent = 'Ready to start';
+				statusPill.className = 'rounded-full bg-hairline-soft px-2.5 py-0.5 text-[12px] font-medium text-mute';
+			}
+			if (metricWpm) metricWpm.textContent = '—';
+			if (metricWpmSub) metricWpmSub.textContent = 'Press Start Reading to begin timer';
+			if (metricTimer) metricTimer.textContent = '00:00.0';
+			if (inlineTimer) inlineTimer.textContent = '00:00.0';
+
+			if (metricComparison) metricComparison.textContent = '238 WPM';
+			if (metricComparisonSub) metricComparisonSub.textContent = 'Standard silent reading benchmark';
+
+			if (metricComprehension) metricComprehension.textContent = '— / 3';
+			if (metricComprehensionSub) metricComprehensionSub.textContent = 'Unlocks when you finish reading';
+
+			if (paceTierBadge) paceTierBadge.textContent = 'Awaiting test';
+			if (speedProgress) speedProgress.style.width = '0%';
+			if (comparisonDetail) {
+				comparisonDetail.textContent =
+					'Complete the passage to see how your personal silent reading pace compares to the 238 WPM benchmark.';
+			}
+
+			if (btnStart) {
+				btnStart.classList.remove('hidden');
+				btnStart.classList.add('inline-flex');
+				btnStart.querySelector('span')!.textContent = 'Start Reading';
+			}
+			if (btnFinish) {
+				btnFinish.disabled = true;
+				btnFinish.classList.add('hidden');
+				btnFinish.classList.remove('inline-flex');
+			}
+			if (bottomAction) {
+				bottomAction.classList.add('hidden');
+				bottomAction.classList.remove('flex');
+			}
+			if (startHint) {
+				startHint.classList.remove('hidden');
+			}
+
+			if (quizStatus) quizStatus.textContent = 'Finish reading first';
+			if (quizLocked) quizLocked.classList.remove('hidden');
+			if (quizContainer) {
+				quizContainer.classList.add('hidden');
+				quizContainer.innerHTML = '';
+			}
+			if (quizResult) {
+				quizResult.classList.add('hidden');
+				quizResult.innerHTML = '';
+			}
+		}
+
+		function startReading() {
+			stopTimerInterval();
+			testState = 'running';
+			startTimeMs = performance.now();
+			elapsedMs = 0;
+			userAnswers = [null, null, null];
+
+			if (statusPill) {
+				statusPill.textContent = 'Reading in progress';
+				statusPill.className = 'rounded-full bg-vercel-blue-soft px-2.5 py-0.5 text-[12px] font-medium text-vercel-blue-deep';
+			}
+			if (metricWpm) metricWpm.textContent = '...';
+			if (metricWpmSub) metricWpmSub.textContent = 'Click Finish Reading when done';
+			if (startHint) startHint.classList.add('hidden');
+
+			if (btnStart) {
+				btnStart.classList.add('hidden');
+				btnStart.classList.remove('inline-flex');
+			}
+			if (btnFinish) {
+				btnFinish.disabled = false;
+				btnFinish.classList.remove('hidden');
+				btnFinish.classList.add('inline-flex');
+			}
+			if (bottomAction) {
+				bottomAction.classList.remove('hidden');
+				bottomAction.classList.add('flex');
+			}
+
+			timerInterval = window.setInterval(() => {
+				elapsedMs = performance.now() - startTimeMs;
+				const formatted = formatStopwatch(elapsedMs);
+				if (metricTimer) metricTimer.textContent = formatted;
+				if (inlineTimer) inlineTimer.textContent = formatted;
+			}, 100);
+		}
+
+		function finishReading() {
+			if (testState !== 'running') return;
+			stopTimerInterval();
+			testState = 'finished';
+			elapsedMs = Math.max(1500, performance.now() - startTimeMs); // guard against accidental <1.5s double-click
+
+			const data = PASSAGES[currentKey];
+			const words = countPassageWords(data.paragraphs);
+			const minutes = elapsedMs / 60000;
+			rawWpm = Math.max(40, Math.min(1200, Math.round(words / minutes)));
+
+			const formattedTime = formatStopwatch(elapsedMs);
+			const secondsRounded = (elapsedMs / 1000).toFixed(1);
+
+			if (metricTimer) metricTimer.textContent = formattedTime;
+			if (inlineTimer) inlineTimer.textContent = formattedTime;
+
+			if (statusPill) {
+				statusPill.textContent = 'Completed';
+				statusPill.className = 'rounded-full bg-hairline-soft px-2.5 py-0.5 text-[12px] font-medium text-ink';
+			}
+			if (metricWpm) metricWpm.textContent = rawWpm.toLocaleString();
+			if (metricWpmSub) metricWpmSub.textContent = `${words} words in ${secondsRounded}s`;
+
+			// Comparison vs 238 WPM
+			const diff = rawWpm - 238;
+			const pctDiff = Math.round((Math.abs(diff) / 238) * 100);
+			const tierLabel = getPaceTier(rawWpm);
+
+			if (paceTierBadge) paceTierBadge.textContent = tierLabel;
+
+			if (metricComparison) {
+				if (diff === 0) {
+					metricComparison.textContent = 'Exact avg';
+				} else if (diff > 0) {
+					metricComparison.textContent = `+${pctDiff}% faster`;
+				} else {
+					metricComparison.textContent = `${pctDiff}% slower`;
+				}
+			}
+			if (metricComparisonSub) {
+				const sign = diff >= 0 ? `+${diff}` : `${diff}`;
+				metricComparisonSub.textContent = `${sign} WPM vs. 238 WPM adult average`;
+			}
+
+			// Scale bar (100 to 450 WPM range)
+			const clamped = Math.max(100, Math.min(450, rawWpm));
+			const barPct = ((clamped - 100) / 350) * 100;
+			if (speedProgress) {
+				speedProgress.style.width = `${Math.max(4, Math.min(100, barPct))}%`;
+			}
+			if (comparisonDetail) {
+				if (diff >= 0) {
+					comparisonDetail.innerHTML = `Your reading rate of <strong class="font-semibold text-ink tabular-nums">${rawWpm} WPM</strong> is <strong class="font-semibold text-ink tabular-nums">${diff} WPM faster</strong> (${pctDiff}% above) than the 238 WPM adult silent reading average.`;
+				} else {
+					comparisonDetail.innerHTML = `Your reading rate of <strong class="font-semibold text-ink tabular-nums">${rawWpm} WPM</strong> is <strong class="font-semibold text-ink tabular-nums">${Math.abs(diff)} WPM below</strong> (${pctDiff}% slower than) the 238 WPM adult silent reading average.`;
+				}
+			}
+
+			// Buttons update
+			if (btnFinish) {
+				btnFinish.disabled = true;
+				btnFinish.classList.add('hidden');
+				btnFinish.classList.remove('inline-flex');
+			}
+			if (bottomAction) {
+				bottomAction.classList.add('hidden');
+				bottomAction.classList.remove('flex');
+			}
+			if (btnStart) {
+				btnStart.classList.remove('hidden');
+				btnStart.classList.add('inline-flex');
+				btnStart.querySelector('span')!.textContent = 'Read Again';
+			}
+
+			// Unlock 3-question comprehension check
+			if (quizLocked) quizLocked.classList.add('hidden');
+			if (quizContainer) quizContainer.classList.remove('hidden');
+			if (quizStatus) quizStatus.textContent = '0 of 3 answered';
+			if (metricComprehension) metricComprehension.textContent = '0 / 3';
+			if (metricComprehensionSub) metricComprehensionSub.textContent = 'Answer the 3 questions below';
+
+			renderQuiz();
+		}
+
+		// Passage Length Selector
+		lengthBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const selected = (btn.dataset.passageKey as 'short' | 'medium' | 'long') || 'short';
+				currentKey = selected;
+
+				lengthBtns.forEach((b) => {
+					const active = b.dataset.passageKey === currentKey;
+					b.setAttribute('aria-selected', active ? 'true' : 'false');
+					b.className = active
+						? 'rst-length-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all tabular-nums'
+						: 'rst-length-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink tabular-nums';
+				});
+
+				resetTest();
+			});
+		});
+
+		btnStart?.addEventListener('click', () => {
+			startReading();
+		});
+
+		btnFinish?.addEventListener('click', () => {
+			finishReading();
+		});
+
+		btnFinishBottom?.addEventListener('click', () => {
+			finishReading();
+		});
+
+		btnReset?.addEventListener('click', () => {
+			resetTest();
+		});
+
+		resetTest();
+	}
+
+	initReadingSpeedTest();
+</script>
+

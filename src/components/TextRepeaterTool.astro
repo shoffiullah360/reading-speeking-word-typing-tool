@@ -1,0 +1,444 @@
+---
+import { getToolById } from '../config/site';
+
+const wordCounterTool = getToolById('word-counter');
+const caseConverterTool = getToolById('case-converter');
+const textReverserTool = getToolById('text-reverser');
+---
+
+<section
+	id="text-repeater-workspace"
+	aria-label="Text Repeater Workspace"
+	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
+>
+	<!-- Live Summary Bar -->
+	<div class="whisper-shadow mb-6 grid grid-cols-2 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-4 sm:divide-x sm:divide-y-0">
+		<article class="flex flex-col justify-between p-4 sm:p-5">
+			<span class="text-[13px] font-medium text-body">Repetitions</span>
+			<div class="mt-1.5 flex items-baseline gap-1.5">
+				<output
+					id="tr-metric-repeats"
+					aria-live="polite"
+					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-ink tabular-nums"
+				>
+					10
+				</output>
+				<span class="text-[13px] text-mute">times</span>
+			</div>
+			<span class="mt-1 text-[12px] text-mute">Max 10,000 repetitions</span>
+		</article>
+
+		<article class="flex flex-col justify-between border-l border-hairline p-4 sm:border-l-0 sm:p-5">
+			<span class="text-[13px] font-medium text-body">Output characters</span>
+			<div class="mt-1.5 flex items-baseline gap-1.5">
+				<output
+					id="tr-metric-chars"
+					aria-live="polite"
+					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[13px] text-mute">characters</span>
+			</div>
+			<span id="tr-metric-words" class="mt-1 text-[12px] text-mute tabular-nums">0 total words</span>
+		</article>
+
+		<article class="flex flex-col justify-between p-4 sm:p-5">
+			<span class="text-[13px] font-medium text-body">Active separator</span>
+			<output
+				id="tr-metric-sep"
+				aria-live="polite"
+				class="mt-1.5 font-sans text-[22px] leading-[28px] font-semibold tracking-[-0.5px] text-ink"
+			>
+				New line
+			</output>
+			<span id="tr-metric-numbering" class="mt-1 text-[12px] text-mute">Line numbering off</span>
+		</article>
+
+		<article class="flex flex-col justify-between border-l border-hairline p-4 sm:border-l-0 sm:p-5">
+			<span class="text-[13px] font-medium text-body">Output lines</span>
+			<div class="mt-1.5 flex items-baseline gap-1.5">
+				<output
+					id="tr-metric-lines"
+					aria-live="polite"
+					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[13px] text-mute">lines</span>
+			</div>
+			<span class="mt-1 text-[12px] text-mute">Runs privately in your browser</span>
+		</article>
+	</div>
+
+	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+		<!-- Left Column: Input & Repeat Settings -->
+		<div class="space-y-6 lg:col-span-5">
+			<div class="whisper-shadow rounded-md border border-hairline bg-canvas-elevated p-5">
+				<div class="flex items-center justify-between gap-2">
+					<label for="tr-input" class="text-[14px] font-semibold text-ink">
+						Text or phrase to repeat
+					</label>
+					<button
+						type="button"
+						id="tr-btn-sample"
+						class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1 text-[12px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+					>
+						Sample phrase
+					</button>
+				</div>
+
+				<textarea
+					id="tr-input"
+					rows="4"
+					placeholder="Enter the word, phrase, or sentence you want to repeat..."
+					class="mt-2.5 w-full resize-y rounded-sm border border-hairline bg-canvas-elevated p-3.5 font-sans text-[15px] leading-[23px] text-ink placeholder:text-faint focus:border-vercel-blue focus:outline-none"
+				>Practice makes progress.</textarea>
+
+				<!-- Repetition Count Control -->
+				<div class="mt-5 border-t border-hairline pt-4">
+					<div class="flex items-center justify-between">
+						<label for="tr-count" class="text-[13px] font-medium text-ink">
+							Number of repetitions (1 – 10,000)
+						</label>
+						<input
+							type="number"
+							id="tr-count"
+							min="1"
+							max="10000"
+							value="10"
+							class="w-28 rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-right font-sans text-[14px] font-semibold text-ink tabular-nums focus:border-vercel-blue focus:outline-none"
+						/>
+					</div>
+
+					<!-- Quick Count Presets -->
+					<div class="mt-2.5 flex flex-wrap gap-1.5">
+						{
+							[5, 10, 25, 50, 100, 500, 1000].map((preset) => (
+								<button
+									type="button"
+									data-repeat-preset={preset}
+									class="tr-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas-muted px-2.5 py-1 text-[12px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+								>
+									{preset.toLocaleString()}x
+								</button>
+							))
+						}
+					</div>
+				</div>
+
+				<!-- Separator Options -->
+				<div class="mt-5 border-t border-hairline pt-4">
+					<span class="block text-[13px] font-medium text-ink">
+						Separator between repetitions
+					</span>
+					<div class="mt-2.5 grid grid-cols-2 gap-2">
+						<button
+							type="button"
+							data-sep-mode="newline"
+							data-sep-label="New line"
+							class="tr-sep-btn cursor-pointer rounded-sm border border-ink bg-primary px-3 py-2 text-left text-[13px] font-medium text-on-primary transition-all"
+						>
+							New line
+						</button>
+						<button
+							type="button"
+							data-sep-mode="space"
+							data-sep-label="Space"
+							class="tr-sep-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-2 text-left text-[13px] font-medium text-ink transition-all hover:border-ink"
+						>
+							Space
+						</button>
+						<button
+							type="button"
+							data-sep-mode="comma"
+							data-sep-label="Comma"
+							class="tr-sep-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-2 text-left text-[13px] font-medium text-ink transition-all hover:border-ink"
+						>
+							Comma (, )
+						</button>
+						<button
+							type="button"
+							data-sep-mode="custom"
+							data-sep-label="Custom separator"
+							class="tr-sep-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-2 text-left text-[13px] font-medium text-ink transition-all hover:border-ink"
+						>
+							Custom separator
+						</button>
+					</div>
+
+					<div id="tr-custom-sep-wrap" class="mt-3 hidden">
+						<label for="tr-custom-sep" class="block text-[12px] font-medium text-body">
+							Custom separator text
+						</label>
+						<input
+							type="text"
+							id="tr-custom-sep"
+							value=" | "
+							placeholder="e.g.  |  or  — "
+							class="mt-1 w-full rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 font-sans text-[14px] text-ink focus:border-vercel-blue focus:outline-none"
+						/>
+					</div>
+				</div>
+
+				<!-- Line Numbering Option -->
+				<div class="mt-5 border-t border-hairline pt-4">
+					<label class="flex cursor-pointer items-center justify-between gap-3">
+						<div>
+							<span class="block text-[13px] font-medium text-ink">
+								Add numbering (1. 2. 3.)
+							</span>
+							<span class="block text-[12px] text-mute">
+								Prefixes each repeated item with its index number
+							</span>
+						</div>
+						<input
+							type="checkbox"
+							id="tr-numbering"
+							class="h-4 w-4 cursor-pointer rounded-sm border-hairline accent-primary"
+						/>
+					</label>
+				</div>
+			</div>
+
+			<!-- Related Text Tools -->
+			<div class="whisper-shadow rounded-md border border-hairline bg-canvas-elevated p-5">
+				<h2 class="text-[15px] font-semibold text-ink">
+					Related text tools
+				</h2>
+				<ul class="mt-3 divide-y divide-hairline text-[14px]">
+					{caseConverterTool && caseConverterTool.status === 'live' && (
+						<li class="py-2 first:pt-0">
+							<a href={caseConverterTool.slug} class="flex items-center justify-between text-body transition-colors hover:text-ink">
+								<span>{caseConverterTool.shortName}</span>
+								<span aria-hidden="true" class="text-mute">→</span>
+							</a>
+						</li>
+					)}
+					{textReverserTool && textReverserTool.status === 'live' && (
+						<li class="py-2">
+							<a href={textReverserTool.slug} class="flex items-center justify-between text-body transition-colors hover:text-ink">
+								<span>{textReverserTool.shortName}</span>
+								<span aria-hidden="true" class="text-mute">→</span>
+							</a>
+						</li>
+					)}
+					{wordCounterTool && wordCounterTool.status === 'live' && (
+						<li class="py-2 last:pb-0">
+							<a href={wordCounterTool.slug} class="flex items-center justify-between text-body transition-colors hover:text-ink">
+								<span>{wordCounterTool.shortName}</span>
+								<span aria-hidden="true" class="text-mute">→</span>
+							</a>
+						</li>
+					)}
+				</ul>
+			</div>
+		</div>
+
+		<!-- Right Column: Generated Output Preview -->
+		<div class="lg:col-span-7">
+			<div class="whisper-shadow flex h-full flex-col overflow-hidden rounded-md border border-hairline bg-canvas-elevated">
+				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline bg-canvas-muted px-4 py-3 sm:px-5">
+					<label for="tr-output" class="text-[14px] font-semibold text-ink">
+						Repeated output
+					</label>
+					<div class="flex flex-wrap items-center gap-2">
+						<button
+							type="button"
+							id="tr-btn-copy"
+							class="cursor-pointer rounded-sm bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-opacity hover:opacity-90"
+						>
+							Copy Output
+						</button>
+						<button
+							type="button"
+							id="tr-btn-download"
+							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+						>
+							Download .txt
+						</button>
+						<button
+							type="button"
+							id="tr-btn-clear"
+							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+						>
+							Clear
+						</button>
+					</div>
+				</div>
+
+				<div class="flex-1 p-4 sm:p-5">
+					<textarea
+						id="tr-output"
+						readonly
+						rows="16"
+						placeholder="Your repeated text will appear here automatically..."
+						class="h-full min-h-[360px] w-full resize-y rounded-sm border border-hairline bg-canvas-muted p-4 font-sans text-[15px] leading-[24px] text-ink focus:border-vercel-blue focus:outline-none"
+					></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	function initTextRepeater() {
+		const inputEl = document.getElementById('tr-input') as HTMLTextAreaElement | null;
+		const countEl = document.getElementById('tr-count') as HTMLInputElement | null;
+		const customSepWrap = document.getElementById('tr-custom-sep-wrap');
+		const customSepEl = document.getElementById('tr-custom-sep') as HTMLInputElement | null;
+		const numberingEl = document.getElementById('tr-numbering') as HTMLInputElement | null;
+		const outputEl = document.getElementById('tr-output') as HTMLTextAreaElement | null;
+
+		const metricRepeats = document.getElementById('tr-metric-repeats');
+		const metricChars = document.getElementById('tr-metric-chars');
+		const metricWords = document.getElementById('tr-metric-words');
+		const metricSep = document.getElementById('tr-metric-sep');
+		const metricNumbering = document.getElementById('tr-metric-numbering');
+		const metricLines = document.getElementById('tr-metric-lines');
+
+		const presetBtns = document.querySelectorAll<HTMLButtonElement>('.tr-preset-btn');
+		const sepBtns = document.querySelectorAll<HTMLButtonElement>('.tr-sep-btn');
+		const sampleBtn = document.getElementById('tr-btn-sample');
+		const copyBtn = document.getElementById('tr-btn-copy');
+		const downloadBtn = document.getElementById('tr-btn-download');
+		const clearBtn = document.getElementById('tr-btn-clear');
+
+		if (!inputEl || !countEl || !outputEl) return;
+
+		let currentSepMode = 'newline';
+		let currentSepLabel = 'New line';
+
+		function getSeparator(): string {
+			switch (currentSepMode) {
+				case 'newline':
+					return '\n';
+				case 'space':
+					return ' ';
+				case 'comma':
+					return ', ';
+				case 'custom':
+					return customSepEl ? customSepEl.value : '';
+				default:
+					return '\n';
+			}
+		}
+
+		function generateRepeatedText() {
+			if (!inputEl || !countEl || !outputEl) return;
+			const source = inputEl.value;
+			let rawCount = parseInt(countEl.value, 10);
+			if (isNaN(rawCount) || rawCount < 1) rawCount = 1;
+			if (rawCount > 10000) {
+				rawCount = 10000;
+				countEl.value = '10000';
+			}
+
+			const useNumbering = numberingEl?.checked ?? false;
+			const sep = getSeparator();
+
+			let result = '';
+			if (source.length > 0) {
+				const items: string[] = new Array(rawCount);
+				for (let i = 0; i < rawCount; i++) {
+					items[i] = useNumbering ? `${i + 1}. ${source}` : source;
+				}
+				result = items.join(sep);
+			}
+
+			outputEl.value = result;
+
+			const chars = result.length;
+			const trimmed = result.trim();
+			const words = trimmed ? trimmed.split(/\s+/).length : 0;
+			const lines = result.length > 0 ? result.split(/\r?\n/).length : 0;
+
+			if (metricRepeats) metricRepeats.textContent = rawCount.toLocaleString();
+			if (metricChars) metricChars.textContent = chars.toLocaleString();
+			if (metricWords) metricWords.textContent = `${words.toLocaleString()} total ${words === 1 ? 'word' : 'words'}`;
+			if (metricSep) metricSep.textContent = currentSepLabel;
+			if (metricNumbering)
+				metricNumbering.textContent = useNumbering ? 'Line numbering on' : 'Line numbering off';
+			if (metricLines) metricLines.textContent = lines.toLocaleString();
+		}
+
+		sepBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				currentSepMode = btn.dataset.sepMode || 'newline';
+				currentSepLabel = btn.dataset.sepLabel || 'New line';
+
+				sepBtns.forEach((b) => {
+					const isActive = b === btn;
+					b.className = isActive
+						? 'tr-sep-btn cursor-pointer rounded-sm border border-ink bg-primary px-3 py-2 text-left text-[13px] font-medium text-on-primary transition-all'
+						: 'tr-sep-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-2 text-left text-[13px] font-medium text-ink transition-all hover:border-ink';
+				});
+
+				if (customSepWrap) {
+					customSepWrap.classList.toggle('hidden', currentSepMode !== 'custom');
+				}
+				generateRepeatedText();
+			});
+		});
+
+		presetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const presetVal = btn.dataset.repeatPreset;
+				if (presetVal && countEl) {
+					countEl.value = presetVal;
+					generateRepeatedText();
+				}
+			});
+		});
+
+		inputEl.addEventListener('input', generateRepeatedText);
+		countEl.addEventListener('input', generateRepeatedText);
+		customSepEl?.addEventListener('input', generateRepeatedText);
+		numberingEl?.addEventListener('change', generateRepeatedText);
+
+		sampleBtn?.addEventListener('click', () => {
+			inputEl.value = 'Clear writing is a sign of clear thinking.';
+			countEl.value = '10';
+			generateRepeatedText();
+		});
+
+		copyBtn?.addEventListener('click', async () => {
+			if (!outputEl.value) return;
+			try {
+				await navigator.clipboard.writeText(outputEl.value);
+				const originalText = copyBtn.textContent;
+				copyBtn.textContent = 'Copied!';
+				setTimeout(() => {
+					copyBtn.textContent = originalText;
+				}, 1600);
+			} catch {
+				outputEl.select();
+				document.execCommand('copy');
+			}
+		});
+
+		downloadBtn?.addEventListener('click', () => {
+			if (!outputEl.value) return;
+			const blob = new Blob([outputEl.value], { type: 'text/plain;charset=utf-8' });
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = 'repeated-text.txt';
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			URL.revokeObjectURL(url);
+		});
+
+		clearBtn?.addEventListener('click', () => {
+			inputEl.value = '';
+			generateRepeatedText();
+			inputEl.focus();
+		});
+
+		generateRepeatedText();
+	}
+
+	initTextRepeater();
+</script>
+

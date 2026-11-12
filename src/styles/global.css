@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-ink: var(--c-ink);
+  --color-body: var(--c-body);
+  --color-mute: var(--c-mute);
+  --color-faint: var(--c-faint);
+  --color-canvas: var(--c-canvas);
+  --color-canvas-elevated: var(--c-canvas-elevated);
+  --color-canvas-muted: var(--c-canvas-muted);
+  --color-hairline: var(--c-hairline);
+  --color-hairline-soft: var(--c-hairline-soft);
+  --color-primary: var(--c-primary);
+  --color-on-primary: var(--c-on-primary);
+  --color-header-bg: var(--c-header-bg);
+  --color-footer-bg: var(--c-footer-bg);
+  --color-footer-border: var(--c-footer-border);
+
+  --color-vercel-blue: #0070f3;
+  --color-vercel-blue-deep: #0761d1;
+  --color-vercel-blue-soft: #d3e5ff;
+  --color-vercel-violet: #7928ca;
+  --color-vercel-cyan: #50e3c2;
+  --color-vercel-pink: #ff0080;
+  --color-vercel-magenta: #eb367f;
+  --color-vercel-warning: #f5a623;
+  --color-vercel-error: #ee0000;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill-category: 64px;
+  --radius-pill: 100px;
+}
+
+:root {
+  --c-primary: #09090b;
+  --c-on-primary: #ffffff;
+  --c-ink: #09090b;
+  --c-body: #334155;
+  --c-mute: #475569;
+  --c-faint: #94a3b8;
+  --c-hairline: #e2e8f0;
+  --c-hairline-soft: #f1f5f9;
+  --c-canvas: #f3f4f6;
+  --c-canvas-elevated: #ffffff;
+  --c-canvas-muted: #f8fafc;
+  --c-header-bg: rgba(255, 255, 255, 0.92);
+  --c-footer-bg: #eaecef;
+  --c-footer-border: #d1d5db;
+  color-scheme: light;
+}
+
+.dark {
+  --c-primary: #ededed;
+  --c-on-primary: #0a0a0a;
+  --c-ink: #ededed;
+  --c-body: #a1a1a1;
+  --c-mute: #878787;
+  --c-faint: #666666;
+  --c-hairline: #242424;
+  --c-hairline-soft: #161616;
+  --c-canvas: #0a0a0a;
+  --c-canvas-elevated: #111111;
+  --c-canvas-muted: rgba(17, 17, 17, 0.6);
+  --c-header-bg: rgba(10, 10, 10, 0.9);
+  --c-footer-bg: #0a0a0a;
+  --c-footer-border: #242424;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--c-canvas);
+    color: var(--c-ink);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--c-canvas);
+    color: var(--c-ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Custom Range Slider styling */
+input[type="range"].geist-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px;
+  background: var(--c-hairline);
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"].geist-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--c-primary);
+  border: 2px solid var(--c-canvas-elevated);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"].geist-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.08);
+}
+
+input[type="range"].geist-slider:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.3);
+}
+
+input[type="range"].geist-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--c-primary);
+  border: 2px solid var(--c-canvas-elevated);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.whisper-shadow {
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 4px 12px rgba(15, 23, 42, 0.03);
+}
+
+.dark .whisper-shadow {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.floating-shadow {
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08), 0 12px 24px -4px rgba(15, 23, 42, 0.06);
+}
+
+.tool-card-live {
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 4px 12px rgba(15, 23, 42, 0.03);
+}
+
+.tool-card-live:hover {
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08), 0 10px 24px -4px rgba(15, 23, 42, 0.06);
+}
+
+.dark .tool-card-live {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.dark .tool-card-live:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}

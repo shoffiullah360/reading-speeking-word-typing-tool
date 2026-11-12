@@ -1,0 +1,501 @@
+---
+import { getToolById } from '../config/site';
+
+const wordCounterTool = getToolById('word-counter');
+const textRepeaterTool = getToolById('text-repeater');
+const textReverserTool = getToolById('text-reverser');
+---
+
+<section
+	id="case-converter-workspace"
+	aria-label="Case Converter Workspace"
+	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
+>
+	<!-- Live Summary Bar -->
+	<div class="whisper-shadow mb-6 grid grid-cols-2 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-4 sm:divide-x sm:divide-y-0">
+		<article class="flex flex-col justify-between p-4 sm:p-5">
+			<span class="text-[13px] font-medium text-body">Active format</span>
+			<output
+				id="cc-active-mode"
+				aria-live="polite"
+				class="mt-1.5 font-sans text-[22px] leading-[28px] font-semibold tracking-[-0.5px] text-ink"
+			>
+				Original text
+			</output>
+			<span class="mt-1 text-[12px] text-mute">Click any case button below</span>
+		</article>
+
+		<article class="flex flex-col justify-between border-l border-hairline p-4 sm:border-l-0 sm:p-5">
+			<span class="text-[13px] font-medium text-body">Word count</span>
+			<div class="mt-1.5 flex items-baseline gap-1.5">
+				<output
+					id="cc-metric-words"
+					aria-live="polite"
+					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[13px] text-mute">words</span>
+			</div>
+			<span id="cc-metric-sentences" class="mt-1 text-[12px] text-mute tabular-nums">0 sentences</span>
+		</article>
+
+		<article class="flex flex-col justify-between p-4 sm:p-5">
+			<span class="text-[13px] font-medium text-body">Character count</span>
+			<div class="mt-1.5 flex items-baseline gap-1.5">
+				<output
+					id="cc-metric-chars"
+					aria-live="polite"
+					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[13px] text-mute">characters</span>
+			</div>
+			<span id="cc-metric-chars-nospace" class="mt-1 text-[12px] text-mute tabular-nums">0 without spaces</span>
+		</article>
+
+		<article class="flex flex-col justify-between border-l border-hairline p-4 sm:border-l-0 sm:p-5">
+			<span class="text-[13px] font-medium text-body">Line count</span>
+			<div class="mt-1.5 flex items-baseline gap-1.5">
+				<output
+					id="cc-metric-lines"
+					aria-live="polite"
+					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[13px] text-mute">lines</span>
+			</div>
+			<span class="mt-1 text-[12px] text-mute">Runs privately in your browser</span>
+		</article>
+	</div>
+
+	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+		<!-- Left Column: Editor + Case Conversion Buttons -->
+		<div class="lg:col-span-8">
+			<div class="whisper-shadow overflow-hidden rounded-md border border-hairline bg-canvas-elevated">
+				<!-- Top Action Bar -->
+				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline bg-canvas-muted px-4 py-3 sm:px-5">
+					<label for="cc-textarea" class="text-[14px] font-semibold text-ink">
+						Paste or type your text
+					</label>
+					<div class="flex flex-wrap items-center gap-2">
+						<button
+							type="button"
+							id="cc-btn-sample"
+							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+						>
+							Sample text
+						</button>
+						<button
+							type="button"
+							id="cc-btn-copy"
+							class="cursor-pointer rounded-sm bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-opacity hover:opacity-90"
+						>
+							Copy Text
+						</button>
+						<button
+							type="button"
+							id="cc-btn-download"
+							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+						>
+							Download .txt
+						</button>
+						<button
+							type="button"
+							id="cc-btn-clear"
+							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+						>
+							Clear
+						</button>
+					</div>
+				</div>
+
+				<!-- Textarea -->
+				<div class="p-4 sm:p-5">
+					<textarea
+						id="cc-textarea"
+						rows="10"
+						placeholder="Type or paste your text here, then select a case format below..."
+						class="w-full resize-y rounded-sm border border-hairline bg-canvas-elevated p-4 font-sans text-[16px] leading-[26px] text-ink placeholder:text-faint focus:border-vercel-blue focus:outline-none"
+					></textarea>
+
+					<!-- 8 Case Conversion Buttons Grid -->
+					<div class="mt-4">
+						<span class="block text-[13px] font-medium text-mute">
+							Convert text case in one click
+						</span>
+						<div class="mt-2.5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+							<button
+								type="button"
+								data-case-mode="sentence"
+								data-case-label="Sentence case"
+								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
+							>
+								Sentence case
+							</button>
+							<button
+								type="button"
+								data-case-mode="lower"
+								data-case-label="lower case"
+								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
+							>
+								lower case
+							</button>
+							<button
+								type="button"
+								data-case-mode="upper"
+								data-case-label="UPPER CASE"
+								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
+							>
+								UPPER CASE
+							</button>
+							<button
+								type="button"
+								data-case-mode="title"
+								data-case-label="Title Case"
+								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
+							>
+								Title Case
+							</button>
+							<button
+								type="button"
+								data-case-mode="capitalized"
+								data-case-label="Capitalized Case"
+								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
+							>
+								Capitalized Case
+							</button>
+							<button
+								type="button"
+								data-case-mode="camel"
+								data-case-label="camelCase"
+								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
+							>
+								camelCase
+							</button>
+							<button
+								type="button"
+								data-case-mode="snake"
+								data-case-label="snake_case"
+								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
+							>
+								snake_case
+							</button>
+							<button
+								type="button"
+								data-case-mode="kebab"
+								data-case-label="kebab-case"
+								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
+							>
+								kebab-case
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Right Column: Case Format Guide & Related Text Tools -->
+		<div class="space-y-6 lg:col-span-4">
+			<div class="whisper-shadow rounded-md border border-hairline bg-canvas-elevated p-5">
+				<h2 class="text-[16px] font-semibold text-ink">
+					Case styles at a glance
+				</h2>
+				<dl class="mt-3.5 space-y-3 text-[13px] leading-[20px]">
+					<div class="border-b border-hairline pb-2.5">
+						<dt class="font-medium text-ink">Sentence case</dt>
+						<dd class="mt-0.5 text-body">Capitalizes the first letter of each sentence and lowers the rest.</dd>
+					</div>
+					<div class="border-b border-hairline pb-2.5">
+						<dt class="font-medium text-ink">Title Case (AP / APA)</dt>
+						<dd class="mt-0.5 text-body">Capitalizes major words while keeping short prepositions, articles, and conjunctions lowercase unless first or last.</dd>
+					</div>
+					<div class="border-b border-hairline pb-2.5">
+						<dt class="font-medium text-ink">Capitalized Case</dt>
+						<dd class="mt-0.5 text-body">Capitalizes the first letter of every single word regardless of length.</dd>
+					</div>
+					<div>
+						<dt class="font-medium text-ink">camelCase, snake_case &amp; kebab-case</dt>
+						<dd class="mt-0.5 text-body">Clean identifier formats for URLs, CSS classes, file names, and variables.</dd>
+					</div>
+				</dl>
+			</div>
+
+			<div class="whisper-shadow rounded-md border border-hairline bg-canvas-elevated p-5">
+				<h2 class="text-[15px] font-semibold text-ink">
+					Related text tools
+				</h2>
+				<ul class="mt-3 divide-y divide-hairline text-[14px]">
+					{wordCounterTool && wordCounterTool.status === 'live' && (
+						<li class="py-2 first:pt-0">
+							<a href={wordCounterTool.slug} class="flex items-center justify-between text-body transition-colors hover:text-ink">
+								<span>{wordCounterTool.shortName}</span>
+								<span aria-hidden="true" class="text-mute">→</span>
+							</a>
+						</li>
+					)}
+					{textRepeaterTool && textRepeaterTool.status === 'live' && (
+						<li class="py-2">
+							<a href={textRepeaterTool.slug} class="flex items-center justify-between text-body transition-colors hover:text-ink">
+								<span>{textRepeaterTool.shortName}</span>
+								<span aria-hidden="true" class="text-mute">→</span>
+							</a>
+						</li>
+					)}
+					{textReverserTool && textReverserTool.status === 'live' && (
+						<li class="py-2 last:pb-0">
+							<a href={textReverserTool.slug} class="flex items-center justify-between text-body transition-colors hover:text-ink">
+								<span>{textReverserTool.shortName}</span>
+								<span aria-hidden="true" class="text-mute">→</span>
+							</a>
+						</li>
+					)}
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	function initCaseConverter() {
+		const textarea = document.getElementById('cc-textarea') as HTMLTextAreaElement | null;
+		const activeModeEl = document.getElementById('cc-active-mode');
+		const wordsEl = document.getElementById('cc-metric-words');
+		const sentencesEl = document.getElementById('cc-metric-sentences');
+		const charsEl = document.getElementById('cc-metric-chars');
+		const charsNoSpaceEl = document.getElementById('cc-metric-chars-nospace');
+		const linesEl = document.getElementById('cc-metric-lines');
+
+		const sampleBtn = document.getElementById('cc-btn-sample');
+		const copyBtn = document.getElementById('cc-btn-copy');
+		const downloadBtn = document.getElementById('cc-btn-download');
+		const clearBtn = document.getElementById('cc-btn-clear');
+		const modeBtns = document.querySelectorAll<HTMLButtonElement>('.cc-mode-btn');
+
+		if (!textarea) return;
+
+		const MINOR_WORDS = new Set([
+			'a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'from', 'in', 'into',
+			'nor', 'of', 'on', 'onto', 'or', 'over', 'per', 'so', 'than', 'that',
+			'the', 'to', 'up', 'upon', 'via', 'with', 'yet'
+		]);
+
+		function toSentenceCase(text: string): string {
+			return text
+				.toLowerCase()
+				.replace(/(^\s*[a-z]|[.!?]\s+[a-z]|\n\s*[a-z])/g, (match) => match.toUpperCase())
+				.replace(/\bi\b/g, 'I');
+		}
+
+		function toCapitalizedCase(text: string): string {
+			return text
+				.toLowerCase()
+				.replace(/(^|[\s\-/—(["'])([a-z])/g, (_, sep, char) => sep + char.toUpperCase());
+		}
+
+		function toTitleCase(text: string): string {
+			return text
+				.split(/(\r?\n)/)
+				.map((line) => {
+					if (/^\r?\n$/.test(line)) return line;
+					const tokens = line.split(/(\s+)/);
+					const wordIndices: number[] = [];
+					tokens.forEach((tok, idx) => {
+						if (/\S/.test(tok)) wordIndices.push(idx);
+					});
+					if (wordIndices.length === 0) return line;
+					const firstIdx = wordIndices[0];
+					const lastIdx = wordIndices[wordIndices.length - 1];
+
+					return tokens
+						.map((tok, idx) => {
+							if (!/\S/.test(tok)) return tok;
+							const prevWordIdx = wordIndices[wordIndices.indexOf(idx) - 1];
+							const prevToken = prevWordIdx !== undefined ? tokens[prevWordIdx] : '';
+							const followsColon = /[:;—-]$/.test(prevToken);
+							const lower = tok.toLowerCase();
+							const bare = lower.replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, '');
+
+							if (idx === firstIdx || idx === lastIdx || followsColon || !MINOR_WORDS.has(bare)) {
+								return lower.replace(/[a-z]/, (c) => c.toUpperCase());
+							}
+							return lower;
+						})
+						.join('');
+				})
+				.join('');
+		}
+
+		function extractWordsForIdentifier(line: string): string[] {
+			const normalized = line
+				.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+				.replace(/[_\-]+/g, ' ')
+				.replace(/[^\p{L}\p{N}\s]+/gu, ' ')
+				.trim();
+			return normalized ? normalized.split(/\s+/) : [];
+		}
+
+		function toCamelCase(text: string): string {
+			return text
+				.split(/\r?\n/)
+				.map((line) => {
+					const words = extractWordsForIdentifier(line);
+					if (words.length === 0) return '';
+					return words
+						.map((w, idx) => {
+							const lower = w.toLowerCase();
+							return idx === 0 ? lower : lower.charAt(0).toUpperCase() + lower.slice(1);
+						})
+						.join('');
+				})
+				.join('\n');
+		}
+
+		function toSnakeCase(text: string): string {
+			return text
+				.split(/\r?\n/)
+				.map((line) =>
+					extractWordsForIdentifier(line)
+						.map((w) => w.toLowerCase())
+						.join('_')
+				)
+				.join('\n');
+		}
+
+		function toKebabCase(text: string): string {
+			return text
+				.split(/\r?\n/)
+				.map((line) =>
+					extractWordsForIdentifier(line)
+						.map((w) => w.toLowerCase())
+						.join('-')
+				)
+				.join('\n');
+		}
+
+		function updateStats() {
+			if (!textarea) return;
+			const val = textarea.value;
+			const trimmed = val.trim();
+			const words = trimmed ? trimmed.split(/\s+/).length : 0;
+			const chars = val.length;
+			const charsNoSpace = val.replace(/\s/g, '').length;
+			const sentences = trimmed
+				? (trimmed.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || []).filter((s) => s.trim().length > 0).length
+				: 0;
+			const lines = val.length > 0 ? val.split(/\r?\n/).length : 0;
+
+			if (wordsEl) wordsEl.textContent = words.toLocaleString();
+			if (sentencesEl) sentencesEl.textContent = `${sentences.toLocaleString()} ${sentences === 1 ? 'sentence' : 'sentences'}`;
+			if (charsEl) charsEl.textContent = chars.toLocaleString();
+			if (charsNoSpaceEl) charsNoSpaceEl.textContent = `${charsNoSpace.toLocaleString()} without spaces`;
+			if (linesEl) linesEl.textContent = lines.toLocaleString();
+		}
+
+		function highlightActiveButton(activeBtn: HTMLButtonElement | null) {
+			modeBtns.forEach((btn) => {
+				const isCurrent = btn === activeBtn;
+				btn.className = isCurrent
+					? 'cc-mode-btn cursor-pointer rounded-sm border border-ink bg-primary px-3.5 py-2.5 text-left text-[14px] font-medium text-on-primary transition-all'
+					: 'cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft';
+			});
+		}
+
+		modeBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const mode = btn.dataset.caseMode;
+				const label = btn.dataset.caseLabel || 'Converted';
+				const current = textarea.value;
+				if (!current) return;
+
+				let converted = current;
+				switch (mode) {
+					case 'sentence':
+						converted = toSentenceCase(current);
+						break;
+					case 'lower':
+						converted = current.toLowerCase();
+						break;
+					case 'upper':
+						converted = current.toUpperCase();
+						break;
+					case 'title':
+						converted = toTitleCase(current);
+						break;
+					case 'capitalized':
+						converted = toCapitalizedCase(current);
+						break;
+					case 'camel':
+						converted = toCamelCase(current);
+						break;
+					case 'snake':
+						converted = toSnakeCase(current);
+						break;
+					case 'kebab':
+						converted = toKebabCase(current);
+						break;
+				}
+
+				textarea.value = converted;
+				if (activeModeEl) activeModeEl.textContent = label;
+				highlightActiveButton(btn);
+				updateStats();
+			});
+		});
+
+		textarea.addEventListener('input', () => {
+			updateStats();
+		});
+
+		sampleBtn?.addEventListener('click', () => {
+			textarea.value =
+				'the quick brown fox jumps over the lazy dog. writing clear, well-structured headlines for articles and essays is easier when you can switch between sentence case, title case, and identifier formats in one click.';
+			if (activeModeEl) activeModeEl.textContent = 'Sample loaded';
+			highlightActiveButton(null);
+			updateStats();
+		});
+
+		copyBtn?.addEventListener('click', async () => {
+			if (!textarea.value) return;
+			try {
+				await navigator.clipboard.writeText(textarea.value);
+				const originalText = copyBtn.textContent;
+				copyBtn.textContent = 'Copied!';
+				setTimeout(() => {
+					copyBtn.textContent = originalText;
+				}, 1600);
+			} catch {
+				textarea.select();
+				document.execCommand('copy');
+			}
+		});
+
+		downloadBtn?.addEventListener('click', () => {
+			if (!textarea.value) return;
+			const blob = new Blob([textarea.value], { type: 'text/plain;charset=utf-8' });
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = 'converted-text.txt';
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			URL.revokeObjectURL(url);
+		});
+
+		clearBtn?.addEventListener('click', () => {
+			textarea.value = '';
+			if (activeModeEl) activeModeEl.textContent = 'Original text';
+			highlightActiveButton(null);
+			updateStats();
+			textarea.focus();
+		});
+
+		updateStats();
+	}
+
+	initCaseConverter();
+</script>
+

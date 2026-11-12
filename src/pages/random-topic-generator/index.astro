@@ -1,0 +1,77 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import RandomTopicGenerator from "../../components/RandomTopicGenerator.astro";
+import Footer from "../../components/Footer.astro";
+import { resolveCanonicalUrl } from "../../config/site";
+
+const pageTitle =
+	"Random Topic Generator — Essay, Speech, Creative Writing & Blog Prompts | Wordora";
+const pageDescription =
+	"Generate curated, thought-provoking writing prompts and speaking topics across Essay & Academic, Public Speaking & Debate, Creative Writing, and Blog & Content modes.";
+const canonicalUrl = resolveCanonicalUrl("/random-topic-generator/");
+
+const softwareAppSchema = {
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	name: "Random Topic & Prompt Generator",
+	url: canonicalUrl,
+	applicationCategory: "UtilitiesApplication",
+	operatingSystem: "Web, Any",
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "USD",
+	},
+	description: pageDescription,
+	featureList: [
+		"Four curated topic modes: Essay & Academic, Public Speaking & Debate, Creative Writing, and Blog & Content",
+		"Thought-provoking prompts paired with suggested angles to explore",
+		"Instant Generate New Topic and one-click Copy Topic controls",
+		"Session-saved Shortlisted Topics list to compare and export favorite prompts",
+		"100% private client-side execution in your browser",
+	],
+};
+---
+
+<Layout
+	title={pageTitle}
+	description={pageDescription}
+	canonicalUrl={canonicalUrl}
+>
+	<Fragment slot="head">
+		<script
+			type="application/ld+json"
+			set:html={JSON.stringify(softwareAppSchema)}
+		/>
+	</Fragment>
+
+	<Header />
+
+	<main class="flex-1">
+		<!-- Clean Editorial Tool Header -->
+		<section class="px-4 pt-12 pb-4 sm:px-6 sm:pt-16 sm:pb-6">
+			<div class="mx-auto max-w-[1200px]">
+				<h1
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1.4px] text-ink sm:text-[42px] sm:leading-[48px] sm:tracking-[-1.8px]"
+				>
+					Random Topic Generator
+				</h1>
+
+				<p
+					class="mt-3 max-w-2xl text-[16px] leading-[25px] font-normal text-body"
+				>
+					Generate curated, thought-provoking prompts for academic essays, public speaking and debates, creative fiction, and blog articles—and save your favorites to a shortlist.
+				</p>
+			</div>
+		</section>
+
+		<!-- Interactive Random Topic Generator Workspace -->
+		<RandomTopicGenerator />
+
+		{/* Editorial Content & FAQ Slot — User Managed */}
+	</main>
+
+	<Footer />
+</Layout>
+

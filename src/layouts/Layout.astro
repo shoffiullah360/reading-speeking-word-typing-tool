@@ -1,23 +1,85 @@
+---
+import '../styles/global.css';
+import {
+	SITE_CONFIG,
+	resolveCanonicalUrl,
+	getVerifiedHreflangLinks,
+	type LocaleCode,
+} from '../config/site';
+
+interface Props {
+	title?: string;
+	description?: string;
+	canonicalUrl?: string;
+	locale?: LocaleCode;
+}
+
+const {
+	title = `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
+	description = 'Instant, client-side reading, writing, speaking, and text analysis tools engineered with the Vercel Geist typographic system.',
+	canonicalUrl = resolveCanonicalUrl(Astro.url.pathname),
+	locale = SITE_CONFIG.defaultLocale,
+} = Astro.props;
+
+const hreflangLinks = getVerifiedHreflangLinks(Astro.url.pathname);
+---
+
 <!doctype html>
-<html lang="en">
+<html lang={locale} class="scroll-smooth">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
+
+		<!-- Verified Reciprocal hreflang + x-default -->
+		{
+			hreflangLinks.map((alt) => (
+				<link rel="alternate" hreflang={alt.hreflang} href={alt.href} />
+			))
+		}
+
+		<!-- Open Graph / Social -->
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content={SITE_CONFIG.name} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+
+		<!-- Geist Sans Font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+
+		<!-- Prevent Flash of Incorrect Theme (FOUC) -->
+		<script is:inline>
+			(function () {
+				try {
+					const storedTheme = localStorage.getItem('theme');
+					const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+						document.documentElement.classList.add('dark');
+					} else {
+						document.documentElement.classList.remove('dark');
+					}
+				} catch (e) {}
+			})();
+		</script>
+
+		<slot name="head" />
 	</head>
-	<body>
+	<body class="bg-canvas text-ink antialiased selection:bg-vercel-blue/15 selection:text-vercel-blue">
 		<slot />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

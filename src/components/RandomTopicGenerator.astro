@@ -1,0 +1,757 @@
+---
+import { getToolById } from '../config/site';
+
+const wordsToPagesTool = getToolById('words-to-pages');
+const typingSpeedTool = getToolById('typing-speed-test');
+const speechTimeTool = getToolById('speech-time-calculator');
+---
+
+<section
+	id="random-topic-workspace"
+	aria-label="Random Topic Generator Workspace"
+	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
+>
+	<!-- 4 Topic Mode Selector Tabs -->
+	<div class="whisper-shadow mb-6 rounded-md border border-hairline bg-canvas-elevated p-3 sm:p-4">
+		<div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+			<span class="text-[13px] font-medium text-body">
+				Select topic mode
+			</span>
+			<div
+				role="tablist"
+				aria-label="Topic categories"
+				class="grid grid-cols-1 gap-1.5 sm:grid-cols-2 lg:flex lg:flex-wrap lg:items-center"
+			>
+				<button
+					type="button"
+					role="tab"
+					data-rtg-mode="Essay & Academic"
+					aria-selected="true"
+					class="cursor-pointer rounded-sm bg-primary px-3.5 py-2 text-left text-[13px] font-medium text-on-primary transition-colors sm:text-center"
+				>
+					Essay &amp; Academic
+				</button>
+				<button
+					type="button"
+					role="tab"
+					data-rtg-mode="Public Speaking & Debate"
+					aria-selected="false"
+					class="cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-2 text-left text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft sm:text-center"
+				>
+					Public Speaking &amp; Debate
+				</button>
+				<button
+					type="button"
+					role="tab"
+					data-rtg-mode="Creative Writing"
+					aria-selected="false"
+					class="cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-2 text-left text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft sm:text-center"
+				>
+					Creative Writing
+				</button>
+				<button
+					type="button"
+					role="tab"
+					data-rtg-mode="Blog & Content"
+					aria-selected="false"
+					class="cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-2 text-left text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft sm:text-center"
+				>
+					Blog &amp; Content
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main Dual-Column Workspace -->
+	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+		<!-- Left Column: Active Topic Generator Card -->
+		<div class="whisper-shadow flex flex-col justify-between rounded-md border border-hairline bg-canvas-elevated lg:col-span-7">
+			<!-- Card Top Bar -->
+			<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-5 py-3.5">
+				<div class="flex items-center gap-2">
+					<span
+						id="rtg-active-mode-pill"
+						class="rounded-full border border-hairline bg-canvas px-3 py-0.5 text-[12px] font-medium text-ink"
+					>
+						Essay &amp; Academic
+					</span>
+					<span id="rtg-Format-hint" class="text-[12px] text-mute">
+						Analytical &amp; persuasive prompt
+					</span>
+				</div>
+				<span id="rtg-counter-label" class="text-[12px] text-mute tabular-nums">
+					Prompt 1 of 12
+				</span>
+			</div>
+
+			<!-- Main Prompt Display -->
+			<div class="flex flex-1 flex-col justify-center px-5 py-8 sm:px-7 sm:py-10">
+				<p class="mb-2 text-[13px] font-medium text-mute">
+					Current topic prompt
+				</p>
+				<blockquote
+					id="rtg-topic-title"
+					aria-live="polite"
+					class="font-sans text-[22px] leading-[32px] font-semibold tracking-[-0.6px] text-ink sm:text-[26px] sm:leading-[36px]"
+				>
+					Should universities evaluate students primarily through long-form research projects rather than timed examinations?
+				</blockquote>
+
+				<div class="mt-5 rounded-sm border border-hairline bg-canvas p-4">
+					<p class="text-[12px] font-semibold text-ink">
+						Suggested angle to explore
+					</p>
+					<p id="rtg-topic-angle" class="mt-1 text-[14px] leading-[22px] text-body">
+						Compare how timed exams measure recall under pressure versus how extended research essays test synthesis, revision, and original argument construction.
+					</p>
+				</div>
+
+				<!-- Primary Action Buttons -->
+				<div class="mt-7 flex flex-wrap items-center gap-2.5">
+					<button
+						type="button"
+						id="rtg-btn-generate"
+						class="inline-flex cursor-pointer items-center gap-2 rounded-sm bg-primary px-4 py-2.5 text-[14px] font-medium text-on-primary transition-opacity hover:opacity-90"
+					>
+						<svg
+							class="h-4 w-4"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							aria-hidden="true"
+						>
+							<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+							<polyline points="7.5 4.21 12 6.81 16.5 4.21" />
+							<polyline points="7.5 19.79 7.5 14.6 3 12" />
+							<polyline points="21 12 16.5 14.6 16.5 19.79" />
+							<polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+							<line x1="12" y1="22.08" x2="12" y2="12" />
+						</svg>
+						<span>Generate New Topic</span>
+					</button>
+
+					<button
+						type="button"
+						id="rtg-btn-copy"
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-4 py-2.5 text-[14px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+					>
+						<svg
+							class="h-4 w-4 text-mute"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							aria-hidden="true"
+						>
+							<rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+							<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+						</svg>
+						<span id="rtg-copy-label">Copy Topic</span>
+					</button>
+
+					<button
+						type="button"
+						id="rtg-btn-shortlist"
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-4 py-2.5 text-[14px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+					>
+						<svg
+							class="h-4 w-4 text-mute"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							aria-hidden="true"
+						>
+							<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+						</svg>
+						<span id="rtg-shortlist-btn-label">Save to Shortlist</span>
+					</button>
+				</div>
+			</div>
+
+			<!-- Card Footer Bar -->
+			<div class="flex flex-wrap items-center justify-between gap-2 border-t border-hairline px-5 py-3 text-[12px] text-mute">
+				<span id="rtg-target-scope" class="tabular-nums">
+					Recommended length: 800 – 1,500 words (3 – 6 pages)
+				</span>
+				<span id="rtg-status-feedback">
+					Runs privately in your browser
+				</span>
+			</div>
+		</div>
+
+		<!-- Right Column: Session-Saved Shortlisted Topics -->
+		<div class="whisper-shadow flex flex-col justify-between rounded-md border border-hairline bg-canvas-elevated lg:col-span-5">
+			<div class="p-5">
+				<div class="flex items-center justify-between gap-2 border-b border-hairline pb-3.5">
+					<div>
+						<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+							Shortlisted Topics
+						</h2>
+						<p class="mt-0.5 text-[12px] text-mute">
+							Saved for your current browser session
+						</p>
+					</div>
+
+					<div class="flex items-center gap-2">
+						<span
+							id="rtg-shortlist-count"
+							class="rounded-full border border-hairline bg-canvas px-2.5 py-0.5 text-[12px] font-medium text-ink tabular-nums"
+						>
+							0 saved
+						</span>
+						<button
+							type="button"
+							id="rtg-btn-clear-shortlist"
+							class="hidden cursor-pointer rounded-sm px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-vercel-error"
+						>
+							Clear all
+						</button>
+					</div>
+				</div>
+
+				<!-- Empty State -->
+				<div
+					id="rtg-shortlist-empty"
+					class="mt-4 rounded-sm border border-hairline bg-canvas px-4 py-8 text-center text-[13px] text-mute"
+				>
+					Click <strong class="font-medium text-ink">Save to Shortlist</strong> on any topic you like to compare ideas and copy them together.
+				</div>
+
+				<!-- Shortlisted Items List -->
+				<ul
+					id="rtg-shortlist-items"
+					aria-label="Shortlisted topics"
+					class="mt-4 hidden max-h-[340px] space-y-2.5 overflow-y-auto pr-1"
+				></ul>
+			</div>
+
+			<!-- Shortlist Footer Actions -->
+			<div class="flex items-center justify-between border-t border-hairline px-5 py-3.5 text-[12px] text-mute">
+				<span>Compare &amp; export your favorites</span>
+				<button
+					type="button"
+					id="rtg-btn-copy-all"
+					disabled
+					class="cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft disabled:cursor-not-allowed disabled:opacity-50"
+				>
+					Copy all saved
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Related Tools Note (Protected Against Draft Links) -->
+	<aside
+		aria-label="Related writing and speaking tools"
+		class="mt-5 flex flex-col items-start justify-between gap-3 pt-2 text-[14px] text-body sm:flex-row sm:items-center"
+	>
+		<p class="leading-[22px]">
+			Ready to start drafting or timing your speech? Try our{' '}
+			{
+				wordsToPagesTool?.status === 'live' ? (
+					<a
+						href={wordsToPagesTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{wordsToPagesTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{wordsToPagesTool?.shortName ?? 'Words to Pages'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			,{' '}
+			{
+				typingSpeedTool?.status === 'live' ? (
+					<a
+						href={typingSpeedTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{typingSpeedTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{typingSpeedTool?.shortName ?? 'Typing Speed Test'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			, or{' '}
+			{
+				speechTimeTool?.status === 'live' ? (
+					<a
+						href={speechTimeTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{speechTimeTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{speechTimeTool?.shortName ?? 'Speech Time Calculator'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}.
+		</p>
+	</aside>
+</section>
+
+<script>
+	interface TopicItem {
+		title: string;
+		angle: string;
+	}
+
+	interface ShortlistedEntry {
+		mode: string;
+		title: string;
+	}
+
+	function initRandomTopicGenerator() {
+		const SESSION_KEY = 'wordora_shortlisted_topics_v1';
+
+		const MODE_META: Record<string, { hint: string; scope: string }> = {
+			'Essay & Academic': {
+				hint: 'Analytical & persuasive prompt',
+				scope: 'Recommended length: 800 – 1,500 words (3 – 6 pages)',
+			},
+			'Public Speaking & Debate': {
+				hint: 'Keynote, impromptu & parliamentary motion',
+				scope: 'Recommended speech time: 3 – 7 minutes (390 – 910 words at 130 WPM)',
+			},
+			'Creative Writing': {
+				hint: 'Narrative fiction & literary scene starter',
+				scope: 'Recommended length: 1,000 – 2,500 words (short story or chapter)',
+			},
+			'Blog & Content': {
+				hint: 'Editorial article & newsletter angle',
+				scope: 'Recommended length: 900 – 1,400 words (4 – 6 min silent read)',
+			},
+		};
+
+		const TOPICS_BY_MODE: Record<string, TopicItem[]> = {
+			'Essay & Academic': [
+				{
+					title: 'Should universities evaluate students primarily through long-form research projects rather than timed examinations?',
+					angle: 'Compare how timed exams measure recall under pressure versus how extended research essays test synthesis, revision, and original argument construction.',
+				},
+				{
+					title: 'How does the architecture of public libraries and pedestrian plazas shape civic trust in modern cities?',
+					angle: 'Examine the role of free, non-commercial "third places" in fostering community connection across socioeconomic backgrounds.',
+				},
+				{
+					title: 'To what extent should historical preservation laws restrict the adaptive reuse of aging urban infrastructure?',
+					angle: 'Weigh cultural heritage conservation against housing affordability, environmental retrofitting, and evolving neighborhood needs.',
+				},
+				{
+					title: 'Does widespread reliance on algorithmic recommendations narrow or expand individual cultural curiosity?',
+					angle: 'Analyze whether personalized discovery feeds create echo chambers of taste or lower barriers to discovering niche art, music, and literature.',
+				},
+				{
+					title: 'Should scientific journals mandate open-access publishing for all publicly funded research immediately upon peer review?',
+					angle: 'Consider the economics of academic publishing alongside the public right to access taxpayer-funded discoveries.',
+				},
+				{
+					title: 'How has the shift from physical notebooks to searchable digital archives changed the way historians and biographers work?',
+					angle: 'Explore what is gained in speed and cross-referencing versus what is lost when handwritten marginalia and drafts disappear.',
+				},
+				{
+					title: 'Is universal financial literacy education in secondary schools sufficient to improve long-term household economic resilience?',
+					angle: 'Evaluate where individual budgeting knowledge succeeds and where broader structural economic factors play a decisive role.',
+				},
+				{
+					title: 'Should municipal governments prioritize congestion pricing or expanded micro-transit networks to reduce urban commuter emissions?',
+					angle: 'Compare behavioral disincentives with infrastructure accessibility for suburban and shift-based workers.',
+				},
+			],
+			'Public Speaking & Debate': [
+				{
+					title: 'This house believes that a four-day workweek should become the statutory baseline for knowledge and service industries.',
+					angle: 'Debate the balance between measurable productivity gains, employee wellbeing, and operational challenges for small businesses.',
+				},
+				{
+					title: 'Why the ability to change your mind in public is the most underrated leadership skill of the decade.',
+					angle: 'Open with a memorable moment where reversing course saved a project, and contrast intellectual humility with stubborn certainty.',
+				},
+				{
+					title: 'Should voting in national and municipal elections be a mandatory civic duty with a "none of the above" ballot option?',
+					angle: 'Weigh universal democratic turnout and civic engagement against individual liberty and the right to abstain.',
+				},
+				{
+					title: 'The hidden cost of constant availability: why organizations thrive when they protect uninterrupted focus hours.',
+					angle: 'Use relatable workplace stories to show how rapid response expectations erode deep strategic thinking.',
+				},
+				{
+					title: 'Should major international sporting events be hosted at a single permanent venue rather than rotating across cities?',
+					angle: 'Contrast the global spirit of rotating host nations with the financial and environmental footprint of building single-use stadiums.',
+				},
+				{
+					title: 'Why learning a second language in adulthood remains valuable even in an era of instant translation tools.',
+					angle: 'Focus on empathy, cultural nuance, and cognitive flexibility that direct word-for-word translation cannot replicate.',
+				},
+				{
+					title: 'Should secondary schools replace traditional summer breaks with shorter, evenly spaced seasonal intervals throughout the year?',
+					angle: 'Address knowledge retention, teacher burnout, and family scheduling traditions on both sides of the motion.',
+				},
+				{
+					title: 'What everyday craftsmanship—from repairing watches to baking sourdough—teaches us about patience in a fast-moving world.',
+					angle: 'Build a warm, reflective keynote around tactile problem-solving and the satisfaction of slow mastery.',
+				},
+			],
+			'Creative Writing': [
+				{
+					title: 'An archivist cataloging a shuttered coastal train station discovers a locker containing forty years of unsent postcards addressed to the same house.',
+					angle: 'Begin with the physical details of the brass key and faded ink, then reveal why the sender never dropped them in a mailbox.',
+				},
+				{
+					title: 'Every autumn, a small mountain town holds a midnight market where residents trade memories they no longer wish to carry.',
+					angle: 'Follow a newcomer who accidentally purchases a memory that belongs to someone sitting across the town square.',
+				},
+				{
+					title: 'Two estranged siblings inherit an eccentric botanical greenhouse where one glass room is kept locked at exactly forty-two degrees.',
+					angle: 'Use the shifting climate inside the greenhouse to mirror the unspoken history between the two characters.',
+				},
+				{
+					title: 'A night-shift radio host in a snowbound northern town receives a call from a listener claiming to hear the broadcast twenty-four hours in the future.',
+					angle: 'Build quiet suspense inside the cramped broadcast booth as the caller describes small, verifiable events before they happen.',
+				},
+				{
+					title: 'A retired cartographer is hired to map an island that appears on maritime radar only during low tide in November.',
+					angle: 'Focus on sensory world-building—salt air, wet slate, and instruments that refuse to agree on the island’s perimeter.',
+				},
+				{
+					title: 'On the final voyage of an overnight sleeper train, two strangers realize they have been reading annotated copies of the same secondhand novel.',
+					angle: 'Let the margin notes inside the book drive the dialogue as the train crosses the border before dawn.',
+				},
+				{
+					title: 'A watchmaker in a quiet port city notices that every mechanical clock in the neighborhood has begun losing exactly three minutes each afternoon.',
+					angle: 'Explore how the town’s routines subtly unravel as one person investigates the source of the drift.',
+				},
+				{
+					title: 'Years after burying a childhood time capsule in a neighborhood park, four friends return to find an unfamiliar fifth object inside the tin box.',
+					angle: 'Trace how each friend remembers the afternoon differently—and who else was watching that day.',
+				},
+			],
+			'Blog & Content': [
+				{
+					title: 'How to design a personal reading and note-taking system that actually survives a busy workweek.',
+					angle: 'Share a practical, low-friction workflow for capturing highlights and turning them into original writing without overcomplicating your tools.',
+				},
+				{
+					title: 'Why shorter paragraphs and concrete verbs immediately make technical explanations easier to trust.',
+					angle: 'Show before-and-after examples of dense industry jargon rewritten into crisp, reader-friendly prose.',
+				},
+				{
+					title: 'The 30-minute weekly review: a calm checklist for resetting priorities before Monday morning begins.',
+					angle: 'Break the process into three simple steps: clearing open loops, reviewing calendar commitments, and picking one flagship goal.',
+				},
+				{
+					title: 'What classic print magazines can teach modern web designers about whitespace, hierarchy, and reader pacing.',
+					angle: 'Translate timeless editorial layout principles—like generous margins and clear subheadings—into practical web design habits.',
+				},
+				{
+					title: 'How to prepare for a high-stakes presentation when you only have ten minutes on the clock.',
+					angle: 'Walk readers through structuring a tight opening hook, three supporting pillars, and a memorable closing takeaway.',
+				},
+				{
+					title: 'Why writing a one-page project brief before building anything saves weeks of revision later.',
+					angle: 'Provide a clear template covering problem statement, target audience, scope boundaries, and definition of done.',
+				},
+				{
+					title: 'The case for slow newsletters: why publishing once a week with depth beats daily surface-level updates.',
+					angle: 'Discuss reader fatigue, long-term archive value, and how thoughtful research builds loyal subscribers.',
+				},
+				{
+					title: 'How to edit your own first draft in three passes: structure first, rhythm second, and line polish last.',
+					angle: 'Give writers a repeatable checklist so they stop getting stuck fixing commas in paragraphs they might delete.',
+				},
+			],
+		};
+
+		// DOM Elements
+		const modeButtons = Array.from(
+			document.querySelectorAll<HTMLButtonElement>('[data-rtg-mode]')
+		);
+		const activeModePill = document.getElementById('rtg-active-mode-pill');
+		const formatHint = document.getElementById('rtg-Format-hint');
+		const counterLabel = document.getElementById('rtg-counter-label');
+		const topicTitle = document.getElementById('rtg-topic-title');
+		const topicAngle = document.getElementById('rtg-topic-angle');
+		const targetScope = document.getElementById('rtg-target-scope');
+		const statusFeedback = document.getElementById('rtg-status-feedback');
+
+		const btnGenerate = document.getElementById('rtg-btn-generate');
+		const btnCopy = document.getElementById('rtg-btn-copy');
+		const copyLabel = document.getElementById('rtg-copy-label');
+		const btnShortlist = document.getElementById('rtg-btn-shortlist');
+		const shortlistBtnLabel = document.getElementById('rtg-shortlist-btn-label');
+
+		const shortlistCount = document.getElementById('rtg-shortlist-count');
+		const btnClearShortlist = document.getElementById('rtg-btn-clear-shortlist');
+		const shortlistEmpty = document.getElementById('rtg-shortlist-empty');
+		const shortlistItemsList = document.getElementById('rtg-shortlist-items');
+		const btnCopyAll = document.getElementById('rtg-btn-copy-all') as HTMLButtonElement | null;
+
+		// State
+		let currentMode = 'Essay & Academic';
+		let currentIndexByMode: Record<string, number> = {
+			'Essay & Academic': 0,
+			'Public Speaking & Debate': 0,
+			'Creative Writing': 0,
+			'Blog & Content': 0,
+		};
+		let shortlisted: ShortlistedEntry[] = [];
+
+		function loadShortlistFromSession() {
+			try {
+				const raw = sessionStorage.getItem(SESSION_KEY);
+				if (raw) {
+					const parsed = JSON.parse(raw);
+					if (Array.isArray(parsed)) {
+						shortlisted = parsed;
+					}
+				}
+			} catch {}
+		}
+
+		function saveShortlistToSession() {
+			try {
+				sessionStorage.setItem(SESSION_KEY, JSON.stringify(shortlisted));
+			} catch {}
+		}
+
+		function getCurrentTopic(): TopicItem {
+			const list = TOPICS_BY_MODE[currentMode] || TOPICS_BY_MODE['Essay & Academic'];
+			const idx = currentIndexByMode[currentMode] || 0;
+			return list[idx % list.length];
+		}
+
+		function isCurrentShortlisted(): boolean {
+			const topic = getCurrentTopic();
+			return shortlisted.some((item) => item.title === topic.title);
+		}
+
+		function syncShortlistButtonState() {
+			if (!shortlistBtnLabel) return;
+			if (isCurrentShortlisted()) {
+				shortlistBtnLabel.textContent = 'Saved in Shortlist';
+			} else {
+				shortlistBtnLabel.textContent = 'Save to Shortlist';
+			}
+		}
+
+		function renderCurrentTopic() {
+			const list = TOPICS_BY_MODE[currentMode] || TOPICS_BY_MODE['Essay & Academic'];
+			const idx = (currentIndexByMode[currentMode] || 0) % list.length;
+			const topic = list[idx];
+			const meta = MODE_META[currentMode] || MODE_META['Essay & Academic'];
+
+			if (activeModePill) activeModePill.textContent = currentMode;
+			if (formatHint) formatHint.textContent = meta.hint;
+			if (counterLabel) counterLabel.textContent = `Prompt ${idx + 1} of ${list.length}`;
+			if (topicTitle) topicTitle.textContent = topic.title;
+			if (topicAngle) topicAngle.textContent = topic.angle;
+			if (targetScope) targetScope.textContent = meta.scope;
+
+			syncShortlistButtonState();
+		}
+
+		function renderShortlist() {
+			const count = shortlisted.length;
+			if (shortlistCount) {
+				shortlistCount.textContent = `${count} saved`;
+			}
+			if (btnCopyAll) {
+				btnCopyAll.disabled = count === 0;
+			}
+
+			if (count === 0) {
+				shortlistEmpty?.classList.remove('hidden');
+				shortlistItemsList?.classList.add('hidden');
+				btnClearShortlist?.classList.add('hidden');
+				if (shortlistItemsList) shortlistItemsList.innerHTML = '';
+				syncShortlistButtonState();
+				return;
+			}
+
+			shortlistEmpty?.classList.add('hidden');
+			shortlistItemsList?.classList.remove('hidden');
+			btnClearShortlist?.classList.remove('hidden');
+
+			if (shortlistItemsList) {
+				shortlistItemsList.innerHTML = '';
+				shortlisted.forEach((entry, index) => {
+					const li = document.createElement('li');
+					li.className = 'rounded-sm border border-hairline bg-canvas p-3 text-[13px]';
+
+					const topRow = document.createElement('div');
+					topRow.className = 'mb-1 flex items-center justify-between gap-2';
+
+					const modeBadge = document.createElement('span');
+					modeBadge.className = 'text-[11px] font-medium text-mute';
+					modeBadge.textContent = entry.mode;
+
+					const actionsDiv = document.createElement('div');
+					actionsDiv.className = 'flex items-center gap-2';
+
+					const copyItemBtn = document.createElement('button');
+					copyItemBtn.type = 'button';
+					copyItemBtn.className = 'cursor-pointer text-[11px] font-medium text-body hover:text-ink';
+					copyItemBtn.textContent = 'Copy';
+					copyItemBtn.addEventListener('click', async () => {
+						try {
+							await navigator.clipboard.writeText(entry.title);
+							copyItemBtn.textContent = 'Copied';
+							setTimeout(() => {
+								copyItemBtn.textContent = 'Copy';
+							}, 1200);
+						} catch {}
+					});
+
+					const removeBtn = document.createElement('button');
+					removeBtn.type = 'button';
+					removeBtn.className = 'cursor-pointer text-[11px] font-medium text-mute hover:text-vercel-error';
+					removeBtn.textContent = 'Remove';
+					removeBtn.addEventListener('click', () => {
+						shortlisted.splice(index, 1);
+						saveShortlistToSession();
+						renderShortlist();
+					});
+
+					actionsDiv.appendChild(copyItemBtn);
+					actionsDiv.appendChild(removeBtn);
+					topRow.appendChild(modeBadge);
+					topRow.appendChild(actionsDiv);
+
+					const titleP = document.createElement('p');
+					titleP.className = 'font-medium text-ink leading-[20px]';
+					titleP.textContent = entry.title;
+
+					li.appendChild(topRow);
+					li.appendChild(titleP);
+					shortlistItemsList.appendChild(li);
+				});
+			}
+
+			syncShortlistButtonState();
+		}
+
+		// Mode tab switching
+		for (const btn of modeButtons) {
+			btn.addEventListener('click', () => {
+				const selected = btn.getAttribute('data-rtg-mode');
+				if (!selected) return;
+				currentMode = selected;
+
+				for (const b of modeButtons) {
+					const isActive = b === btn;
+					b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+					if (isActive) {
+						b.className =
+							'cursor-pointer rounded-sm bg-primary px-3.5 py-2 text-left text-[13px] font-medium text-on-primary transition-colors sm:text-center';
+					} else {
+						b.className =
+							'cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-2 text-left text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft sm:text-center';
+					}
+				}
+
+				renderCurrentTopic();
+			});
+		}
+
+		// Generate New Topic button
+		btnGenerate?.addEventListener('click', () => {
+			const list = TOPICS_BY_MODE[currentMode] || TOPICS_BY_MODE['Essay & Academic'];
+			const currentIdx = currentIndexByMode[currentMode] || 0;
+			// Pick next or random different index for natural variety
+			let nextIdx = (currentIdx + 1) % list.length;
+			if (list.length > 2 && Math.random() > 0.45) {
+				const offset = 1 + Math.floor(Math.random() * (list.length - 1));
+				nextIdx = (currentIdx + offset) % list.length;
+			}
+			currentIndexByMode[currentMode] = nextIdx;
+			renderCurrentTopic();
+			if (statusFeedback) {
+				statusFeedback.textContent = `Generated new ${currentMode} prompt`;
+			}
+		});
+
+		// Copy Topic button
+		btnCopy?.addEventListener('click', async () => {
+			const topic = getCurrentTopic();
+			try {
+				await navigator.clipboard.writeText(topic.title);
+				if (copyLabel) copyLabel.textContent = 'Copied';
+				if (statusFeedback) statusFeedback.textContent = 'Copied topic to clipboard';
+				setTimeout(() => {
+					if (copyLabel) copyLabel.textContent = 'Copy Topic';
+				}, 1400);
+			} catch {}
+		});
+
+		// Save to Shortlist button
+		btnShortlist?.addEventListener('click', () => {
+			const topic = getCurrentTopic();
+			const existingIndex = shortlisted.findIndex((item) => item.title === topic.title);
+			if (existingIndex === -1) {
+				shortlisted.unshift({
+					mode: currentMode,
+					title: topic.title,
+				});
+				saveShortlistToSession();
+				renderShortlist();
+				if (statusFeedback) statusFeedback.textContent = 'Added topic to your shortlist';
+			} else {
+				if (statusFeedback) statusFeedback.textContent = 'Topic is already in your shortlist';
+			}
+		});
+
+		// Clear Shortlist button
+		btnClearShortlist?.addEventListener('click', () => {
+			shortlisted = [];
+			saveShortlistToSession();
+			renderShortlist();
+			if (statusFeedback) statusFeedback.textContent = 'Cleared shortlisted topics';
+		});
+
+		// Copy All Saved button
+		btnCopyAll?.addEventListener('click', async () => {
+			if (shortlisted.length === 0) return;
+			const formatted = shortlisted
+				.map((item, idx) => `${idx + 1}. [${item.mode}] ${item.title}`)
+				.join('\n');
+			try {
+				await navigator.clipboard.writeText(formatted);
+				const prev = btnCopyAll.textContent;
+				btnCopyAll.textContent = 'Copied all';
+				if (statusFeedback) statusFeedback.textContent = 'Copied all shortlisted topics';
+				setTimeout(() => {
+					btnCopyAll.textContent = prev;
+				}, 1400);
+			} catch {}
+		});
+
+		loadShortlistFromSession();
+		renderCurrentTopic();
+		renderShortlist();
+	}
+
+	initRandomTopicGenerator();
+</script>
+

@@ -1,0 +1,1181 @@
+---
+import { getToolById } from '../config/site';
+
+const speechTool = getToolById('speech-time-calculator');
+const speedTestTool = getToolById('reading-speed-test');
+---
+
+<section id="calculator" aria-label="Reading Time Calculator and Counter Workspace" class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6">
+	<!-- Live Summary Bar (Clean, Non-Boxed-In-Box Layout) -->
+	<div class="whisper-shadow mb-6 grid grid-cols-1 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+		<!-- Stat 1: Silent reading time -->
+		<article class="flex flex-col justify-between p-5">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Silent reading time
+				</span>
+				<span
+					id="badge-silent-wpm"
+					class="text-[12px] text-mute tabular-nums"
+				>
+					238 WPM
+				</span>
+			</div>
+			<div class="my-2.5">
+				<output
+					id="metric-silent-time"
+					aria-live="polite"
+					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0 min 0 sec
+				</output>
+			</div>
+			<p id="metric-silent-sub" class="text-[12px] text-mute">
+				Average adult reading pace
+			</p>
+		</article>
+
+		<!-- Stat 2: Read aloud time -->
+		<article class="flex flex-col justify-between p-5 sm:border-l sm:border-hairline lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Read aloud time
+				</span>
+				<span
+					id="badge-speaking-wpm"
+					class="text-[12px] text-mute tabular-nums"
+				>
+					183 WPM
+				</span>
+			</div>
+			<div class="my-2.5">
+				<output
+					id="metric-speaking-time"
+					aria-live="polite"
+					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0 min 0 sec
+				</output>
+			</div>
+			<p id="metric-speaking-sub" class="text-[12px] text-mute">
+				Natural speaking pace
+			</p>
+		</article>
+
+		<!-- Stat 3: Word & character count -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-hairline lg:border-t-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Word &amp; character count
+				</span>
+				<span
+					id="badge-active-mode"
+					class="text-[12px] text-mute"
+				>
+					Text input
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="metric-word-count"
+					aria-live="polite"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[14px] text-body">words</span>
+			</div>
+			<div class="flex items-center gap-4 text-[12px] text-mute">
+				<span><strong id="metric-char-count" class="font-medium text-ink tabular-nums">0</strong> characters</span>
+				<span><strong id="metric-sentence-count" class="font-medium text-ink tabular-nums">0</strong> sentences</span>
+			</div>
+		</article>
+
+		<!-- Stat 4: Reading level -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-hairline lg:border-t-0 lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Reading level
+				</span>
+				<span
+					id="difficulty-dot"
+					class="inline-block h-2 w-2 rounded-full bg-mute"
+					aria-hidden="true"
+				></span>
+			</div>
+			<div class="my-2.5 flex items-center">
+				<output
+					id="metric-difficulty-badge"
+					aria-live="polite"
+					class="text-[24px] leading-[32px] font-semibold tracking-[-0.5px] text-ink"
+				>
+					—
+				</output>
+			</div>
+			<p id="metric-difficulty-detail" class="text-[12px] text-mute tabular-nums">
+				Paste text to check reading level
+			</p>
+		</article>
+	</div>
+
+	<!-- Main Dual-Column Workspace -->
+	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+		<!-- Left Column: Multi-Input System (3 Interactive Tabs) -->
+		<div class="whisper-shadow flex flex-col rounded-md border border-hairline bg-canvas-elevated lg:col-span-7">
+			<!-- Tab Bar Header -->
+			<div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-5 py-3">
+				<div
+					role="tablist"
+					aria-label="Input mode"
+					class="inline-flex items-center gap-1"
+				>
+					<button
+						type="button"
+						role="tab"
+						id="tab-btn-paste"
+						aria-selected="true"
+						aria-controls="tab-panel-paste"
+						data-tab="paste"
+						class="calc-tab-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all"
+					>
+						Paste text
+					</button>
+					<button
+						type="button"
+						role="tab"
+						id="tab-btn-words"
+						aria-selected="false"
+						aria-controls="tab-panel-words"
+						data-tab="words"
+						class="calc-tab-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
+					>
+						Word count
+					</button>
+					<button
+						type="button"
+						role="tab"
+						id="tab-btn-pages"
+						aria-selected="false"
+						aria-controls="tab-panel-pages"
+						data-tab="pages"
+						class="calc-tab-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
+					>
+						Pages
+					</button>
+				</div>
+
+				<!-- Action Controls for Tab 1 -->
+				<div id="paste-toolbar-actions" class="flex items-center gap-2">
+					<button
+						type="button"
+						id="btn-load-sample"
+						class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-body transition-colors hover:bg-hairline-soft hover:text-ink"
+					>
+						Sample text
+					</button>
+					<label
+						for="file-upload-input"
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+					>
+						<svg class="h-3.5 w-3.5 text-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+							<polyline points="17 8 12 3 7 8" />
+							<line x1="12" y1="3" x2="12" y2="15" />
+						</svg>
+						Upload .txt
+						<input id="file-upload-input" type="file" accept=".txt,text/plain,.md" class="sr-only" />
+					</label>
+					<button
+						type="button"
+						id="btn-clear-text"
+						class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-vercel-error"
+					>
+						Clear
+					</button>
+				</div>
+			</div>
+
+			<!-- Tab 1 Panel: Paste Text -->
+			<div
+				id="tab-panel-paste"
+				role="tabpanel"
+				aria-labelledby="tab-btn-paste"
+				class="relative flex flex-1 flex-col p-5"
+			>
+				<!-- Drag and drop overlay -->
+				<div
+					id="dropzone-overlay"
+					class="pointer-events-none absolute inset-3 z-20 hidden flex-col items-center justify-center rounded-md border-2 border-dashed border-vercel-blue bg-canvas-elevated/95 backdrop-blur-xs transition-opacity"
+				>
+					<svg class="mb-2 h-8 w-8 text-vercel-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+						<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+						<polyline points="14 2 14 8 20 8" />
+						<line x1="12" y1="18" x2="12" y2="12" />
+						<line x1="9" y1="15" x2="15" y2="15" />
+					</svg>
+					<p class="text-[14px] font-medium text-ink">Drop your .txt file here</p>
+					<p class="text-[12px] text-mute">Runs privately in your browser</p>
+				</div>
+
+				<label for="reading-textarea" class="sr-only">Paste or type your text to calculate reading time</label>
+				<textarea
+					id="reading-textarea"
+					rows="12"
+					placeholder="Paste or type your text here, or drag and drop a .txt file..."
+					class="w-full flex-1 resize-y bg-transparent font-sans text-[15px] leading-[25px] text-ink placeholder:text-faint focus:outline-none"
+				></textarea>
+
+				<!-- Bottom Status Bar inside Paste Panel -->
+				<div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-hairline pt-3 text-[13px] text-mute">
+					<div class="flex flex-wrap items-center gap-4 tabular-nums">
+						<span>Words: <strong id="inline-word-counter" class="font-medium text-ink">0</strong></span>
+						<span>Characters: <strong id="inline-char-counter" class="font-medium text-ink">0</strong></span>
+						<span>Without spaces: <strong id="inline-char-nospace-counter" class="font-medium text-ink">0</strong></span>
+						<span>Paragraphs: <strong id="inline-para-counter" class="font-medium text-ink">0</strong></span>
+					</div>
+					<span id="file-status-msg" class="text-[12px] text-mute">
+						Runs privately in your browser
+					</span>
+				</div>
+			</div>
+
+			<!-- Tab 2 Panel: Word Count Direct Input -->
+			<div
+				id="tab-panel-words"
+				role="tabpanel"
+				aria-labelledby="tab-btn-words"
+				class="hidden flex-1 flex-col justify-between p-6"
+			>
+				<div>
+					<label for="direct-word-input" class="block text-[15px] font-medium text-ink">
+						Enter word count
+					</label>
+					<p class="mt-1 mb-4 text-[14px] text-body">
+						Type the word count of your article, book chapter, or script to see how long it takes to read.
+					</p>
+
+					<div class="relative flex items-center">
+						<input
+							id="direct-word-input"
+							type="number"
+							min="0"
+							max="10000000"
+							step="50"
+							value="1500"
+							class="w-full rounded-sm border border-hairline bg-canvas px-4 py-3 text-[22px] font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+						/>
+						<span class="pointer-events-none absolute right-4 text-[14px] text-mute">
+							words
+						</span>
+					</div>
+
+					<!-- Quick Word Count Presets -->
+					<div class="mt-5">
+						<span class="mb-2.5 block text-[13px] font-medium text-mute">
+							Common document lengths
+						</span>
+						<div class="flex flex-wrap gap-2">
+							<button
+								type="button"
+								data-word-preset="300"
+								class="word-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								Short post (300)
+							</button>
+							<button
+								type="button"
+								data-word-preset="800"
+								class="word-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								Article (800)
+							</button>
+							<button
+								type="button"
+								data-word-preset="1500"
+								class="word-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-3 py-1.5 text-[13px] font-medium text-on-primary transition-colors"
+							>
+								Long-form post (1,500)
+							</button>
+							<button
+								type="button"
+								data-word-preset="2500"
+								class="word-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								In-depth guide (2,500)
+							</button>
+							<button
+								type="button"
+								data-word-preset="5000"
+								class="word-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								Long report (5,000)
+							</button>
+							<button
+								type="button"
+								data-word-preset="50000"
+								class="word-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								Novel (50,000)
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="mt-6 space-y-2 border-t border-hairline pt-4 text-[14px]">
+					<div class="flex items-center justify-between">
+						<span class="text-body">Single-spaced pages (500 words/page)</span>
+						<strong id="words-to-single-pages" class="font-medium text-ink tabular-nums">3.0 pages</strong>
+					</div>
+					<div class="flex items-center justify-between">
+						<span class="text-body">Double-spaced pages (250 words/page)</span>
+						<strong id="words-to-double-pages" class="font-medium text-ink tabular-nums">6.0 pages</strong>
+					</div>
+				</div>
+			</div>
+
+			<!-- Tab 3 Panel: Pages Count Input -->
+			<div
+				id="tab-panel-pages"
+				role="tabpanel"
+				aria-labelledby="tab-btn-pages"
+				class="hidden flex-1 flex-col justify-between p-6"
+			>
+				<div>
+					<label for="pages-count-input" class="block text-[15px] font-medium text-ink">
+						Convert pages to reading time
+					</label>
+					<p class="mt-1 mb-4 text-[14px] text-body">
+						Estimate total words and reading time based on standard 12pt font and 1-inch margins.
+					</p>
+
+					<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+						<div>
+							<label for="pages-count-input" class="mb-1.5 block text-[13px] font-medium text-mute">
+								Number of pages
+							</label>
+							<div class="relative flex items-center">
+								<input
+									id="pages-count-input"
+									type="number"
+									min="0.5"
+									max="10000"
+									step="0.5"
+									value="5"
+									class="w-full rounded-sm border border-hairline bg-canvas px-4 py-3 text-[20px] font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+								/>
+								<span class="pointer-events-none absolute right-3.5 text-[13px] text-mute">
+									pages
+								</span>
+							</div>
+						</div>
+
+						<div>
+							<span class="mb-1.5 block text-[13px] font-medium text-mute">
+								Line spacing
+							</span>
+							<div class="grid grid-cols-2 gap-2" role="group" aria-label="Page Line Spacing">
+								<button
+									type="button"
+									id="spacing-btn-single"
+									data-spacing="single"
+									data-wpp="500"
+									class="spacing-option-btn flex cursor-pointer flex-col items-start rounded-sm border border-primary bg-primary p-3 text-left text-on-primary transition-all"
+								>
+									<span class="text-[13px] font-semibold">Single spaced</span>
+									<span class="text-[12px] opacity-80 tabular-nums">500 words/page</span>
+								</button>
+								<button
+									type="button"
+									id="spacing-btn-double"
+									data-spacing="double"
+									data-wpp="250"
+									class="spacing-option-btn flex cursor-pointer flex-col items-start rounded-sm border border-hairline bg-canvas p-3 text-left text-ink transition-all hover:border-ink"
+								>
+									<span class="text-[13px] font-semibold">Double spaced</span>
+									<span class="text-[12px] text-mute tabular-nums">250 words/page</span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- Quick Page Presets -->
+					<div class="mt-5">
+						<span class="mb-2 block text-[13px] font-medium text-mute">
+							Quick page counts
+						</span>
+						<div class="flex flex-wrap gap-2">
+							{[1, 2, 5, 10, 20, 50, 100, 300].map((pg) => (
+								<button
+									type="button"
+									data-page-preset={pg}
+									class={`page-preset-btn cursor-pointer rounded-sm border px-3 py-1.5 text-[13px] font-medium tabular-nums transition-colors ${
+										pg === 5
+											? 'border-primary bg-primary text-on-primary'
+											: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+									}`}
+								>
+									{pg} {pg === 1 ? 'page' : 'pages'}
+								</button>
+							))}
+						</div>
+					</div>
+				</div>
+
+				<div class="mt-6 border-t border-hairline pt-4">
+					<div class="flex items-center justify-between text-[14px]">
+						<span class="text-body">Estimated word count</span>
+						<strong id="pages-derived-words" class="text-[15px] font-semibold text-ink tabular-nums">
+							2,500 words
+						</strong>
+					</div>
+					<p class="mt-1 text-[13px] text-mute">
+						Based on <span id="pages-wpp-label" class="tabular-nums">500</span> words per page.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Right Column: Reading Speed Controls (Unified, Calm Panel) -->
+		<div class="whisper-shadow flex flex-col justify-between divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated lg:col-span-5">
+			<!-- Section A: Silent reading speed -->
+			<div class="p-5">
+				<div class="flex items-baseline justify-between gap-2">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						Silent reading speed
+					</h2>
+					<div class="flex items-baseline gap-1 text-ink tabular-nums">
+						<span id="silent-wpm-display" class="text-[17px] font-semibold">238</span>
+						<span class="text-[12px] text-mute">WPM</span>
+					</div>
+				</div>
+
+				<div class="my-4">
+					<label for="silent-wpm-slider" class="sr-only">Silent reading speed in words per minute (100 to 400)</label>
+					<input
+						id="silent-wpm-slider"
+						type="range"
+						min="100"
+						max="400"
+						step="1"
+						value="238"
+						class="geist-slider"
+					/>
+					<div class="mt-1.5 flex justify-between text-[12px] text-mute">
+						<span>Slow</span>
+						<span>Average</span>
+						<span>Fast</span>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+					<button
+						type="button"
+						data-silent-preset="130"
+						class="silent-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-center transition-all hover:border-ink"
+					>
+						<span class="block text-[12px] font-medium text-ink">Slow</span>
+						<span class="text-[11px] text-mute tabular-nums">130 WPM</span>
+					</button>
+					<button
+						type="button"
+						data-silent-preset="238"
+						class="silent-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-2.5 py-1.5 text-center text-on-primary transition-all"
+					>
+						<span class="block text-[12px] font-medium">Average</span>
+						<span class="text-[11px] opacity-80 tabular-nums">238 WPM</span>
+					</button>
+					<button
+						type="button"
+						data-silent-preset="300"
+						class="silent-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-center transition-all hover:border-ink"
+					>
+						<span class="block text-[12px] font-medium text-ink">Fast</span>
+						<span class="text-[11px] text-mute tabular-nums">300 WPM</span>
+					</button>
+					<button
+						type="button"
+						data-silent-preset="400"
+						class="silent-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-center transition-all hover:border-ink"
+					>
+						<span class="block text-[12px] font-medium text-ink">Skimming</span>
+						<span class="text-[11px] text-mute tabular-nums">400 WPM</span>
+					</button>
+				</div>
+			</div>
+
+			<!-- Section B: Read aloud speed -->
+			<div class="p-5">
+				<div class="flex items-baseline justify-between gap-2">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						Read aloud speed
+					</h2>
+					<div class="flex items-baseline gap-1 text-ink tabular-nums">
+						<span id="speaking-wpm-display" class="text-[17px] font-semibold">183</span>
+						<span class="text-[12px] text-mute">WPM</span>
+					</div>
+				</div>
+
+				<div class="my-4">
+					<label for="speaking-wpm-slider" class="sr-only">Read aloud speed in words per minute (100 to 300)</label>
+					<input
+						id="speaking-wpm-slider"
+						type="range"
+						min="100"
+						max="300"
+						step="1"
+						value="183"
+						class="geist-slider"
+					/>
+					<div class="mt-1.5 flex justify-between text-[12px] text-mute">
+						<span>Slow</span>
+						<span>Average</span>
+						<span>Fast</span>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-3 gap-2">
+					<button
+						type="button"
+						data-speaking-preset="100"
+						class="speaking-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-center transition-all hover:border-ink"
+					>
+						<span class="block text-[12px] font-medium text-ink">Slow</span>
+						<span class="text-[11px] text-mute tabular-nums">100 WPM</span>
+					</button>
+					<button
+						type="button"
+						data-speaking-preset="183"
+						class="speaking-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-2.5 py-1.5 text-center text-on-primary transition-all"
+					>
+						<span class="block text-[12px] font-medium">Average</span>
+						<span class="text-[11px] opacity-80 tabular-nums">183 WPM</span>
+					</button>
+					<button
+						type="button"
+						data-speaking-preset="300"
+						class="speaking-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-center transition-all hover:border-ink"
+					>
+						<span class="block text-[12px] font-medium text-ink">Fast</span>
+						<span class="text-[11px] text-mute tabular-nums">300 WPM</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Related Tools Note (Clean Inline Bar, Protected Against Draft Links) -->
+	<aside
+		aria-label="Related reading and speech tools"
+		class="mt-5 flex flex-col items-start justify-between gap-3 pt-2 text-[14px] text-body sm:flex-row sm:items-center"
+	>
+		<p class="leading-[22px]">
+			Timing a speech or presentation instead? Try our{' '}
+			{
+				speechTool?.status === 'live' ? (
+					<a
+						href={speechTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{speechTool.shortName}
+					</a>
+				) : (
+					<span
+						aria-disabled="true"
+						class="inline-flex items-center gap-1.5 font-medium text-ink"
+					>
+						<span>{speechTool?.shortName ?? 'Speech Time Calculator'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}{' '}
+			or check your personal reading speed with the{' '}
+			{
+				speedTestTool?.status === 'live' ? (
+					<a
+						href={speedTestTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{speedTestTool.shortName}
+					</a>
+				) : (
+					<span
+						aria-disabled="true"
+						class="inline-flex items-center gap-1.5 font-medium text-ink"
+					>
+						<span>{speedTestTool?.shortName ?? 'Reading Speed Test'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}.
+		</p>
+		<button
+			type="button"
+			data-quick-action="speech-mode"
+			class="shrink-0 cursor-pointer text-[13px] font-medium text-body underline decoration-hairline underline-offset-4 transition-colors hover:text-ink"
+		>
+			Reset read aloud to 183 WPM
+		</button>
+	</aside>
+</section>
+
+<script>
+	function initReadingCalculator() {
+		// State
+		let activeTab: 'paste' | 'words' | 'pages' = 'paste';
+		let silentWpm = 238;
+		let speakingWpm = 183;
+		let pageSpacingWpp = 500; // 500 for single, 250 for double
+
+		// DOM Elements — Tabs
+		const tabBtns = document.querySelectorAll<HTMLButtonElement>('.calc-tab-btn');
+		const panelPaste = document.getElementById('tab-panel-paste');
+		const panelWords = document.getElementById('tab-panel-words');
+		const panelPages = document.getElementById('tab-panel-pages');
+		const pasteToolbar = document.getElementById('paste-toolbar-actions');
+		const badgeActiveMode = document.getElementById('badge-active-mode');
+
+		// DOM Elements — Inputs
+		const textarea = document.getElementById('reading-textarea') as HTMLTextAreaElement | null;
+		const fileInput = document.getElementById('file-upload-input') as HTMLInputElement | null;
+		const dropzoneOverlay = document.getElementById('dropzone-overlay');
+		const fileStatusMsg = document.getElementById('file-status-msg');
+		const btnClearText = document.getElementById('btn-clear-text');
+		const btnLoadSample = document.getElementById('btn-load-sample');
+
+		const directWordInput = document.getElementById('direct-word-input') as HTMLInputElement | null;
+		const wordPresetBtns = document.querySelectorAll<HTMLButtonElement>('.word-preset-btn');
+		const wordsToSinglePages = document.getElementById('words-to-single-pages');
+		const wordsToDoublePages = document.getElementById('words-to-double-pages');
+
+		const pagesCountInput = document.getElementById('pages-count-input') as HTMLInputElement | null;
+		const spacingBtns = document.querySelectorAll<HTMLButtonElement>('.spacing-option-btn');
+		const pagePresetBtns = document.querySelectorAll<HTMLButtonElement>('.page-preset-btn');
+		const pagesDerivedWords = document.getElementById('pages-derived-words');
+		const pagesWppLabel = document.getElementById('pages-wpp-label');
+
+		// DOM Elements — Speed Controls
+		const silentSlider = document.getElementById('silent-wpm-slider') as HTMLInputElement | null;
+		const silentWpmDisplay = document.getElementById('silent-wpm-display');
+		const badgeSilentWpm = document.getElementById('badge-silent-wpm');
+		const silentPresetBtns = document.querySelectorAll<HTMLButtonElement>('.silent-preset-btn');
+
+		const speakingSlider = document.getElementById('speaking-wpm-slider') as HTMLInputElement | null;
+		const speakingWpmDisplay = document.getElementById('speaking-wpm-display');
+		const badgeSpeakingWpm = document.getElementById('badge-speaking-wpm');
+		const speakingPresetBtns = document.querySelectorAll<HTMLButtonElement>('.speaking-preset-btn');
+
+		// DOM Elements — Live Metric Outputs
+		const metricSilentTime = document.getElementById('metric-silent-time');
+		const metricSpeakingTime = document.getElementById('metric-speaking-time');
+		const metricWordCount = document.getElementById('metric-word-count');
+		const metricCharCount = document.getElementById('metric-char-count');
+		const metricSentenceCount = document.getElementById('metric-sentence-count');
+		const metricDifficultyBadge = document.getElementById('metric-difficulty-badge');
+		const metricDifficultyDetail = document.getElementById('metric-difficulty-detail');
+		const difficultyDot = document.getElementById('difficulty-dot');
+
+		// Inline counters in Tab 1
+		const inlineWordCounter = document.getElementById('inline-word-counter');
+		const inlineCharCounter = document.getElementById('inline-char-counter');
+		const inlineCharNoSpaceCounter = document.getElementById('inline-char-nospace-counter');
+		const inlineParaCounter = document.getElementById('inline-para-counter');
+
+		const defaultSampleText = `Good writing is a transaction of time. Every sentence asks the reader for a few seconds of attention, and every paragraph must earn the right to lead into the next. When authors, editors, and speakers measure reading time accurately, they respect that reader's attention.
+
+Research in cognitive psychology shows that the average adult reads silent non-fiction at approximately 238 words per minute (WPM). Technical documentation, legal agreements, and academic papers naturally call for a slower, more deliberate pace closer to 180 WPM, while light fiction often flows at 260 to 300 WPM.
+
+When reading aloud—whether delivering a talk, recording a podcast script, or narrating an audiobook—our natural pace shifts to an average of 183 words per minute, leaving room for pauses, breathing, and emphasis.`;
+
+		// Helper: Format total minutes float into "X min Y sec"
+		function formatDuration(words: number, wpm: number): string {
+			if (words <= 0 || wpm <= 0) return '0 min 0 sec';
+			const totalSeconds = Math.round((words / wpm) * 60);
+			const minutes = Math.floor(totalSeconds / 60);
+			const seconds = totalSeconds % 60;
+			return `${minutes.toLocaleString()} min ${seconds} sec`;
+		}
+
+		// Helper: Count syllables in a word accurately
+		function countSyllablesInWord(rawWord: string): number {
+			const word = rawWord.toLowerCase().replace(/[^a-z]/g, '');
+			if (!word) return 0;
+			if (word.length <= 3) return 1;
+			const cleaned = word
+				.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '')
+				.replace(/^y/, '');
+			const matches = cleaned.match(/[aeiouy]{1,2}/g);
+			return matches ? Math.max(1, matches.length) : 1;
+		}
+
+		// Helper: Analyze text for words, characters, sentences, paragraphs, and difficulty
+		function analyzeText(text: string) {
+			const trimmed = text.trim();
+			const charsTotal = text.length;
+			const charsNoSpaces = text.replace(/\s/g, '').length;
+
+			if (!trimmed) {
+				return {
+					words: 0,
+					charsTotal: 0,
+					charsNoSpaces: 0,
+					sentences: 0,
+					paragraphs: 0,
+					difficulty: '—' as const,
+					avgSyllables: 0,
+					avgWordLength: 0,
+				};
+			}
+
+			const wordTokens = trimmed.split(/\s+/).filter(Boolean);
+			const wordCount = wordTokens.length;
+
+			const sentenceMatches = trimmed.split(/[.!?]+/).filter((s) => s.trim().length > 0);
+			const sentenceCount = Math.max(1, sentenceMatches.length);
+
+			const paraMatches = trimmed.split(/\n\s*\n/).filter((p) => p.trim().length > 0);
+			const paraCount = Math.max(1, paraMatches.length);
+
+			// Sample up to first 2,500 words for zero-lag syllable & length calculation
+			const sampleLimit = Math.min(wordCount, 2500);
+			let totalSyllables = 0;
+			let totalAlphaChars = 0;
+
+			for (let i = 0; i < sampleLimit; i++) {
+				const w = wordTokens[i];
+				totalSyllables += countSyllablesInWord(w);
+				totalAlphaChars += w.replace(/[^a-zA-Z0-9]/g, '').length;
+			}
+
+			const avgSyllables = sampleLimit > 0 ? totalSyllables / sampleLimit : 0;
+			const avgWordLength = sampleLimit > 0 ? totalAlphaChars / sampleLimit : 0;
+
+			let difficulty: 'Easy' | 'Medium' | 'Hard' = 'Easy';
+			if (avgSyllables >= 1.72 || avgWordLength >= 5.6) {
+				difficulty = 'Hard';
+			} else if (avgSyllables >= 1.42 || avgWordLength >= 4.7) {
+				difficulty = 'Medium';
+			}
+
+			return {
+				words: wordCount,
+				charsTotal,
+				charsNoSpaces,
+				sentences: sentenceCount,
+				paragraphs: paraCount,
+				difficulty,
+				avgSyllables,
+				avgWordLength,
+			};
+		}
+
+		// Main update routine
+		function updateAllMetrics() {
+			let words = 0;
+			let chars = 0;
+			let sentences = 0;
+			let difficulty: 'Easy' | 'Medium' | 'Hard' | '—' = '—';
+			let difficultyDetail = '';
+
+			if (activeTab === 'paste') {
+				const rawText = textarea ? textarea.value : '';
+				const stats = analyzeText(rawText);
+				words = stats.words;
+				chars = stats.charsTotal;
+				sentences = stats.sentences;
+				difficulty = stats.difficulty;
+
+				if (words === 0) {
+					difficultyDetail = 'Paste text to check reading level';
+				} else {
+					difficultyDetail = `${stats.avgSyllables.toFixed(1)} syllables/word · ${stats.avgWordLength.toFixed(1)} letters/word`;
+				}
+
+				if (inlineWordCounter) inlineWordCounter.textContent = words.toLocaleString();
+				if (inlineCharCounter) inlineCharCounter.textContent = stats.charsTotal.toLocaleString();
+				if (inlineCharNoSpaceCounter) inlineCharNoSpaceCounter.textContent = stats.charsNoSpaces.toLocaleString();
+				if (inlineParaCounter) inlineParaCounter.textContent = stats.paragraphs.toLocaleString();
+			} else if (activeTab === 'words') {
+				const val = directWordInput ? parseInt(directWordInput.value, 10) : 0;
+				words = Number.isNaN(val) || val < 0 ? 0 : val;
+				chars = words * 6; // Standard 5 chars + 1 space average
+				sentences = Math.max(0, Math.round(words / 18));
+				difficulty = words === 0 ? '—' : 'Standard';
+				difficultyDetail =
+					words === 0 ? 'Enter a word count' : 'Estimated for general reading';
+
+				if (wordsToSinglePages) {
+					wordsToSinglePages.textContent = `${(words / 500).toFixed(1)} pages`;
+				}
+				if (wordsToDoublePages) {
+					wordsToDoublePages.textContent = `${(words / 250).toFixed(1)} pages`;
+				}
+			} else if (activeTab === 'pages') {
+				const pgVal = pagesCountInput ? parseFloat(pagesCountInput.value) : 0;
+				const validPages = Number.isNaN(pgVal) || pgVal < 0 ? 0 : pgVal;
+				words = Math.round(validPages * pageSpacingWpp);
+				chars = words * 6;
+				sentences = Math.max(0, Math.round(words / 18));
+				difficulty = words === 0 ? '—' : 'Standard';
+				difficultyDetail =
+					words === 0
+						? 'Enter a page count'
+						: `${pageSpacingWpp} words per page (${pageSpacingWpp === 500 ? 'single' : 'double'} spaced)`;
+
+				if (pagesDerivedWords) {
+					pagesDerivedWords.textContent = `${words.toLocaleString()} words`;
+				}
+				if (pagesWppLabel) {
+					pagesWppLabel.textContent = String(pageSpacingWpp);
+				}
+			}
+
+			// Update Top Live Metric Cards
+			if (metricSilentTime) {
+				metricSilentTime.textContent = formatDuration(words, silentWpm);
+			}
+			if (metricSpeakingTime) {
+				metricSpeakingTime.textContent = formatDuration(words, speakingWpm);
+			}
+			if (metricWordCount) {
+				metricWordCount.textContent = words.toLocaleString();
+			}
+			if (metricCharCount) {
+				metricCharCount.textContent = chars.toLocaleString();
+			}
+			if (metricSentenceCount) {
+				metricSentenceCount.textContent = sentences.toLocaleString();
+			}
+			if (metricDifficultyBadge) {
+				metricDifficultyBadge.textContent = difficulty;
+			}
+			if (metricDifficultyDetail) {
+				metricDifficultyDetail.textContent = difficultyDetail;
+			}
+			if (difficultyDot) {
+				difficultyDot.className = 'inline-block h-2 w-2 rounded-full ';
+				if (difficulty === '—') {
+					difficultyDot.classList.add('bg-mute');
+				} else if (difficulty === 'Easy') {
+					difficultyDot.classList.add('bg-vercel-cyan');
+				} else if (difficulty === 'Medium' || difficulty === 'Standard') {
+					difficultyDot.classList.add('bg-vercel-blue');
+				} else {
+					difficultyDot.classList.add('bg-vercel-warning');
+				}
+			}
+		}
+
+		// Sync Preset Button Active States
+		function syncSilentPresetButtons() {
+			silentPresetBtns.forEach((btn) => {
+				const presetVal = Number(btn.dataset.silentPreset);
+				const isActive = presetVal === silentWpm;
+				const subSpan = btn.querySelector('span:last-child');
+				const titleSpan = btn.querySelector('span:first-child');
+				if (isActive) {
+					btn.className =
+						'silent-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-2.5 py-1.5 text-center text-on-primary transition-all';
+					if (titleSpan) titleSpan.className = 'block text-[12px] font-medium';
+					if (subSpan) subSpan.className = 'text-[11px] opacity-80 tabular-nums';
+				} else {
+					btn.className =
+						'silent-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-center transition-all hover:border-ink';
+					if (titleSpan) titleSpan.className = 'block text-[12px] font-medium text-ink';
+					if (subSpan) subSpan.className = 'text-[11px] text-mute tabular-nums';
+				}
+			});
+		}
+
+		function syncSpeakingPresetButtons() {
+			speakingPresetBtns.forEach((btn) => {
+				const presetVal = Number(btn.dataset.speakingPreset);
+				const isActive = presetVal === speakingWpm;
+				const subSpan = btn.querySelector('span:last-child');
+				const titleSpan = btn.querySelector('span:first-child');
+				if (isActive) {
+					btn.className =
+						'speaking-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-2.5 py-1.5 text-center text-on-primary transition-all';
+					if (titleSpan) titleSpan.className = 'block text-[12px] font-medium';
+					if (subSpan) subSpan.className = 'text-[11px] opacity-80 tabular-nums';
+				} else {
+					btn.className =
+						'speaking-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-center transition-all hover:border-ink';
+					if (titleSpan) titleSpan.className = 'block text-[12px] font-medium text-ink';
+					if (subSpan) subSpan.className = 'text-[11px] text-mute tabular-nums';
+				}
+			});
+		}
+
+		// Tab Switching
+		function switchTab(targetTab: 'paste' | 'words' | 'pages') {
+			activeTab = targetTab;
+
+			tabBtns.forEach((btn) => {
+				const isMatch = btn.dataset.tab === targetTab;
+				btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+				if (isMatch) {
+					btn.className =
+						'calc-tab-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all';
+				} else {
+					btn.className =
+						'calc-tab-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink';
+				}
+			});
+
+			panelPaste?.classList.toggle('hidden', targetTab !== 'paste');
+			panelPaste?.classList.toggle('flex', targetTab === 'paste');
+
+			panelWords?.classList.toggle('hidden', targetTab !== 'words');
+			panelWords?.classList.toggle('flex', targetTab === 'words');
+
+			panelPages?.classList.toggle('hidden', targetTab !== 'pages');
+			panelPages?.classList.toggle('flex', targetTab === 'pages');
+
+			pasteToolbar?.classList.toggle('hidden', targetTab !== 'paste');
+			pasteToolbar?.classList.toggle('flex', targetTab === 'paste');
+
+			if (badgeActiveMode) {
+				badgeActiveMode.textContent =
+					targetTab === 'paste' ? 'Text input' : targetTab === 'words' ? 'Word count' : 'Pages';
+			}
+
+			updateAllMetrics();
+		}
+
+		tabBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const t = btn.dataset.tab as 'paste' | 'words' | 'pages';
+				if (t) switchTab(t);
+			});
+		});
+
+		// Textarea & Paste Events
+		textarea?.addEventListener('input', updateAllMetrics);
+
+		btnClearText?.addEventListener('click', () => {
+			if (textarea) {
+				textarea.value = '';
+				textarea.focus();
+				if (fileStatusMsg) fileStatusMsg.textContent = 'Text cleared';
+				updateAllMetrics();
+			}
+		});
+
+		btnLoadSample?.addEventListener('click', () => {
+			if (textarea) {
+				textarea.value = defaultSampleText;
+				if (fileStatusMsg) fileStatusMsg.textContent = 'Sample article loaded';
+				updateAllMetrics();
+			}
+		});
+
+		// File Reader helper (.txt drag-and-drop & file input)
+		function readTxtFile(file: File) {
+			if (!file) return;
+			const isText =
+				file.type === 'text/plain' ||
+				file.name.toLowerCase().endsWith('.txt') ||
+				file.name.toLowerCase().endsWith('.md');
+
+			if (!isText) {
+				if (fileStatusMsg) {
+					fileStatusMsg.textContent = 'Please upload a .txt or .md file';
+				}
+				return;
+			}
+
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				const content = typeof e.target?.result === 'string' ? e.target.result : '';
+				if (textarea) {
+					textarea.value = content;
+					if (activeTab !== 'paste') switchTab('paste');
+					else updateAllMetrics();
+				}
+				if (fileStatusMsg) {
+					fileStatusMsg.textContent = `Loaded ${file.name}`;
+				}
+			};
+			reader.readAsText(file);
+		}
+
+		fileInput?.addEventListener('change', () => {
+			const file = fileInput.files?.[0];
+			if (file) readTxtFile(file);
+			fileInput.value = '';
+		});
+
+		// Drag and Drop events on Paste Panel
+		if (panelPaste && dropzoneOverlay) {
+			let dragCounter = 0;
+
+			panelPaste.addEventListener('dragenter', (e) => {
+				e.preventDefault();
+				dragCounter++;
+				dropzoneOverlay.classList.remove('hidden');
+				dropzoneOverlay.classList.add('flex');
+			});
+
+			panelPaste.addEventListener('dragover', (e) => {
+				e.preventDefault();
+			});
+
+			panelPaste.addEventListener('dragleave', (e) => {
+				e.preventDefault();
+				dragCounter--;
+				if (dragCounter <= 0) {
+					dragCounter = 0;
+					dropzoneOverlay.classList.add('hidden');
+					dropzoneOverlay.classList.remove('flex');
+				}
+			});
+
+			panelPaste.addEventListener('drop', (e) => {
+				e.preventDefault();
+				dragCounter = 0;
+				dropzoneOverlay.classList.add('hidden');
+				dropzoneOverlay.classList.remove('flex');
+				const file = e.dataTransfer?.files?.[0];
+				if (file) readTxtFile(file);
+			});
+		}
+
+		// Tab 2: Direct Word Count Input & Presets
+		directWordInput?.addEventListener('input', () => {
+			const currentVal = Number(directWordInput.value);
+			wordPresetBtns.forEach((btn) => {
+				const isMatch = Number(btn.dataset.wordPreset) === currentVal;
+				btn.className = isMatch
+					? 'word-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-3 py-1.5 text-[13px] font-medium text-on-primary transition-colors'
+					: 'word-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink';
+			});
+			updateAllMetrics();
+		});
+
+		wordPresetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const preset = btn.dataset.wordPreset;
+				if (directWordInput && preset) {
+					directWordInput.value = preset;
+					directWordInput.dispatchEvent(new Event('input'));
+				}
+			});
+		});
+
+		// Tab 3: Pages Input, Spacing Toggle, & Page Presets
+		pagesCountInput?.addEventListener('input', () => {
+			const currentPg = Number(pagesCountInput.value);
+			pagePresetBtns.forEach((btn) => {
+				const isMatch = Number(btn.dataset.pagePreset) === currentPg;
+				btn.className = isMatch
+					? 'page-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-3 py-1.5 text-[13px] font-medium text-on-primary tabular-nums transition-colors'
+					: 'page-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink';
+			});
+			updateAllMetrics();
+		});
+
+		pagePresetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const pg = btn.dataset.pagePreset;
+				if (pagesCountInput && pg) {
+					pagesCountInput.value = pg;
+					pagesCountInput.dispatchEvent(new Event('input'));
+				}
+			});
+		});
+
+		spacingBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const wpp = Number(btn.dataset.wpp);
+				if (!wpp) return;
+				pageSpacingWpp = wpp;
+
+				spacingBtns.forEach((b) => {
+					const active = Number(b.dataset.wpp) === pageSpacingWpp;
+					const sub = b.querySelector('span:last-child');
+					if (active) {
+						b.className =
+							'spacing-option-btn flex cursor-pointer flex-col items-start rounded-sm border border-primary bg-primary p-3 text-left text-on-primary transition-all';
+						if (sub) sub.className = 'text-[12px] opacity-80 tabular-nums';
+					} else {
+						b.className =
+							'spacing-option-btn flex cursor-pointer flex-col items-start rounded-sm border border-hairline bg-canvas p-3 text-left text-ink transition-all hover:border-ink';
+						if (sub) sub.className = 'text-[12px] text-mute tabular-nums';
+					}
+				});
+
+				updateAllMetrics();
+			});
+		});
+
+		// Silent Speed Slider & Presets
+		function setSilentSpeed(newWpm: number) {
+			silentWpm = Math.min(400, Math.max(100, newWpm));
+			if (silentSlider) silentSlider.value = String(silentWpm);
+			if (silentWpmDisplay) silentWpmDisplay.textContent = String(silentWpm);
+			if (badgeSilentWpm) badgeSilentWpm.textContent = `${silentWpm} WPM`;
+			syncSilentPresetButtons();
+			updateAllMetrics();
+		}
+
+		silentSlider?.addEventListener('input', () => {
+			setSilentSpeed(Number(silentSlider.value));
+		});
+
+		silentPresetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const val = Number(btn.dataset.silentPreset);
+				if (val) setSilentSpeed(val);
+			});
+		});
+
+		// Read Aloud Speed Slider & Presets
+		function setSpeakingSpeed(newWpm: number) {
+			speakingWpm = Math.min(300, Math.max(100, newWpm));
+			if (speakingSlider) speakingSlider.value = String(speakingWpm);
+			if (speakingWpmDisplay) speakingWpmDisplay.textContent = String(speakingWpm);
+			if (badgeSpeakingWpm) badgeSpeakingWpm.textContent = `${speakingWpm} WPM`;
+			syncSpeakingPresetButtons();
+			updateAllMetrics();
+		}
+
+		speakingSlider?.addEventListener('input', () => {
+			setSpeakingSpeed(Number(speakingSlider.value));
+		});
+
+		speakingPresetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const val = Number(btn.dataset.speakingPreset);
+				if (val) setSpeakingSpeed(val);
+			});
+		});
+
+		// Quick Callout Action (Read Aloud Baseline)
+		const speechModeAction = document.querySelector('[data-quick-action="speech-mode"]');
+		speechModeAction?.addEventListener('click', (e) => {
+			e.preventDefault();
+			setSpeakingSpeed(183);
+			speakingSlider?.focus();
+		});
+
+		// Custom Event hook so Benchmark Table rows can load directly into Calculator
+		window.addEventListener('load-benchmark-words', ((e: CustomEvent<{ words: number }>) => {
+			if (e.detail && typeof e.detail.words === 'number') {
+				if (directWordInput) {
+					directWordInput.value = String(e.detail.words);
+				}
+				switchTab('words');
+				document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
+			}
+		}) as EventListener);
+
+		// Initial compute
+		updateAllMetrics();
+	}
+
+	initReadingCalculator();
+</script>

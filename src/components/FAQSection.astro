@@ -1,0 +1,99 @@
+---
+export interface FAQItem {
+	question: string;
+	answer: string;
+}
+
+export const faqItems: FAQItem[] = [
+	{
+		question: 'How is reading time calculated?',
+		answer:
+			'Reading time is calculated by dividing the total word count of a document by the reader’s words per minute (WPM) speed. For silent reading, our calculator defaults to 238 WPM—the benchmark for adult non-fiction reading established by Marc Brysbaert’s 2019 research. The remaining decimal is multiplied by 60 to get the exact minutes and seconds.',
+	},
+	{
+		question: 'What is the average silent reading speed vs. speaking speed?',
+		answer:
+			'The average adult reads silently at about 238 words per minute (WPM) for non-fiction and roughly 260 WPM for fiction. When reading aloud or giving a speech, people naturally slow down to between 120 and 185 WPM so listeners can follow along clearly.',
+	},
+	{
+		question: 'How long does it take to read 1,000 words?',
+		answer:
+			'At the average silent reading speed of 238 WPM, reading 1,000 words takes about 4 minutes and 12 seconds. If you are reading 1,000 words aloud for a speech, podcast, or presentation at 130 WPM, it takes about 7 minutes and 42 seconds.',
+	},
+	{
+		question: 'How many words are on a single-spaced vs. double-spaced page?',
+		answer:
+			'With standard formatting (12-point Times New Roman or Arial font and 1-inch margins on letter-size paper), a single-spaced page holds about 500 words, while a double-spaced page holds about 250 words.',
+	},
+	{
+		question: 'How long does it take to read 5 pages?',
+		answer:
+			'Five single-spaced pages (around 2,500 words) take about 10 minutes and 30 seconds to read silently at 238 WPM, or 19 minutes and 14 seconds to read aloud at 130 WPM. Five double-spaced pages (around 1,250 words) take about 5 minutes and 15 seconds silently, or 9 minutes and 37 seconds aloud.',
+	},
+	{
+		question: 'How does the reading level indicator work?',
+		answer:
+			'When you paste or upload text, the tool checks the average word length and number of syllables per word. Text averaging under 1.42 syllables per word is labeled Easy, 1.42 to 1.71 is labeled Medium, and 1.72 or higher is labeled Hard.',
+	},
+	{
+		question: 'Is my pasted text or uploaded .txt file kept private?',
+		answer:
+			'Yes, completely. All word counting, reading time calculations, and file uploads happen right in your browser. Your text is never sent to any server or stored anywhere.',
+	},
+];
+---
+
+<section id="faq" aria-labelledby="faq-heading" class="border-t border-hairline bg-canvas py-14 sm:py-20">
+	<div class="mx-auto max-w-[1200px] px-4 sm:px-6">
+		<div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+			<!-- Left Column: Section Intro -->
+			<div class="lg:col-span-5">
+				<h2
+					id="faq-heading"
+					class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
+				>
+					Common questions
+				</h2>
+				<p class="mt-3 text-[15px] leading-[24px] text-body">
+					How reading time, speaking pace, and page counts are estimated.
+				</p>
+
+				<div class="whisper-shadow mt-6 rounded-md border border-hairline bg-canvas-elevated p-5">
+					<p class="text-[14px] font-medium text-ink">
+						How the math works: <span class="font-normal text-body">Total words ÷ Words per minute (WPM)</span>
+					</p>
+					<p class="mt-2 text-[13px] leading-[20px] text-mute">
+						Based on Marc Brysbaert’s review of 190 reading studies (<em>Journal of Memory and Language</em>, 2019), which found an average adult silent reading rate of 238 WPM.
+					</p>
+				</div>
+			</div>
+
+			<!-- Right Column: Clean Accordion List -->
+			<div class="lg:col-span-7">
+				<div class="whisper-shadow divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated px-6">
+					{
+						faqItems.map((item, idx) => (
+							<details
+								class="group py-4.5 transition-colors"
+								open={idx === 0}
+							>
+								<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] leading-[24px] font-semibold tracking-[-0.2px] text-ink focus:outline-none">
+									<span>{item.question}</span>
+									<span class="flex h-6 w-6 shrink-0 items-center justify-center text-mute transition-transform duration-200 group-open:rotate-45 group-open:text-ink">
+										<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+											<line x1="12" y1="5" x2="12" y2="19" />
+											<line x1="5" y1="12" x2="19" y2="12" />
+										</svg>
+									</span>
+								</summary>
+								<p class="mt-2.5 pr-6 text-[14px] leading-[23px] text-body">
+									{item.answer}
+								</p>
+							</details>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

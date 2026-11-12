@@ -1,0 +1,695 @@
+---
+import { getToolById } from '../config/site';
+
+const wordsToPagesTool = getToolById('words-to-pages');
+const randomTopicTool = getToolById('random-topic-generator');
+const readingSpeedTool = getToolById('reading-speed-test');
+---
+
+<section
+	id="typing-speed-workspace"
+	aria-label="Typing Speed Test Workspace"
+	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
+>
+	<!-- Live Metrics Summary Bar -->
+	<div class="whisper-shadow mb-6 grid grid-cols-1 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+		<!-- Stat 1: Net WPM -->
+		<article class="flex flex-col justify-between p-5">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Typing speed
+				</span>
+				<span id="tst-tier-badge" class="text-[12px] text-mute">
+					40 WPM average
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="tst-metric-wpm"
+					aria-live="polite"
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[14px] text-body">WPM</span>
+			</div>
+			<p id="tst-metric-net-note" class="text-[12px] text-mute tabular-nums">
+				Net speed adjusted for errors
+			</p>
+		</article>
+
+		<!-- Stat 2: Raw WPM -->
+		<article class="flex flex-col justify-between p-5 sm:border-l sm:border-hairline lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Raw WPM
+				</span>
+				<span class="text-[12px] text-mute">
+					Unadjusted pace
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="tst-metric-raw-wpm"
+					aria-live="polite"
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[14px] text-body">WPM</span>
+			</div>
+			<p class="text-[12px] text-mute tabular-nums">
+				<strong id="tst-metric-words-typed" class="font-medium text-ink">0</strong> words typed
+			</p>
+		</article>
+
+		<!-- Stat 3: Accuracy % -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-hairline lg:border-t-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Accuracy
+				</span>
+				<span class="text-[12px] text-mute">
+					Precision
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-1.5">
+				<output
+					id="tst-metric-accuracy"
+					aria-live="polite"
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					100%
+				</output>
+			</div>
+			<p class="text-[12px] text-mute tabular-nums">
+				<strong id="tst-metric-correct-chars" class="font-medium text-ink">0</strong> correct · <strong id="tst-metric-error-chars" class="font-medium text-ink">0</strong> mistakes
+			</p>
+		</article>
+
+		<!-- Stat 4: Time Remaining -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-hairline lg:border-t-0 lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Time remaining
+				</span>
+				<span id="tst-status-label" class="text-[12px] text-mute">
+					Ready to start
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="tst-metric-timer"
+					aria-live="polite"
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					60s
+				</output>
+			</div>
+			<p id="tst-timer-subtext" class="text-[12px] text-mute tabular-nums">
+				Timer starts on first keystroke
+			</p>
+		</article>
+	</div>
+
+	<!-- Distraction-Free Typing Box Card -->
+	<div class="whisper-shadow rounded-md border border-hairline bg-canvas-elevated">
+		<!-- Control Bar: Duration Selector & Restart Controls -->
+		<div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-5 py-3.5">
+			<div class="flex flex-wrap items-center gap-3">
+				<span class="text-[13px] font-medium text-body">
+					Test duration
+				</span>
+				<div
+					role="group"
+					aria-label="Select typing test duration"
+					class="inline-flex items-center rounded-sm border border-hairline bg-canvas p-0.5"
+				>
+					<button
+						type="button"
+						data-tst-duration="15"
+						aria-pressed="false"
+						class="cursor-pointer rounded-[4px] px-3 py-1 text-[13px] font-medium text-body transition-colors hover:text-ink tabular-nums"
+					>
+						15s
+					</button>
+					<button
+						type="button"
+						data-tst-duration="30"
+						aria-pressed="false"
+						class="cursor-pointer rounded-[4px] px-3 py-1 text-[13px] font-medium text-body transition-colors hover:text-ink tabular-nums"
+					>
+						30s
+					</button>
+					<button
+						type="button"
+						data-tst-duration="60"
+						aria-pressed="true"
+						class="cursor-pointer rounded-[4px] bg-canvas-elevated px-3 py-1 text-[13px] font-semibold text-ink shadow-2xs transition-colors tabular-nums"
+					>
+						60s
+					</button>
+					<button
+						type="button"
+						data-tst-duration="120"
+						aria-pressed="false"
+						class="cursor-pointer rounded-[4px] px-3 py-1 text-[13px] font-medium text-body transition-colors hover:text-ink tabular-nums"
+					>
+						120s
+					</button>
+				</div>
+			</div>
+
+			<div class="flex flex-wrap items-center gap-2">
+				<button
+					type="button"
+					id="tst-btn-new-passage"
+					class="cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+				>
+					New passage
+				</button>
+
+				<button
+					type="button"
+					id="tst-btn-restart"
+					title="Restart test (Tab)"
+					class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-opacity hover:opacity-90"
+				>
+					<svg
+						class="h-3.5 w-3.5"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+						<path d="M3 3v5h5" />
+					</svg>
+					<span>Restart (Tab)</span>
+				</button>
+			</div>
+		</div>
+
+		<!-- Interactive Typing Practice Area -->
+		<div class="p-5 sm:p-7">
+			<div
+				id="tst-box-container"
+				class="relative cursor-text rounded-md border border-hairline bg-canvas p-5 transition-colors focus-within:border-ink sm:p-6"
+			>
+				<label for="tst-hidden-input" class="sr-only">
+					Type the passage shown below
+				</label>
+				<textarea
+					id="tst-hidden-input"
+					rows="1"
+					autocapitalize="off"
+					autocomplete="off"
+					autocorrect="off"
+					spellcheck="false"
+					aria-label="Typing test input field"
+					class=" absolute inset-0 h-full w-full cursor-text resize-none opacity-0 focus:outline-none"
+				></textarea>
+
+				<!-- Focus Prompt Banner -->
+				<div class="mb-3 flex items-center justify-between gap-2 text-[12px] text-mute">
+					<span id="tst-focus-hint">
+						Click here and begin typing to start the timer
+					</span>
+					<span class="tabular-nums">
+						Press <strong class="font-medium text-ink">Tab</strong> anytime to restart
+					</span>
+				</div>
+
+				<!-- Character-by-Character Passage Viewport -->
+				<div
+					id="tst-passage-viewport"
+					class="max-h-[196px] overflow-hidden font-sans text-[20px] leading-[36px] tracking-[-0.2px] select-none sm:text-[22px] sm:leading-[40px]"
+					aria-live="off"
+				>
+					<div id="tst-passage-chars" class="break-words whitespace-pre-wrap"></div>
+				</div>
+			</div>
+
+			<!-- Post-Test Completion Card (Hidden until timer finishes) -->
+			<div
+				id="tst-results-panel"
+				class="mt-5 hidden rounded-md border border-hairline bg-canvas p-5"
+			>
+				<div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+					<div>
+						<h2 class="text-[18px] font-semibold tracking-[-0.3px] text-ink">
+							Test complete
+						</h2>
+						<p id="tst-results-summary" class="mt-1 text-[14px] text-body">
+							Here is your typing breakdown for this session.
+						</p>
+					</div>
+					<div class="flex flex-wrap items-center gap-2.5">
+						<button
+							type="button"
+							id="tst-btn-repeat-same"
+							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+						>
+							Retry same passage
+						</button>
+						<button
+							type="button"
+							id="tst-btn-next-test"
+							class="cursor-pointer rounded-sm bg-primary px-4 py-2 text-[13px] font-medium text-on-primary transition-opacity hover:opacity-90"
+						>
+							Next passage
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer Bar Inside Workspace -->
+			<div class="mt-4 flex flex-wrap items-center justify-between gap-2 text-[13px] text-mute">
+				<div class="flex flex-wrap items-center gap-4 tabular-nums">
+					<span>Progress: <strong id="tst-inline-progress" class="font-medium text-ink">0%</strong></span>
+					<span>Characters typed: <strong id="tst-inline-chars" class="font-medium text-ink">0</strong></span>
+					<span>Standard word length: <strong class="font-medium text-ink">5 characters</strong></span>
+				</div>
+				<span class="text-[12px] text-mute">
+					Runs privately in your browser
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- Related Tools Note (Protected Against Draft Links) -->
+	<aside
+		aria-label="Related writing and reading tools"
+		class="mt-5 flex flex-col items-start justify-between gap-3 pt-2 text-[14px] text-body sm:flex-row sm:items-center"
+	>
+		<p class="leading-[22px]">
+			Looking for writing inspiration or manuscript page estimates? Try our{' '}
+			{
+				randomTopicTool?.status === 'live' ? (
+					<a
+						href={randomTopicTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{randomTopicTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{randomTopicTool?.shortName ?? 'Random Topic Generator'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			,{' '}
+			{
+				wordsToPagesTool?.status === 'live' ? (
+					<a
+						href={wordsToPagesTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{wordsToPagesTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{wordsToPagesTool?.shortName ?? 'Words to Pages'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			, or{' '}
+			{
+				readingSpeedTool?.status === 'live' ? (
+					<a
+						href={readingSpeedTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{readingSpeedTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{readingSpeedTool?.shortName ?? 'Reading Speed Test'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}.
+		</p>
+	</aside>
+</section>
+
+<script>
+	function initTypingSpeedTest() {
+		const PASSAGES = [
+			"Clear writing begins with steady rhythm and attention to detail. When you type at a comfortable, unhurried pace, your fingers find each key with fewer pauses and corrections. Over time, accuracy naturally builds speed, allowing your thoughts to move from mind to page without friction. Many experienced editors find that maintaining a calm posture and looking ahead by a few words helps eliminate common keystroke slips before they happen.",
+			"Every strong essay or article relies on structure just as much as vocabulary. An inviting opening paragraph sets the context, while short, concrete examples keep the reader engaged through complex ideas. Rather than reaching for ornate phrases, choose everyday words that state your point directly. Reading your draft aloud after typing it is one of the simplest ways to catch awkward cadence and tighten long sentences.",
+			"Public libraries and quiet study halls have long served as sanctuaries for deep focus. Surrounded by shelves of books and the soft tap of keyboards, it becomes easier to set aside digital distractions and finish meaningful work. Even twenty minutes of uninterrupted writing can produce a complete first draft when you resist the urge to edit every sentence while typing.",
+			"Designers and typographers care deeply about spacing, line length, and contrast because visual comfort shapes how we read and write. A well-proportioned column of text reduces eye strain and helps writers track their progress across the screen. Whether you are drafting research notes, preparing a keynote script, or practicing daily typing drills, a clean workspace keeps your attention on the words themselves.",
+			"Building consistent habits matters far more than occasional bursts of effort. Practicing a short typing passage each morning warms up your hands and sharpens your focus for the day ahead. Notice which letter combinations slow you down, ease your grip on the keyboard, and prioritize clean accuracy over rushed speed. Steady improvement follows naturally from deliberate, relaxed practice."
+		];
+
+		// DOM Elements
+		const durationButtons = Array.from(
+			document.querySelectorAll<HTMLButtonElement>('[data-tst-duration]')
+		);
+		const btnNewPassage = document.getElementById('tst-btn-new-passage');
+		const btnRestart = document.getElementById('tst-btn-restart');
+		const btnRepeatSame = document.getElementById('tst-btn-repeat-same');
+		const btnNextTest = document.getElementById('tst-btn-next-test');
+
+		const boxContainer = document.getElementById('tst-box-container');
+		const hiddenInput = document.getElementById('tst-hidden-input') as HTMLTextAreaElement | null;
+		const passageViewport = document.getElementById('tst-passage-viewport');
+		const passageCharsContainer = document.getElementById('tst-passage-chars');
+		const focusHint = document.getElementById('tst-focus-hint');
+		const resultsPanel = document.getElementById('tst-results-panel');
+		const resultsSummary = document.getElementById('tst-results-summary');
+
+		// Metric Outputs
+		const metricWpm = document.getElementById('tst-metric-wpm');
+		const tierBadge = document.getElementById('tst-tier-badge');
+		const metricRawWpm = document.getElementById('tst-metric-raw-wpm');
+		const metricWordsTyped = document.getElementById('tst-metric-words-typed');
+		const metricAccuracy = document.getElementById('tst-metric-accuracy');
+		const metricCorrectChars = document.getElementById('tst-metric-correct-chars');
+		const metricErrorChars = document.getElementById('tst-metric-error-chars');
+		const metricTimer = document.getElementById('tst-metric-timer');
+		const statusLabel = document.getElementById('tst-status-label');
+		const timerSubtext = document.getElementById('tst-timer-subtext');
+
+		const inlineProgress = document.getElementById('tst-inline-progress');
+		const inlineChars = document.getElementById('tst-inline-chars');
+
+		// State
+		let selectedDuration = 60;
+		let timeRemaining = 60;
+		let timerInterval: number | null = null;
+		let startTimeMs: number | null = null;
+		let isRunning = false;
+		let isFinished = false;
+		let passageIndex = 0;
+		let targetText = '';
+		let charSpans: HTMLSpanElement[] = [];
+
+		function buildTargetText(startIndex: number): string {
+			// Combine 2 passages so even 120s fast typists have plenty of natural English text
+			const first = PASSAGES[startIndex % PASSAGES.length];
+			const second = PASSAGES[(startIndex + 1) % PASSAGES.length];
+			return `${first} ${second}`;
+		}
+
+		function renderPassage() {
+			if (!passageCharsContainer) return;
+			passageCharsContainer.innerHTML = '';
+			charSpans = [];
+
+			for (let i = 0; i < targetText.length; i++) {
+				const span = document.createElement('span');
+				span.textContent = targetText[i];
+				if (i === 0) {
+					span.className = 'bg-vercel-blue/15 text-ink border-b-2 border-vercel-blue';
+				} else {
+					span.className = 'text-mute/80';
+				}
+				charSpans.push(span);
+				passageCharsContainer.appendChild(span);
+			}
+			if (passageViewport) {
+				passageViewport.scrollTop = 0;
+			}
+		}
+
+		function getSpeedTier(wpm: number): string {
+			if (wpm <= 0) return '40 WPM average';
+			if (wpm < 35) return 'Building rhythm';
+			if (wpm < 55) return 'Everyday average';
+			if (wpm < 75) return 'Fast typist';
+			if (wpm < 95) return 'Advanced pace';
+			return 'Professional speed';
+		}
+
+		function stopTimer() {
+			if (timerInterval !== null) {
+				window.clearInterval(timerInterval);
+				timerInterval = null;
+			}
+		}
+
+		function calculateAndRenderStats(elapsedSecondsOverride?: number) {
+			const typed = hiddenInput ? hiddenInput.value : '';
+			const typedLen = typed.length;
+
+			let correct = 0;
+			let errors = 0;
+
+			for (let i = 0; i < typedLen && i < targetText.length; i++) {
+				if (typed[i] === targetText[i]) {
+					correct++;
+				} else {
+					errors++;
+				}
+			}
+
+			let elapsedSec = elapsedSecondsOverride;
+			if (elapsedSec === undefined) {
+				if (startTimeMs !== null) {
+					elapsedSec = Math.max(0.5, ( performance.now() - startTimeMs ) / 1000);
+				} else {
+					elapsedSec = 0;
+				}
+			}
+
+			const elapsedMin = elapsedSec / 60;
+			const netWpm = elapsedMin > 0 ? Math.max(0, Math.round((correct / 5) / elapsedMin)) : 0;
+			const rawWpm = elapsedMin > 0 ? Math.max(0, Math.round((typedLen / 5) / elapsedMin)) : 0;
+			const accuracy = typedLen > 0 ? Math.round((correct / typedLen) * 100) : 100;
+			const wordsTyped = Math.floor(typedLen / 5);
+			const progressPct = targetText.length > 0 ? Math.min(100, Math.round((typedLen / targetText.length) * 100)) : 0;
+
+			if (metricWpm) metricWpm.textContent = netWpm.toLocaleString();
+			if (tierBadge) tierBadge.textContent = getSpeedTier(netWpm);
+			if (metricRawWpm) metricRawWpm.textContent = rawWpm.toLocaleString();
+			if (metricWordsTyped) metricWordsTyped.textContent = wordsTyped.toLocaleString();
+			if (metricAccuracy) metricAccuracy.textContent = `${accuracy}%`;
+			if (metricCorrectChars) metricCorrectChars.textContent = correct.toLocaleString();
+			if (metricErrorChars) metricErrorChars.textContent = errors.toLocaleString();
+
+			if (inlineProgress) inlineProgress.textContent = `${progressPct}%`;
+			if (inlineChars) inlineChars.textContent = `${typedLen.toLocaleString()} / ${targetText.length.toLocaleString()}`;
+
+			return { netWpm, rawWpm, accuracy, correct, errors, typedLen };
+		}
+
+		function finishTest() {
+			stopTimer();
+			isRunning = false;
+			isFinished = true;
+			timeRemaining = 0;
+
+			if (metricTimer) metricTimer.textContent = '0s';
+			if (statusLabel) statusLabel.textContent = 'Test complete';
+			if (timerSubtext) timerSubtext.textContent = `Completed ${selectedDuration}s session`;
+			if (focusHint) focusHint.textContent = 'Session complete — press Tab or click Restart to practice again';
+
+			const elapsed = startTimeMs !== null
+				? Math.min(selectedDuration, Math.max(1, (performance.now() - startTimeMs) / 1000))
+				: selectedDuration;
+
+			const stats = calculateAndRenderStats(elapsed);
+
+			if (resultsSummary) {
+				resultsSummary.textContent = `You typed ${stats.netWpm} WPM (${stats.rawWpm} Raw WPM) with ${stats.accuracy}% accuracy (${stats.correct} correct characters, ${stats.errors} ${stats.errors === 1 ? 'mistake' : 'mistakes'}) in ${Math.round(elapsed)} seconds.`;
+			}
+			resultsPanel?.classList.remove('hidden');
+		}
+
+		function startTimerIfNeeded() {
+			if (isRunning || isFinished) return;
+			isRunning = true;
+			startTimeMs = performance.now();
+			if (statusLabel) statusLabel.textContent = 'Test in progress';
+			if (timerSubtext) timerSubtext.textContent = `${selectedDuration}s timed session`;
+			if (focusHint) focusHint.textContent = 'Keep typing smoothly — accuracy builds speed';
+
+			timerInterval = window.setInterval(() => {
+				if (!startTimeMs) return;
+				const elapsedWhole = Math.floor((performance.now() - startTimeMs) / 1000);
+				const remaining = Math.max(0, selectedDuration - elapsedWhole);
+				timeRemaining = remaining;
+				if (metricTimer) metricTimer.textContent = `${remaining}s`;
+
+				calculateAndRenderStats();
+
+				if (remaining <= 0) {
+					finishTest();
+				}
+			}, 200);
+		}
+
+		function updateCharacterHighlighting() {
+			const typed = hiddenInput ? hiddenInput.value : '';
+			const typedLen = typed.length;
+
+			for (let i = 0; i < charSpans.length; i++) {
+				const span = charSpans[i];
+				if (i < typedLen) {
+					if (typed[i] === targetText[i]) {
+						span.className = 'text-ink';
+					} else {
+						span.className = 'bg-vercel-error/15 text-vercel-error underline decoration-vercel-error';
+					}
+				} else if (i === typedLen && !isFinished) {
+					span.className = 'bg-vercel-blue/15 text-ink border-b-2 border-vercel-blue';
+				} else {
+					span.className = 'text-mute/80';
+				}
+			}
+
+			// Keep active character smoothly in view inside the passage viewport
+			const activeSpan = charSpans[Math.min(typedLen, charSpans.length - 1)];
+			if (activeSpan && passageViewport) {
+				const spanTop = activeSpan.offsetTop;
+				const lineHeight = 40;
+				if (spanTop > passageViewport.scrollTop + lineHeight * 2) {
+					passageViewport.scrollTop = spanTop - lineHeight;
+				} else if (spanTop < passageViewport.scrollTop) {
+					passageViewport.scrollTop = Math.max(0, spanTop - lineHeight);
+				}
+			}
+		}
+
+		function resetTest(advancePassage = false, focusInput = true) {
+			stopTimer();
+			if (advancePassage) {
+				passageIndex = (passageIndex + 1) % PASSAGES.length;
+			}
+			isRunning = false;
+			isFinished = false;
+			startTimeMs = null;
+			timeRemaining = selectedDuration;
+
+			if (hiddenInput) {
+				hiddenInput.value = '';
+			}
+
+			targetText = buildTargetText(passageIndex);
+			renderPassage();
+
+			if (metricWpm) metricWpm.textContent = '0';
+			if (tierBadge) tierBadge.textContent = '40 WPM average';
+			if (metricRawWpm) metricRawWpm.textContent = '0';
+			if (metricWordsTyped) metricWordsTyped.textContent = '0';
+			if (metricAccuracy) metricAccuracy.textContent = '100%';
+			if (metricCorrectChars) metricCorrectChars.textContent = '0';
+			if (metricErrorChars) metricErrorChars.textContent = '0';
+			if (metricTimer) metricTimer.textContent = `${selectedDuration}s`;
+			if (statusLabel) statusLabel.textContent = 'Ready to start';
+			if (timerSubtext) timerSubtext.textContent = 'Timer starts on first keystroke';
+			if (focusHint) focusHint.textContent = 'Click here and begin typing to start the timer';
+			if (inlineProgress) inlineProgress.textContent = '0%';
+			if (inlineChars) inlineChars.textContent = `0 / ${targetText.length.toLocaleString()}`;
+
+			resultsPanel?.classList.add('hidden');
+
+			if (focusInput) {
+				hiddenInput?.focus();
+			}
+		}
+
+		// Duration selector buttons
+		for (const btn of durationButtons) {
+			btn.addEventListener('click', () => {
+				const dur = Number(btn.getAttribute('data-tst-duration') || '60');
+				selectedDuration = dur;
+
+				for (const b of durationButtons) {
+					const isSelected = b === btn;
+					b.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+					if (isSelected) {
+						b.className =
+							'cursor-pointer rounded-[4px] bg-canvas-elevated px-3 py-1 text-[13px] font-semibold text-ink shadow-2xs transition-colors tabular-nums';
+					} else {
+						b.className =
+							'cursor-pointer rounded-[4px] px-3 py-1 text-[13px] font-medium text-body transition-colors hover:text-ink tabular-nums';
+					}
+				}
+
+				resetTest(false, true);
+			});
+		}
+
+		// Typing input handler
+		hiddenInput?.addEventListener('input', () => {
+			if (isFinished) {
+				hiddenInput.value = hiddenInput.value.slice(0, targetText.length);
+				return;
+			}
+
+			if (hiddenInput.value.length > 0 && !isRunning) {
+				startTimerIfNeeded();
+			}
+
+			if (hiddenInput.value.length >= targetText.length) {
+				hiddenInput.value = hiddenInput.value.slice(0, targetText.length);
+				updateCharacterHighlighting();
+				finishTest();
+				return;
+			}
+
+			updateCharacterHighlighting();
+			calculateAndRenderStats();
+		});
+
+		// Prevent newline in typing box & handle Tab quick-restart
+		hiddenInput?.addEventListener('keydown', (e) => {
+			if (e.key === 'Tab') {
+				e.preventDefault();
+				resetTest(false, true);
+				return;
+			}
+			if (e.key === 'Enter') {
+				e.preventDefault();
+			}
+		});
+
+		// Global Tab shortcut when inside the typing workspace section
+		document.getElementById('typing-speed-workspace')?.addEventListener('keydown', (e) => {
+			if (e.key === 'Tab') {
+				e.preventDefault();
+				resetTest(false, true);
+			}
+		});
+
+		boxContainer?.addEventListener('click', () => {
+			hiddenInput?.focus();
+		});
+
+		btnRestart?.addEventListener('click', () => {
+			resetTest(false, true);
+		});
+
+		btnNewPassage?.addEventListener('click', () => {
+			resetTest(true, true);
+		});
+
+		btnRepeatSame?.addEventListener('click', () => {
+			resetTest(false, true);
+		});
+
+		btnNextTest?.addEventListener('click', () => {
+			resetTest(true, true);
+		});
+
+		// Initialize first passage without stealing scroll on load
+		resetTest(false, false);
+	}
+
+	initTypingSpeedTest();
+</script>
+

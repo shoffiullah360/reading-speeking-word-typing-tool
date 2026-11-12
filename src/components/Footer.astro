@@ -1,0 +1,110 @@
+---
+import { SITE_CONFIG, TOOLS_REGISTRY, STATIC_PAGES } from '../config/site';
+
+const currentYear = new Date().getFullYear();
+
+const categorizedTools = SITE_CONFIG.categories.map((category) => ({
+	category,
+	tools: TOOLS_REGISTRY.filter((tool) => tool.category === category),
+}));
+---
+
+<footer class="mt-auto border-t border-footer-border bg-footer-bg py-14 text-[14px] text-body">
+	<div class="mx-auto max-w-[1200px] px-4 sm:px-6">
+		<div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
+			<!-- Brand Column -->
+			<div class="lg:col-span-3">
+				<a href="/" class="inline-flex items-center gap-2 text-ink">
+					<span class="flex h-6 w-6 items-center justify-center rounded-sm bg-primary text-on-primary">
+						<svg
+							class="h-3.5 w-3.5"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2.2"
+						>
+							<circle cx="12" cy="13" r="8" />
+							<path d="M12 9v4l2.5 2.5" />
+							<path d="M9 2h6" />
+						</svg>
+					</span>
+					<span class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						{SITE_CONFIG.name}
+					</span>
+				</a>
+				<p class="mt-3 max-w-xs text-[14px] leading-[22px] text-body">
+					Simple, fast tools for writers, editors, speakers, and students to check reading time, time speeches, and transform text.
+				</p>
+				<p class="mt-3 text-[13px] text-mute">
+					Runs privately in your browser—your text never leaves your device.
+				</p>
+			</div>
+
+			<!-- 4 Category Columns + Company & Legal Column -->
+			<div class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5 lg:col-span-9">
+				{
+					categorizedTools.map(({ category, tools }) => (
+						<div>
+							<h3 class="text-[13px] font-semibold text-ink">
+								{category}
+							</h3>
+							<ul class="mt-3 space-y-2.5 text-[14px]">
+								{tools.map((tool) => (
+									<li>
+										{tool.status === 'live' ? (
+											<a
+												href={tool.slug}
+												class="text-body transition-colors hover:text-ink"
+											>
+												{tool.shortName}
+											</a>
+										) : (
+											<span
+												aria-disabled="true"
+												class="inline-flex cursor-default items-center gap-2 text-mute select-none"
+											>
+												<span>{tool.shortName}</span>
+												<span class="rounded-full border border-hairline bg-canvas-elevated px-2 py-0.5 text-[11px] font-medium text-mute">
+													Soon
+												</span>
+											</span>
+										)}
+									</li>
+								))}
+							</ul>
+						</div>
+					))
+				}
+
+				<div>
+					<h3 class="text-[13px] font-semibold text-ink">
+						Company &amp; Legal
+					</h3>
+					<ul class="mt-3 space-y-2.5 text-[14px]">
+						{
+							STATIC_PAGES.map((page) => (
+								<li>
+									<a
+										href={page.slug}
+										class="text-body transition-colors hover:text-ink"
+									>
+										{page.shortName}
+									</a>
+								</li>
+							))
+						}
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-footer-border pt-6 text-[13px] text-mute sm:flex-row">
+			<p>© {currentYear} {SITE_CONFIG.name} ({SITE_CONFIG.origin.replace('https://', '')}). All rights reserved.</p>
+			<div class="flex flex-wrap items-center gap-4">
+				<a href="/about/" class="transition-colors hover:text-ink">About</a>
+				<a href="/privacy-policy/" class="transition-colors hover:text-ink">Privacy Policy</a>
+				<a href="/contact/" class="transition-colors hover:text-ink">Contact</a>
+			</div>
+		</div>
+	</div>
+</footer>

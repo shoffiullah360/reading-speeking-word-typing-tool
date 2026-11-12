@@ -1,0 +1,499 @@
+---
+import { SITE_CONFIG, getLiveTools, normalizeTrailingSlashPath } from '../config/site';
+
+const currentPath = normalizeTrailingSlashPath(Astro.url.pathname);
+const liveTools = getLiveTools();
+
+const categoriesWithTools = SITE_CONFIG.categories.map((category) => {
+	const tools = liveTools.filter((tool) => tool.category === category);
+	const isActiveCategory = tools.some((tool) => tool.slug === currentPath);
+	return {
+		category,
+		id: category.toLowerCase(),
+		tools,
+		isActiveCategory,
+	};
+});
+---
+
+<header class="sticky top-0 z-50 w-full border-b border-hairline bg-header-bg backdrop-blur-md">
+	<div class="mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
+		<!-- Left: Wordora Brand Logo -->
+		<a
+			href="/"
+			class="group flex shrink-0 items-center gap-2.5 text-ink focus:outline-none"
+			aria-label={`${SITE_CONFIG.name} Home`}
+		>
+			<span class="flex h-7 w-7 items-center justify-center rounded-sm bg-primary text-on-primary transition-transform duration-150 group-hover:scale-105">
+				<svg
+					class="h-4 w-4"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2.2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<circle cx="12" cy="13" r="8" />
+					<path d="M12 9v4l2.5 2.5" />
+					<path d="M9 2h6" />
+				</svg>
+			</span>
+			<span class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+				{SITE_CONFIG.name}
+			</span>
+		</a>
+
+		<!-- Center: 4 Canonical Category Dropdowns (Desktop) -->
+		<nav
+			aria-label="Primary category navigation"
+			class="hidden items-center gap-1 whitespace-nowrap md:flex lg:gap-1.5"
+		>
+			{
+				categoriesWithTools.map(({ category, id, tools, isActiveCategory }) => (
+					<div class="relative" data-nav-dropdown={id}>
+						<button
+							type="button"
+							id={`nav-trigger-${id}`}
+							data-nav-trigger={id}
+							aria-expanded="false"
+							aria-haspopup="true"
+							aria-controls={`nav-panel-${id}`}
+							class={`inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[14px] transition-colors hover:bg-hairline-soft hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vercel-blue ${
+								isActiveCategory
+									? 'bg-hairline-soft font-medium text-ink'
+									: 'font-normal text-body'
+							}`}
+						>
+							<span>{category}</span>
+							<svg
+								data-nav-chevron={id}
+								class="h-3.5 w-3.5 text-mute transition-transform duration-150"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="m6 9 6 6 6-6" />
+							</svg>
+						</button>
+
+						<!-- Elevated Dropdown Card -->
+						<div
+							id={`nav-panel-${id}`}
+							data-nav-panel={id}
+							role="menu"
+							aria-label={`${category} tools`}
+							class="floating-shadow invisible absolute left-1/2 top-full z-50 mt-2 w-[340px] -translate-x-1/2 rounded-md border border-hairline bg-[#ffffff] p-2 opacity-0 transition-all duration-150 dark:bg-[#141416]"
+						>
+							<ul class="space-y-0.5">
+								{tools.map((tool) => (
+									<li>
+										<a
+											href={tool.slug}
+											role="menuitem"
+											aria-current={currentPath === tool.slug ? 'page' : undefined}
+											class={`group block rounded-sm px-3 py-2.5 transition-colors hover:bg-hairline-soft ${
+												currentPath === tool.slug ? 'bg-hairline-soft' : ''
+											}`}
+										>
+											<div class="flex items-center justify-between gap-2">
+												<span
+													class={`text-[14px] transition-colors group-hover:text-vercel-blue ${
+														currentPath === tool.slug
+															? 'font-semibold text-ink'
+															: 'font-medium text-ink'
+													}`}
+												>
+													{tool.shortName}
+												</span>
+												{tool.badge && (
+													<span class="rounded-full border border-hairline bg-canvas px-2 py-0.5 text-[11px] font-medium text-mute">
+														{tool.badge}
+													</span>
+												)}
+											</div>
+											<p class="mt-0.5 line-clamp-1 text-[12px] leading-[18px] font-normal text-mute">
+												{tool.description}
+											</p>
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					</div>
+				))
+			}
+		</nav>
+
+		<!-- Right: Theme Toggle & Mobile Menu Button -->
+		<div class="flex shrink-0 items-center gap-2 whitespace-nowrap">
+			<button
+				id="theme-toggle"
+				type="button"
+				class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border border-hairline bg-canvas-elevated text-ink transition-colors hover:bg-hairline-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vercel-blue"
+				aria-label="Toggle light and dark mode"
+				title="Switch appearance"
+			>
+				<!-- Sun Icon (shown in dark mode) -->
+				<svg
+					id="theme-icon-sun"
+					class="hidden h-4 w-4"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.8"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<circle cx="12" cy="12" r="4" />
+					<path d="M12 2v2" />
+					<path d="M12 20v2" />
+					<path d="m4.93 4.93 1.41 1.41" />
+					<path d="m17.66 17.66 1.41 1.41" />
+					<path d="M2 12h2" />
+					<path d="M20 12h2" />
+					<path d="m6.34 17.66-1.41 1.41" />
+					<path d="m19.07 4.93-1.41 1.41" />
+				</svg>
+				<!-- Moon Icon (shown in light mode) -->
+				<svg
+					id="theme-icon-moon"
+					class="block h-4 w-4"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.8"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+				</svg>
+			</button>
+
+			<!-- Mobile Drawer Trigger -->
+			<button
+				id="mobile-menu-toggle"
+				type="button"
+				aria-expanded="false"
+				aria-controls="mobile-nav-drawer"
+				aria-label="Toggle navigation menu"
+				class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border border-hairline bg-canvas-elevated text-ink transition-colors hover:bg-hairline-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vercel-blue md:hidden"
+			>
+				<svg
+					id="mobile-icon-open"
+					class="block h-4 w-4"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.8"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<line x1="4" y1="7" x2="20" y2="7" />
+					<line x1="4" y1="12" x2="20" y2="12" />
+					<line x1="4" y1="17" x2="20" y2="17" />
+				</svg>
+				<svg
+					id="mobile-icon-close"
+					class="hidden h-4 w-4"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="1.8"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+				>
+					<path d="M18 6 6 18" />
+					<path d="m6 6 12 12" />
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<!-- Mobile Navigation Drawer / Accordion (Grouped by Reading, Writing, Speaking, Text) -->
+	<div
+		id="mobile-nav-drawer"
+		aria-label="Mobile category navigation"
+		class="hidden border-t border-hairline bg-[#ffffff] px-4 py-3 md:hidden dark:bg-[#141416]"
+	>
+		<div class="mx-auto max-w-[1200px] divide-y divide-hairline">
+			{
+				categoriesWithTools.map(({ category, id, tools, isActiveCategory }, index) => {
+					const defaultOpen = isActiveCategory || index === 0;
+					return (
+						<div class="py-2" data-mobile-accordion={id}>
+							<button
+								type="button"
+								data-mobile-accordion-trigger={id}
+								aria-expanded={defaultOpen ? 'true' : 'false'}
+								aria-controls={`mobile-panel-${id}`}
+								class="flex w-full cursor-pointer items-center justify-between rounded-sm px-2 py-2 text-left text-[15px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+							>
+								<span>{category}</span>
+								<svg
+									data-mobile-accordion-chevron={id}
+									class={`h-4 w-4 text-mute transition-transform duration-150 ${
+										defaultOpen ? 'rotate-180' : ''
+									}`}
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									aria-hidden="true"
+								>
+									<path d="m6 9 6 6 6-6" />
+								</svg>
+							</button>
+
+							<ul
+								id={`mobile-panel-${id}`}
+								data-mobile-accordion-panel={id}
+								class={`mt-1 space-y-1 pl-2 ${defaultOpen ? 'block' : 'hidden'}`}
+							>
+								{tools.map((tool) => (
+									<li>
+										<a
+											href={tool.slug}
+											aria-current={currentPath === tool.slug ? 'page' : undefined}
+											class={`block rounded-sm px-3 py-2 transition-colors hover:bg-hairline-soft ${
+												currentPath === tool.slug ? 'bg-hairline-soft' : ''
+											}`}
+										>
+											<div class="flex items-center justify-between gap-2">
+												<span
+													class={`text-[14px] ${
+														currentPath === tool.slug
+															? 'font-semibold text-ink'
+															: 'font-medium text-ink'
+													}`}
+												>
+													{tool.shortName}
+												</span>
+												{tool.badge && (
+													<span class="rounded-full border border-hairline bg-canvas px-2 py-0.5 text-[11px] font-medium text-mute">
+														{tool.badge}
+													</span>
+												)}
+											</div>
+											<p class="mt-0.5 line-clamp-1 text-[12px] leading-[18px] text-mute">
+												{tool.description}
+											</p>
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+					);
+				})
+			}
+		</div>
+	</div>
+</header>
+
+<script>
+	function setupHeaderInteractions() {
+		// 1. Theme Toggle
+		const toggleBtn = document.getElementById('theme-toggle');
+		const sunIcon = document.getElementById('theme-icon-sun');
+		const moonIcon = document.getElementById('theme-icon-moon');
+
+		const syncIcons = () => {
+			const isDark = document.documentElement.classList.contains('dark');
+			if (sunIcon && moonIcon) {
+				sunIcon.classList.toggle('hidden', !isDark);
+				sunIcon.classList.toggle('block', isDark);
+				moonIcon.classList.toggle('hidden', isDark);
+				moonIcon.classList.toggle('block', !isDark);
+			}
+		};
+
+		syncIcons();
+
+		toggleBtn?.addEventListener('click', () => {
+			const isDark = document.documentElement.classList.toggle('dark');
+			try {
+				localStorage.setItem('theme', isDark ? 'dark' : 'light');
+			} catch (e) {}
+			syncIcons();
+		});
+
+		// 2. Desktop 4-Category Dropdown Menus
+		const dropdownContainers = Array.from(
+			document.querySelectorAll<HTMLElement>('[data-nav-dropdown]')
+		);
+		let activeDropdownId: string | null = null;
+		let closeTimeout: number | null = null;
+
+		const clearCloseTimer = () => {
+			if (closeTimeout !== null) {
+				window.clearTimeout(closeTimeout);
+				closeTimeout = null;
+			}
+		};
+
+		const closeAllDropdowns = () => {
+			clearCloseTimer();
+			activeDropdownId = null;
+			for (const container of dropdownContainers) {
+				const id = container.getAttribute('data-nav-dropdown');
+				if (!id) continue;
+				const trigger = container.querySelector<HTMLElement>(`[data-nav-trigger="${id}"]`);
+				const panel = container.querySelector<HTMLElement>(`[data-nav-panel="${id}"]`);
+				const chevron = container.querySelector<HTMLElement>(`[data-nav-chevron="${id}"]`);
+
+				trigger?.setAttribute('aria-expanded', 'false');
+				panel?.classList.remove('visible', 'opacity-100');
+				panel?.classList.add('invisible', 'opacity-0');
+				chevron?.classList.remove('rotate-180');
+			}
+		};
+
+		const openDropdown = (targetId: string) => {
+			clearCloseTimer();
+			activeDropdownId = targetId;
+			for (const container of dropdownContainers) {
+				const id = container.getAttribute('data-nav-dropdown');
+				if (!id) continue;
+				const trigger = container.querySelector<HTMLElement>(`[data-nav-trigger="${id}"]`);
+				const panel = container.querySelector<HTMLElement>(`[data-nav-panel="${id}"]`);
+				const chevron = container.querySelector<HTMLElement>(`[data-nav-chevron="${id}"]`);
+
+				if (id === targetId) {
+					trigger?.setAttribute('aria-expanded', 'true');
+					panel?.classList.remove('invisible', 'opacity-0');
+					panel?.classList.add('visible', 'opacity-100');
+					chevron?.classList.add('rotate-180');
+				} else {
+					trigger?.setAttribute('aria-expanded', 'false');
+					panel?.classList.remove('visible', 'opacity-100');
+					panel?.classList.add('invisible', 'opacity-0');
+					chevron?.classList.remove('rotate-180');
+				}
+			}
+		};
+
+		for (const container of dropdownContainers) {
+			const id = container.getAttribute('data-nav-dropdown');
+			if (!id) continue;
+			const trigger = container.querySelector<HTMLElement>(`[data-nav-trigger="${id}"]`);
+
+			trigger?.addEventListener('click', (e) => {
+				e.stopPropagation();
+				if (activeDropdownId === id) {
+					closeAllDropdowns();
+				} else {
+					openDropdown(id);
+				}
+			});
+
+			container.addEventListener('mouseenter', () => {
+				openDropdown(id);
+			});
+
+			container.addEventListener('mouseleave', () => {
+				clearCloseTimer();
+				closeTimeout = window.setTimeout(() => {
+					if (activeDropdownId === id) {
+						closeAllDropdowns();
+					}
+				}, 130);
+			});
+		}
+
+		// 3. Mobile Drawer & Category Accordions
+		const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+		const mobileDrawer = document.getElementById('mobile-nav-drawer');
+		const mobileIconOpen = document.getElementById('mobile-icon-open');
+		const mobileIconClose = document.getElementById('mobile-icon-close');
+		let isMobileDrawerOpen = false;
+
+		const setMobileDrawerState = (open: boolean) => {
+			isMobileDrawerOpen = open;
+			mobileMenuToggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+			mobileDrawer?.classList.toggle('hidden', !open);
+			mobileIconOpen?.classList.toggle('hidden', open);
+			mobileIconOpen?.classList.toggle('block', !open);
+			mobileIconClose?.classList.toggle('hidden', !open);
+			mobileIconClose?.classList.toggle('block', open);
+		};
+
+		mobileMenuToggle?.addEventListener('click', (e) => {
+			e.stopPropagation();
+			setMobileDrawerState(!isMobileDrawerOpen);
+		});
+
+		const accordionTriggers = Array.from(
+			document.querySelectorAll<HTMLElement>('[data-mobile-accordion-trigger]')
+		);
+
+		for (const trigger of accordionTriggers) {
+			trigger.addEventListener('click', () => {
+				const id = trigger.getAttribute('data-mobile-accordion-trigger');
+				if (!id) return;
+				const panel = document.querySelector<HTMLElement>(
+					`[data-mobile-accordion-panel="${id}"]`
+				);
+				const chevron = document.querySelector<HTMLElement>(
+					`[data-mobile-accordion-chevron="${id}"]`
+				);
+				const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+				trigger.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+				panel?.classList.toggle('hidden', isExpanded);
+				panel?.classList.toggle('block', !isExpanded);
+				chevron?.classList.toggle('rotate-180', !isExpanded);
+			});
+		}
+
+		// 4. Global Click-Outside & Escape Key Handling
+		document.addEventListener('click', (e) => {
+			const target = e.target as Node;
+			if (activeDropdownId) {
+				const activeContainer = document.querySelector<HTMLElement>(
+					`[data-nav-dropdown="${activeDropdownId}"]`
+				);
+				if (activeContainer && !activeContainer.contains(target)) {
+					closeAllDropdowns();
+				}
+			}
+
+			if (
+				isMobileDrawerOpen &&
+				mobileDrawer &&
+				!mobileDrawer.contains(target) &&
+				mobileMenuToggle &&
+				!mobileMenuToggle.contains(target)
+			) {
+				setMobileDrawerState(false);
+			}
+		});
+
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+				if (activeDropdownId) {
+					const triggerToFocus = document.querySelector<HTMLElement>(
+						`[data-nav-trigger="${activeDropdownId}"]`
+					);
+					closeAllDropdowns();
+					triggerToFocus?.focus();
+				}
+				if (isMobileDrawerOpen) {
+					setMobileDrawerState(false);
+					mobileMenuToggle?.focus();
+				}
+			}
+		});
+	}
+
+	setupHeaderInteractions();
+</script>

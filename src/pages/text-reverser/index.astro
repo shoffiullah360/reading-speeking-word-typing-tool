@@ -1,0 +1,78 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import TextReverserTool from "../../components/TextReverserTool.astro";
+import Footer from "../../components/Footer.astro";
+import { resolveCanonicalUrl } from "../../config/site";
+
+const pageTitle =
+	"Text Reverser & Flipper — Reverse Text, Word Order & Upside Down | Wordora";
+const pageDescription =
+	"Free online Text Reverser and Upside-Down Text Flipper. Instantly reverse entire text strings, reverse word order, mirror each word individually, or flip text upside down in your browser.";
+const canonicalUrl = resolveCanonicalUrl("/text-reverser/");
+
+const softwareAppSchema = {
+	"@context": "https://schema.org",
+	"@type": "SoftwareApplication",
+	name: "Text Reverser & Flipper",
+	url: canonicalUrl,
+	applicationCategory: "UtilitiesApplication",
+	operatingSystem: "Web, Any",
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "USD",
+	},
+	description: pageDescription,
+	featureList: [
+		"Reverse Entire Text (mirror all characters end-to-start)",
+		"Reverse Word Order while keeping individual words intact",
+		"Reverse Each Word Individually in place",
+		"Flip Text Upside Down (180-degree Unicode character rotation)",
+		"Automatic palindrome detector, live output preview, and one-click Copy",
+	],
+};
+---
+
+<Layout
+	title={pageTitle}
+	description={pageDescription}
+	canonicalUrl={canonicalUrl}
+>
+	<Fragment slot="head">
+		<script
+			type="application/ld+json"
+			set:html={JSON.stringify(softwareAppSchema)}
+		/>
+	</Fragment>
+
+	<Header />
+
+	<main class="flex-1">
+		<!-- Clean Editorial Tool Header -->
+		<section class="px-4 pt-12 pb-4 sm:px-6 sm:pt-16 sm:pb-6">
+			<div class="mx-auto max-w-[1200px]">
+				<h1
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1.4px] text-ink sm:text-[42px] sm:leading-[48px] sm:tracking-[-1.8px]"
+				>
+					Text Reverser &amp; Flipper
+				</h1>
+
+				<p
+					class="mt-3 max-w-2xl text-[16px] leading-[25px] font-normal text-body"
+				>
+					Reverse entire passages, flip word order, mirror individual words, or turn text upside down with live preview and one-click copy.
+				</p>
+			</div>
+		</section>
+
+		<!-- Interactive Text Reverser Workspace -->
+		<TextReverserTool />
+
+		{/* Editorial Content & FAQ Slot — User Managed */}
+		<div id="editorial-content-slot" class="mx-auto max-w-[1200px] px-4 sm:px-6"></div>
+	</main>
+
+	<Footer />
+</Layout>
+

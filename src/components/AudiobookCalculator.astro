@@ -1,0 +1,921 @@
+---
+import { getToolById } from '../config/site';
+
+const readingCounterTool = getToolById('reading-time-counter');
+const speedTestTool = getToolById('reading-speed-test');
+const wordsToPagesTool = getToolById('words-to-pages');
+---
+
+<section
+	id="audiobook-calculator-workspace"
+	aria-label="Audiobook Speed and Listening Time Calculator Workspace"
+	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
+>
+	<!-- Live Summary Bar -->
+	<div class="whisper-shadow mb-6 grid grid-cols-1 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+		<!-- Stat 1: Adjusted listening time -->
+		<article class="flex flex-col justify-between p-5">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Adjusted listening time
+				</span>
+				<span
+					id="ab-badge-speed"
+					class="rounded-full bg-hairline-soft px-2.5 py-0.5 text-[12px] font-medium text-ink tabular-nums"
+				>
+					At 1.25x speed
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="ab-metric-adjusted-time"
+					aria-live="polite"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					8 hr 0 min
+				</output>
+			</div>
+			<p id="ab-metric-adjusted-sub" class="text-[12px] text-mute tabular-nums">
+				480 total minutes of listening
+			</p>
+		</article>
+
+		<!-- Stat 2: Time saved (or added) -->
+		<article class="flex flex-col justify-between p-5 sm:border-l sm:border-hairline lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span id="ab-label-saved" class="text-[13px] font-medium text-body">
+					Time saved
+				</span>
+				<span
+					id="ab-badge-saved-pct"
+					class="text-[12px] text-mute tabular-nums"
+				>
+					20% shorter
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="ab-metric-time-saved"
+					aria-live="polite"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					2 hr 0 min
+				</output>
+			</div>
+			<p id="ab-metric-saved-sub" class="text-[12px] text-mute tabular-nums">
+				Compared to 10 hr 0 min at 1.0x
+			</p>
+		</article>
+
+		<!-- Stat 3: Original 1.0x length -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-hairline lg:border-t-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Original 1.0x length
+				</span>
+				<span id="ab-badge-mode" class="text-[12px] text-mute">
+					By length
+				</span>
+			</div>
+			<div class="my-2.5">
+				<output
+					id="ab-metric-base-time"
+					aria-live="polite"
+					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					10 hr 0 min
+				</output>
+			</div>
+			<p id="ab-metric-words-est" class="text-[12px] text-mute tabular-nums">
+				~93,000 words at 155 WPM narration
+			</p>
+		</article>
+
+		<!-- Stat 4: Daily listening schedule preview -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-hairline lg:border-t-0 lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Daily finish estimate
+				</span>
+				<span class="text-[12px] text-mute tabular-nums">
+					At 45 min/day
+				</span>
+			</div>
+			<div class="my-2.5">
+				<output
+					id="ab-metric-days-45"
+					aria-live="polite"
+					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					11 days
+				</output>
+			</div>
+			<p id="ab-metric-days-sub" class="text-[12px] text-mute tabular-nums">
+				16 days at 30m · 8 days at 60m
+			</p>
+		</article>
+	</div>
+
+	<!-- Main Dual-Column Workspace -->
+	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+		<!-- Left Column: Input Modes (By Audiobook Length OR By Word Count) & Speed Breakdown -->
+		<div class="whisper-shadow flex flex-col justify-between rounded-md border border-hairline bg-canvas-elevated lg:col-span-7">
+			<div>
+				<!-- Tab Bar Header: By Audiobook Length vs By Word Count -->
+				<div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-5 py-3">
+					<div
+						role="tablist"
+						aria-label="Audiobook input mode"
+						class="inline-flex items-center gap-1"
+					>
+						<button
+							type="button"
+							role="tab"
+							id="ab-tab-btn-length"
+							aria-selected="true"
+							aria-controls="ab-panel-length"
+							data-mode="length"
+							class="ab-mode-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all"
+						>
+							By Audiobook Length
+						</button>
+						<button
+							type="button"
+							role="tab"
+							id="ab-tab-btn-words"
+							aria-selected="false"
+							aria-controls="ab-panel-words"
+							data-mode="words"
+							class="ab-mode-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
+						>
+							By Word Count
+						</button>
+					</div>
+
+					<button
+						type="button"
+						id="ab-btn-reset"
+						class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
+					>
+						Reset defaults
+					</button>
+				</div>
+
+				<!-- Panel 1: By Audiobook Length (Hours & Minutes) -->
+				<div
+					id="ab-panel-length"
+					role="tabpanel"
+					aria-labelledby="ab-tab-btn-length"
+					class="p-6"
+				>
+					<h2 class="text-[15px] font-medium text-ink">
+						Enter audiobook duration (at 1.0x speed)
+					</h2>
+					<p class="mt-1 mb-4 text-[14px] text-body">
+						Enter the total or remaining hours and minutes of your audiobook to see how fast you will finish.
+					</p>
+
+					<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+						<div>
+							<label for="ab-hours-input" class="mb-1.5 block text-[13px] font-medium text-body">
+								Hours
+							</label>
+							<div class="relative flex items-center">
+								<input
+									id="ab-hours-input"
+									type="number"
+									min="0"
+									max="500"
+									step="1"
+									value="10"
+									class="w-full rounded-sm border border-hairline bg-canvas px-4 py-3 text-[24px] font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+								/>
+								<span class="pointer-events-none absolute right-4 text-[14px] text-mute">
+									hours
+								</span>
+							</div>
+						</div>
+
+						<div>
+							<label for="ab-minutes-input" class="mb-1.5 block text-[13px] font-medium text-body">
+								Minutes
+							</label>
+							<div class="relative flex items-center">
+								<input
+									id="ab-minutes-input"
+									type="number"
+									min="0"
+									max="59"
+									step="1"
+									value="0"
+									class="w-full rounded-sm border border-hairline bg-canvas px-4 py-3 text-[24px] font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+								/>
+								<span class="pointer-events-none absolute right-4 text-[14px] text-mute">
+									min
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Common Audiobook Duration Presets -->
+					<div class="mt-5">
+						<span class="mb-2.5 block text-[13px] font-medium text-mute">
+							Common audiobook lengths
+						</span>
+						<div class="flex flex-wrap gap-2">
+							{
+								[
+									{ hours: 4, minutes: 0, label: '4 hr (Short book)' },
+									{ hours: 7, minutes: 30, label: '7 hr 30 min' },
+									{ hours: 10, minutes: 0, label: '10 hr (Average)' },
+									{ hours: 14, minutes: 0, label: '14 hr' },
+									{ hours: 20, minutes: 0, label: '20 hr (Biography)' },
+									{ hours: 30, minutes: 0, label: '30 hr (Epic)' },
+								].map((preset) => (
+									<button
+										type="button"
+										data-hours-preset={preset.hours}
+										data-minutes-preset={preset.minutes}
+										class={`ab-duration-preset cursor-pointer rounded-sm border px-3 py-1.5 text-[13px] font-medium tabular-nums transition-colors ${
+											preset.hours === 10 && preset.minutes === 0
+												? 'border-primary bg-primary text-on-primary'
+												: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+										}`}
+									>
+										{preset.label}
+									</button>
+								))
+							}
+						</div>
+					</div>
+				</div>
+
+				<!-- Panel 2: By Word Count (~155 WPM Narration Speed) -->
+				<div
+					id="ab-panel-words"
+					role="tabpanel"
+					aria-labelledby="ab-tab-btn-words"
+					class="hidden p-6"
+				>
+					<div class="flex flex-wrap items-baseline justify-between gap-2">
+						<label for="ab-words-input" class="block text-[15px] font-medium text-ink">
+							Enter total book word count
+						</label>
+						<span class="text-[12px] text-mute tabular-nums">
+							Standard audiobook narration: ~155 WPM
+						</span>
+					</div>
+					<p class="mt-1 mb-4 text-[14px] text-body">
+						Estimate audiobook duration from a manuscript or book word count using professional narration pacing (~155 words per minute, or ~9,300 words per hour).
+					</p>
+
+					<div class="relative flex items-center">
+						<input
+							id="ab-words-input"
+							type="number"
+							min="100"
+							max="5000000"
+							step="1000"
+							value="90000"
+							class="w-full rounded-sm border border-hairline bg-canvas px-4 py-3 text-[24px] font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+						/>
+						<span class="pointer-events-none absolute right-4 text-[14px] text-mute">
+							words
+						</span>
+					</div>
+
+					<!-- Common Book Word Count Presets -->
+					<div class="mt-5">
+						<span class="mb-2.5 block text-[13px] font-medium text-mute">
+							Common book word counts
+						</span>
+						<div class="flex flex-wrap gap-2">
+							{
+								[
+									{ words: 40000, label: '40,000 words (Novella)' },
+									{ words: 65000, label: '65,000 words (Non-fiction)' },
+									{ words: 90000, label: '90,000 words (Novel)' },
+									{ words: 120000, label: '120,000 words (Long novel)' },
+									{ words: 180000, label: '180,000 words (Epic)' },
+								].map((preset) => (
+									<button
+										type="button"
+										data-words-preset={preset.words}
+										class={`ab-words-preset cursor-pointer rounded-sm border px-3 py-1.5 text-[13px] font-medium tabular-nums transition-colors ${
+											preset.words === 90000
+												? 'border-primary bg-primary text-on-primary'
+												: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+										}`}
+									>
+										{preset.label}
+									</button>
+								))
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Instant Playback Speed Comparison Grid -->
+			<div class="border-t border-hairline px-6 py-5">
+				<div class="mb-3 flex items-center justify-between gap-2">
+					<h2 class="text-[14px] font-semibold text-ink">
+						Listening time across popular playback speeds
+					</h2>
+					<span id="ab-comparison-base-badge" class="text-[12px] text-mute tabular-nums">
+						For 10 hr 0 min book
+					</span>
+				</div>
+
+				<div class="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px]">
+						<span class="text-body tabular-nums">1.0x <span class="text-mute">(Original)</span></span>
+						<strong id="ab-comp-100" class="font-semibold text-ink tabular-nums">10 hr 0 min</strong>
+					</div>
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px]">
+						<span class="text-body tabular-nums">1.25x <span class="text-mute">(-20%)</span></span>
+						<strong id="ab-comp-125" class="font-semibold text-ink tabular-nums">8 hr 0 min</strong>
+					</div>
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px]">
+						<span class="text-body tabular-nums">1.5x <span class="text-mute">(-33%)</span></span>
+						<strong id="ab-comp-150" class="font-semibold text-ink tabular-nums">6 hr 40 min</strong>
+					</div>
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px]">
+						<span class="text-body tabular-nums">1.75x <span class="text-mute">(-43%)</span></span>
+						<strong id="ab-comp-175" class="font-semibold text-ink tabular-nums">5 hr 43 min</strong>
+					</div>
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px]">
+						<span class="text-body tabular-nums">2.0x <span class="text-mute">(-50%)</span></span>
+						<strong id="ab-comp-200" class="font-semibold text-ink tabular-nums">5 hr 0 min</strong>
+					</div>
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px]">
+						<span class="text-body">Silent read <span class="text-mute tabular-nums">(238 WPM)</span></span>
+						<strong id="ab-comp-silent" class="font-semibold text-ink tabular-nums">6 hr 31 min</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Right Column: Playback Speed Selector & Daily Listening Schedule -->
+		<div class="whisper-shadow flex flex-col justify-between divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated lg:col-span-5">
+			<!-- Section A: Playback Speed Selector (Preset Pills + 0.5x–3.0x Slider) -->
+			<div class="p-5 sm:p-6">
+				<div class="flex items-baseline justify-between gap-2">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						Playback speed
+					</h2>
+					<span
+						id="ab-active-speed-display"
+						class="text-[14px] font-semibold text-ink tabular-nums"
+					>
+						1.25x (~194 WPM)
+					</span>
+				</div>
+				<p class="mt-1 mb-3.5 text-[13px] text-body">
+					Choose a quick preset speed or dial in a custom playback rate between 0.5x and 3.0x.
+				</p>
+
+				<!-- Quick Preset Speed Pills (0.75x, 1.0x, 1.25x, 1.5x, 1.75x, 2.0x) -->
+				<div
+					role="group"
+					aria-label="Playback speed presets"
+					class="grid grid-cols-3 gap-2 sm:grid-cols-6"
+				>
+					{
+						[0.75, 1.0, 1.25, 1.5, 1.75, 2.0].map((spd) => (
+							<button
+								type="button"
+								data-speed-preset={spd}
+								class={`ab-speed-pill cursor-pointer rounded-sm border py-2 text-center text-[13px] font-medium tabular-nums transition-all ${
+									spd === 1.25
+										? 'border-primary bg-primary text-on-primary'
+										: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+								}`}
+							>
+								{spd === 1 || spd === 2 ? `${spd.toFixed(1)}x` : `${spd}x`}
+							</button>
+						))
+					}
+				</div>
+
+				<!-- Fine-Grained Custom Speed Slider (0.5x – 3.0x) -->
+				<div class="mt-5 rounded-sm border border-hairline bg-canvas p-4">
+					<div class="mb-2 flex items-center justify-between">
+						<label for="ab-speed-slider" class="text-[13px] font-medium text-body">
+							Custom playback speed
+						</label>
+						<output
+							id="ab-slider-value"
+							for="ab-speed-slider"
+							class="text-[14px] font-semibold text-ink tabular-nums"
+						>
+							1.25x
+						</output>
+					</div>
+					<input
+						id="ab-speed-slider"
+						type="range"
+						min="0.5"
+						max="3.0"
+						step="0.05"
+						value="1.25"
+						class="geist-slider"
+					/>
+					<div class="mt-1.5 flex justify-between text-[11px] text-mute tabular-nums">
+						<span>0.5x (Slower)</span>
+						<span>1.0x</span>
+						<span>2.0x</span>
+						<span>3.0x (Max)</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Section B: Practical Daily Listening Schedule -->
+			<div class="p-5 sm:p-6">
+				<div class="flex items-baseline justify-between gap-2">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						Daily listening schedule
+					</h2>
+					<span id="ab-schedule-speed-badge" class="text-[12px] text-mute tabular-nums">
+						At 1.25x speed
+					</span>
+				</div>
+				<p class="mt-1 mb-4 text-[13px] text-body">
+					See how many days it takes to finish this audiobook during your daily commute, workout, or evening routine.
+				</p>
+
+				<div class="space-y-2.5">
+					<!-- 30 min / day -->
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-4 py-3">
+						<div>
+							<span class="block text-[14px] font-semibold text-ink tabular-nums">
+								30 minutes / day
+							</span>
+							<span class="text-[12px] text-mute">
+								Short daily commute or walk
+							</span>
+						</div>
+						<div class="text-right">
+							<strong
+								id="ab-sched-30-days"
+								class="block text-[16px] font-semibold text-ink tabular-nums"
+							>
+								16 days
+							</strong>
+							<span id="ab-sched-30-sub" class="text-[12px] text-mute tabular-nums">
+								~2.3 weeks
+							</span>
+						</div>
+					</div>
+
+					<!-- 45 min / day -->
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-4 py-3">
+						<div>
+							<span class="block text-[14px] font-semibold text-ink tabular-nums">
+								45 minutes / day
+							</span>
+							<span class="text-[12px] text-mute">
+								Daily workout or chores
+							</span>
+						</div>
+						<div class="text-right">
+							<strong
+								id="ab-sched-45-days"
+								class="block text-[16px] font-semibold text-ink tabular-nums"
+							>
+								11 days
+							</strong>
+							<span id="ab-sched-45-sub" class="text-[12px] text-mute tabular-nums">
+								~1.5 weeks
+							</span>
+						</div>
+					</div>
+
+					<!-- 60 min / day -->
+					<div class="flex items-center justify-between rounded-sm border border-hairline bg-canvas px-4 py-3">
+						<div>
+							<span class="block text-[14px] font-semibold text-ink tabular-nums">
+								60 minutes / day
+							</span>
+							<span class="text-[12px] text-mute">
+								1 hour dedicated daily listen
+							</span>
+						</div>
+						<div class="text-right">
+							<strong
+								id="ab-sched-60-days"
+								class="block text-[16px] font-semibold text-ink tabular-nums"
+							>
+								8 days
+							</strong>
+							<span id="ab-sched-60-sub" class="text-[12px] text-mute tabular-nums">
+								~1.1 weeks
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Related Tools Note (Protected Against Draft Links) -->
+	<aside
+		aria-label="Related reading and page tools"
+		class="mt-5 flex flex-col items-start justify-between gap-3 pt-2 text-[14px] text-body sm:flex-row sm:items-center"
+	>
+		<p class="leading-[22px]">
+			Prefer reading on the page? Check your silent pace with the{' '}
+			{
+				speedTestTool?.status === 'live' ? (
+					<a
+						href={speedTestTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{speedTestTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{speedTestTool?.shortName ?? 'Reading Speed Test'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			, estimate article duration in the{' '}
+			{
+				readingCounterTool?.status === 'live' ? (
+					<a
+						href={readingCounterTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{readingCounterTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{readingCounterTool?.shortName ?? 'Reading Time Counter'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			, or convert book length with{' '}
+			{
+				wordsToPagesTool?.status === 'live' ? (
+					<a
+						href={wordsToPagesTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{wordsToPagesTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{wordsToPagesTool?.shortName ?? 'Words to Pages'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}.
+		</p>
+	</aside>
+</section>
+
+<script>
+	function initAudiobookCalculator() {
+		const NARRATION_WPM = 155; // Standard audiobook narration rate (~155 WPM / ~9,300 words per hour)
+		const SILENT_WPM = 238;
+
+		let mode: 'length' | 'words' = 'length';
+		let playbackSpeed = 1.25;
+
+		// DOM Elements
+		const modeBtns = document.querySelectorAll<HTMLButtonElement>('.ab-mode-btn');
+		const panelLength = document.getElementById('ab-panel-length');
+		const panelWords = document.getElementById('ab-panel-words');
+		const btnReset = document.getElementById('ab-btn-reset');
+
+		const hoursInput = document.getElementById('ab-hours-input') as HTMLInputElement | null;
+		const minutesInput = document.getElementById('ab-minutes-input') as HTMLInputElement | null;
+		const wordsInput = document.getElementById('ab-words-input') as HTMLInputElement | null;
+
+		const durationPresetBtns = document.querySelectorAll<HTMLButtonElement>('.ab-duration-preset');
+		const wordsPresetBtns = document.querySelectorAll<HTMLButtonElement>('.ab-words-preset');
+		const speedPillBtns = document.querySelectorAll<HTMLButtonElement>('.ab-speed-pill');
+		const speedSlider = document.getElementById('ab-speed-slider') as HTMLInputElement | null;
+		const sliderValueOut = document.getElementById('ab-slider-value');
+		const activeSpeedDisplay = document.getElementById('ab-active-speed-display');
+
+		// Summary Bar Elements
+		const badgeSpeed = document.getElementById('ab-badge-speed');
+		const metricAdjustedTime = document.getElementById('ab-metric-adjusted-time');
+		const metricAdjustedSub = document.getElementById('ab-metric-adjusted-sub');
+		const labelSaved = document.getElementById('ab-label-saved');
+		const badgeSavedPct = document.getElementById('ab-badge-saved-pct');
+		const metricTimeSaved = document.getElementById('ab-metric-time-saved');
+		const metricSavedSub = document.getElementById('ab-metric-saved-sub');
+		const badgeMode = document.getElementById('ab-badge-mode');
+		const metricBaseTime = document.getElementById('ab-metric-base-time');
+		const metricWordsEst = document.getElementById('ab-metric-words-est');
+		const metricDays45 = document.getElementById('ab-metric-days-45');
+		const metricDaysSub = document.getElementById('ab-metric-days-sub');
+
+		// Comparison & Schedule Elements
+		const comparisonBaseBadge = document.getElementById('ab-comparison-base-badge');
+		const comp100 = document.getElementById('ab-comp-100');
+		const comp125 = document.getElementById('ab-comp-125');
+		const comp150 = document.getElementById('ab-comp-150');
+		const comp175 = document.getElementById('ab-comp-175');
+		const comp200 = document.getElementById('ab-comp-200');
+		const compSilent = document.getElementById('ab-comp-silent');
+
+		const scheduleSpeedBadge = document.getElementById('ab-schedule-speed-badge');
+		const sched30Days = document.getElementById('ab-sched-30-days');
+		const sched30Sub = document.getElementById('ab-sched-30-sub');
+		const sched45Days = document.getElementById('ab-sched-45-days');
+		const sched45Sub = document.getElementById('ab-sched-45-sub');
+		const sched60Days = document.getElementById('ab-sched-60-days');
+		const sched60Sub = document.getElementById('ab-sched-60-sub');
+
+		function formatSpeedLabel(spd: number): string {
+			const rounded = Math.round(spd * 100) / 100;
+			if (Number.isInteger(rounded)) return `${rounded.toFixed(1)}x`;
+			return `${rounded}x`;
+		}
+
+		function formatHoursMinutes(totalMinutesFloat: number): string {
+			const totalMinutes = Math.max(0, Math.round(totalMinutesFloat));
+			const hrs = Math.floor(totalMinutes / 60);
+			const mins = totalMinutes % 60;
+			if (hrs === 0) return `${mins} min`;
+			return `${hrs.toLocaleString()} hr ${mins} min`;
+		}
+
+		function formatDaysCount(days: number): string {
+			if (days <= 0) return '0 days';
+			return days === 1 ? '1 day' : `${days.toLocaleString()} days`;
+		}
+
+		function formatWeeksSub(days: number, totalMinutes: number): string {
+			if (totalMinutes <= 0) return '0 hours total';
+			if (days <= 7) {
+				const hrs = (totalMinutes / 60).toFixed(1);
+				return `${hrs} listening hours total`;
+			}
+			const weeks = (days / 7).toFixed(1);
+			return `~${weeks} weeks`;
+		}
+
+		function syncSpeedControls() {
+			const speedStr = formatSpeedLabel(playbackSpeed);
+			const effectiveWpm = Math.round(NARRATION_WPM * playbackSpeed);
+
+			if (speedSlider) speedSlider.value = String(playbackSpeed);
+			if (sliderValueOut) sliderValueOut.textContent = speedStr;
+			if (activeSpeedDisplay) {
+				activeSpeedDisplay.textContent = `${speedStr} (~${effectiveWpm} WPM)`;
+			}
+
+			speedPillBtns.forEach((btn) => {
+				const presetVal = Number(btn.dataset.speedPreset);
+				const isMatch = Math.abs(presetVal - playbackSpeed) < 0.001;
+				btn.className = `ab-speed-pill cursor-pointer rounded-sm border py-2 text-center text-[13px] font-medium tabular-nums transition-all ${
+					isMatch
+						? 'border-primary bg-primary text-on-primary'
+						: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+				}`;
+			});
+		}
+
+		function syncDurationPresets(h: number, m: number) {
+			durationPresetBtns.forEach((btn) => {
+				const ph = Number(btn.dataset.hoursPreset);
+				const pm = Number(btn.dataset.minutesPreset);
+				const isMatch = ph === h && pm === m;
+				btn.className = `ab-duration-preset cursor-pointer rounded-sm border px-3 py-1.5 text-[13px] font-medium tabular-nums transition-colors ${
+					isMatch
+						? 'border-primary bg-primary text-on-primary'
+						: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+				}`;
+			});
+		}
+
+		function syncWordsPresets(w: number) {
+			wordsPresetBtns.forEach((btn) => {
+				const pw = Number(btn.dataset.wordsPreset);
+				const isMatch = pw === w;
+				btn.className = `ab-words-preset cursor-pointer rounded-sm border px-3 py-1.5 text-[13px] font-medium tabular-nums transition-colors ${
+					isMatch
+						? 'border-primary bg-primary text-on-primary'
+						: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+				}`;
+			});
+		}
+
+		function updateUI() {
+			let baseMinutes = 0;
+			let totalWords = 0;
+
+			if (mode === 'length') {
+				const hrs = Math.max(0, Math.min(500, Math.floor(Number(hoursInput?.value) || 0)));
+				const mins = Math.max(0, Math.min(59, Math.floor(Number(minutesInput?.value) || 0)));
+				baseMinutes = hrs * 60 + mins;
+				totalWords = Math.round(baseMinutes * NARRATION_WPM);
+				if (wordsInput) {
+					wordsInput.value = String(totalWords);
+				}
+			} else {
+				totalWords = Math.max(0, Math.round(Number(wordsInput?.value) || 0));
+				baseMinutes = totalWords / NARRATION_WPM;
+				if (hoursInput && minutesInput) {
+					const roundedMins = Math.round(baseMinutes);
+					hoursInput.value = String(Math.floor(roundedMins / 60));
+					minutesInput.value = String(roundedMins % 60);
+				}
+			}
+
+			const adjustedMinutes = playbackSpeed > 0 ? baseMinutes / playbackSpeed : 0;
+			const diffMinutes = baseMinutes - adjustedMinutes; // positive = saved, negative = added
+			const speedStr = formatSpeedLabel(playbackSpeed);
+			const baseFormatted = formatHoursMinutes(baseMinutes);
+			const adjustedFormatted = formatHoursMinutes(adjustedMinutes);
+
+			// Stat 1: Adjusted listening time
+			if (badgeSpeed) badgeSpeed.textContent = `At ${speedStr} speed`;
+			if (metricAdjustedTime) metricAdjustedTime.textContent = adjustedFormatted;
+			if (metricAdjustedSub) {
+				metricAdjustedSub.textContent = `${Math.round(adjustedMinutes).toLocaleString()} total minutes of listening`;
+			}
+
+			// Stat 2: Time saved or added
+			if (Math.abs(playbackSpeed - 1.0) < 0.001) {
+				if (labelSaved) labelSaved.textContent = 'Time saved';
+				if (badgeSavedPct) badgeSavedPct.textContent = 'Original pace';
+				if (metricTimeSaved) metricTimeSaved.textContent = '0 min';
+				if (metricSavedSub) metricSavedSub.textContent = `Standard 1.0x narration pace`;
+			} else if (diffMinutes > 0) {
+				const pctSaved = Math.round((diffMinutes / Math.max(1, baseMinutes)) * 100);
+				if (labelSaved) labelSaved.textContent = 'Time saved';
+				if (badgeSavedPct) badgeSavedPct.textContent = `${pctSaved}% shorter`;
+				if (metricTimeSaved) metricTimeSaved.textContent = formatHoursMinutes(diffMinutes);
+				if (metricSavedSub) metricSavedSub.textContent = `Compared to ${baseFormatted} at 1.0x`;
+			} else {
+				const addedMinutes = Math.abs(diffMinutes);
+				const pctAdded = Math.round((addedMinutes / Math.max(1, baseMinutes)) * 100);
+				if (labelSaved) labelSaved.textContent = 'Time added';
+				if (badgeSavedPct) badgeSavedPct.textContent = `+${pctAdded}% longer`;
+				if (metricTimeSaved) metricTimeSaved.textContent = `+${formatHoursMinutes(addedMinutes)}`;
+				if (metricSavedSub) metricSavedSub.textContent = `Slower than ${baseFormatted} at 1.0x`;
+			}
+
+			// Stat 3: Original 1.0x length
+			if (badgeMode) {
+				badgeMode.textContent = mode === 'length' ? 'By length' : 'By word count';
+			}
+			if (metricBaseTime) metricBaseTime.textContent = baseFormatted;
+			if (metricWordsEst) {
+				metricWordsEst.textContent = `~${totalWords.toLocaleString()} words at ${NARRATION_WPM} WPM narration`;
+			}
+
+			// Daily Listening Schedule (30, 45, 60 min/day)
+			const days30 = adjustedMinutes > 0 ? Math.ceil(adjustedMinutes / 30) : 0;
+			const days45 = adjustedMinutes > 0 ? Math.ceil(adjustedMinutes / 45) : 0;
+			const days60 = adjustedMinutes > 0 ? Math.ceil(adjustedMinutes / 60) : 0;
+
+			if (metricDays45) metricDays45.textContent = formatDaysCount(days45);
+			if (metricDaysSub) {
+				metricDaysSub.textContent = `${days30} ${days30 === 1 ? 'day' : 'days'} at 30m · ${days60} ${days60 === 1 ? 'day' : 'days'} at 60m`;
+			}
+
+			if (scheduleSpeedBadge) scheduleSpeedBadge.textContent = `At ${speedStr} speed`;
+			if (sched30Days) sched30Days.textContent = formatDaysCount(days30);
+			if (sched30Sub) sched30Sub.textContent = formatWeeksSub(days30, adjustedMinutes);
+			if (sched45Days) sched45Days.textContent = formatDaysCount(days45);
+			if (sched45Sub) sched45Sub.textContent = formatWeeksSub(days45, adjustedMinutes);
+			if (sched60Days) sched60Days.textContent = formatDaysCount(days60);
+			if (sched60Sub) sched60Sub.textContent = formatWeeksSub(days60, adjustedMinutes);
+
+			// Speed Comparison Grid
+			if (comparisonBaseBadge) {
+				comparisonBaseBadge.textContent = `For ${baseFormatted} book`;
+			}
+			if (comp100) comp100.textContent = formatHoursMinutes(baseMinutes / 1.0);
+			if (comp125) comp125.textContent = formatHoursMinutes(baseMinutes / 1.25);
+			if (comp150) comp150.textContent = formatHoursMinutes(baseMinutes / 1.5);
+			if (comp175) comp175.textContent = formatHoursMinutes(baseMinutes / 1.75);
+			if (comp200) comp200.textContent = formatHoursMinutes(baseMinutes / 2.0);
+			if (compSilent) {
+				const silentMinutes = totalWords / SILENT_WPM;
+				compSilent.textContent = formatHoursMinutes(silentMinutes);
+			}
+		}
+
+		// Mode Tab Switching
+		modeBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const targetMode = (btn.dataset.mode as 'length' | 'words') || 'length';
+				mode = targetMode;
+
+				modeBtns.forEach((b) => {
+					const active = b.dataset.mode === mode;
+					b.setAttribute('aria-selected', active ? 'true' : 'false');
+					b.className = active
+						? 'ab-mode-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all'
+						: 'ab-mode-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink';
+				});
+
+				panelLength?.classList.toggle('hidden', mode !== 'length');
+				panelWords?.classList.toggle('hidden', mode !== 'words');
+				updateUI();
+			});
+		});
+
+		// Hours & Minutes inputs
+		const handleLengthInput = () => {
+			mode = 'length';
+			const h = Number(hoursInput?.value) || 0;
+			const m = Number(minutesInput?.value) || 0;
+			syncDurationPresets(h, m);
+			updateUI();
+		};
+		hoursInput?.addEventListener('input', handleLengthInput);
+		minutesInput?.addEventListener('input', handleLengthInput);
+
+		durationPresetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				mode = 'length';
+				const h = Number(btn.dataset.hoursPreset) || 0;
+				const m = Number(btn.dataset.minutesPreset) || 0;
+				if (hoursInput) hoursInput.value = String(h);
+				if (minutesInput) minutesInput.value = String(m);
+				syncDurationPresets(h, m);
+				updateUI();
+			});
+		});
+
+		// Word count input & presets
+		wordsInput?.addEventListener('input', () => {
+			mode = 'words';
+			const w = Number(wordsInput.value) || 0;
+			syncWordsPresets(w);
+			updateUI();
+		});
+
+		wordsPresetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				mode = 'words';
+				const w = Number(btn.dataset.wordsPreset) || 90000;
+				if (wordsInput) wordsInput.value = String(w);
+				syncWordsPresets(w);
+				updateUI();
+			});
+		});
+
+		// Playback speed preset pills
+		speedPillBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				playbackSpeed = Number(btn.dataset.speedPreset) || 1.0;
+				syncSpeedControls();
+				updateUI();
+			});
+		});
+
+		// Fine-grained speed slider
+		speedSlider?.addEventListener('input', () => {
+			playbackSpeed = Number(speedSlider.value) || 1.0;
+			syncSpeedControls();
+			updateUI();
+		});
+
+		// Reset button
+		btnReset?.addEventListener('click', () => {
+			mode = 'length';
+			playbackSpeed = 1.25;
+			if (hoursInput) hoursInput.value = '10';
+			if (minutesInput) minutesInput.value = '0';
+			if (wordsInput) wordsInput.value = '93000';
+
+			modeBtns.forEach((b) => {
+				const active = b.dataset.mode === 'length';
+				b.setAttribute('aria-selected', active ? 'true' : 'false');
+				b.className = active
+					? 'ab-mode-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all'
+					: 'ab-mode-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink';
+			});
+
+			panelLength?.classList.remove('hidden');
+			panelWords?.classList.add('hidden');
+			syncDurationPresets(10, 0);
+			syncWordsPresets(90000);
+			syncSpeedControls();
+			updateUI();
+		});
+
+		syncSpeedControls();
+		updateUI();
+	}
+
+	initAudiobookCalculator();
+</script>
+

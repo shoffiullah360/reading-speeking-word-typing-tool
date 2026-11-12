@@ -1,0 +1,1484 @@
+---
+import { getToolById } from '../config/site';
+
+const readingTool = getToolById('reading-time-counter');
+const speedTestTool = getToolById('reading-speed-test');
+const wordsToPagesTool = getToolById('words-to-pages');
+---
+
+<section
+	id="speech-calculator"
+	aria-label="Speech Time Calculator and Rehearsal Workspace"
+	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
+>
+	<!-- Live Summary Bar -->
+	<div class="whisper-shadow mb-6 grid grid-cols-1 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+		<!-- Stat 1: Speaking time -->
+		<article class="flex flex-col justify-between p-5">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Speaking time
+				</span>
+				<span
+					id="badge-speaking-wpm"
+					class="text-[12px] text-mute tabular-nums"
+				>
+					130 WPM
+				</span>
+			</div>
+			<div class="my-2.5">
+				<output
+					id="metric-speech-time"
+					aria-live="polite"
+					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0 min 0 sec
+				</output>
+			</div>
+			<p id="metric-speech-sub" class="text-[12px] text-mute">
+				Conversational / keynote pace
+			</p>
+		</article>
+
+		<!-- Stat 2: Word & sentence count -->
+		<article class="flex flex-col justify-between p-5 sm:border-l sm:border-hairline lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span
+					id="label-word-metric"
+					class="text-[13px] font-medium text-body"
+				>
+					Word count
+				</span>
+				<span
+					id="badge-active-mode"
+					class="text-[12px] text-mute"
+				>
+					Script to time
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="metric-word-count"
+					aria-live="polite"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[14px] text-body">words</span>
+			</div>
+			<div class="flex items-center gap-4 text-[12px] text-mute">
+				<span><strong id="metric-sentence-count" class="font-medium text-ink tabular-nums">0</strong> sentences</span>
+				<span><strong id="metric-char-count" class="font-medium text-ink tabular-nums">0</strong> characters</span>
+			</div>
+		</article>
+
+		<!-- Stat 3: Estimated slides -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-hairline lg:border-t-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Estimated slides
+				</span>
+				<span
+					id="badge-slide-rate"
+					class="text-[12px] text-mute"
+				>
+					1 slide / min
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="metric-slide-count"
+					aria-live="polite"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[14px] text-body">slides</span>
+			</div>
+			<p id="metric-slide-sub" class="text-[12px] text-mute tabular-nums">
+				Typical range: 0–0 slides
+			</p>
+		</article>
+
+		<!-- Stat 4: Speaking pace -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-hairline lg:border-t-0 lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Speaking pace
+				</span>
+				<span
+					id="cadence-dot"
+					class="inline-block h-2 w-2 rounded-full bg-vercel-blue"
+					aria-hidden="true"
+				></span>
+			</div>
+			<div class="my-2.5 flex items-center">
+				<output
+					id="metric-cadence-badge"
+					aria-live="polite"
+					class="text-[24px] leading-[32px] font-semibold tracking-[-0.5px] text-ink"
+				>
+					Keynote
+				</output>
+			</div>
+			<p id="metric-cadence-detail" class="text-[12px] text-mute tabular-nums">
+				130 WPM · 2.2 words/sec
+			</p>
+		</article>
+	</div>
+
+	<!-- Main Dual-Column Workspace -->
+	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+		<!-- Left Column: 3 Interactive Speaking Modes -->
+		<div class="whisper-shadow flex flex-col rounded-md border border-hairline bg-canvas-elevated lg:col-span-7">
+			<!-- Tab Bar Header -->
+			<div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-5 py-3">
+				<div
+					role="tablist"
+					aria-label="Speech calculation mode"
+					class="inline-flex flex-wrap items-center gap-1"
+				>
+					<button
+						type="button"
+						role="tab"
+						id="tab-btn-script"
+						aria-selected="true"
+						aria-controls="tab-panel-script"
+						data-tab="script"
+						class="speech-tab-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all"
+					>
+						Script to time
+					</button>
+					<button
+						type="button"
+						role="tab"
+						id="tab-btn-target"
+						aria-selected="false"
+						aria-controls="tab-panel-target"
+						data-tab="target"
+						class="speech-tab-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
+					>
+						Time to words
+					</button>
+					<button
+						type="button"
+						role="tab"
+						id="tab-btn-rehearsal"
+						aria-selected="false"
+						aria-controls="tab-panel-rehearsal"
+						data-tab="rehearsal"
+						class="speech-tab-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
+					>
+						Rehearsal timer
+					</button>
+				</div>
+
+				<!-- Action Controls for Tab 1 (Script Mode) -->
+				<div id="script-toolbar-actions" class="flex items-center gap-2">
+					<button
+						type="button"
+						id="btn-load-sample"
+						class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-body transition-colors hover:bg-hairline-soft hover:text-ink"
+					>
+						Sample speech
+					</button>
+					<label
+						for="speech-file-upload"
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+					>
+						<svg class="h-3.5 w-3.5 text-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+							<polyline points="17 8 12 3 7 8" />
+							<line x1="12" y1="3" x2="12" y2="15" />
+						</svg>
+						Upload .txt
+						<input id="speech-file-upload" type="file" accept=".txt,text/plain,.md,text/markdown" class="sr-only" />
+					</label>
+					<button
+						type="button"
+						id="btn-clear-script"
+						class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-vercel-error"
+					>
+						Clear
+					</button>
+				</div>
+			</div>
+
+			<!-- Tab 1 Panel: Script to Speech Time -->
+			<div
+				id="tab-panel-script"
+				role="tabpanel"
+				aria-labelledby="tab-btn-script"
+				class="relative flex flex-1 flex-col p-5"
+			>
+				<!-- Drag and drop overlay -->
+				<div
+					id="speech-dropzone-overlay"
+					class="pointer-events-none absolute inset-3 z-20 hidden flex-col items-center justify-center rounded-md border-2 border-dashed border-vercel-blue bg-canvas-elevated/95 backdrop-blur-xs transition-opacity"
+				>
+					<svg class="mb-2 h-8 w-8 text-vercel-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+						<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+						<polyline points="14 2 14 8 20 8" />
+						<line x1="12" y1="18" x2="12" y2="12" />
+						<line x1="9" y1="15" x2="15" y2="15" />
+					</svg>
+					<p class="text-[14px] font-medium text-ink">Drop your .txt or .md script here</p>
+					<p class="text-[12px] text-mute">Runs privately in your browser</p>
+				</div>
+
+				<label for="speech-textarea" class="sr-only">Paste or type your speech script to calculate speaking duration</label>
+				<textarea
+					id="speech-textarea"
+					rows="12"
+					placeholder="Paste or type your speech script, talk notes, or podcast outline here..."
+					class="w-full flex-1 resize-y bg-transparent font-sans text-[15px] leading-[25px] text-ink placeholder:text-faint focus:outline-none"
+				></textarea>
+
+				<!-- Bottom Status Bar inside Script Panel -->
+				<div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-hairline pt-3 text-[13px] text-mute">
+					<div class="flex flex-wrap items-center gap-4 tabular-nums">
+						<span>Words: <strong id="inline-word-counter" class="font-medium text-ink">0</strong></span>
+						<span>Sentences: <strong id="inline-sentence-counter" class="font-medium text-ink">0</strong></span>
+						<span>Paragraphs: <strong id="inline-para-counter" class="font-medium text-ink">0</strong></span>
+						<span>Slides: <strong id="inline-slide-counter" class="font-medium text-ink">0</strong></span>
+					</div>
+					<div class="flex items-center gap-3">
+						<span id="speech-file-status" class="text-[12px] text-mute">
+							Runs privately in your browser
+						</span>
+						<button
+							type="button"
+							id="btn-jump-rehearsal"
+							class="cursor-pointer text-[13px] font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:text-vercel-blue"
+						>
+							Practice with timer →
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- Tab 2 Panel: Target Time to Words -->
+			<div
+				id="tab-panel-target"
+				role="tabpanel"
+				aria-labelledby="tab-btn-target"
+				class="hidden flex-1 flex-col justify-between p-6"
+			>
+				<div>
+					<span class="block text-[15px] font-medium text-ink">
+						Target speaking time
+					</span>
+					<p class="mt-1 mb-4 text-[14px] text-body">
+						Enter your speaking time slot to see how many words you should write for your pace.
+					</p>
+
+					<!-- Minutes & Seconds Inputs -->
+					<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+						<div>
+							<label for="target-minutes-input" class="mb-1.5 block text-[13px] font-medium text-mute">
+								Minutes
+							</label>
+							<div class="relative flex items-center">
+								<input
+									id="target-minutes-input"
+									type="number"
+									min="0"
+									max="600"
+									step="1"
+									value="5"
+									class="w-full rounded-sm border border-hairline bg-canvas px-4 py-3 text-[22px] font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+								/>
+								<span class="pointer-events-none absolute right-3.5 text-[13px] text-mute">
+									min
+								</span>
+							</div>
+						</div>
+
+						<div>
+							<label for="target-seconds-input" class="mb-1.5 block text-[13px] font-medium text-mute">
+								Seconds
+							</label>
+							<div class="relative flex items-center">
+								<input
+									id="target-seconds-input"
+									type="number"
+									min="0"
+									max="59"
+									step="5"
+									value="0"
+									class="w-full rounded-sm border border-hairline bg-canvas px-4 py-3 text-[22px] font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+								/>
+								<span class="pointer-events-none absolute right-3.5 text-[13px] text-mute">
+									sec
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Quick Speech Duration Presets -->
+					<div class="mt-5">
+						<span class="mb-2.5 block text-[13px] font-medium text-mute">
+							Common speech lengths
+						</span>
+						<div class="flex flex-wrap gap-2">
+							<button
+								type="button"
+								data-min-preset="1"
+								data-sec-preset="0"
+								class="duration-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								Elevator pitch (1 min)
+							</button>
+							<button
+								type="button"
+								data-min-preset="3"
+								data-sec-preset="0"
+								class="duration-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								Lightning talk (3 min)
+							</button>
+							<button
+								type="button"
+								data-min-preset="5"
+								data-sec-preset="0"
+								class="duration-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-3 py-1.5 text-[13px] font-medium text-on-primary transition-colors"
+							>
+								Standard speech (5 min)
+							</button>
+							<button
+								type="button"
+								data-min-preset="10"
+								data-sec-preset="0"
+								class="duration-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								Conference talk (10 min)
+							</button>
+							<button
+								type="button"
+								data-min-preset="18"
+								data-sec-preset="0"
+								class="duration-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								TED talk (18 min)
+							</button>
+							<button
+								type="button"
+								data-min-preset="30"
+								data-sec-preset="0"
+								class="duration-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								Keynote (30 min)
+							</button>
+							<button
+								type="button"
+								data-min-preset="45"
+								data-sec-preset="0"
+								class="duration-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							>
+								Lecture (45 min)
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Target Word Output Summary -->
+				<div class="mt-6 border-t border-hairline pt-4">
+					<div class="flex flex-wrap items-baseline justify-between gap-2 pb-3">
+						<span class="text-[14px] text-body">
+							Target word count at <strong id="target-wpm-inline" class="font-medium text-ink tabular-nums">130 WPM</strong>
+						</span>
+						<strong id="target-derived-words" class="text-[20px] font-semibold text-ink tabular-nums">
+							650 words
+						</strong>
+					</div>
+					<div class="space-y-1.5 text-[13px]">
+						<div class="flex items-center justify-between">
+							<span class="text-mute">Word range (100–180 WPM)</span>
+							<strong id="target-word-range" class="font-medium text-ink tabular-nums">500 – 900 words</strong>
+						</div>
+						<div class="flex items-center justify-between">
+							<span class="text-mute">Double-spaced pages (250 words/page)</span>
+							<strong id="target-double-pages" class="font-medium text-ink tabular-nums">2.6 pages</strong>
+						</div>
+						<div class="flex items-center justify-between">
+							<span class="text-mute">Suggested slides (1 slide/min)</span>
+							<strong id="target-slide-count" class="font-medium text-ink tabular-nums">5 slides</strong>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Tab 3 Panel: Live Rehearsal Countdown Timer -->
+			<div
+				id="tab-panel-rehearsal"
+				role="tabpanel"
+				aria-labelledby="tab-btn-rehearsal"
+				class="hidden flex-1 flex-col justify-between p-6"
+			>
+				<div>
+					<div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+						<div class="flex items-center gap-2">
+							<span
+								id="timer-status-dot"
+								class="inline-block h-2 w-2 rounded-full bg-mute"
+								aria-hidden="true"
+							></span>
+							<span id="timer-sync-label" class="text-[13px] text-mute">
+								Synced to speech time
+							</span>
+						</div>
+
+						<label class="inline-flex cursor-pointer items-center gap-2 text-[13px] text-body select-none hover:text-ink">
+							<input
+								id="timer-audio-toggle"
+								type="checkbox"
+								checked
+								class="h-3.5 w-3.5 accent-primary"
+							/>
+							<span>Chime when timer ends</span>
+						</label>
+					</div>
+
+					<!-- Countdown Display Surface -->
+					<div
+						id="timer-display-box"
+						class="relative flex flex-col items-center justify-center rounded-md border border-hairline bg-canvas px-6 py-7 text-center transition-colors"
+					>
+						<span
+							id="timer-state-eyebrow"
+							class="mb-1 text-[13px] font-medium text-mute"
+						>
+							Ready to rehearse
+						</span>
+
+						<output
+							id="rehearsal-timer-display"
+							aria-live="off"
+							class="font-sans text-[48px] leading-[56px] font-semibold tracking-[-2px] text-ink tabular-nums sm:text-[64px] sm:leading-[68px]"
+						>
+							00:00
+						</output>
+
+						<p id="timer-target-sub" class="mt-2 text-[13px] text-mute tabular-nums">
+							Total time: 0 min 0 sec (130 WPM)
+						</p>
+
+						<!-- Subtle Progress Bar -->
+						<div class="mt-5 h-1.5 w-full max-w-md overflow-hidden rounded-full bg-hairline">
+							<div
+								id="rehearsal-progress-bar"
+								class="h-full w-full bg-primary transition-all duration-300"
+							></div>
+						</div>
+
+						<!-- Subtle Visual Alert Banner when 00:00 Reached -->
+						<div
+							id="rehearsal-complete-alert"
+							role="status"
+							aria-live="assertive"
+							class="mt-4 hidden items-center gap-2 rounded-pill border border-vercel-blue bg-canvas-elevated px-4 py-1.5 text-[13px] font-medium text-ink"
+						>
+							<span class="inline-block h-2 w-2 rounded-full bg-vercel-blue"></span>
+							<span>Time is up — rehearsal complete</span>
+						</div>
+					</div>
+
+					<!-- Primary Timer Controls: Start, Pause, Reset + Quick Adjustments -->
+					<div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+						<div class="flex items-center gap-2">
+							<button
+								type="button"
+								id="btn-timer-start"
+								class="inline-flex h-9 cursor-pointer items-center gap-2 rounded-pill bg-primary px-5 text-[14px] font-medium text-on-primary transition-opacity hover:opacity-90"
+							>
+								<svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
+									<polygon points="5 3 19 12 5 21 5 3" />
+								</svg>
+								<span id="btn-timer-start-label">Start</span>
+							</button>
+
+							<button
+								type="button"
+								id="btn-timer-pause"
+								disabled
+								class="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas-elevated px-3.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft disabled:cursor-not-allowed disabled:opacity-40"
+							>
+								Pause
+							</button>
+
+							<button
+								type="button"
+								id="btn-timer-reset"
+								class="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas-elevated px-3.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+							>
+								Reset
+							</button>
+						</div>
+
+						<div class="flex items-center gap-1.5">
+							<button
+								type="button"
+								data-timer-adjust="-30"
+								class="timer-adjust-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-[12px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+								title="Subtract 30 seconds"
+							>
+								-30s
+							</button>
+							<button
+								type="button"
+								data-timer-adjust="30"
+								class="timer-adjust-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-[12px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+								title="Add 30 seconds"
+							>
+								+30s
+							</button>
+							<button
+								type="button"
+								data-timer-adjust="60"
+								class="timer-adjust-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-[12px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+								title="Add 1 minute"
+							>
+								+1m
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Rehearsal Script Reader Preview -->
+				<div class="mt-6 border-t border-hairline pt-4">
+					<div class="mb-2 flex items-center justify-between">
+						<span class="text-[13px] font-medium text-ink">
+							Speaking notes
+						</span>
+						<span id="rehearsal-word-badge" class="text-[12px] text-mute tabular-nums">
+							0 words loaded
+						</span>
+					</div>
+					<div
+						id="rehearsal-script-preview"
+						class="max-h-36 overflow-y-auto font-sans text-[14px] leading-[22px] whitespace-pre-wrap text-body"
+					>
+						Paste your script in the "Script to time" tab to read your notes here while practicing.
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Right Column: Speaking Pace Control & Comparison (Unified, Calm Panel) -->
+		<div class="whisper-shadow flex flex-col justify-between divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated lg:col-span-5">
+			<!-- Section A: Speaking pace -->
+			<div class="p-5">
+				<div class="flex items-baseline justify-between gap-2">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						Speaking speed
+					</h2>
+					<div class="flex items-baseline gap-1 text-ink tabular-nums">
+						<span id="speaking-wpm-display" class="text-[17px] font-semibold">130</span>
+						<span class="text-[12px] text-mute">WPM</span>
+					</div>
+				</div>
+
+				<div class="my-4">
+					<label for="speaking-wpm-slider" class="sr-only">
+						Speaking pace in words per minute (100 to 220 WPM)
+					</label>
+					<input
+						id="speaking-wpm-slider"
+						type="range"
+						min="100"
+						max="220"
+						step="1"
+						value="130"
+						class="geist-slider"
+					/>
+					<div class="mt-1.5 flex justify-between text-[12px] text-mute">
+						<span>Slow (100)</span>
+						<span>Keynote (130)</span>
+						<span>Fast (220)</span>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+					<button
+						type="button"
+						data-wpm-preset="100"
+						class="wpm-preset-btn flex cursor-pointer items-center justify-between rounded-sm border border-hairline bg-canvas px-3 py-2 text-left transition-all hover:border-ink"
+					>
+						<span class="text-[13px] font-medium text-ink">Slow / formal</span>
+						<span class="text-[12px] text-mute tabular-nums">100 WPM</span>
+					</button>
+
+					<button
+						type="button"
+						data-wpm-preset="130"
+						class="wpm-preset-btn flex cursor-pointer items-center justify-between rounded-sm border border-primary bg-primary px-3 py-2 text-left text-on-primary transition-all"
+					>
+						<span class="text-[13px] font-medium">Keynote</span>
+						<span class="text-[12px] opacity-80 tabular-nums">130 WPM</span>
+					</button>
+
+					<button
+						type="button"
+						data-wpm-preset="150"
+						class="wpm-preset-btn flex cursor-pointer items-center justify-between rounded-sm border border-hairline bg-canvas px-3 py-2 text-left transition-all hover:border-ink"
+					>
+						<span class="text-[13px] font-medium text-ink">Presentation</span>
+						<span class="text-[12px] text-mute tabular-nums">150 WPM</span>
+					</button>
+
+					<button
+						type="button"
+						data-wpm-preset="180"
+						class="wpm-preset-btn flex cursor-pointer items-center justify-between rounded-sm border border-hairline bg-canvas px-3 py-2 text-left transition-all hover:border-ink"
+					>
+						<span class="text-[13px] font-medium text-ink">Fast / podcast</span>
+						<span class="text-[12px] text-mute tabular-nums">180 WPM</span>
+					</button>
+				</div>
+			</div>
+
+			<!-- Section B: Pause Buffer & Pace Comparison -->
+			<div class="p-5">
+				<div class="flex items-baseline justify-between gap-2">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						Extra pause time
+					</h2>
+					<span
+						id="pause-buffer-badge"
+						class="text-[12px] text-mute tabular-nums"
+					>
+						+0s buffer
+					</span>
+				</div>
+
+				<div class="mt-3 grid grid-cols-4 gap-2" role="group" aria-label="Pause buffer seconds">
+					{[
+						{ label: 'None', sec: 0 },
+						{ label: '+15s', sec: 15 },
+						{ label: '+30s', sec: 30 },
+						{ label: '+60s', sec: 60 },
+					].map((buf) => (
+						<button
+							type="button"
+							data-pause-buffer={buf.sec}
+							class={`pause-buffer-btn cursor-pointer rounded-sm border py-1.5 text-center text-[13px] font-medium tabular-nums transition-all ${
+								buf.sec === 0
+									? 'border-primary bg-primary text-on-primary'
+									: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+							}`}
+						>
+							{buf.label}
+						</button>
+					))}
+				</div>
+
+				<!-- Live 4-Tier Pace Comparison -->
+				<div class="mt-5 border-t border-hairline pt-4">
+					<span class="mb-2.5 block text-[13px] font-medium text-mute">
+						Time by speaking style
+					</span>
+					<div class="space-y-2 text-[13px]">
+						<div class="flex items-center justify-between py-1">
+							<span class="text-body">Slow / formal <span class="text-mute">(100 WPM)</span></span>
+							<strong id="compare-100" class="font-medium text-ink tabular-nums">0 min 0 sec</strong>
+						</div>
+						<div class="flex items-center justify-between py-1">
+							<span class="text-body">Keynote <span class="text-mute">(130 WPM)</span></span>
+							<strong id="compare-130" class="font-medium text-ink tabular-nums">0 min 0 sec</strong>
+						</div>
+						<div class="flex items-center justify-between py-1">
+							<span class="text-body">Presentation <span class="text-mute">(150 WPM)</span></span>
+							<strong id="compare-150" class="font-medium text-ink tabular-nums">0 min 0 sec</strong>
+						</div>
+						<div class="flex items-center justify-between py-1">
+							<span class="text-body">Fast / podcast <span class="text-mute">(180 WPM)</span></span>
+							<strong id="compare-180" class="font-medium text-ink tabular-nums">0 min 0 sec</strong>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Related Tools Note (Clean Inline Bar, Protected Against Draft Links) -->
+	<aside
+		aria-label="Related reading and writing tools"
+		class="mt-5 flex flex-col items-start justify-between gap-3 pt-2 text-[14px] text-body sm:flex-row sm:items-center"
+	>
+		<p class="leading-[22px]">
+			Checking silent reading time (238 WPM) or reading level instead? Use our{' '}
+			{
+				readingTool?.status === 'live' ? (
+					<a
+						href={readingTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{readingTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{readingTool?.shortName ?? 'Reading Time Counter'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			, or explore upcoming tools:{' '}
+			{
+				speedTestTool?.status === 'live' ? (
+					<a
+						href={speedTestTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{speedTestTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{speedTestTool?.shortName ?? 'Reading Speed Test'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}{' '}
+			and{' '}
+			{
+				wordsToPagesTool?.status === 'live' ? (
+					<a
+						href={wordsToPagesTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{wordsToPagesTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{wordsToPagesTool?.shortName ?? 'Words to Pages'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}.
+		</p>
+		<button
+			type="button"
+			data-quick-action="keynote-reset"
+			class="shrink-0 cursor-pointer text-[13px] font-medium text-body underline decoration-hairline underline-offset-4 transition-colors hover:text-ink"
+		>
+			Reset pace to 130 WPM
+		</button>
+	</aside>
+</section>
+
+<script>
+	function initSpeechCalculator() {
+		// State
+		let activeTab: 'script' | 'target' | 'rehearsal' = 'script';
+		let speakingWpm = 130; // Default 130 WPM conversational/keynote pace
+		let pauseBufferSec = 0;
+
+		// Rehearsal Timer State
+		let timerTotalSeconds = 300; // Synced with calculated duration
+		let timerRemainingSeconds = 300;
+		let timerIntervalId: number | null = null;
+		let isTimerRunning = false;
+
+		// DOM Elements — Tabs
+		const tabBtns = document.querySelectorAll<HTMLButtonElement>('.speech-tab-btn');
+		const panelScript = document.getElementById('tab-panel-script');
+		const panelTarget = document.getElementById('tab-panel-target');
+		const panelRehearsal = document.getElementById('tab-panel-rehearsal');
+		const scriptToolbar = document.getElementById('script-toolbar-actions');
+		const badgeActiveMode = document.getElementById('badge-active-mode');
+		const labelWordMetric = document.getElementById('label-word-metric');
+
+		// DOM Elements — Tab 1 (Script to Speech Time)
+		const textarea = document.getElementById('speech-textarea') as HTMLTextAreaElement | null;
+		const fileInput = document.getElementById('speech-file-upload') as HTMLInputElement | null;
+		const dropzoneOverlay = document.getElementById('speech-dropzone-overlay');
+		const fileStatusMsg = document.getElementById('speech-file-status');
+		const btnClearScript = document.getElementById('btn-clear-script');
+		const btnLoadSample = document.getElementById('btn-load-sample');
+		const btnJumpRehearsal = document.getElementById('btn-jump-rehearsal');
+
+		const inlineWordCounter = document.getElementById('inline-word-counter');
+		const inlineSentenceCounter = document.getElementById('inline-sentence-counter');
+		const inlineParaCounter = document.getElementById('inline-para-counter');
+		const inlineSlideCounter = document.getElementById('inline-slide-counter');
+
+		// DOM Elements — Tab 2 (Target Time to Words)
+		const targetMinutesInput = document.getElementById('target-minutes-input') as HTMLInputElement | null;
+		const targetSecondsInput = document.getElementById('target-seconds-input') as HTMLInputElement | null;
+		const durationPresetBtns = document.querySelectorAll<HTMLButtonElement>('.duration-preset-btn');
+		const targetWpmInline = document.getElementById('target-wpm-inline');
+		const targetDerivedWords = document.getElementById('target-derived-words');
+		const targetWordRange = document.getElementById('target-word-range');
+		const targetDoublePages = document.getElementById('target-double-pages');
+		const targetSlideCount = document.getElementById('target-slide-count');
+
+		// DOM Elements — Tab 3 (Live Rehearsal Timer)
+		const timerStatusDot = document.getElementById('timer-status-dot');
+		const timerSyncLabel = document.getElementById('timer-sync-label');
+		const timerAudioToggle = document.getElementById('timer-audio-toggle') as HTMLInputElement | null;
+		const timerDisplayBox = document.getElementById('timer-display-box');
+		const timerStateEyebrow = document.getElementById('timer-state-eyebrow');
+		const rehearsalTimerDisplay = document.getElementById('rehearsal-timer-display');
+		const timerTargetSub = document.getElementById('timer-target-sub');
+		const rehearsalProgressBar = document.getElementById('rehearsal-progress-bar');
+		const rehearsalCompleteAlert = document.getElementById('rehearsal-complete-alert');
+		const btnTimerStart = document.getElementById('btn-timer-start') as HTMLButtonElement | null;
+		const btnTimerStartLabel = document.getElementById('btn-timer-start-label');
+		const btnTimerPause = document.getElementById('btn-timer-pause') as HTMLButtonElement | null;
+		const btnTimerReset = document.getElementById('btn-timer-reset') as HTMLButtonElement | null;
+		const timerAdjustBtns = document.querySelectorAll<HTMLButtonElement>('.timer-adjust-btn');
+		const rehearsalWordBadge = document.getElementById('rehearsal-word-badge');
+		const rehearsalScriptPreview = document.getElementById('rehearsal-script-preview');
+
+		// DOM Elements — Right Column Controls
+		const speakingSlider = document.getElementById('speaking-wpm-slider') as HTMLInputElement | null;
+		const speakingWpmDisplay = document.getElementById('speaking-wpm-display');
+		const badgeSpeakingWpm = document.getElementById('badge-speaking-wpm');
+		const wpmPresetBtns = document.querySelectorAll<HTMLButtonElement>('.wpm-preset-btn');
+		const pauseBufferBtns = document.querySelectorAll<HTMLButtonElement>('.pause-buffer-btn');
+		const pauseBufferBadge = document.getElementById('pause-buffer-badge');
+
+		const compare100 = document.getElementById('compare-100');
+		const compare130 = document.getElementById('compare-130');
+		const compare150 = document.getElementById('compare-150');
+		const compare180 = document.getElementById('compare-180');
+
+		// DOM Elements — Top Cards
+		const metricSpeechTime = document.getElementById('metric-speech-time');
+		const metricSpeechSub = document.getElementById('metric-speech-sub');
+		const metricWordCount = document.getElementById('metric-word-count');
+		const metricSentenceCount = document.getElementById('metric-sentence-count');
+		const metricCharCount = document.getElementById('metric-char-count');
+		const metricSlideCount = document.getElementById('metric-slide-count');
+		const metricSlideSub = document.getElementById('metric-slide-sub');
+		const metricCadenceBadge = document.getElementById('metric-cadence-badge');
+		const metricCadenceDetail = document.getElementById('metric-cadence-detail');
+		const cadenceDot = document.getElementById('cadence-dot');
+
+		const defaultSampleSpeech = `Every great presentation begins with a simple promise: by the time these minutes are over, the audience will see a familiar problem in a clearer, more useful way.
+
+When we speak on a stage or into a microphone, our listeners cannot re-read a dense paragraph. They rely on rhythm, clear phrasing, and natural pauses to take in each idea before the next one arrives. That is why experienced speakers aim for a conversational pace of around 130 words per minute—lively enough to hold attention, yet unhurried enough to let key points land.
+
+Before you step up to speak, read your script out loud. Notice where you naturally take a breath, shorten sentences that feel wordy, and give your strongest ideas room to breathe.`;
+
+		function formatSecondsToMinSec(totalSec: number): string {
+			const clean = Math.max(0, Math.round(totalSec));
+			const mins = Math.floor(clean / 60);
+			const secs = clean % 60;
+			return `${mins.toLocaleString()} min ${secs} sec`;
+		}
+
+		function formatClockDisplay(totalSec: number): string {
+			const clean = Math.max(0, Math.round(totalSec));
+			const hrs = Math.floor(clean / 3600);
+			const mins = Math.floor((clean % 3600) / 60);
+			const secs = clean % 60;
+			const mm = String(mins).padStart(2, '0');
+			const ss = String(secs).padStart(2, '0');
+			if (hrs > 0) {
+				return `${String(hrs).padStart(2, '0')}:${mm}:${ss}`;
+			}
+			return `${mm}:${ss}`;
+		}
+
+		function computeDurationSeconds(words: number, wpm: number, extraSec = 0): number {
+			if (words <= 0 || wpm <= 0) return extraSec > 0 && words > 0 ? extraSec : 0;
+			return Math.round((words / wpm) * 60) + extraSec;
+		}
+
+		function getCadenceProfile(wpm: number): {
+			badge: string;
+			sub: string;
+			dotClass: string;
+		} {
+			if (wpm <= 114) {
+				return {
+					badge: 'Slow / formal',
+					sub: 'Slow, deliberate pace',
+					dotClass: 'bg-vercel-cyan',
+				};
+			}
+			if (wpm <= 142) {
+				return {
+					badge: 'Keynote',
+					sub: 'Conversational / keynote pace',
+					dotClass: 'bg-vercel-blue',
+				};
+			}
+			if (wpm <= 168) {
+				return {
+					badge: 'Presentation',
+					sub: 'Lively presentation pace',
+					dotClass: 'bg-vercel-violet',
+				};
+			}
+			return {
+				badge: 'Fast / podcast',
+				sub: 'Fast podcast or broadcast pace',
+				dotClass: 'bg-vercel-warning',
+			};
+		}
+
+		function analyzeScript(text: string) {
+			const trimmed = text.trim();
+			const chars = text.length;
+			if (!trimmed) {
+				return { words: 0, sentences: 0, paragraphs: 0, chars: 0 };
+			}
+			const words = trimmed.split(/\s+/).filter(Boolean).length;
+			const sentences = Math.max(
+				1,
+				trimmed.split(/[.!?]+/).filter((s) => s.trim().length > 0).length
+			);
+			const paragraphs = Math.max(
+				1,
+				trimmed.split(/\n\s*\n/).filter((p) => p.trim().length > 0).length
+			);
+			return { words, sentences, paragraphs, chars };
+		}
+
+		function playCompletionChime() {
+			if (timerAudioToggle && !timerAudioToggle.checked) return;
+			try {
+				const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+				if (!AudioCtx) return;
+				const ctx = new AudioCtx();
+				const now = ctx.currentTime;
+
+				const notes = [523.25, 659.25, 783.99];
+				notes.forEach((freq, idx) => {
+					const osc = ctx.createOscillator();
+					const gain = ctx.createGain();
+					osc.type = 'sine';
+					osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+					gain.gain.setValueAtTime(0.0001, now + idx * 0.12);
+					gain.gain.exponentialRampToValueAtTime(0.12, now + idx * 0.12 + 0.03);
+					gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.12 + 0.55);
+					osc.connect(gain);
+					gain.connect(ctx.destination);
+					osc.start(now + idx * 0.12);
+					osc.stop(now + idx * 0.12 + 0.6);
+				});
+			} catch {
+				// AudioContext blocked or unsupported
+			}
+		}
+
+		function renderTimerDisplay() {
+			if (rehearsalTimerDisplay) {
+				rehearsalTimerDisplay.textContent = formatClockDisplay(timerRemainingSeconds);
+			}
+			if (rehearsalProgressBar) {
+				const pct =
+					timerTotalSeconds > 0
+						? Math.max(0, Math.min(100, (timerRemainingSeconds / timerTotalSeconds) * 100))
+						: 0;
+				rehearsalProgressBar.style.width = `${pct}%`;
+			}
+		}
+
+		function stopTimerInterval() {
+			if (timerIntervalId !== null) {
+				window.clearInterval(timerIntervalId);
+				timerIntervalId = null;
+			}
+			isTimerRunning = false;
+			if (btnTimerPause) btnTimerPause.disabled = true;
+		}
+
+		function syncTimerToDuration(newTotalSec: number, sourceLabel: string) {
+			if (isTimerRunning) return;
+			const fallbackSec = newTotalSec > 0 ? newTotalSec : 180;
+			timerTotalSeconds = fallbackSec;
+			timerRemainingSeconds = fallbackSec;
+
+			if (timerSyncLabel) {
+				timerSyncLabel.textContent = sourceLabel;
+			}
+			if (timerTargetSub) {
+				timerTargetSub.textContent = `Total time: ${formatSecondsToMinSec(fallbackSec)} (${speakingWpm} WPM)`;
+			}
+			if (timerStateEyebrow) {
+				timerStateEyebrow.textContent = 'Ready to rehearse';
+			}
+			if (btnTimerStartLabel) {
+				btnTimerStartLabel.textContent = 'Start';
+			}
+			rehearsalCompleteAlert?.classList.add('hidden');
+			rehearsalCompleteAlert?.classList.remove('inline-flex');
+			timerDisplayBox?.classList.remove('border-vercel-blue');
+			renderTimerDisplay();
+		}
+
+		function updateAllMetrics() {
+			const rawScript = textarea ? textarea.value : '';
+			const scriptStats = analyzeScript(rawScript);
+
+			const minVal = targetMinutesInput ? parseInt(targetMinutesInput.value, 10) : 0;
+			const secVal = targetSecondsInput ? parseInt(targetSecondsInput.value, 10) : 0;
+			const cleanMin = Number.isNaN(minVal) || minVal < 0 ? 0 : minVal;
+			const cleanSec = Number.isNaN(secVal) || secVal < 0 ? 0 : Math.min(59, secVal);
+			const targetDurationSec = cleanMin * 60 + cleanSec;
+
+			let activeWords = 0;
+			let activeSentences = 0;
+			let activeChars = 0;
+			let activeDurationSec = 0;
+
+			if (activeTab === 'script') {
+				activeWords = scriptStats.words;
+				activeSentences = scriptStats.sentences;
+				activeChars = scriptStats.chars;
+				activeDurationSec = computeDurationSeconds(activeWords, speakingWpm, pauseBufferSec);
+			} else if (activeTab === 'target') {
+				const effectiveSpeechSec = Math.max(0, targetDurationSec - pauseBufferSec);
+				activeWords = Math.round((effectiveSpeechSec / 60) * speakingWpm);
+				activeSentences = Math.max(0, Math.round(activeWords / 16));
+				activeChars = activeWords * 6;
+				activeDurationSec = targetDurationSec;
+			} else {
+				if (scriptStats.words > 0) {
+					activeWords = scriptStats.words;
+					activeSentences = scriptStats.sentences;
+					activeChars = scriptStats.chars;
+					activeDurationSec = computeDurationSeconds(activeWords, speakingWpm, pauseBufferSec);
+				} else {
+					const effectiveSpeechSec = Math.max(0, targetDurationSec - pauseBufferSec);
+					activeWords = Math.round((effectiveSpeechSec / 60) * speakingWpm);
+					activeSentences = Math.max(0, Math.round(activeWords / 16));
+					activeChars = activeWords * 6;
+					activeDurationSec = targetDurationSec;
+				}
+			}
+
+			const scriptSlides =
+				scriptStats.words > 0
+					? Math.max(1, Math.round(computeDurationSeconds(scriptStats.words, speakingWpm, 0) / 60))
+					: 0;
+			if (inlineWordCounter) inlineWordCounter.textContent = scriptStats.words.toLocaleString();
+			if (inlineSentenceCounter) inlineSentenceCounter.textContent = scriptStats.sentences.toLocaleString();
+			if (inlineParaCounter) inlineParaCounter.textContent = scriptStats.paragraphs.toLocaleString();
+			if (inlineSlideCounter) inlineSlideCounter.textContent = scriptSlides.toLocaleString();
+
+			const effectiveTargetSec = Math.max(0, targetDurationSec - pauseBufferSec);
+			const derivedTargetWords = Math.round((effectiveTargetSec / 60) * speakingWpm);
+			const minRangeWords = Math.round((effectiveTargetSec / 60) * 100);
+			const maxRangeWords = Math.round((effectiveTargetSec / 60) * 180);
+			const targetSlides = targetDurationSec > 0 ? Math.max(1, Math.round(targetDurationSec / 60)) : 0;
+
+			if (targetWpmInline) targetWpmInline.textContent = `${speakingWpm} WPM`;
+			if (targetDerivedWords) targetDerivedWords.textContent = `${derivedTargetWords.toLocaleString()} words`;
+			if (targetWordRange) {
+				targetWordRange.textContent = `${minRangeWords.toLocaleString()} – ${maxRangeWords.toLocaleString()} words`;
+			}
+			if (targetDoublePages) {
+				targetDoublePages.textContent = `${(derivedTargetWords / 250).toFixed(1)} pages`;
+			}
+			if (targetSlideCount) {
+				targetSlideCount.textContent = `${targetSlides} ${targetSlides === 1 ? 'slide' : 'slides'}`;
+			}
+
+			if (rehearsalWordBadge) {
+				rehearsalWordBadge.textContent =
+					scriptStats.words > 0
+						? `${scriptStats.words.toLocaleString()} words loaded`
+						: `Target slot (${formatSecondsToMinSec(targetDurationSec)})`;
+			}
+			if (rehearsalScriptPreview) {
+				rehearsalScriptPreview.textContent =
+					scriptStats.words > 0
+						? rawScript.trim()
+						: 'Paste your script in the "Script to time" tab to read your notes here while practicing.';
+			}
+
+			const rehearsalSyncSeconds =
+				scriptStats.words > 0
+					? computeDurationSeconds(scriptStats.words, speakingWpm, pauseBufferSec)
+					: targetDurationSec;
+			const rehearsalSourceText =
+				scriptStats.words > 0
+					? `Synced to script (${scriptStats.words.toLocaleString()} words at ${speakingWpm} WPM)`
+					: `Synced to target time (${formatSecondsToMinSec(targetDurationSec)})`;
+			syncTimerToDuration(rehearsalSyncSeconds, rehearsalSourceText);
+
+			const cadence = getCadenceProfile(speakingWpm);
+			const durationMinutesFloat = activeDurationSec / 60;
+			const estSlides = activeWords > 0 ? Math.max(1, Math.round(durationMinutesFloat)) : 0;
+			const minSlides = activeWords > 0 ? Math.max(1, Math.floor(durationMinutesFloat / 2)) : 0;
+			const maxSlides = activeWords > 0 ? Math.max(1, Math.ceil(durationMinutesFloat)) : 0;
+
+			if (metricSpeechTime) {
+				metricSpeechTime.textContent = formatSecondsToMinSec(activeDurationSec);
+			}
+			if (metricSpeechSub) {
+				metricSpeechSub.textContent =
+					pauseBufferSec > 0
+						? `${cadence.sub} (+${pauseBufferSec}s buffer)`
+						: cadence.sub;
+			}
+			if (metricWordCount) {
+				metricWordCount.textContent = activeWords.toLocaleString();
+			}
+			if (metricSentenceCount) {
+				metricSentenceCount.textContent = activeSentences.toLocaleString();
+			}
+			if (metricCharCount) {
+				metricCharCount.textContent = activeChars.toLocaleString();
+			}
+			if (metricSlideCount) {
+				metricSlideCount.textContent = estSlides.toLocaleString();
+			}
+			if (metricSlideSub) {
+				metricSlideSub.textContent =
+					activeWords > 0
+						? `Typical range: ${minSlides}–${maxSlides} slides`
+						: 'Typical range: 0–0 slides';
+			}
+			if (metricCadenceBadge) {
+				metricCadenceBadge.textContent = cadence.badge;
+			}
+			if (metricCadenceDetail) {
+				const wordsPerSec = (speakingWpm / 60).toFixed(1);
+				metricCadenceDetail.textContent = `${speakingWpm} WPM · ${wordsPerSec} words/sec`;
+			}
+			if (cadenceDot) {
+				cadenceDot.className = `inline-block h-2 w-2 rounded-full ${cadence.dotClass}`;
+			}
+
+			if (compare100) {
+				compare100.textContent = formatSecondsToMinSec(
+					computeDurationSeconds(activeWords, 100, pauseBufferSec)
+				);
+			}
+			if (compare130) {
+				compare130.textContent = formatSecondsToMinSec(
+					computeDurationSeconds(activeWords, 130, pauseBufferSec)
+				);
+			}
+			if (compare150) {
+				compare150.textContent = formatSecondsToMinSec(
+					computeDurationSeconds(activeWords, 150, pauseBufferSec)
+				);
+			}
+			if (compare180) {
+				compare180.textContent = formatSecondsToMinSec(
+					computeDurationSeconds(activeWords, 180, pauseBufferSec)
+				);
+			}
+		}
+
+		function syncWpmPresetButtons() {
+			wpmPresetBtns.forEach((btn) => {
+				const presetVal = Number(btn.dataset.wpmPreset);
+				const isActive = presetVal === speakingWpm;
+				const titleSpan = btn.querySelector('span:first-child');
+				const subSpan = btn.querySelector('span:last-child');
+				if (isActive) {
+					btn.className =
+						'wpm-preset-btn flex cursor-pointer items-center justify-between rounded-sm border border-primary bg-primary px-3 py-2 text-left text-on-primary transition-all';
+					if (titleSpan) titleSpan.className = 'text-[13px] font-medium';
+					if (subSpan) subSpan.className = 'text-[12px] opacity-80 tabular-nums';
+				} else {
+					btn.className =
+						'wpm-preset-btn flex cursor-pointer items-center justify-between rounded-sm border border-hairline bg-canvas px-3 py-2 text-left transition-all hover:border-ink';
+					if (titleSpan) titleSpan.className = 'text-[13px] font-medium text-ink';
+					if (subSpan) subSpan.className = 'text-[12px] text-mute tabular-nums';
+				}
+			});
+		}
+
+		function setSpeakingWpm(newWpm: number) {
+			speakingWpm = Math.min(220, Math.max(100, newWpm));
+			if (speakingSlider) speakingSlider.value = String(speakingWpm);
+			if (speakingWpmDisplay) speakingWpmDisplay.textContent = String(speakingWpm);
+			if (badgeSpeakingWpm) badgeSpeakingWpm.textContent = `${speakingWpm} WPM`;
+			syncWpmPresetButtons();
+			updateAllMetrics();
+		}
+
+		function switchTab(targetTab: 'script' | 'target' | 'rehearsal') {
+			activeTab = targetTab;
+
+			tabBtns.forEach((btn) => {
+				const isMatch = btn.dataset.tab === targetTab;
+				btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+				btn.className = isMatch
+					? 'speech-tab-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all'
+					: 'speech-tab-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink';
+			});
+
+			panelScript?.classList.toggle('hidden', targetTab !== 'script');
+			panelScript?.classList.toggle('flex', targetTab === 'script');
+
+			panelTarget?.classList.toggle('hidden', targetTab !== 'target');
+			panelTarget?.classList.toggle('flex', targetTab === 'target');
+
+			panelRehearsal?.classList.toggle('hidden', targetTab !== 'rehearsal');
+			panelRehearsal?.classList.toggle('flex', targetTab === 'rehearsal');
+
+			scriptToolbar?.classList.toggle('hidden', targetTab !== 'script');
+			scriptToolbar?.classList.toggle('flex', targetTab === 'script');
+
+			if (badgeActiveMode) {
+				badgeActiveMode.textContent =
+					targetTab === 'script'
+						? 'Script to time'
+						: targetTab === 'target'
+							? 'Time to words'
+							: 'Rehearsal timer';
+			}
+			if (labelWordMetric) {
+				labelWordMetric.textContent =
+					targetTab === 'target' ? 'Target words' : 'Word count';
+			}
+
+			updateAllMetrics();
+		}
+
+		tabBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const t = btn.dataset.tab as 'script' | 'target' | 'rehearsal';
+				if (t) switchTab(t);
+			});
+		});
+
+		textarea?.addEventListener('input', updateAllMetrics);
+
+		btnClearScript?.addEventListener('click', () => {
+			if (textarea) {
+				textarea.value = '';
+				textarea.focus();
+				if (fileStatusMsg) fileStatusMsg.textContent = 'Script cleared';
+				updateAllMetrics();
+			}
+		});
+
+		btnLoadSample?.addEventListener('click', () => {
+			if (textarea) {
+				textarea.value = defaultSampleSpeech;
+				if (fileStatusMsg) fileStatusMsg.textContent = 'Sample speech loaded';
+				if (activeTab !== 'script') switchTab('script');
+				else updateAllMetrics();
+			}
+		});
+
+		btnJumpRehearsal?.addEventListener('click', () => {
+			stopTimerInterval();
+			switchTab('rehearsal');
+		});
+
+		function readScriptFile(file: File) {
+			if (!file) return;
+			const lower = file.name.toLowerCase();
+			const isSupported =
+				file.type === 'text/plain' ||
+				file.type === 'text/markdown' ||
+				lower.endsWith('.txt') ||
+				lower.endsWith('.md');
+
+			if (!isSupported) {
+				if (fileStatusMsg) fileStatusMsg.textContent = 'Please upload a .txt or .md file';
+				return;
+			}
+
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				const content = typeof e.target?.result === 'string' ? e.target.result : '';
+				if (textarea) {
+					textarea.value = content;
+					if (activeTab !== 'script') switchTab('script');
+					else updateAllMetrics();
+				}
+				if (fileStatusMsg) {
+					fileStatusMsg.textContent = `Loaded ${file.name}`;
+				}
+			};
+			reader.readAsText(file);
+		}
+
+		fileInput?.addEventListener('change', () => {
+			const file = fileInput.files?.[0];
+			if (file) readScriptFile(file);
+			fileInput.value = '';
+		});
+
+		if (panelScript && dropzoneOverlay) {
+			let dragCounter = 0;
+
+			panelScript.addEventListener('dragenter', (e) => {
+				e.preventDefault();
+				dragCounter++;
+				dropzoneOverlay.classList.remove('hidden');
+				dropzoneOverlay.classList.add('flex');
+			});
+
+			panelScript.addEventListener('dragover', (e) => {
+				e.preventDefault();
+			});
+
+			panelScript.addEventListener('dragleave', (e) => {
+				e.preventDefault();
+				dragCounter--;
+				if (dragCounter <= 0) {
+					dragCounter = 0;
+					dropzoneOverlay.classList.add('hidden');
+					dropzoneOverlay.classList.remove('flex');
+				}
+			});
+
+			panelScript.addEventListener('drop', (e) => {
+				e.preventDefault();
+				dragCounter = 0;
+				dropzoneOverlay.classList.add('hidden');
+				dropzoneOverlay.classList.remove('flex');
+				const file = e.dataTransfer?.files?.[0];
+				if (file) readScriptFile(file);
+			});
+		}
+
+		function syncDurationPresetButtons() {
+			const curMin = Number(targetMinutesInput?.value ?? 0);
+			const curSec = Number(targetSecondsInput?.value ?? 0);
+			durationPresetBtns.forEach((btn) => {
+				const pMin = Number(btn.dataset.minPreset);
+				const pSec = Number(btn.dataset.secPreset);
+				const isMatch = pMin === curMin && pSec === curSec;
+				btn.className = isMatch
+					? 'duration-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-3 py-1.5 text-[13px] font-medium text-on-primary transition-colors'
+					: 'duration-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink';
+			});
+		}
+
+		targetMinutesInput?.addEventListener('input', () => {
+			syncDurationPresetButtons();
+			updateAllMetrics();
+		});
+
+		targetSecondsInput?.addEventListener('input', () => {
+			syncDurationPresetButtons();
+			updateAllMetrics();
+		});
+
+		durationPresetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const pMin = btn.dataset.minPreset ?? '5';
+				const pSec = btn.dataset.secPreset ?? '0';
+				if (targetMinutesInput) targetMinutesInput.value = pMin;
+				if (targetSecondsInput) targetSecondsInput.value = pSec;
+				syncDurationPresetButtons();
+				updateAllMetrics();
+			});
+		});
+
+		btnTimerStart?.addEventListener('click', () => {
+			if (isTimerRunning) return;
+
+			if (timerRemainingSeconds <= 0) {
+				timerRemainingSeconds = timerTotalSeconds > 0 ? timerTotalSeconds : 180;
+			}
+
+			rehearsalCompleteAlert?.classList.add('hidden');
+			rehearsalCompleteAlert?.classList.remove('inline-flex');
+			timerDisplayBox?.classList.remove('border-vercel-blue');
+
+			isTimerRunning = true;
+			if (btnTimerPause) btnTimerPause.disabled = false;
+			if (btnTimerStartLabel) btnTimerStartLabel.textContent = 'Running...';
+			if (timerStateEyebrow) timerStateEyebrow.textContent = 'Rehearsal in progress';
+			if (timerStatusDot) timerStatusDot.className = 'inline-block h-2 w-2 rounded-full bg-vercel-blue';
+
+			timerIntervalId = window.setInterval(() => {
+				if (timerRemainingSeconds > 0) {
+					timerRemainingSeconds--;
+					renderTimerDisplay();
+				}
+
+				if (timerRemainingSeconds <= 0) {
+					stopTimerInterval();
+					if (btnTimerStartLabel) btnTimerStartLabel.textContent = 'Restart';
+					if (timerStateEyebrow) timerStateEyebrow.textContent = 'Time complete';
+					if (timerStatusDot) timerStatusDot.className = 'inline-block h-2 w-2 rounded-full bg-vercel-warning';
+					rehearsalCompleteAlert?.classList.remove('hidden');
+					rehearsalCompleteAlert?.classList.add('inline-flex');
+					timerDisplayBox?.classList.add('border-vercel-blue');
+					playCompletionChime();
+				}
+			}, 1000);
+		});
+
+		btnTimerPause?.addEventListener('click', () => {
+			if (!isTimerRunning) return;
+			stopTimerInterval();
+			if (btnTimerStartLabel) btnTimerStartLabel.textContent = 'Resume';
+			if (timerStateEyebrow) timerStateEyebrow.textContent = 'Paused';
+			if (timerStatusDot) timerStatusDot.className = 'inline-block h-2 w-2 rounded-full bg-mute';
+		});
+
+		btnTimerReset?.addEventListener('click', () => {
+			stopTimerInterval();
+			timerRemainingSeconds = timerTotalSeconds > 0 ? timerTotalSeconds : 180;
+			if (btnTimerStartLabel) btnTimerStartLabel.textContent = 'Start';
+			if (timerStateEyebrow) timerStateEyebrow.textContent = 'Ready to rehearse';
+			if (timerStatusDot) timerStatusDot.className = 'inline-block h-2 w-2 rounded-full bg-mute';
+			rehearsalCompleteAlert?.classList.add('hidden');
+			rehearsalCompleteAlert?.classList.remove('inline-flex');
+			timerDisplayBox?.classList.remove('border-vercel-blue');
+			renderTimerDisplay();
+		});
+
+		timerAdjustBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const delta = Number(btn.dataset.timerAdjust ?? 0);
+				if (!delta) return;
+				const nextRemaining = Math.max(10, timerRemainingSeconds + delta);
+				timerRemainingSeconds = nextRemaining;
+				timerTotalSeconds = Math.max(timerTotalSeconds, nextRemaining);
+				renderTimerDisplay();
+			});
+		});
+
+		speakingSlider?.addEventListener('input', () => {
+			setSpeakingWpm(Number(speakingSlider.value));
+		});
+
+		wpmPresetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const val = Number(btn.dataset.wpmPreset);
+				if (val) setSpeakingWpm(val);
+			});
+		});
+
+		pauseBufferBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const sec = Number(btn.dataset.pauseBuffer ?? 0);
+				pauseBufferSec = sec;
+				if (pauseBufferBadge) {
+					pauseBufferBadge.textContent = `+${sec}s buffer`;
+				}
+				pauseBufferBtns.forEach((b) => {
+					const active = Number(b.dataset.pauseBuffer ?? 0) === pauseBufferSec;
+					b.className = active
+						? 'pause-buffer-btn cursor-pointer rounded-sm border border-primary bg-primary py-1.5 text-center text-[13px] font-medium text-on-primary tabular-nums transition-all'
+						: 'pause-buffer-btn cursor-pointer rounded-sm border border-hairline bg-canvas py-1.5 text-center text-[13px] font-medium text-body tabular-nums transition-all hover:border-ink hover:text-ink';
+				});
+				updateAllMetrics();
+			});
+		});
+
+		const keynoteResetBtn = document.querySelector('[data-quick-action="keynote-reset"]');
+		keynoteResetBtn?.addEventListener('click', (e) => {
+			e.preventDefault();
+			setSpeakingWpm(130);
+			speakingSlider?.focus();
+		});
+
+		updateAllMetrics();
+	}
+
+	initSpeechCalculator();
+</script>

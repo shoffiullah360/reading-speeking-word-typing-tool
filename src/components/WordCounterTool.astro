@@ -1,0 +1,618 @@
+---
+import { getToolById } from '../config/site';
+
+const readingTool = getToolById('reading-time-counter');
+const wordsToPagesTool = getToolById('words-to-pages');
+const speechTool = getToolById('speech-time-calculator');
+---
+
+<section
+	id="word-counter-workspace"
+	aria-label="Word and Character Counter Workspace"
+	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
+>
+	<!-- Live Summary Bar -->
+	<div class="whisper-shadow mb-6 grid grid-cols-1 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+		<!-- Stat 1: Words -->
+		<article class="flex flex-col justify-between p-5">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Words
+				</span>
+				<span id="wc-status-pill" class="text-[12px] text-mute">
+					Live count
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="wc-metric-words"
+					aria-live="polite"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[14px] text-body">words</span>
+			</div>
+			<p id="wc-metric-avg-len" class="text-[12px] text-mute tabular-nums">
+				0.0 letters per word
+			</p>
+		</article>
+
+		<!-- Stat 2: Characters (with & without spaces) -->
+		<article class="flex flex-col justify-between p-5 sm:border-l sm:border-hairline lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Characters (with spaces)
+				</span>
+				<span class="text-[12px] text-mute">
+					Total length
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-2">
+				<output
+					id="wc-metric-chars"
+					aria-live="polite"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0
+				</output>
+				<span class="text-[14px] text-body">characters</span>
+			</div>
+			<p class="text-[12px] text-mute tabular-nums">
+				<strong id="wc-metric-chars-nospace" class="font-medium text-ink">0</strong> characters without spaces
+			</p>
+		</article>
+
+		<!-- Stat 3: Sentences & Paragraphs -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-hairline lg:border-t-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Sentences &amp; paragraphs
+				</span>
+				<span class="text-[12px] text-mute">
+					Structure
+				</span>
+			</div>
+			<div class="my-2.5 flex items-baseline gap-4">
+				<div class="flex items-baseline gap-1.5">
+					<output
+						id="wc-metric-sentences"
+						aria-live="polite"
+						class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					>
+						0
+					</output>
+					<span class="text-[14px] text-body">sentences</span>
+				</div>
+			</div>
+			<p class="text-[12px] text-mute tabular-nums">
+				<strong id="wc-metric-paragraphs" class="font-medium text-ink">0</strong> paragraphs · <strong id="wc-metric-avg-sentence" class="font-medium text-ink">0</strong> words/sentence
+			</p>
+		</article>
+
+		<!-- Stat 4: Reading & Speaking Time -->
+		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-hairline lg:border-t-0 lg:border-l-0">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[13px] font-medium text-body">
+					Estimated reading time
+				</span>
+				<span class="text-[12px] text-mute tabular-nums">
+					238 WPM
+				</span>
+			</div>
+			<div class="my-2.5">
+				<output
+					id="wc-metric-reading-time"
+					aria-live="polite"
+					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+				>
+					0 min 0 sec
+				</output>
+			</div>
+			<p class="text-[12px] text-mute tabular-nums">
+				Speaking time (130 WPM): <strong id="wc-metric-speaking-time" class="font-medium text-ink">0 min 0 sec</strong>
+			</p>
+		</article>
+	</div>
+
+	<!-- Main Dual-Column Workspace -->
+	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+		<!-- Left Column: Editor & Action Toolbar -->
+		<div class="whisper-shadow flex flex-col rounded-md border border-hairline bg-canvas-elevated lg:col-span-7">
+			<!-- Editor Action Bar -->
+			<div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-5 py-3">
+				<span class="text-[14px] font-medium text-ink">
+					Text editor
+				</span>
+
+				<div class="flex flex-wrap items-center gap-2">
+					<button
+						type="button"
+						id="wc-btn-sample"
+						class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-body transition-colors hover:bg-hairline-soft hover:text-ink"
+					>
+						Sample text
+					</button>
+
+					<label
+						for="wc-file-upload"
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+					>
+						<svg class="h-3.5 w-3.5 text-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+							<polyline points="17 8 12 3 7 8" />
+							<line x1="12" y1="3" x2="12" y2="15" />
+						</svg>
+						Upload .txt / .md
+						<input id="wc-file-upload" type="file" accept=".txt,.md,text/plain,text/markdown" class="sr-only" />
+					</label>
+
+					<button
+						type="button"
+						id="wc-btn-copy"
+						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+					>
+						Copy text
+					</button>
+
+					<button
+						type="button"
+						id="wc-btn-clear"
+						class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-vercel-error"
+					>
+						Clear text
+					</button>
+				</div>
+			</div>
+
+			<!-- Textarea + Drag & Drop Area -->
+			<div id="wc-editor-panel" class="relative flex flex-1 flex-col p-5">
+				<div
+					id="wc-dropzone-overlay"
+					class="pointer-events-none absolute inset-3 z-20 hidden flex-col items-center justify-center rounded-md border-2 border-dashed border-vercel-blue bg-canvas-elevated/95 backdrop-blur-xs transition-opacity"
+				>
+					<svg class="mb-2 h-8 w-8 text-vercel-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+						<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+						<polyline points="14 2 14 8 20 8" />
+						<line x1="12" y1="18" x2="12" y2="12" />
+						<line x1="9" y1="15" x2="15" y2="15" />
+					</svg>
+					<p class="text-[14px] font-medium text-ink">Drop your .txt or .md file here</p>
+					<p class="text-[12px] text-mute">Runs privately in your browser</p>
+				</div>
+
+				<label for="wc-textarea" class="sr-only">Paste or type your text to count words and characters</label>
+				<textarea
+					id="wc-textarea"
+					rows="14"
+					placeholder="Paste or type your text here, or drag and drop a .txt or .md file..."
+					class="w-full flex-1 resize-y bg-transparent font-sans text-[15px] leading-[25px] text-ink placeholder:text-faint focus:outline-none"
+				></textarea>
+
+				<!-- Bottom Status Bar inside Editor -->
+				<div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-hairline pt-3 text-[13px] text-mute">
+					<div class="flex flex-wrap items-center gap-4 tabular-nums">
+						<span>Words: <strong id="wc-inline-words" class="font-medium text-ink">0</strong></span>
+						<span>With spaces: <strong id="wc-inline-chars" class="font-medium text-ink">0</strong></span>
+						<span>Without spaces: <strong id="wc-inline-chars-nospace" class="font-medium text-ink">0</strong></span>
+						<span>Pages (double): <strong id="wc-inline-pages" class="font-medium text-ink">0</strong></span>
+					</div>
+					<span id="wc-status-msg" class="text-[12px] text-mute">
+						Runs privately in your browser
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Right Column: Detailed Breakdown & Top Keywords / Word Frequency -->
+		<div class="whisper-shadow flex flex-col justify-between divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated lg:col-span-5">
+			<!-- Section A: Top Keywords / Word Frequency -->
+			<div class="p-5">
+				<div class="flex items-baseline justify-between gap-2">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						Top keywords &amp; word frequency
+					</h2>
+					<span id="wc-unique-words-badge" class="text-[12px] text-mute tabular-nums">
+						0 unique words
+					</span>
+				</div>
+				<p class="mt-1 mb-4 text-[13px] text-body">
+					Most frequent content words in your text (excluding common stop words).
+				</p>
+
+				<!-- Empty state -->
+				<div
+					id="wc-keywords-empty"
+					class="rounded-sm border border-hairline bg-canvas px-4 py-6 text-center text-[13px] text-mute"
+				>
+					Start typing or load sample text to see your top keywords and repetition frequency.
+				</div>
+
+				<!-- Keywords List -->
+				<ul
+					id="wc-keywords-list"
+					aria-label="Top keywords frequency list"
+					class="hidden space-y-2 text-[13px]"
+				></ul>
+			</div>
+
+			<!-- Section B: Document Summary & Reading/Speaking Breakdown -->
+			<div class="p-5">
+				<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+					Document summary
+				</h2>
+				<div class="mt-3 space-y-2 text-[13px]">
+					<div class="flex items-center justify-between py-1">
+						<span class="text-body">Characters (with spaces)</span>
+						<strong id="wc-detail-chars" class="font-medium text-ink tabular-nums">0</strong>
+					</div>
+					<div class="flex items-center justify-between py-1">
+						<span class="text-body">Characters (without spaces)</span>
+						<strong id="wc-detail-chars-nospace" class="font-medium text-ink tabular-nums">0</strong>
+					</div>
+					<div class="flex items-center justify-between py-1">
+						<span class="text-body">Sentences</span>
+						<strong id="wc-detail-sentences" class="font-medium text-ink tabular-nums">0</strong>
+					</div>
+					<div class="flex items-center justify-between py-1">
+						<span class="text-body">Paragraphs</span>
+						<strong id="wc-detail-paragraphs" class="font-medium text-ink tabular-nums">0</strong>
+					</div>
+					<div class="flex items-center justify-between border-t border-hairline pt-2.5">
+						<span class="text-body">Estimated reading time <span class="text-mute">(238 WPM)</span></span>
+						<strong id="wc-detail-reading" class="font-medium text-ink tabular-nums">0 min 0 sec</strong>
+					</div>
+					<div class="flex items-center justify-between py-1">
+						<span class="text-body">Speaking time <span class="text-mute">(130 WPM)</span></span>
+						<strong id="wc-detail-speaking" class="font-medium text-ink tabular-nums">0 min 0 sec</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Related Tools Note (Protected Against Draft Links) -->
+	<aside
+		aria-label="Related text and reading tools"
+		class="mt-5 flex flex-col items-start justify-between gap-3 pt-2 text-[14px] text-body sm:flex-row sm:items-center"
+	>
+		<p class="leading-[22px]">
+			Need page count formatting or custom WPM sliders? Try our{' '}
+			{
+				wordsToPagesTool?.status === 'live' ? (
+					<a
+						href={wordsToPagesTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{wordsToPagesTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{wordsToPagesTool?.shortName ?? 'Words to Pages'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			,{' '}
+			{
+				readingTool?.status === 'live' ? (
+					<a
+						href={readingTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{readingTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{readingTool?.shortName ?? 'Reading Time Counter'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}
+			, or{' '}
+			{
+				speechTool?.status === 'live' ? (
+					<a
+						href={speechTool.slug}
+						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
+					>
+						{speechTool.shortName}
+					</a>
+				) : (
+					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
+						<span>{speechTool?.shortName ?? 'Speech Time Calculator'}</span>
+						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
+							Soon
+						</span>
+					</span>
+				)
+			}.
+		</p>
+	</aside>
+</section>
+
+<script>
+	function initWordCounterTool() {
+		const STOP_WORDS = new Set([
+			'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i',
+			'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at',
+			'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she',
+			'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what',
+			'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me',
+			'when', 'make', 'can', 'like', 'no', 'just', 'him', 'know', 'take', 'into',
+			'your', 'some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look',
+			'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two',
+			'how', 'our', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these',
+			'give', 'most', 'us', 'is', 'are', 'was', 'were', 'been', 'has', 'had',
+			'did', 'does', 'may', 'might', 'must', 'shall', 'should', 'very', 'more', 'much',
+			'such', 'each', 'every', 'both', 'few', 'many', 'those', 'same', 'own', 'while',
+			'where', 'why', 'how', 'through', 'between', 'before', 'under', 'again', 'further', 'once'
+		]);
+
+		const sampleText = `Clarity is the foundation of memorable writing. When you trim unnecessary words and keep sentences focused, readers absorb your ideas without friction. Every paragraph should serve a distinct purpose, guiding the reader smoothly from the opening premise to the final conclusion.
+
+Writers, editors, and students often work within strict word and character boundaries. An academic abstract might allow only 250 words, a blog post introduction works best under 150 words, and a keynote speech typically moves at 130 words per minute.
+
+By tracking word frequency alongside sentence and paragraph counts, you can spot overused terms early, vary your phrasing, and keep your writing crisp and engaging.`;
+
+		// DOM Elements
+		const textarea = document.getElementById('wc-textarea') as HTMLTextAreaElement | null;
+		const fileInput = document.getElementById('wc-file-upload') as HTMLInputElement | null;
+		const editorPanel = document.getElementById('wc-editor-panel');
+		const dropzoneOverlay = document.getElementById('wc-dropzone-overlay');
+		const statusMsg = document.getElementById('wc-status-msg');
+
+		const btnSample = document.getElementById('wc-btn-sample');
+		const btnCopy = document.getElementById('wc-btn-copy');
+		const btnClear = document.getElementById('wc-btn-clear');
+
+		// Metric Outputs
+		const metricWords = document.getElementById('wc-metric-words');
+		const metricAvgLen = document.getElementById('wc-metric-avg-len');
+		const metricChars = document.getElementById('wc-metric-chars');
+		const metricCharsNoSpace = document.getElementById('wc-metric-chars-nospace');
+		const metricSentences = document.getElementById('wc-metric-sentences');
+		const metricParagraphs = document.getElementById('wc-metric-paragraphs');
+		const metricAvgSentence = document.getElementById('wc-metric-avg-sentence');
+		const metricReadingTime = document.getElementById('wc-metric-reading-time');
+		const metricSpeakingTime = document.getElementById('wc-metric-speaking-time');
+
+		// Inline & Detail Outputs
+		const inlineWords = document.getElementById('wc-inline-words');
+		const inlineChars = document.getElementById('wc-inline-chars');
+		const inlineCharsNoSpace = document.getElementById('wc-inline-chars-nospace');
+		const inlinePages = document.getElementById('wc-inline-pages');
+
+		const detailChars = document.getElementById('wc-detail-chars');
+		const detailCharsNoSpace = document.getElementById('wc-detail-chars-nospace');
+		const detailSentences = document.getElementById('wc-detail-sentences');
+		const detailParagraphs = document.getElementById('wc-detail-paragraphs');
+		const detailReading = document.getElementById('wc-detail-reading');
+		const detailSpeaking = document.getElementById('wc-detail-speaking');
+
+		// Keywords Outputs
+		const uniqueWordsBadge = document.getElementById('wc-unique-words-badge');
+		const keywordsEmpty = document.getElementById('wc-keywords-empty');
+		const keywordsList = document.getElementById('wc-keywords-list');
+
+		function formatDuration(words: number, wpm: number): string {
+			if (words <= 0 || wpm <= 0) return '0 min 0 sec';
+			const totalSeconds = Math.round((words / wpm) * 60);
+			const minutes = Math.floor(totalSeconds / 60);
+			const seconds = totalSeconds % 60;
+			return `${minutes.toLocaleString()} min ${seconds} sec`;
+		}
+
+		function updateMetrics() {
+			const raw = textarea ? textarea.value : '';
+			const trimmed = raw.trim();
+			const charsWithSpaces = raw.length;
+			const charsWithoutSpaces = raw.replace(/\s/g, '').length;
+
+			if (!trimmed) {
+				if (metricWords) metricWords.textContent = '0';
+				if (metricAvgLen) metricAvgLen.textContent = '0.0 letters per word';
+				if (metricChars) metricChars.textContent = charsWithSpaces.toLocaleString();
+				if (metricCharsNoSpace) metricCharsNoSpace.textContent = '0';
+				if (metricSentences) metricSentences.textContent = '0';
+				if (metricParagraphs) metricParagraphs.textContent = '0';
+				if (metricAvgSentence) metricAvgSentence.textContent = '0';
+				if (metricReadingTime) metricReadingTime.textContent = '0 min 0 sec';
+				if (metricSpeakingTime) metricSpeakingTime.textContent = '0 min 0 sec';
+
+				if (inlineWords) inlineWords.textContent = '0';
+				if (inlineChars) inlineChars.textContent = charsWithSpaces.toLocaleString();
+				if (inlineCharsNoSpace) inlineCharsNoSpace.textContent = '0';
+				if (inlinePages) inlinePages.textContent = '0';
+
+				if (detailChars) detailChars.textContent = charsWithSpaces.toLocaleString();
+				if (detailCharsNoSpace) detailCharsNoSpace.textContent = '0';
+				if (detailSentences) detailSentences.textContent = '0';
+				if (detailParagraphs) detailParagraphs.textContent = '0';
+				if (detailReading) detailReading.textContent = '0 min 0 sec';
+				if (detailSpeaking) detailSpeaking.textContent = '0 min 0 sec';
+
+				if (uniqueWordsBadge) uniqueWordsBadge.textContent = '0 unique words';
+				keywordsEmpty?.classList.remove('hidden');
+				keywordsList?.classList.add('hidden');
+				if (keywordsList) keywordsList.innerHTML = '';
+				return;
+			}
+
+			const wordTokens = trimmed.split(/\s+/).filter(Boolean);
+			const wordCount = wordTokens.length;
+
+			const sentenceParts = trimmed.split(/[.!?]+/).filter((s) => s.trim().length > 0);
+			const sentenceCount = Math.max(1, sentenceParts.length);
+
+			const paragraphParts = trimmed.split(/\n\s*\n/).filter((p) => p.trim().length > 0);
+			const paragraphCount = Math.max(1, paragraphParts.length);
+
+			let totalAlphaNumeric = 0;
+			const freqMap = new Map<string, number>();
+			const uniqueSet = new Set<string>();
+
+			for (const token of wordTokens) {
+				const cleaned = token.toLowerCase().replace(/^[^a-z0-9]+|[^a-z0-9]+$/gi, '');
+				if (!cleaned) continue;
+				totalAlphaNumeric += cleaned.length;
+				uniqueSet.add(cleaned);
+
+				if (cleaned.length >= 3 && !STOP_WORDS.has(cleaned) && !/^\d+$/.test(cleaned)) {
+					freqMap.set(cleaned, (freqMap.get(cleaned) || 0) + 1);
+				}
+			}
+
+			const avgWordLen = wordCount > 0 ? totalAlphaNumeric / wordCount : 0;
+			const avgSentenceLen = sentenceCount > 0 ? Math.round(wordCount / sentenceCount) : 0;
+			const readingTimeStr = formatDuration(wordCount, 238);
+			const speakingTimeStr = formatDuration(wordCount, 130);
+			const doublePages = (wordCount / 250).toFixed(1);
+
+			if (metricWords) metricWords.textContent = wordCount.toLocaleString();
+			if (metricAvgLen) metricAvgLen.textContent = `${avgWordLen.toFixed(1)} letters per word`;
+			if (metricChars) metricChars.textContent = charsWithSpaces.toLocaleString();
+			if (metricCharsNoSpace) metricCharsNoSpace.textContent = charsWithoutSpaces.toLocaleString();
+			if (metricSentences) metricSentences.textContent = sentenceCount.toLocaleString();
+			if (metricParagraphs) metricParagraphs.textContent = paragraphCount.toLocaleString();
+			if (metricAvgSentence) metricAvgSentence.textContent = avgSentenceLen.toLocaleString();
+			if (metricReadingTime) metricReadingTime.textContent = readingTimeStr;
+			if (metricSpeakingTime) metricSpeakingTime.textContent = speakingTimeStr;
+
+			if (inlineWords) inlineWords.textContent = wordCount.toLocaleString();
+			if (inlineChars) inlineChars.textContent = charsWithSpaces.toLocaleString();
+			if (inlineCharsNoSpace) inlineCharsNoSpace.textContent = charsWithoutSpaces.toLocaleString();
+			if (inlinePages) inlinePages.textContent = doublePages;
+
+			if (detailChars) detailChars.textContent = charsWithSpaces.toLocaleString();
+			if (detailCharsNoSpace) detailCharsNoSpace.textContent = charsWithoutSpaces.toLocaleString();
+			if (detailSentences) detailSentences.textContent = sentenceCount.toLocaleString();
+			if (detailParagraphs) detailParagraphs.textContent = paragraphCount.toLocaleString();
+			if (detailReading) detailReading.textContent = readingTimeStr;
+			if (detailSpeaking) detailSpeaking.textContent = speakingTimeStr;
+
+			if (uniqueWordsBadge) {
+				uniqueWordsBadge.textContent = `${uniqueSet.size.toLocaleString()} unique ${uniqueSet.size === 1 ? 'word' : 'words'}`;
+			}
+
+			const topKeywords = [...freqMap.entries()]
+				.sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+				.slice(0, 8);
+
+			if (topKeywords.length === 0) {
+				keywordsEmpty?.classList.remove('hidden');
+				keywordsList?.classList.add('hidden');
+				if (keywordsList) keywordsList.innerHTML = '';
+			} else {
+				keywordsEmpty?.classList.add('hidden');
+				keywordsList?.classList.remove('hidden');
+				if (keywordsList) {
+					keywordsList.innerHTML = '';
+					for (const [word, count] of topKeywords) {
+						const pct = ((count / wordCount) * 100).toFixed(1);
+						const li = document.createElement('li');
+						li.className = 'flex items-center justify-between rounded-sm border border-hairline bg-canvas px-3 py-2';
+
+						const wordSpan = document.createElement('span');
+						wordSpan.className = 'font-medium text-ink';
+						wordSpan.textContent = word;
+
+						const statsSpan = document.createElement('span');
+						statsSpan.className = 'text-[12px] text-mute tabular-nums';
+						statsSpan.textContent = `${count}× (${pct}%)`;
+
+						li.appendChild(wordSpan);
+						li.appendChild(statsSpan);
+						keywordsList.appendChild(li);
+					}
+				}
+			}
+		}
+
+		function loadFileContent(file: File) {
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				const content = typeof e.target?.result === 'string' ? e.target.result : '';
+				if (textarea) {
+					textarea.value = content;
+					updateMetrics();
+				}
+				if (statusMsg) {
+					statusMsg.textContent = `Loaded ${file.name}`;
+				}
+			};
+			reader.readAsText(file);
+		}
+
+		textarea?.addEventListener('input', updateMetrics);
+
+		btnSample?.addEventListener('click', () => {
+			if (textarea) {
+				textarea.value = sampleText;
+				updateMetrics();
+			}
+			if (statusMsg) statusMsg.textContent = 'Sample text loaded';
+		});
+
+		btnCopy?.addEventListener('click', async () => {
+			if (!textarea || !textarea.value) return;
+			try {
+				await navigator.clipboard.writeText(textarea.value);
+				const originalText = btnCopy.textContent;
+				btnCopy.textContent = 'Copied';
+				if (statusMsg) statusMsg.textContent = 'Copied text to clipboard';
+				setTimeout(() => {
+					btnCopy.textContent = originalText;
+				}, 1500);
+			} catch {
+				textarea.select();
+				document.execCommand('copy');
+			}
+		});
+
+		btnClear?.addEventListener('click', () => {
+			if (textarea) {
+				textarea.value = '';
+				textarea.focus();
+				updateMetrics();
+			}
+			if (fileInput) fileInput.value = '';
+			if (statusMsg) statusMsg.textContent = 'Runs privately in your browser';
+		});
+
+		fileInput?.addEventListener('change', () => {
+			const file = fileInput.files?.[0];
+			if (file) loadFileContent(file);
+		});
+
+		editorPanel?.addEventListener('dragover', (e) => {
+			e.preventDefault();
+			dropzoneOverlay?.classList.remove('hidden');
+			dropzoneOverlay?.classList.add('flex');
+		});
+
+		editorPanel?.addEventListener('dragleave', (e) => {
+			if (!editorPanel.contains(e.relatedTarget as Node)) {
+				dropzoneOverlay?.classList.add('hidden');
+				dropzoneOverlay?.classList.remove('flex');
+			}
+		});
+
+		editorPanel?.addEventListener('drop', (e) => {
+			e.preventDefault();
+			dropzoneOverlay?.classList.add('hidden');
+			dropzoneOverlay?.classList.remove('flex');
+			const file = e.dataTransfer?.files?.[0];
+			if (file) loadFileContent(file);
+		});
+
+		updateMetrics();
+	}
+
+	initWordCounterTool();
+</script>
+

@@ -1,0 +1,143 @@
+---
+interface BenchmarkRow {
+	words: number;
+	useCase: string;
+}
+
+const benchmarkRows: BenchmarkRow[] = [
+	{ words: 100, useCase: 'Short email, social post, or brief update' },
+	{ words: 250, useCase: '1 double-spaced page or short memo' },
+	{ words: 300, useCase: 'Quick blog update or announcement' },
+	{ words: 500, useCase: '1 single-spaced page or newsletter' },
+	{ words: 750, useCase: '3 double-spaced pages or op-ed column' },
+	{ words: 1000, useCase: '2 single-spaced pages or standard article' },
+	{ words: 1250, useCase: '5-minute speech or feature story' },
+	{ words: 1500, useCase: 'In-depth blog post or tutorial' },
+	{ words: 2000, useCase: 'Detailed guide or long-form article' },
+	{ words: 2500, useCase: '5 single-spaced pages or essay' },
+	{ words: 3000, useCase: 'Case study or technical guide' },
+	{ words: 4000, useCase: 'Academic paper or short story' },
+	{ words: 5000, useCase: '10 single-spaced pages or whitepaper' },
+	{ words: 7500, useCase: 'Long research paper or book chapter' },
+	{ words: 10000, useCase: '20 single-spaced pages or in-depth report' },
+];
+
+function formatMinSec(words: number, wpm: number): string {
+	const totalSec = Math.round((words / wpm) * 60);
+	const mins = Math.floor(totalSec / 60);
+	const secs = totalSec % 60;
+	if (mins === 0) return `${secs} sec`;
+	if (secs === 0) return `${mins} min`;
+	return `${mins} min ${secs} sec`;
+}
+
+function formatDecimalMinutes(words: number, wpm: number): string {
+	return `${(words / wpm).toFixed(1)} min`;
+}
+---
+
+<section id="benchmarks" aria-labelledby="benchmarks-heading" class="border-t border-hairline bg-canvas py-14 sm:py-20">
+	<div class="mx-auto max-w-[1200px] px-4 sm:px-6">
+		<div class="mb-8 flex flex-col justify-between gap-3 md:flex-row md:items-end">
+			<div>
+				<h2
+					id="benchmarks-heading"
+					class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
+				>
+					Reading time by word count
+				</h2>
+				<p class="mt-2 max-w-2xl text-[15px] leading-[24px] text-body">
+					Compare average silent reading time (238 WPM) and read-aloud speaking time (130 WPM) for common document lengths.
+				</p>
+			</div>
+			<p class="text-[13px] text-mute">
+				Click any row to load that word count into the calculator
+			</p>
+		</div>
+
+		<div class="whisper-shadow overflow-x-auto rounded-md border border-hairline bg-canvas-elevated">
+			<table class="w-full border-collapse text-left">
+				<thead>
+					<tr class="border-b border-hairline bg-canvas-muted text-[13px] font-semibold text-ink">
+						<th scope="col" class="py-3.5 pl-5 pr-4">Word count</th>
+						<th scope="col" class="px-4 py-3.5">Silent reading (238 WPM)</th>
+						<th scope="col" class="px-4 py-3.5">Read aloud (130 WPM)</th>
+						<th scope="col" class="hidden px-4 py-3.5 sm:table-cell">Fast reader (300 WPM)</th>
+						<th scope="col" class="hidden px-4 py-3.5 md:table-cell">Pages (single / double)</th>
+						<th scope="col" class="hidden py-3.5 pl-4 pr-5 lg:table-cell">Typical length</th>
+					</tr>
+				</thead>
+				<tbody class="divide-y divide-hairline text-[14px]">
+					{
+						benchmarkRows.map((row) => {
+							const singlePg = (row.words / 500).toFixed(1).replace(/\.0$/, '');
+							const doublePg = (row.words / 250).toFixed(1).replace(/\.0$/, '');
+							return (
+								<tr
+									data-benchmark-words={row.words}
+									tabindex="0"
+									role="button"
+									aria-label={`Load ${row.words} words into calculator`}
+									class="benchmark-row group cursor-pointer transition-colors hover:bg-hairline-soft/70 focus:bg-hairline-soft/70 focus:outline-none"
+								>
+									<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums group-hover:text-vercel-blue">
+										{row.words.toLocaleString()} words
+									</td>
+									<td class="whitespace-nowrap px-4 py-3.5 tabular-nums">
+										<span class="font-medium text-ink">{formatMinSec(row.words, 238)}</span>
+										<span class="ml-1.5 text-[13px] text-mute">
+											({formatDecimalMinutes(row.words, 238)})
+										</span>
+									</td>
+									<td class="whitespace-nowrap px-4 py-3.5 tabular-nums">
+										<span class="font-medium text-ink">{formatMinSec(row.words, 130)}</span>
+										<span class="ml-1.5 text-[13px] text-mute">
+											({formatDecimalMinutes(row.words, 130)})
+										</span>
+									</td>
+									<td class="hidden whitespace-nowrap px-4 py-3.5 text-[14px] text-body tabular-nums sm:table-cell">
+										{formatMinSec(row.words, 300)}
+									</td>
+									<td class="hidden whitespace-nowrap px-4 py-3.5 text-[14px] text-body tabular-nums md:table-cell">
+										{singlePg} / {doublePg} pages
+									</td>
+									<td class="hidden py-3.5 pl-4 pr-5 text-[14px] text-body lg:table-cell">
+										{row.useCase}
+									</td>
+								</tr>
+							);
+						})
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+
+<script>
+	function initBenchmarkTable() {
+		const rows = document.querySelectorAll<HTMLElement>('.benchmark-row');
+		rows.forEach((row) => {
+			const triggerLoad = () => {
+				const words = Number(row.dataset.benchmarkWords);
+				if (words) {
+					window.dispatchEvent(
+						new CustomEvent('load-benchmark-words', {
+							detail: { words },
+						})
+					);
+				}
+			};
+
+			row.addEventListener('click', triggerLoad);
+			row.addEventListener('keydown', (e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					triggerLoad();
+				}
+			});
+		});
+	}
+
+	initBenchmarkTable();
+</script>
