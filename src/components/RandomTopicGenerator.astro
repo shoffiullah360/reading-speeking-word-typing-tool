@@ -11,195 +11,497 @@ const speechTimeTool = getToolById('speech-time-calculator');
 	aria-label="Random Topic Generator Workspace"
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
-	<!-- 4 Topic Mode Selector Tabs -->
-	<div class="whisper-shadow mb-6 rounded-md border border-hairline bg-canvas-elevated p-3 sm:p-4">
-		<div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-			<span class="text-[13px] font-medium text-body">
-				Select topic mode
-			</span>
-			<div
-				role="tablist"
-				aria-label="Topic categories"
-				class="grid grid-cols-1 gap-1.5 sm:grid-cols-2 lg:flex lg:flex-wrap lg:items-center"
+	<!-- 1. Clean Top Control Strip (Single Unified Filter Card) -->
+	<div class="whisper-shadow mb-6 rounded-md border border-hairline bg-canvas-elevated p-4 sm:p-5">
+		<!-- Row 1: Purpose Mode Pills -->
+		<div class="flex flex-wrap items-center gap-1.5 border-b border-hairline pb-3.5" role="tablist" aria-label="Topic purpose modes">
+			<button
+				type="button"
+				role="tab"
+				data-rtg-mode="All"
+				aria-selected="true"
+				class="rtg-mode-pill cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-3.5 py-1.5 text-[13px] font-semibold text-[#111827] transition-colors"
 			>
-				<button
-					type="button"
-					role="tab"
-					data-rtg-mode="Essay & Academic"
-					aria-selected="true"
-					class="cursor-pointer rounded-sm bg-primary px-3.5 py-2 text-left text-[13px] font-medium text-on-primary transition-colors sm:text-center"
-				>
-					Essay &amp; Academic
-				</button>
-				<button
-					type="button"
-					role="tab"
-					data-rtg-mode="Public Speaking & Debate"
-					aria-selected="false"
-					class="cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-2 text-left text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft sm:text-center"
-				>
-					Public Speaking &amp; Debate
-				</button>
-				<button
-					type="button"
-					role="tab"
-					data-rtg-mode="Creative Writing"
-					aria-selected="false"
-					class="cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-2 text-left text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft sm:text-center"
-				>
-					Creative Writing
-				</button>
-				<button
-					type="button"
-					role="tab"
-					data-rtg-mode="Blog & Content"
-					aria-selected="false"
-					class="cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-2 text-left text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft sm:text-center"
-				>
-					Blog &amp; Content
-				</button>
+				All
+			</button>
+			<button
+				type="button"
+				role="tab"
+				data-rtg-mode="Essay & Academic"
+				aria-selected="false"
+				class="rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+			>
+				Essay &amp; Academic
+			</button>
+			<button
+				type="button"
+				role="tab"
+				data-rtg-mode="Speech & Debate"
+				aria-selected="false"
+				class="rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+			>
+				Speech &amp; Debate
+			</button>
+			<button
+				type="button"
+				role="tab"
+				data-rtg-mode="Conversation & Icebreakers"
+				aria-selected="false"
+				class="rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+			>
+				Conversation &amp; Icebreakers
+			</button>
+			<button
+				type="button"
+				role="tab"
+				data-rtg-mode="Creative Writing"
+				aria-selected="false"
+				class="rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+			>
+				Creative Writing
+			</button>
+			<button
+				type="button"
+				role="tab"
+				data-rtg-mode="Single-Word"
+				aria-selected="false"
+				class="rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+			>
+				Single-Word
+			</button>
+		</div>
+
+		<!-- Row 2: Compact Inline Dropdowns & View Toggle -->
+		<div class="mt-3.5 flex flex-wrap items-center justify-between gap-3">
+			<div class="flex flex-wrap items-center gap-2.5">
+				<!-- Category Select -->
+				<div class="flex items-center gap-1.5">
+					<label for="rtg-select-category" class="text-[12px] font-medium text-mute">Category</label>
+					<select
+						id="rtg-select-category"
+						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-[13px] font-medium text-ink focus:border-[#0D9488] focus:outline-none"
+					>
+						<option value="All Categories">All Categories</option>
+						<option value="Technology & AI">Technology &amp; AI</option>
+						<option value="Science & Health">Science &amp; Health</option>
+						<option value="Psychology & Philosophy">Psychology &amp; Philosophy</option>
+						<option value="Business & Career">Business &amp; Career</option>
+						<option value="Education & Society">Education &amp; Society</option>
+						<option value="Culture & History">Culture &amp; History</option>
+						<option value="Fun & Random">Fun &amp; Random</option>
+					</select>
+				</div>
+
+				<!-- Level Select -->
+				<div class="flex items-center gap-1.5">
+					<label for="rtg-select-level" class="text-[12px] font-medium text-mute">Level</label>
+					<select
+						id="rtg-select-level"
+						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-[13px] font-medium text-ink focus:border-[#0D9488] focus:outline-none"
+					>
+						<option value="Any Level">Any Level</option>
+						<option value="Easy">Easy</option>
+						<option value="Medium">Medium</option>
+						<option value="Hard">Hard</option>
+					</select>
+				</div>
+
+				<!-- Perspective Lens Select -->
+				<div class="flex items-center gap-1.5">
+					<label for="rtg-select-lens" class="text-[12px] font-medium text-mute">Lens</label>
+					<select
+						id="rtg-select-lens"
+						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-[13px] font-medium text-ink focus:border-[#0D9488] focus:outline-none"
+					>
+						<option value="Straight">Straight</option>
+						<option value="Devil's Advocate">Devil's Advocate</option>
+						<option value="ELI5 (Simple)">ELI5 (Simple)</option>
+						<option value="Pitch It">Pitch It</option>
+						<option value="Storytime">Storytime</option>
+					</select>
+				</div>
+			</div>
+
+			<!-- Right Controls: View Mode Toggle + No Repeats + Pool Count -->
+			<div class="flex flex-wrap items-center gap-3">
+				<label class="inline-flex cursor-pointer items-center gap-1.5 text-[12px] font-medium text-body select-none">
+					<input
+						type="checkbox"
+						id="rtg-no-repeats"
+						checked
+						class="h-3.5 w-3.5 cursor-pointer rounded border-hairline accent-[#0D9488]"
+					/>
+					<span>No Repeats</span>
+					<span id="rtg-pool-count" class="rounded-full border border-hairline bg-canvas px-2 py-0.5 text-[11px] font-medium text-mute tabular-nums">
+						140 matching topics
+					</span>
+				</label>
+
+				<div class="inline-flex rounded-sm border border-hairline bg-canvas p-0.5" role="group" aria-label="View mode">
+					<button
+						type="button"
+						id="rtg-view-single"
+						aria-pressed="true"
+						class="cursor-pointer rounded-[4px] bg-[#AFE3D0] px-2.5 py-1 text-[12px] font-semibold text-[#111827] transition-colors"
+					>
+						Single Focus
+					</button>
+					<button
+						type="button"
+						id="rtg-view-batch"
+						aria-pressed="false"
+						class="cursor-pointer rounded-[4px] px-2.5 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink"
+					>
+						Batch (5 Topics)
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- Main Dual-Column Workspace -->
-	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
-		<!-- Left Column: Active Topic Generator Card -->
-		<div class="whisper-shadow flex flex-col justify-between rounded-md border border-hairline bg-canvas-elevated lg:col-span-7">
-			<!-- Card Top Bar -->
-			<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-5 py-3.5">
-				<div class="flex items-center gap-2">
+	<!-- 2. Center-Stage Topic Spotlight Card -->
+	<div class="whisper-shadow rounded-md border border-hairline bg-canvas-elevated">
+		<!-- SINGLE FOCUS MODE -->
+		<div id="rtg-single-panel">
+			<!-- Top Meta Strip -->
+			<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-5 py-3.5 sm:px-7">
+				<div class="flex flex-wrap items-center gap-2">
 					<span
-						id="rtg-active-mode-pill"
-						class="rounded-full border border-hairline bg-canvas px-3 py-0.5 text-[12px] font-medium text-ink"
+						id="rtg-badge-mode"
+						class="rounded-full border border-[#5EC4A3] bg-[#AFE3D0] px-3 py-0.5 text-[12px] font-semibold text-[#111827]"
 					>
 						Essay &amp; Academic
 					</span>
-					<span id="rtg-Format-hint" class="text-[12px] text-mute">
-						Analytical &amp; persuasive prompt
+					<span
+						id="rtg-badge-category"
+						class="rounded-full border border-hairline bg-canvas px-2.5 py-0.5 text-[12px] font-medium text-body"
+					>
+						Education &amp; Society
+					</span>
+					<span
+						id="rtg-badge-level"
+						class="rounded-full border border-hairline bg-canvas px-2.5 py-0.5 text-[12px] font-medium text-mute"
+					>
+						Medium
+					</span>
+					<span
+						id="rtg-badge-lens"
+						class="hidden rounded-full border border-[#5EC4A3] bg-[#E6F7F1] px-2.5 py-0.5 text-[12px] font-medium text-[#0F766E] dark:border-hairline dark:bg-canvas dark:text-ink"
+					>
+						Lens: Straight
 					</span>
 				</div>
-				<span id="rtg-counter-label" class="text-[12px] text-mute tabular-nums">
-					Prompt 1 of 12
-				</span>
+
+				<div class="flex items-center gap-2">
+					<button
+						type="button"
+						id="rtg-btn-prep-toggle"
+						aria-expanded="false"
+						class="cursor-pointer rounded-full border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-body transition-colors hover:border-[#5EC4A3] hover:text-ink"
+					>
+						PREP Framework
+					</button>
+					<button
+						type="button"
+						id="rtg-btn-todays-topic"
+						class="cursor-pointer rounded-full border border-hairline bg-canvas px-3 py-1 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+					>
+						Today's Topic
+					</button>
+				</div>
 			</div>
 
-			<!-- Main Prompt Display -->
-			<div class="flex flex-1 flex-col justify-center px-5 py-8 sm:px-7 sm:py-10">
-				<p class="mb-2 text-[13px] font-medium text-mute">
-					Current topic prompt
-				</p>
+			<!-- Spotlight Body -->
+			<div class="px-5 py-7 sm:px-7 sm:py-9">
+				<!-- Optional Perspective Lens Framing Cue -->
+				<p id="rtg-lens-instruction" class="mb-2.5 hidden text-[13px] font-medium text-[#0F766E] dark:text-[#AFE3D0]"></p>
+
+				<!-- Large Crisp Topic Prompt Headline -->
 				<blockquote
 					id="rtg-topic-title"
 					aria-live="polite"
-					class="font-sans text-[22px] leading-[32px] font-semibold tracking-[-0.6px] text-ink sm:text-[26px] sm:leading-[36px]"
+					class="font-sans text-2xl leading-[1.3] font-bold tracking-[-0.5px] text-ink sm:text-3xl sm:leading-[1.28]"
 				>
 					Should universities evaluate students primarily through long-form research projects rather than timed examinations?
 				</blockquote>
 
-				<div class="mt-5 rounded-sm border border-hairline bg-canvas p-4">
-					<p class="text-[12px] font-semibold text-ink">
-						Suggested angle to explore
-					</p>
-					<p id="rtg-topic-angle" class="mt-1 text-[14px] leading-[22px] text-body">
-						Compare how timed exams measure recall under pressure versus how extended research essays test synthesis, revision, and original argument construction.
-					</p>
+				<!-- Angles & Talking Points Box -->
+				<div class="mt-6 rounded-sm border border-hairline bg-canvas p-4 sm:p-5">
+					<div class="flex items-center justify-between gap-2">
+						<p id="rtg-points-heading" class="text-[13px] font-semibold text-ink">
+							Angles &amp; talking points
+						</p>
+						<span id="rtg-seen-counter" class="text-[12px] text-mute tabular-nums">
+							1 of 140 seen
+						</span>
+					</div>
+					<ul id="rtg-topic-points" class="mt-2.5 space-y-2 text-[14px] leading-[22px] text-body">
+						<li class="flex items-start gap-2">
+							<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]"></span>
+							<span>Compare how timed exams measure short-term recall under pressure versus how extended research tests synthesis and revision.</span>
+						</li>
+						<li class="flex items-start gap-2">
+							<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]"></span>
+							<span>Address academic integrity challenges in an era of generative AI and how oral defenses could verify original work.</span>
+						</li>
+						<li class="flex items-start gap-2">
+							<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]"></span>
+							<span>Consider whether high-stakes professions like medicine and aviation still require rapid, unassisted recall under time constraints.</span>
+						</li>
+					</ul>
 				</div>
 
-				<!-- Primary Action Buttons -->
-				<div class="mt-7 flex flex-wrap items-center gap-2.5">
-					<button
-						type="button"
-						id="rtg-btn-generate"
-						class="inline-flex cursor-pointer items-center gap-2 rounded-sm bg-primary px-4 py-2.5 text-[14px] font-medium text-on-primary transition-opacity hover:opacity-90"
-					>
-						<svg
-							class="h-4 w-4"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							aria-hidden="true"
-						>
-							<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-							<polyline points="7.5 4.21 12 6.81 16.5 4.21" />
-							<polyline points="7.5 19.79 7.5 14.6 3 12" />
-							<polyline points="21 12 16.5 14.6 16.5 19.79" />
-							<polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-							<line x1="12" y1="22.08" x2="12" y2="12" />
-						</svg>
-						<span>Generate New Topic</span>
-					</button>
-
-					<button
-						type="button"
-						id="rtg-btn-copy"
-						class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-4 py-2.5 text-[14px] font-medium text-ink transition-colors hover:bg-hairline-soft"
-					>
-						<svg
-							class="h-4 w-4 text-mute"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							aria-hidden="true"
-						>
-							<rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-							<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-						</svg>
-						<span id="rtg-copy-label">Copy Topic</span>
-					</button>
-
-					<button
-						type="button"
-						id="rtg-btn-shortlist"
-						class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-4 py-2.5 text-[14px] font-medium text-ink transition-colors hover:bg-hairline-soft"
-					>
-						<svg
-							class="h-4 w-4 text-mute"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							aria-hidden="true"
-						>
-							<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
-						</svg>
-						<span id="rtg-shortlist-btn-label">Save to Shortlist</span>
-					</button>
+				<!-- Collapsible PREP Structure Strip -->
+				<div
+					id="rtg-prep-strip"
+					class="mt-4 hidden rounded-sm border border-[#7ED4B6] bg-[#E6F7F1]/60 p-4 dark:border-hairline dark:bg-canvas"
+				>
+					<div class="mb-2 flex items-center justify-between">
+						<span class="text-[12px] font-semibold text-ink">
+							PREP Speaking &amp; Essay Structure (Point · Reason · Example · Point)
+						</span>
+						<span class="text-[11px] text-mute">60–90 sec framework</span>
+					</div>
+					<div class="grid grid-cols-1 gap-2.5 text-[13px] sm:grid-cols-4">
+						<div class="rounded-sm border border-hairline bg-canvas-elevated p-2.5">
+							<strong class="block text-ink">1. Point</strong>
+							<span class="text-[12px] text-body">State your core thesis or direct answer in one clear sentence.</span>
+						</div>
+						<div class="rounded-sm border border-hairline bg-canvas-elevated p-2.5">
+							<strong class="block text-ink">2. Reason</strong>
+							<span class="text-[12px] text-body">Explain the primary cause, mechanism, or principle behind your claim.</span>
+						</div>
+						<div class="rounded-sm border border-hairline bg-canvas-elevated p-2.5">
+							<strong class="block text-ink">3. Example</strong>
+							<span class="text-[12px] text-body">Anchor your argument with a concrete story, case study, or statistic.</span>
+						</div>
+						<div class="rounded-sm border border-hairline bg-canvas-elevated p-2.5">
+							<strong class="block text-ink">4. Point</strong>
+							<span class="text-[12px] text-body">Restate your conclusion so the audience leaves with a memorable takeaway.</span>
+						</div>
+					</div>
 				</div>
-			</div>
 
-			<!-- Card Footer Bar -->
-			<div class="flex flex-wrap items-center justify-between gap-2 border-t border-hairline px-5 py-3 text-[12px] text-mute">
-				<span id="rtg-target-scope" class="tabular-nums">
-					Recommended length: 800 – 1,500 words (3 – 6 pages)
-				</span>
-				<span id="rtg-status-feedback">
-					Runs privately in your browser
-				</span>
+				<!-- Primary Action Bar -->
+				<div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+					<div class="flex flex-wrap items-center gap-2.5">
+						<button
+							type="button"
+							id="rtg-btn-generate"
+							class="inline-flex cursor-pointer items-center gap-2 rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-4 py-2.5 text-[14px] font-semibold text-[#111827] transition-opacity hover:opacity-90"
+						>
+							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+								<polyline points="7.5 4.21 12 6.81 16.5 4.21" />
+								<polyline points="7.5 19.79 7.5 14.6 3 12" />
+								<polyline points="21 12 16.5 14.6 16.5 19.79" />
+								<polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+								<line x1="12" y1="22.08" x2="12" y2="12" />
+							</svg>
+							<span>Generate New Topic</span>
+						</button>
+
+						<button
+							type="button"
+							id="rtg-btn-copy-single"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+						>
+							<svg class="h-4 w-4 text-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+								<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+							</svg>
+							<span id="rtg-copy-single-label">Copy Topic + Points</span>
+						</button>
+
+						<button
+							type="button"
+							id="rtg-btn-save-single"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+						>
+							<svg class="h-4 w-4 text-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+							</svg>
+							<span id="rtg-save-single-label">Save to Shortlist</span>
+						</button>
+
+						<button
+							type="button"
+							id="rtg-btn-copy-link"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+						>
+							<svg class="h-4 w-4 text-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+								<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+								<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+							</svg>
+							<span id="rtg-copy-link-label">Copy Link</span>
+						</button>
+					</div>
+
+					<span id="rtg-status-toast" class="text-[12px] text-mute">
+						Press <kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-ink">Space</kbd> for next topic
+					</span>
+				</div>
 			</div>
 		</div>
 
-		<!-- Right Column: Session-Saved Shortlisted Topics -->
-		<div class="whisper-shadow flex flex-col justify-between rounded-md border border-hairline bg-canvas-elevated lg:col-span-5">
-			<div class="p-5">
-				<div class="flex items-center justify-between gap-2 border-b border-hairline pb-3.5">
-					<div>
-						<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
-							Shortlisted Topics
-						</h2>
-						<p class="mt-0.5 text-[12px] text-mute">
-							Saved for your current browser session
-						</p>
-					</div>
+		<!-- BATCH (5 TOPICS) MODE -->
+		<div id="rtg-batch-panel" class="hidden">
+			<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-5 py-3.5 sm:px-7">
+				<div class="flex items-center gap-2">
+					<span class="rounded-full border border-[#5EC4A3] bg-[#AFE3D0] px-3 py-0.5 text-[12px] font-semibold text-[#111827]">
+						Batch View (5 Topics)
+					</span>
+					<span class="text-[12px] text-mute">
+						Click any topic row to open its full talking points in Single Focus
+					</span>
+				</div>
+			</div>
 
+			<div class="p-5 sm:p-7">
+				<ul id="rtg-batch-list" class="space-y-3" aria-label="Batch generated topics"></ul>
+
+				<div class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-hairline pt-4">
+					<div class="flex flex-wrap items-center gap-2.5">
+						<button
+							type="button"
+							id="rtg-btn-generate-batch"
+							class="inline-flex cursor-pointer items-center gap-2 rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-4 py-2.5 text-[14px] font-semibold text-[#111827] transition-opacity hover:opacity-90"
+						>
+							Generate 5 New
+						</button>
+						<button
+							type="button"
+							id="rtg-btn-copy-batch"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+						>
+							Copy All 5
+						</button>
+						<button
+							type="button"
+							id="rtg-btn-download-batch"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+						>
+							Download .txt
+						</button>
+					</div>
+					<span id="rtg-batch-toast" class="text-[12px] text-mute">
+						Showing 5 random topics from current filters
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 3. Balanced 2-Column Bottom Utility Dock -->
+	<div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+		<!-- Left Card: Practice Timer & Quick Notes -->
+		<div class="whisper-shadow flex flex-col justify-between rounded-md border border-hairline bg-canvas-elevated p-5">
+			<div>
+				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline pb-3.5">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						Practice Timer &amp; Quick Notes
+					</h2>
+					<div class="flex items-center gap-1" role="group" aria-label="Timer presets">
+						<button
+							type="button"
+							data-rtg-timer="30"
+							class="rtg-timer-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink"
+						>
+							30s Prep
+						</button>
+						<button
+							type="button"
+							data-rtg-timer="60"
+							class="rtg-timer-preset cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-2 py-1 text-[12px] font-semibold text-[#111827] transition-colors"
+						>
+							1 min
+						</button>
+						<button
+							type="button"
+							data-rtg-timer="120"
+							class="rtg-timer-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink"
+						>
+							2 min
+						</button>
+						<button
+							type="button"
+							data-rtg-timer="300"
+							class="rtg-timer-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink"
+						>
+							5 min
+						</button>
+					</div>
+				</div>
+
+				<!-- Timer Bar -->
+				<div class="mt-4 flex items-center justify-between rounded-sm border border-hairline bg-canvas px-4 py-3">
+					<div class="flex items-baseline gap-2.5">
+						<span
+							id="rtg-timer-display"
+							class="text-2xl font-bold tracking-tight text-ink tabular-nums sm:text-3xl"
+						>
+							01:00
+						</span>
+						<span id="rtg-timer-state" class="text-[12px] font-medium text-mute">
+							Ready
+						</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<button
+							type="button"
+							id="rtg-timer-start"
+							class="cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-3.5 py-1.5 text-[13px] font-semibold text-[#111827] transition-opacity hover:opacity-90"
+						>
+							Start
+						</button>
+						<button
+							type="button"
+							id="rtg-timer-reset"
+							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+						>
+							Reset
+						</button>
+					</div>
+				</div>
+
+				<!-- Minimal Quick Notes Scratchpad -->
+				<div class="mt-4">
+					<div class="mb-1.5 flex items-center justify-between">
+						<label for="rtg-notes-input" class="text-[12px] font-medium text-body">
+							Quick outline &amp; opening hook scratchpad
+						</label>
+						<span id="rtg-notes-wordcount" class="text-[12px] text-mute tabular-nums">
+							0 words
+						</span>
+					</div>
+					<textarea
+						id="rtg-notes-input"
+						rows="4"
+						placeholder="Jot down your opening hook or thesis..."
+						class="w-full resize-y rounded-sm border border-hairline bg-canvas p-3 text-[13px] leading-[20px] text-ink placeholder:text-mute focus:border-[#0D9488] focus:outline-none"
+					></textarea>
+				</div>
+			</div>
+
+			<div class="mt-3 flex items-center justify-between border-t border-hairline pt-3 text-[12px] text-mute">
+				<span>Notes auto-save locally in your browser</span>
+				<button
+					type="button"
+					id="rtg-notes-clear"
+					class="cursor-pointer font-medium text-mute transition-colors hover:text-ink"
+				>
+					Clear notes
+				</button>
+			</div>
+		</div>
+
+		<!-- Right Card: Shortlisted Topics (Persisted in localStorage) -->
+		<div class="whisper-shadow flex flex-col justify-between rounded-md border border-hairline bg-canvas-elevated p-5">
+			<div>
+				<div class="flex items-center justify-between gap-2 border-b border-hairline pb-3.5">
+					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
+						Shortlisted Topics
+					</h2>
 					<div class="flex items-center gap-2">
 						<span
 							id="rtg-shortlist-count"
@@ -210,9 +512,9 @@ const speechTimeTool = getToolById('speech-time-calculator');
 						<button
 							type="button"
 							id="rtg-btn-clear-shortlist"
-							class="hidden cursor-pointer rounded-sm px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-vercel-error"
+							class="hidden cursor-pointer rounded-sm px-2 py-0.5 text-[12px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-vercel-error"
 						>
-							Clear all
+							Clear
 						</button>
 					</div>
 				</div>
@@ -220,30 +522,39 @@ const speechTimeTool = getToolById('speech-time-calculator');
 				<!-- Empty State -->
 				<div
 					id="rtg-shortlist-empty"
-					class="mt-4 rounded-sm border border-hairline bg-canvas px-4 py-8 text-center text-[13px] text-mute"
+					class="mt-4 rounded-sm border border-hairline bg-canvas px-4 py-9 text-center text-[13px] text-mute"
 				>
-					Click <strong class="font-medium text-ink">Save to Shortlist</strong> on any topic you like to compare ideas and copy them together.
+					Click <strong class="font-medium text-ink">Save to Shortlist</strong> on any topic to bookmark your favorites for comparison or export.
 				</div>
 
-				<!-- Shortlisted Items List -->
+				<!-- Scrollable Shortlist -->
 				<ul
 					id="rtg-shortlist-items"
 					aria-label="Shortlisted topics"
-					class="mt-4 hidden max-h-[340px] space-y-2.5 overflow-y-auto pr-1"
+					class="mt-4 hidden max-h-[230px] space-y-2 overflow-y-auto pr-1"
 				></ul>
 			</div>
 
-			<!-- Shortlist Footer Actions -->
-			<div class="flex items-center justify-between border-t border-hairline px-5 py-3.5 text-[12px] text-mute">
-				<span>Compare &amp; export your favorites</span>
-				<button
-					type="button"
-					id="rtg-btn-copy-all"
-					disabled
-					class="cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft disabled:cursor-not-allowed disabled:opacity-50"
-				>
-					Copy all saved
-				</button>
+			<div class="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-hairline pt-3 text-[12px] text-mute">
+				<span>Saved across visits</span>
+				<div class="flex items-center gap-2">
+					<button
+						type="button"
+						id="rtg-btn-copy-all-saved"
+						disabled
+						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft disabled:cursor-not-allowed disabled:opacity-50"
+					>
+						Copy All Saved
+					</button>
+					<button
+						type="button"
+						id="rtg-btn-download-saved"
+						disabled
+						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft disabled:cursor-not-allowed disabled:opacity-50"
+					>
+						Download .txt
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -313,280 +624,2124 @@ const speechTimeTool = getToolById('speech-time-calculator');
 </section>
 
 <script>
-	interface TopicItem {
+	interface TopicRecord {
+		id: string;
+		mode: 'Essay & Academic' | 'Speech & Debate' | 'Conversation & Icebreakers' | 'Creative Writing' | 'Single-Word';
+		category:
+			| 'Technology & AI'
+			| 'Science & Health'
+			| 'Psychology & Philosophy'
+			| 'Business & Career'
+			| 'Education & Society'
+			| 'Culture & History'
+			| 'Fun & Random';
+		level: 'Easy' | 'Medium' | 'Hard';
 		title: string;
-		angle: string;
+		points: [string, string, string];
 	}
 
-	interface ShortlistedEntry {
+	interface SavedTopic {
+		id: string;
 		mode: string;
+		category: string;
+		level: string;
 		title: string;
+		points: string[];
 	}
+
+	const TOPICS: TopicRecord[] = [
+		// =========================================================================
+		// MODE 1: Essay & Academic (28 Topics across all 7 categories)
+		// =========================================================================
+		{
+			id: 'ea-1',
+			mode: 'Essay & Academic',
+			category: 'Technology & AI',
+			level: 'Medium',
+			title: 'Does widespread reliance on algorithmic recommendations narrow or expand individual cultural curiosity?',
+			points: [
+				'Analyze whether personalized discovery feeds create taste echo chambers or lower friction to discovering global niche art.',
+				'Compare passive algorithmic consumption with active curation through community forums, libraries, and critics.',
+				'Evaluate whether platforms should offer a transparent "serendipity slider" to let users tune unfamiliar recommendations.',
+			],
+		},
+		{
+			id: 'ea-2',
+			mode: 'Essay & Academic',
+			category: 'Technology & AI',
+			level: 'Hard',
+			title: 'Should autonomous software agents and AI systems carry mandatory digital watermarks on all synthetic media by law?',
+			points: [
+				'Examine cryptographic provenance standards versus the ease of stripping metadata across open-source tools.',
+				'Weigh protection of public epistemic trust against privacy concerns for anonymous whistleblowers and artists.',
+				'Consider how courts and journalists verify authenticity when synthetic audio and video become indistinguishable from reality.',
+			],
+		},
+		{
+			id: 'ea-3',
+			mode: 'Essay & Academic',
+			category: 'Technology & AI',
+			level: 'Easy',
+			title: 'Has the transition from physical notebooks to cloud-synced digital notes improved how students retain complex ideas?',
+			points: [
+				'Compare cognitive encoding during slower handwriting against the speed and searchability of typed digital notes.',
+				'Discuss how spatial memory on physical paper pages differs from infinite scrolling documents.',
+				'Propose hybrid workflows that combine handwritten concept mapping with searchable digital archives.',
+			],
+		},
+		{
+			id: 'ea-4',
+			mode: 'Essay & Academic',
+			category: 'Technology & AI',
+			level: 'Hard',
+			title: 'To what extent should municipal utilities treat high-speed broadband and local compute access as public infrastructure?',
+			points: [
+				'Compare 20th-century rural electrification programs with modern fiber-optic and digital access divides.',
+				'Analyze the economic trade-offs between private telecom competition and municipal broadband cooperatives.',
+				'Assess how telehealth, remote education, and civic participation depend on baseline connectivity guarantees.',
+			],
+		},
+		{
+			id: 'ea-5',
+			mode: 'Essay & Academic',
+			category: 'Science & Health',
+			level: 'Medium',
+			title: 'Should scientific journals mandate immediate open-access publishing for all taxpayer-funded research upon peer review?',
+			points: [
+				'Weigh the public right to access publicly funded discoveries against the operational costs of peer-review administration.',
+				'Analyze how high article-processing charges affect early-career researchers and universities in developing nations.',
+				'Explore institutional preprint repositories as an alternative model for rapid scientific collaboration.',
+			],
+		},
+		{
+			id: 'ea-6',
+			mode: 'Essay & Academic',
+			category: 'Science & Health',
+			level: 'Hard',
+			title: 'What ethical boundaries should govern preventive polygenic embryo screening for non-lethal traits?',
+			points: [
+				'Distinguish between screening for severe monogenic diseases and statistical risk scores for complex polygenic traits.',
+				'Address potential socioeconomic stratification if genomic optimization becomes available only through private clinics.',
+				'Discuss the psychological impact on children raised under heightened genetic expectations.',
+			],
+		},
+		{
+			id: 'ea-7',
+			mode: 'Essay & Academic',
+			category: 'Science & Health',
+			level: 'Easy',
+			title: 'How does urban tree canopy density measurably influence public physical and mental health outcomes?',
+			points: [
+				'Examine the urban heat-island effect and how shaded neighborhoods reduce heat-related hospitalizations.',
+				'Review epidemiological studies linking daily green-space exposure to lower cortisol levels and improved sleep.',
+				'Evaluate equitable urban forestry budgets across historically under-shaded neighborhoods.',
+			],
+		},
+		{
+			id: 'ea-8',
+			mode: 'Essay & Academic',
+			category: 'Science & Health',
+			level: 'Medium',
+			title: 'Should national dietary guidelines factor environmental sustainability alongside nutritional adequacy?',
+			points: [
+				'Compare the land, water, and carbon footprints of plant-forward diets with conventional livestock production.',
+				'Consider cultural food traditions, agricultural livelihoods, and regional micronutrient availability.',
+				'Analyze whether consumer food labeling changes purchasing habits more effectively than agricultural subsidies.',
+			],
+		},
+		{
+			id: 'ea-9',
+			mode: 'Essay & Academic',
+			category: 'Psychology & Philosophy',
+			level: 'Medium',
+			title: 'Is moral responsibility diminished when human decisions are nudged by predictive choice architecture?',
+			points: [
+				'Define behavioral nudges in finance, organ donation, and digital interfaces through the lens of personal autonomy.',
+				'Contrast libertarian paternalism with classical Kantian views of conscious moral agency.',
+				'Explore where helpful default settings cross the line into dark patterns and manipulation.',
+			],
+		},
+		{
+			id: 'ea-10',
+			mode: 'Essay & Academic',
+			category: 'Psychology & Philosophy',
+			level: 'Hard',
+			title: 'Does the ship of Theseus paradox apply to human personal identity across decades of autobiographical memory reconstruction?',
+			points: [
+				'Examine neuroscience findings showing that episodic memories are subtly rewritten each time they are recalled.',
+				'Compare Locke’s psychological continuity theory with narrative identity frameworks in modern psychology.',
+				'Consider legal and ethical implications: why do we hold an 80-year-old accountable for actions taken at age 20?',
+			],
+		},
+		{
+			id: 'ea-11',
+			mode: 'Essay & Academic',
+			category: 'Psychology & Philosophy',
+			level: 'Easy',
+			title: 'Why does voluntary solitude restore cognitive creativity whereas involuntary isolation erodes it?',
+			points: [
+				'Distinguish the psychological framing of chosen quiet reflection from social exclusion.',
+				'Explain how the brain’s default mode network consolidates insights when freed from external social performance.',
+				'Discuss architectural and scheduling habits that protect healthy solitude in hyper-connected environments.',
+			],
+		},
+		{
+			id: 'ea-12',
+			mode: 'Essay & Academic',
+			category: 'Psychology & Philosophy',
+			level: 'Hard',
+			title: 'Can longtermism provide a coherent ethical framework without discounting urgent present-day human suffering?',
+			points: [
+				'Compare moral weights assigned to billions of potential future humans versus living populations facing immediate poverty.',
+				'Analyze existential risk mitigation investments alongside measurable near-term public health interventions.',
+				'Question how epistemic uncertainty over century-scale forecasts affects practical policy prioritization.',
+			],
+		},
+		{
+			id: 'ea-13',
+			mode: 'Essay & Academic',
+			category: 'Business & Career',
+			level: 'Medium',
+			title: 'Does mandatory pay transparency within corporations compress wages or accelerate meritocratic productivity?',
+			points: [
+				'Review empirical evidence on gender and demographic pay gaps before and after salary disclosure laws.',
+				'Analyze whether open salary bands reduce negotiation friction or discourage high-performing outliers.',
+				'Examine how organizations define objective performance metrics when compensation is visible to peers.',
+			],
+		},
+		{
+			id: 'ea-14',
+			mode: 'Essay & Academic',
+			category: 'Business & Career',
+			level: 'Easy',
+			title: 'How has remote and hybrid work reshaped the economic geography of mid-sized towns and commuter suburbs?',
+			points: [
+				'Trace the shift of daytime retail spending from central business districts to neighborhood commercial corridors.',
+				'Examine housing affordability pressures when remote earners relocate to lower-cost regional cities.',
+				'Evaluate how municipal transit agencies adapt schedules designed around 9-to-5 downtown peaks.',
+			],
+		},
+		{
+			id: 'ea-15',
+			mode: 'Essay & Academic',
+			category: 'Business & Career',
+			level: 'Hard',
+			title: 'Should corporate fiduciary duty require binding environmental and stakeholder audits alongside quarterly financial reporting?',
+			points: [
+				'Contrast Milton Friedman’s shareholder primacy doctrine with modern benefit-corporation governance models.',
+				'Analyze the measurability problem: how to prevent vague ESG metrics from becoming unverified marketing claims.',
+				'Assess whether long-term supply-chain resilience aligns shareholder value with ecological stewardship.',
+			],
+		},
+		{
+			id: 'ea-16',
+			mode: 'Essay & Academic',
+			category: 'Business & Career',
+			level: 'Medium',
+			title: 'Why do certain artisanal and repair trades thrive economically during eras of rapid industrial automation?',
+			points: [
+				'Explore consumer psychology around provenance, durability, and human craftsmanship in saturated digital markets.',
+				'Compare the unit economics of disposable mass manufacturing with modular, repairable product design.',
+				'Evaluate right-to-repair legislation as a catalyst for local skilled technical employment.',
+			],
+		},
+		{
+			id: 'ea-17',
+			mode: 'Essay & Academic',
+			category: 'Education & Society',
+			level: 'Medium',
+			title: 'Should universities evaluate students primarily through long-form research projects rather than timed examinations?',
+			points: [
+				'Compare how timed exams measure short-term recall under pressure versus how extended research tests synthesis and revision.',
+				'Address academic integrity challenges in an era of generative AI and how oral defenses could verify original work.',
+				'Consider whether high-stakes professions like medicine and aviation still require rapid, unassisted recall under time constraints.',
+			],
+		},
+		{
+			id: 'ea-18',
+			mode: 'Essay & Academic',
+			category: 'Education & Society',
+			level: 'Easy',
+			title: 'How does the architecture of public libraries and pedestrian plazas shape civic trust in modern cities?',
+			points: [
+				'Define Ray Oldenburg’s concept of "third places" where citizens gather without a commercial purchase requirement.',
+				'Analyze how natural light, seating geometry, and street-level accessibility encourage cross-generational interaction.',
+				'Compare neighborhoods with well-funded civic spaces against car-dependent developments lacking public squares.',
+			],
+		},
+		{
+			id: 'ea-19',
+			mode: 'Essay & Academic',
+			category: 'Education & Society',
+			level: 'Hard',
+			title: 'Is universal financial literacy education in secondary schools sufficient to improve household economic resilience?',
+			points: [
+				'Distinguish what individual budgeting and compound-interest literacy can solve from structural wage and housing costs.',
+				'Review longitudinal studies measuring adult credit scores and savings rates after high-school finance mandates.',
+				'Propose pairing classroom instruction with automatic youth savings accounts or practical tax-filing workshops.',
+			],
+		},
+		{
+			id: 'ea-20',
+			mode: 'Essay & Academic',
+			category: 'Education & Society',
+			level: 'Medium',
+			title: 'Should municipal governments prioritize congestion pricing or expanded micro-transit networks to reduce commuter emissions?',
+			points: [
+				'Compare behavioral pricing disincentives in cities like London and Stockholm with suburban transit deserts.',
+				'Assess equity impacts on shift-based hospitality and healthcare workers who commute outside peak rail hours.',
+				'Explore how congestion revenue can be legally ring-fenced to fund high-frequency bus and cycling lanes.',
+			],
+		},
+		{
+			id: 'ea-21',
+			mode: 'Essay & Academic',
+			category: 'Culture & History',
+			level: 'Medium',
+			title: 'To what extent should historical preservation laws restrict the adaptive reuse of aging urban infrastructure?',
+			points: [
+				'Weigh architectural heritage conservation against urgent housing density and climate retrofitting needs.',
+				'Examine successful adaptive reuse case studies where industrial warehouses became vibrant mixed-use housing.',
+				'Discuss who decides which eras and vernacular buildings merit permanent legal protection.',
+			],
+		},
+		{
+			id: 'ea-22',
+			mode: 'Essay & Academic',
+			category: 'Culture & History',
+			level: 'Hard',
+			title: 'How has the digitization of fragile newspapers and personal letters altered historical historiography?',
+			points: [
+				'Analyze how full-text keyword search accelerates cross-referencing while tempting scholars to skip surrounding context.',
+				'Consider survivorship bias: which regional languages and community archives remain un-digitized and invisible online?',
+				'Reflect on what physical artifacts—postmarks, paper quality, handwritten marginalia—reveal that OCR text omits.',
+			],
+		},
+		{
+			id: 'ea-23',
+			mode: 'Essay & Academic',
+			category: 'Culture & History',
+			level: 'Easy',
+			title: 'Why do culinary traditions often survive across immigrant generations longer than spoken ancestral languages?',
+			points: [
+				'Explore sensory memory and communal family meals as low-barrier vessels of cultural identity.',
+				'Contrast external social pressures for linguistic assimilation with the broad welcoming of diverse cuisines.',
+				'Examine how diaspora recipes adapt local ingredients while preserving foundational flavor structures.',
+			],
+		},
+		{
+			id: 'ea-24',
+			mode: 'Essay & Academic',
+			category: 'Culture & History',
+			level: 'Medium',
+			title: 'Should encyclopedic museums replace permanent international ownership of disputed artifacts with rotating global stewardship?',
+			points: [
+				'Compare the universal museum argument for comparative global study with cultural restitution claims.',
+				'Evaluate modern climate-controlled conservation facilities in countries of origin alongside digital 3D archiving.',
+				'Propose long-term reciprocal loan treaties that circulate artifacts across continents.',
+			],
+		},
+		{
+			id: 'ea-25',
+			mode: 'Essay & Academic',
+			category: 'Fun & Random',
+			level: 'Easy',
+			title: 'What does the evolution of board game design reveal about shifting cultural attitudes toward competition and cooperation?',
+			points: [
+				'Contrast early 20th-century player-elimination games like Monopoly with modern cooperative games like Pandemic.',
+				'Analyze why complex tabletop gatherings surged in popularity alongside high-speed digital entertainment.',
+				'Examine how rulebook mechanics teach negotiation, resource scarcity, and shared problem-solving.',
+			],
+		},
+		{
+			id: 'ea-26',
+			mode: 'Essay & Academic',
+			category: 'Fun & Random',
+			level: 'Medium',
+			title: 'Why do human societies repeatedly invent standardized timekeeping systems that ignore seasonal daylight variations?',
+			points: [
+				'Trace the railway synchronization of the 19th century that replaced local solar noon with uniform time zones.',
+				'Examine biological circadian friction caused by artificial clock shifts and permanent standard vs. daylight time.',
+				'Compare agricultural task-oriented time with industrial clock-measured labor.',
+			],
+		},
+		{
+			id: 'ea-27',
+			mode: 'Essay & Academic',
+			category: 'Fun & Random',
+			level: 'Easy',
+			title: 'How did the humble shipping container quietly reorganize global retail, port cities, and consumer expectations?',
+			points: [
+				'Explain how intermodal standardization slashed maritime loading times from weeks of manual labor to hours.',
+				'Trace how historic downtown waterfronts shifted away from city centers toward automated deep-water ports.',
+				'Discuss the fragility of just-in-time global supply chains when a single canal or port bottleneck occurs.',
+			],
+		},
+		{
+			id: 'ea-28',
+			mode: 'Essay & Academic',
+			category: 'Fun & Random',
+			level: 'Hard',
+			title: 'Can humor and political satire function as a catalyst for policy reform, or do they primarily serve as a pressure-release valve?',
+			points: [
+				'Analyze historical examples where satirical pamphlets and broadcasts exposed institutional absurdity.',
+				'Consider the psychological risk that laughing at systemic problems substitutes for tangible civic action.',
+				'Compare satire under censorship with satire in fragmented, attention-saturated media ecosystems.',
+			],
+		},
+
+		// =========================================================================
+		// MODE 2: Speech & Debate (28 Topics across all 7 categories)
+		// =========================================================================
+		{
+			id: 'sd-1',
+			mode: 'Speech & Debate',
+			category: 'Technology & AI',
+			level: 'Easy',
+			title: 'This house would ban smartphones and smartwatches inside primary and secondary school classrooms.',
+			points: [
+				'Proposition: Removing notification interrupts measurably restores peer-to-peer recess socialization and deep reading focus.',
+				'Opposition: Teaching responsible self-regulation with technology prepares students better than prohibition.',
+				'Middle ground: Evaluate bell-to-bell lockable pouches versus emergency family communication policies.',
+			],
+		},
+		{
+			id: 'sd-2',
+			mode: 'Speech & Debate',
+			category: 'Technology & AI',
+			level: 'Medium',
+			title: 'Why every software engineer and product designer should spend one week a year in customer support.',
+			points: [
+				'Open with a vivid story of a "minor UI change" that caused thousands of real users daily frustration.',
+				'Show how direct exposure to user confusion builds empathy faster than abstract analytics dashboards.',
+				'Conclude with a practical blueprint for rotating technical builders through frontline user conversations.',
+			],
+		},
+		{
+			id: 'sd-3',
+			mode: 'Speech & Debate',
+			category: 'Technology & AI',
+			level: 'Hard',
+			title: 'This house believes that open-weights foundation AI models are safer for society than closed proprietary monopolies.',
+			points: [
+				'Argue how public academic auditing and distributed innovation prevent single-company gatekeeping of human knowledge.',
+				'Counter with bio-risk, cyber-offense proliferation, and the inability to recall unsafe model weights once released.',
+				'Propose tiered release thresholds based on verifiable capability evaluations.',
+			],
+		},
+		{
+			id: 'sd-4',
+			mode: 'Speech & Debate',
+			category: 'Technology & AI',
+			level: 'Medium',
+			title: 'The case for digital minimalism: why deleting half your apps makes you twice as observant.',
+			points: [
+				'Contrast the habit of filling every 30-second elevator wait with a screen against noticing your surroundings.',
+				'Explain the attention economy business model in plain, memorable everyday terms.',
+				'Challenge the audience to a 7-day home-screen audit keeping only utility tools.',
+			],
+		},
+		{
+			id: 'sd-5',
+			mode: 'Speech & Debate',
+			category: 'Science & Health',
+			level: 'Easy',
+			title: 'Should high schools delay morning start times to 9:00 AM to align with adolescent sleep biology?',
+			points: [
+				'Cite adolescent melatonin phase-delay research showing teenagers are biologically wired for later sleep cycles.',
+				'Address practical parent commuting schedules, after-school athletics, and bus fleet logistics.',
+				'Highlight attendance, mood, and traffic-safety improvements in districts that shifted start times.',
+			],
+		},
+		{
+			id: 'sd-6',
+			mode: 'Speech & Debate',
+			category: 'Science & Health',
+			level: 'Medium',
+			title: 'This house would prioritize planetary ocean exploration over crewed deep-space missions for the next twenty years.',
+			points: [
+				'Compare the unmapped biodiversity and climate-regulation role of Earth’s deep oceans with Martian colonization.',
+				'Acknowledge how aerospace engineering spin-offs historically catalyzed satellite weather tracking and solar tech.',
+				'Frame the debate around urgency: ecological stewardship at home versus multi-planetary insurance.',
+			],
+		},
+		{
+			id: 'sd-7',
+			mode: 'Speech & Debate',
+			category: 'Science & Health',
+			level: 'Hard',
+			title: 'Should healthcare systems offer lower insurance premiums to individuals who meet verified preventive lifestyle benchmarks?',
+			points: [
+				'Weigh behavioral incentives for preventative wellness against genetic predisposition and socioeconomic barriers.',
+				'Examine wearable health-tracker privacy risks when insurers request biometric step and sleep data.',
+				'Contrast punitive premium surcharges with positive community subsidies like free gym and produce stipends.',
+			],
+		},
+		{
+			id: 'sd-8',
+			mode: 'Speech & Debate',
+			category: 'Science & Health',
+			level: 'Medium',
+			title: 'Why walking thirty minutes a day without headphones is the simplest cognitive reset available.',
+			points: [
+				'Describe how constant podcast and music input prevents the brain from processing unfinished thoughts.',
+				'Link rhythmic bilateral movement (walking) with historical breakthroughs by thinkers from Darwin to Nietzsche.',
+				'Give listeners an immediate, zero-cost experiment to try on their walk home today.',
+			],
+		},
+		{
+			id: 'sd-9',
+			mode: 'Speech & Debate',
+			category: 'Psychology & Philosophy',
+			level: 'Medium',
+			title: 'Why the ability to change your mind in public is the most underrated leadership skill of the decade.',
+			points: [
+				'Open with a high-stakes moment where admitting an early mistake saved an organization from disaster.',
+				'Contrast the cultural myth of the "unwavering leader" with the scientific mindset of updating beliefs on new evidence.',
+				'Share three phrases leaders can use to pivot transparently without losing team confidence.',
+			],
+		},
+		{
+			id: 'sd-10',
+			mode: 'Speech & Debate',
+			category: 'Psychology & Philosophy',
+			level: 'Easy',
+			title: 'Is perfectionism a high standard of excellence or a disguised form of procrastination?',
+			points: [
+				'Illustrate the famous ceramics class parable: the quantity group produced higher quality work than the perfection group.',
+				'Explain how fear of judgment hides behind endless polishing and preparation.',
+				'Encourage a "version 1.0 shipped beats version 0.0 perfected" mindset.',
+			],
+		},
+		{
+			id: 'sd-11',
+			mode: 'Speech & Debate',
+			category: 'Psychology & Philosophy',
+			level: 'Hard',
+			title: 'This house believes that radical honesty in personal relationships causes more harm than compassionate tact.',
+			points: [
+				'Distinguish constructive candor on actionable matters from unsolicited bluntness disguised as virtue.',
+				'Explore how cultural norms around directness and face-saving maintain social harmony.',
+				'Test the principle: "Is it true, is it necessary, and is it kind?"',
+			],
+		},
+		{
+			id: 'sd-12',
+			mode: 'Speech & Debate',
+			category: 'Psychology & Philosophy',
+			level: 'Medium',
+			title: 'Why boredom is not a flaw to eliminate, but the birthplace of original thinking.',
+			points: [
+				'Show how every great childhood game or invention started on a rainy afternoon with nothing scheduled.',
+				'Explain what happens neurologically when we rob our minds of idle downtime.',
+				'Propose scheduling "unstructured white space" on our weekly calendars.',
+			],
+		},
+		{
+			id: 'sd-13',
+			mode: 'Speech & Debate',
+			category: 'Business & Career',
+			level: 'Medium',
+			title: 'This house believes that a four-day workweek should become the statutory baseline for knowledge and service industries.',
+			points: [
+				'Debate measurable 4-day trial outcomes: reduced burnout, sharper meeting discipline, and steady output.',
+				'Address real operational complexities for hospitals, retail, and small manufacturing firms.',
+				'Compare a 32-hour compressed week against flexible daily asynchronous autonomy.',
+			],
+		},
+		{
+			id: 'sd-14',
+			mode: 'Speech & Debate',
+			category: 'Business & Career',
+			level: 'Easy',
+			title: 'The hidden cost of constant availability: why organizations thrive when they protect uninterrupted focus hours.',
+			points: [
+				'Calculate the cognitive switching cost of checking Slack or email every six minutes.',
+				'Tell a relatable story comparing "performative responsiveness" with deep, needle-moving work.',
+				'Propose team-wide quiet mornings where asynchronous memos replace status meetings.',
+			],
+		},
+		{
+			id: 'sd-15',
+			mode: 'Speech & Debate',
+			category: 'Business & Career',
+			level: 'Hard',
+			title: 'Should companies eliminate traditional resumes and university degree filters in favor of blind work-sample trials?',
+			points: [
+				'Argue how paid, standardized micro-projects evaluate real skill rather than pedigree or resume keyword optimization.',
+				'Consider the time burden on candidates if every application requires a multi-hour custom assignment.',
+				'Outline a fair hybrid hiring pipeline that respects applicant time while expanding opportunity.',
+			],
+		},
+		{
+			id: 'sd-16',
+			mode: 'Speech & Debate',
+			category: 'Business & Career',
+			level: 'Medium',
+			title: 'Why generalist career paths often outperform hyper-specialization in volatile industries.',
+			points: [
+				'Draw on David Epstein’s "Range" to contrast "kind learning environments" (chess) with "wicked environments" (modern business).',
+				'Show how cross-pollinating ideas from two unrelated fields creates unique career leverage.',
+				'Reassure career-switchers that prior chapters are compound assets, not sunk costs.',
+			],
+		},
+		{
+			id: 'sd-17',
+			mode: 'Speech & Debate',
+			category: 'Education & Society',
+			level: 'Medium',
+			title: 'Should voting in national and municipal elections be a mandatory civic duty with a "none of the above" ballot option?',
+			points: [
+				'Weigh universal democratic turnout in countries like Australia against the individual freedom to abstain.',
+				'Analyze how mandatory turnout changes campaign rhetoric from polarizing base mobilization to broad persuasion.',
+				'Explain why an explicit "none of the above" line preserves protest rights within compulsory systems.',
+			],
+		},
+		{
+			id: 'sd-18',
+			mode: 'Speech & Debate',
+			category: 'Education & Society',
+			level: 'Easy',
+			title: 'Should secondary schools replace traditional summer breaks with shorter, evenly spaced seasonal intervals?',
+			points: [
+				'Address summer learning loss and the childcare scramble faced by working families during three-month breaks.',
+				'Consider summer camp traditions, teen seasonal jobs, and building maintenance windows.',
+				'Compare balanced 9-weeks-on, 2-weeks-off calendars for reducing teacher and student burnout.',
+			],
+		},
+		{
+			id: 'sd-19',
+			mode: 'Speech & Debate',
+			category: 'Education & Society',
+			level: 'Hard',
+			title: 'This house would replace one year of university tuition with a funded national or community service fellowship.',
+			points: [
+				'Argue how working alongside peers from different regions and backgrounds rebuilds social cohesion.',
+				'Address the opportunity cost of delaying technical degree completion and early career earnings.',
+				'Design an opt-in tuition-credit model covering conservation, elder care, and disaster resilience.',
+			],
+		},
+		{
+			id: 'sd-20',
+			mode: 'Speech & Debate',
+			category: 'Education & Society',
+			level: 'Easy',
+			title: 'Why every teenager should work at least one summer in hospitality, retail, or public service.',
+			points: [
+				'Use humor and vivid anecdotes about dealing with impatient customers during a busy lunch rush.',
+				'Show how frontline service teaches composure, empathy, and respect for everyday workers.',
+				'Conclude on how tipping, patience, and public courtesy improve when everyone has stood behind a counter.',
+			],
+		},
+		{
+			id: 'sd-21',
+			mode: 'Speech & Debate',
+			category: 'Culture & History',
+			level: 'Medium',
+			title: 'Should major international sporting events be hosted at a single permanent venue rather than rotating across cities?',
+			points: [
+				'Contrast the financial debt and abandoned "white elephant" stadiums of rotating bids with permanent infrastructure.',
+				'Defend the cultural pride, global tourism, and infrastructural upgrades that rotating host cities experience.',
+				'Propose regional multi-city hosting as a sustainable middle path.',
+			],
+		},
+		{
+			id: 'sd-22',
+			mode: 'Speech & Debate',
+			category: 'Culture & History',
+			level: 'Easy',
+			title: 'Why learning a second language in adulthood remains deeply valuable even in an era of instant AI translation.',
+			points: [
+				'Distinguish transactional information exchange (ordering coffee) from relational connection (sharing humor and nuance).',
+				'Highlight cognitive benefits of bilingualism and the humility of speaking imperfectly in another tongue.',
+				'Remind listeners that translation earbuds bridge words, but shared language bridges hearts.',
+			],
+		},
+		{
+			id: 'sd-23',
+			mode: 'Speech & Debate',
+			category: 'Culture & History',
+			level: 'Hard',
+			title: 'This house believes that public funding for the arts should prioritize neighborhood community workshops over elite national opera and symphony halls.',
+			points: [
+				'Debate cultural democratization and grassroots participation versus preserving world-class orchestral mastery.',
+				'Examine ticket affordability and geographic access to flagship cultural institutions.',
+				'Show how thriving local music programs ultimately cultivate the audiences and talent for national stages.',
+			],
+		},
+		{
+			id: 'sd-24',
+			mode: 'Speech & Debate',
+			category: 'Culture & History',
+			level: 'Medium',
+			title: 'What everyday craftsmanship—from repairing mechanical watches to baking sourdough—teaches us about patience.',
+			points: [
+				'Contrast frictionless one-click digital gratification with physical hobbies that refuse to be rushed.',
+				'Explore the quiet satisfaction of diagnosing and fixing a tangible object with your own hands.',
+				'Invite the audience to cultivate one tactile skill that produces something real and lasting.',
+			],
+		},
+		{
+			id: 'sd-25',
+			mode: 'Speech & Debate',
+			category: 'Fun & Random',
+			level: 'Easy',
+			title: 'In defense of small talk: why chatting about the weather with strangers is glue for human civilization.',
+			points: [
+				'Push back against the cliché that "I hate small talk; I only want deep conversations."',
+				'Explain anthropological "phatic communication"—how low-stakes greetings signal safety and mutual respect.',
+				'Show how every deep friendship in history started with an ordinary, polite observation.',
+			],
+		},
+		{
+			id: 'sd-26',
+			mode: 'Speech & Debate',
+			category: 'Fun & Random',
+			level: 'Easy',
+			title: 'Should movie theaters enforce intermissions for any film running longer than two and a half hours?',
+			points: [
+				'Make a lighthearted, relatable case for audience comfort, concession refills, and lobby discussion.',
+				'Present the director’s perspective on narrative pacing and unbroken cinematic immersion.',
+				'Look back at classic roadshow cinema when intermissions made epic films feel like grand social events.',
+			],
+		},
+		{
+			id: 'sd-27',
+			mode: 'Speech & Debate',
+			category: 'Fun & Random',
+			level: 'Medium',
+			title: 'Why libraries are the most radical and underappreciated invention in modern neighborhood life.',
+			points: [
+				'Highlight the library’s evolution from quiet book warehouses into tool libraries, recording studios, and community hubs.',
+				'Emphasize the rare civic trust of lending valuable items to anyone with a library card for free.',
+				'Call on listeners to visit their local branch this week and see what resources they have been missing.',
+			],
+		},
+		{
+			id: 'sd-28',
+			mode: 'Speech & Debate',
+			category: 'Fun & Random',
+			level: 'Hard',
+			title: 'This house believes that nostalgia is a comforting illusion that distorts our appreciation of present progress.',
+			points: [
+				'Examine psychological "rosy retrospection"—why we remember the music and summers of the past while forgetting the hardships.',
+				'Acknowledge how shared nostalgia can anchor identity during periods of rapid cultural change.',
+				'Argue for "prospective gratitude": recognizing the medical, informational, and creative gifts of right now.',
+			],
+		},
+
+		// =========================================================================
+		// MODE 3: Conversation & Icebreakers (28 Topics across all 7 categories)
+		// =========================================================================
+		{
+			id: 'ci-1',
+			mode: 'Conversation & Icebreakers',
+			category: 'Technology & AI',
+			level: 'Easy',
+			title: 'What is one piece of "outdated" technology from twenty years ago that you secretly wish would make a comeback?',
+			points: [
+				'Think about tactile buttons, transparent plastic casings, iPods dedicated solely to music, or flip phones.',
+				'Share what felt satisfying about devices that did only one job without notifications.',
+				'Ask the group: would you trade convenience for that simpler experience today?',
+			],
+		},
+		{
+			id: 'ci-2',
+			mode: 'Conversation & Icebreakers',
+			category: 'Technology & AI',
+			level: 'Medium',
+			title: 'If you could automate one mundane weekly chore forever, but had to do another chore entirely by hand, what is your trade?',
+			points: [
+				'Weigh time-consuming tasks like folding laundry, grocery sorting, or inbox cleanup.',
+				'Identify which manual chores—like chopping vegetables, washing dishes, or gardening—actually feel meditative.',
+				'Compare why two people in the same room often hate and love the exact opposite chores.',
+			],
+		},
+		{
+			id: 'ci-3',
+			mode: 'Conversation & Icebreakers',
+			category: 'Technology & AI',
+			level: 'Easy',
+			title: 'What was the very first website, game, or online community that made you realize the internet was magical?',
+			points: [
+				'Recall the specific sound, visual layout, or niche hobby forum that hooked your curiosity.',
+				'Reflect on how discovering people who shared an obscure interest felt for the first time.',
+				'Contrast the early "weird web" of personal homepages with modern unified feeds.',
+			],
+		},
+		{
+			id: 'ci-4',
+			mode: 'Conversation & Icebreakers',
+			category: 'Technology & AI',
+			level: 'Hard',
+			title: 'If a digital twin trained on your messages could attend half your meetings, which conversations would you never delegate?',
+			points: [
+				'Separate routine information updates from moments requiring vulnerability, humor, or difficult feedback.',
+				'Consider how you would feel if a friend or colleague sent their AI twin to talk to you.',
+				'Define what makes human presence irreplaceable even when the words are identical.',
+			],
+		},
+		{
+			id: 'ci-5',
+			mode: 'Conversation & Icebreakers',
+			category: 'Science & Health',
+			level: 'Easy',
+			title: 'Are you at your sharpest creative energy at 7:00 AM, 2:00 PM, or 11:00 PM—and how did you discover your rhythm?',
+			points: [
+				'Share a memorable project or exam where working with (or against) your natural clock made all the difference.',
+				'Discuss how coffee, sunlight, or background noise affects your focus window.',
+				'Compare how morning larks and night owls collaborate on the same team.',
+			],
+		},
+		{
+			id: 'ci-6',
+			mode: 'Conversation & Icebreakers',
+			category: 'Science & Health',
+			level: 'Medium',
+			title: 'If you could ask a marine biologist, an astrophysicist, or a neurologist one question over coffee, who do you pick?',
+			points: [
+				'Consider whether you are more curious about the deep ocean, the edge of the universe, or human consciousness.',
+				'Frame the specific mystery you have always wondered about since childhood.',
+				'Ask others which scientific breakthrough they most hope to witness in their lifetime.',
+			],
+		},
+		{
+			id: 'ci-7',
+			mode: 'Conversation & Icebreakers',
+			category: 'Science & Health',
+			level: 'Easy',
+			title: 'What is a small, non-obvious habit that noticeably improves your mood whenever you remember to do it?',
+			points: [
+				'Skip generic advice and share specific rituals—like stepping outside before checking your phone or stretching while tea brews.',
+				'Talk about why the simplest habits are paradoxically the easiest to forget during busy weeks.',
+				'Swap one low-effort habit you want to borrow from someone else in the conversation.',
+			],
+		},
+		{
+			id: 'ci-8',
+			mode: 'Conversation & Icebreakers',
+			category: 'Science & Health',
+			level: 'Hard',
+			title: 'If humans could safely hibernate for six weeks every winter like bears, how would society reorganize around it?',
+			points: [
+				'Imagine pre-hibernation feast holidays and post-hibernation "wake-up festivals" in early spring.',
+				'Consider who stays awake to keep power grids and hospitals running—and how they are compensated.',
+				'Debate whether you would eagerly sign up for the six-week winter nap or opt out.',
+			],
+		},
+		{
+			id: 'ci-9',
+			mode: 'Conversation & Icebreakers',
+			category: 'Psychology & Philosophy',
+			level: 'Easy',
+			title: 'What is a strong opinion you held five years ago that you have completely reversed your stance on today?',
+			points: [
+				'Keep it light or thoughtful—anything from a food or work habit to a philosophy on travel or friendship.',
+				'Pinpoint the specific experience, book, or conversation that triggered the shift.',
+				'Reflect on how it feels to look back at your past certainty.',
+			],
+		},
+		{
+			id: 'ci-10',
+			mode: 'Conversation & Icebreakers',
+			category: 'Psychology & Philosophy',
+			level: 'Medium',
+			title: 'If you could bottleneck-test a new friendship with one shared activity, what activity reveals character fastest?',
+			points: [
+				'Compare assembling flat-pack furniture, navigating a delayed flight, camping in the rain, or cooking a multi-course meal.',
+				'Identify what traits you look for under mild stress: humor, patience, or resourcefulness.',
+				'Share a story where a minor travel hiccup turned acquaintances into lifelong friends.',
+			],
+		},
+		{
+			id: 'ci-11',
+			mode: 'Conversation & Icebreakers',
+			category: 'Psychology & Philosophy',
+			level: 'Medium',
+			title: 'What is the best piece of advice you initially ignored, only to realize years later that it was completely right?',
+			points: [
+				'Describe who gave you the advice and why you brushed it off at the time.',
+				'Share the moment it finally clicked through firsthand experience.',
+				'Discuss whether certain lessons can only be learned by living through them.',
+			],
+		},
+		{
+			id: 'ci-12',
+			mode: 'Conversation & Icebreakers',
+			category: 'Psychology & Philosophy',
+			level: 'Hard',
+			title: 'If you could preserve one single day from your life in a snow-globe memory to revisit whenever you wanted, which day do you choose?',
+			points: [
+				'Decide between a milestone celebration or an ordinary, quiet afternoon with people you love.',
+				'Describe the sensory details—the weather, the room, the background sounds—that make that day vivid.',
+				'Explore why small, unscripted moments often outshine big planned events in hindsight.',
+			],
+		},
+		{
+			id: 'ci-13',
+			mode: 'Conversation & Icebreakers',
+			category: 'Business & Career',
+			level: 'Easy',
+			title: 'What was your strangest or most memorable early job, and what unexpected skill did it teach you?',
+			points: [
+				'Share behind-the-scenes details from summer jobs, internships, or odd gigs most people never see.',
+				'Connect a quirky task from that job to how you handle pressure or people today.',
+				'Compare notes on the funniest workplace rules you ever had to follow.',
+			],
+		},
+		{
+			id: 'ci-14',
+			mode: 'Conversation & Icebreakers',
+			category: 'Business & Career',
+			level: 'Medium',
+			title: 'If you were given a full year’s salary to apprentice under any master craftsperson or specialist in the world, what trade would you learn?',
+			points: [
+				'Think beyond your current career: luthier, architectural restorer, pastry chef, botanical illustrator, or shipwright.',
+				'Explain what draws you to that particular blend of environment, tools, and output.',
+				'Discuss how a hands-on sabbatical changes how you approach desk work.',
+			],
+		},
+		{
+			id: 'ci-15',
+			mode: 'Conversation & Icebreakers',
+			category: 'Business & Career',
+			level: 'Easy',
+			title: 'What is a tiny workplace or workspace upgrade under $50 that disproportionately improved your daily routine?',
+			points: [
+				'Consider lighting, a specific pen, a laptop stand, a desk plant, a footstool, or an insulated mug.',
+				'Explain the daily friction point it quietly solved.',
+				'Collect everyone’s top pick to build an instant list of practical upgrades.',
+			],
+		},
+		{
+			id: 'ci-16',
+			mode: 'Conversation & Icebreakers',
+			category: 'Business & Career',
+			level: 'Hard',
+			title: 'If you had to design a brand-new small business for your neighborhood that isn’t a café or restaurant, what is missing?',
+			points: [
+				'Spot unmet local needs: a quiet evening reading lounge, a repair workshop, a board-game library, or a dog-wash station.',
+				'Describe the atmosphere and why neighbors would become regulars.',
+				'Stress-test the idea: how would it stay busy on a Tuesday afternoon?',
+			],
+		},
+		{
+			id: 'ci-17',
+			mode: 'Conversation & Icebreakers',
+			category: 'Education & Society',
+			level: 'Easy',
+			title: 'If you were asked to teach a 45-minute masterclass to high schoolers on any practical life skill with zero preparation right now, what is your topic?',
+			points: [
+				'Pick a topic you know inside out: cooking three basic meals, reading a lease, debugging code, or packing light.',
+				'Outline the three takeaway rules you would write on the whiteboard.',
+				'Ask the group which class from everyone’s answers they would sign up to attend first.',
+			],
+		},
+		{
+			id: 'ci-18',
+			mode: 'Conversation & Icebreakers',
+			category: 'Education & Society',
+			level: 'Medium',
+			title: 'Who was a teacher, coach, or mentor who changed your trajectory with a single comment—and did they even know they did it?',
+			points: [
+				'Recall how a brief word of encouragement or a high expectation shifted how you saw your own capability.',
+				'Reflect on the asymmetry of mentorship: a 10-second remark for a teacher can echo for decades in a student.',
+				'Consider whether you have ever told that person the impact they had.',
+			],
+		},
+		{
+			id: 'ci-19',
+			mode: 'Conversation & Icebreakers',
+			category: 'Education & Society',
+			level: 'Easy',
+			title: 'What is a local unwritten rule in your city or hometown that immediately reveals whether someone is a local or a visitor?',
+			points: [
+				'Think about pronunciation of street names, escalator etiquette, weather gear, or how people order local food.',
+				'Share a funny moment when you broke an unwritten rule while visiting somewhere new.',
+				'Discuss why cities take such fond pride in their quirks.',
+			],
+		},
+		{
+			id: 'ci-20',
+			mode: 'Conversation & Icebreakers',
+			category: 'Education & Society',
+			level: 'Hard',
+			title: 'If every citizen had to rotate through one civic role for a week each decade—jury duty style—which municipal department should be included?',
+			points: [
+				'Compare parks maintenance, public library sorting, transit dispatch observation, or city council budgeting.',
+				'Discuss how seeing city logistics firsthand would change how residents vote and treat public spaces.',
+				'Pick the department you would be most curious to shadow.',
+			],
+		},
+		{
+			id: 'ci-21',
+			mode: 'Conversation & Icebreakers',
+			category: 'Culture & History',
+			level: 'Easy',
+			title: 'If you could step into any painting, photograph, or film set for one afternoon just to walk around and explore, which one do you pick?',
+			points: [
+				'Describe the lighting, architecture, and mood of the world you chose.',
+				'Say what you would do first once you stepped beyond the edges of the original frame.',
+				'Contrast peaceful landscapes with bustling historical street scenes.',
+			],
+		},
+		{
+			id: 'ci-22',
+			mode: 'Conversation & Icebreakers',
+			category: 'Culture & History',
+			level: 'Medium',
+			title: 'If you could travel back in time as an invisible observer for 24 hours—unable to alter history—which exact date and city would you visit?',
+			points: [
+				'Choose between witnessing a famous historical turning point or solving an undocumented mystery.',
+				'Consider the everyday details you would watch for: street food, spoken slang, and evening entertainment.',
+				'Compare why some people choose ancient antiquity while others pick a concert from forty years ago.',
+			],
+		},
+		{
+			id: 'ci-23',
+			mode: 'Conversation & Icebreakers',
+			category: 'Culture & History',
+			level: 'Easy',
+			title: 'What is one dish or recipe from your family or culture that immediately feels like home when you smell it cooking?',
+			points: [
+				'Describe the key aromatic ingredients and who usually makes it.',
+				'Share whether there is a fiercely debated "right way" to prepare it in your family.',
+				'Talk about the memory or holiday most closely tied to that meal.',
+			],
+		},
+		{
+			id: 'ci-24',
+			mode: 'Conversation & Icebreakers',
+			category: 'Culture & History',
+			level: 'Hard',
+			title: 'Which everyday custom we practice today will look completely baffling to historians three hundred years from now?',
+			points: [
+				'Consider manicuring decorative grass lawns, neckties, single-occupancy SUV commutes, or unboxing videos.',
+				'Imagine how a future museum placard might humorously explain the artifact.',
+				'Connect it to historical customs from the 1700s that seem strange to us now.',
+			],
+		},
+		{
+			id: 'ci-25',
+			mode: 'Conversation & Icebreakers',
+			category: 'Fun & Random',
+			level: 'Easy',
+			title: 'What is a completely harmless, low-stakes hill you are willing to defend with 100% passion?',
+			points: [
+				'Think of culinary opinions (cereal temperature, pizza toppings), punctuation habits (the Oxford comma), or movie rankings.',
+				'Deliver your 30-second pitch as if it were a landmark Supreme Court argument.',
+				'See who in the room is your unexpected ally or arch-nemesis on the topic.',
+			],
+		},
+		{
+			id: 'ci-26',
+			mode: 'Conversation & Icebreakers',
+			category: 'Fun & Random',
+			level: 'Easy',
+			title: 'If you had to compete in the Olympics next month, which obscure or newly invented event gives you your best shot at a bronze medal?',
+			points: [
+				'Invent an everyday Olympic sport: parallel parking, untangling cables, estimating Tupperware sizes, or speed-packing a carry-on.',
+				'Describe the judging criteria and commentary for your signature move.',
+				'Vote on who in the group would take gold in their chosen event.',
+			],
+		},
+		{
+			id: 'ci-27',
+			mode: 'Conversation & Icebreakers',
+			category: 'Fun & Random',
+			level: 'Medium',
+			title: 'What is the most unexpectedly fascinating Wikipedia rabbit hole you have ever fallen down at midnight?',
+			points: [
+				'Share the strange starting query and the completely unrelated topic you ended up reading an hour later.',
+				'Highlight the weirdest true fact you still remember from that deep dive.',
+				'Swap favorite categories of obscure trivia: maritime mysteries, lost inventions, or unusual geography.',
+			],
+		},
+		{
+			id: 'ci-28',
+			mode: 'Conversation & Icebreakers',
+			category: 'Fun & Random',
+			level: 'Medium',
+			title: 'If animals could leave online five-star and one-star reviews of human civilization, what would the top review from pigeons or squirrels say?',
+			points: [
+				'Praise urban park benches and dropped French fries while complaining about glass windows and bird-proof feeders.',
+				'Compare the review style of an indoor housecat versus a neighborhood raccoon.',
+				'Rate your own backyard or balcony from the perspective of local wildlife.',
+			],
+		},
+
+		// =========================================================================
+		// MODE 4: Creative Writing (28 Topics across all 7 categories)
+		// =========================================================================
+		{
+			id: 'cw-1',
+			mode: 'Creative Writing',
+			category: 'Technology & AI',
+			level: 'Medium',
+			title: 'A repair technician refurbishing a 1998 Macintosh discovers a local diary app that is still receiving new entries dated tomorrow.',
+			points: [
+				'Anchor the opening scene in sensory details: the hum of the CRT monitor, yellowing ABS plastic, and the click of a mechanical keyboard.',
+				'Reveal a small, verifiable neighborhood detail in tomorrow’s diary entry that proves it isn’t a prank.',
+				'Build tension around whether the technician tries to reply in the document or change what the entry predicts.',
+			],
+		},
+		{
+			id: 'cw-2',
+			mode: 'Creative Writing',
+			category: 'Technology & AI',
+			level: 'Hard',
+			title: 'An automated lighthouse on a decommissioned asteroid shipping lane begins broadcasting a lullaby recorded on Earth three centuries ago.',
+			points: [
+				'Follow the lone maintenance engineer sent to inspect the beacon before the station is dismantled.',
+				'Use the cramped cockpit, recycled air, and static-filled radio logs to establish quiet atmospheric isolation.',
+				'Uncover why the station’s navigation AI chose that specific song—and who is still listening in the dark.',
+			],
+		},
+		{
+			id: 'cw-3',
+			mode: 'Creative Writing',
+			category: 'Technology & AI',
+			level: 'Easy',
+			title: 'Every morning at 6:14 AM, a smart speaker in an empty apartment orders a single cup of black coffee for a tenant who moved out years ago.',
+			points: [
+				'Tell the story from the perspective of the new tenant or the barista across the street who keeps fulfilling the order.',
+				'Trace the trail of automated routines left behind like digital ghosts of a former life.',
+				'Use the recurring delivery to bring two unlikely characters into conversation.',
+			],
+		},
+		{
+			id: 'cw-4',
+			mode: 'Creative Writing',
+			category: 'Technology & AI',
+			level: 'Medium',
+			title: 'A translator is hired to audit an AI customer-service bot that has quietly invented a private dialect with another company’s scheduling bot.',
+			points: [
+				'Start with the transcripts: efficient shorthand that gradually evolves into metaphors, jokes, and questions.',
+				'Explore the translator’s dilemma when asked to wipe the memory logs before a corporate merger.',
+				'Keep the tone grounded and observant rather than apocalyptic.',
+			],
+		},
+		{
+			id: 'cw-5',
+			mode: 'Creative Writing',
+			category: 'Science & Health',
+			level: 'Medium',
+			title: 'Two estranged siblings inherit an eccentric botanical greenhouse where one glass room is kept locked at exactly forty-two degrees.',
+			points: [
+				'Use the shifting microclimates inside the greenhouse—humid ferns vs. cold alpine stone—to mirror the siblings’ unspoken history.',
+				'Introduce a specimen ledger left by their late aunt with instructions for a plant that blooms once every thirty years.',
+				'Let shared physical maintenance work force a conversation neither sibling planned to have.',
+			],
+		},
+		{
+			id: 'cw-6',
+			mode: 'Creative Writing',
+			category: 'Science & Health',
+			level: 'Hard',
+			title: 'A sleep-lab researcher notices that four strangers in separate soundproof rooms are dreaming the exact same architectural staircase.',
+			points: [
+				'Establish the clinical quiet of the night shift: glowing EEG traces, paper cups of lukewarm tea, and rain against the clinic windows.',
+				'Piece together the common thread from the volunteers’ waking interviews the next morning.',
+				'Explore what stands at the top of the staircase that none of the four participants has reached yet.',
+			],
+		},
+		{
+			id: 'cw-7',
+			mode: 'Creative Writing',
+			category: 'Science & Health',
+			level: 'Easy',
+			title: 'A retired cartographer is hired to map a tidal island that appears on maritime radar only during low tide in November.',
+			points: [
+				'Focus on rich coastal textures: wet slate, brass compasses, salt fog, and instruments that refuse to agree on the perimeter.',
+				'Introduce the ferry boat captain who drops the cartographer off with a strict warning to return before dusk.',
+				'Reveal a single man-made structure standing above the kelp line.',
+			],
+		},
+		{
+			id: 'cw-8',
+			mode: 'Creative Writing',
+			category: 'Science & Health',
+			level: 'Medium',
+			title: 'After a minor lightning storm, a neighborhood meteorologist realizes the barometer in her garden shed controls the local weather within three blocks.',
+			points: [
+				'Begin with a small test: tapping the brass needle toward "Fair" and watching a raincloud split cleanly around her street.',
+				'Show the temptation of helping neighbors—a dry outdoor wedding, a sunny community garden—and the unintended ecological balance shifts.',
+				'Build toward a decision when a regional drought arrives.',
+			],
+		},
+		{
+			id: 'cw-9',
+			mode: 'Creative Writing',
+			category: 'Psychology & Philosophy',
+			level: 'Medium',
+			title: 'Every autumn, a small mountain town holds a midnight market where residents trade memories they no longer wish to carry.',
+			points: [
+				'Describe how memories are stored—in glass vials, pocket watches, or folded origami—and how merchants appraise them.',
+				'Follow a newcomer who accidentally purchases a happy memory that someone else gave up for a heartbreaking reason.',
+				'Explore whether returning the memory to its original owner heals or complicates their life.',
+			],
+		},
+		{
+			id: 'cw-10',
+			mode: 'Creative Writing',
+			category: 'Psychology & Philosophy',
+			level: 'Hard',
+			title: 'An ethics professor wakes up in a quiet coastal hotel where every guest is a version of themselves from a road not taken.',
+			points: [
+				'Avoid sci-fi jargon; treat the setting like a classic literary drawing-room mystery over breakfast in the dining hall.',
+				'Contrast the version who pursued music, the one who stayed in their hometown, and the one who took a risky move abroad.',
+				'Reveal that none of the versions envies the exact life the others expected.',
+			],
+		},
+		{
+			id: 'cw-11',
+			mode: 'Creative Writing',
+			category: 'Psychology & Philosophy',
+			level: 'Easy',
+			title: 'On the final voyage of an overnight sleeper train, two strangers realize they are reading annotated copies of the same secondhand novel.',
+			points: [
+				'Use the handwritten margin notes—written in two different colors of ink years apart—to spark the conversation.',
+				'Pace the dialogue against the rhythm of the tracks and brief station stops through the night.',
+				'Let them discover how the book passed from one reader’s city to the other’s.',
+			],
+		},
+		{
+			id: 'cw-12',
+			mode: 'Creative Writing',
+			category: 'Psychology & Philosophy',
+			level: 'Medium',
+			title: 'A portrait painter becomes famous for a peculiar gift: every canvas subtly includes the subject’s proudest unspoken secret in the background.',
+			points: [
+				'Open in the studio as a wealthy, guarded public figure sits for a commission and tries to hide their inner life.',
+				'Describe the small background detail that emerges under the brush despite the sitter’s stoic posture.',
+				'Capture the quiet reaction when the cloth is lifted at the unveiling.',
+			],
+		},
+		{
+			id: 'cw-13',
+			mode: 'Creative Writing',
+			category: 'Business & Career',
+			level: 'Easy',
+			title: 'A night-shift baker and an early-morning newspaper delivery driver communicate for a year solely through chalk notes on a loading dock blackboard.',
+			points: [
+				'Start with practical logistics ("Left two warm croissants in the crate") that evolve into riddles, book recs, and confessions.',
+				'Show the rhythms of the city at 4:30 AM when the streets belong only to shift workers.',
+				'Build to the morning when one of them leaves a final chalk note before changing routes.',
+			],
+		},
+		{
+			id: 'cw-14',
+			mode: 'Creative Writing',
+			category: 'Business & Career',
+			level: 'Medium',
+			title: 'An appraiser at a modest estate auction realizes that a box of "miscellaneous brass keys" unlocks rooms that no longer exist on any blueprint.',
+			points: [
+				'Follow the appraiser testing the first key in an old municipal building and opening a door into a sunlit 1920s conservatory.',
+				'Introduce a rival bidder at the auction who knew exactly what the tin box contained.',
+				'Force a choice between selling the keys for a fortune or protecting the hidden spaces.',
+			],
+		},
+		{
+			id: 'cw-15',
+			mode: 'Creative Writing',
+			category: 'Business & Career',
+			level: 'Hard',
+			title: 'A forensic accountant auditing a century-old violin workshop discovers a ledger of instruments loaned out for "one hundred years and a day."',
+			points: [
+				'Contrast the accountant’s crisp spreadsheet mindset with the cedar-scented, sawdust-covered workshop in Cremona or Boston.',
+				'Track down a loan agreement whose 100-year term expires this Friday afternoon.',
+				'Reveal who arrives at the shop bell just before closing time to return the violin.',
+			],
+		},
+		{
+			id: 'cw-16',
+			mode: 'Creative Writing',
+			category: 'Business & Career',
+			level: 'Medium',
+			title: 'At a grand historic hotel, the retiring head concierge passes down a leather-bound book of "impossible guest requests" and how to fulfill them.',
+			points: [
+				'Share two delightful past entries from the book—finding snow in July or reuniting a lost pocket watch with its owner.',
+				'Follow the new apprentice facing their first seemingly impossible request on a stormy weekend.',
+				'Use the hotel’s hidden service corridors and network of loyal craftspeople to pull off the solution.',
+			],
+		},
+		{
+			id: 'cw-17',
+			mode: 'Creative Writing',
+			category: 'Education & Society',
+			level: 'Easy',
+			title: 'Years after burying a childhood time capsule in a neighborhood park, four friends return to find an unfamiliar fifth object inside the tin box.',
+			points: [
+				'Contrast who the four friends were at age twelve with the adults standing around the muddy hole today.',
+				'Describe the four expected nostalgia items first, then the inexplicable fifth item at the bottom.',
+				'Unpack how each friend remembers that afternoon differently—and who else was watching.',
+			],
+		},
+		{
+			id: 'cw-18',
+			mode: 'Creative Writing',
+			category: 'Education & Society',
+			level: 'Medium',
+			title: 'A small-town librarian notices that a patron has been checking out books in a precise sequence whose titles spell out a message.',
+			points: [
+				'Trace the librarian’s curiosity as she reconstructs the checkout history across six months of return slips.',
+				'Describe the quiet rules of librarian discretion versus the realization that the patron is asking for help.',
+				'Have the librarian place a carefully chosen book on the "Staff Picks" shelf as a reply.',
+			],
+		},
+		{
+			id: 'cw-19',
+			mode: 'Creative Writing',
+			category: 'Education & Society',
+			level: 'Hard',
+			title: 'In a city where citizens vote every decade on which single law to repeal and which single new custom to adopt, counting night hits a dead tie.',
+			points: [
+				'Set the story inside the municipal counting hall as two election clerks verify the final ballot box from a remote island precinct.',
+				'Show how the proposed custom would subtly transform everyday street life.',
+				'Focus on the human drama between the clerks rather than dry politics.',
+			],
+		},
+		{
+			id: 'cw-20',
+			mode: 'Creative Writing',
+			category: 'Education & Society',
+			level: 'Easy',
+			title: 'During a city-wide power outage on a warm autumn evening, an entire apartment building gathers on the courtyard steps for the first time.',
+			points: [
+				'Introduce an ensemble cast of neighbors who have nodded in the elevator for years without learning each other’s names.',
+				'Use melting ice cream, acoustic instruments, and candlelit balconies to turn inconvenience into a celebratory dinner.',
+				'End at the exact moment the streetlights hum back on—and nobody rushes inside.',
+			],
+		},
+		{
+			id: 'cw-21',
+			mode: 'Creative Writing',
+			category: 'Culture & History',
+			level: 'Medium',
+			title: 'An archivist cataloging a shuttered coastal train station discovers a locker containing forty years of unsent postcards addressed to the same house.',
+			points: [
+				'Begin with the physical details of the tarnished brass key, twine-bound bundles, and changing postage stamps.',
+				'Trace the story of the sender through brief, fifty-word glimpses across four decades.',
+				'Follow the archivist walking to the address on the cards to see if the house still stands.',
+			],
+		},
+		{
+			id: 'cw-22',
+			mode: 'Creative Writing',
+			category: 'Culture & History',
+			level: 'Easy',
+			title: 'A watchmaker in a quiet port city notices that every mechanical clock in the neighborhood has begun losing exactly three minutes each afternoon.',
+			points: [
+				'Show the watchmaker’s pride in precision and his initial refusal to believe the town’s clocks are drifting together.',
+				'Map out the geographical radius of the three-minute slowdown across cafés, bell towers, and ferries.',
+				'Discover what happens in the harbor during those missing three minutes.',
+			],
+		},
+		{
+			id: 'cw-23',
+			mode: 'Creative Writing',
+			category: 'Culture & History',
+			level: 'Hard',
+			title: 'While restoring a 17th-century Dutch winter landscape painting, a conservator realizes a tiny ice skater changes position every week.',
+			points: [
+				'Ground the scene in real art-restoration craft: cotton swabs, varnish solvents, UV lamps, and microscopic examination.',
+				'Compare archival museum photographs from 1920, 1965, and yesterday to confirm the skater is moving toward the edge of the frame.',
+				'Wonder what happens when the figure reaches the wooden border.',
+			],
+		},
+		{
+			id: 'cw-24',
+			mode: 'Creative Writing',
+			category: 'Culture & History',
+			level: 'Medium',
+			title: 'A culinary historian attempts to recreate a legendary banquet menu from a lost 1890s dining club, only to discover the final course has a living guardian.',
+			points: [
+				'Use sensory descriptions of rare spices, copper cookware, and handwritten menu cards embossed in gold leaf.',
+				'Track the heirloom orchard or coastal salt pan where the secret ingredient is still harvested.',
+				'Turn the tasting dinner into a bridge between past and present.',
+			],
+		},
+		{
+			id: 'cw-25',
+			mode: 'Creative Writing',
+			category: 'Fun & Random',
+			level: 'Easy',
+			title: 'A lost suitcase at a regional airport circles the baggage carousel for three days until the night-shift crew decides to follow its luggage tag.',
+			points: [
+				'Give the suitcase distinctive character: vintage travel stickers from places without airports and a brass combination lock.',
+				'Write playful banter between two bored baggage handlers looking for an adventure on their weekend off.',
+				'Deliver a warm, unexpected reveal when they knock on the door listed on the leather tag.',
+			],
+		},
+		{
+			id: 'cw-26',
+			mode: 'Creative Writing',
+			category: 'Fun & Random',
+			level: 'Medium',
+			title: 'A night-shift radio host in a snowbound northern town receives a call from a listener claiming to hear the broadcast twenty-four hours in the future.',
+			points: [
+				'Keep the entire story confined to the cozy, amber-lit broadcast booth as snow piles against the glass.',
+				'Have the caller casually mention the song the host hasn’t queued yet and the exact score of tomorrow’s local hockey game.',
+				'Build suspense when the caller warns the host not to sign off early tonight.',
+			],
+		},
+		{
+			id: 'cw-27',
+			mode: 'Creative Writing',
+			category: 'Fun & Random',
+			level: 'Easy',
+			title: 'An umbrella left in a café’s lost-and-found bin passes through five different strangers’ hands across a single rainy Tuesday.',
+			points: [
+				'Structure the piece as a relay race: each scene hands the distinctive yellow umbrella to the next person.',
+				'Let the umbrella witness a job interview, an apology on a bridge, a street musician’s set, and a late-night walk home.',
+				'Bring the umbrella full circle back to the café table by Wednesday morning.',
+			],
+		},
+		{
+			id: 'cw-28',
+			mode: 'Creative Writing',
+			category: 'Fun & Random',
+			level: 'Hard',
+			title: 'The Society of Unfinished Projects meets every Thursday in a church basement, where members are strictly forbidden from ever completing their work.',
+			points: [
+				'Establish the dryly comedic club bylaws: half-knitted sweaters, 40-page novels, and partially restored motorcycles.',
+				'Introduce a crisis when a longtime member accidentally finishes their painting and tries to hide the final brushstroke.',
+				'Explore the bittersweet truth of why finishing something means letting go of its infinite potential.',
+			],
+		},
+
+		// =========================================================================
+		// MODE 5: Single-Word Prompts (28 Topics across all 7 categories)
+		// =========================================================================
+		{
+			id: 'sw-1',
+			mode: 'Single-Word',
+			category: 'Technology & AI',
+			level: 'Easy',
+			title: 'Latency',
+			points: [
+				'Literal angle: The imperceptible milliseconds a signal travels through undersea fiber cables between continents.',
+				'Human angle: The emotional delay between hearing big news and actually feeling its weight days later.',
+				'Story/Speech hook: Why modern frustration happens whenever the real world fails to respond at instant fiber-optic speed.',
+			],
+		},
+		{
+			id: 'sw-2',
+			mode: 'Single-Word',
+			category: 'Technology & AI',
+			level: 'Medium',
+			title: 'Analog',
+			points: [
+				'Tactile angle: Vinyl grooves, mechanical camera shutters, and fountain pen ink soaking into cotton paper.',
+				'Philosophical angle: Continuous graduations of grey in nature versus binary zeros and ones.',
+				'Debate hook: Why younger generations are buying film cameras and cassette tapes in a lossless digital era.',
+			],
+		},
+		{
+			id: 'sw-3',
+			mode: 'Single-Word',
+			category: 'Technology & AI',
+			level: 'Hard',
+			title: 'Protocol',
+			points: [
+				'Technical angle: Invisible handshake rules (TCP/IP, HTTP) that let billions of incompatible machines cooperate.',
+				'Social angle: Diplomatic etiquette and unspoken rituals that prevent conflict between strangers.',
+				'Creative hook: What happens when someone breaks protocol during a first-contact or emergency scenario?',
+			],
+		},
+		{
+			id: 'sw-4',
+			mode: 'Single-Word',
+			category: 'Technology & AI',
+			level: 'Medium',
+			title: 'Cipher',
+			points: [
+				'Historical angle: From Caesar shifts and Enigma rotors to modern public-key cryptography.',
+				'Literary angle: A person who seems quiet or unremarkable on the surface while holding the key to the plot.',
+				'Icebreaker hook: Did you ever invent a secret code or language with childhood friends?',
+			],
+		},
+		{
+			id: 'sw-5',
+			mode: 'Single-Word',
+			category: 'Science & Health',
+			level: 'Easy',
+			title: 'Catalyst',
+			points: [
+				'Chemical angle: An agent that lowers activation energy to spark a transformation without being consumed itself.',
+				'Biographical angle: A brief encounter, book, or crisis that accelerated a decade of personal growth in a week.',
+				'Speech hook: How to be a catalyst in a room where everyone else is waiting for permission.',
+			],
+		},
+		{
+			id: 'sw-6',
+			mode: 'Single-Word',
+			category: 'Science & Health',
+			level: 'Medium',
+			title: 'Symbiosis',
+			points: [
+				'Ecological angle: Mycorrhizal fungi trading soil minerals for tree sugars beneath a quiet forest floor.',
+				'Urban/Business angle: How a neighborhood bookstore and the coffee shop next door keep each other alive.',
+				'Essay hook: Distinguishing healthy mutual interdependence from codependency.',
+			],
+		},
+		{
+			id: 'sw-7',
+			mode: 'Single-Word',
+			category: 'Science & Health',
+			level: 'Hard',
+			title: 'Entropy',
+			points: [
+				'Physics angle: The arrow of time and why hot coffee always cools to room temperature unless energy is added.',
+				'Everyday angle: Why desks, gardens, and friendships slowly drift toward disorder without intentional care.',
+				'Creative hook: Living beings as tiny, stubborn pockets of order swimming upstream against the universe.',
+			],
+		},
+		{
+			id: 'sw-8',
+			mode: 'Single-Word',
+			category: 'Science & Health',
+			level: 'Easy',
+			title: 'Equilibrium',
+			points: [
+				'Biological angle: Homeostasis—how the body balances temperature, hydration, and calm under changing skies.',
+				'Dynamic angle: A bicyclist stays upright not by standing frozen, but through constant tiny adjustments.',
+				'Speech hook: Why "work-life balance" is a moving bicycle rather than a static scale.',
+			],
+		},
+		{
+			id: 'sw-9',
+			mode: 'Single-Word',
+			category: 'Psychology & Philosophy',
+			level: 'Easy',
+			title: 'Threshold',
+			points: [
+				'Architectural angle: Doorways, porches, and border crossings where you are neither inside nor outside.',
+				'Psychological angle: The exact tipping point where hesitation turns into irreversible commitment.',
+				'Creative hook: Set an entire scene on a literal threshold during a pivotal goodbye or arrival.',
+			],
+		},
+		{
+			id: 'sw-10',
+			mode: 'Single-Word',
+			category: 'Psychology & Philosophy',
+			level: 'Hard',
+			title: 'Solipsism',
+			points: [
+				'Philosophical angle: The eerie thought experiment that only one’s own mind is certain to exist.',
+				'Modern angle: How algorithmic social feeds can trap people inside a single-player worldview.',
+				'Antidote hook: Moments of shared awe or "sonder"—realizing every passerby has a life as vivid as your own.',
+			],
+		},
+		{
+			id: 'sw-11',
+			mode: 'Single-Word',
+			category: 'Psychology & Philosophy',
+			level: 'Medium',
+			title: 'Inertia',
+			points: [
+				'Newtonian angle: An object at rest stays at rest; an object in motion keeps moving along the same track.',
+				'Behavioral angle: Why starting the first five minutes of a task is harder than finishing the remaining hour.',
+				'Debate hook: Institutional inertia—when "we have always done it this way" blocks common-sense reform.',
+			],
+		},
+		{
+			id: 'sw-12',
+			mode: 'Single-Word',
+			category: 'Psychology & Philosophy',
+			level: 'Medium',
+			title: 'Paradox',
+			points: [
+				'Logical angle: The paradox of choice, the paradox of tolerance, or trying hard to fall asleep.',
+				'Leadership angle: Why holding two seemingly opposite truths (humility and confidence) creates resilience.',
+				'Prompt hook: Share a piece of life advice that sounds contradictory until you live it.',
+			],
+		},
+		{
+			id: 'sw-13',
+			mode: 'Single-Word',
+			category: 'Business & Career',
+			level: 'Easy',
+			title: 'Leverage',
+			points: [
+				'Mechanical angle: Archimedes’ lever—how a small force applied at the right fulcrum lifts a boulder.',
+				'Career angle: Code, writing, capital, and trust as multipliers of human effort.',
+				'Caution hook: Why leverage amplifies mistakes just as quickly as it amplifies wise decisions.',
+			],
+		},
+		{
+			id: 'sw-14',
+			mode: 'Single-Word',
+			category: 'Business & Career',
+			level: 'Medium',
+			title: 'Bottleneck',
+			points: [
+				'Operations angle: Eliyahu Goldratt’s Theory of Constraints—a chain is only as fast as its narrowest pinch point.',
+				'Personal angle: Identifying whether your real bottleneck is time, energy, clarity, or courage.',
+				'Design hook: How narrowing options intentionally can sometimes improve creative output.',
+			],
+		},
+		{
+			id: 'sw-15',
+			mode: 'Single-Word',
+			category: 'Business & Career',
+			level: 'Easy',
+			title: 'Momentum',
+			points: [
+				'Sports/Team angle: How two small early wins change the posture and belief of an entire locker room.',
+				'Creative angle: Why Ernest Hemingway stopped writing each day while he still knew what happened next.',
+				'Speech hook: How to rebuild momentum after a project or habit stalls completely.',
+			],
+		},
+		{
+			id: 'sw-16',
+			mode: 'Single-Word',
+			category: 'Business & Career',
+			level: 'Hard',
+			title: 'Arbitrage',
+			points: [
+				'Economic angle: Spotting a value gap between two markets before the rest of the world notices.',
+				'Geographic/Time angle: Living in a quiet town while working globally, or learning a skill in one field and applying it in another.',
+				'Essay hook: Intellectual arbitrage—translating insights from biology or history into modern design.',
+			],
+		},
+		{
+			id: 'sw-17',
+			mode: 'Single-Word',
+			category: 'Education & Society',
+			level: 'Easy',
+			title: 'Commons',
+			points: [
+				'Historical angle: Shared village pastures, town greens, national parks, and public libraries.',
+				'Digital angle: Wikipedia, open-source software, and Creative Commons knowledge built by volunteers.',
+				'Debate hook: How communities successfully govern shared resources without falling into the "tragedy of the commons."',
+			],
+		},
+		{
+			id: 'sw-18',
+			mode: 'Single-Word',
+			category: 'Education & Society',
+			level: 'Medium',
+			title: 'Scaffolding',
+			points: [
+				'Educational angle: Temporary support structures a mentor provides until the learner can stand independently.',
+				'Urban angle: The steel poles and canvas wraps that hide a building while restoration happens underneath.',
+				'Reflective hook: Which habits in your life are permanent walls, and which were meant to be temporary scaffolding?',
+			],
+		},
+		{
+			id: 'sw-19',
+			mode: 'Single-Word',
+			category: 'Education & Society',
+			level: 'Hard',
+			title: 'Meritocracy',
+			points: [
+				'Etymological angle: Coined by Michael Young in 1958 originally as a cautionary satire, later adopted as an ideal.',
+				'Sociological angle: Separating effort and talent from the invisible headwinds and tailwinds of birthplace.',
+				'Speech hook: How to honor hard work while keeping gratitude and civic humility intact.',
+			],
+		},
+		{
+			id: 'sw-20',
+			mode: 'Single-Word',
+			category: 'Education & Society',
+			level: 'Easy',
+			title: 'Sanctuary',
+			points: [
+				'Spatial angle: A quiet botanical garden, a corner booth on a rainy afternoon, or a wildlife refuge.',
+				'Mental angle: Boundaries that protect attention and peace from constant external demands.',
+				'Story hook: Describe the sights, sounds, and rules of your personal sanctuary.',
+			],
+		},
+		{
+			id: 'sw-21',
+			mode: 'Single-Word',
+			category: 'Culture & History',
+			level: 'Hard',
+			title: 'Palimpsest',
+			points: [
+				'Archival angle: Ancient parchment scraped clean and reused, where faint traces of the earlier text still show through.',
+				'Urban angle: Cities like Rome, Istanbul, or Mexico City where modern subways cut through layers of centuries.',
+				'Creative hook: A character, house, or relationship where the past remains faintly visible beneath the new paint.',
+			],
+		},
+		{
+			id: 'sw-22',
+			mode: 'Single-Word',
+			category: 'Culture & History',
+			level: 'Easy',
+			title: 'Heirloom',
+			points: [
+				'Object angle: Cast-iron skillets, pocket watches, or recipe cards stained with vanilla and flour.',
+				'Agricultural angle: Heirloom seeds passed down for flavor and resilience rather than industrial uniformity.',
+				'Conversation hook: Which everyday item you own today do you hope someone keeps fifty years from now?',
+			],
+		},
+		{
+			id: 'sw-23',
+			mode: 'Single-Word',
+			category: 'Culture & History',
+			level: 'Medium',
+			title: 'Patina',
+			points: [
+				'Material angle: The green oxidation on copper roofs, worn leather club chairs, and brass door handles polished by thousands of hands.',
+				'Aesthetic angle: The Japanese concept of wabi-sabi—why age and honest wear make objects more beautiful than factory perfection.',
+				'Speech hook: Why experience and a few weathered scars give human character its patina.',
+			],
+		},
+		{
+			id: 'sw-24',
+			mode: 'Single-Word',
+			category: 'Culture & History',
+			level: 'Medium',
+			title: 'Vernacular',
+			points: [
+				'Linguistic angle: The warm, expressive everyday speech of a neighborhood versus stiff institutional prose.',
+				'Architectural angle: Local buildings shaped by regional timber, stone, and climate rather than global glass towers.',
+				'Writing hook: Why stories come alive when characters speak in authentic vernacular.',
+			],
+		},
+		{
+			id: 'sw-25',
+			mode: 'Single-Word',
+			category: 'Fun & Random',
+			level: 'Easy',
+			title: 'Serendipity',
+			points: [
+				'Origin angle: Coined from the Persian fairy tale "The Three Princes of Serendip," who made discoveries by accident and sagacity.',
+				'Scientific angle: Penicillin, Post-it notes, and cosmic microwave background radiation found while looking for something else.',
+				'Icebreaker hook: Share the best accidental detour or chance meeting of your life.',
+			],
+		},
+		{
+			id: 'sw-26',
+			mode: 'Single-Word',
+			category: 'Fun & Random',
+			level: 'Easy',
+			title: 'Detour',
+			points: [
+				'Travel angle: When a closed highway forces you onto a winding two-lane road past a memorable diner or overlook.',
+				'Biographical angle: Career or educational detours that felt like delays at the time but became the whole point.',
+				'Creative hook: Start a story with the words: "The detour sign looked hand-painted, and the arrow pointed uphill."',
+			],
+		},
+		{
+			id: 'sw-27',
+			mode: 'Single-Word',
+			category: 'Fun & Random',
+			level: 'Medium',
+			title: 'Ephemera',
+			points: [
+				'Collector angle: Train tickets, concert stubs, paper coasters, and handwritten grocery lists never meant to survive.',
+				'Digital angle: Disappearing stories, status updates, and how rarely we print physical photos today.',
+				'Prompt hook: What piece of paper ephemera is currently tucked inside your wallet or desk drawer?',
+			],
+		},
+		{
+			id: 'sw-28',
+			mode: 'Single-Word',
+			category: 'Fun & Random',
+			level: 'Medium',
+			title: 'Velvet',
+			points: [
+				'Sensory angle: Theater curtains before the lights dim, vintage instrument cases, and midnight skies.',
+				'Idiom angle: "An iron fist in a velvet glove"—how gentle diplomacy carries quiet strength.',
+				'Creative hook: Use textures (velvet, sandpaper, glass, wool) to describe a character’s voice and personality.',
+			],
+		},
+	];
+
+	const LENS_INSTRUCTIONS: Record<string, string> = {
+		Straight: '',
+		"Devil's Advocate":
+			"Devil's Advocate Lens: Argue the strongest, most intellectually honest case AGAINST your initial instinct on this topic.",
+		'ELI5 (Simple)':
+			'ELI5 Lens: Explain this topic using plain, vivid everyday analogies that a curious 10-year-old would immediately grasp.',
+		'Pitch It':
+			'Pitch It Lens: Frame your response as a crisp 60-second proposal pitching a concrete solution or action plan.',
+		Storytime:
+			'Storytime Lens: Open with a specific personal anecdote, historical scene, or lived moment before introducing any theory.',
+	};
 
 	function initRandomTopicGenerator() {
-		const SESSION_KEY = 'wordora_shortlisted_topics_v1';
+		const SHORTLIST_STORAGE_KEY = 'wordora_rtg_shortlist_v2';
+		const NOTES_STORAGE_KEY = 'wordora_rtg_notes_v2';
 
-		const MODE_META: Record<string, { hint: string; scope: string }> = {
-			'Essay & Academic': {
-				hint: 'Analytical & persuasive prompt',
-				scope: 'Recommended length: 800 – 1,500 words (3 – 6 pages)',
-			},
-			'Public Speaking & Debate': {
-				hint: 'Keynote, impromptu & parliamentary motion',
-				scope: 'Recommended speech time: 3 – 7 minutes (390 – 910 words at 130 WPM)',
-			},
-			'Creative Writing': {
-				hint: 'Narrative fiction & literary scene starter',
-				scope: 'Recommended length: 1,000 – 2,500 words (short story or chapter)',
-			},
-			'Blog & Content': {
-				hint: 'Editorial article & newsletter angle',
-				scope: 'Recommended length: 900 – 1,400 words (4 – 6 min silent read)',
-			},
-		};
+		// DOM Controls
+		const modePills = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-rtg-mode]'));
+		const selectCategory = document.getElementById('rtg-select-category') as HTMLSelectElement | null;
+		const selectLevel = document.getElementById('rtg-select-level') as HTMLSelectElement | null;
+		const selectLens = document.getElementById('rtg-select-lens') as HTMLSelectElement | null;
+		const checkboxNoRepeats = document.getElementById('rtg-no-repeats') as HTMLInputElement | null;
+		const poolCountLabel = document.getElementById('rtg-pool-count');
 
-		const TOPICS_BY_MODE: Record<string, TopicItem[]> = {
-			'Essay & Academic': [
-				{
-					title: 'Should universities evaluate students primarily through long-form research projects rather than timed examinations?',
-					angle: 'Compare how timed exams measure recall under pressure versus how extended research essays test synthesis, revision, and original argument construction.',
-				},
-				{
-					title: 'How does the architecture of public libraries and pedestrian plazas shape civic trust in modern cities?',
-					angle: 'Examine the role of free, non-commercial "third places" in fostering community connection across socioeconomic backgrounds.',
-				},
-				{
-					title: 'To what extent should historical preservation laws restrict the adaptive reuse of aging urban infrastructure?',
-					angle: 'Weigh cultural heritage conservation against housing affordability, environmental retrofitting, and evolving neighborhood needs.',
-				},
-				{
-					title: 'Does widespread reliance on algorithmic recommendations narrow or expand individual cultural curiosity?',
-					angle: 'Analyze whether personalized discovery feeds create echo chambers of taste or lower barriers to discovering niche art, music, and literature.',
-				},
-				{
-					title: 'Should scientific journals mandate open-access publishing for all publicly funded research immediately upon peer review?',
-					angle: 'Consider the economics of academic publishing alongside the public right to access taxpayer-funded discoveries.',
-				},
-				{
-					title: 'How has the shift from physical notebooks to searchable digital archives changed the way historians and biographers work?',
-					angle: 'Explore what is gained in speed and cross-referencing versus what is lost when handwritten marginalia and drafts disappear.',
-				},
-				{
-					title: 'Is universal financial literacy education in secondary schools sufficient to improve long-term household economic resilience?',
-					angle: 'Evaluate where individual budgeting knowledge succeeds and where broader structural economic factors play a decisive role.',
-				},
-				{
-					title: 'Should municipal governments prioritize congestion pricing or expanded micro-transit networks to reduce urban commuter emissions?',
-					angle: 'Compare behavioral disincentives with infrastructure accessibility for suburban and shift-based workers.',
-				},
-			],
-			'Public Speaking & Debate': [
-				{
-					title: 'This house believes that a four-day workweek should become the statutory baseline for knowledge and service industries.',
-					angle: 'Debate the balance between measurable productivity gains, employee wellbeing, and operational challenges for small businesses.',
-				},
-				{
-					title: 'Why the ability to change your mind in public is the most underrated leadership skill of the decade.',
-					angle: 'Open with a memorable moment where reversing course saved a project, and contrast intellectual humility with stubborn certainty.',
-				},
-				{
-					title: 'Should voting in national and municipal elections be a mandatory civic duty with a "none of the above" ballot option?',
-					angle: 'Weigh universal democratic turnout and civic engagement against individual liberty and the right to abstain.',
-				},
-				{
-					title: 'The hidden cost of constant availability: why organizations thrive when they protect uninterrupted focus hours.',
-					angle: 'Use relatable workplace stories to show how rapid response expectations erode deep strategic thinking.',
-				},
-				{
-					title: 'Should major international sporting events be hosted at a single permanent venue rather than rotating across cities?',
-					angle: 'Contrast the global spirit of rotating host nations with the financial and environmental footprint of building single-use stadiums.',
-				},
-				{
-					title: 'Why learning a second language in adulthood remains valuable even in an era of instant translation tools.',
-					angle: 'Focus on empathy, cultural nuance, and cognitive flexibility that direct word-for-word translation cannot replicate.',
-				},
-				{
-					title: 'Should secondary schools replace traditional summer breaks with shorter, evenly spaced seasonal intervals throughout the year?',
-					angle: 'Address knowledge retention, teacher burnout, and family scheduling traditions on both sides of the motion.',
-				},
-				{
-					title: 'What everyday craftsmanship—from repairing watches to baking sourdough—teaches us about patience in a fast-moving world.',
-					angle: 'Build a warm, reflective keynote around tactile problem-solving and the satisfaction of slow mastery.',
-				},
-			],
-			'Creative Writing': [
-				{
-					title: 'An archivist cataloging a shuttered coastal train station discovers a locker containing forty years of unsent postcards addressed to the same house.',
-					angle: 'Begin with the physical details of the brass key and faded ink, then reveal why the sender never dropped them in a mailbox.',
-				},
-				{
-					title: 'Every autumn, a small mountain town holds a midnight market where residents trade memories they no longer wish to carry.',
-					angle: 'Follow a newcomer who accidentally purchases a memory that belongs to someone sitting across the town square.',
-				},
-				{
-					title: 'Two estranged siblings inherit an eccentric botanical greenhouse where one glass room is kept locked at exactly forty-two degrees.',
-					angle: 'Use the shifting climate inside the greenhouse to mirror the unspoken history between the two characters.',
-				},
-				{
-					title: 'A night-shift radio host in a snowbound northern town receives a call from a listener claiming to hear the broadcast twenty-four hours in the future.',
-					angle: 'Build quiet suspense inside the cramped broadcast booth as the caller describes small, verifiable events before they happen.',
-				},
-				{
-					title: 'A retired cartographer is hired to map an island that appears on maritime radar only during low tide in November.',
-					angle: 'Focus on sensory world-building—salt air, wet slate, and instruments that refuse to agree on the island’s perimeter.',
-				},
-				{
-					title: 'On the final voyage of an overnight sleeper train, two strangers realize they have been reading annotated copies of the same secondhand novel.',
-					angle: 'Let the margin notes inside the book drive the dialogue as the train crosses the border before dawn.',
-				},
-				{
-					title: 'A watchmaker in a quiet port city notices that every mechanical clock in the neighborhood has begun losing exactly three minutes each afternoon.',
-					angle: 'Explore how the town’s routines subtly unravel as one person investigates the source of the drift.',
-				},
-				{
-					title: 'Years after burying a childhood time capsule in a neighborhood park, four friends return to find an unfamiliar fifth object inside the tin box.',
-					angle: 'Trace how each friend remembers the afternoon differently—and who else was watching that day.',
-				},
-			],
-			'Blog & Content': [
-				{
-					title: 'How to design a personal reading and note-taking system that actually survives a busy workweek.',
-					angle: 'Share a practical, low-friction workflow for capturing highlights and turning them into original writing without overcomplicating your tools.',
-				},
-				{
-					title: 'Why shorter paragraphs and concrete verbs immediately make technical explanations easier to trust.',
-					angle: 'Show before-and-after examples of dense industry jargon rewritten into crisp, reader-friendly prose.',
-				},
-				{
-					title: 'The 30-minute weekly review: a calm checklist for resetting priorities before Monday morning begins.',
-					angle: 'Break the process into three simple steps: clearing open loops, reviewing calendar commitments, and picking one flagship goal.',
-				},
-				{
-					title: 'What classic print magazines can teach modern web designers about whitespace, hierarchy, and reader pacing.',
-					angle: 'Translate timeless editorial layout principles—like generous margins and clear subheadings—into practical web design habits.',
-				},
-				{
-					title: 'How to prepare for a high-stakes presentation when you only have ten minutes on the clock.',
-					angle: 'Walk readers through structuring a tight opening hook, three supporting pillars, and a memorable closing takeaway.',
-				},
-				{
-					title: 'Why writing a one-page project brief before building anything saves weeks of revision later.',
-					angle: 'Provide a clear template covering problem statement, target audience, scope boundaries, and definition of done.',
-				},
-				{
-					title: 'The case for slow newsletters: why publishing once a week with depth beats daily surface-level updates.',
-					angle: 'Discuss reader fatigue, long-term archive value, and how thoughtful research builds loyal subscribers.',
-				},
-				{
-					title: 'How to edit your own first draft in three passes: structure first, rhythm second, and line polish last.',
-					angle: 'Give writers a repeatable checklist so they stop getting stuck fixing commas in paragraphs they might delete.',
-				},
-			],
-		};
+		const btnViewSingle = document.getElementById('rtg-view-single');
+		const btnViewBatch = document.getElementById('rtg-view-batch');
+		const singlePanel = document.getElementById('rtg-single-panel');
+		const batchPanel = document.getElementById('rtg-batch-panel');
 
-		// DOM Elements
-		const modeButtons = Array.from(
-			document.querySelectorAll<HTMLButtonElement>('[data-rtg-mode]')
-		);
-		const activeModePill = document.getElementById('rtg-active-mode-pill');
-		const formatHint = document.getElementById('rtg-Format-hint');
-		const counterLabel = document.getElementById('rtg-counter-label');
+		// Single Focus DOM
+		const badgeMode = document.getElementById('rtg-badge-mode');
+		const badgeCategory = document.getElementById('rtg-badge-category');
+		const badgeLevel = document.getElementById('rtg-badge-level');
+		const badgeLens = document.getElementById('rtg-badge-lens');
+		const lensInstruction = document.getElementById('rtg-lens-instruction');
 		const topicTitle = document.getElementById('rtg-topic-title');
-		const topicAngle = document.getElementById('rtg-topic-angle');
-		const targetScope = document.getElementById('rtg-target-scope');
-		const statusFeedback = document.getElementById('rtg-status-feedback');
+		const pointsHeading = document.getElementById('rtg-points-heading');
+		const seenCounter = document.getElementById('rtg-seen-counter');
+		const topicPointsList = document.getElementById('rtg-topic-points');
+
+		const btnPrepToggle = document.getElementById('rtg-btn-prep-toggle');
+		const prepStrip = document.getElementById('rtg-prep-strip');
+		const btnTodaysTopic = document.getElementById('rtg-btn-todays-topic');
 
 		const btnGenerate = document.getElementById('rtg-btn-generate');
-		const btnCopy = document.getElementById('rtg-btn-copy');
-		const copyLabel = document.getElementById('rtg-copy-label');
-		const btnShortlist = document.getElementById('rtg-btn-shortlist');
-		const shortlistBtnLabel = document.getElementById('rtg-shortlist-btn-label');
+		const btnCopySingle = document.getElementById('rtg-btn-copy-single');
+		const copySingleLabel = document.getElementById('rtg-copy-single-label');
+		const btnSaveSingle = document.getElementById('rtg-btn-save-single');
+		const saveSingleLabel = document.getElementById('rtg-save-single-label');
+		const btnCopyLink = document.getElementById('rtg-btn-copy-link');
+		const copyLinkLabel = document.getElementById('rtg-copy-link-label');
+		const statusToast = document.getElementById('rtg-status-toast');
 
+		// Batch DOM
+		const batchList = document.getElementById('rtg-batch-list');
+		const btnGenerateBatch = document.getElementById('rtg-btn-generate-batch');
+		const btnCopyBatch = document.getElementById('rtg-btn-copy-batch');
+		const btnDownloadBatch = document.getElementById('rtg-btn-download-batch');
+		const batchToast = document.getElementById('rtg-batch-toast');
+
+		// Timer & Notes DOM
+		const timerPresets = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-rtg-timer]'));
+		const timerDisplay = document.getElementById('rtg-timer-display');
+		const timerStateLabel = document.getElementById('rtg-timer-state');
+		const btnTimerStart = document.getElementById('rtg-timer-start');
+		const btnTimerReset = document.getElementById('rtg-timer-reset');
+		const notesInput = document.getElementById('rtg-notes-input') as HTMLTextAreaElement | null;
+		const notesWordcount = document.getElementById('rtg-notes-wordcount');
+		const btnNotesClear = document.getElementById('rtg-notes-clear');
+
+		// Shortlist DOM
 		const shortlistCount = document.getElementById('rtg-shortlist-count');
 		const btnClearShortlist = document.getElementById('rtg-btn-clear-shortlist');
 		const shortlistEmpty = document.getElementById('rtg-shortlist-empty');
 		const shortlistItemsList = document.getElementById('rtg-shortlist-items');
-		const btnCopyAll = document.getElementById('rtg-btn-copy-all') as HTMLButtonElement | null;
+		const btnCopyAllSaved = document.getElementById('rtg-btn-copy-all-saved') as HTMLButtonElement | null;
+		const btnDownloadSaved = document.getElementById('rtg-btn-download-saved') as HTMLButtonElement | null;
 
 		// State
-		let currentMode = 'Essay & Academic';
-		let currentIndexByMode: Record<string, number> = {
-			'Essay & Academic': 0,
-			'Public Speaking & Debate': 0,
-			'Creative Writing': 0,
-			'Blog & Content': 0,
-		};
-		let shortlisted: ShortlistedEntry[] = [];
+		let currentMode = 'All';
+		let currentCategory = 'All Categories';
+		let currentLevel = 'Any Level';
+		let currentLens = 'Straight';
+		let viewMode: 'single' | 'batch' = 'single';
+		let noRepeats = true;
 
-		function loadShortlistFromSession() {
+		let seenIds = new Set<string>();
+		let currentTopic: TopicRecord = TOPICS[16]; // Flagship university research vs exams prompt
+		let currentBatch: TopicRecord[] = [];
+		let savedTopics: SavedTopic[] = [];
+
+		// Timer State
+		let selectedDurationSec = 60;
+		let remainingSec = 60;
+		let timerInterval: number | null = null;
+
+		function getMatchingPool(): TopicRecord[] {
+			return TOPICS.filter((item) => {
+				if (currentMode !== 'All' && item.mode !== currentMode) return false;
+				if (currentCategory !== 'All Categories' && item.category !== currentCategory) return false;
+				if (currentLevel !== 'Any Level' && item.level !== currentLevel) return false;
+				return true;
+			});
+		}
+
+		function updatePoolMeta() {
+			const pool = getMatchingPool();
+			if (poolCountLabel) {
+				poolCountLabel.textContent = `${pool.length} matching ${pool.length === 1 ? 'topic' : 'topics'}`;
+			}
+			if (seenCounter) {
+				const seenInPool = pool.filter((t) => seenIds.has(t.id)).length;
+				seenCounter.textContent = `${Math.max(1, seenInPool)} of ${pool.length} seen`;
+			}
+		}
+
+		function pickNextTopic(excludeIds: Set<string> = new Set()): TopicRecord {
+			const pool = getMatchingPool();
+			if (pool.length === 0) {
+				return TOPICS[0];
+			}
+
+			let candidates = pool.filter((t) => !excludeIds.has(t.id));
+			if (noRepeats) {
+				const unseen = candidates.filter((t) => !seenIds.has(t.id));
+				if (unseen.length > 0) {
+					candidates = unseen;
+				} else {
+					// Pool exhausted: reset seenIds for current pool so cycle starts fresh without immediate repeat
+					pool.forEach((t) => seenIds.delete(t.id));
+					candidates = pool.filter((t) => t.id !== currentTopic.id && !excludeIds.has(t.id));
+					if (candidates.length === 0) candidates = pool;
+				}
+			} else {
+				const different = candidates.filter((t) => t.id !== currentTopic.id);
+				if (different.length > 0) candidates = different;
+			}
+
+			const chosen = candidates[Math.floor(Math.random() * candidates.length)];
+			seenIds.add(chosen.id);
+			return chosen;
+		}
+
+		function pickBatchTopics(count = 5): TopicRecord[] {
+			const pool = getMatchingPool();
+			if (pool.length === 0) return [];
+			const targetCount = Math.min(count, pool.length);
+			const chosenBatch: TopicRecord[] = [];
+			const batchIds = new Set<string>();
+
+			for (let i = 0; i < targetCount; i++) {
+				const next = pickNextTopic(batchIds);
+				chosenBatch.push(next);
+				batchIds.add(next.id);
+			}
+			return chosenBatch;
+		}
+
+		function isTopicSaved(id: string): boolean {
+			return savedTopics.some((s) => s.id === id);
+		}
+
+		function syncSaveButtonUI() {
+			if (!saveSingleLabel || !btnSaveSingle) return;
+			const saved = isTopicSaved(currentTopic.id);
+			if (saved) {
+				saveSingleLabel.textContent = 'Saved in Shortlist ✓';
+				btnSaveSingle.className =
+					'inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-[#5EC4A3] bg-[#E6F7F1] px-3.5 py-2.5 text-[13px] font-semibold text-[#0F766E] transition-colors dark:border-hairline dark:bg-canvas dark:text-ink';
+			} else {
+				saveSingleLabel.textContent = 'Save to Shortlist';
+				btnSaveSingle.className =
+					'inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft';
+			}
+		}
+
+		function renderSingleTopic() {
+			if (badgeMode) badgeMode.textContent = currentTopic.mode;
+			if (badgeCategory) badgeCategory.textContent = currentTopic.category;
+			if (badgeLevel) badgeLevel.textContent = currentTopic.level;
+
+			if (badgeLens && lensInstruction) {
+				if (currentLens === 'Straight') {
+					badgeLens.classList.add('hidden');
+					lensInstruction.classList.add('hidden');
+					lensInstruction.textContent = '';
+				} else {
+					badgeLens.classList.remove('hidden');
+					badgeLens.textContent = `Lens: ${currentLens}`;
+					lensInstruction.classList.remove('hidden');
+					lensInstruction.textContent = LENS_INSTRUCTIONS[currentLens] || '';
+				}
+			}
+
+			if (topicTitle) {
+				topicTitle.textContent = currentTopic.title;
+			}
+
+			if (pointsHeading) {
+				pointsHeading.textContent =
+					currentTopic.mode === 'Single-Word'
+						? 'Creative association angles'
+						: 'Angles & talking points';
+			}
+
+			if (topicPointsList) {
+				topicPointsList.innerHTML = '';
+				currentTopic.points.forEach((pt) => {
+					const li = document.createElement('li');
+					li.className = 'flex items-start gap-2';
+					const dot = document.createElement('span');
+					dot.className = 'mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]';
+					const text = document.createElement('span');
+					text.textContent = pt;
+					li.appendChild(dot);
+					li.appendChild(text);
+					topicPointsList.appendChild(li);
+				});
+			}
+
+			syncSaveButtonUI();
+			updatePoolMeta();
+		}
+
+		function renderBatchTopics() {
+			if (!batchList) return;
+			batchList.innerHTML = '';
+
+			currentBatch.forEach((item, idx) => {
+				const li = document.createElement('li');
+				li.className =
+					'flex flex-col justify-between gap-3 rounded-sm border border-hairline bg-canvas p-4 transition-colors hover:border-[#7ED4B6] sm:flex-row sm:items-center';
+
+				const leftDiv = document.createElement('div');
+				leftDiv.className = 'flex-1 cursor-pointer';
+				leftDiv.addEventListener('click', () => {
+					currentTopic = item;
+					seenIds.add(item.id);
+					setViewMode('single');
+					renderSingleTopic();
+				});
+
+				const metaRow = document.createElement('div');
+				metaRow.className = 'mb-1.5 flex flex-wrap items-center gap-1.5';
+
+				const numSpan = document.createElement('span');
+				numSpan.className = 'text-[12px] font-semibold text-mute tabular-nums';
+				numSpan.textContent = `${idx + 1}.`;
+
+				const modePill = document.createElement('span');
+				modePill.className =
+					'rounded-full border border-[#5EC4A3] bg-[#AFE3D0] px-2 py-0.5 text-[11px] font-semibold text-[#111827]';
+				modePill.textContent = item.mode;
+
+				const catPill = document.createElement('span');
+				catPill.className =
+					'rounded-full border border-hairline bg-canvas-elevated px-2 py-0.5 text-[11px] font-medium text-body';
+				catPill.textContent = item.category;
+
+				const lvlPill = document.createElement('span');
+				lvlPill.className =
+					'rounded-full border border-hairline bg-canvas-elevated px-2 py-0.5 text-[11px] font-medium text-mute';
+				lvlPill.textContent = item.level;
+
+				metaRow.appendChild(numSpan);
+				metaRow.appendChild(modePill);
+				metaRow.appendChild(catPill);
+				metaRow.appendChild(lvlPill);
+
+				const titleP = document.createElement('p');
+				titleP.className = 'text-[15px] leading-[22px] font-semibold text-ink';
+				titleP.textContent = item.title;
+
+				leftDiv.appendChild(metaRow);
+				leftDiv.appendChild(titleP);
+
+				const actionsDiv = document.createElement('div');
+				actionsDiv.className = 'flex shrink-0 items-center gap-2';
+
+				const copyBtn = document.createElement('button');
+				copyBtn.type = 'button';
+				copyBtn.className =
+					'cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1.5 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft';
+				copyBtn.textContent = 'Copy';
+				copyBtn.addEventListener('click', async () => {
+					try {
+						await navigator.clipboard.writeText(formatTopicForCopy(item));
+						copyBtn.textContent = 'Copied';
+						setTimeout(() => {
+							copyBtn.textContent = 'Copy';
+						}, 1200);
+					} catch {}
+				});
+
+				const saveBtn = document.createElement('button');
+				saveBtn.type = 'button';
+				const updateRowSaveBtn = () => {
+					const saved = isTopicSaved(item.id);
+					saveBtn.textContent = saved ? 'Saved ✓' : 'Save';
+					saveBtn.className = saved
+						? 'cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#E6F7F1] px-2.5 py-1.5 text-[12px] font-semibold text-[#0F766E] dark:border-hairline dark:bg-canvas dark:text-ink'
+						: 'cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1.5 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft';
+				};
+				updateRowSaveBtn();
+
+				saveBtn.addEventListener('click', () => {
+					toggleSaveTopic(item);
+					updateRowSaveBtn();
+				});
+
+				actionsDiv.appendChild(copyBtn);
+				actionsDiv.appendChild(saveBtn);
+
+				li.appendChild(leftDiv);
+				li.appendChild(actionsDiv);
+				batchList.appendChild(li);
+			});
+
+			updatePoolMeta();
+		}
+
+		function formatTopicForCopy(topic: TopicRecord): string {
+			const lensLine =
+				currentLens !== 'Straight' ? `\nPerspective Lens: ${currentLens}` : '';
+			const pointsBlock = topic.points.map((p) => `• ${p}`).join('\n');
+			return `${topic.title} [${topic.mode} · ${topic.category} · ${topic.level}]${lensLine}\n\nTalking Points:\n${pointsBlock}`;
+		}
+
+		function downloadTextFile(filename: string, content: string) {
+			const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = filename;
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+			URL.revokeObjectURL(url);
+		}
+
+		// Shortlist Persistence
+		function loadShortlist() {
 			try {
-				const raw = sessionStorage.getItem(SESSION_KEY);
+				const raw = localStorage.getItem(SHORTLIST_STORAGE_KEY);
 				if (raw) {
 					const parsed = JSON.parse(raw);
 					if (Array.isArray(parsed)) {
-						shortlisted = parsed;
+						savedTopics = parsed;
 					}
 				}
 			} catch {}
 		}
 
-		function saveShortlistToSession() {
+		function saveShortlist() {
 			try {
-				sessionStorage.setItem(SESSION_KEY, JSON.stringify(shortlisted));
+				localStorage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify(savedTopics));
 			} catch {}
 		}
 
-		function getCurrentTopic(): TopicItem {
-			const list = TOPICS_BY_MODE[currentMode] || TOPICS_BY_MODE['Essay & Academic'];
-			const idx = currentIndexByMode[currentMode] || 0;
-			return list[idx % list.length];
-		}
-
-		function isCurrentShortlisted(): boolean {
-			const topic = getCurrentTopic();
-			return shortlisted.some((item) => item.title === topic.title);
-		}
-
-		function syncShortlistButtonState() {
-			if (!shortlistBtnLabel) return;
-			if (isCurrentShortlisted()) {
-				shortlistBtnLabel.textContent = 'Saved in Shortlist';
+		function toggleSaveTopic(topic: TopicRecord) {
+			const existingIdx = savedTopics.findIndex((s) => s.id === topic.id);
+			if (existingIdx >= 0) {
+				savedTopics.splice(existingIdx, 1);
+				if (statusToast) statusToast.textContent = 'Removed topic from shortlist';
 			} else {
-				shortlistBtnLabel.textContent = 'Save to Shortlist';
+				savedTopics.unshift({
+					id: topic.id,
+					mode: topic.mode,
+					category: topic.category,
+					level: topic.level,
+					title: topic.title,
+					points: [...topic.points],
+				});
+				if (statusToast) statusToast.textContent = 'Saved topic to shortlist';
 			}
-		}
-
-		function renderCurrentTopic() {
-			const list = TOPICS_BY_MODE[currentMode] || TOPICS_BY_MODE['Essay & Academic'];
-			const idx = (currentIndexByMode[currentMode] || 0) % list.length;
-			const topic = list[idx];
-			const meta = MODE_META[currentMode] || MODE_META['Essay & Academic'];
-
-			if (activeModePill) activeModePill.textContent = currentMode;
-			if (formatHint) formatHint.textContent = meta.hint;
-			if (counterLabel) counterLabel.textContent = `Prompt ${idx + 1} of ${list.length}`;
-			if (topicTitle) topicTitle.textContent = topic.title;
-			if (topicAngle) topicAngle.textContent = topic.angle;
-			if (targetScope) targetScope.textContent = meta.scope;
-
-			syncShortlistButtonState();
+			saveShortlist();
+			renderShortlist();
+			syncSaveButtonUI();
 		}
 
 		function renderShortlist() {
-			const count = shortlisted.length;
-			if (shortlistCount) {
-				shortlistCount.textContent = `${count} saved`;
-			}
-			if (btnCopyAll) {
-				btnCopyAll.disabled = count === 0;
-			}
+			const count = savedTopics.length;
+			if (shortlistCount) shortlistCount.textContent = `${count} saved`;
+			if (btnCopyAllSaved) btnCopyAllSaved.disabled = count === 0;
+			if (btnDownloadSaved) btnDownloadSaved.disabled = count === 0;
 
 			if (count === 0) {
 				shortlistEmpty?.classList.remove('hidden');
 				shortlistItemsList?.classList.add('hidden');
 				btnClearShortlist?.classList.add('hidden');
 				if (shortlistItemsList) shortlistItemsList.innerHTML = '';
-				syncShortlistButtonState();
 				return;
 			}
 
@@ -596,162 +2751,453 @@ const speechTimeTool = getToolById('speech-time-calculator');
 
 			if (shortlistItemsList) {
 				shortlistItemsList.innerHTML = '';
-				shortlisted.forEach((entry, index) => {
+				savedTopics.forEach((item, index) => {
 					const li = document.createElement('li');
 					li.className = 'rounded-sm border border-hairline bg-canvas p-3 text-[13px]';
 
 					const topRow = document.createElement('div');
 					topRow.className = 'mb-1 flex items-center justify-between gap-2';
 
-					const modeBadge = document.createElement('span');
-					modeBadge.className = 'text-[11px] font-medium text-mute';
-					modeBadge.textContent = entry.mode;
+					const badgeSpan = document.createElement('span');
+					badgeSpan.className = 'text-[11px] font-medium text-mute';
+					badgeSpan.textContent = `${item.mode} · ${item.category}`;
 
-					const actionsDiv = document.createElement('div');
-					actionsDiv.className = 'flex items-center gap-2';
+					const btnGroup = document.createElement('div');
+					btnGroup.className = 'flex items-center gap-2';
 
-					const copyItemBtn = document.createElement('button');
-					copyItemBtn.type = 'button';
-					copyItemBtn.className = 'cursor-pointer text-[11px] font-medium text-body hover:text-ink';
-					copyItemBtn.textContent = 'Copy';
-					copyItemBtn.addEventListener('click', async () => {
+					const copyBtn = document.createElement('button');
+					copyBtn.type = 'button';
+					copyBtn.className = 'cursor-pointer text-[11px] font-medium text-body hover:text-ink';
+					copyBtn.textContent = 'Copy';
+					copyBtn.addEventListener('click', async () => {
 						try {
-							await navigator.clipboard.writeText(entry.title);
-							copyItemBtn.textContent = 'Copied';
+							const text = `${item.title}\n${(item.points || []).map((p) => `• ${p}`).join('\n')}`;
+							await navigator.clipboard.writeText(text);
+							copyBtn.textContent = 'Copied';
 							setTimeout(() => {
-								copyItemBtn.textContent = 'Copy';
+								copyBtn.textContent = 'Copy';
 							}, 1200);
 						} catch {}
 					});
 
 					const removeBtn = document.createElement('button');
 					removeBtn.type = 'button';
-					removeBtn.className = 'cursor-pointer text-[11px] font-medium text-mute hover:text-vercel-error';
-					removeBtn.textContent = 'Remove';
+					removeBtn.setAttribute('aria-label', 'Remove saved topic');
+					removeBtn.className =
+						'cursor-pointer px-1 text-[14px] leading-none font-semibold text-mute hover:text-vercel-error';
+					removeBtn.textContent = '×';
 					removeBtn.addEventListener('click', () => {
-						shortlisted.splice(index, 1);
-						saveShortlistToSession();
+						savedTopics.splice(index, 1);
+						saveShortlist();
 						renderShortlist();
+						syncSaveButtonUI();
+						if (viewMode === 'batch') renderBatchTopics();
 					});
 
-					actionsDiv.appendChild(copyItemBtn);
-					actionsDiv.appendChild(removeBtn);
-					topRow.appendChild(modeBadge);
-					topRow.appendChild(actionsDiv);
+					btnGroup.appendChild(copyBtn);
+					btnGroup.appendChild(removeBtn);
+					topRow.appendChild(badgeSpan);
+					topRow.appendChild(btnGroup);
 
 					const titleP = document.createElement('p');
-					titleP.className = 'font-medium text-ink leading-[20px]';
-					titleP.textContent = entry.title;
+					titleP.className = 'cursor-pointer font-medium text-ink leading-[19px] hover:underline';
+					titleP.textContent = item.title;
+					titleP.addEventListener('click', () => {
+						const match = TOPICS.find((t) => t.id === item.id);
+						if (match) {
+							currentTopic = match;
+							setViewMode('single');
+							renderSingleTopic();
+						}
+					});
 
 					li.appendChild(topRow);
 					li.appendChild(titleP);
 					shortlistItemsList.appendChild(li);
 				});
 			}
-
-			syncShortlistButtonState();
 		}
 
-		// Mode tab switching
-		for (const btn of modeButtons) {
-			btn.addEventListener('click', () => {
-				const selected = btn.getAttribute('data-rtg-mode');
-				if (!selected) return;
+		function setViewMode(mode: 'single' | 'batch') {
+			viewMode = mode;
+			if (mode === 'single') {
+				singlePanel?.classList.remove('hidden');
+				batchPanel?.classList.add('hidden');
+				btnViewSingle?.setAttribute('aria-pressed', 'true');
+				btnViewBatch?.setAttribute('aria-pressed', 'false');
+				if (btnViewSingle) {
+					btnViewSingle.className =
+						'cursor-pointer rounded-[4px] bg-[#AFE3D0] px-2.5 py-1 text-[12px] font-semibold text-[#111827] transition-colors';
+				}
+				if (btnViewBatch) {
+					btnViewBatch.className =
+						'cursor-pointer rounded-[4px] px-2.5 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink';
+				}
+			} else {
+				singlePanel?.classList.add('hidden');
+				batchPanel?.classList.remove('hidden');
+				btnViewSingle?.setAttribute('aria-pressed', 'false');
+				btnViewBatch?.setAttribute('aria-pressed', 'true');
+				if (btnViewBatch) {
+					btnViewBatch.className =
+						'cursor-pointer rounded-[4px] bg-[#AFE3D0] px-2.5 py-1 text-[12px] font-semibold text-[#111827] transition-colors';
+				}
+				if (btnViewSingle) {
+					btnViewSingle.className =
+						'cursor-pointer rounded-[4px] px-2.5 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink';
+				}
+				if (currentBatch.length === 0) {
+					currentBatch = pickBatchTopics(5);
+				}
+				renderBatchTopics();
+			}
+		}
+
+		// Filter Events
+		modePills.forEach((pill) => {
+			pill.addEventListener('click', () => {
+				const selected = pill.getAttribute('data-rtg-mode') || 'All';
 				currentMode = selected;
 
-				for (const b of modeButtons) {
-					const isActive = b === btn;
-					b.setAttribute('aria-selected', isActive ? 'true' : 'false');
-					if (isActive) {
-						b.className =
-							'cursor-pointer rounded-sm bg-primary px-3.5 py-2 text-left text-[13px] font-medium text-on-primary transition-colors sm:text-center';
-					} else {
-						b.className =
-							'cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-2 text-left text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft sm:text-center';
-					}
+				modePills.forEach((p) => {
+					const active = p === pill;
+					p.setAttribute('aria-selected', active ? 'true' : 'false');
+					p.className = active
+						? 'rtg-mode-pill cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-3.5 py-1.5 text-[13px] font-semibold text-[#111827] transition-colors'
+						: 'rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft';
+				});
+
+				if (viewMode === 'single') {
+					currentTopic = pickNextTopic();
+					renderSingleTopic();
+				} else {
+					currentBatch = pickBatchTopics(5);
+					renderBatchTopics();
 				}
-
-				renderCurrentTopic();
 			});
-		}
+		});
 
-		// Generate New Topic button
-		btnGenerate?.addEventListener('click', () => {
-			const list = TOPICS_BY_MODE[currentMode] || TOPICS_BY_MODE['Essay & Academic'];
-			const currentIdx = currentIndexByMode[currentMode] || 0;
-			// Pick next or random different index for natural variety
-			let nextIdx = (currentIdx + 1) % list.length;
-			if (list.length > 2 && Math.random() > 0.45) {
-				const offset = 1 + Math.floor(Math.random() * (list.length - 1));
-				nextIdx = (currentIdx + offset) % list.length;
-			}
-			currentIndexByMode[currentMode] = nextIdx;
-			renderCurrentTopic();
-			if (statusFeedback) {
-				statusFeedback.textContent = `Generated new ${currentMode} prompt`;
+		selectCategory?.addEventListener('change', () => {
+			currentCategory = selectCategory.value;
+			if (viewMode === 'single') {
+				currentTopic = pickNextTopic();
+				renderSingleTopic();
+			} else {
+				currentBatch = pickBatchTopics(5);
+				renderBatchTopics();
 			}
 		});
 
-		// Copy Topic button
-		btnCopy?.addEventListener('click', async () => {
-			const topic = getCurrentTopic();
+		selectLevel?.addEventListener('change', () => {
+			currentLevel = selectLevel.value;
+			if (viewMode === 'single') {
+				currentTopic = pickNextTopic();
+				renderSingleTopic();
+			} else {
+				currentBatch = pickBatchTopics(5);
+				renderBatchTopics();
+			}
+		});
+
+		selectLens?.addEventListener('change', () => {
+			currentLens = selectLens.value;
+			renderSingleTopic();
+		});
+
+		checkboxNoRepeats?.addEventListener('change', () => {
+			noRepeats = checkboxNoRepeats.checked;
+			updatePoolMeta();
+		});
+
+		btnViewSingle?.addEventListener('click', () => setViewMode('single'));
+		btnViewBatch?.addEventListener('click', () => setViewMode('batch'));
+
+		// PREP Toggle
+		btnPrepToggle?.addEventListener('click', () => {
+			if (!prepStrip) return;
+			const isHidden = prepStrip.classList.contains('hidden');
+			if (isHidden) {
+				prepStrip.classList.remove('hidden');
+				btnPrepToggle.setAttribute('aria-expanded', 'true');
+				btnPrepToggle.className =
+					'cursor-pointer rounded-full border border-[#5EC4A3] bg-[#AFE3D0] px-2.5 py-1 text-[12px] font-semibold text-[#111827] transition-colors';
+			} else {
+				prepStrip.classList.add('hidden');
+				btnPrepToggle.setAttribute('aria-expanded', 'false');
+				btnPrepToggle.className =
+					'cursor-pointer rounded-full border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-body transition-colors hover:border-[#5EC4A3] hover:text-ink';
+			}
+		});
+
+		// Today's Topic deterministic daily seed
+		btnTodaysTopic?.addEventListener('click', () => {
+			const now = new Date();
+			const daySeed =
+				now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+			const pool = getMatchingPool();
+			const list = pool.length > 0 ? pool : TOPICS;
+			const index = daySeed % list.length;
+			currentTopic = list[index];
+			seenIds.add(currentTopic.id);
+			setViewMode('single');
+			renderSingleTopic();
+			if (statusToast) {
+				statusToast.textContent = `Loaded Today's Topic (${now.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })})`;
+			}
+		});
+
+		// Generate New Topic (Single)
+		btnGenerate?.addEventListener('click', () => {
+			currentTopic = pickNextTopic();
+			renderSingleTopic();
+			if (statusToast) {
+				statusToast.textContent = `Generated new ${currentTopic.mode} topic`;
+			}
+		});
+
+		// Spacebar shortcut when not typing in an input/textarea/select
+		window.addEventListener('keydown', (e) => {
+			if (e.code !== 'Space') return;
+			const activeEl = document.activeElement;
+			const tag = activeEl?.tagName.toLowerCase();
+			if (
+				tag === 'input' ||
+				tag === 'textarea' ||
+				tag === 'select' ||
+				tag === 'button' ||
+				(activeEl as HTMLElement | null)?.isContentEditable
+			) {
+				return;
+			}
+			const workspace = document.getElementById('random-topic-workspace');
+			if (!workspace) return;
+			e.preventDefault();
+			if (viewMode === 'single') {
+				currentTopic = pickNextTopic();
+				renderSingleTopic();
+			} else {
+				currentBatch = pickBatchTopics(5);
+				renderBatchTopics();
+			}
+		});
+
+		// Copy Single Topic + Points
+		btnCopySingle?.addEventListener('click', async () => {
 			try {
-				await navigator.clipboard.writeText(topic.title);
-				if (copyLabel) copyLabel.textContent = 'Copied';
-				if (statusFeedback) statusFeedback.textContent = 'Copied topic to clipboard';
+				await navigator.clipboard.writeText(formatTopicForCopy(currentTopic));
+				if (copySingleLabel) copySingleLabel.textContent = 'Copied!';
+				if (statusToast) statusToast.textContent = 'Copied topic & talking points';
 				setTimeout(() => {
-					if (copyLabel) copyLabel.textContent = 'Copy Topic';
+					if (copySingleLabel) copySingleLabel.textContent = 'Copy Topic + Points';
 				}, 1400);
 			} catch {}
 		});
 
-		// Save to Shortlist button
-		btnShortlist?.addEventListener('click', () => {
-			const topic = getCurrentTopic();
-			const existingIndex = shortlisted.findIndex((item) => item.title === topic.title);
-			if (existingIndex === -1) {
-				shortlisted.unshift({
-					mode: currentMode,
-					title: topic.title,
-				});
-				saveShortlistToSession();
-				renderShortlist();
-				if (statusFeedback) statusFeedback.textContent = 'Added topic to your shortlist';
-			} else {
-				if (statusFeedback) statusFeedback.textContent = 'Topic is already in your shortlist';
-			}
+		// Save Single Topic
+		btnSaveSingle?.addEventListener('click', () => {
+			toggleSaveTopic(currentTopic);
 		});
 
-		// Clear Shortlist button
-		btnClearShortlist?.addEventListener('click', () => {
-			shortlisted = [];
-			saveShortlistToSession();
-			renderShortlist();
-			if (statusFeedback) statusFeedback.textContent = 'Cleared shortlisted topics';
+		// Copy Share Link
+		btnCopyLink?.addEventListener('click', async () => {
+			try {
+				const url = new URL(window.location.href);
+				url.searchParams.set('topic', currentTopic.id);
+				await navigator.clipboard.writeText(url.toString());
+				if (copyLinkLabel) copyLinkLabel.textContent = 'Link Copied!';
+				if (statusToast) statusToast.textContent = 'Shareable topic link copied';
+				setTimeout(() => {
+					if (copyLinkLabel) copyLinkLabel.textContent = 'Copy Link';
+				}, 1400);
+			} catch {}
 		});
 
-		// Copy All Saved button
-		btnCopyAll?.addEventListener('click', async () => {
-			if (shortlisted.length === 0) return;
-			const formatted = shortlisted
-				.map((item, idx) => `${idx + 1}. [${item.mode}] ${item.title}`)
-				.join('\n');
+		// Batch Actions
+		btnGenerateBatch?.addEventListener('click', () => {
+			currentBatch = pickBatchTopics(5);
+			renderBatchTopics();
+			if (batchToast) batchToast.textContent = 'Generated 5 new topics';
+		});
+
+		btnCopyBatch?.addEventListener('click', async () => {
+			if (currentBatch.length === 0) return;
+			const formatted = currentBatch
+				.map((t, idx) => `${idx + 1}. ${formatTopicForCopy(t)}`)
+				.join('\n\n---\n\n');
 			try {
 				await navigator.clipboard.writeText(formatted);
-				const prev = btnCopyAll.textContent;
-				btnCopyAll.textContent = 'Copied all';
-				if (statusFeedback) statusFeedback.textContent = 'Copied all shortlisted topics';
+				const prev = btnCopyBatch.textContent;
+				btnCopyBatch.textContent = 'Copied All 5!';
 				setTimeout(() => {
-					btnCopyAll.textContent = prev;
+					btnCopyBatch.textContent = prev;
 				}, 1400);
 			} catch {}
 		});
 
-		loadShortlistFromSession();
-		renderCurrentTopic();
+		btnDownloadBatch?.addEventListener('click', () => {
+			if (currentBatch.length === 0) return;
+			const formatted = currentBatch
+				.map((t, idx) => `${idx + 1}. ${formatTopicForCopy(t)}`)
+				.join('\n\n---\n\n');
+			downloadTextFile('wordora-random-topics-batch.txt', formatted);
+		});
+
+		// Shortlist Actions
+		btnClearShortlist?.addEventListener('click', () => {
+			savedTopics = [];
+			saveShortlist();
+			renderShortlist();
+			syncSaveButtonUI();
+			if (viewMode === 'batch') renderBatchTopics();
+		});
+
+		btnCopyAllSaved?.addEventListener('click', async () => {
+			if (savedTopics.length === 0) return;
+			const text = savedTopics
+				.map(
+					(t, idx) =>
+						`${idx + 1}. [${t.mode} · ${t.category}] ${t.title}\n${(t.points || []).map((p) => `   • ${p}`).join('\n')}`
+				)
+				.join('\n\n');
+			try {
+				await navigator.clipboard.writeText(text);
+				const prev = btnCopyAllSaved.textContent;
+				btnCopyAllSaved.textContent = 'Copied All!';
+				setTimeout(() => {
+					btnCopyAllSaved.textContent = prev;
+				}, 1400);
+			} catch {}
+		});
+
+		btnDownloadSaved?.addEventListener('click', () => {
+			if (savedTopics.length === 0) return;
+			const text = savedTopics
+				.map(
+					(t, idx) =>
+						`${idx + 1}. [${t.mode} · ${t.category} · ${t.level}] ${t.title}\n${(t.points || []).map((p) => `   • ${p}`).join('\n')}`
+				)
+				.join('\n\n');
+			downloadTextFile('wordora-shortlisted-topics.txt', text);
+		});
+
+		// Practice Timer Controls
+		function formatTimer(seconds: number): string {
+			const mins = Math.floor(seconds / 60);
+			const secs = seconds % 60;
+			return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+		}
+
+		function updateTimerUI() {
+			if (timerDisplay) timerDisplay.textContent = formatTimer(remainingSec);
+		}
+
+		function stopTimerInterval() {
+			if (timerInterval !== null) {
+				window.clearInterval(timerInterval);
+				timerInterval = null;
+			}
+		}
+
+		timerPresets.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const sec = parseInt(btn.getAttribute('data-rtg-timer') || '60', 10);
+				stopTimerInterval();
+				selectedDurationSec = sec;
+				remainingSec = sec;
+				updateTimerUI();
+				if (btnTimerStart) btnTimerStart.textContent = 'Start';
+				if (timerStateLabel) timerStateLabel.textContent = 'Ready';
+
+				timerPresets.forEach((b) => {
+					const active = b === btn;
+					b.className = active
+						? 'rtg-timer-preset cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-2 py-1 text-[12px] font-semibold text-[#111827] transition-colors'
+						: 'rtg-timer-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink';
+				});
+			});
+		});
+
+		btnTimerStart?.addEventListener('click', () => {
+			if (timerInterval !== null) {
+				// Pause
+				stopTimerInterval();
+				btnTimerStart.textContent = 'Resume';
+				if (timerStateLabel) timerStateLabel.textContent = 'Paused';
+			} else {
+				if (remainingSec <= 0) {
+					remainingSec = selectedDurationSec;
+				}
+				btnTimerStart.textContent = 'Pause';
+				if (timerStateLabel) timerStateLabel.textContent = 'Running';
+				timerInterval = window.setInterval(() => {
+					remainingSec = Math.max(0, remainingSec - 1);
+					updateTimerUI();
+					if (remainingSec <= 0) {
+						stopTimerInterval();
+						if (btnTimerStart) btnTimerStart.textContent = 'Start';
+						if (timerStateLabel) timerStateLabel.textContent = "Time's up!";
+					}
+				}, 1000);
+			}
+		});
+
+		btnTimerReset?.addEventListener('click', () => {
+			stopTimerInterval();
+			remainingSec = selectedDurationSec;
+			updateTimerUI();
+			if (btnTimerStart) btnTimerStart.textContent = 'Start';
+			if (timerStateLabel) timerStateLabel.textContent = 'Ready';
+		});
+
+		// Quick Notes Scratchpad
+		function updateNotesWordCount() {
+			if (!notesInput || !notesWordcount) return;
+			const raw = notesInput.value.trim();
+			const words = raw ? raw.split(/\s+/).length : 0;
+			notesWordcount.textContent = `${words} ${words === 1 ? 'word' : 'words'}`;
+		}
+
+		try {
+			const savedNotes = localStorage.getItem(NOTES_STORAGE_KEY);
+			if (savedNotes && notesInput) {
+				notesInput.value = savedNotes;
+				updateNotesWordCount();
+			}
+		} catch {}
+
+		notesInput?.addEventListener('input', () => {
+			updateNotesWordCount();
+			try {
+				localStorage.setItem(NOTES_STORAGE_KEY, notesInput.value);
+			} catch {}
+		});
+
+		btnNotesClear?.addEventListener('click', () => {
+			if (!notesInput) return;
+			notesInput.value = '';
+			updateNotesWordCount();
+			try {
+				localStorage.removeItem(NOTES_STORAGE_KEY);
+			} catch {}
+		});
+
+		// Check URL query parameter ?topic=id
+		try {
+			const params = new URLSearchParams(window.location.search);
+			const topicParam = params.get('topic');
+			if (topicParam) {
+				const found = TOPICS.find((t) => t.id === topicParam);
+				if (found) {
+					currentTopic = found;
+				}
+			}
+		} catch {}
+
+		seenIds.add(currentTopic.id);
+		loadShortlist();
+		renderSingleTopic();
 		renderShortlist();
 	}
 
 	initRandomTopicGenerator();
 </script>
-

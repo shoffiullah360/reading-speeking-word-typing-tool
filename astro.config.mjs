@@ -8,6 +8,7 @@ import { SITE_CONFIG, isPublicLiveUrl } from './src/config/site.ts';
 export default defineConfig({
 	site: SITE_CONFIG.origin,
 	trailingSlash: 'always',
+	devToolbar: { enabled: false },
 	integrations: [
 		sitemap({
 			filter: (page) => isPublicLiveUrl(page),

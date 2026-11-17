@@ -270,7 +270,7 @@ function runValidation() {
 				continue;
 			}
 
-			// Internal path link (e.g. "/reading-time-counter/" or "/reading-time-counter/#benchmarks")
+			// Internal path link (e.g. "/reading-time-calculator/" or "/reading-time-calculator/#benchmarks")
 			const [pathPart, hashPart] = rawHref.split('#');
 			const cleanPath = pathPart.split('?')[0];
 

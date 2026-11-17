@@ -12,62 +12,62 @@ const textReverserTool = getToolById('text-reverser');
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
 	<!-- Live Summary Bar -->
-	<div class="whisper-shadow mb-6 grid grid-cols-2 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-4 sm:divide-x sm:divide-y-0">
-		<article class="flex flex-col justify-between p-4 sm:p-5">
-			<span class="text-[13px] font-medium text-body">Active format</span>
+	<div class="kpi-summary-bar whisper-shadow mb-6 grid grid-cols-2 divide-y divide-[#7ED4B6] rounded-md border border-[#7ED4B6] bg-[#AFE3D0] sm:grid-cols-4 sm:divide-x sm:divide-y-0 dark:divide-hairline dark:border-hairline dark:bg-canvas-elevated">
+		<article class="kpi-card flex flex-col justify-between p-4 sm:p-5">
+			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Active format</span>
 			<output
 				id="cc-active-mode"
 				aria-live="polite"
-				class="mt-1.5 font-sans text-[22px] leading-[28px] font-semibold tracking-[-0.5px] text-ink"
+				class="mt-1.5 font-sans text-[22px] leading-[28px] font-semibold tracking-[-0.5px] text-[#111827] dark:text-ink"
 			>
 				Original text
 			</output>
-			<span class="mt-1 text-[12px] text-mute">Click any case button below</span>
+			<span class="mt-1 text-[12px] text-[#1F2937] dark:text-mute">Click any case button below</span>
 		</article>
 
-		<article class="flex flex-col justify-between border-l border-hairline p-4 sm:border-l-0 sm:p-5">
-			<span class="text-[13px] font-medium text-body">Word count</span>
+		<article class="kpi-card flex flex-col justify-between border-l border-[#7ED4B6] p-4 sm:border-l-0 sm:p-5 dark:border-hairline">
+			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Word count</span>
 			<div class="mt-1.5 flex items-baseline gap-1.5">
 				<output
 					id="cc-metric-words"
 					aria-live="polite"
-					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-ink tabular-nums"
+					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0
 				</output>
-				<span class="text-[13px] text-mute">words</span>
+				<span class="text-[13px] text-[#1F2937] dark:text-mute">words</span>
 			</div>
-			<span id="cc-metric-sentences" class="mt-1 text-[12px] text-mute tabular-nums">0 sentences</span>
+			<span id="cc-metric-sentences" class="mt-1 text-[12px] text-[#1F2937] tabular-nums dark:text-mute">0 sentences</span>
 		</article>
 
-		<article class="flex flex-col justify-between p-4 sm:p-5">
-			<span class="text-[13px] font-medium text-body">Character count</span>
+		<article class="kpi-card flex flex-col justify-between p-4 sm:p-5">
+			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Character count</span>
 			<div class="mt-1.5 flex items-baseline gap-1.5">
 				<output
 					id="cc-metric-chars"
 					aria-live="polite"
-					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-ink tabular-nums"
+					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0
 				</output>
-				<span class="text-[13px] text-mute">characters</span>
+				<span class="text-[13px] text-[#1F2937] dark:text-mute">characters</span>
 			</div>
-			<span id="cc-metric-chars-nospace" class="mt-1 text-[12px] text-mute tabular-nums">0 without spaces</span>
+			<span id="cc-metric-chars-nospace" class="mt-1 text-[12px] text-[#1F2937] tabular-nums dark:text-mute">0 without spaces</span>
 		</article>
 
-		<article class="flex flex-col justify-between border-l border-hairline p-4 sm:border-l-0 sm:p-5">
-			<span class="text-[13px] font-medium text-body">Line count</span>
+		<article class="kpi-card flex flex-col justify-between border-l border-[#7ED4B6] p-4 sm:border-l-0 sm:p-5 dark:border-hairline">
+			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Line count</span>
 			<div class="mt-1.5 flex items-baseline gap-1.5">
 				<output
 					id="cc-metric-lines"
 					aria-live="polite"
-					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-ink tabular-nums"
+					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0
 				</output>
-				<span class="text-[13px] text-mute">lines</span>
+				<span class="text-[13px] text-[#1F2937] dark:text-mute">lines</span>
 			</div>
-			<span class="mt-1 text-[12px] text-mute">Runs privately in your browser</span>
+			<span class="mt-1 text-[12px] text-[#1F2937] dark:text-mute">Runs privately in your browser</span>
 		</article>
 	</div>
 

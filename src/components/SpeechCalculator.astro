@@ -1,7 +1,7 @@
 ---
 import { getToolById } from '../config/site';
 
-const readingTool = getToolById('reading-time-counter');
+const readingTool = getToolById('reading-time-calculator');
 const speedTestTool = getToolById('reading-speed-test');
 const wordsToPagesTool = getToolById('words-to-pages');
 ---
@@ -12,16 +12,16 @@ const wordsToPagesTool = getToolById('words-to-pages');
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
 	<!-- Live Summary Bar -->
-	<div class="whisper-shadow mb-6 grid grid-cols-1 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+	<div class="kpi-summary-bar whisper-shadow mb-6 grid grid-cols-1 divide-y divide-[#7ED4B6] rounded-md border border-[#7ED4B6] bg-[#AFE3D0] sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x dark:divide-hairline dark:border-hairline dark:bg-canvas-elevated">
 		<!-- Stat 1: Speaking time -->
-		<article class="flex flex-col justify-between p-5">
+		<article class="kpi-card flex flex-col justify-between p-5">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Speaking time
 				</span>
 				<span
 					id="badge-speaking-wpm"
-					class="text-[12px] text-mute tabular-nums"
+					class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute"
 				>
 					130 WPM
 				</span>
@@ -30,28 +30,28 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<output
 					id="metric-speech-time"
 					aria-live="polite"
-					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0 min 0 sec
 				</output>
 			</div>
-			<p id="metric-speech-sub" class="text-[12px] text-mute">
+			<p id="metric-speech-sub" class="text-[12px] text-[#1F2937] dark:text-mute">
 				Conversational / keynote pace
 			</p>
 		</article>
 
 		<!-- Stat 2: Word & sentence count -->
-		<article class="flex flex-col justify-between p-5 sm:border-l sm:border-hairline lg:border-l-0">
+		<article class="kpi-card flex flex-col justify-between p-5 sm:border-l sm:border-[#7ED4B6] lg:border-l-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
 				<span
 					id="label-word-metric"
-					class="text-[13px] font-medium text-body"
+					class="text-[13px] font-medium text-[#1F2937] dark:text-body"
 				>
 					Word count
 				</span>
 				<span
 					id="badge-active-mode"
-					class="text-[12px] text-mute"
+					class="text-[12px] text-[#1F2937] dark:text-mute"
 				>
 					Script to time
 				</span>
@@ -60,27 +60,27 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<output
 					id="metric-word-count"
 					aria-live="polite"
-					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0
 				</output>
-				<span class="text-[14px] text-body">words</span>
+				<span class="text-[14px] text-[#1F2937] dark:text-body">words</span>
 			</div>
-			<div class="flex items-center gap-4 text-[12px] text-mute">
-				<span><strong id="metric-sentence-count" class="font-medium text-ink tabular-nums">0</strong> sentences</span>
-				<span><strong id="metric-char-count" class="font-medium text-ink tabular-nums">0</strong> characters</span>
+			<div class="flex items-center gap-4 text-[12px] text-[#1F2937] dark:text-mute">
+				<span><strong id="metric-sentence-count" class="font-medium text-[#111827] tabular-nums dark:text-ink">0</strong> sentences</span>
+				<span><strong id="metric-char-count" class="font-medium text-[#111827] tabular-nums dark:text-ink">0</strong> characters</span>
 			</div>
 		</article>
 
 		<!-- Stat 3: Estimated slides -->
-		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-hairline lg:border-t-0">
+		<article class="kpi-card flex flex-col justify-between p-5 sm:border-t sm:border-[#7ED4B6] lg:border-t-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Estimated slides
 				</span>
 				<span
 					id="badge-slide-rate"
-					class="text-[12px] text-mute"
+					class="text-[12px] text-[#1F2937] dark:text-mute"
 				>
 					1 slide / min
 				</span>
@@ -89,26 +89,26 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<output
 					id="metric-slide-count"
 					aria-live="polite"
-					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0
 				</output>
-				<span class="text-[14px] text-body">slides</span>
+				<span class="text-[14px] text-[#1F2937] dark:text-body">slides</span>
 			</div>
-			<p id="metric-slide-sub" class="text-[12px] text-mute tabular-nums">
+			<p id="metric-slide-sub" class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
 				Typical range: 0–0 slides
 			</p>
 		</article>
 
 		<!-- Stat 4: Speaking pace -->
-		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-hairline lg:border-t-0 lg:border-l-0">
+		<article class="kpi-card flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-[#7ED4B6] lg:border-t-0 lg:border-l-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Speaking pace
 				</span>
 				<span
 					id="cadence-dot"
-					class="inline-block h-2 w-2 rounded-full bg-vercel-blue"
+					class="inline-block h-2 w-2 rounded-full bg-[#0D9488] dark:bg-vercel-blue"
 					aria-hidden="true"
 				></span>
 			</div>
@@ -116,12 +116,12 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<output
 					id="metric-cadence-badge"
 					aria-live="polite"
-					class="text-[24px] leading-[32px] font-semibold tracking-[-0.5px] text-ink"
+					class="text-[24px] leading-[32px] font-semibold tracking-[-0.5px] text-[#111827] dark:text-ink"
 				>
 					Keynote
 				</output>
 			</div>
-			<p id="metric-cadence-detail" class="text-[12px] text-mute tabular-nums">
+			<p id="metric-cadence-detail" class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
 				130 WPM · 2.2 words/sec
 			</p>
 		</article>

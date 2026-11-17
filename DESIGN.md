@@ -4,20 +4,22 @@ name: Wordora Editorial Utility Design System
 description: Clean, calm, human-centric editorial utility aesthetic built on Geist / Inter Sans-Serif typography. Prioritizes generous whitespace, natural sentence-case labels, subtle 1px dividers, and everyday human phrasing—free of artificial rainbow gradients, robotic monospace uppercase eyebrows, or nested "box-inside-a-box" containers.
 
 colors:
-  primary: "#09090b"
-  on-primary: "#ffffff"
-  ink: "#09090b"
-  body: "#334155"
-  mute: "#475569"
-  faint: "#94a3b8"
-  hairline: "#e2e8f0"
-  hairline-soft: "#f1f5f9"
-  canvas: "#f3f4f6"
-  canvas-elevated: "#ffffff"
-  canvas-muted: "#f8fafc"
-  header-bg: "rgba(255, 255, 255, 0.92)"
-  footer-bg: "#eaecef"
-  footer-border: "#d1d5db"
+  primary: "#0F172A"
+  on-primary: "#F3F6FA"
+  ink: "#0F172A"
+  body: "#2D3B4E"
+  mute: "#5B6B80"
+  faint: "#8292A6"
+  hairline: "#C4CFDD"
+  hairline-soft: "#DCE3EC"
+  canvas: "#E8EDF3"
+  canvas-elevated: "#F3F6FA"
+  canvas-muted: "#DCE3EC"
+  card: "#F3F6FA"
+  surface: "#DCE3EC"
+  header-bg: "rgba(232, 237, 243, 0.88)"
+  footer-bg: "#DCE3EC"
+  footer-border: "#C4CFDD"
   link: "#0070f3"
   link-deep: "#0761d1"
   link-soft: "#d3e5ff"
@@ -91,7 +93,7 @@ spacing:
 
 ## Overview
 
-Wordora's design language is a calm, distraction-free editorial utility aesthetic designed for writers, editors, speakers, and students. The interface uses a layered surface hierarchy: a cool neutral page canvas (`#f3f4f6` in light mode, `#0a0a0a` in dark mode) paired with crisp pure white elevated workspaces (`#ffffff` in light mode, `#111111` in dark mode), distinct `1px` structural borders (`#e2e8f0` light / `#242424` dark), and soft multi-stop elevation shadows (`0 1px 3px rgba(15, 23, 42, 0.05), 0 4px 12px rgba(15, 23, 42, 0.03)`).
+Wordora's design language is a calm, distraction-free editorial utility aesthetic designed for writers, editors, speakers, and students. The interface uses a layered surface hierarchy with zero pure white glare in Light Mode: a soothing slate-mist page canvas (`#E8EDF3` in light mode, `#0a0a0a` in dark mode) paired with soft tinted ice-slate elevated workspaces (`#F3F6FA` in light mode, `#111111` in dark mode), distinct `1px` structural borders (`#C4CFDD` light / `#242424` dark), and tactile elevation shadows (`0 2px 6px rgba(15, 23, 42, 0.06)`).
 
 ## Core Design Principles
 
@@ -101,9 +103,9 @@ Wordora's design language is a calm, distraction-free editorial utility aestheti
 - **Numeric Alignment:** Use `tabular-nums` on live numerical outputs, timers, WPM counters, and data tables so digits stay cleanly aligned without switching to a robotic monospace font.
 
 ### 2. Layered Surface Contrast & Framing
-- **Page Canvas vs. Elevated Surfaces:** The Light Mode canvas (`#f3f4f6`) provides subtle contrast so pure white (`#ffffff`) tool cards, calculator workspaces, benchmark tables, and FAQ accordions pop with clarity.
-- **Live vs. Draft Card Hierarchy:** Live tool cards sit on `#ffffff` with `#e2e8f0` borders, soft elevation shadow, and a tactile hover lift (`-translate-y-0.5`, border shifting to `#0f172a`, and deepened shadow). Draft (`Soon`) cards remain visually recessed (`#f8fafc` background with `#e2e8f0` border).
-- **Distinct Header & Footer Framing:** `Header.astro` uses a translucent pure white surface (`rgba(255, 255, 255, 0.92)` with backdrop blur) and a crisp `#e2e8f0` bottom border. `Footer.astro` finishes the page with a grounded `#eaecef` surface and a `#d1d5db` top border.
+- **Page Canvas vs. Elevated Surfaces:** The Light Mode canvas (`#E8EDF3`) provides subtle contrast so ice-slate (`#F3F6FA`) tool cards, calculator workspaces, benchmark tables, and FAQ accordions pop with clarity and zero white glare.
+- **Live vs. Draft Card Hierarchy:** Live tool cards sit on `#F3F6FA` with `#C4CFDD` borders, soft elevation shadow (`0 2px 6px rgba(15, 23, 42, 0.06)`), and a tactile hover lift (`-translate-y-0.5`, border shifting to `#0F172A`, and deepened shadow). Draft (`Soon`) cards remain visually recessed (`#DCE3EC` background with `#C4CFDD` border).
+- **Distinct Header & Footer Framing:** `Header.astro` uses a translucent mist surface (`rgba(232, 237, 243, 0.88)` with backdrop blur) and a crisp `#C4CFDD` bottom border. `Footer.astro` finishes the page with a grounded `#DCE3EC` surface and a `#C4CFDD` top border.
 - **No Artificial Hero Gradients or "Box Inside a Box" Nesting:** Hero sections sit directly on the clean canvas (`bg-canvas`) without `.vercel-mesh-hero` rainbow washes. Avoid wrapping every badge or sub-stat in its own nested box inside a parent card.
 
 ### 3. Natural, Everyday Copy (Zero AI Jargon)
@@ -113,18 +115,18 @@ Wordora's design language is a calm, distraction-free editorial utility aestheti
 ## Color Tokens
 
 ### Light Mode (Default)
-- **Canvas:** `#f3f4f6` (`--c-canvas`)
-- **Elevated Workspace / Cards:** `#ffffff` (`--c-canvas-elevated`)
-- **Muted / Draft Card Surface:** `#f8fafc` (`--c-canvas-muted`)
-- **Header Surface:** `rgba(255, 255, 255, 0.92)` (`--c-header-bg`) with `backdrop-blur-md` and `#e2e8f0` bottom border
-- **Footer Surface:** `#eaecef` (`--c-footer-bg`) with `#d1d5db` (`--c-footer-border`) top border
-- **Primary / Ink (Obsidian Black):** `#09090b` (`--c-ink` / `--c-primary`)
-- **Body Copy (Rich Dark Slate):** `#334155` (`--c-body`)
-- **Muted Text:** `#475569` (`--c-mute`)
-- **Faint / Placeholder:** `#94a3b8` (`--c-faint`)
-- **Structural Hairline:** `#e2e8f0` (`--c-hairline`)
-- **Soft Hover Fill:** `#f1f5f9` (`--c-hairline-soft`)
-- **Card Elevation Shadow:** `0 1px 3px rgba(15, 23, 42, 0.05), 0 4px 12px rgba(15, 23, 42, 0.03)`
+- **Canvas:** `#E8EDF3` (`--color-canvas` / `--c-canvas`)
+- **Elevated Workspace / Cards:** `#F3F6FA` (`--color-card` / `--c-canvas-elevated`)
+- **Muted / Table Header / Nested Surface:** `#DCE3EC` (`--color-surface` / `--c-canvas-muted`)
+- **Header Surface:** `rgba(232, 237, 243, 0.88)` (`--c-header-bg`) with `backdrop-blur-md` and `#C4CFDD` bottom border
+- **Footer Surface:** `#DCE3EC` (`--c-footer-bg`) with `#C4CFDD` (`--c-footer-border`) top border
+- **Primary / Ink:** `#0F172A` (`--color-ink` / `--c-ink` / `--c-primary`)
+- **Body Copy:** `#2D3B4E` (`--color-body` / `--c-body`)
+- **Muted Text:** `#5B6B80` (`--color-muted` / `--c-mute`)
+- **Faint / Placeholder:** `#8292A6` (`--c-faint`)
+- **Structural Hairline:** `#C4CFDD` (`--color-hairline` / `--c-hairline`)
+- **Soft Hover / Inner Fill:** `#DCE3EC` (`--c-hairline-soft`)
+- **Card Elevation Shadow:** `0 2px 6px rgba(15, 23, 42, 0.06)`
 
 ### Dark Mode (`.dark`)
 - **Canvas:** `#0a0a0a`

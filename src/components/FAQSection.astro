@@ -6,93 +6,116 @@ export interface FAQItem {
 
 export const faqItems: FAQItem[] = [
 	{
-		question: 'How is reading time calculated?',
+		question: 'Can you read 2000 words per minute?',
 		answer:
-			'Reading time is calculated by dividing the total word count of a document by the reader’s words per minute (WPM) speed. For silent reading, our calculator defaults to 238 WPM—the benchmark for adult non-fiction reading established by Marc Brysbaert’s 2019 research. The remaining decimal is multiplied by 60 to get the exact minutes and seconds.',
+			'No, reading 2,000 words per minute with full comprehension is not humanly possible. Eye-tracking studies show that human vision and language processing cap true comprehension around 700 to 900 WPM. Anyone claiming 2,000 WPM is skimming headlines or scanning keywords rather than reading every word.',
 	},
 	{
-		question: 'What is the average silent reading speed vs. speaking speed?',
+		question: 'How long is a 2 minute read?',
 		answer:
-			'The average adult reads silently at about 238 words per minute (WPM) for non-fiction and roughly 260 WPM for fiction. When reading aloud or giving a speech, people naturally slow down to between 120 and 185 WPM so listeners can follow along clearly.',
+			'A 2-minute read is approximately 450 to 500 words at the average adult silent reading speed of 238 WPM (or 600 words for a fast reader at 300 WPM). That equals roughly one single-spaced page or two double-spaced pages—ideal for a concise newsletter or LinkedIn post.',
 	},
 	{
-		question: 'How long does it take to read 1,000 words?',
+		question: 'How many words is a 3 minute read?',
 		answer:
-			'At the average silent reading speed of 238 WPM, reading 1,000 words takes about 4 minutes and 12 seconds. If you are reading 1,000 words aloud for a speech, podcast, or presentation at 130 WPM, it takes about 7 minutes and 42 seconds.',
+			'A 3-minute read is roughly 700 to 750 words for an average adult reader (238 WPM), or about 550 words if read out loud at 183 WPM. Most short blog posts, op-eds, and daily email digests fall right in this 3-minute window.',
 	},
 	{
-		question: 'How many words are on a single-spaced vs. double-spaced page?',
+		question: 'How many words take 7 minutes to read?',
 		answer:
-			'With standard formatting (12-point Times New Roman or Arial font and 1-inch margins on letter-size paper), a single-spaced page holds about 500 words, while a double-spaced page holds about 250 words.',
+			'Roughly 1,650 to 1,700 words take 7 minutes to read silently at the average pace of 238 WPM (specifically, 1,666 words). For a faster reader at 300 WPM, a 7-minute read covers about 2,100 words, which matches a detailed tutorial or feature article.',
 	},
 	{
-		question: 'How long does it take to read 5 pages?',
+		question: 'How many words take 20 minutes to read?',
 		answer:
-			'Five single-spaced pages (around 2,500 words) take about 10 minutes and 30 seconds to read silently at 238 WPM, or 19 minutes and 14 seconds to read aloud at 130 WPM. Five double-spaced pages (around 1,250 words) take about 5 minutes and 15 seconds silently, or 9 minutes and 37 seconds aloud.',
+			'At the average adult reading speed of 238 WPM, 4,760 words take 20 minutes to read silently—about 16 pages of a standard paperback novel. A fast reader at 300 WPM can cover 6,000 words (roughly 20 paperback pages) in the same 20 minutes.',
+	},
+	{
+		question: 'How many words take 2 minutes to read out loud?',
+		answer:
+			'At the natural read-aloud speed of 183 WPM, 366 words take 2 minutes to read out loud. If you are delivering a deliberate speech or pitch at 150 WPM with pauses, aim for 300 words so you finish comfortably within two minutes.',
+	},
+	{
+		question: 'How many words take 5 minutes to read out loud?',
+		answer:
+			'Reading out loud at 183 WPM covers roughly 915 words in 5 minutes. For a 5-minute presentation or wedding toast where you pause for emphasis, 750 words (150 WPM) is the safest target so you never feel rushed.',
+	},
+	{
+		question: 'How many words takes 10 minutes to read out loud?',
+		answer:
+			'A 10-minute read-aloud equals about 1,830 words at a natural 183 WPM pace, or 1,500 words at a steady 150 WPM presentation pace. That equals roughly six double-spaced script pages.',
+	},
+	{
+		question: 'How many words can I read out loud in 15 minutes?',
+		answer:
+			'You can read approximately 2,745 words out loud in 15 minutes at 183 WPM, or 2,250 words at a relaxed 150 WPM speaking pace. Most 15-minute conference talks and podcast segments fall right between 2,200 and 2,500 words.',
+	},
+	{
+		question: 'Is reading 100 pages in 2 hours fast?',
+		answer:
+			'Yes, reading 100 standard paperback pages (~30,000 words) in 2 hours equals 50 pages per hour, or 250 WPM—which is faster than the 238 WPM adult average. If the book has dense pages (400+ words per page), finishing 100 pages in 2 hours puts you at 330+ WPM.',
+	},
+	{
+		question: 'Is reading 200 pages in 3 hours good?',
+		answer:
+			'Yes, finishing 200 paperback pages (~60,000 words) in 3 hours equals 67 pages per hour, or 333 WPM. That is roughly 40% faster than the average adult reader and places you in the fast-reader tier.',
+	},
+	{
+		question: 'What is the difference between silent reading speed and speaking speed?',
+		answer:
+			'Silent reading averages 238 WPM because your eyes process multiple words at once without moving your vocal cords. Speaking and reading out loud average 183 WPM (and 130–160 WPM for formal presentations) because pronouncing words and pausing for breath naturally take longer.',
 	},
 	{
 		question: 'How does the reading level indicator work?',
 		answer:
-			'When you paste or upload text, the tool checks the average word length and number of syllables per word. Text averaging under 1.42 syllables per word is labeled Easy, 1.42 to 1.71 is labeled Medium, and 1.72 or higher is labeled Hard.',
+			'When you paste text into the calculator, it analyzes average sentence length and syllable count per word to estimate readability (such as Easy, Standard, or Academic). Longer sentences and complex multi-syllable words usually mean readers will spend slightly more time absorbing the text.',
 	},
 	{
 		question: 'Is my pasted text or uploaded .txt file kept private?',
 		answer:
-			'Yes, completely. All word counting, reading time calculations, and file uploads happen right in your browser. Your text is never sent to any server or stored anywhere.',
+			'Yes, 100%. All word counts, reading time estimates, and readability checks run locally inside your web browser using JavaScript. Your text or uploaded .txt file is never sent to, stored on, or logged by any server.',
 	},
 ];
+
+interface Props {
+	faqs?: FAQItem[];
+}
+
+const { faqs = faqItems } = Astro.props;
 ---
 
-<section id="faq" aria-labelledby="faq-heading" class="border-t border-hairline bg-canvas py-14 sm:py-20">
+<section id="faq" aria-labelledby="faq-heading" class="mt-10 pb-14 md:mt-12 sm:pb-20">
 	<div class="mx-auto max-w-[1200px] px-4 sm:px-6">
-		<div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
-			<!-- Left Column: Section Intro -->
-			<div class="lg:col-span-5">
-				<h2
-					id="faq-heading"
-					class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
-				>
-					Common questions
-				</h2>
-				<p class="mt-3 text-[15px] leading-[24px] text-body">
-					How reading time, speaking pace, and page counts are estimated.
-				</p>
+		<div class="mx-auto w-full max-w-[920px]">
+			<h2
+				id="faq-heading"
+				class="text-center text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
+			>
+				Frequently Asked Questions
+			</h2>
 
-				<div class="whisper-shadow mt-6 rounded-md border border-hairline bg-canvas-elevated p-5">
-					<p class="text-[14px] font-medium text-ink">
-						How the math works: <span class="font-normal text-body">Total words ÷ Words per minute (WPM)</span>
-					</p>
-					<p class="mt-2 text-[13px] leading-[20px] text-mute">
-						Based on Marc Brysbaert’s review of 190 reading studies (<em>Journal of Memory and Language</em>, 2019), which found an average adult silent reading rate of 238 WPM.
-					</p>
-				</div>
-			</div>
-
-			<!-- Right Column: Clean Accordion List -->
-			<div class="lg:col-span-7">
-				<div class="whisper-shadow divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated px-6">
-					{
-						faqItems.map((item, idx) => (
-							<details
-								class="group py-4.5 transition-colors"
-								open={idx === 0}
-							>
-								<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] leading-[24px] font-semibold tracking-[-0.2px] text-ink focus:outline-none">
-									<span>{item.question}</span>
-									<span class="flex h-6 w-6 shrink-0 items-center justify-center text-mute transition-transform duration-200 group-open:rotate-45 group-open:text-ink">
-										<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-											<line x1="12" y1="5" x2="12" y2="19" />
-											<line x1="5" y1="12" x2="19" y2="12" />
-										</svg>
-									</span>
-								</summary>
-								<p class="mt-2.5 pr-6 text-[14px] leading-[23px] text-body">
-									{item.answer}
-								</p>
-							</details>
-						))
-					}
-				</div>
+			<div class="whisper-shadow mt-8 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated px-6">
+				{
+					faqs.map((item, idx) => (
+						<details
+							class="group py-4.5 transition-colors"
+							open={idx === 0}
+						>
+							<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] leading-[24px] font-semibold tracking-[-0.2px] text-ink focus:outline-none">
+								<span>{item.question}</span>
+								<span class="flex h-6 w-6 shrink-0 items-center justify-center text-mute transition-transform duration-200 group-open:rotate-45 group-open:text-ink">
+									<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+										<line x1="12" y1="5" x2="12" y2="19" />
+										<line x1="5" y1="12" x2="19" y2="12" />
+									</svg>
+								</span>
+							</summary>
+							<p class="mt-2.5 pr-6 text-[14px] leading-[23px] text-body">
+								{item.answer}
+							</p>
+						</details>
+					))
+				}
 			</div>
 		</div>
 	</div>

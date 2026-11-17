@@ -12,14 +12,14 @@ const readingSpeedTool = getToolById('reading-speed-test');
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
 	<!-- Live Metrics Summary Bar -->
-	<div class="whisper-shadow mb-6 grid grid-cols-1 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+	<div class="kpi-summary-bar whisper-shadow mb-6 grid grid-cols-1 divide-y divide-[#7ED4B6] rounded-md border border-[#7ED4B6] bg-[#AFE3D0] sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x dark:divide-hairline dark:border-hairline dark:bg-canvas-elevated">
 		<!-- Stat 1: Net WPM -->
-		<article class="flex flex-col justify-between p-5">
+		<article class="kpi-card flex flex-col justify-between p-5">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Typing speed
 				</span>
-				<span id="tst-tier-badge" class="text-[12px] text-mute">
+				<span id="tst-tier-badge" class="text-[12px] text-[#1F2937] dark:text-mute">
 					40 WPM average
 				</span>
 			</div>
@@ -27,24 +27,24 @@ const readingSpeedTool = getToolById('reading-speed-test');
 				<output
 					id="tst-metric-wpm"
 					aria-live="polite"
-					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0
 				</output>
-				<span class="text-[14px] text-body">WPM</span>
+				<span class="text-[14px] text-[#1F2937] dark:text-body">WPM</span>
 			</div>
-			<p id="tst-metric-net-note" class="text-[12px] text-mute tabular-nums">
+			<p id="tst-metric-net-note" class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
 				Net speed adjusted for errors
 			</p>
 		</article>
 
 		<!-- Stat 2: Raw WPM -->
-		<article class="flex flex-col justify-between p-5 sm:border-l sm:border-hairline lg:border-l-0">
+		<article class="kpi-card flex flex-col justify-between p-5 sm:border-l sm:border-[#7ED4B6] lg:border-l-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Raw WPM
 				</span>
-				<span class="text-[12px] text-mute">
+				<span class="text-[12px] text-[#1F2937] dark:text-mute">
 					Unadjusted pace
 				</span>
 			</div>
@@ -52,24 +52,24 @@ const readingSpeedTool = getToolById('reading-speed-test');
 				<output
 					id="tst-metric-raw-wpm"
 					aria-live="polite"
-					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0
 				</output>
-				<span class="text-[14px] text-body">WPM</span>
+				<span class="text-[14px] text-[#1F2937] dark:text-body">WPM</span>
 			</div>
-			<p class="text-[12px] text-mute tabular-nums">
-				<strong id="tst-metric-words-typed" class="font-medium text-ink">0</strong> words typed
+			<p class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
+				<strong id="tst-metric-words-typed" class="font-medium text-[#111827] dark:text-ink">0</strong> words typed
 			</p>
 		</article>
 
 		<!-- Stat 3: Accuracy % -->
-		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-hairline lg:border-t-0">
+		<article class="kpi-card flex flex-col justify-between p-5 sm:border-t sm:border-[#7ED4B6] lg:border-t-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Accuracy
 				</span>
-				<span class="text-[12px] text-mute">
+				<span class="text-[12px] text-[#1F2937] dark:text-mute">
 					Precision
 				</span>
 			</div>
@@ -77,23 +77,23 @@ const readingSpeedTool = getToolById('reading-speed-test');
 				<output
 					id="tst-metric-accuracy"
 					aria-live="polite"
-					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					100%
 				</output>
 			</div>
-			<p class="text-[12px] text-mute tabular-nums">
-				<strong id="tst-metric-correct-chars" class="font-medium text-ink">0</strong> correct · <strong id="tst-metric-error-chars" class="font-medium text-ink">0</strong> mistakes
+			<p class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
+				<strong id="tst-metric-correct-chars" class="font-medium text-[#111827] dark:text-ink">0</strong> correct · <strong id="tst-metric-error-chars" class="font-medium text-[#111827] dark:text-ink">0</strong> mistakes
 			</p>
 		</article>
 
 		<!-- Stat 4: Time Remaining -->
-		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-hairline lg:border-t-0 lg:border-l-0">
+		<article class="kpi-card flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-[#7ED4B6] lg:border-t-0 lg:border-l-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Time remaining
 				</span>
-				<span id="tst-status-label" class="text-[12px] text-mute">
+				<span id="tst-status-label" class="text-[12px] text-[#1F2937] dark:text-mute">
 					Ready to start
 				</span>
 			</div>
@@ -101,12 +101,12 @@ const readingSpeedTool = getToolById('reading-speed-test');
 				<output
 					id="tst-metric-timer"
 					aria-live="polite"
-					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					60s
 				</output>
 			</div>
-			<p id="tst-timer-subtext" class="text-[12px] text-mute tabular-nums">
+			<p id="tst-timer-subtext" class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
 				Timer starts on first keystroke
 			</p>
 		</article>

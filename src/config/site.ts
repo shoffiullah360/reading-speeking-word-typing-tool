@@ -34,8 +34,8 @@ export const SITE_CONFIG = {
 
 export const TOOLS_REGISTRY: ToolDefinition[] = [
 	{
-		id: 'reading-time-counter',
-		slug: '/reading-time-counter/',
+		id: 'reading-time-calculator',
+		slug: '/reading-time-calculator/',
 		name: 'Reading Time Calculator & Counter',
 		shortName: 'Reading Time Counter',
 		description:
@@ -194,7 +194,7 @@ export const STATIC_PAGES: StaticPageDefinition[] = [
 ];
 
 /**
- * Ensures a pathname starts and ends with a single slash (e.g. "/" or "/reading-time-counter/").
+ * Ensures a pathname starts and ends with a single slash (e.g. "/" or "/reading-time-calculator/").
  */
 export function normalizeTrailingSlashPath(pathname: string): string {
 	if (!pathname || pathname === '/') return '/';

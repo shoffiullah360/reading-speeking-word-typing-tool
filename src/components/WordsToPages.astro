@@ -1,0 +1,1366 @@
+---
+import { getToolById } from '../config/site';
+
+const readingTool = getToolById('reading-time-calculator');
+const wordCounterTool = getToolById('word-counter');
+const speechTool = getToolById('speech-time-calculator');
+---
+
+<section
+	id="words-to-pages-workspace"
+	aria-label="Words to Pages and Pages to Words Converter Workspace"
+	class="mx-auto max-w-[1200px] px-4 pt-3 pb-8 sm:px-6"
+>
+	<!-- Top 2-Column Calculator Grid -->
+	<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
+		<!-- Left Column: Main White Input Card ONLY -->
+		<div class="flex flex-col">
+			<!-- Main White Input Card -->
+			<div class="whisper-shadow shadow-xs flex flex-1 flex-col justify-between rounded-md border border-hairline bg-canvas-elevated">
+				<!-- Tab Bar Header: 2 Mode Tabs + Top Actions -->
+				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-4 py-2.5">
+					<div
+						role="tablist"
+						aria-label="Words to pages converter modes"
+						class="inline-flex items-center gap-1"
+					>
+						<button
+							type="button"
+							role="tab"
+							id="wtp-tab-btn-w2p"
+							aria-selected="true"
+							aria-controls="wtp-panel-w2p"
+							data-mode="w2p"
+							class="wtp-mode-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[12px] font-medium text-on-primary transition-all"
+						>
+							Words to pages
+						</button>
+						<button
+							type="button"
+							role="tab"
+							id="wtp-tab-btn-p2w"
+							aria-selected="false"
+							aria-controls="wtp-panel-p2w"
+							data-mode="p2w"
+							class="wtp-mode-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[12px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
+						>
+							Pages to words
+						</button>
+					</div>
+
+					<div class="flex flex-wrap items-center gap-1">
+						<button
+							type="button"
+							id="wtp-btn-copy-result"
+							class="cursor-pointer rounded-sm px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
+						>
+							Copy result
+						</button>
+						<button
+							type="button"
+							id="wtp-btn-copy-link"
+							class="cursor-pointer rounded-sm px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
+						>
+							Copy link
+						</button>
+						<button
+							type="button"
+							id="wtp-btn-reset"
+							class="cursor-pointer rounded-sm px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
+						>
+							Reset defaults
+						</button>
+					</div>
+				</div>
+
+				<!-- Card Content Container -->
+				<div class="p-4 space-y-3">
+					<!-- Panel 1: Words to Pages (Numeric/Shorthand Input + Presets) -->
+					<div
+						id="wtp-panel-w2p"
+						role="tabpanel"
+						aria-labelledby="wtp-tab-btn-w2p"
+						class="space-y-2.5"
+					>
+						<div class="flex items-baseline justify-between gap-2">
+							<label for="wtp-words-input" class="text-[13px] font-medium text-ink">
+								Enter word count
+							</label>
+							<span id="wtp-words-parsed" class="text-[11px] text-mute tabular-nums">
+								Accepts shorthand: e.g. 1.5k or 2.5k
+							</span>
+						</div>
+
+						<div class="relative flex items-center">
+							<input
+								id="wtp-words-input"
+								type="text"
+								inputmode="text"
+								value=""
+								placeholder="e.g. 1,500 or 1.5k"
+								class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+							/>
+							<span class="pointer-events-none absolute right-3 text-[12px] text-mute">
+								words
+							</span>
+						</div>
+
+						<!-- Quick Essay / Document Presets -->
+						<div>
+							<span class="mb-1 block text-[11px] font-medium text-mute">
+								Common document & essay presets
+							</span>
+							<div class="flex flex-wrap gap-1">
+								{
+									[
+										{ words: 500, label: '500' },
+										{ words: 1000, label: '1,000' },
+										{ words: 1500, label: '1,500' },
+										{ words: 2000, label: '2,000' },
+										{ words: 5000, label: '5,000' },
+										{ words: 100000, label: '100,000' },
+									].map((preset) => (
+										<button
+											type="button"
+											data-words-preset={preset.words}
+											class="wtp-word-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+										>
+											{preset.label}
+										</button>
+									))
+								}
+							</div>
+						</div>
+					</div>
+
+					<!-- Panel 2: Pages to Words -->
+					<div
+						id="wtp-panel-p2w"
+						role="tabpanel"
+						aria-labelledby="wtp-tab-btn-p2w"
+						class="hidden space-y-2.5"
+					>
+						<div class="flex items-baseline justify-between gap-2">
+							<label for="wtp-pages-input" class="text-[13px] font-medium text-ink">
+								Enter target page count
+							</label>
+							<span class="text-[11px] text-mute tabular-nums">
+								Calculates target words to write
+							</span>
+						</div>
+
+						<div class="relative flex items-center">
+							<input
+								id="wtp-pages-input"
+								type="number"
+								min="0"
+								max="50000"
+								step="0.5"
+								value=""
+								placeholder="e.g. 6"
+								class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+							/>
+							<span class="pointer-events-none absolute right-3 text-[12px] text-mute">
+								pages
+							</span>
+						</div>
+
+						<!-- Quick Page Presets -->
+						<div>
+							<span class="mb-1 block text-[11px] font-medium text-mute">
+								Common page count presets
+							</span>
+							<div class="flex flex-wrap gap-1">
+								{
+									[2, 5, 10, 50, 300, 500].map((pg) => (
+										<button
+											type="button"
+											data-pages-preset={pg}
+											class="wtp-page-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+										>
+											{pg} pages
+										</button>
+									))
+								}
+							</div>
+						</div>
+					</div>
+
+					<!-- Direct Compact Text Paste Box (textarea) Directly Below Input & Presets -->
+					<div class="border-t border-hairline pt-3">
+						<div class="mb-1.5 flex items-baseline justify-between gap-2">
+							<label for="wtp-direct-paste" class="text-[12px] font-medium text-ink">
+								Or paste / type your text
+							</label>
+							<button
+								type="button"
+								id="wtp-direct-clear"
+								class="hidden cursor-pointer text-[11px] font-medium text-mute transition-colors hover:text-ink"
+							>
+								Clear
+							</button>
+						</div>
+
+						<div class="relative">
+							<textarea
+								id="wtp-direct-paste"
+								rows="6"
+								placeholder="Paste your essay or draft here to count words, characters, and pages..."
+								class="w-full min-h-[145px] resize-y rounded-sm border border-hairline bg-canvas p-3 text-[13px] leading-relaxed text-ink placeholder:text-mute focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+							></textarea>
+						</div>
+
+						<!-- Compact Inline Counter -->
+						<div class="mt-1.5 flex items-center justify-between text-[11px] text-mute">
+							<span id="wtp-direct-microstats" class="tabular-nums">
+								0 words · 0 chars · 0 paragraphs
+							</span>
+							<span class="text-[10px] text-mute">
+								Live synced
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Live Format Comparison Strip -->
+				<div class="border-t border-hairline px-4 py-2.5">
+					<div class="mb-1.5 flex items-center justify-between gap-2">
+						<h2 class="text-[12px] font-semibold text-ink">
+							Format comparison for current word count
+						</h2>
+						<span id="wtp-comparison-base-badge" class="text-[11px] text-mute tabular-nums">
+							For 0 words
+						</span>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+						<div class="flex items-center justify-between gap-1.5 rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs">
+							<span class="text-body truncate">Single <span class="text-mute tabular-nums">(1.0)</span></span>
+							<strong id="wtp-comp-single" class="font-semibold text-ink tabular-nums">0 pages</strong>
+						</div>
+						<div class="flex items-center justify-between gap-1.5 rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs">
+							<span class="text-body truncate">1.5-spaced</span>
+							<strong id="wtp-comp-15" class="font-semibold text-ink tabular-nums">0 pages</strong>
+						</div>
+						<div class="flex items-center justify-between gap-1.5 rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs">
+							<span class="text-body truncate">Double <span class="text-mute tabular-nums">(2.0)</span></span>
+							<strong id="wtp-comp-double" class="font-semibold text-ink tabular-nums">0 pages</strong>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Right Column: Top Line Spacing Card + Bottom Font & Page Settings Card -->
+		<div class="flex flex-col gap-4">
+			<!-- Top Card: Line Spacing -->
+			<div class="whisper-shadow h-fit rounded-md border border-hairline bg-canvas-elevated p-4">
+				<div class="flex items-baseline justify-between gap-2 mb-2.5">
+					<h2 class="text-[14px] font-semibold tracking-[-0.2px] text-ink">
+						Line spacing
+					</h2>
+					<span
+						id="wtp-active-spacing-display"
+						class="text-[12px] font-semibold text-ink tabular-nums"
+					>
+						Double-spaced (250 w/p)
+					</span>
+				</div>
+
+				<!-- Line Spacing Pills -->
+				<div
+					role="group"
+					aria-label="Line spacing"
+					class="grid grid-cols-2 gap-1.5 sm:grid-cols-4"
+				>
+					<button
+						type="button"
+						data-spacing-preset="1.0"
+						class="wtp-spacing-pill cursor-pointer rounded-sm border border-hairline bg-canvas py-1.5 text-center text-xs font-medium tabular-nums transition-all hover:border-ink hover:text-ink"
+					>
+						Single-spaced
+					</button>
+					<button
+						type="button"
+						data-spacing-preset="1.5"
+						class="wtp-spacing-pill cursor-pointer rounded-sm border border-hairline bg-canvas py-1.5 text-center text-xs font-medium tabular-nums transition-all hover:border-ink hover:text-ink"
+					>
+						1.5-spaced
+					</button>
+					<button
+						type="button"
+						data-spacing-preset="2.0"
+						class="wtp-spacing-pill cursor-pointer rounded-sm border border-primary bg-primary text-on-primary py-1.5 text-center text-xs font-medium tabular-nums transition-all"
+					>
+						Double-spaced
+					</button>
+					<button
+						type="button"
+						data-spacing-preset="custom"
+						class="wtp-spacing-pill cursor-pointer rounded-sm border border-hairline bg-canvas py-1.5 text-center text-xs font-medium tabular-nums transition-all hover:border-ink hover:text-ink"
+					>
+						Custom rate
+					</button>
+				</div>
+
+				<!-- Words Per Page Input -->
+				<div class="mt-3 rounded-sm border border-hairline bg-canvas p-2.5">
+					<div class="flex items-center justify-between gap-2">
+						<label for="wtp-wpp-input" class="text-[12px] font-medium text-body">
+							Words per page
+						</label>
+						<span id="wtp-wpp-status" class="text-[11px] text-mute">
+							Auto-calculated
+						</span>
+					</div>
+					<div class="relative mt-1 flex items-center">
+						<input
+							id="wtp-wpp-input"
+							type="number"
+							min="20"
+							max="5000"
+							step="5"
+							value="250"
+							class="w-full rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1.5 pr-14 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
+						/>
+						<span class="pointer-events-none absolute right-2.5 text-[11px] text-mute">
+							w / page
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Bottom Card: Font & Page Settings (5 Compact Dropdowns) -->
+			<div class="whisper-shadow h-fit rounded-md border border-hairline bg-canvas-elevated p-4">
+				<div class="flex items-baseline justify-between gap-2 mb-2.5">
+					<h2 class="text-[14px] font-semibold tracking-[-0.2px] text-ink">
+						Font & page settings
+					</h2>
+					<span id="wtp-typography-summary" class="text-[11px] text-mute tabular-nums">
+						Times · 12pt · Letter
+					</span>
+				</div>
+
+				<!-- 5 Compact Dropdowns Grid -->
+				<div class="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+					<!-- 1. Font Family -->
+					<div class="space-y-1">
+						<label for="wtp-select-font" class="block text-[11px] font-medium text-body">
+							Font Family
+						</label>
+						<select
+							id="wtp-select-font"
+							class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-xs text-ink focus:border-ink focus:outline-none"
+						>
+							<option value="times" selected>Times New Roman</option>
+							<option value="arial">Arial</option>
+							<option value="calibri">Calibri</option>
+							<option value="comic">Comic Sans MS</option>
+							<option value="courier">Courier</option>
+							<option value="garamond">Garamond</option>
+							<option value="verdana">Verdana</option>
+						</select>
+					</div>
+
+					<!-- 2. Font Size -->
+					<div class="space-y-1">
+						<label for="wtp-select-size" class="block text-[11px] font-medium text-body">
+							Font Size
+						</label>
+						<select
+							id="wtp-select-size"
+							class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-xs text-ink focus:border-ink focus:outline-none"
+						>
+							<option value="10">10 pt</option>
+							<option value="10.5">10.5 pt</option>
+							<option value="11">11 pt</option>
+							<option value="11.5">11.5 pt</option>
+							<option value="12" selected>12 pt</option>
+							<option value="12.5">12.5 pt</option>
+							<option value="13">13 pt</option>
+							<option value="13.5">13.5 pt</option>
+							<option value="14">14 pt</option>
+						</select>
+					</div>
+
+					<!-- 3. Page Format -->
+					<div class="space-y-1">
+						<label for="wtp-select-format" class="block text-[11px] font-medium text-body">
+							Page Format
+						</label>
+						<select
+							id="wtp-select-format"
+							class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-xs text-ink focus:border-ink focus:outline-none"
+						>
+							<option value="letter" selected>US Letter (8.5×11 in)</option>
+							<option value="a4">A4 (210×297 mm)</option>
+							<option value="a5">A5 (148×210 mm)</option>
+							<option value="b5">B5 (176×250 mm)</option>
+							<option value="legal">US Legal (8.5×14 in)</option>
+							<option value="digest">Novel Digest (5×8 in · ~250 w/p)</option>
+							<option value="trade">Trade Paperback (5.5×8.5 in · ~275 w/p)</option>
+							<option value="hardcover">Standard Hardcover / Book (6×9 in · ~300 w/p)</option>
+						</select>
+					</div>
+
+					<!-- 4. Margins -->
+					<div class="space-y-1">
+						<label for="wtp-select-margins" class="block text-[11px] font-medium text-body">
+							Margins
+						</label>
+						<select
+							id="wtp-select-margins"
+							class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-xs text-ink focus:border-ink focus:outline-none"
+						>
+							<option value="normal" selected>Normal (1 in / 2.5 cm)</option>
+							<option value="narrow">Narrow (0.5 in / 1.27 cm)</option>
+							<option value="moderate">Moderate (0.75×1 in)</option>
+							<option value="wide">Wide (1×1.25 in)</option>
+						</select>
+					</div>
+
+					<!-- 5. Orientation (Span 2 cols on sm) -->
+					<div class="space-y-1 sm:col-span-2">
+						<label for="wtp-select-orientation" class="block text-[11px] font-medium text-body">
+							Orientation
+						</label>
+						<select
+							id="wtp-select-orientation"
+							class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-xs text-ink focus:border-ink focus:outline-none"
+						>
+							<option value="portrait" selected>Portrait</option>
+							<option value="landscape">Landscape</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bottom Full-Width Horizontal Output Row (4 #afe3d0 Mint KPI Output Cards) -->
+	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
+		<!-- Stat 1: Estimated pages -->
+		<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[12px] font-medium text-[#1F2937] dark:text-body">
+					Estimated pages
+				</span>
+				<span
+					id="wtp-badge-pages"
+					class="shrink-0 rounded-full border border-[#7ED4B6] bg-white/65 px-2 py-0.5 text-[11px] font-medium text-[#111827] tabular-nums dark:border-transparent dark:bg-hairline-soft dark:text-ink"
+				>
+					Double-spaced
+				</span>
+			</div>
+			<div class="my-1.5 flex items-baseline gap-2">
+				<output
+					id="wtp-metric-pages"
+					aria-live="polite"
+					class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
+				>
+					0.0 pages
+				</output>
+			</div>
+			<p id="wtp-metric-pages-sub" class="truncate text-[11px] text-[#1F2937] tabular-nums dark:text-mute">
+				0 full pages · 0 print sheets
+			</p>
+		</article>
+
+		<!-- Stat 2: Total words -->
+		<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[12px] font-medium text-[#1F2937] dark:text-body">
+					Total words
+				</span>
+				<span
+					id="wtp-badge-mode"
+					class="shrink-0 rounded-full border border-[#7ED4B6] bg-white/65 px-2 py-0.5 text-[11px] font-medium text-[#111827] dark:border-transparent dark:bg-hairline-soft dark:text-ink"
+				>
+					Words to pages
+				</span>
+			</div>
+			<div class="my-1.5 flex items-baseline gap-2">
+				<output
+					id="wtp-metric-words"
+					aria-live="polite"
+					class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
+				>
+					0 words
+				</output>
+			</div>
+			<p id="wtp-metric-chars-sub" class="truncate text-[11px] text-[#1F2937] tabular-nums dark:text-mute">
+				0 chars (with spaces) · 0 no spaces
+			</p>
+		</article>
+
+		<!-- Stat 3: Silent reading time -->
+		<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[12px] font-medium text-[#1F2937] dark:text-body">
+					Silent reading time
+				</span>
+				<span
+					class="shrink-0 rounded-full border border-[#7ED4B6] bg-white/65 px-2 py-0.5 text-[11px] font-medium text-[#111827] tabular-nums dark:border-transparent dark:bg-hairline-soft dark:text-ink"
+				>
+					238 WPM
+				</span>
+			</div>
+			<div class="my-1.5 flex items-baseline gap-2">
+				<output
+					id="wtp-metric-reading-time"
+					aria-live="polite"
+					class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
+				>
+					0 min 0 sec
+				</output>
+			</div>
+			<p class="truncate text-[11px] text-[#1F2937] tabular-nums dark:text-mute">
+				Average adult reading pace
+			</p>
+		</article>
+
+		<!-- Stat 4: Speaking time -->
+		<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
+			<div class="flex items-center justify-between gap-2">
+				<span class="text-[12px] font-medium text-[#1F2937] dark:text-body">
+					Speaking time
+				</span>
+				<span
+					class="shrink-0 rounded-full border border-[#7ED4B6] bg-white/65 px-2 py-0.5 text-[11px] font-medium text-[#111827] tabular-nums dark:border-transparent dark:bg-hairline-soft dark:text-ink"
+				>
+					183 WPM
+				</span>
+			</div>
+			<div class="my-1.5 flex items-baseline gap-2">
+				<output
+					id="wtp-metric-speaking-time"
+					aria-live="polite"
+					class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
+				>
+					0 min 0 sec
+				</output>
+			</div>
+			<p class="truncate text-[11px] text-[#1F2937] tabular-nums dark:text-mute">
+				Read-aloud presentation pace
+			</p>
+		</article>
+	</div>
+
+	<!-- Related Tools Navigation Strip -->
+	<aside aria-label="Related reading and text utilities" class="mt-6 border-t border-hairline pt-3">
+		<p class="text-xs text-mute">
+			Related tools:{' '}
+			{
+				readingTool?.status === 'live' ? (
+					<a
+						href={readingTool.slug}
+						class="font-medium text-ink underline decoration-hairline underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
+					>
+						{readingTool.shortName}
+					</a>
+				) : (
+					<span>{readingTool?.shortName ?? 'Reading Time Counter'}</span>
+				)
+			}
+			{' · '}
+			{
+				wordCounterTool?.status === 'live' ? (
+					<a
+						href={wordCounterTool.slug}
+						class="font-medium text-ink underline decoration-hairline underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
+					>
+						{wordCounterTool.shortName}
+					</a>
+				) : (
+					<span>{wordCounterTool?.shortName ?? 'Word Counter'}</span>
+				)
+			}
+			{' · '}
+			{
+				speechTool?.status === 'live' ? (
+					<a
+						href={speechTool.slug}
+						class="font-medium text-ink underline decoration-hairline underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
+					>
+						{speechTool.shortName}
+					</a>
+				) : (
+					<span>{speechTool?.shortName ?? 'Speech Calculator'}</span>
+				)
+			}.
+		</p>
+	</aside>
+</section>
+
+<script>
+	function initWordsToPagesCalculator() {
+		const SILENT_WPM = 238;
+		const SPEAKING_WPM = 183;
+
+		const DEFAULTS = {
+			spacing: '2.0',
+			font: 'times',
+			size: '12',
+			format: 'letter',
+			margins: 'normal',
+			orientation: 'portrait',
+			wpp: 250,
+		};
+
+		type Mode = 'w2p' | 'p2w';
+
+		let mode: Mode = 'w2p';
+		let activeSpacing = DEFAULTS.spacing;
+		let customRateActive = false;
+		let customWppValue = 250;
+
+		const el = <T extends HTMLElement>(id: string): T | null =>
+			document.getElementById(id) as T | null;
+
+		// Mode tabs & panels
+		const modeBtns = document.querySelectorAll<HTMLButtonElement>('.wtp-mode-btn');
+		const panelW2P = el<HTMLElement>('wtp-panel-w2p');
+		const panelP2W = el<HTMLElement>('wtp-panel-p2w');
+
+		// Header action buttons
+		const btnCopyResult = el<HTMLButtonElement>('wtp-btn-copy-result');
+		const btnCopyLink = el<HTMLButtonElement>('wtp-btn-copy-link');
+		const btnReset = el<HTMLButtonElement>('wtp-btn-reset');
+
+		// Inputs
+		const wordsInput = el<HTMLInputElement>('wtp-words-input');
+		const wordsParsedBadge = el<HTMLElement>('wtp-words-parsed');
+		const pagesInput = el<HTMLInputElement>('wtp-pages-input');
+
+		// Direct Compact Textarea & Stats
+		const directPaste = el<HTMLTextAreaElement>('wtp-direct-paste');
+		const directClearBtn = el<HTMLButtonElement>('wtp-direct-clear');
+		const directMicrostats = el<HTMLElement>('wtp-direct-microstats');
+
+		// Presets
+		const wordPresetBtns = document.querySelectorAll<HTMLButtonElement>('.wtp-word-preset');
+		const pagePresetBtns = document.querySelectorAll<HTMLButtonElement>('.wtp-page-preset');
+
+		// Line Spacing Controls
+		const spacingPillBtns = document.querySelectorAll<HTMLButtonElement>('.wtp-spacing-pill');
+		const activeSpacingDisplay = el<HTMLElement>('wtp-active-spacing-display');
+		const wppInput = el<HTMLInputElement>('wtp-wpp-input');
+		const wppStatus = el<HTMLElement>('wtp-wpp-status');
+
+		// 5 Dropdowns
+		const selectFont = el<HTMLSelectElement>('wtp-select-font');
+		const selectSize = el<HTMLSelectElement>('wtp-select-size');
+		const selectFormat = el<HTMLSelectElement>('wtp-select-format');
+		const selectMargins = el<HTMLSelectElement>('wtp-select-margins');
+		const selectOrientation = el<HTMLSelectElement>('wtp-select-orientation');
+		const typographySummary = el<HTMLElement>('wtp-typography-summary');
+
+		// 2x2 Mint KPI outputs (Bottom of Left Column)
+		const metricPages = el<HTMLElement>('wtp-metric-pages');
+		const metricPagesSub = el<HTMLElement>('wtp-metric-pages-sub');
+		const badgePages = el<HTMLElement>('wtp-badge-pages');
+
+		const metricWords = el<HTMLElement>('wtp-metric-words');
+		const metricCharsSub = el<HTMLElement>('wtp-metric-chars-sub');
+		const badgeMode = el<HTMLElement>('wtp-badge-mode');
+
+		const metricReadingTime = el<HTMLElement>('wtp-metric-reading-time');
+		const metricSpeakingTime = el<HTMLElement>('wtp-metric-speaking-time');
+
+		// Comparison strip elements
+		const compBaseBadge = el<HTMLElement>('wtp-comparison-base-badge');
+		const compSingle = el<HTMLElement>('wtp-comp-single');
+		const comp15 = el<HTMLElement>('wtp-comp-15');
+		const compDouble = el<HTMLElement>('wtp-comp-double');
+
+		const state = {
+			currentWords: 0,
+			currentPages: 0,
+			charsWithSpaces: 0,
+			charsNoSpaces: 0,
+			paragraphs: 0,
+			source: 'numeric' as 'numeric' | 'paste' | 'pages',
+		};
+
+		function parseWordCount(raw: string | null | undefined): number {
+			if (!raw) return 0;
+			let str = String(raw).trim().toLowerCase().replace(/,/g, '');
+			if (!str) return 0;
+			let multiplier = 1;
+			if (str.endsWith('k')) {
+				multiplier = 1000;
+				str = str.slice(0, -1).trim();
+			} else if (str.endsWith('m')) {
+				multiplier = 1000000;
+				str = str.slice(0, -1).trim();
+			}
+			const val = parseFloat(str);
+			if (isNaN(val) || val < 0) return 0;
+			return Math.min(10000000, Math.round(val * multiplier));
+		}
+
+		function countTextMetrics(text: string) {
+			const trimmed = text.trim();
+			const words = trimmed ? trimmed.split(/\s+/).filter(Boolean).length : 0;
+			const charsWithSpaces = text.length;
+			const charsNoSpaces = text.replace(/\s/g, '').length;
+			const paragraphs = trimmed
+				? trimmed.split(/\n+/).filter((p) => p.trim().length > 0).length
+				: 0;
+			return { words, charsWithSpaces, charsNoSpaces, paragraphs };
+		}
+
+		function computeWppFromSettings(): number {
+			if (customRateActive) {
+				return customWppValue > 0 ? customWppValue : 250;
+			}
+
+			const baseSpacingMap: Record<string, number> = {
+				'1.0': 500,
+				'1.5': 330,
+				'2.0': 250,
+			};
+
+			const fontFactorMap: Record<string, number> = {
+				times: 1.0,
+				arial: 0.95,
+				calibri: 1.08,
+				comic: 0.88,
+				courier: 0.72,
+				garamond: 1.05,
+				verdana: 0.84,
+			};
+
+			const sizeFactorMap: Record<string, number> = {
+				'10': 1.25,
+				'10.5': 1.18,
+				'11': 1.1,
+				'11.5': 1.05,
+				'12': 1.0,
+				'12.5': 0.94,
+				'13': 0.88,
+				'13.5': 0.83,
+				'14': 0.78,
+			};
+
+			const formatFactorMap: Record<string, number> = {
+				letter: 1.0,
+				a4: 1.04,
+				a5: 0.5,
+				b5: 0.72,
+				legal: 1.27,
+				digest: 1.0,
+				trade: 1.1,
+				hardcover: 1.2,
+			};
+
+			const marginsFactorMap: Record<string, number> = {
+				normal: 1.0,
+				narrow: 1.25,
+				moderate: 1.12,
+				wide: 0.85,
+			};
+
+			const orientationFactorMap: Record<string, number> = {
+				portrait: 1.0,
+				landscape: 0.95,
+			};
+
+			const base = baseSpacingMap[activeSpacing] || 250;
+			const fontKey = selectFont?.value || 'times';
+			const sizeKey = selectSize?.value || '12';
+			const formatKey = selectFormat?.value || 'letter';
+			const marginsKey = selectMargins?.value || 'normal';
+			const orientationKey = selectOrientation?.value || 'portrait';
+
+			const fFactor = fontFactorMap[fontKey] ?? 1.0;
+			const sFactor = sizeFactorMap[sizeKey] ?? 1.0;
+			const fmtFactor = formatFactorMap[formatKey] ?? 1.0;
+			const mFactor = marginsFactorMap[marginsKey] ?? 1.0;
+			const oFactor = orientationFactorMap[orientationKey] ?? 1.0;
+
+			return Math.max(20, Math.round(base * fFactor * sFactor * fmtFactor * mFactor * oFactor));
+		}
+
+		function formatTime(totalSeconds: number): string {
+			if (totalSeconds <= 0) return '0 min 0 sec';
+			const minutes = Math.floor(totalSeconds / 60);
+			const seconds = totalSeconds % 60;
+			if (minutes >= 60) {
+				const hours = Math.floor(minutes / 60);
+				const remMins = minutes % 60;
+				return `${hours} hr ${remMins} min`;
+			}
+			return `${minutes} min ${seconds} sec`;
+		}
+
+		function getSpacingLabel(): string {
+			if (customRateActive) return 'Custom rate';
+			switch (activeSpacing) {
+				case '1.0':
+					return 'Single-spaced';
+				case '1.5':
+					return '1.5-spaced';
+				case '2.0':
+					return 'Double-spaced';
+				default:
+					return `${activeSpacing} spacing`;
+			}
+		}
+
+		function updatePillStyles<T extends HTMLElement>(
+			elements: NodeListOf<T>,
+			activeValue: string,
+			dataAttr: string,
+		) {
+			elements.forEach((btn) => {
+				const val = btn.getAttribute(dataAttr);
+				if (val === activeValue) {
+					btn.classList.add('border-primary', 'bg-primary', 'text-on-primary');
+					btn.classList.remove('border-hairline', 'bg-canvas', 'text-body');
+				} else {
+					btn.classList.remove('border-primary', 'bg-primary', 'text-on-primary');
+					btn.classList.add('border-hairline', 'bg-canvas', 'text-body');
+				}
+			});
+		}
+
+		function updateInputPills() {
+			const w = state.currentWords;
+			wordPresetBtns.forEach((btn) => {
+				const presetVal = Number(btn.getAttribute('data-words-preset'));
+				if (w > 0 && presetVal === w && mode === 'w2p' && state.source === 'numeric') {
+					btn.classList.add('border-primary', 'bg-primary', 'text-on-primary');
+					btn.classList.remove('border-hairline', 'bg-canvas', 'text-body');
+				} else {
+					btn.classList.remove('border-primary', 'bg-primary', 'text-on-primary');
+					btn.classList.add('border-hairline', 'bg-canvas', 'text-body');
+				}
+			});
+
+			pagePresetBtns.forEach((btn) => {
+				const presetVal = Number(btn.getAttribute('data-pages-preset'));
+				if (state.currentPages > 0 && presetVal === state.currentPages && mode === 'p2w') {
+					btn.classList.add('border-primary', 'bg-primary', 'text-on-primary');
+					btn.classList.remove('border-hairline', 'bg-canvas', 'text-body');
+				} else {
+					btn.classList.remove('border-primary', 'bg-primary', 'text-on-primary');
+					btn.classList.add('border-hairline', 'bg-canvas', 'text-body');
+				}
+			});
+		}
+
+		function updateSpacingUI() {
+			updatePillStyles(
+				spacingPillBtns,
+				customRateActive ? 'custom' : activeSpacing,
+				'data-spacing-preset',
+			);
+
+			const wpp = computeWppFromSettings();
+			if (activeSpacingDisplay) {
+				activeSpacingDisplay.textContent = `${getSpacingLabel()} (${wpp} w/p)`;
+			}
+
+			if (wppInput && !customRateActive) {
+				wppInput.value = String(wpp);
+			}
+
+			if (wppStatus) {
+				if (customRateActive) {
+					wppStatus.textContent = 'Custom override';
+					wppStatus.classList.remove('text-mute');
+					wppStatus.classList.add('text-ink', 'font-medium');
+				} else {
+					wppStatus.textContent = 'Auto-calculated';
+					wppStatus.classList.remove('text-ink', 'font-medium');
+					wppStatus.classList.add('text-mute');
+				}
+			}
+
+			if (typographySummary) {
+				const fontText = selectFont?.options[selectFont.selectedIndex]?.text.split(' ')[0] || 'Times';
+				const sizeText = selectSize?.options[selectSize.selectedIndex]?.text || '12 pt';
+				const formatMapNames: Record<string, string> = {
+					letter: 'Letter',
+					a4: 'A4',
+					a5: 'A5',
+					b5: 'B5',
+					legal: 'Legal',
+					digest: '5×8" Digest',
+					trade: '5.5×8.5" Trade',
+					hardcover: '6×9" Hardcover',
+				};
+				const formatText = formatMapNames[selectFormat?.value || ''] || 'Letter';
+				typographySummary.textContent = `${fontText} · ${sizeText} · ${formatText}`;
+			}
+		}
+
+		function syncMode() {
+			modeBtns.forEach((btn) => {
+				const btnMode = btn.getAttribute('data-mode');
+				if (btnMode === mode) {
+					btn.setAttribute('aria-selected', 'true');
+					btn.classList.add('bg-primary', 'text-on-primary');
+					btn.classList.remove('bg-transparent', 'text-body');
+				} else {
+					btn.setAttribute('aria-selected', 'false');
+					btn.classList.remove('bg-primary', 'text-on-primary');
+					btn.classList.add('bg-transparent', 'text-body');
+				}
+			});
+
+			if (panelW2P) panelW2P.classList.toggle('hidden', mode !== 'w2p');
+			if (panelP2W) panelP2W.classList.toggle('hidden', mode !== 'p2w');
+
+			if (badgeMode) {
+				badgeMode.textContent =
+					mode === 'w2p'
+						? state.source === 'paste'
+							? 'Pasted text'
+							: 'Words to pages'
+						: 'Pages to words';
+			}
+		}
+
+		function recalculate() {
+			const wpp = computeWppFromSettings();
+
+			if (state.source === 'paste') {
+				const text = directPaste?.value ?? '';
+				const metrics = countTextMetrics(text);
+				state.currentWords = metrics.words;
+				state.currentPages = wpp > 0 && metrics.words > 0 ? metrics.words / wpp : 0;
+				state.charsWithSpaces = metrics.charsWithSpaces;
+				state.charsNoSpaces = metrics.charsNoSpaces;
+				state.paragraphs = metrics.paragraphs;
+
+				if (wordsInput) {
+					wordsInput.value = metrics.words > 0 ? metrics.words.toLocaleString() : '';
+				}
+
+				if (wordsParsedBadge) {
+					wordsParsedBadge.textContent =
+						metrics.words > 0
+							? `= ${metrics.words.toLocaleString()} words (pasted)`
+							: 'Accepts shorthand: e.g. 1.5k or 2.5k';
+				}
+
+				if (directMicrostats) {
+					directMicrostats.textContent = `${metrics.words.toLocaleString()} words · ${metrics.charsWithSpaces.toLocaleString()} chars · ${metrics.paragraphs.toLocaleString()} paragraphs`;
+				}
+				if (directClearBtn) {
+					directClearBtn.classList.toggle('hidden', text.length === 0);
+				}
+			} else if (mode === 'w2p') {
+				const raw = wordsInput?.value ?? '';
+				const parsed = parseWordCount(raw);
+				state.currentWords = parsed;
+				state.currentPages = wpp > 0 && parsed > 0 ? parsed / wpp : 0;
+				state.charsWithSpaces = parsed > 0 ? Math.round(parsed * 6) : 0;
+				state.charsNoSpaces = parsed > 0 ? Math.round(parsed * 5) : 0;
+				state.paragraphs = parsed > 0 ? Math.max(1, Math.ceil(parsed / 125)) : 0;
+
+				if (wordsParsedBadge) {
+					if (raw.toLowerCase().includes('k') || raw.toLowerCase().includes('m')) {
+						wordsParsedBadge.textContent = `= ${parsed.toLocaleString()} words`;
+						wordsParsedBadge.classList.add('text-ink', 'font-medium');
+						wordsParsedBadge.classList.remove('text-mute');
+					} else {
+						wordsParsedBadge.textContent = 'Accepts shorthand: e.g. 1.5k or 2.5k';
+						wordsParsedBadge.classList.remove('text-ink', 'font-medium');
+						wordsParsedBadge.classList.add('text-mute');
+					}
+				}
+
+				if (!directPaste?.value.trim()) {
+					if (directMicrostats) {
+						directMicrostats.textContent = `${parsed.toLocaleString()} words · ${state.charsWithSpaces.toLocaleString()} chars · ${state.paragraphs.toLocaleString()} paragraphs`;
+					}
+					if (directClearBtn) directClearBtn.classList.add('hidden');
+				}
+			} else if (mode === 'p2w') {
+				const pagesVal = Number(pagesInput?.value);
+				const pages = Number.isFinite(pagesVal) && pagesVal > 0 ? pagesVal : 0;
+				state.currentPages = pages;
+				state.currentWords = Math.round(pages * wpp);
+				state.charsWithSpaces = state.currentWords > 0 ? Math.round(state.currentWords * 6) : 0;
+				state.charsNoSpaces = state.currentWords > 0 ? Math.round(state.currentWords * 5) : 0;
+				state.paragraphs = state.currentWords > 0 ? Math.max(1, Math.ceil(state.currentWords / 125)) : 0;
+
+				if (!directPaste?.value.trim()) {
+					if (directMicrostats) {
+						directMicrostats.textContent = `${state.currentWords.toLocaleString()} words · ${state.charsWithSpaces.toLocaleString()} chars · ${state.paragraphs.toLocaleString()} paragraphs`;
+					}
+					if (directClearBtn) directClearBtn.classList.add('hidden');
+				}
+			}
+
+			syncMode();
+			updateInputPills();
+			updateSpacingUI();
+			renderOutputs();
+		}
+
+		function renderOutputs() {
+			const w = state.currentWords;
+			const p = state.currentPages;
+
+			// 1. Estimated pages
+			if (metricPages) {
+				metricPages.textContent = `${p.toFixed(1)} pages`;
+			}
+			if (metricPagesSub) {
+				const fullPages = Math.ceil(p);
+				const sheets = Math.ceil(p / 2);
+				metricPagesSub.textContent = `${fullPages} full pages · ${sheets} print sheets`;
+			}
+			if (badgePages) {
+				badgePages.textContent = getSpacingLabel();
+			}
+
+			// 2. Total words
+			if (metricWords) {
+				metricWords.textContent = `${w.toLocaleString()} words`;
+			}
+			if (metricCharsSub) {
+				metricCharsSub.textContent = `${state.charsWithSpaces.toLocaleString()} chars (with spaces) · ${state.charsNoSpaces.toLocaleString()} no spaces`;
+			}
+
+			// 3. Silent reading time
+			const silentSec = w > 0 ? Math.round((w / SILENT_WPM) * 60) : 0;
+			const speakingSec = w > 0 ? Math.round((w / SPEAKING_WPM) * 60) : 0;
+
+			if (metricReadingTime) {
+				metricReadingTime.textContent = formatTime(silentSec);
+			}
+
+			// 4. Speaking time
+			if (metricSpeakingTime) {
+				metricSpeakingTime.textContent = formatTime(speakingSec);
+			}
+
+			// Live Format Comparison Strip
+			if (compBaseBadge) {
+				compBaseBadge.textContent = `For ${w.toLocaleString()} words`;
+			}
+			if (compSingle) {
+				const pages = w > 0 ? (w / 500).toFixed(1) : '0';
+				compSingle.textContent = `${pages} pages`;
+			}
+			if (comp15) {
+				const pages = w > 0 ? (w / 330).toFixed(1) : '0';
+				comp15.textContent = `${pages} pages`;
+			}
+			if (compDouble) {
+				const pages = w > 0 ? (w / 250).toFixed(1) : '0';
+				compDouble.textContent = `${pages} pages`;
+			}
+		}
+
+		// Event Listeners: Mode Tabs
+		modeBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const targetMode = btn.getAttribute('data-mode') as Mode;
+				if (targetMode && targetMode !== mode) {
+					mode = targetMode;
+					state.source = targetMode === 'w2p' ? 'numeric' : 'pages';
+					syncMode();
+					recalculate();
+				}
+			});
+		});
+
+		// Event Listeners: Direct Textarea Input & Clear
+		directPaste?.addEventListener('input', () => {
+			state.source = 'paste';
+			mode = 'w2p';
+			recalculate();
+		});
+
+		directClearBtn?.addEventListener('click', () => {
+			if (directPaste) directPaste.value = '';
+			if (wordsInput) wordsInput.value = '';
+			state.source = 'numeric';
+			recalculate();
+			if (directMicrostats) directMicrostats.textContent = '0 words · 0 chars · 0 paragraphs';
+			if (directClearBtn) directClearBtn.classList.add('hidden');
+		});
+
+		// Event Listeners: Numeric Inputs
+		wordsInput?.addEventListener('input', () => {
+			state.source = 'numeric';
+			if (directPaste && directPaste.value) {
+				directPaste.value = '';
+				if (directClearBtn) directClearBtn.classList.add('hidden');
+			}
+			recalculate();
+		});
+		wordsInput?.addEventListener('change', () => {
+			state.source = 'numeric';
+			recalculate();
+		});
+
+		pagesInput?.addEventListener('input', () => {
+			state.source = 'pages';
+			recalculate();
+		});
+		pagesInput?.addEventListener('change', () => {
+			state.source = 'pages';
+			recalculate();
+		});
+
+		// Event Listeners: Word Presets
+		wordPresetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const presetVal = btn.getAttribute('data-words-preset');
+				if (wordsInput && presetVal) {
+					wordsInput.value = Number(presetVal).toLocaleString();
+					if (directPaste) directPaste.value = '';
+					if (directClearBtn) directClearBtn.classList.add('hidden');
+					mode = 'w2p';
+					state.source = 'numeric';
+					recalculate();
+				}
+			});
+		});
+
+		pagePresetBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const presetVal = btn.getAttribute('data-pages-preset');
+				if (pagesInput && presetVal) {
+					pagesInput.value = presetVal;
+					mode = 'p2w';
+					state.source = 'pages';
+					recalculate();
+				}
+			});
+		});
+
+		// Event Listeners: Spacing Pills
+		spacingPillBtns.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const val = btn.getAttribute('data-spacing-preset');
+				if (val === 'custom') {
+					customRateActive = true;
+					const currentWpp = Number(wppInput?.value) || 250;
+					customWppValue = currentWpp;
+					if (wppInput) wppInput.focus();
+				} else if (val) {
+					customRateActive = false;
+					activeSpacing = val;
+				}
+				recalculate();
+			});
+		});
+
+		// Event Listeners: Words Per Page Input
+		wppInput?.addEventListener('input', () => {
+			const val = Number(wppInput.value);
+			if (Number.isFinite(val) && val > 0) {
+				customRateActive = true;
+				customWppValue = val;
+				recalculate();
+			}
+		});
+
+		// Event Listeners: Dropdowns
+		[selectFont, selectSize, selectFormat, selectMargins, selectOrientation].forEach((sel) => {
+			sel?.addEventListener('change', () => {
+				customRateActive = false;
+				recalculate();
+			});
+		});
+
+		// Copy Result Action
+		btnCopyResult?.addEventListener('click', async () => {
+			const w = state.currentWords;
+			const p = state.currentPages;
+			const wpp = computeWppFromSettings();
+			const silentSec = w > 0 ? Math.round((w / SILENT_WPM) * 60) : 0;
+			const speakingSec = w > 0 ? Math.round((w / SPEAKING_WPM) * 60) : 0;
+
+			const text = [
+				'Wordora Words to Pages Conversion',
+				'──────────────────────────────────',
+				`Estimated Pages: ${p.toFixed(1)} pages (${Math.ceil(p)} full pages, ${Math.ceil(p / 2)} double-sided sheets)`,
+				`Total Words: ${w.toLocaleString()} words`,
+				`Characters: ${state.charsWithSpaces.toLocaleString()} (with spaces) · ${state.charsNoSpaces.toLocaleString()} (no spaces)`,
+				`Paragraphs: ${state.paragraphs.toLocaleString()}`,
+				`Words per Page: ${wpp} w/p (${getSpacingLabel()})`,
+				`Silent Reading Time: ${formatTime(silentSec)} (238 WPM)`,
+				`Speaking Time: ${formatTime(speakingSec)} (183 WPM)`,
+				'──────────────────────────────────',
+				'Calculate online at https://wordora.site/words-to-pages/',
+			].join('\n');
+
+			try {
+				await navigator.clipboard.writeText(text);
+			} catch {
+				const ta = document.createElement('textarea');
+				ta.value = text;
+				ta.style.position = 'fixed';
+				ta.style.opacity = '0';
+				document.body.appendChild(ta);
+				ta.focus();
+				ta.select();
+				document.execCommand('copy');
+				document.body.removeChild(ta);
+			}
+
+			const origText = btnCopyResult.textContent;
+			btnCopyResult.textContent = 'Copied!';
+			btnCopyResult.classList.add('text-primary');
+			setTimeout(() => {
+				btnCopyResult.textContent = origText;
+				btnCopyResult.classList.remove('text-primary');
+			}, 1800);
+		});
+
+		// Copy Link Action
+		btnCopyLink?.addEventListener('click', async () => {
+			const url = new URL(window.location.href);
+			url.searchParams.set('mode', mode);
+
+			if (mode === 'w2p' && state.currentWords > 0) {
+				url.searchParams.set('words', String(state.currentWords));
+				url.searchParams.delete('pages');
+			} else if (mode === 'p2w' && state.currentPages > 0) {
+				url.searchParams.set('pages', String(state.currentPages));
+				url.searchParams.delete('words');
+			}
+
+			if (customRateActive) {
+				url.searchParams.set('wpp', String(customWppValue));
+			} else {
+				url.searchParams.delete('wpp');
+				if (activeSpacing !== DEFAULTS.spacing) url.searchParams.set('spacing', activeSpacing);
+				else url.searchParams.delete('spacing');
+			}
+
+			if (selectFont && selectFont.value !== DEFAULTS.font) url.searchParams.set('font', selectFont.value);
+			else url.searchParams.delete('font');
+
+			if (selectSize && selectSize.value !== DEFAULTS.size) url.searchParams.set('size', selectSize.value);
+			else url.searchParams.delete('size');
+
+			if (selectFormat && selectFormat.value !== DEFAULTS.format) url.searchParams.set('fmt', selectFormat.value);
+			else url.searchParams.delete('fmt');
+
+			if (selectMargins && selectMargins.value !== DEFAULTS.margins) url.searchParams.set('mrg', selectMargins.value);
+			else url.searchParams.delete('mrg');
+
+			if (selectOrientation && selectOrientation.value !== DEFAULTS.orientation) url.searchParams.set('ori', selectOrientation.value);
+			else url.searchParams.delete('ori');
+
+			window.history.replaceState({}, '', url.toString());
+
+			try {
+				await navigator.clipboard.writeText(url.toString());
+			} catch {
+				const ta = document.createElement('textarea');
+				ta.value = url.toString();
+				ta.style.position = 'fixed';
+				ta.style.opacity = '0';
+				document.body.appendChild(ta);
+				ta.focus();
+				ta.select();
+				document.execCommand('copy');
+				document.body.removeChild(ta);
+			}
+
+			const origText = btnCopyLink.textContent;
+			btnCopyLink.textContent = 'Copied!';
+			btnCopyLink.classList.add('text-primary');
+			setTimeout(() => {
+				btnCopyLink.textContent = origText;
+				btnCopyLink.classList.remove('text-primary');
+			}, 1800);
+		});
+
+		// Reset Defaults Action
+		btnReset?.addEventListener('click', () => {
+			mode = 'w2p';
+			state.source = 'numeric';
+			activeSpacing = DEFAULTS.spacing;
+			customRateActive = false;
+			customWppValue = 250;
+
+			if (wordsInput) wordsInput.value = '';
+			if (pagesInput) pagesInput.value = '';
+			if (directPaste) directPaste.value = '';
+			if (directClearBtn) directClearBtn.classList.add('hidden');
+			if (directMicrostats) directMicrostats.textContent = '0 words · 0 chars · 0 paragraphs';
+
+			if (selectFont) selectFont.value = DEFAULTS.font;
+			if (selectSize) selectSize.value = DEFAULTS.size;
+			if (selectFormat) selectFormat.value = DEFAULTS.format;
+			if (selectMargins) selectMargins.value = DEFAULTS.margins;
+			if (selectOrientation) selectOrientation.value = DEFAULTS.orientation;
+
+			const url = new URL(window.location.href);
+			url.search = '';
+			window.history.replaceState({}, '', url.toString());
+
+			syncMode();
+			recalculate();
+		});
+
+		// Apply URL Query State on Load
+		function applyUrlParams() {
+			try {
+				const params = new URLSearchParams(window.location.search);
+				if (!params.toString()) return;
+
+				if (params.get('mode') === 'p2w') {
+					mode = 'p2w';
+					state.source = 'pages';
+				} else {
+					mode = 'w2p';
+					state.source = 'numeric';
+				}
+
+				if (params.has('words') && wordsInput) {
+					wordsInput.value = params.get('words') || '';
+				}
+				if (params.has('pages') && pagesInput) {
+					pagesInput.value = params.get('pages') || '';
+				}
+				if (params.has('spacing')) {
+					activeSpacing = params.get('spacing') || DEFAULTS.spacing;
+				}
+				if (params.has('wpp')) {
+					const val = Number(params.get('wpp'));
+					if (Number.isFinite(val) && val > 0) {
+						customRateActive = true;
+						customWppValue = val;
+						if (wppInput) wppInput.value = String(val);
+					}
+				}
+				if (params.has('font') && selectFont) {
+					selectFont.value = params.get('font') || DEFAULTS.font;
+				}
+				if (params.has('size') && selectSize) {
+					selectSize.value = params.get('size') || DEFAULTS.size;
+				}
+				if (params.has('fmt') && selectFormat) {
+					selectFormat.value = params.get('fmt') || DEFAULTS.format;
+				}
+				if (params.has('mrg') && selectMargins) {
+					selectMargins.value = params.get('mrg') || DEFAULTS.margins;
+				}
+				if (params.has('ori') && selectOrientation) {
+					selectOrientation.value = params.get('ori') || DEFAULTS.orientation;
+				}
+			} catch {
+				// Fallback to defaults
+			}
+		}
+
+		applyUrlParams();
+		syncMode();
+		recalculate();
+	}
+
+	initWordsToPagesCalculator();
+</script>

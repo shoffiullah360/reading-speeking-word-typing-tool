@@ -6,9 +6,9 @@ import Footer from "../../components/Footer.astro";
 import { resolveCanonicalUrl } from "../../config/site";
 
 const pageTitle =
-	"Words to Pages Converter — Single, 1.5 & Double-Spaced Page Calculator | Wordora";
+	"Words to Pages Converter — Words to Pages & Pages to Words Calculator";
 const pageDescription =
-	"Convert words to pages or pages to words instantly. Compare single-spaced (500 words/page), 1.5-spaced (330 words/page), double-spaced (250 words/page), and paperback book layouts.";
+	"Convert words to pages or pages to words instantly. Calculate exact page counts across single, 1.5, and double spacing, Times New Roman, Arial, Calibri, A4/Letter paper, and book trim sizes.";
 const canonicalUrl = resolveCanonicalUrl("/words-to-pages/");
 
 const softwareAppSchema = {
@@ -32,6 +32,82 @@ const softwareAppSchema = {
 		"Live silent reading time (238 WPM) and speaking time (130 WPM) estimates",
 	],
 };
+
+const faqList = [
+	{
+		question: "How many words are in 1 page?",
+		answer:
+			"Under standard formatting (12-point Times New Roman, 1-inch margins, US Letter paper), 1 single-spaced page contains about 500 words and 1 double-spaced page contains about 250 words. In a 5.5\" × 8.5\" trade paperback novel, 1 page averages 275 words.",
+	},
+	{
+		question: "Is 1,000 words 4 pages?",
+		answer:
+			"Yes—1,000 words equals 4.0 pages double-spaced using 12-point Times New Roman and 1-inch margins. If your document is single-spaced, 1,000 words equals 2.0 pages, and in 11-point Calibri double-spaced it takes about 3.8 pages.",
+	},
+	{
+		question: "Is 1,500 words 4 or 6 pages?",
+		answer:
+			"1,500 words is 6.0 pages double-spaced (at 250 words per page) and 3.0 pages single-spaced (at 500 words per page). At 1.5 line spacing, 1,500 words fills 4.5 pages.",
+	},
+	{
+		question: "Is 5,000 words 20 pages?",
+		answer:
+			"Yes—5,000 words equals 20.0 pages double-spaced or 10.0 pages single-spaced in standard academic formatting. Printed in a 5.5\" × 8.5\" paperback book, 5,000 words is roughly 18.2 pages.",
+	},
+	{
+		question: "How many pages is a 70,000-word book?",
+		answer:
+			"A 70,000-word novel prints at roughly 255 pages in a standard 5.5\" × 8.5\" trade paperback (~275 words/page), 280 pages in a 5\" × 8\" digest paperback (~250 words/page), or 233 pages in a 6\" × 9\" hardcover (~300 words/page).",
+	},
+	{
+		question: "How many words should a 300-page book be?",
+		answer:
+			"A 300-page printed book typically contains 75,000 to 90,000 words, depending on trim size, font size, margins, and chapter spacing. Most commercial fiction novels fall squarely within this 300-page benchmark.",
+	},
+	{
+		question: "How many pages is 100,000 words?",
+		answer:
+			"100,000 words equals 400 pages double-spaced or 200 pages single-spaced in manuscript format, and prints at 333 to 365 pages in a standard trade paperback novel.",
+	},
+	{
+		question: "Does font choice (Times New Roman vs. Arial vs. Calibri) change page count?",
+		answer:
+			"Yes. At 12-point double-spaced, Calibri fits about 260 words/page, Times New Roman fits 250 words/page, Arial fits 225 words/page, and monospaced Courier New fits only 180 words/page—creating up to a 25% difference in total page count.",
+	},
+	{
+		question: "Does A4 paper hold more words per page than US Letter?",
+		answer:
+			"Yes. Standard A4 paper (210 × 297 mm) is taller than US Letter (8.5 × 11 in) and provides roughly 6% more printable area with 1-inch margins, fitting about 265 double-spaced words per page instead of 250.",
+	},
+	{
+		question: "How many words is a 5-minute speech in pages?",
+		answer:
+			"Spoken at a natural conversational pace of 130 to 150 words per minute, a 5-minute speech is 650 to 750 words, which equals 2.6 to 3.0 pages double-spaced (or 1.3 to 1.5 pages single-spaced).",
+	},
+	{
+		question: "Do headings, block quotes, and images change my page count?",
+		answer:
+			"Yes. Word-to-page formulas measure continuous body paragraphs. Chapter headings, bulleted lists, tables, block quotes, title pages, and reference lists add extra vertical whitespace and will increase your final page count by 5% to 15%.",
+	},
+	{
+		question: "Is this Words to Pages Converter free and private?",
+		answer:
+			"Yes. Wordora's Words to Pages Converter is 100% free with no limits or sign-up, and all word counting and page calculations run locally inside your browser—your text is never uploaded or stored on any server.",
+	},
+];
+
+const faqPageSchema = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	mainEntity: faqList.map((item) => ({
+		"@type": "Question",
+		name: item.question,
+		acceptedAnswer: {
+			"@type": "Answer",
+			text: item.answer,
+		},
+	})),
+};
 ---
 
 <Layout
@@ -43,6 +119,10 @@ const softwareAppSchema = {
 		<script
 			type="application/ld+json"
 			set:html={JSON.stringify(softwareAppSchema)}
+		/>
+		<script
+			type="application/ld+json"
+			set:html={JSON.stringify(faqPageSchema)}
 		/>
 	</Fragment>
 
@@ -69,8 +149,819 @@ const softwareAppSchema = {
 		<!-- Interactive Words to Pages Calculator Workspace -->
 		<WordsToPagesCalculator />
 
-		{/* Editorial Content & FAQ Slot — User Managed */}
-		<div id="editorial-content-slot" class="mx-auto max-w-[1200px] px-4 sm:px-6"></div>
+		<!-- Section 1: Quick Reference Charts & Formula Cards -->
+		<section class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-10 pb-16 sm:px-6 md:mt-12 md:pt-12">
+			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+				Words to Pages &amp; Pages to Words Quick Reference Charts
+			</h2>
+
+			<p class="text-[16px] leading-relaxed text-body">
+				Under standard academic formatting—12-point Times New Roman font, 1-inch margins, and US Letter paper—<strong class="font-semibold text-ink">1 double-spaced page holds roughly 250 words</strong>, while <strong class="font-semibold text-ink">1 single-spaced page holds roughly 500 words</strong>. For printed books, a standard <strong class="font-semibold text-ink">5.5" × 8.5" trade paperback averages 275 words per page</strong>, making word-to-page estimates predictable once you match your document layout.
+			</p>
+
+			<!-- 2-Column Side-by-Side Tables -->
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+				<!-- Left Card: Words to Pages Conversion Table -->
+				<div class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated">
+					<div class="border-b border-hairline px-4 py-3.5 sm:px-5">
+						<h3 class="text-lg font-semibold tracking-tight text-ink">
+							Words to Pages Conversion Table
+						</h3>
+					</div>
+					<div class="overflow-x-auto">
+						<table class="w-full min-w-[500px] border-collapse text-left text-[14px]">
+							<thead>
+								<tr class="border-b border-hairline bg-canvas text-[13px] font-semibold text-ink">
+									<th class="px-4 py-3">Word Count</th>
+									<th class="px-4 py-3">Single (1.0)</th>
+									<th class="px-4 py-3">1.5-Spaced</th>
+									<th class="px-4 py-3">Double (2.0)</th>
+									<th class="px-4 py-3">Paperback (~275 w/p)</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-hairline text-body">
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">100 words</td>
+									<td class="px-4 py-3 tabular-nums">0.2 pages</td>
+									<td class="px-4 py-3 tabular-nums">0.3 pages</td>
+									<td class="px-4 py-3 tabular-nums">0.4 pages</td>
+									<td class="px-4 py-3 tabular-nums">0.4 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">250 words</td>
+									<td class="px-4 py-3 tabular-nums">0.5 pages</td>
+									<td class="px-4 py-3 tabular-nums">0.8 pages</td>
+									<td class="px-4 py-3 tabular-nums">1.0 page</td>
+									<td class="px-4 py-3 tabular-nums">0.9 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">500 words</td>
+									<td class="px-4 py-3 tabular-nums">1.0 page</td>
+									<td class="px-4 py-3 tabular-nums">1.5 pages</td>
+									<td class="px-4 py-3 tabular-nums">2.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">1.8 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">750 words</td>
+									<td class="px-4 py-3 tabular-nums">1.5 pages</td>
+									<td class="px-4 py-3 tabular-nums">2.3 pages</td>
+									<td class="px-4 py-3 tabular-nums">3.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">2.7 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">1,000 words</td>
+									<td class="px-4 py-3 tabular-nums">2.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">3.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">4.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">3.6 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">1,500 words</td>
+									<td class="px-4 py-3 tabular-nums">3.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">4.5 pages</td>
+									<td class="px-4 py-3 tabular-nums">6.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">5.5 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">2,000 words</td>
+									<td class="px-4 py-3 tabular-nums">4.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">6.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">8.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">7.3 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">2,500 words</td>
+									<td class="px-4 py-3 tabular-nums">5.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">7.5 pages</td>
+									<td class="px-4 py-3 tabular-nums">10.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">9.1 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">3,000 words</td>
+									<td class="px-4 py-3 tabular-nums">6.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">9.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">12.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">10.9 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">5,000 words</td>
+									<td class="px-4 py-3 tabular-nums">10.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">15.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">20.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">18.2 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">10,000 words</td>
+									<td class="px-4 py-3 tabular-nums">20.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">30.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">40.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">36.4 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">20,000 words</td>
+									<td class="px-4 py-3 tabular-nums">40.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">60.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">80.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">72.7 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">50,000 words</td>
+									<td class="px-4 py-3 tabular-nums">100.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">150.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">200.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">181.8 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">70,000 words</td>
+									<td class="px-4 py-3 tabular-nums">140.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">210.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">280.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">254.5 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">100,000 words</td>
+									<td class="px-4 py-3 tabular-nums">200.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">300.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">400.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">363.6 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">250,000 words</td>
+									<td class="px-4 py-3 tabular-nums">500.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">750.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">1,000.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">909.1 pages</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- Right Card: Pages to Words Conversion Table -->
+				<div class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated">
+					<div class="border-b border-hairline px-4 py-3.5 sm:px-5">
+						<h3 class="text-lg font-semibold tracking-tight text-ink">
+							Pages to Words Conversion Table
+						</h3>
+					</div>
+					<div class="overflow-x-auto">
+						<table class="w-full min-w-[440px] border-collapse text-left text-[14px]">
+							<thead>
+								<tr class="border-b border-hairline bg-canvas text-[13px] font-semibold text-ink">
+									<th class="px-4 py-3">Page Count</th>
+									<th class="px-4 py-3">Double-Spaced (250 w/p)</th>
+									<th class="px-4 py-3">Paperback Book (275 w/p)</th>
+									<th class="px-4 py-3">Single-Spaced (500 w/p)</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-hairline text-body">
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">1 page</td>
+									<td class="px-4 py-3 tabular-nums">250 words</td>
+									<td class="px-4 py-3 tabular-nums">275 words</td>
+									<td class="px-4 py-3 tabular-nums">500 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">2 pages</td>
+									<td class="px-4 py-3 tabular-nums">500 words</td>
+									<td class="px-4 py-3 tabular-nums">550 words</td>
+									<td class="px-4 py-3 tabular-nums">1,000 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">3 pages</td>
+									<td class="px-4 py-3 tabular-nums">750 words</td>
+									<td class="px-4 py-3 tabular-nums">825 words</td>
+									<td class="px-4 py-3 tabular-nums">1,500 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">5 pages</td>
+									<td class="px-4 py-3 tabular-nums">1,250 words</td>
+									<td class="px-4 py-3 tabular-nums">1,375 words</td>
+									<td class="px-4 py-3 tabular-nums">2,500 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">10 pages</td>
+									<td class="px-4 py-3 tabular-nums">2,500 words</td>
+									<td class="px-4 py-3 tabular-nums">2,750 words</td>
+									<td class="px-4 py-3 tabular-nums">5,000 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">15 pages</td>
+									<td class="px-4 py-3 tabular-nums">3,750 words</td>
+									<td class="px-4 py-3 tabular-nums">4,125 words</td>
+									<td class="px-4 py-3 tabular-nums">7,500 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">20 pages</td>
+									<td class="px-4 py-3 tabular-nums">5,000 words</td>
+									<td class="px-4 py-3 tabular-nums">5,500 words</td>
+									<td class="px-4 py-3 tabular-nums">10,000 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">25 pages</td>
+									<td class="px-4 py-3 tabular-nums">6,250 words</td>
+									<td class="px-4 py-3 tabular-nums">6,875 words</td>
+									<td class="px-4 py-3 tabular-nums">12,500 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">50 pages</td>
+									<td class="px-4 py-3 tabular-nums">12,500 words</td>
+									<td class="px-4 py-3 tabular-nums">13,750 words</td>
+									<td class="px-4 py-3 tabular-nums">25,000 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">100 pages</td>
+									<td class="px-4 py-3 tabular-nums">25,000 words</td>
+									<td class="px-4 py-3 tabular-nums">27,500 words</td>
+									<td class="px-4 py-3 tabular-nums">50,000 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">200 pages</td>
+									<td class="px-4 py-3 tabular-nums">50,000 words</td>
+									<td class="px-4 py-3 tabular-nums">55,000 words</td>
+									<td class="px-4 py-3 tabular-nums">100,000 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">300 pages</td>
+									<td class="px-4 py-3 tabular-nums">75,000 words</td>
+									<td class="px-4 py-3 tabular-nums">82,500 words</td>
+									<td class="px-4 py-3 tabular-nums">150,000 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">400 pages</td>
+									<td class="px-4 py-3 tabular-nums">100,000 words</td>
+									<td class="px-4 py-3 tabular-nums">110,000 words</td>
+									<td class="px-4 py-3 tabular-nums">200,000 words</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">500 pages</td>
+									<td class="px-4 py-3 tabular-nums">125,000 words</td>
+									<td class="px-4 py-3 tabular-nums">137,500 words</td>
+									<td class="px-4 py-3 tabular-nums">250,000 words</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!-- 2-Column Formula Cards Directly Below -->
+			<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+				<div class="rounded-xl border border-hairline bg-canvas-elevated p-5 text-[14.5px] leading-relaxed text-body">
+					<strong class="font-semibold text-ink">Convert Words to Pages Formula:</strong> <code class="rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums">Pages = Total Words ÷ Words per Page</code> — Example: 1,500 words ÷ 250 words/page (double-spaced) = <strong class="font-semibold text-ink">6.0 pages</strong>.
+				</div>
+				<div class="rounded-xl border border-hairline bg-canvas-elevated p-5 text-[14.5px] leading-relaxed text-body">
+					<strong class="font-semibold text-ink">Convert Pages to Words Formula:</strong> <code class="rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums">Total Words = Page Count × Words per Page</code> — Example: 300 pages × 275 words/page (paperback) = <strong class="font-semibold text-ink">82,500 words</strong>.
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 2: Words Per Page by Font Family, Font Size & Paper Size -->
+		<section class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-12 pb-16 sm:px-6 md:pt-16">
+			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+				Words Per Page by Font Family, Font Size &amp; Paper Size
+			</h2>
+
+			<p class="text-[16px] leading-relaxed text-body">
+				The "250 words per double-spaced page" rule is only a baseline for 12-point Times New Roman on US Letter paper with 1-inch margins. Changing your typeface, font size, margins, or paper dimensions can shift your final page count by <strong class="font-semibold text-ink">10% to 25%</strong> without changing a single word of your draft.
+			</p>
+
+			<!-- Font & Size Matrix Card -->
+			<div class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated">
+				<div class="border-b border-hairline px-4 py-3.5 sm:px-5">
+					<h3 class="text-lg font-semibold tracking-tight text-ink">
+						Detailed Words-Per-Page Matrix (1-Inch Margins, US Letter)
+					</h3>
+				</div>
+				<div class="overflow-x-auto">
+					<table class="w-full min-w-[640px] border-collapse text-left text-[14px]">
+						<thead>
+							<tr class="border-b border-hairline bg-canvas text-[13px] font-semibold text-ink">
+								<th class="px-4 py-3">Font Family</th>
+								<th class="px-4 py-3">10 pt (Single / Double)</th>
+								<th class="px-4 py-3">11 pt (Single / Double)</th>
+								<th class="px-4 py-3">12 pt (Single / Double)</th>
+								<th class="px-4 py-3">14 pt (Single / Double)</th>
+							</tr>
+						</thead>
+						<tbody class="divide-y divide-hairline text-body">
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Times New Roman</td>
+								<td class="px-4 py-3 tabular-nums">680 / 340 w/p</td>
+								<td class="px-4 py-3 tabular-nums">580 / 290 w/p</td>
+								<td class="px-4 py-3 tabular-nums">500 / 250 w/p</td>
+								<td class="px-4 py-3 tabular-nums">380 / 190 w/p</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Calibri</td>
+								<td class="px-4 py-3 tabular-nums">710 / 355 w/p</td>
+								<td class="px-4 py-3 tabular-nums">600 / 300 w/p</td>
+								<td class="px-4 py-3 tabular-nums">520 / 260 w/p</td>
+								<td class="px-4 py-3 tabular-nums">400 / 200 w/p</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Arial</td>
+								<td class="px-4 py-3 tabular-nums">640 / 320 w/p</td>
+								<td class="px-4 py-3 tabular-nums">540 / 270 w/p</td>
+								<td class="px-4 py-3 tabular-nums">450 / 225 w/p</td>
+								<td class="px-4 py-3 tabular-nums">340 / 170 w/p</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Georgia</td>
+								<td class="px-4 py-3 tabular-nums">620 / 310 w/p</td>
+								<td class="px-4 py-3 tabular-nums">520 / 260 w/p</td>
+								<td class="px-4 py-3 tabular-nums">440 / 220 w/p</td>
+								<td class="px-4 py-3 tabular-nums">330 / 165 w/p</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Verdana</td>
+								<td class="px-4 py-3 tabular-nums">540 / 270 w/p</td>
+								<td class="px-4 py-3 tabular-nums">460 / 230 w/p</td>
+								<td class="px-4 py-3 tabular-nums">390 / 195 w/p</td>
+								<td class="px-4 py-3 tabular-nums">290 / 145 w/p</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Courier New</td>
+								<td class="px-4 py-3 tabular-nums">490 / 245 w/p</td>
+								<td class="px-4 py-3 tabular-nums">420 / 210 w/p</td>
+								<td class="px-4 py-3 tabular-nums">360 / 180 w/p</td>
+								<td class="px-4 py-3 tabular-nums">270 / 135 w/p</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- Paper Size & Margins Card -->
+			<div class="rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-4">
+				<h3 class="text-lg font-semibold tracking-tight text-ink">
+					How Paper Size &amp; Margins Affect Page Density (US Letter vs. A4)
+				</h3>
+
+				<div class="grid gap-5 md:grid-cols-3">
+					<div class="text-[14.5px] leading-relaxed text-body">
+						<strong class="font-semibold text-ink">US Letter (8.5 × 11 in) vs. A4 (210 × 297 mm):</strong> Standard A4 paper is slightly narrower and taller than US Letter, giving it roughly <strong class="font-semibold text-ink">6% more printable area</strong> at 1-inch margins. A 10-page US Letter document typically condenses to <strong class="font-semibold text-ink">9.4 pages on A4</strong>.
+					</div>
+					<div class="text-[14.5px] leading-relaxed text-body">
+						<strong class="font-semibold text-ink">Margin Width (1 in vs. 0.5 in):</strong> Switching from standard 1-inch margins to narrow 0.5-inch margins expands the printable text block by nearly <strong class="font-semibold text-ink">28%</strong>, fitting roughly <strong class="font-semibold text-ink">320 words per double-spaced page</strong> instead of 250.
+					</div>
+					<div class="text-[14.5px] leading-relaxed text-body">
+						<strong class="font-semibold text-ink">Proportional vs. Monospace Fonts:</strong> Proportional fonts like Calibri and Times New Roman pack narrower characters tightly together, whereas monospaced fonts like Courier New assign equal width to every letter—stretching a 1,000-word essay from <strong class="font-semibold text-ink">4.0 pages to 5.6 pages</strong>.
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 3: Academic Style Guides & Book / Novel Page Benchmarks -->
+		<section class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-12 pb-16 sm:px-6 md:pt-16">
+			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+				Academic Style Guides &amp; Book / Novel Page Benchmarks
+			</h2>
+
+			<p class="text-[16px] leading-relaxed text-body">
+				Whether you are formatting a university research paper or estimating the physical spine width of a self-published novel, your target industry sets strict layout rules that directly control words per page.
+			</p>
+
+			<!-- Academic Formatting Card -->
+			<div class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated">
+				<div class="border-b border-hairline px-4 py-3.5 sm:px-5">
+					<h3 class="text-lg font-semibold tracking-tight text-ink">
+						Academic Formatting Standards (MLA 9, APA 7, Chicago, Harvard)
+					</h3>
+				</div>
+				<div class="overflow-x-auto">
+					<table class="w-full min-w-[640px] border-collapse text-left text-[14px]">
+						<thead>
+							<tr class="border-b border-hairline bg-canvas text-[13px] font-semibold text-ink">
+								<th class="px-4 py-3">Citation &amp; Style Guide</th>
+								<th class="px-4 py-3">Required Font &amp; Spacing</th>
+								<th class="px-4 py-3">Margins</th>
+								<th class="px-4 py-3">Average Words per Page</th>
+							</tr>
+						</thead>
+						<tbody class="divide-y divide-hairline text-body">
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">MLA 9th Edition</td>
+								<td class="px-4 py-3">12pt Times New Roman, double-spaced</td>
+								<td class="px-4 py-3">1 inch (all sides)</td>
+								<td class="px-4 py-3 tabular-nums">~250 words/page</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">APA 7th Edition</td>
+								<td class="px-4 py-3">12pt Times New Roman or 11pt Calibri/Arial, double-spaced</td>
+								<td class="px-4 py-3">1 inch (all sides)</td>
+								<td class="px-4 py-3 tabular-nums">~250–280 words/page</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Chicago / Turabian</td>
+								<td class="px-4 py-3">12pt Times New Roman, double-spaced (footnotes single-spaced)</td>
+								<td class="px-4 py-3">1 inch (all sides)</td>
+								<td class="px-4 py-3 tabular-nums">~250 words/page</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Harvard Style</td>
+								<td class="px-4 py-3">12pt Arial or Times New Roman, 1.5 or double-spaced</td>
+								<td class="px-4 py-3">1 inch (2.54 cm)</td>
+								<td class="px-4 py-3 tabular-nums">~250–330 words/page</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="border-t border-hairline px-4 py-3 sm:px-5">
+					<p class="text-[13px] italic text-muted">
+						Note: Academic word-to-page estimates apply to body paragraphs only—title pages, abstracts, reference lists, and appendices add extra pages.
+					</p>
+				</div>
+			</div>
+
+			<!-- Book Trim Sizes & Fiction Card -->
+			<div class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated">
+				<div class="border-b border-hairline px-4 py-3.5 sm:px-5">
+					<h3 class="text-lg font-semibold tracking-tight text-ink">
+						Printed Book Trim Sizes &amp; Fiction Length Benchmarks (Novel, Novella, AO3)
+					</h3>
+				</div>
+				<div class="overflow-x-auto">
+					<table class="w-full min-w-[640px] border-collapse text-left text-[14px]">
+						<thead>
+							<tr class="border-b border-hairline bg-canvas text-[13px] font-semibold text-ink">
+								<th class="px-4 py-3">Format or Story Category</th>
+								<th class="px-4 py-3">Standard Trim / Word Range</th>
+								<th class="px-4 py-3">Words per Page</th>
+								<th class="px-4 py-3">Typical Printed Page Count</th>
+							</tr>
+						</thead>
+						<tbody class="divide-y divide-hairline text-body">
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Novel Digest Paperback</td>
+								<td class="px-4 py-3">5" × 8" trim (11pt Garamond/serif)</td>
+								<td class="px-4 py-3 tabular-nums">~250 words/page</td>
+								<td class="px-4 py-3 tabular-nums">200–320 pages (50k–80k words)</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Trade Paperback Novel</td>
+								<td class="px-4 py-3">5.5" × 8.5" trim (industry standard fiction)</td>
+								<td class="px-4 py-3 tabular-nums">~275 words/page</td>
+								<td class="px-4 py-3 tabular-nums">250–365 pages (70k–100k words)</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Nonfiction / Hardcover Book</td>
+								<td class="px-4 py-3">6" × 9" trim (wider line measure)</td>
+								<td class="px-4 py-3 tabular-nums">~300 words/page</td>
+								<td class="px-4 py-3 tabular-nums">200–335 pages (60k–100k words)</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Short Story &amp; Novella</td>
+								<td class="px-4 py-3">1,500–7,500 words (Short) / 16,000–40,000 words (Novella)</td>
+								<td class="px-4 py-3 tabular-nums">~275 words/page</td>
+								<td class="px-4 py-3 tabular-nums">6–27 pages (Short) / 60–145 pages (Novella)</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Epic Fantasy / Sci-Fi Novel</td>
+								<td class="px-4 py-3">120,000–250,000+ words</td>
+								<td class="px-4 py-3 tabular-nums">~300 words/page</td>
+								<td class="px-4 py-3 tabular-nums">400–835+ pages</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">AO3 &amp; Web Fiction Chapters</td>
+								<td class="px-4 py-3">2,000–5,000 words per chapter (50k–150k full fic)</td>
+								<td class="px-4 py-3 tabular-nums">~250–275 words/page</td>
+								<td class="px-4 py-3 tabular-nums">8–20 pages/chapter (180–550 pages full)</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 4: Common Word-to-Page Breakdowns & Real-World Book Examples -->
+		<section class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-12 pb-16 sm:px-6 md:pt-16">
+			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+				Common Word-to-Page Breakdowns &amp; Real-World Book Examples
+			</h2>
+
+			<p class="text-[16px] leading-relaxed text-body">
+				Students, writers, and editors frequently search for exact page counts at specific word milestones. Below are direct breakdowns using standard 12-point Times New Roman formatting (1-inch margins), followed by real-world word and page counts from well-known books and speeches.
+			</p>
+
+			<!-- Direct Milestone Breakdown Card -->
+			<div class="rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6">
+				<h3 class="text-lg font-semibold tracking-tight text-ink">
+					Direct Answers for Popular Word &amp; Page Milestones
+				</h3>
+
+				<ul class="mt-4 grid gap-4 sm:grid-cols-2 text-[14.5px] leading-relaxed text-body">
+					<li class="flex items-start gap-2.5">
+						<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+						<div>
+							<strong class="font-semibold text-ink">How many pages is 500 words?</strong> <strong class="font-semibold text-ink">500 words</strong> equals <strong class="font-semibold text-ink">1.0 page single-spaced</strong> or <strong class="font-semibold text-ink">2.0 pages double-spaced</strong>—the classic length of a high school 5-paragraph essay, scholarship statement, or short blog post.
+						</div>
+					</li>
+					<li class="flex items-start gap-2.5">
+						<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+						<div>
+							<strong class="font-semibold text-ink">How many pages is 1,000 words?</strong> <strong class="font-semibold text-ink">1,000 words</strong> equals <strong class="font-semibold text-ink">2.0 pages single-spaced</strong> or <strong class="font-semibold text-ink">4.0 pages double-spaced</strong> (about 3.6 pages in 11pt Calibri). Most undergraduate response papers fall into this range.
+						</div>
+					</li>
+					<li class="flex items-start gap-2.5">
+						<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+						<div>
+							<strong class="font-semibold text-ink">How many pages is 1,500 words?</strong> <strong class="font-semibold text-ink">1,500 words</strong> equals <strong class="font-semibold text-ink">3.0 pages single-spaced</strong> or <strong class="font-semibold text-ink">6.0 pages double-spaced</strong>—a standard length for college argumentative essays and in-depth feature articles.
+						</div>
+					</li>
+					<li class="flex items-start gap-2.5">
+						<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+						<div>
+							<strong class="font-semibold text-ink">How many pages is 2,000 words?</strong> <strong class="font-semibold text-ink">2,000 words</strong> equals <strong class="font-semibold text-ink">4.0 pages single-spaced</strong>, <strong class="font-semibold text-ink">6.0 pages at 1.5 spacing</strong>, or <strong class="font-semibold text-ink">8.0 pages double-spaced</strong>, commonly required for mid-term research papers.
+						</div>
+					</li>
+					<li class="flex items-start gap-2.5">
+						<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+						<div>
+							<strong class="font-semibold text-ink">How many pages is 5,000 words?</strong> <strong class="font-semibold text-ink">5,000 words</strong> equals <strong class="font-semibold text-ink">10.0 pages single-spaced</strong> or <strong class="font-semibold text-ink">20.0 pages double-spaced</strong> (roughly 18 pages in a 5.5" × 8.5" paperback), typical for a capstone paper or long-form novelette.
+						</div>
+					</li>
+					<li class="flex items-start gap-2.5">
+						<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+						<div>
+							<strong class="font-semibold text-ink">How many pages is 100,000 words?</strong> <strong class="font-semibold text-ink">100,000 words</strong> equals <strong class="font-semibold text-ink">200 pages single-spaced</strong> or <strong class="font-semibold text-ink">400 pages double-spaced</strong> in manuscript form, and prints at roughly <strong class="font-semibold text-ink">330 to 365 pages</strong> in a standard trade paperback novel.
+						</div>
+					</li>
+					<li class="flex items-start gap-2.5 sm:col-span-2">
+						<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+						<div>
+							<strong class="font-semibold text-ink">How many words is a 300-page book?</strong> A <strong class="font-semibold text-ink">300-page printed novel</strong> typically contains <strong class="font-semibold text-ink">75,000 to 90,000 words</strong> (averaging 250–300 words per page depending on trim size and chapter breaks).
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<!-- Real-World Benchmarks Table Card -->
+			<div class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated">
+				<div class="border-b border-hairline px-4 py-3.5 sm:px-5">
+					<h3 class="text-lg font-semibold tracking-tight text-ink">
+						Real-World Word Count &amp; Page Count Benchmarks
+					</h3>
+				</div>
+				<div class="overflow-x-auto">
+					<table class="w-full min-w-[640px] border-collapse text-left text-[14px]">
+						<thead>
+							<tr class="border-b border-hairline bg-canvas text-[13px] font-semibold text-ink">
+								<th class="px-4 py-3">Title &amp; Format</th>
+								<th class="px-4 py-3">Approximate Word Count</th>
+								<th class="px-4 py-3">Printed Page Count</th>
+								<th class="px-4 py-3">Category</th>
+							</tr>
+						</thead>
+						<tbody class="divide-y divide-hairline text-body">
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">5-Minute Keynote or TED-Style Speech</td>
+								<td class="px-4 py-3 tabular-nums">~650–750 words (at 130–150 WPM)</td>
+								<td class="px-4 py-3 tabular-nums">2.5–3 pages (double-spaced)</td>
+								<td class="px-4 py-3">Spoken Presentation</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Dr. Martin Luther King Jr. — I Have a Dream</td>
+								<td class="px-4 py-3 tabular-nums">1,667 words</td>
+								<td class="px-4 py-3 tabular-nums">~6.7 pages (double-spaced)</td>
+								<td class="px-4 py-3">Historic Speech</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">F. Scott Fitzgerald — The Great Gatsby</td>
+								<td class="px-4 py-3 tabular-nums">47,094 words</td>
+								<td class="px-4 py-3 tabular-nums">~180 pages (paperback)</td>
+								<td class="px-4 py-3">Classic Novel</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">J.K. Rowling — Harry Potter and the Sorcerer's Stone</td>
+								<td class="px-4 py-3 tabular-nums">76,944 words</td>
+								<td class="px-4 py-3 tabular-nums">~309 pages (US paperback)</td>
+								<td class="px-4 py-3">Middle-Grade Fantasy</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">George Orwell — 1984</td>
+								<td class="px-4 py-3 tabular-nums">88,942 words</td>
+								<td class="px-4 py-3 tabular-nums">~328 pages (paperback)</td>
+								<td class="px-4 py-3">Dystopian Novel</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">J.R.R. Tolkien — The Hobbit</td>
+								<td class="px-4 py-3 tabular-nums">95,356 words</td>
+								<td class="px-4 py-3 tabular-nums">~310 pages (paperback)</td>
+								<td class="px-4 py-3">Fantasy Novel</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Frank Herbert — Dune</td>
+								<td class="px-4 py-3 tabular-nums">187,240 words</td>
+								<td class="px-4 py-3 tabular-nums">~658 pages (trade paperback)</td>
+								<td class="px-4 py-3">Epic Sci-Fi Novel</td>
+							</tr>
+							<tr>
+								<td class="px-4 py-3 font-medium text-ink">Brandon Sanderson — Words of Radiance</td>
+								<td class="px-4 py-3 tabular-nums">398,288 words</td>
+								<td class="px-4 py-3 tabular-nums">~1,088 pages (hardcover)</td>
+								<td class="px-4 py-3">Epic Fantasy Novel</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 5: How to Use the Words to Pages Converter & Tips to Hit Your Page Target -->
+		<section class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-12 pb-16 sm:px-6 md:pt-16">
+			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+				How to Use the Words to Pages Converter &amp; Tips to Hit Your Page Target
+			</h2>
+
+			<!-- 2-Column Layout -->
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+				<!-- Left Card: How to Convert Words to Pages (or Pages to Words) in 3 Steps -->
+				<div class="rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-4">
+					<h3 class="text-lg font-semibold tracking-tight text-ink">
+						How to Convert Words to Pages (or Pages to Words) in 3 Steps
+					</h3>
+
+					<ol class="space-y-4 text-[14.5px] leading-relaxed text-body">
+						<li class="flex items-start gap-3">
+							<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-hairline bg-canvas text-[12px] font-semibold text-ink tabular-nums">1</span>
+							<div>
+								<strong class="font-semibold text-ink">Enter a Number or Paste Your Draft:</strong> Type any word count—including shorthand like <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink tabular-nums">1.5k</code> or <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink tabular-nums">10k</code>—into the input box, switch to the <strong class="font-semibold text-ink">Pages to words</strong> tab to reverse-calculate from a target page limit, or paste your full draft directly into the text box for an exact word, character, and paragraph count.
+							</div>
+						</li>
+						<li class="flex items-start gap-3">
+							<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-hairline bg-canvas text-[12px] font-semibold text-ink tabular-nums">2</span>
+							<div>
+								<strong class="font-semibold text-ink">Match Your Document Layout:</strong> Select your line spacing (<code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">Single</code>, <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">1.5</code>, or <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">Double</code>), font family (<code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">Times New Roman</code>, <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">Arial</code>, <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">Calibri</code>, <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">Georgia</code>, <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">Verdana</code>, or <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">Courier New</code>), font size (<code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink tabular-nums">10pt–14pt</code>), paper format (<code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">US Letter</code>, <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">A4</code>, or book trim sizes), and margin width.
+							</div>
+						</li>
+						<li class="flex items-start gap-3">
+							<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-hairline bg-canvas text-[12px] font-semibold text-ink tabular-nums">3</span>
+							<div>
+								<strong class="font-semibold text-ink">Read Your Instant Document Metrics:</strong> View your exact decimal page count, rounded full pages, double-sided print sheets, silent reading time (238 WPM), and read-aloud speaking time (183 WPM) in the summary bar below—all calculated locally in your browser without uploading your text.
+							</div>
+						</li>
+					</ol>
+				</div>
+
+				<!-- Right Card: Practical Writing Tips to Hit—or Trim—Your Target Page Count -->
+				<div class="rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-4">
+					<h3 class="text-lg font-semibold tracking-tight text-ink">
+						Practical Writing Tips to Hit—or Trim—Your Target Page Count
+					</h3>
+
+					<ul class="space-y-4 text-[14.5px] leading-relaxed text-body">
+						<li class="flex items-start gap-2.5">
+							<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+							<div>
+								<strong class="font-semibold text-ink">Need to Expand a Short Draft Without Fluff?</strong> Break dense walls of text into shorter, focused paragraphs, add concrete examples or data citations for every main claim, and include brief transition sentences between sections rather than changing fonts or inflating margins.
+							</div>
+						</li>
+						<li class="flex items-start gap-2.5">
+							<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+							<div>
+								<strong class="font-semibold text-ink">Need to Trim an Over-Length Paper?</strong> Cut redundant qualifier phrases (such as <em>"in order to"</em>, <em>"due to the fact that"</em>, or <em>"it is important to note that"</em>), combine repetitive sentences, and tighten passive constructions into direct active verbs.
+							</div>
+						</li>
+						<li class="flex items-start gap-2.5">
+							<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+							<div>
+								<strong class="font-semibold text-ink">Working with Apple Pages (.pages) Files?</strong> If you drafted in Apple Pages and need an exact word or Microsoft Word count, open the file in Pages and choose <strong class="font-semibold text-ink">File &gt; Export To &gt; Word (.docx)</strong>—then paste the text above to verify how it paginates in Times New Roman or Calibri.
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 6: Frequently Asked Questions -->
+		<section class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-12 pb-16 sm:px-6 md:pt-16">
+			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+				Frequently Asked Questions
+			</h2>
+
+			<div class="divide-y divide-hairline rounded-2xl border border-hairline bg-canvas-elevated">
+				<details class="group p-5 sm:p-6" open>
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>How many words are in 1 page?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						Under standard formatting (12-point Times New Roman, 1-inch margins, US Letter paper), <strong class="font-semibold text-ink">1 single-spaced page contains about 500 words</strong> and <strong class="font-semibold text-ink">1 double-spaced page contains about 250 words</strong>. In a 5.5" × 8.5" trade paperback novel, 1 page averages <strong class="font-semibold text-ink">275 words</strong>.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>Is 1,000 words 4 pages?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						Yes—<strong class="font-semibold text-ink">1,000 words equals 4.0 pages double-spaced</strong> using 12-point Times New Roman and 1-inch margins. If your document is single-spaced, 1,000 words equals <strong class="font-semibold text-ink">2.0 pages</strong>, and in 11-point Calibri double-spaced it takes about <strong class="font-semibold text-ink">3.8 pages</strong>.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>Is 1,500 words 4 or 6 pages?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						<strong class="font-semibold text-ink">1,500 words is 6.0 pages double-spaced</strong> (at 250 words per page) and <strong class="font-semibold text-ink">3.0 pages single-spaced</strong> (at 500 words per page). At 1.5 line spacing, 1,500 words fills <strong class="font-semibold text-ink">4.5 pages</strong>.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>Is 5,000 words 20 pages?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						Yes—<strong class="font-semibold text-ink">5,000 words equals 20.0 pages double-spaced</strong> or <strong class="font-semibold text-ink">10.0 pages single-spaced</strong> in standard academic formatting. Printed in a 5.5" × 8.5" paperback book, 5,000 words is roughly <strong class="font-semibold text-ink">18.2 pages</strong>.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>How many pages is a 70,000-word book?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						A <strong class="font-semibold text-ink">70,000-word novel</strong> prints at roughly <strong class="font-semibold text-ink">255 pages</strong> in a standard 5.5" × 8.5" trade paperback (~275 words/page), <strong class="font-semibold text-ink">280 pages</strong> in a 5" × 8" digest paperback (~250 words/page), or <strong class="font-semibold text-ink">233 pages</strong> in a 6" × 9" hardcover (~300 words/page).
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>How many words should a 300-page book be?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						A <strong class="font-semibold text-ink">300-page printed book</strong> typically contains <strong class="font-semibold text-ink">75,000 to 90,000 words</strong>, depending on trim size, font size, margins, and chapter spacing. Most commercial fiction novels fall squarely within this 300-page benchmark.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>How many pages is 100,000 words?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						<strong class="font-semibold text-ink">100,000 words</strong> equals <strong class="font-semibold text-ink">400 pages double-spaced</strong> or <strong class="font-semibold text-ink">200 pages single-spaced</strong> in manuscript format, and prints at <strong class="font-semibold text-ink">333 to 365 pages</strong> in a standard trade paperback novel.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>Does font choice (Times New Roman vs. Arial vs. Calibri) change page count?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						Yes. At 12-point double-spaced, <strong class="font-semibold text-ink">Calibri</strong> fits about <strong class="font-semibold text-ink">260 words/page</strong>, <strong class="font-semibold text-ink">Times New Roman</strong> fits <strong class="font-semibold text-ink">250 words/page</strong>, <strong class="font-semibold text-ink">Arial</strong> fits <strong class="font-semibold text-ink">225 words/page</strong>, and monospaced <strong class="font-semibold text-ink">Courier New</strong> fits only <strong class="font-semibold text-ink">180 words/page</strong>—creating up to a 25% difference in total page count.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>Does A4 paper hold more words per page than US Letter?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						Yes. Standard <strong class="font-semibold text-ink">A4 paper (210 × 297 mm)</strong> is taller than <strong class="font-semibold text-ink">US Letter (8.5 × 11 in)</strong> and provides roughly <strong class="font-semibold text-ink">6% more printable area</strong> with 1-inch margins, fitting about <strong class="font-semibold text-ink">265 double-spaced words per page</strong> instead of 250.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>How many words is a 5-minute speech in pages?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						Spoken at a natural conversational pace of <strong class="font-semibold text-ink">130 to 150 words per minute</strong>, a <strong class="font-semibold text-ink">5-minute speech is 650 to 750 words</strong>, which equals <strong class="font-semibold text-ink">2.6 to 3.0 pages double-spaced</strong> (or 1.3 to 1.5 pages single-spaced).
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>Do headings, block quotes, and images change my page count?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						Yes. Word-to-page formulas measure continuous body paragraphs. Chapter headings, bulleted lists, tables, block quotes, title pages, and reference lists add extra vertical whitespace and will increase your final page count by <strong class="font-semibold text-ink">5% to 15%</strong>.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>Is this Words to Pages Converter free and private?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						Yes. Wordora's Words to Pages Converter is <strong class="font-semibold text-ink">100% free with no limits or sign-up</strong>, and all word counting and page calculations run locally inside your browser—your text is never uploaded or stored on any server.
+					</p>
+				</details>
+			</div>
+		</section>
 	</main>
 
 	<Footer />

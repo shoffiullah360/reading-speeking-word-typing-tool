@@ -1,7 +1,7 @@
 ---
 import { getToolById } from '../config/site';
 
-const readingTool = getToolById('reading-time-counter');
+const readingTool = getToolById('reading-time-calculator');
 const wordsToPagesTool = getToolById('words-to-pages');
 const speechTool = getToolById('speech-time-calculator');
 ---
@@ -12,14 +12,14 @@ const speechTool = getToolById('speech-time-calculator');
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
 	<!-- Live Summary Bar -->
-	<div class="whisper-shadow mb-6 grid grid-cols-1 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
+	<div class="kpi-summary-bar whisper-shadow mb-6 grid grid-cols-1 divide-y divide-[#7ED4B6] rounded-md border border-[#7ED4B6] bg-[#AFE3D0] sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x dark:divide-hairline dark:border-hairline dark:bg-canvas-elevated">
 		<!-- Stat 1: Words -->
-		<article class="flex flex-col justify-between p-5">
+		<article class="kpi-card flex flex-col justify-between p-5">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Words
 				</span>
-				<span id="wc-status-pill" class="text-[12px] text-mute">
+				<span id="wc-status-pill" class="text-[12px] text-[#1F2937] dark:text-mute">
 					Live count
 				</span>
 			</div>
@@ -27,24 +27,24 @@ const speechTool = getToolById('speech-time-calculator');
 				<output
 					id="wc-metric-words"
 					aria-live="polite"
-					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0
 				</output>
-				<span class="text-[14px] text-body">words</span>
+				<span class="text-[14px] text-[#1F2937] dark:text-body">words</span>
 			</div>
-			<p id="wc-metric-avg-len" class="text-[12px] text-mute tabular-nums">
+			<p id="wc-metric-avg-len" class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
 				0.0 letters per word
 			</p>
 		</article>
 
 		<!-- Stat 2: Characters (with & without spaces) -->
-		<article class="flex flex-col justify-between p-5 sm:border-l sm:border-hairline lg:border-l-0">
+		<article class="kpi-card flex flex-col justify-between p-5 sm:border-l sm:border-[#7ED4B6] lg:border-l-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Characters (with spaces)
 				</span>
-				<span class="text-[12px] text-mute">
+				<span class="text-[12px] text-[#1F2937] dark:text-mute">
 					Total length
 				</span>
 			</div>
@@ -52,24 +52,24 @@ const speechTool = getToolById('speech-time-calculator');
 				<output
 					id="wc-metric-chars"
 					aria-live="polite"
-					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0
 				</output>
-				<span class="text-[14px] text-body">characters</span>
+				<span class="text-[14px] text-[#1F2937] dark:text-body">characters</span>
 			</div>
-			<p class="text-[12px] text-mute tabular-nums">
-				<strong id="wc-metric-chars-nospace" class="font-medium text-ink">0</strong> characters without spaces
+			<p class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
+				<strong id="wc-metric-chars-nospace" class="font-medium text-[#111827] dark:text-ink">0</strong> characters without spaces
 			</p>
 		</article>
 
 		<!-- Stat 3: Sentences & Paragraphs -->
-		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-hairline lg:border-t-0">
+		<article class="kpi-card flex flex-col justify-between p-5 sm:border-t sm:border-[#7ED4B6] lg:border-t-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Sentences &amp; paragraphs
 				</span>
-				<span class="text-[12px] text-mute">
+				<span class="text-[12px] text-[#1F2937] dark:text-mute">
 					Structure
 				</span>
 			</div>
@@ -78,25 +78,25 @@ const speechTool = getToolById('speech-time-calculator');
 					<output
 						id="wc-metric-sentences"
 						aria-live="polite"
-						class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+						class="font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 					>
 						0
 					</output>
-					<span class="text-[14px] text-body">sentences</span>
+					<span class="text-[14px] text-[#1F2937] dark:text-body">sentences</span>
 				</div>
 			</div>
-			<p class="text-[12px] text-mute tabular-nums">
-				<strong id="wc-metric-paragraphs" class="font-medium text-ink">0</strong> paragraphs · <strong id="wc-metric-avg-sentence" class="font-medium text-ink">0</strong> words/sentence
+			<p class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
+				<strong id="wc-metric-paragraphs" class="font-medium text-[#111827] dark:text-ink">0</strong> paragraphs · <strong id="wc-metric-avg-sentence" class="font-medium text-[#111827] dark:text-ink">0</strong> words/sentence
 			</p>
 		</article>
 
 		<!-- Stat 4: Reading & Speaking Time -->
-		<article class="flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-hairline lg:border-t-0 lg:border-l-0">
+		<article class="kpi-card flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-[#7ED4B6] lg:border-t-0 lg:border-l-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
-				<span class="text-[13px] font-medium text-body">
+				<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
 					Estimated reading time
 				</span>
-				<span class="text-[12px] text-mute tabular-nums">
+				<span class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
 					238 WPM
 				</span>
 			</div>
@@ -104,13 +104,13 @@ const speechTool = getToolById('speech-time-calculator');
 				<output
 					id="wc-metric-reading-time"
 					aria-live="polite"
-					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-ink tabular-nums"
+					class="block font-sans text-[30px] leading-[36px] font-semibold tracking-[-1px] text-[#111827] tabular-nums dark:text-ink"
 				>
 					0 min 0 sec
 				</output>
 			</div>
-			<p class="text-[12px] text-mute tabular-nums">
-				Speaking time (130 WPM): <strong id="wc-metric-speaking-time" class="font-medium text-ink">0 min 0 sec</strong>
+			<p class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
+				Speaking time (130 WPM): <strong id="wc-metric-speaking-time" class="font-medium text-[#111827] dark:text-ink">0 min 0 sec</strong>
 			</p>
 		</article>
 	</div>

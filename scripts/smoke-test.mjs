@@ -9,7 +9,7 @@
 
 const SITE_URL = (process.env.SITE_URL || 'https://wordora.site').replace(/\/+$/, '');
 
-const LIVE_PATHS = ['/', '/reading-time-counter/', '/speech-time-calculator/'];
+const LIVE_PATHS = ['/', '/reading-time-calculator/', '/speech-time-calculator/'];
 const DRAFT_PATHS = [
 	'/reading-speed-test/',
 	'/words-to-pages/',
