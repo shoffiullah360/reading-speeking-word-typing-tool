@@ -1,15 +1,90 @@
 ---
-import { localePath } from '../i18n/ui';
-import { getToolById } from '../config/site';
+import { getToolById, resolveCanonicalUrl } from '../config/site';
+import {
+	getLocaleFromUrl,
+	getLocalizedPath,
+	useTranslations,
+	type Locale,
+} from '../i18n/ui';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 
 const readingCounterTool = getToolById('reading-time-calculator');
 const audiobookTool = getToolById('audiobook-speed-calculator') || getToolById('audiobook-calculator');
 const speechTool = getToolById('speech-time-calculator');
+
+interface QuizQuestion {
+	question: string;
+	options: string[];
+	correctIndex: number;
+	explanation: string;
+}
+
+interface PassageItem {
+	id: string;
+	difficulty: 'beginner' | 'intermediate' | 'challenge';
+	difficultyLabel: string;
+	topic: string;
+	title: string;
+	paragraphs: string[];
+	questions: QuizQuestion[];
+}
+
+const passages = t.raw<PassageItem[]>('readingSpeedTest.passages') ?? [];
+const clientStrings = t.raw<Record<string, unknown>>('readingSpeedTest.client') ?? {};
+
+const beginnerPassages = passages.filter((p) => p.difficulty === 'beginner');
+const firstPassage = beginnerPassages[0] ?? passages[0];
+const firstWordCount = firstPassage
+	? firstPassage.paragraphs.join(' ').trim().split(/\s+/).filter(Boolean).length
+	: 155;
+const firstTotalInDiff = beginnerPassages.length || 2;
+const firstRsvpSecs = Math.ceil((firstWordCount / 300) * 60);
+const firstRsvpMins = Math.floor(firstRsvpSecs / 60);
+const firstRsvpSecStr = String(firstRsvpSecs % 60).padStart(2, '0');
+
+const initialPassageMeta = firstPassage
+	? t('readingSpeedTest.client.passageMeta', {
+			topic: firstPassage.topic,
+			index: 1,
+			total: firstTotalInDiff,
+			words: firstWordCount,
+		})
+	: '';
+
+const initialSetupSummary = t('readingSpeedTest.client.setupSummary', {
+	mode: t('readingSpeedTest.client.modeStandardLabel'),
+	words: firstWordCount,
+	quiz: t('readingSpeedTest.client.quizCountLabel', { count: 3 }),
+});
+
+const initialRsvpProgress = t('readingSpeedTest.client.rsvpProgress', {
+	done: 0,
+	total: firstWordCount,
+});
+
+const initialRsvpRemaining = t('readingSpeedTest.client.rsvpTimeRemaining', {
+	mins: firstRsvpMins,
+	secs: firstRsvpSecStr,
+	wpm: 300,
+});
+
+const clientI18n = {
+	locale,
+	shareUrl: resolveCanonicalUrl(getLocalizedPath('/reading-speed-test/', locale)),
+	strings: clientStrings,
+	passages,
+};
 ---
 
 <section
 	id="reading-speed-test-workspace"
-	aria-label="Reading Speed Test and RSVP Speed Trainer Workspace"
+	aria-label={t('readingSpeedTest.ui.workspaceAria')}
 	class="mx-auto max-w-[1140px] px-4 pt-4 pb-14 sm:px-6"
 >
 	<!-- Centered Single-Window Wizard Container -->
@@ -17,7 +92,7 @@ const speechTool = getToolById('speech-time-calculator');
 		<!-- Minimalist Top Header: Subtle Step Trail + Past Results Link -->
 		<div class="mb-4 flex flex-wrap items-center justify-between gap-3 px-1">
 			<nav
-				aria-label="Reading test progress steps"
+				aria-label={t('readingSpeedTest.ui.stepsNavAria')}
 				class="flex flex-wrap items-center gap-1.5 text-[13px]"
 			>
 				<button
@@ -26,28 +101,28 @@ const speechTool = getToolById('speech-time-calculator');
 					data-step-nav="setup"
 					class="rst-step-pill cursor-pointer rounded-full bg-[#0f2e26] px-3 py-1 text-[12px] font-semibold text-[#afe3d0] transition-colors tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 				>
-					1. Setup
+					{t('readingSpeedTest.ui.stepSetup')}
 				</button>
 				<span aria-hidden="true" class="text-[11px] text-faint">→</span>
 				<span
 					id="rst-step-indicator-read"
 					class="rst-step-pill rounded-full bg-transparent px-2.5 py-1 text-[12px] font-medium text-mute transition-colors tabular-nums"
 				>
-					2. Read
+					{t('readingSpeedTest.ui.stepRead')}
 				</span>
 				<span aria-hidden="true" class="text-[11px] text-faint">→</span>
 				<span
 					id="rst-step-indicator-quiz"
 					class="rst-step-pill rounded-full bg-transparent px-2.5 py-1 text-[12px] font-medium text-mute transition-colors tabular-nums"
 				>
-					3. Quiz
+					{t('readingSpeedTest.ui.stepQuiz')}
 				</span>
 				<span aria-hidden="true" class="text-[11px] text-faint">→</span>
 				<span
 					id="rst-step-indicator-results"
 					class="rst-step-pill rounded-full bg-transparent px-2.5 py-1 text-[12px] font-medium text-mute transition-colors tabular-nums"
 				>
-					4. Results
+					{t('readingSpeedTest.ui.stepResults')}
 				</span>
 			</nav>
 
@@ -56,7 +131,7 @@ const speechTool = getToolById('speech-time-calculator');
 				id="rst-tab-history"
 				class="cursor-pointer inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
 			>
-				<span>Past Results</span>
+				<span>{t('readingSpeedTest.ui.pastResults')}</span>
 				<span
 					id="rst-history-count-badge"
 					class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-semibold text-ink tabular-nums"
@@ -79,11 +154,11 @@ const speechTool = getToolById('speech-time-calculator');
 					<!-- Reading Mode -->
 					<div>
 						<label class="mb-2 block text-[13px] font-medium text-mute">
-							Reading mode
+							{t('readingSpeedTest.ui.readingModeLabel')}
 						</label>
 						<div
 							role="tablist"
-							aria-label="Reading test mode selector"
+							aria-label={t('readingSpeedTest.ui.readingModeAria')}
 							class="inline-flex rounded-full border border-hairline bg-canvas p-1"
 						>
 							<button
@@ -93,7 +168,7 @@ const speechTool = getToolById('speech-time-calculator');
 								data-mode="standard"
 								class="rst-mode-btn cursor-pointer rounded-full bg-[#afe3d0] px-4 py-1.5 text-[13px] font-semibold text-[#0f2e26] transition-all"
 							>
-								Standard Test
+								{t('readingSpeedTest.ui.modeStandard')}
 							</button>
 							<button
 								type="button"
@@ -102,7 +177,7 @@ const speechTool = getToolById('speech-time-calculator');
 								data-mode="rsvp"
 								class="rst-mode-btn cursor-pointer rounded-full bg-transparent px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink"
 							>
-								RSVP Trainer
+								{t('readingSpeedTest.ui.modeRsvp')}
 							</button>
 						</div>
 					</div>
@@ -110,11 +185,11 @@ const speechTool = getToolById('speech-time-calculator');
 					<!-- Passage Difficulty -->
 					<div>
 						<label class="mb-2 block text-[13px] font-medium text-mute">
-							Passage difficulty
+							{t('readingSpeedTest.ui.difficultyLabel')}
 						</label>
 						<div
 							role="tablist"
-							aria-label="Passage difficulty or custom text"
+							aria-label={t('readingSpeedTest.ui.difficultyAria')}
 							class="inline-flex flex-wrap rounded-2xl border border-hairline bg-canvas p-1 sm:rounded-full"
 						>
 							<button
@@ -124,7 +199,7 @@ const speechTool = getToolById('speech-time-calculator');
 								data-difficulty="beginner"
 								class="rst-diff-btn cursor-pointer rounded-full bg-[#0f2e26] px-3.5 py-1.5 text-[13px] font-medium text-[#afe3d0] transition-all tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 							>
-								Beginner
+								{t('readingSpeedTest.ui.diffBeginner')}
 							</button>
 							<button
 								type="button"
@@ -133,7 +208,7 @@ const speechTool = getToolById('speech-time-calculator');
 								data-difficulty="intermediate"
 								class="rst-diff-btn cursor-pointer rounded-full bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink tabular-nums"
 							>
-								Intermediate
+								{t('readingSpeedTest.ui.diffIntermediate')}
 							</button>
 							<button
 								type="button"
@@ -142,7 +217,7 @@ const speechTool = getToolById('speech-time-calculator');
 								data-difficulty="challenge"
 								class="rst-diff-btn cursor-pointer rounded-full bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink tabular-nums"
 							>
-								Challenge
+								{t('readingSpeedTest.ui.diffChallenge')}
 							</button>
 							<button
 								type="button"
@@ -151,7 +226,7 @@ const speechTool = getToolById('speech-time-calculator');
 								data-difficulty="custom"
 								class="rst-diff-btn cursor-pointer rounded-full bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink"
 							>
-								Custom Text
+								{t('readingSpeedTest.ui.diffCustom')}
 							</button>
 						</div>
 					</div>
@@ -168,13 +243,13 @@ const speechTool = getToolById('speech-time-calculator');
 								id="rst-setup-passage-meta"
 								class="text-[12px] font-medium text-mute tabular-nums"
 							>
-								Cognitive science · Passage 1 of 2 · 155 words
+								{initialPassageMeta}
 							</span>
 							<h2
 								id="rst-setup-passage-title"
 								class="mt-1 text-[18px] font-semibold tracking-[-0.3px] text-ink sm:text-[20px]"
 							>
-								How the Human Eye Reads Printed Text
+								{firstPassage?.title ?? ''}
 							</h2>
 						</div>
 
@@ -183,7 +258,7 @@ const speechTool = getToolById('speech-time-calculator');
 							id="rst-btn-shuffle"
 							class="cursor-pointer inline-flex items-center gap-1.5 rounded-full border border-hairline bg-canvas-elevated px-4 py-2 text-[13px] font-medium text-ink transition-colors hover:border-ink"
 						>
-							<span>Shuffle</span>
+							<span>{t('readingSpeedTest.ui.shuffleBtn')}</span>
 						</button>
 					</div>
 
@@ -191,20 +266,20 @@ const speechTool = getToolById('speech-time-calculator');
 					<div id="rst-setup-custom-card" class="hidden rounded-2xl border border-hairline bg-canvas p-5">
 						<div class="mb-2.5 flex items-center justify-between gap-2">
 							<label for="rst-custom-textarea" class="text-[13px] font-medium text-ink">
-								Paste your article, study notes, or draft
+								{t('readingSpeedTest.ui.customLabel')}
 							</label>
 							<span id="rst-custom-word-badge" class="text-[12px] font-medium text-mute tabular-nums">
-								0 words
+								{t('readingSpeedTest.ui.zeroWords')}
 							</span>
 						</div>
 						<textarea
 							id="rst-custom-textarea"
 							rows="5"
-							placeholder="Paste or type at least 15 words here to time your reading speed or practice in the RSVP Speed Trainer..."
+							placeholder={t('readingSpeedTest.ui.customPlaceholder')}
 							class="w-full rounded-xl border border-hairline bg-canvas-elevated p-3.5 text-[15px] leading-[24px] text-ink placeholder:text-faint focus:border-ink focus:outline-none"
 						></textarea>
 						<p id="rst-custom-hint" class="mt-2 text-[12px] text-mute">
-							Custom text automatically bypasses the multiple-choice quiz (Speed Only).
+							{t('readingSpeedTest.ui.customHintDefault')}
 						</p>
 					</div>
 				</div>
@@ -212,31 +287,31 @@ const speechTool = getToolById('speech-time-calculator');
 				<!-- Row 3: Collapsible Test Options (Quiz Length & Font Size) -->
 				<details open class="group rounded-2xl border border-hairline bg-canvas px-5 py-3.5">
 					<summary class="flex cursor-pointer list-none items-center justify-between text-[13px] font-medium text-body transition-colors hover:text-ink">
-						<span>Test Options</span>
+						<span>{t('readingSpeedTest.ui.testOptions')}</span>
 						<span class="inline-block text-[12px] text-mute transition-transform duration-200 group-open:rotate-180">▾</span>
 					</summary>
 					<div class="mt-4 grid grid-cols-1 gap-4 border-t border-hairline pt-4 sm:grid-cols-2">
 						<div>
 							<label for="rst-quiz-length-select" class="block text-[12px] font-medium text-mute">
-								Memory comprehension quiz
+								{t('readingSpeedTest.ui.quizLengthLabel')}
 							</label>
 							<select
 								id="rst-quiz-length-select"
 								class="mt-1.5 w-full cursor-pointer rounded-xl border border-hairline bg-canvas-elevated px-3.5 py-2 text-[13px] font-medium text-ink outline-none transition-colors hover:border-ink focus:border-ink disabled:cursor-not-allowed disabled:opacity-50"
 							>
-								<option value="3" selected>3 Questions (Recommended)</option>
-								<option value="5">5 Questions (Full Check)</option>
-								<option value="0">No Quiz (Speed Only)</option>
+								<option value="3" selected>{t('readingSpeedTest.ui.quizOption3')}</option>
+								<option value="5">{t('readingSpeedTest.ui.quizOption5')}</option>
+								<option value="0">{t('readingSpeedTest.ui.quizOption0')}</option>
 							</select>
 						</div>
 
 						<div>
 							<span class="block text-[12px] font-medium text-mute">
-								Reading font size
+								{t('readingSpeedTest.ui.fontSizeLabel')}
 							</span>
 							<div
 								role="group"
-								aria-label="Passage font size"
+								aria-label={t('readingSpeedTest.ui.fontSizeAria')}
 								class="mt-1.5 inline-flex w-full items-center overflow-hidden rounded-xl border border-hairline bg-canvas-elevated"
 							>
 								<button
@@ -244,21 +319,21 @@ const speechTool = getToolById('speech-time-calculator');
 									data-font-size="sm"
 									class="rst-font-btn flex-1 cursor-pointer py-2 text-[12px] font-medium text-body transition-colors hover:bg-hairline-soft hover:text-ink"
 								>
-									A- Small
+									{t('readingSpeedTest.ui.fontSmall')}
 								</button>
 								<button
 									type="button"
 									data-font-size="md"
 									class="rst-font-btn flex-1 cursor-pointer border-x border-hairline bg-[#0f2e26] py-2 text-[13px] font-medium text-[#afe3d0] transition-colors dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 								>
-									A Default
+									{t('readingSpeedTest.ui.fontDefault')}
 								</button>
 								<button
 									type="button"
 									data-font-size="lg"
 									class="rst-font-btn flex-1 cursor-pointer py-2 text-[14px] font-medium text-body transition-colors hover:bg-hairline-soft hover:text-ink"
 								>
-									A+ Large
+									{t('readingSpeedTest.ui.fontLarge')}
 								</button>
 							</div>
 						</div>
@@ -268,14 +343,14 @@ const speechTool = getToolById('speech-time-calculator');
 				<!-- Row 4: Setup Summary & Bold Start CTA -->
 				<div class="flex flex-col items-stretch justify-between gap-4 border-t border-hairline pt-6 sm:flex-row sm:items-center">
 					<span id="rst-setup-summary-line" class="text-[13px] text-mute tabular-nums">
-						Standard Test · 155 words · 3-question memory quiz
+						{initialSetupSummary}
 					</span>
 					<button
 						type="button"
 						id="rst-btn-start-test"
 						class="cursor-pointer inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-[#0f2e26] px-8 text-[15px] font-semibold text-[#afe3d0] transition-all hover:opacity-95 active:scale-[0.99] dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 					>
-						<span>Start Reading Test</span>
+						<span>{t('readingSpeedTest.ui.startTestBtn')}</span>
 					</button>
 				</div>
 			</div>
@@ -300,14 +375,14 @@ const speechTool = getToolById('speech-time-calculator');
 						<span id="rst-live-timer">00:00.0</span>
 					</span>
 					<span id="rst-read-word-badge" class="text-[13px] text-mute tabular-nums">
-						155 words
+						{`${firstWordCount} ${t('readingSpeedTest.client.wordsPlural')}`}
 					</span>
 				</div>
 
 				<div class="flex items-center gap-3">
 					<div
 						role="group"
-						aria-label="Passage font size"
+						aria-label={t('readingSpeedTest.ui.fontSizeAria')}
 						class="inline-flex items-center overflow-hidden rounded-xl border border-hairline bg-canvas-elevated"
 					>
 						<button
@@ -338,7 +413,7 @@ const speechTool = getToolById('speech-time-calculator');
 						id="rst-btn-cancel-read"
 						class="cursor-pointer rounded-full px-3 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
 					>
-						Cancel
+						{t('readingSpeedTest.ui.cancelBtn')}
 					</button>
 				</div>
 			</div>
@@ -347,13 +422,13 @@ const speechTool = getToolById('speech-time-calculator');
 			<div id="rst-read-standard-canvas" class="px-6 py-8 sm:px-12 sm:py-10">
 				<div class="mx-auto max-w-[65ch]">
 					<span id="rst-read-topic" class="text-[12px] font-medium text-mute">
-						Cognitive science
+						{firstPassage?.topic ?? ''}
 					</span>
 					<h2
 						id="rst-read-title"
 						class="mt-1 text-[22px] leading-[30px] font-semibold tracking-[-0.4px] text-ink sm:text-[26px] sm:leading-[34px]"
 					>
-						How the Human Eye Reads Printed Text
+						{firstPassage?.title ?? ''}
 					</h2>
 
 					<div
@@ -364,14 +439,14 @@ const speechTool = getToolById('speech-time-calculator');
 					<!-- Prominent Finish Reading CTA right below the last paragraph -->
 					<div class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-hairline pt-6 sm:flex-row">
 						<span class="text-[13px] text-mute">
-							Click Finish Reading as soon as you reach the last word.
+							{t('readingSpeedTest.ui.finishHint')}
 						</span>
 						<button
 							type="button"
 							id="rst-btn-finish-reading"
 							class="w-full cursor-pointer inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-[#afe3d0] px-8 text-[15px] font-semibold text-[#0f2e26] transition-all hover:bg-[#c5eedf] sm:w-auto"
 						>
-							<span>Finish Reading</span>
+							<span>{t('readingSpeedTest.ui.finishReadingBtn')}</span>
 						</button>
 					</div>
 				</div>
@@ -382,16 +457,16 @@ const speechTool = getToolById('speech-time-calculator');
 				<div class="mx-auto max-w-[680px]">
 					<div class="flex flex-wrap items-center justify-between gap-3">
 						<div>
-							<span class="text-[12px] font-medium text-mute">RSVP Speed Trainer</span>
+							<span class="text-[12px] font-medium text-mute">{t('readingSpeedTest.ui.rsvpHeading')}</span>
 							<h2 id="rst-rsvp-title" class="mt-0.5 text-[18px] font-semibold text-ink">
-								How the Human Eye Reads Printed Text
+								{firstPassage?.title ?? ''}
 							</h2>
 						</div>
 
 						<!-- Word-by-word vs Sentence-by-sentence toggle -->
 						<div
 							role="group"
-							aria-label="RSVP chunk mode"
+							aria-label={t('readingSpeedTest.ui.rsvpChunkAria')}
 							class="inline-flex items-center rounded-full border border-hairline bg-canvas p-1"
 						>
 							<button
@@ -399,14 +474,14 @@ const speechTool = getToolById('speech-time-calculator');
 								data-rsvp-chunk="word"
 								class="rst-rsvp-chunk-btn cursor-pointer rounded-full bg-[#0f2e26] px-3.5 py-1 text-[12px] font-medium text-[#afe3d0] transition-colors dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 							>
-								Word-by-word
+								{t('readingSpeedTest.ui.rsvpWordByWord')}
 							</button>
 							<button
 								type="button"
 								data-rsvp-chunk="sentence"
 								class="rst-rsvp-chunk-btn cursor-pointer rounded-full bg-transparent px-3.5 py-1 text-[12px] font-medium text-body transition-colors hover:text-ink"
 							>
-								Sentence-by-sentence
+								{t('readingSpeedTest.ui.rsvpSentenceBySentence')}
 							</button>
 						</div>
 					</div>
@@ -415,7 +490,7 @@ const speechTool = getToolById('speech-time-calculator');
 					<div class="mt-5 rounded-2xl border border-hairline bg-canvas p-4 sm:p-5">
 						<div class="flex items-center justify-between text-[13px]">
 							<label for="rst-rsvp-wpm-slider" class="font-medium text-body">
-								Target training speed
+								{t('readingSpeedTest.ui.rsvpTargetSpeedLabel')}
 							</label>
 							<output
 								id="rst-rsvp-wpm-label"
@@ -448,15 +523,15 @@ const speechTool = getToolById('speech-time-calculator');
 							id="rst-rsvp-display"
 							class="max-w-xl font-sans text-[28px] leading-[38px] font-semibold tracking-[-0.5px] text-ink select-none sm:text-[34px] sm:leading-[44px]"
 						>
-							Ready
+							{t('readingSpeedTest.ui.rsvpReady')}
 						</div>
 					</div>
 
 					<!-- Progress Bar -->
 					<div class="mt-4">
 						<div class="flex items-center justify-between text-[12px] text-mute tabular-nums">
-							<span id="rst-rsvp-progress-label">0 / 155 words</span>
-							<span id="rst-rsvp-time-remaining">~0:31 at 300 WPM</span>
+							<span id="rst-rsvp-progress-label">{initialRsvpProgress}</span>
+							<span id="rst-rsvp-time-remaining">{initialRsvpRemaining}</span>
 						</div>
 						<div class="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-hairline">
 							<div
@@ -475,14 +550,14 @@ const speechTool = getToolById('speech-time-calculator');
 								id="rst-rsvp-play-btn"
 								class="cursor-pointer inline-flex h-11 items-center gap-2 rounded-2xl bg-[#0f2e26] px-6 text-[14px] font-medium text-[#afe3d0] transition-opacity hover:opacity-90 dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 							>
-								<span>Pause</span>
+								<span>{t('readingSpeedTest.ui.rsvpPause')}</span>
 							</button>
 							<button
 								type="button"
 								id="rst-rsvp-restart-btn"
 								class="cursor-pointer inline-flex h-11 items-center gap-2 rounded-2xl border border-hairline bg-canvas px-5 text-[14px] font-medium text-ink transition-colors hover:bg-hairline-soft"
 							>
-								<span>Restart</span>
+								<span>{t('readingSpeedTest.ui.rsvpRestart')}</span>
 							</button>
 						</div>
 
@@ -491,7 +566,7 @@ const speechTool = getToolById('speech-time-calculator');
 							id="rst-rsvp-finish-btn"
 							class="cursor-pointer inline-flex h-11 items-center gap-2 rounded-2xl bg-[#afe3d0] px-6 text-[14px] font-semibold text-[#0f2e26] transition-colors hover:bg-[#c5eedf]"
 						>
-							<span>Finish Session</span>
+							<span>{t('readingSpeedTest.ui.rsvpFinishSession')}</span>
 						</button>
 					</div>
 				</div>
@@ -508,30 +583,30 @@ const speechTool = getToolById('speech-time-calculator');
 			<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-6 py-5 sm:px-8">
 				<div>
 					<span id="rst-quiz-speed-pill" class="text-[12px] font-medium text-mute tabular-nums">
-						Raw speed recorded: 250 WPM
+						{t('readingSpeedTest.client.rawSpeedRecorded', { wpm: 250 })}
 					</span>
 					<h2 id="rst-quiz-heading" class="mt-0.5 text-[20px] font-semibold tracking-[-0.3px] text-ink">
-						Memory comprehension check
+						{t('readingSpeedTest.ui.quizHeadingDefault')}
 					</h2>
 				</div>
 				<span
 					id="rst-quiz-progress-badge"
 					class="rounded-full bg-hairline-soft px-3.5 py-1 text-[12px] font-medium text-ink tabular-nums"
 				>
-					0 of 3 selected
+					{t('readingSpeedTest.client.quizProgress', { answered: 0, total: 3 })}
 				</span>
 			</div>
 
 			<div class="px-6 py-7 sm:px-8">
 				<p class="mb-6 text-[14px] text-body">
-					The passage is hidden so you can answer from memory. Your accuracy determines your comprehension-adjusted Effective WPM.
+					{t('readingSpeedTest.ui.quizIntro')}
 				</p>
 
 				<div id="rst-quiz-questions-list" class="space-y-4"></div>
 
 				<div class="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-hairline pt-6">
 					<span id="rst-quiz-helper-msg" class="text-[13px] text-mute">
-						Select an answer for every question to continue.
+						{t('readingSpeedTest.ui.quizHelperDefault')}
 					</span>
 					<button
 						type="button"
@@ -539,7 +614,7 @@ const speechTool = getToolById('speech-time-calculator');
 						disabled
 						class="cursor-pointer inline-flex h-12 items-center justify-center rounded-2xl bg-[#0f2e26] px-8 text-[14px] font-semibold text-[#afe3d0] transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 					>
-						Submit & View Results
+						{t('readingSpeedTest.ui.submitQuizBtn')}
 					</button>
 				</div>
 			</div>
@@ -557,10 +632,10 @@ const speechTool = getToolById('speech-time-calculator');
 				<div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#afe3d0]/15 pb-6">
 					<div>
 						<span class="block text-[12px] font-medium text-[#afe3d0]/80">
-							Reading speed test complete
+							{t('readingSpeedTest.ui.resultsEyebrow')}
 						</span>
 						<h2 class="mt-1 text-[22px] font-semibold tracking-[-0.4px] text-white sm:text-[26px]">
-							Your Reading Performance
+							{t('readingSpeedTest.ui.resultsHeading')}
 						</h2>
 					</div>
 					<div class="flex flex-wrap items-center gap-2.5">
@@ -569,26 +644,26 @@ const speechTool = getToolById('speech-time-calculator');
 							id="rst-btn-copy-result"
 							class="cursor-pointer inline-flex h-11 items-center justify-center rounded-2xl border border-[#afe3d0]/40 bg-[#afe3d0] px-6 text-[14px] font-semibold text-[#0f2e26] transition-all hover:bg-[#c5eedf]"
 						>
-							Copy Result
+							{t('readingSpeedTest.ui.copyResultBtn')}
 						</button>
 						<button
 							type="button"
 							id="rst-btn-take-another"
 							class="cursor-pointer inline-flex h-11 items-center justify-center rounded-2xl border border-[#afe3d0]/25 bg-[#153d33]/80 px-6 text-[14px] font-semibold text-[#f0fdf7] transition-all hover:bg-[#153d33]"
 						>
-							Take Another Test
+							{t('readingSpeedTest.ui.takeAnotherBtn')}
 						</button>
 					</div>
 				</div>
 
 				<!-- 4 Summary KPI Cards inside the Emerald Stage -->
 				<div
-					aria-label="Test result summary metrics"
+					aria-label={t('readingSpeedTest.ui.resultsMetricsAria')}
 					class="mt-6 grid grid-cols-2 gap-3.5 sm:grid-cols-4"
 				>
 					<!-- KPI 1: Raw Speed (WPM) -->
 					<article class="flex flex-col justify-between rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/65 p-4 sm:p-5">
-						<span class="text-[12px] font-medium text-[#afe3d0]/80">Raw Speed</span>
+						<span class="text-[12px] font-medium text-[#afe3d0]/80">{t('readingSpeedTest.ui.kpiRawSpeed')}</span>
 						<div class="my-2 flex items-baseline gap-1.5">
 							<output
 								id="rst-res-raw-wpm"
@@ -599,13 +674,13 @@ const speechTool = getToolById('speech-time-calculator');
 							<span class="text-[13px] text-[#e2f5ee]">WPM</span>
 						</div>
 						<p id="rst-res-raw-sub" class="text-[12px] text-[#d1fae5]/75 tabular-nums">
-							155 words in 37.2s
+							{t('readingSpeedTest.client.resRawSub', { words: firstWordCount, seconds: '37.2' })}
 						</p>
 					</article>
 
 					<!-- KPI 2: Comprehension (%) -->
 					<article class="flex flex-col justify-between rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/65 p-4 sm:p-5">
-						<span class="text-[12px] font-medium text-[#afe3d0]/80">Comprehension</span>
+						<span class="text-[12px] font-medium text-[#afe3d0]/80">{t('readingSpeedTest.ui.kpiComprehension')}</span>
 						<div class="my-2 flex items-baseline gap-1.5">
 							<output
 								id="rst-res-comp-pct"
@@ -615,13 +690,13 @@ const speechTool = getToolById('speech-time-calculator');
 							</output>
 						</div>
 						<p id="rst-res-comp-sub" class="text-[12px] text-[#d1fae5]/75 tabular-nums">
-							3 of 3 correct
+							{t('readingSpeedTest.client.resCompSub', { correct: 3, total: 3 })}
 						</p>
 					</article>
 
 					<!-- KPI 3: Effective WPM -->
 					<article class="flex flex-col justify-between rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/65 p-4 sm:p-5">
-						<span class="text-[12px] font-medium text-[#afe3d0]/80">Effective WPM</span>
+						<span class="text-[12px] font-medium text-[#afe3d0]/80">{t('readingSpeedTest.ui.kpiEffectiveWpm')}</span>
 						<div class="my-2 flex items-baseline gap-1.5">
 							<output
 								id="rst-res-effective-wpm"
@@ -632,23 +707,26 @@ const speechTool = getToolById('speech-time-calculator');
 							<span class="text-[13px] text-[#e2f5ee]">WPM</span>
 						</div>
 						<p id="rst-res-effective-sub" class="text-[12px] text-[#d1fae5]/75 tabular-nums">
-							Raw WPM × accuracy
+							{t('readingSpeedTest.ui.kpiEffectiveSubDefault')}
 						</p>
 					</article>
 
 					<!-- KPI 4: Reader Profile & Percentile -->
 					<article class="flex flex-col justify-between rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/65 p-4 sm:p-5">
-						<span class="text-[12px] font-medium text-[#afe3d0]/80">Reader Profile</span>
+						<span class="text-[12px] font-medium text-[#afe3d0]/80">{t('readingSpeedTest.ui.kpiReaderProfile')}</span>
 						<div class="my-2">
 							<output
 								id="rst-res-profile"
 								class="block font-sans text-[20px] leading-[26px] font-semibold tracking-[-0.4px] text-[#afe3d0] sm:text-[22px]"
 							>
-								Average Reader
+								{t('readingSpeedTest.client.profiles.average')}
 							</output>
 						</div>
 						<p id="rst-res-percentile" class="text-[12px] text-[#d1fae5]/75 tabular-nums">
-							Faster than 58% of adult readers
+							{t('readingSpeedTest.client.resPercentile', {
+								percentile: 58,
+								profile: t('readingSpeedTest.client.profiles.average'),
+							})}
 						</p>
 					</article>
 				</div>
@@ -658,9 +736,8 @@ const speechTool = getToolById('speech-time-calculator');
 			<div
 				id="rst-skim-warning"
 				class="whisper-shadow hidden rounded-2xl border border-vercel-warning/50 bg-canvas-elevated p-5 text-[13px] leading-[20px] text-body"
-			>
-				<strong class="font-semibold text-ink">Note on 700+ WPM speeds:</strong> Reading faster than 700 WPM indicates rapid skimming or scanning rather than full word-by-word comprehension. Human eye fixations physiologically cap deep silent reading near 400–500 WPM.
-			</div>
+				set:html={t('readingSpeedTest.ui.skimWarningHtml')}
+			/>
 
 			<!-- Age Group Comparison & Books a Year Mini-Calculator Card -->
 			<div class="whisper-shadow grid grid-cols-1 divide-y divide-hairline overflow-hidden rounded-3xl border border-hairline bg-canvas-elevated md:grid-cols-2 md:divide-x md:divide-y-0">
@@ -668,21 +745,21 @@ const speechTool = getToolById('speech-time-calculator');
 				<div class="p-6 sm:p-7">
 					<div class="flex flex-wrap items-center justify-between gap-2">
 						<h3 class="text-[15px] font-semibold text-ink">
-							Age group comparison
+							{t('readingSpeedTest.ui.ageComparisonHeading')}
 						</h3>
 						<div class="flex items-center gap-1.5">
 							<label for="rst-age-select" class="text-[12px] text-mute">
-								Age:
+								{t('readingSpeedTest.ui.ageLabel')}
 							</label>
 							<select
 								id="rst-age-select"
 								class="cursor-pointer rounded-xl border border-hairline bg-canvas px-3 py-1.5 text-[12px] font-medium text-ink outline-none transition-colors hover:border-ink focus:border-ink"
 							>
-								<option value="under13">Under 13 (165 WPM)</option>
-								<option value="13-17">13–17 (205 WPM)</option>
-								<option value="18-24">18–24 (245 WPM)</option>
-								<option value="25-34" selected>25–34 (238 WPM)</option>
-								<option value="35plus">35+ (230 WPM)</option>
+								<option value="under13">{t('readingSpeedTest.ui.ageOptUnder13')}</option>
+								<option value="13-17">{t('readingSpeedTest.ui.ageOpt13_17')}</option>
+								<option value="18-24">{t('readingSpeedTest.ui.ageOpt18_24')}</option>
+								<option value="25-34" selected>{t('readingSpeedTest.ui.ageOpt25_34')}</option>
+								<option value="35plus">{t('readingSpeedTest.ui.ageOpt35Plus')}</option>
 							</select>
 						</div>
 					</div>
@@ -690,7 +767,7 @@ const speechTool = getToolById('speech-time-calculator');
 					<div class="mt-4 rounded-2xl border border-hairline bg-canvas p-4">
 						<div class="flex items-center justify-between text-[12px] text-mute tabular-nums">
 							<span>100 WPM</span>
-							<span id="rst-age-benchmark-label" class="font-medium text-ink">238 WPM Peer Avg</span>
+							<span id="rst-age-benchmark-label" class="font-medium text-ink">{t('readingSpeedTest.ui.peerAvgInitial')}</span>
 							<span>500+ WPM</span>
 						</div>
 						<div class="relative mt-2.5 h-2.5 w-full overflow-hidden rounded-full bg-hairline">
@@ -698,7 +775,7 @@ const speechTool = getToolById('speech-time-calculator');
 								id="rst-age-marker"
 								class="absolute top-0 bottom-0 z-10 w-0.5 bg-ink/60"
 								style="left: 34.5%;"
-								title="Peer Benchmark Average"
+								title={t('readingSpeedTest.ui.peerBenchmarkTitle')}
 							></div>
 							<div
 								id="rst-speed-progress"
@@ -707,7 +784,7 @@ const speechTool = getToolById('speech-time-calculator');
 							></div>
 						</div>
 						<p id="rst-comparison-detail" class="mt-3 text-[13px] text-body">
-							Comparing your reading speed against your selected age group benchmark.
+							{t('readingSpeedTest.ui.comparisonDetailDefault')}
 						</p>
 					</div>
 				</div>
@@ -717,10 +794,10 @@ const speechTool = getToolById('speech-time-calculator');
 					<div class="flex flex-wrap items-center justify-between gap-2">
 						<div>
 							<h3 class="text-[15px] font-semibold text-ink">
-								Books a year at your speed
+								{t('readingSpeedTest.ui.booksPerYearHeading')}
 							</h3>
 							<p class="text-[12px] text-mute">
-								Standard 90,000-word non-fiction books
+								{t('readingSpeedTest.ui.booksPerYearSub')}
 							</p>
 						</div>
 						<div class="flex items-center gap-1.5">
@@ -731,25 +808,25 @@ const speechTool = getToolById('speech-time-calculator');
 								max="300"
 								step="5"
 								value="20"
-								aria-label="Daily reading minutes"
+								aria-label={t('readingSpeedTest.ui.dailyMinsAria')}
 								class="w-16 rounded-xl border border-hairline bg-canvas px-2.5 py-1.5 text-right text-[13px] font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
 							/>
-							<span class="text-[12px] text-body">min/day</span>
+							<span class="text-[12px] text-body">{t('readingSpeedTest.ui.minPerDay')}</span>
 						</div>
 					</div>
 
 					<div class="mt-4 rounded-2xl border border-hairline bg-canvas p-4">
 						<div class="flex items-baseline justify-between">
-							<span class="text-[13px] text-body">Estimated annual books:</span>
+							<span class="text-[13px] text-body">{t('readingSpeedTest.ui.estimatedAnnualBooks')}</span>
 							<output
 								id="rst-books-per-year-output"
 								class="text-[20px] font-semibold text-ink tabular-nums"
 							>
-								19.3 books / yr
+								{t('readingSpeedTest.ui.booksPerYearInitial')}
 							</output>
 						</div>
 						<p id="rst-books-per-year-sub" class="mt-1.5 text-[12px] text-mute tabular-nums">
-							At 238 WPM pace · ~1,737,400 words/year
+							{t('readingSpeedTest.ui.booksPerYearSubInitial')}
 						</p>
 					</div>
 				</div>
@@ -762,10 +839,10 @@ const speechTool = getToolById('speech-time-calculator');
 			>
 				<div class="flex items-center justify-between gap-2">
 					<h3 class="text-[16px] font-semibold tracking-[-0.2px] text-ink">
-						Answer Review & Explanations
+						{t('readingSpeedTest.ui.answerReviewHeading')}
 					</h3>
 					<span id="rst-review-summary-badge" class="text-[12px] font-medium text-mute tabular-nums">
-						3 of 3 correct
+						{t('readingSpeedTest.client.resCompSub', { correct: 3, total: 3 })}
 					</span>
 				</div>
 				<div id="rst-answer-review-list" class="mt-4 space-y-3"></div>
@@ -782,10 +859,10 @@ const speechTool = getToolById('speech-time-calculator');
 			<div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline pb-4">
 				<div>
 					<h2 class="text-[18px] font-semibold tracking-[-0.3px] text-ink">
-						Your Last 10 Test Results
+						{t('readingSpeedTest.ui.historyHeading')}
 					</h2>
 					<p class="mt-0.5 text-[13px] text-mute">
-						Stored privately in your browser’s local storage.
+						{t('readingSpeedTest.ui.historySub')}
 					</p>
 				</div>
 				<div class="flex items-center gap-2">
@@ -794,31 +871,31 @@ const speechTool = getToolById('speech-time-calculator');
 						id="rst-btn-clear-history"
 						class="cursor-pointer rounded-full border border-hairline bg-canvas px-3.5 py-1.5 text-[12px] font-medium text-mute transition-colors hover:border-ink hover:text-ink"
 					>
-						Clear history
+						{t('readingSpeedTest.ui.clearHistoryBtn')}
 					</button>
 					<button
 						type="button"
 						id="rst-btn-back-to-test"
 						class="cursor-pointer rounded-full bg-[#0f2e26] px-4 py-1.5 text-[13px] font-medium text-[#afe3d0] transition-opacity hover:opacity-90 dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 					>
-						Back to Test
+						{t('readingSpeedTest.ui.backToTestBtn')}
 					</button>
 				</div>
 			</div>
 
 			<div id="rst-history-empty" class="mt-5 rounded-2xl border border-hairline bg-canvas p-6 text-center text-[13px] text-mute">
-				No reading speed tests saved yet. Complete a test to track your WPM and accuracy over time.
+				{t('readingSpeedTest.ui.historyEmpty')}
 			</div>
 
 			<div id="rst-history-table-wrap" class="mt-4 hidden overflow-x-auto">
 				<table class="w-full border-collapse text-left text-[13px]">
 					<thead>
 						<tr class="border-b border-hairline text-mute">
-							<th class="py-2.5 pr-4 font-medium">Passage & difficulty</th>
-							<th class="px-3 py-2.5 font-medium tabular-nums">Raw WPM</th>
-							<th class="px-3 py-2.5 font-medium tabular-nums">Comprehension</th>
-							<th class="px-3 py-2.5 font-medium tabular-nums">Effective WPM</th>
-							<th class="py-2.5 pl-3 text-right font-medium tabular-nums">When</th>
+							<th class="py-2.5 pr-4 font-medium">{t('readingSpeedTest.ui.historyColPassage')}</th>
+							<th class="px-3 py-2.5 font-medium tabular-nums">{t('readingSpeedTest.ui.historyColRawWpm')}</th>
+							<th class="px-3 py-2.5 font-medium tabular-nums">{t('readingSpeedTest.ui.historyColComp')}</th>
+							<th class="px-3 py-2.5 font-medium tabular-nums">{t('readingSpeedTest.ui.historyColEffectiveWpm')}</th>
+							<th class="py-2.5 pl-3 text-right font-medium tabular-nums">{t('readingSpeedTest.ui.historyColWhen')}</th>
 						</tr>
 					</thead>
 					<tbody id="rst-history-tbody" class="divide-y divide-hairline text-body"></tbody>
@@ -829,60 +906,60 @@ const speechTool = getToolById('speech-time-calculator');
 
 		<!-- Related Tools Note (Protected Against Draft Links) -->
 		<aside
-			aria-label="Related reading tools"
+			aria-label={t('readingSpeedTest.ui.relatedToolsAria')}
 			class="mt-6 flex flex-col items-start justify-between gap-3 pt-2 text-[14px] text-body sm:flex-row sm:items-center"
 		>
 			<p class="leading-[22px]">
-				Now that you know your personal WPM, use it in our{' '}
+				{t('readingSpeedTest.ui.relatedBefore1')}{' '}
 				{
 					readingCounterTool?.status === 'live' ? (
 						<a
-							href={localePath(readingCounterTool.slug, Astro.url)}
+							href={getLocalizedPath(readingCounterTool.slug, locale)}
 							class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 						>
-							{readingCounterTool.shortName}
+							{t('readingTimeCalculator.shortName')}
 						</a>
 					) : (
 						<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-							<span>{readingCounterTool?.shortName ?? 'Reading Time Counter'}</span>
+							<span>{t('readingTimeCalculator.shortName')}</span>
 							<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-								Soon
+								{t('common.soon')}
 							</span>
 						</span>
 					)
 				}
-				, plan your next listen with the{' '}
+				{t('readingSpeedTest.ui.relatedBefore2')}{' '}
 				{
 					audiobookTool?.status === 'live' ? (
 						<a
-							href={localePath(audiobookTool.slug, Astro.url)}
+							href={getLocalizedPath(audiobookTool.slug, locale)}
 							class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 						>
-							{audiobookTool.shortName}
+							{t('audiobookCalculator.shortName')}
 						</a>
 					) : (
 						<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-							<span>{audiobookTool?.shortName ?? 'Audiobook Calculator'}</span>
+							<span>{t('audiobookCalculator.shortName')}</span>
 							<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-								Soon
+								{t('common.soon')}
 							</span>
 						</span>
 					)
 				}
-				, or pace a presentation with the{' '}
+				{t('readingSpeedTest.ui.relatedBefore3')}{' '}
 				{
 					speechTool?.status === 'live' ? (
 						<a
-							href={localePath(speechTool.slug, Astro.url)}
+							href={getLocalizedPath(speechTool.slug, locale)}
 							class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 						>
-							{speechTool.shortName}
+							{t('speechCalculator.shortName')}
 						</a>
 					) : (
 						<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-							<span>{speechTool?.shortName ?? 'Speech Time Calculator'}</span>
+							<span>{t('speechCalculator.shortName')}</span>
 							<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-								Soon
+								{t('common.soon')}
 							</span>
 						</span>
 					)
@@ -891,6 +968,12 @@ const speechTool = getToolById('speech-time-calculator');
 		</aside>
 	</div>
 </section>
+
+<script
+	type="application/json"
+	id="rst-i18n"
+	set:html={JSON.stringify(clientI18n).replace(/</g, '\\u003c')}
+/>
 
 <script>
 	interface QuizQuestion {
@@ -922,385 +1005,90 @@ const speechTool = getToolById('speech-time-calculator');
 		timestamp: string;
 	}
 
+	interface ClientStrings {
+		ageBenchmarks: Record<string, string>;
+		profiles: {
+			careful: string;
+			steady: string;
+			average: string;
+			fast: string;
+			speed: string;
+			skimmer: string;
+		};
+		customDefaultParagraph: string;
+		customPassageTitle: string;
+		customPassageTopic: string;
+		customDifficultyLabel: string;
+		wordSingular: string;
+		wordsPlural: string;
+		passageMeta: string;
+		modeStandardLabel: string;
+		modeRsvpLabel: string;
+		quizSpeedOnlyLabel: string;
+		quizCountLabel: string;
+		setupSummary: string;
+		rsvpProgress: string;
+		rsvpTimeRemaining: string;
+		rsvpPlay: string;
+		rsvpPause: string;
+		rsvpResume: string;
+		rsvpReady: string;
+		customMinWordsError: string;
+		customReadyHint: string;
+		rawSpeedRecorded: string;
+		quizHeadingCount: string;
+		quizProgress: string;
+		quizHelperRemainingSingular: string;
+		quizHelperRemainingPlural: string;
+		quizHelperReady: string;
+		ageBenchmarkLabel: string;
+		comparisonExactHtml: string;
+		comparisonFasterHtml: string;
+		comparisonSlowerHtml: string;
+		booksPerYearOutput: string;
+		booksPerYearSub: string;
+		resRawSub: string;
+		speedOnlyShort: string;
+		quizBypassed: string;
+		effectiveSpeedOnlySub: string;
+		resCompSub: string;
+		resEffectiveSub: string;
+		resPercentile: string;
+		reviewSummaryBadge: string;
+		noAnswer: string;
+		badgeCorrect: string;
+		badgeIncorrect: string;
+		yourAnswerLabel: string;
+		correctAnswerLabel: string;
+		historyAverageSingular: string;
+		historyAveragePlural: string;
+		copySummary: string;
+		copiedLabel: string;
+		copyResultLabel: string;
+	}
+
+	interface ClientI18nPayload {
+		locale: string;
+		shareUrl: string;
+		strings: ClientStrings;
+		passages: PassageItem[];
+	}
+
 	const STORAGE_KEY = 'wordora_rst_history_v2';
 
-	// 6 Curated Non-Fiction Passages (2 Beginner ~150w, 2 Intermediate ~300w, 2 Challenge ~500w)
-	const PASSAGES: PassageItem[] = [
-		{
-			id: 'beg-1',
-			difficulty: 'beginner',
-			difficultyLabel: 'Beginner (~150w)',
-			topic: 'Cognitive science',
-			title: 'How the Human Eye Reads Printed Text',
-			paragraphs: [
-				'When you read a page of text, it feels as though your eyes glide smoothly across every line from left to right. In reality, human vision works through a rapid sequence of tiny, darting movements called saccades, separated by brief pauses known as fixations. During each fixation, which lasts roughly a quarter of a second, your eyes focus on a cluster of seven to nine letters while peripheral vision previews the shapes of upcoming words.',
-				'Skilled readers rarely stop on every single word. Instead, the brain automatically skips predictable short words like "the" or "and" and uses context to fill in the meaning. When a sentence introduces an unfamiliar term or an unexpected grammar shift, the eyes perform a quick backward jump called a regression to verify the phrase. Understanding this natural rhythm explains why clear typography and comfortable line spacing make sustained reading feel effortless.',
-			],
-			questions: [
-				{
-					question: 'What are the brief pauses called when your eyes focus on a cluster of letters?',
-					options: ['Fixations', 'Transitions', 'Intervals', 'Reflections'],
-					correctIndex: 0,
-					explanation: 'Your eyes pause in brief stops called fixations between rapid darting movements.',
-				},
-				{
-					question: 'Approximately how long does each pause last while reading?',
-					options: ['Roughly two full seconds', 'Roughly a quarter of a second', 'Roughly ten seconds', 'Half a minute'],
-					correctIndex: 1,
-					explanation: 'Each fixation lasts about a quarter of a second (250 milliseconds).',
-				},
-				{
-					question: 'How many letters do the eyes typically focus on during a single pause?',
-					options: ['One single letter', 'Seven to nine letters', 'Thirty to forty letters', 'An entire paragraph'],
-					correctIndex: 1,
-					explanation: 'Foveal vision captures a sharp cluster of seven to nine letters per fixation.',
-				},
-				{
-					question: 'What triggers a backward eye jump (a regression) during silent reading?',
-					options: [
-						'Predictable short words like "the" or "and"',
-						'An unfamiliar term or unexpected grammar shift',
-						'Wide page margins at the bottom of a book',
-						'Reading in natural daylight',
-					],
-					correctIndex: 1,
-					explanation: 'Regressions happen when the brain encounters an unfamiliar word or confusing syntax.',
-				},
-				{
-					question: 'What role does peripheral vision play while you read a line of text?',
-					options: [
-						'It previews the shapes of upcoming words',
-						'It counts the page numbers at the bottom',
-						'It closes off completely during fixations',
-						'It reads the previous page backward',
-					],
-					correctIndex: 0,
-					explanation: 'Peripheral vision previews upcoming word shapes to guide where the eye lands next.',
-				},
-			],
-		},
-		{
-			id: 'beg-2',
-			difficulty: 'beginner',
-			difficultyLabel: 'Beginner (~150w)',
-			topic: 'Environmental design',
-			title: 'Why Coffee Shops Help People Focus',
-			paragraphs: [
-				'Many writers and students discover that they get more work done at a busy neighborhood cafe than in a completely silent room. Psychologists call this phenomenon the coffee shop effect. While jarring noises like a nearby phone conversation or a slamming door break concentration, a steady background hum of espresso machines, quiet chatter, and clinking cups creates a gentle layer of ambient sound around seventy decibels.',
-				'That moderate level of background noise masks sudden acoustic spikes and prevents the brain from feeling isolated. Combined with subtle visual activity—seeing other people typing, reading, or sketching at nearby tables—a cafe triggers mild social facilitation. Knowing that others around you are working quietly encourages you to stay on task too, turning an ordinary room full of strangers into a supportive workspace.',
-			],
-			questions: [
-				{
-					question: 'What do psychologists call the productivity boost experienced in busy cafes?',
-					options: ['The acoustic echo effect', 'The coffee shop effect', 'The espresso reflex', 'Silent room syndrome'],
-					correctIndex: 1,
-					explanation: 'Researchers refer to improved focus in moderate ambient noise as the coffee shop effect.',
-				},
-				{
-					question: 'Approximately what decibel level is the steady background hum mentioned in the passage?',
-					options: ['Around ten decibels', 'Around seventy decibels', 'Around one hundred thirty decibels', 'Zero decibels'],
-					correctIndex: 1,
-					explanation: 'A gentle layer of ambient cafe sound sits near seventy decibels.',
-				},
-				{
-					question: 'How does steady ambient noise help protect concentration?',
-					options: [
-						'It masks sudden acoustic spikes that would otherwise startle the brain',
-						'It makes the room completely silent',
-						'It forces people to read out loud',
-						'It lowers the temperature of the room',
-					],
-					correctIndex: 0,
-					explanation: 'Moderate background hum masks sudden sharp noises so they feel less disruptive.',
-				},
-				{
-					question: 'What psychological effect is triggered by seeing other people working at nearby tables?',
-					options: ['Visual fatigue', 'Social facilitation', 'Memory regression', 'Sensory overload'],
-					correctIndex: 1,
-					explanation: 'Seeing others focus nearby triggers social facilitation, motivating you to stay on task.',
-				},
-				{
-					question: 'Which sound is described as jarring enough to break concentration?',
-					options: [
-						'Quiet background chatter',
-						'A nearby phone conversation or slamming door',
-						'The hum of an espresso machine',
-						'Softly clinking coffee cups',
-					],
-					correctIndex: 1,
-					explanation: 'Sudden, distinct noises like a slamming door or loud phone call pull attention away.',
-				},
-			],
-		},
-		{
-			id: 'int-1',
-			difficulty: 'intermediate',
-			difficultyLabel: 'Intermediate (~300w)',
-			topic: 'History of books & media',
-			title: 'Why Silent Reading Was Once Considered Unusual',
-			paragraphs: [
-				'Today we take silent reading for granted—whether browsing an article on a laptop, reviewing notes before a meeting, or reading a novel on a quiet train. Yet for much of early recorded history, reading was predominantly a spoken performance. Ancient Greek and Roman manuscripts were written in continuous streams of capital letters without spaces between words or punctuation marks to signal where a thought ended.',
-				'Because the eye had no visual gaps to separate one word from the next, readers sounded out syllables aloud so their ears could recognize familiar phrases. When fourth-century scholars observed someone reading a page without moving their lips or making a sound, they found the habit remarkable enough to record in their journals. Libraries in the ancient world were not hushed halls; they hummed with the low murmur of dozens of scholars reciting texts to themselves.',
-				'The shift toward effortless silent reading began in the early Middle Ages when scribes in Ireland and Britain started inserting clear blank spaces between words and introducing commas, periods, and paragraph breaks. Once words stood apart as distinct visual shapes on the page, the human brain could recognize whole words at a glance without pronouncing them first. That simple layout breakthrough dramatically accelerated reading speed, enabled private reflection, and laid the foundation for modern publishing.',
-			],
-			questions: [
-				{
-					question: 'How were ancient Greek and Roman manuscripts typically written?',
-					options: [
-						'With wide spaces and color-coded punctuation',
-						'In continuous streams of capital letters without spaces between words',
-						'In bulleted lists with bold headings',
-						'Using lowercase cursive with numbered sentences',
-					],
-					correctIndex: 1,
-					explanation: 'Ancient manuscripts used continuous capital letters (scriptura continua) without word spaces.',
-				},
-				{
-					question: 'Why did ancient readers pronounce syllables aloud while reading?',
-					options: [
-						'Hearing the syllables helped their ears recognize familiar phrases across unspaced text',
-						'Ancient laws forbade silent reading in public',
-						'Scrolls were written in musical notation',
-						'Rooms were too dark to see the ink clearly',
-					],
-					correctIndex: 0,
-					explanation: 'Without visual spaces, sounding out words let the ear detect where one word ended and another began.',
-				},
-				{
-					question: 'What were ancient libraries like compared to modern libraries?',
-					options: [
-						'They hummed with the murmur of scholars reciting texts aloud',
-						'They enforced strict silence with heavy fines',
-						'They only allowed one visitor inside per day',
-						'They stored only spoken audio recordings',
-					],
-					correctIndex: 0,
-					explanation: 'Ancient libraries were filled with the low murmur of readers speaking texts aloud.',
-				},
-				{
-					question: 'Who began inserting clear blank spaces between words in the early Middle Ages?',
-					options: [
-						'Roman senate clerks',
-						'Scribes in Ireland and Britain',
-						'Nineteenth-century newspaper editors',
-						'Ancient Athenian playwrights',
-					],
-					correctIndex: 1,
-					explanation: 'Irish and British scribes pioneered word spacing and punctuation in the early Middle Ages.',
-				},
-				{
-					question: 'What did distinct visual word shapes allow the human brain to do?',
-					options: [
-						'Recognize whole words at a glance without pronouncing them first',
-						'Memorize entire books after a single glance at the cover',
-						'Read in total darkness',
-						'Write without using vowels',
-					],
-					correctIndex: 0,
-					explanation: 'Clear spaces gave each word a distinct visual silhouette that the brain could decode silently.',
-				},
-			],
-		},
-		{
-			id: 'int-2',
-			difficulty: 'intermediate',
-			difficultyLabel: 'Intermediate (~300w)',
-			topic: 'Maritime history & science',
-			title: 'How Marine Chronometers Solved Longitude at Sea',
-			paragraphs: [
-				'For centuries, sailors crossing open oceans could determine their latitude—how far north or south they were—by measuring the height of the sun at noon or the angle of the North Star at night. Calculating longitude, which measures east-to-west position, proved far more dangerous and elusive. Without a reliable way to know their exact longitude, ships routinely drifted off course, missed supply islands, or struck uncharted reefs in the dark.',
-				'The key to longitude lay in keeping accurate time. Because the Earth rotates three hundred sixty degrees every twenty-four hours, it turns fifteen degrees every single hour. If a navigator knew the exact time at a fixed home port while simultaneously observing local noon aboard the ship, each hour of difference revealed fifteen degrees of longitude east or west. Unfortunately, early pendulum clocks failed aboard rolling wooden ships because ocean waves and shifting temperatures threw their gears out of rhythm.',
-				'In the eighteenth century, a self-taught English carpenter and clockmaker named John Harrison spent decades designing compact spring-driven sea watches known as marine chronometers. By pairing metals that expanded at different rates to cancel out temperature changes and eliminating pendulums altogether, Harrison’s fourth timepiece lost less than five seconds across an eighty-one-day voyage to Jamaica. His invention transformed global navigation and made ocean travel vastly safer.',
-			],
-			questions: [
-				{
-					question: 'How did sailors traditionally determine their north-to-south latitude at sea?',
-					options: [
-						'By measuring the height of the sun at noon or the North Star at night',
-						'By dropping a weighted rope to the ocean floor',
-						'By listening to radio beacons from shore',
-						'By tasting the salinity of the seawater',
-					],
-					correctIndex: 0,
-					explanation: 'Navigators measured the angle of the sun or the North Star above the horizon to find latitude.',
-				},
-				{
-					question: 'How many degrees does the Earth rotate in a single hour?',
-					options: ['Five degrees', 'Fifteen degrees', 'Ninety degrees', 'Three hundred sixty degrees'],
-					correctIndex: 1,
-					explanation: 'Dividing 360 degrees by 24 hours equals 15 degrees of rotation per hour.',
-				},
-				{
-					question: 'Why did early pendulum clocks fail on ocean voyages?',
-					options: [
-						'Rolling waves and temperature swings disrupted their pendulums and gears',
-						'Saltwater dissolved their glass faces',
-						'They could only run for thirty minutes at a time',
-						'Magnetic compasses stopped their hands from moving',
-					],
-					correctIndex: 0,
-					explanation: 'A pitching ship deck and changing climate ruined the steady swing of a pendulum.',
-				},
-				{
-					question: 'What was John Harrison’s original trade before building marine chronometers?',
-					options: ['Royal Navy admiral', 'Self-taught carpenter and clockmaker', 'University astronomer', 'Glass lens grinder'],
-					correctIndex: 1,
-					explanation: 'John Harrison was a self-taught English carpenter who mastered precision clockmaking.',
-				},
-				{
-					question: 'How accurate was Harrison’s fourth timepiece on its eighty-one-day voyage to Jamaica?',
-					options: [
-						'It lost less than five seconds',
-						'It lost roughly two hours',
-						'It stopped working halfway across the Atlantic',
-						'It gained ten minutes per week',
-					],
-					correctIndex: 0,
-					explanation: 'Harrison’s H4 marine watch lost under five seconds across the entire 81-day Atlantic crossing.',
-				},
-			],
-		},
-		{
-			id: 'chal-1',
-			difficulty: 'challenge',
-			difficultyLabel: 'Challenge (~500w)',
-			topic: 'Attention & learning',
-			title: 'Deep Reading vs. Rapid Skimming in a Digital World',
-			paragraphs: [
-				'Over the past two decades, the average person’s daily diet of written words has grown substantially. Between emails, messaging apps, documentation, and news feeds, modern readers process thousands of words before lunch. To cope with this volume, our brains naturally develop an adaptive habit known as non-linear skimming: we scan headings, look for bullet points, and jump across paragraphs in an F-shaped pattern to extract key facts as quickly as possible.',
-				'Skimming is a genuinely useful skill when triaging an inbox or searching a technical manual for a specific setting. However, cognitive researchers have found that using a skimming mindset for every piece of writing comes with a subtle trade-off. When we rush past sentences at 400 or 500 words per minute, working memory has less time to connect new ideas with existing knowledge, notice nuanced arguments, or recall details an hour later.',
-				'Deep reading operates on a different cadence. At a comfortable silent pace—typically between 200 and 280 words per minute for most adults—the brain allocates time for inference and mental imagery. Instead of merely decoding surface words, you pause for fractions of a second at the end of clauses to weigh whether a claim makes sense. Studies comparing comprehension across formats consistently show that readers who slow down slightly on dense non-fiction retain significantly more information than those who race to the bottom of the screen.',
-				'Another factor influencing comprehension is physical spatial memory. When you read a printed book, your fingers feel the thickness of the pages on the left versus the right, and your eyes remember whether an important paragraph sat near the top-left corner or bottom-right corner of a two-page spread. On a continuously scrolling screen, text moves upward through a single frame, removing those fixed geographic landmarks that help anchor long-term recall.',
-				'Fortunately, switching between rapid scanning and deep focus is a skill anyone can deliberately practice. Giving yourself a distraction-free page, choosing a comfortable column width, and setting aside even fifteen uninterrupted minutes signals to your attention system that there is no need to rush. By matching your reading speed to the purpose of the text—skimming lightly for quick lookups and settling into a steady cadence for complex ideas—you get the best of both worlds: efficiency when you need answers fast, and lasting understanding when depth matters most.',
-			],
-			questions: [
-				{
-					question: 'What reading pattern do people commonly use when quickly scanning digital pages?',
-					options: [
-						'Reading from the bottom paragraph upward',
-						'Non-linear skimming in an F-shaped pattern across headings and bullets',
-						'Reading every word twice out loud',
-						'Diagonal spiral reading from the center outward',
-					],
-					correctIndex: 1,
-					explanation: 'Digital readers frequently scan headings and openings in an F-shaped pattern.',
-				},
-				{
-					question: 'What happens when a reader rushes through dense non-fiction at 400–500 WPM?',
-					options: [
-						'Working memory has less time to connect ideas and retain details',
-						'Long-term comprehension automatically doubles',
-						'Eye fixations last several seconds per letter',
-						'Spatial memory landmarks become stronger',
-					],
-					correctIndex: 0,
-					explanation: 'Rushing at 400–500 WPM deprives working memory of the time needed to link and store complex ideas.',
-				},
-				{
-					question: 'What typical silent reading range supports strong inference and deep reading for most adults?',
-					options: [
-						'Between 50 and 80 WPM',
-						'Between 200 and 280 WPM',
-						'Between 550 and 700 WPM',
-						'Over 850 WPM',
-					],
-					correctIndex: 1,
-					explanation: 'A steady silent cadence of 200 to 280 WPM gives the brain room for inference and imagery.',
-				},
-				{
-					question: 'How do printed books support spatial memory differently than scrolling screens?',
-					options: [
-						'Fixed page corners and page thickness provide physical landmarks for recall',
-						'Printed ink glows in the dark to boost memory',
-						'Printed books use a faster refresh rate',
-						'Paper pages automatically summarize each chapter',
-					],
-					correctIndex: 0,
-					explanation: 'Physical pages provide fixed visual corners and tactile thickness cues that anchor memory.',
-				},
-				{
-					question: 'What practical strategy does the passage recommend at the end?',
-					options: [
-						'Eliminating all digital screens permanently',
-						'Matching your reading speed to the purpose of the text',
-						'Forcing yourself to read every email at 100 WPM',
-						'Skimming novels at 600 WPM',
-					],
-					correctIndex: 1,
-					explanation: 'Skim lightly for quick lookups, and slow down to a steady pace when reading for depth.',
-				},
-			],
-		},
-		{
-			id: 'chal-2',
-			difficulty: 'challenge',
-			difficultyLabel: 'Challenge (~500w)',
-			topic: 'Neuroscience & health',
-			title: 'How the Brain Consolidates Memory During Sleep',
-			paragraphs: [
-				'For much of the twentieth century, scientists viewed sleep as a passive shutdown—a nightly maintenance period when the brain simply rested to conserve energy after waking hours. Modern neuroimaging and electrical recordings tell a very different story. Far from turning off, the sleeping brain runs a highly coordinated series of biological routines that sort, strengthen, and reorganize everything you learned during the day.',
-				'Throughout waking life, new experiences and facts are temporarily recorded in the hippocampus, a seahorse-shaped structure deep inside the temporal lobe that acts like a fast-writing notepad. Because the hippocampus has limited storage capacity, those fresh traces are fragile and easily overwritten by the next day’s events. To become permanent knowledge, memories must be transferred outward to the neocortex, the wrinkled outer layer of the brain responsible for long-term storage and complex reasoning.',
-				'That transfer happens primarily during deep slow-wave sleep. As brain waves slow into rhythmic oscillations, the hippocampus replays the day’s neural firing patterns at high speed, sending bursts of electrical activity called sharp-wave ripples toward the neocortex. Each replay strengthens the synaptic connections between cortical neurons, gradually weaving new vocabulary, motor skills, or conceptual insights into your existing web of knowledge so you can recall them effortlessly weeks later.',
-				'Later in the night, rapid eye movement (REM) sleep takes over a complementary role. While deep slow-wave sleep cements factual details and procedures, REM sleep cross-references new memories with older experiences stored years ago. By testing unexpected associations in a neurochemically relaxed environment, the dreaming brain spots creative patterns and strips away the raw emotional sting of stressful events, leaving behind useful lessons without the initial anxiety.',
-				'At the same time, a microscopic plumbing network known as the glymphatic system opens channels between brain cells, allowing cerebrospinal fluid to flush away metabolic byproducts that accumulate during focused thinking. This nightly combination of synaptic filing and cellular cleanup explains why pulling an all-nighter before an exam or presentation backfires: without uninterrupted sleep cycles, the brain’s temporary notepad stays cluttered and newly studied material never locks into long-term memory.',
-			],
-			questions: [
-				{
-					question: 'Which brain structure acts like a fast-writing temporary notepad for new daily facts?',
-					options: ['The hippocampus', 'The cerebellum', 'The optic nerve', 'The spinal cord'],
-					correctIndex: 0,
-					explanation: 'The hippocampus temporarily encodes fresh daily experiences before long-term transfer.',
-				},
-				{
-					question: 'Where are memories transferred for permanent long-term storage?',
-					options: ['To the neocortex', 'To the inner ear', 'To the retina', 'To the brain stem'],
-					correctIndex: 0,
-					explanation: 'During sleep, memories move from the hippocampus to the neocortex for durable storage.',
-				},
-				{
-					question: 'During which stage of sleep does the hippocampus replay neural patterns to cement facts?',
-					options: [
-						'Deep slow-wave sleep',
-						'Brief afternoon daydreaming',
-						'The first thirty seconds after waking up',
-						'Light blinking while reading',
-					],
-					correctIndex: 0,
-					explanation: 'Deep slow-wave sleep drives high-speed neural replay and synaptic consolidation.',
-				},
-				{
-					question: 'What special role does REM sleep play in memory processing?',
-					options: [
-						'It cross-references new memories with older experiences and softens emotional stress',
-						'It erases all childhood memories to save space',
-						'It stops all electrical activity in the cortex',
-						'It prevents the eyes from moving',
-					],
-					correctIndex: 0,
-					explanation: 'REM sleep builds creative associations across older memories and reduces emotional reactivity.',
-				},
-				{
-					question: 'What is the function of the brain’s glymphatic system during sleep?',
-					options: [
-						'It flushes away metabolic byproducts using cerebrospinal fluid',
-						'It translates spoken language into visual images',
-						'It increases heart rate and blood pressure',
-						'It blocks oxygen from reaching neurons',
-					],
-					correctIndex: 0,
-					explanation: 'The glymphatic system clears metabolic waste from between brain cells during sleep.',
-				},
-			],
-		},
-	];
+	function loadClientI18n(): ClientI18nPayload | null {
+		const el = document.getElementById('rst-i18n');
+		if (!el?.textContent) return null;
+		try {
+			return JSON.parse(el.textContent) as ClientI18nPayload;
+		} catch {
+			return null;
+		}
+	}
 
-	const AGE_BENCHMARKS: Record<string, { label: string; avgWpm: number }> = {
-		under13: { label: 'Under 13', avgWpm: 165 },
-		'13-17': { label: 'Ages 13–17', avgWpm: 205 },
-		'18-24': { label: 'Ages 18–24', avgWpm: 245 },
-		'25-34': { label: 'Ages 25–34', avgWpm: 238 },
-		'35plus': { label: 'Ages 35+', avgWpm: 230 },
-	};
+	function fmt(template: string, vars: Record<string, string | number>): string {
+		return template.replace(/\{(\w+)\}/g, (_, name: string) => String(vars[name] ?? `{${name}}`));
+	}
 
 	function countWords(text: string): number {
 		const cleaned = text.trim();
@@ -1312,23 +1100,41 @@ const speechTool = getToolById('speech-time-calculator');
 		return countWords(paragraphs.join(' '));
 	}
 
-	function computeAdultPercentileAndProfile(wpm: number): { percentile: number; profile: string } {
-		const z = (wpm - 238) / 70;
-		const rawPct = Math.round(100 / (1 + Math.exp(-1.702 * z)));
-		const percentile = Math.max(1, Math.min(99, rawPct));
-
-		let profile = 'Average Reader';
-		if (wpm < 170) profile = 'Careful Reader';
-		else if (wpm < 220) profile = 'Steady Reader';
-		else if (wpm <= 265) profile = 'Average Reader';
-		else if (wpm <= 350) profile = 'Fast Reader';
-		else if (wpm <= 500) profile = 'Speed Reader';
-		else profile = 'Rapid Skimmer';
-
-		return { percentile, profile };
-	}
-
 	function initReadingSpeedWizard() {
+		const i18nPayload = loadClientI18n();
+		if (!i18nPayload || !Array.isArray(i18nPayload.passages) || i18nPayload.passages.length === 0) {
+			return;
+		}
+
+		const S = i18nPayload.strings;
+		const PASSAGES = i18nPayload.passages;
+		const LOCALE = i18nPayload.locale || 'en';
+		const SHARE_URL = i18nPayload.shareUrl || 'https://wordora.site/reading-speed-test/';
+
+		const AGE_BENCHMARKS: Record<string, { label: string; avgWpm: number }> = {
+			under13: { label: S.ageBenchmarks.under13, avgWpm: 165 },
+			'13-17': { label: S.ageBenchmarks['13-17'], avgWpm: 205 },
+			'18-24': { label: S.ageBenchmarks['18-24'], avgWpm: 245 },
+			'25-34': { label: S.ageBenchmarks['25-34'], avgWpm: 238 },
+			'35plus': { label: S.ageBenchmarks['35plus'], avgWpm: 230 },
+		};
+
+		function computeAdultPercentileAndProfile(wpm: number): { percentile: number; profile: string } {
+			const z = (wpm - 238) / 70;
+			const rawPct = Math.round(100 / (1 + Math.exp(-1.702 * z)));
+			const percentile = Math.max(1, Math.min(99, rawPct));
+
+			let profile = S.profiles.average;
+			if (wpm < 170) profile = S.profiles.careful;
+			else if (wpm < 220) profile = S.profiles.steady;
+			else if (wpm <= 265) profile = S.profiles.average;
+			else if (wpm <= 350) profile = S.profiles.fast;
+			else if (wpm <= 500) profile = S.profiles.speed;
+			else profile = S.profiles.skimmer;
+
+			return { percentile, profile };
+		}
+
 		let activeView: 'wizard' | 'history' = 'wizard';
 		let currentStep: WizardStep = 'setup';
 		let currentMode: 'standard' | 'rsvp' = 'standard';
@@ -1338,9 +1144,7 @@ const speechTool = getToolById('speech-time-calculator');
 			intermediate: 0,
 			challenge: 0,
 		};
-		let customParagraphs: string[] = [
-			'When you read a page of text, your eyes move in quick jumps called saccades and pause briefly on clusters of letters. Paste your own article or notes in Setup to test your silent reading speed on any custom text.',
-		];
+		let customParagraphs: string[] = [S.customDefaultParagraph];
 
 		let quizLength: 0 | 3 | 5 = 3;
 		let fontSizeMode: 'sm' | 'md' | 'lg' = 'md';
@@ -1463,9 +1267,9 @@ const speechTool = getToolById('speech-time-calculator');
 		function getActivePassage() {
 			if (currentDifficulty === 'custom') {
 				return {
-					title: 'Your Custom Text Passage',
-					topic: 'Custom pasted text',
-					difficultyLabel: 'Custom text',
+					title: S.customPassageTitle,
+					topic: S.customPassageTopic,
+					difficultyLabel: S.customDifficultyLabel,
 					paragraphs: customParagraphs,
 					questions: [] as QuizQuestion[],
 					indexInDiff: 1,
@@ -1519,7 +1323,7 @@ const speechTool = getToolById('speech-time-calculator');
 				const span = rsvpPlayBtn.querySelector('span');
 				if (span) {
 					span.textContent =
-						rsvpCurrentIndex > 0 && rsvpCurrentIndex < rsvpUnits.length ? 'Resume' : 'Play';
+						rsvpCurrentIndex > 0 && rsvpCurrentIndex < rsvpUnits.length ? S.rsvpResume : S.rsvpPlay;
 				}
 			}
 		}
@@ -1633,7 +1437,7 @@ const speechTool = getToolById('speech-time-calculator');
 			// Sync all font-size buttons across Setup and Read windows
 			fontBtns.forEach((b) => {
 				const active = b.dataset.fontSize === fontSizeMode;
-				const isSetupBtn = b.textContent?.includes(' ');
+				const isSetupBtn = b.textContent?.trim().includes(' ');
 				const borderClasses = b.dataset.fontSize === 'md' ? 'border-x border-hairline ' : '';
 				const textScale =
 					b.dataset.fontSize === 'sm'
@@ -1670,7 +1474,12 @@ const speechTool = getToolById('speech-time-calculator');
 					quizLengthSelect.disabled = false;
 				}
 				if (setupPassageMeta) {
-					setupPassageMeta.textContent = `${active.topic} · Passage ${active.indexInDiff} of ${active.totalInDiff} · ${words} words`;
+					setupPassageMeta.textContent = fmt(S.passageMeta, {
+						topic: active.topic,
+						index: active.indexInDiff,
+						total: active.totalInDiff,
+						words,
+					});
 				}
 				if (setupPassageTitle) {
 					setupPassageTitle.textContent = active.title;
@@ -1678,10 +1487,18 @@ const speechTool = getToolById('speech-time-calculator');
 			}
 
 			const qCount = getEffectiveQuizCount();
-			const modeLabel = currentMode === 'rsvp' ? `RSVP Trainer (${rsvpTargetWpm} WPM)` : 'Standard Test';
-			const quizLabel = qCount === 0 ? 'Speed only (no quiz)' : `${qCount}-question memory quiz`;
+			const modeLabel =
+				currentMode === 'rsvp'
+					? fmt(S.modeRsvpLabel, { wpm: rsvpTargetWpm })
+					: S.modeStandardLabel;
+			const quizLabel =
+				qCount === 0 ? S.quizSpeedOnlyLabel : fmt(S.quizCountLabel, { count: qCount });
 			if (setupSummaryLine) {
-				setupSummaryLine.textContent = `${modeLabel} · ${words} words · ${quizLabel}`;
+				setupSummaryLine.textContent = fmt(S.setupSummary, {
+					mode: modeLabel,
+					words,
+					quiz: quizLabel,
+				});
 			}
 		}
 
@@ -1714,7 +1531,10 @@ const speechTool = getToolById('speech-time-calculator');
 			const pct = totalWords > 0 ? Math.min(100, Math.round((wordsDone / totalWords) * 100)) : 0;
 
 			if (rsvpProgressLabel) {
-				rsvpProgressLabel.textContent = `${wordsDone} / ${totalWords} words`;
+				rsvpProgressLabel.textContent = fmt(S.rsvpProgress, {
+					done: wordsDone,
+					total: totalWords,
+				});
 			}
 			if (rsvpProgressBar) {
 				rsvpProgressBar.style.width = `${pct}%`;
@@ -1724,7 +1544,11 @@ const speechTool = getToolById('speech-time-calculator');
 			const mins = Math.floor(secsLeft / 60);
 			const secs = String(secsLeft % 60).padStart(2, '0');
 			if (rsvpTimeRemaining) {
-				rsvpTimeRemaining.textContent = `~${mins}:${secs} at ${rsvpTargetWpm} WPM`;
+				rsvpTimeRemaining.textContent = fmt(S.rsvpTimeRemaining, {
+					mins,
+					secs,
+					wpm: rsvpTargetWpm,
+				});
 			}
 		}
 
@@ -1755,7 +1579,7 @@ const speechTool = getToolById('speech-time-calculator');
 				const wc = countWords(raw);
 				if (wc < 10) {
 					if (customHint) {
-						customHint.textContent = 'Please paste or type at least 10 words before starting.';
+						customHint.textContent = S.customMinWordsError;
 						customHint.className = 'mt-2 text-[12px] font-medium text-vercel-error';
 					}
 					customTextarea?.focus();
@@ -1773,12 +1597,19 @@ const speechTool = getToolById('speech-time-calculator');
 			const active = getActivePassage();
 			const words = countPassageWords(active.paragraphs);
 
-			if (readWordBadge) readWordBadge.textContent = `${words} words`;
+			if (readWordBadge) {
+				readWordBadge.textContent = `${words} ${words === 1 ? S.wordSingular : S.wordsPlural}`;
+			}
 			if (readTopic) readTopic.textContent = active.topic;
 			if (readTitle) readTitle.textContent = active.title;
 			if (rsvpTitle) rsvpTitle.textContent = active.title;
 			if (readParagraphs) {
-				readParagraphs.innerHTML = active.paragraphs.map((p) => `<p>${p}</p>`).join('');
+				readParagraphs.innerHTML = '';
+				active.paragraphs.forEach((p) => {
+					const para = document.createElement('p');
+					para.textContent = p;
+					readParagraphs.appendChild(para);
+				});
 			}
 
 			applyFontSize();
@@ -1804,7 +1635,7 @@ const speechTool = getToolById('speech-time-calculator');
 				rsvpRunning = true;
 				if (rsvpPlayBtn) {
 					const span = rsvpPlayBtn.querySelector('span');
-					if (span) span.textContent = 'Pause';
+					if (span) span.textContent = S.rsvpPause;
 				}
 				updateRsvpProgressUI();
 				stepRsvp();
@@ -1854,10 +1685,10 @@ const speechTool = getToolById('speech-time-calculator');
 			const questions = active.questions.slice(0, qCount);
 
 			if (quizSpeedPill) {
-				quizSpeedPill.textContent = `Raw speed recorded: ${rawWpm} WPM`;
+				quizSpeedPill.textContent = fmt(S.rawSpeedRecorded, { wpm: rawWpm });
 			}
 			if (quizHeading) {
-				quizHeading.textContent = `${qCount}-question memory check`;
+				quizHeading.textContent = fmt(S.quizHeadingCount, { count: qCount });
 			}
 
 			if (!quizQuestionsList) return;
@@ -1904,16 +1735,23 @@ const speechTool = getToolById('speech-time-calculator');
 
 			const answeredCount = userAnswers.filter((a) => a !== null).length;
 			if (quizProgressBadge) {
-				quizProgressBadge.textContent = `${answeredCount} of ${qCount} selected`;
+				quizProgressBadge.textContent = fmt(S.quizProgress, {
+					answered: answeredCount,
+					total: qCount,
+				});
 			}
 			if (btnSubmitQuiz) {
 				btnSubmitQuiz.disabled = answeredCount < qCount;
 			}
 			if (quizHelperMsg) {
+				const remaining = qCount - answeredCount;
 				quizHelperMsg.textContent =
-					answeredCount < qCount
-						? `Select ${qCount - answeredCount} more ${qCount - answeredCount === 1 ? 'answer' : 'answers'} to view your results.`
-						: 'All questions answered. Click Submit & View Results.';
+					remaining > 0
+						? fmt(
+								remaining === 1 ? S.quizHelperRemainingSingular : S.quizHelperRemainingPlural,
+								{ remaining },
+							)
+						: S.quizHelperReady;
 			}
 		}
 
@@ -1939,7 +1777,10 @@ const speechTool = getToolById('speech-time-calculator');
 			const peerAvg = ageInfo.avgWpm;
 
 			if (ageBenchmarkLabel) {
-				ageBenchmarkLabel.textContent = `${peerAvg} WPM (${ageInfo.label} avg)`;
+				ageBenchmarkLabel.textContent = fmt(S.ageBenchmarkLabel, {
+					avg: peerAvg,
+					label: ageInfo.label,
+				});
 			}
 			const markerPct = Math.max(5, Math.min(95, ((peerAvg - 100) / 400) * 100));
 			if (ageMarker) {
@@ -1955,11 +1796,27 @@ const speechTool = getToolById('speech-time-calculator');
 			}
 			if (comparisonDetail) {
 				if (diff === 0) {
-					comparisonDetail.innerHTML = `Your reading rate of <strong class="font-semibold text-ink tabular-nums">${rawWpm} WPM</strong> matches the <strong class="font-semibold text-ink tabular-nums">${peerAvg} WPM</strong> benchmark for ${ageInfo.label}.`;
+					comparisonDetail.innerHTML = fmt(S.comparisonExactHtml, {
+						rawWpm,
+						peerAvg,
+						ageLabel: ageInfo.label,
+					});
 				} else if (diff > 0) {
-					comparisonDetail.innerHTML = `At <strong class="font-semibold text-ink tabular-nums">${rawWpm} WPM</strong>, you read <strong class="font-semibold text-ink tabular-nums">${diff} WPM faster</strong> (+${pctDiff}%) than the ${ageInfo.label} benchmark (${peerAvg} WPM).`;
+					comparisonDetail.innerHTML = fmt(S.comparisonFasterHtml, {
+						rawWpm,
+						diff,
+						pctDiff,
+						ageLabel: ageInfo.label,
+						peerAvg,
+					});
 				} else {
-					comparisonDetail.innerHTML = `At <strong class="font-semibold text-ink tabular-nums">${rawWpm} WPM</strong>, you are <strong class="font-semibold text-ink tabular-nums">${Math.abs(diff)} WPM below</strong> (${pctDiff}% slower than) the ${ageInfo.label} benchmark (${peerAvg} WPM).`;
+					comparisonDetail.innerHTML = fmt(S.comparisonSlowerHtml, {
+						rawWpm,
+						diff: Math.abs(diff),
+						pctDiff,
+						ageLabel: ageInfo.label,
+						peerAvg,
+					});
 				}
 			}
 
@@ -1970,42 +1827,71 @@ const speechTool = getToolById('speech-time-calculator');
 			const booksPerYear = wordsPerYear / 90000;
 
 			if (booksPerYearOutput) {
-				booksPerYearOutput.textContent = `${booksPerYear.toFixed(1)} books / yr`;
+				booksPerYearOutput.textContent = fmt(S.booksPerYearOutput, {
+					books: booksPerYear.toLocaleString(LOCALE, {
+						minimumFractionDigits: 1,
+						maximumFractionDigits: 1,
+					}),
+				});
 			}
 			if (booksPerYearSub) {
-				booksPerYearSub.textContent = `At ${activeSpeed} WPM pace · ~${Math.round(wordsPerYear).toLocaleString()} words/year`;
+				booksPerYearSub.textContent = fmt(S.booksPerYearSub, {
+					wpm: activeSpeed,
+					words: Math.round(wordsPerYear).toLocaleString(LOCALE),
+				});
 			}
 		}
 
 		function renderResultsWindow() {
 			const active = getActivePassage();
 			const words = countPassageWords(active.paragraphs);
-			const secondsRounded = (elapsedMs / 1000).toFixed(1);
+			const secondsRounded = (elapsedMs / 1000).toLocaleString(LOCALE, {
+				minimumFractionDigits: 1,
+				maximumFractionDigits: 1,
+			});
 			const qCount = getEffectiveQuizCount();
 
-			if (resRawWpm) resRawWpm.textContent = rawWpm.toLocaleString();
-			if (resRawSub) resRawSub.textContent = `${words} words in ${secondsRounded}s`;
+			if (resRawWpm) resRawWpm.textContent = rawWpm.toLocaleString(LOCALE);
+			if (resRawSub) {
+				resRawSub.textContent = fmt(S.resRawSub, {
+					words,
+					seconds: secondsRounded,
+				});
+			}
 
 			if (qCount === 0 || accuracyPct === null) {
-				if (resCompPct) resCompPct.textContent = 'Speed only';
-				if (resCompSub) resCompSub.textContent = 'Quiz bypassed';
-				if (resEffectiveWpm) resEffectiveWpm.textContent = rawWpm.toLocaleString();
-				if (resEffectiveSub) resEffectiveSub.textContent = 'Unadjusted speed-only WPM';
+				if (resCompPct) resCompPct.textContent = S.speedOnlyShort;
+				if (resCompSub) resCompSub.textContent = S.quizBypassed;
+				if (resEffectiveWpm) resEffectiveWpm.textContent = rawWpm.toLocaleString(LOCALE);
+				if (resEffectiveSub) resEffectiveSub.textContent = S.effectiveSpeedOnlySub;
 			} else {
 				const questions = active.questions.slice(0, qCount);
 				const correctCount = questions.reduce((acc, q, idx) => {
 					return acc + (userAnswers[idx] === q.correctIndex ? 1 : 0);
 				}, 0);
 				if (resCompPct) resCompPct.textContent = `${accuracyPct}%`;
-				if (resCompSub) resCompSub.textContent = `${correctCount} of ${qCount} correct`;
-				if (resEffectiveWpm) resEffectiveWpm.textContent = effectiveWpm.toLocaleString();
-				if (resEffectiveSub) resEffectiveSub.textContent = `${rawWpm} WPM × ${accuracyPct}% accuracy`;
+				if (resCompSub) {
+					resCompSub.textContent = fmt(S.resCompSub, {
+						correct: correctCount,
+						total: qCount,
+					});
+				}
+				if (resEffectiveWpm) resEffectiveWpm.textContent = effectiveWpm.toLocaleString(LOCALE);
+				if (resEffectiveSub) {
+					resEffectiveSub.textContent = fmt(S.resEffectiveSub, {
+						rawWpm,
+						accuracy: accuracyPct,
+					});
+				}
 			}
 
 			const { percentile, profile } = computeAdultPercentileAndProfile(rawWpm);
 			if (resProfile) resProfile.textContent = profile;
 			if (resPercentile) {
-				resPercentile.textContent = `Faster than ${percentile}% of adult readers · ${profile}`;
+				resPercentile.textContent = fmt(S.resPercentile, {
+					percentile,
+					profile,
+				});
 			}
 
 			if (skimWarning) {
@@ -2025,14 +1911,18 @@ const speechTool = getToolById('speech-time-calculator');
 						return acc + (userAnswers[idx] === q.correctIndex ? 1 : 0);
 					}, 0);
 					if (reviewSummaryBadge) {
-						reviewSummaryBadge.textContent = `${correctCount} of ${qCount} correct (${accuracyPct}%)`;
+						reviewSummaryBadge.textContent = fmt(S.reviewSummaryBadge, {
+							correct: correctCount,
+							total: qCount,
+							accuracy: accuracyPct ?? 0,
+						});
 					}
 					answerReviewList.innerHTML = '';
 
 					questions.forEach((q, qIdx) => {
 						const chosenIdx = userAnswers[qIdx];
 						const isCorrect = chosenIdx === q.correctIndex;
-						const chosenText = chosenIdx !== null ? q.options[chosenIdx] : 'No answer';
+						const chosenText = chosenIdx !== null ? q.options[chosenIdx] : S.noAnswer;
 						const correctText = q.options[q.correctIndex];
 
 						const item = document.createElement('div');
@@ -2050,18 +1940,18 @@ const speechTool = getToolById('speech-time-calculator');
 						badge.className = isCorrect
 							? 'shrink-0 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400'
 							: 'shrink-0 rounded-full bg-vercel-error/15 px-2.5 py-0.5 text-[11px] font-semibold text-vercel-error';
-						badge.textContent = isCorrect ? 'Correct' : 'Incorrect';
+						badge.textContent = isCorrect ? S.badgeCorrect : S.badgeIncorrect;
 						headerRow.appendChild(badge);
 						item.appendChild(headerRow);
 
 						const detail = document.createElement('div');
 						detail.className = 'mt-2 space-y-1 text-[12px]';
 						if (isCorrect) {
-							detail.innerHTML = `<p class="text-body">Your answer: <strong class="font-medium text-ink">${chosenText}</strong></p>`;
+							detail.innerHTML = `<p class="text-body">${S.yourAnswerLabel} <strong class="font-medium text-ink">${chosenText}</strong></p>`;
 						} else {
 							detail.innerHTML = `
-								<p class="text-vercel-error">Your answer: <strong class="font-medium">${chosenText}</strong></p>
-								<p class="text-body">Correct answer: <strong class="font-medium text-ink">${correctText}</strong></p>
+								<p class="text-vercel-error">${S.yourAnswerLabel} <strong class="font-medium">${chosenText}</strong></p>
+								<p class="text-body">${S.correctAnswerLabel} <strong class="font-medium text-ink">${correctText}</strong></p>
 							`;
 						}
 						item.appendChild(detail);
@@ -2083,7 +1973,7 @@ const speechTool = getToolById('speech-time-calculator');
 				rawWpm,
 				accuracyPct,
 				effectiveWpm,
-				timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+				timestamp: new Date().toLocaleTimeString(LOCALE, { hour: '2-digit', minute: '2-digit' }),
 			});
 		}
 
@@ -2136,7 +2026,7 @@ const speechTool = getToolById('speech-time-calculator');
 
 			historyTbody.innerHTML = records
 				.map((r) => {
-					const compLabel = r.accuracyPct !== null ? `${r.accuracyPct}%` : 'Speed only';
+					const compLabel = r.accuracyPct !== null ? `${r.accuracyPct}%` : S.speedOnlyShort;
 					return `
 						<tr>
 							<td class="py-2.5 pr-4">
@@ -2164,9 +2054,14 @@ const speechTool = getToolById('speech-time-calculator');
 					? `${Math.round(withQuiz.reduce((acc, r) => acc + (r.accuracyPct ?? 0), 0) / withQuiz.length)}%`
 					: '—';
 
+			const avgRowLabel = fmt(
+				records.length === 1 ? S.historyAverageSingular : S.historyAveragePlural,
+				{ count: records.length },
+			);
+
 			historyTfoot.innerHTML = `
 				<tr>
-					<td class="py-2.5 pr-4 font-semibold text-ink">Average (${records.length} ${records.length === 1 ? 'test' : 'tests'})</td>
+					<td class="py-2.5 pr-4 font-semibold text-ink">${avgRowLabel}</td>
 					<td class="px-3 py-2.5 font-semibold text-ink tabular-nums">${avgRawWpm} WPM</td>
 					<td class="px-3 py-2.5 font-semibold text-ink tabular-nums">${avgAccLabel}</td>
 					<td class="px-3 py-2.5 font-semibold text-ink tabular-nums">${avgEffectiveWpm} WPM</td>
@@ -2236,7 +2131,7 @@ const speechTool = getToolById('speech-time-calculator');
 		customTextarea?.addEventListener('input', () => {
 			const wc = countWords(customTextarea.value);
 			if (customWordBadge) {
-				customWordBadge.textContent = `${wc} ${wc === 1 ? 'word' : 'words'}`;
+				customWordBadge.textContent = `${wc} ${wc === 1 ? S.wordSingular : S.wordsPlural}`;
 			}
 			if (wc >= 10) {
 				customParagraphs = customTextarea.value
@@ -2245,7 +2140,7 @@ const speechTool = getToolById('speech-time-calculator');
 					.map((p) => p.trim())
 					.filter(Boolean);
 				if (customHint) {
-					customHint.textContent = 'Custom text ready. Click Start Reading Test below.';
+					customHint.textContent = S.customReadyHint;
 					customHint.className = 'mt-2 text-[12px] text-mute';
 				}
 				renderSetupWindow();
@@ -2295,7 +2190,7 @@ const speechTool = getToolById('speech-time-calculator');
 				rsvpCurrentIndex = 0;
 				applyFontSize();
 				updateRsvpProgressUI();
-				if (rsvpDisplay) rsvpDisplay.textContent = rsvpUnits[0] || 'Ready';
+				if (rsvpDisplay) rsvpDisplay.textContent = rsvpUnits[0] || S.rsvpReady;
 			});
 		});
 
@@ -2315,7 +2210,7 @@ const speechTool = getToolById('speech-time-calculator');
 			}
 			rsvpRunning = true;
 			const span = rsvpPlayBtn.querySelector('span');
-			if (span) span.textContent = 'Pause';
+			if (span) span.textContent = S.rsvpPause;
 			stepRsvp();
 		});
 
@@ -2326,7 +2221,7 @@ const speechTool = getToolById('speech-time-calculator');
 			rsvpRunning = true;
 			if (rsvpPlayBtn) {
 				const span = rsvpPlayBtn.querySelector('span');
-				if (span) span.textContent = 'Pause';
+				if (span) span.textContent = S.rsvpPause;
 			}
 			stepRsvp();
 		});
@@ -2356,14 +2251,20 @@ const speechTool = getToolById('speech-time-calculator');
 
 		btnCopyResult?.addEventListener('click', async () => {
 			const { percentile, profile } = computeAdultPercentileAndProfile(rawWpm);
-			const summaryText = `Reading Speed Test (Wordora): ${rawWpm} WPM Raw · ${effectiveWpm} Effective WPM · ${profile} (faster than ${percentile}% of adult readers) — https://wordora.site/reading-speed-test/`;
+			const summaryText = fmt(S.copySummary, {
+				rawWpm,
+				effectiveWpm,
+				profile,
+				percentile,
+				url: SHARE_URL,
+			});
 			try {
 				await navigator.clipboard.writeText(summaryText);
 				if (btnCopyResult) {
 					const prev = btnCopyResult.textContent;
-					btnCopyResult.textContent = 'Copied!';
+					btnCopyResult.textContent = S.copiedLabel;
 					window.setTimeout(() => {
-						btnCopyResult.textContent = prev || 'Copy Result';
+						btnCopyResult.textContent = prev || S.copyResultLabel;
 					}, 1800);
 				}
 			} catch {

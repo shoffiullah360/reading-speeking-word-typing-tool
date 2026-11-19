@@ -1,15 +1,82 @@
 ---
-import { localePath } from '../i18n/ui';
-import { getToolById } from '../config/site';
+import { getLocaleFromUrl, getLocalizedPath, useTranslations, type Locale } from '../i18n/ui';
+import { getToolById, resolveCanonicalUrl } from '../config/site';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 
 const readingTool = getToolById('reading-time-calculator');
 const wordCounterTool = getToolById('word-counter');
 const speechTool = getToolById('speech-time-calculator');
+
+const canonicalPageUrl = resolveCanonicalUrl(getLocalizedPath('/words-to-pages/', locale));
+
+const clientI18n = {
+	zeroTime: t('wordsToPages.client.zeroTime'),
+	timeHrMin: t('wordsToPages.client.timeHrMin'),
+	timeMinSec: t('wordsToPages.client.timeMinSec'),
+	spacingSingle: t('wordsToPages.client.spacingSingle'),
+	spacing15: t('wordsToPages.client.spacing15'),
+	spacingDouble: t('wordsToPages.client.spacingDouble'),
+	spacingCustom: t('wordsToPages.client.spacingCustom'),
+	spacingOther: t('wordsToPages.client.spacingOther'),
+	activeSpacingDisplay: t('wordsToPages.client.activeSpacingDisplay'),
+	customOverride: t('wordsToPages.client.customOverride'),
+	autoCalculated: t('wordsToPages.client.autoCalculated'),
+	shortFormats: {
+		letter: t('wordsToPages.client.shortFormats.letter'),
+		a4: t('wordsToPages.client.shortFormats.a4'),
+		a5: t('wordsToPages.client.shortFormats.a5'),
+		b5: t('wordsToPages.client.shortFormats.b5'),
+		legal: t('wordsToPages.client.shortFormats.legal'),
+		digest: t('wordsToPages.client.shortFormats.digest'),
+		trade: t('wordsToPages.client.shortFormats.trade'),
+		hardcover: t('wordsToPages.client.shortFormats.hardcover'),
+	},
+	modePasted: t('wordsToPages.client.modePasted'),
+	modeW2P: t('wordsToPages.client.modeW2P'),
+	modeP2W: t('wordsToPages.client.modeP2W'),
+	parsedPasted: t('wordsToPages.client.parsedPasted'),
+	parsedWords: t('wordsToPages.client.parsedWords'),
+	shorthandHint: t('wordsToPages.client.shorthandHint'),
+	microstats: t('wordsToPages.client.microstats'),
+	pagesSingular: t('wordsToPages.client.pagesSingular'),
+	pagesPlural: t('wordsToPages.client.pagesPlural'),
+	fullPageSingular: t('wordsToPages.client.fullPageSingular'),
+	fullPagePlural: t('wordsToPages.client.fullPagePlural'),
+	sheetSingular: t('wordsToPages.client.sheetSingular'),
+	sheetPlural: t('wordsToPages.client.sheetPlural'),
+	doubleSidedSheetSingular: t('wordsToPages.client.doubleSidedSheetSingular'),
+	doubleSidedSheetPlural: t('wordsToPages.client.doubleSidedSheetPlural'),
+	pagesSub: t('wordsToPages.client.pagesSub'),
+	wordsSingular: t('wordsToPages.client.wordsSingular'),
+	wordsPlural: t('wordsToPages.client.wordsPlural'),
+	charsSub: t('wordsToPages.client.charsSub'),
+	forWordSingular: t('wordsToPages.client.forWordSingular'),
+	forWordsPlural: t('wordsToPages.client.forWordsPlural'),
+	copyResult: t('wordsToPages.client.copyResult'),
+	copyLink: t('wordsToPages.client.copyLink'),
+	copied: t('wordsToPages.client.copied'),
+	copyHeader: t('wordsToPages.client.copyHeader'),
+	copyEstimatedPages: t('wordsToPages.client.copyEstimatedPages'),
+	copyTotalWords: t('wordsToPages.client.copyTotalWords'),
+	copyCharacters: t('wordsToPages.client.copyCharacters'),
+	copyParagraphs: t('wordsToPages.client.copyParagraphs'),
+	copyWpp: t('wordsToPages.client.copyWpp'),
+	copySilentReading: t('wordsToPages.client.copySilentReading'),
+	copySpeakingTime: t('wordsToPages.client.copySpeakingTime'),
+	copyFooter: t('wordsToPages.client.copyFooter'),
+	pageUrl: canonicalPageUrl,
+};
 ---
 
 <section
 	id="words-to-pages-workspace"
-	aria-label="Words to Pages and Pages to Words Converter Workspace"
+	aria-label={t('wordsToPages.ui.workspaceLabel')}
 	class="mx-auto max-w-[1200px] px-4 pt-3 pb-8 sm:px-6"
 >
 	<!-- Top 2-Column Calculator Grid -->
@@ -22,7 +89,7 @@ const speechTool = getToolById('speech-time-calculator');
 				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-4 py-2.5">
 					<div
 						role="tablist"
-						aria-label="Words to pages converter modes"
+						aria-label={t('wordsToPages.ui.modesLabel')}
 						class="inline-flex items-center gap-1"
 					>
 						<button
@@ -34,7 +101,7 @@ const speechTool = getToolById('speech-time-calculator');
 							data-mode="w2p"
 							class="wtp-mode-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[12px] font-medium text-on-primary transition-all"
 						>
-							Words to pages
+							{t('wordsToPages.ui.tabWordsToPages')}
 						</button>
 						<button
 							type="button"
@@ -45,7 +112,7 @@ const speechTool = getToolById('speech-time-calculator');
 							data-mode="p2w"
 							class="wtp-mode-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[12px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
 						>
-							Pages to words
+							{t('wordsToPages.ui.tabPagesToWords')}
 						</button>
 					</div>
 
@@ -55,21 +122,21 @@ const speechTool = getToolById('speech-time-calculator');
 							id="wtp-btn-copy-result"
 							class="cursor-pointer rounded-sm border border-[#5ec4a3] bg-[#afe3d0] px-2.5 py-1 text-[12px] font-semibold text-[#0f2e26] transition-colors hover:bg-[#c5eedf] dark:border-transparent dark:bg-transparent dark:font-medium dark:text-mute dark:hover:bg-hairline-soft dark:hover:text-ink"
 						>
-							Copy result
+							{t('wordsToPages.ui.copyResult')}
 						</button>
 						<button
 							type="button"
 							id="wtp-btn-copy-link"
 							class="cursor-pointer rounded-sm px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
 						>
-							Copy link
+							{t('wordsToPages.ui.copyLink')}
 						</button>
 						<button
 							type="button"
 							id="wtp-btn-reset"
 							class="cursor-pointer rounded-sm px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
 						>
-							Reset defaults
+							{t('wordsToPages.ui.resetDefaults')}
 						</button>
 					</div>
 				</div>
@@ -85,10 +152,10 @@ const speechTool = getToolById('speech-time-calculator');
 					>
 						<div class="flex items-baseline justify-between gap-2">
 							<label for="wtp-words-input" class="text-[13px] font-medium text-ink">
-								Enter word count
+								{t('wordsToPages.ui.enterWordCount')}
 							</label>
 							<span id="wtp-words-parsed" class="text-[11px] text-mute tabular-nums">
-								Accepts shorthand: e.g. 1.5k or 2.5k
+								{t('wordsToPages.ui.shorthandHint')}
 							</span>
 						</div>
 
@@ -98,18 +165,18 @@ const speechTool = getToolById('speech-time-calculator');
 								type="text"
 								inputmode="text"
 								value=""
-								placeholder="e.g. 1,500 or 1.5k"
+								placeholder={t('wordsToPages.ui.wordsPlaceholder')}
 								class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 							/>
 							<span class="pointer-events-none absolute right-3 text-[12px] text-mute">
-								words
+								{t('wordsToPages.ui.unitWords')}
 							</span>
 						</div>
 
 						<!-- Quick Essay / Document Presets -->
 						<div>
 							<span class="mb-1 block text-[11px] font-medium text-mute">
-								Common document & essay presets
+								{t('wordsToPages.ui.wordPresetsLabel')}
 							</span>
 							<div class="flex flex-wrap gap-1">
 								{
@@ -143,10 +210,10 @@ const speechTool = getToolById('speech-time-calculator');
 					>
 						<div class="flex items-baseline justify-between gap-2">
 							<label for="wtp-pages-input" class="text-[13px] font-medium text-ink">
-								Enter target page count
+								{t('wordsToPages.ui.enterPageCount')}
 							</label>
 							<span class="text-[11px] text-mute tabular-nums">
-								Calculates target words to write
+								{t('wordsToPages.ui.pagesHint')}
 							</span>
 						</div>
 
@@ -158,18 +225,18 @@ const speechTool = getToolById('speech-time-calculator');
 								max="50000"
 								step="0.5"
 								value=""
-								placeholder="e.g. 6"
+								placeholder={t('wordsToPages.ui.pagesPlaceholder')}
 								class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 							/>
 							<span class="pointer-events-none absolute right-3 text-[12px] text-mute">
-								pages
+								{t('wordsToPages.ui.unitPages')}
 							</span>
 						</div>
 
 						<!-- Quick Page Presets -->
 						<div>
 							<span class="mb-1 block text-[11px] font-medium text-mute">
-								Common page count presets
+								{t('wordsToPages.ui.pagePresetsLabel')}
 							</span>
 							<div class="flex flex-wrap gap-1">
 								{
@@ -179,7 +246,7 @@ const speechTool = getToolById('speech-time-calculator');
 											data-pages-preset={pg}
 											class="wtp-page-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 										>
-											{pg} pages
+											{t('wordsToPages.ui.pagesPreset', { count: pg })}
 										</button>
 									))
 								}
@@ -191,14 +258,14 @@ const speechTool = getToolById('speech-time-calculator');
 					<div class="border-t border-hairline pt-3">
 						<div class="mb-1.5 flex items-baseline justify-between gap-2">
 							<label for="wtp-direct-paste" class="text-[12px] font-medium text-ink">
-								Or paste / type your text
+								{t('wordsToPages.ui.pasteLabel')}
 							</label>
 							<button
 								type="button"
 								id="wtp-direct-clear"
 								class="hidden cursor-pointer text-[11px] font-medium text-mute transition-colors hover:text-ink"
 							>
-								Clear
+								{t('wordsToPages.ui.clear')}
 							</button>
 						</div>
 
@@ -206,7 +273,7 @@ const speechTool = getToolById('speech-time-calculator');
 							<textarea
 								id="wtp-direct-paste"
 								rows="6"
-								placeholder="Paste your essay or draft here to count words, characters, and pages..."
+								placeholder={t('wordsToPages.ui.pastePlaceholder')}
 								class="w-full min-h-[145px] resize-y rounded-sm border border-hairline bg-canvas p-3 text-[13px] leading-relaxed text-ink placeholder:text-mute focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 							></textarea>
 						</div>
@@ -214,10 +281,10 @@ const speechTool = getToolById('speech-time-calculator');
 						<!-- Compact Inline Counter -->
 						<div class="mt-1.5 flex items-center justify-between text-[11px] text-mute">
 							<span id="wtp-direct-microstats" class="tabular-nums">
-								0 words · 0 chars · 0 paragraphs
+								{t('wordsToPages.client.microstats', { words: 0, chars: 0, paragraphs: 0 })}
 							</span>
 							<span class="text-[10px] text-mute">
-								Live synced
+								{t('wordsToPages.ui.liveSynced')}
 							</span>
 						</div>
 					</div>
@@ -227,25 +294,25 @@ const speechTool = getToolById('speech-time-calculator');
 				<div class="border-t border-hairline px-4 py-2.5">
 					<div class="mb-1.5 flex items-center justify-between gap-2">
 						<h2 class="text-[12px] font-semibold text-ink">
-							Format comparison for current word count
+							{t('wordsToPages.ui.comparisonHeading')}
 						</h2>
 						<span id="wtp-comparison-base-badge" class="text-[11px] text-mute tabular-nums">
-							For 0 words
+							{t('wordsToPages.client.forWordsPlural', { words: 0 })}
 						</span>
 					</div>
 
 					<div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
 						<div class="flex items-center justify-between gap-1.5 rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs">
-							<span class="text-body truncate">Single <span class="text-mute tabular-nums">(1.0)</span></span>
-							<strong id="wtp-comp-single" class="font-semibold text-ink tabular-nums">0 pages</strong>
+							<span class="text-body truncate">{t('wordsToPages.ui.compSingle')} <span class="text-mute tabular-nums">(1.0)</span></span>
+							<strong id="wtp-comp-single" class="font-semibold text-ink tabular-nums">{t('wordsToPages.client.pagesPlural', { count: 0 })}</strong>
 						</div>
 						<div class="flex items-center justify-between gap-1.5 rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs">
-							<span class="text-body truncate">1.5-spaced</span>
-							<strong id="wtp-comp-15" class="font-semibold text-ink tabular-nums">0 pages</strong>
+							<span class="text-body truncate">{t('wordsToPages.ui.spacing15')}</span>
+							<strong id="wtp-comp-15" class="font-semibold text-ink tabular-nums">{t('wordsToPages.client.pagesPlural', { count: 0 })}</strong>
 						</div>
 						<div class="flex items-center justify-between gap-1.5 rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs">
-							<span class="text-body truncate">Double <span class="text-mute tabular-nums">(2.0)</span></span>
-							<strong id="wtp-comp-double" class="font-semibold text-ink tabular-nums">0 pages</strong>
+							<span class="text-body truncate">{t('wordsToPages.ui.compDouble')} <span class="text-mute tabular-nums">(2.0)</span></span>
+							<strong id="wtp-comp-double" class="font-semibold text-ink tabular-nums">{t('wordsToPages.client.pagesPlural', { count: 0 })}</strong>
 						</div>
 					</div>
 				</div>
@@ -258,20 +325,20 @@ const speechTool = getToolById('speech-time-calculator');
 			<div class="whisper-shadow h-fit rounded-md border border-hairline bg-canvas-elevated p-4">
 				<div class="flex items-baseline justify-between gap-2 mb-2.5">
 					<h2 class="text-[14px] font-semibold tracking-[-0.2px] text-ink">
-						Line spacing
+						{t('wordsToPages.ui.lineSpacingHeading')}
 					</h2>
 					<span
 						id="wtp-active-spacing-display"
 						class="text-[12px] font-semibold text-ink tabular-nums"
 					>
-						Double-spaced (250 w/p)
+						{t('wordsToPages.client.activeSpacingDisplay', { label: t('wordsToPages.ui.spacingDouble'), wpp: 250 })}
 					</span>
 				</div>
 
 				<!-- Line Spacing Pills -->
 				<div
 					role="group"
-					aria-label="Line spacing"
+					aria-label={t('wordsToPages.ui.lineSpacingHeading')}
 					class="grid grid-cols-2 gap-1.5 sm:grid-cols-4"
 				>
 					<button
@@ -279,28 +346,28 @@ const speechTool = getToolById('speech-time-calculator');
 						data-spacing-preset="1.0"
 						class="wtp-spacing-pill cursor-pointer rounded-sm border border-hairline bg-canvas py-1.5 text-center text-xs font-medium tabular-nums transition-all hover:border-ink hover:text-ink"
 					>
-						Single-spaced
+						{t('wordsToPages.ui.spacingSingle')}
 					</button>
 					<button
 						type="button"
 						data-spacing-preset="1.5"
 						class="wtp-spacing-pill cursor-pointer rounded-sm border border-hairline bg-canvas py-1.5 text-center text-xs font-medium tabular-nums transition-all hover:border-ink hover:text-ink"
 					>
-						1.5-spaced
+						{t('wordsToPages.ui.spacing15')}
 					</button>
 					<button
 						type="button"
 						data-spacing-preset="2.0"
 						class="wtp-spacing-pill cursor-pointer rounded-sm border border-primary bg-primary text-on-primary py-1.5 text-center text-xs font-medium tabular-nums transition-all"
 					>
-						Double-spaced
+						{t('wordsToPages.ui.spacingDouble')}
 					</button>
 					<button
 						type="button"
 						data-spacing-preset="custom"
 						class="wtp-spacing-pill cursor-pointer rounded-sm border border-hairline bg-canvas py-1.5 text-center text-xs font-medium tabular-nums transition-all hover:border-ink hover:text-ink"
 					>
-						Custom rate
+						{t('wordsToPages.ui.spacingCustom')}
 					</button>
 				</div>
 
@@ -308,10 +375,10 @@ const speechTool = getToolById('speech-time-calculator');
 				<div class="mt-3 rounded-sm border border-hairline bg-canvas p-2.5">
 					<div class="flex items-center justify-between gap-2">
 						<label for="wtp-wpp-input" class="text-[12px] font-medium text-body">
-							Words per page
+							{t('wordsToPages.ui.wordsPerPageLabel')}
 						</label>
 						<span id="wtp-wpp-status" class="text-[11px] text-mute">
-							Auto-calculated
+							{t('wordsToPages.client.autoCalculated')}
 						</span>
 					</div>
 					<div class="relative mt-1 flex items-center">
@@ -325,7 +392,7 @@ const speechTool = getToolById('speech-time-calculator');
 							class="w-full rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1.5 pr-14 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
 						/>
 						<span class="pointer-events-none absolute right-2.5 text-[11px] text-mute">
-							w / page
+							{t('wordsToPages.ui.unitWpp')}
 						</span>
 					</div>
 				</div>
@@ -335,10 +402,10 @@ const speechTool = getToolById('speech-time-calculator');
 			<div class="whisper-shadow h-fit rounded-md border border-hairline bg-canvas-elevated p-4">
 				<div class="flex items-baseline justify-between gap-2 mb-2.5">
 					<h2 class="text-[14px] font-semibold tracking-[-0.2px] text-ink">
-						Font & page settings
+						{t('wordsToPages.ui.fontSettingsHeading')}
 					</h2>
 					<span id="wtp-typography-summary" class="text-[11px] text-mute tabular-nums">
-						Times · 12pt · Letter
+						{t('wordsToPages.ui.defaultTypographySummary')}
 					</span>
 				</div>
 
@@ -347,7 +414,7 @@ const speechTool = getToolById('speech-time-calculator');
 					<!-- 1. Font Family -->
 					<div class="space-y-1">
 						<label for="wtp-select-font" class="block text-[11px] font-medium text-body">
-							Font Family
+							{t('wordsToPages.ui.fontFamilyLabel')}
 						</label>
 						<select
 							id="wtp-select-font"
@@ -366,7 +433,7 @@ const speechTool = getToolById('speech-time-calculator');
 					<!-- 2. Font Size -->
 					<div class="space-y-1">
 						<label for="wtp-select-size" class="block text-[11px] font-medium text-body">
-							Font Size
+							{t('wordsToPages.ui.fontSizeLabel')}
 						</label>
 						<select
 							id="wtp-select-size"
@@ -387,50 +454,50 @@ const speechTool = getToolById('speech-time-calculator');
 					<!-- 3. Page Format -->
 					<div class="space-y-1">
 						<label for="wtp-select-format" class="block text-[11px] font-medium text-body">
-							Page Format
+							{t('wordsToPages.ui.pageFormatLabel')}
 						</label>
 						<select
 							id="wtp-select-format"
 							class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-xs text-ink focus:border-ink focus:outline-none"
 						>
-							<option value="letter" selected>US Letter (8.5×11 in)</option>
-							<option value="a4">A4 (210×297 mm)</option>
-							<option value="a5">A5 (148×210 mm)</option>
-							<option value="b5">B5 (176×250 mm)</option>
-							<option value="legal">US Legal (8.5×14 in)</option>
-							<option value="digest">Novel Digest (5×8 in · ~250 w/p)</option>
-							<option value="trade">Trade Paperback (5.5×8.5 in · ~275 w/p)</option>
-							<option value="hardcover">Standard Hardcover / Book (6×9 in · ~300 w/p)</option>
+							<option value="letter" selected>{t('wordsToPages.ui.formats.letter')}</option>
+							<option value="a4">{t('wordsToPages.ui.formats.a4')}</option>
+							<option value="a5">{t('wordsToPages.ui.formats.a5')}</option>
+							<option value="b5">{t('wordsToPages.ui.formats.b5')}</option>
+							<option value="legal">{t('wordsToPages.ui.formats.legal')}</option>
+							<option value="digest">{t('wordsToPages.ui.formats.digest')}</option>
+							<option value="trade">{t('wordsToPages.ui.formats.trade')}</option>
+							<option value="hardcover">{t('wordsToPages.ui.formats.hardcover')}</option>
 						</select>
 					</div>
 
 					<!-- 4. Margins -->
 					<div class="space-y-1">
 						<label for="wtp-select-margins" class="block text-[11px] font-medium text-body">
-							Margins
+							{t('wordsToPages.ui.marginsLabel')}
 						</label>
 						<select
 							id="wtp-select-margins"
 							class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-xs text-ink focus:border-ink focus:outline-none"
 						>
-							<option value="normal" selected>Normal (1 in / 2.5 cm)</option>
-							<option value="narrow">Narrow (0.5 in / 1.27 cm)</option>
-							<option value="moderate">Moderate (0.75×1 in)</option>
-							<option value="wide">Wide (1×1.25 in)</option>
+							<option value="normal" selected>{t('wordsToPages.ui.margins.normal')}</option>
+							<option value="narrow">{t('wordsToPages.ui.margins.narrow')}</option>
+							<option value="moderate">{t('wordsToPages.ui.margins.moderate')}</option>
+							<option value="wide">{t('wordsToPages.ui.margins.wide')}</option>
 						</select>
 					</div>
 
 					<!-- 5. Orientation (Span 2 cols on sm) -->
 					<div class="space-y-1 sm:col-span-2">
 						<label for="wtp-select-orientation" class="block text-[11px] font-medium text-body">
-							Orientation
+							{t('wordsToPages.ui.orientationLabel')}
 						</label>
 						<select
 							id="wtp-select-orientation"
 							class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-xs text-ink focus:border-ink focus:outline-none"
 						>
-							<option value="portrait" selected>Portrait</option>
-							<option value="landscape">Landscape</option>
+							<option value="portrait" selected>{t('wordsToPages.ui.orientations.portrait')}</option>
+							<option value="landscape">{t('wordsToPages.ui.orientations.landscape')}</option>
 						</select>
 					</div>
 				</div>
@@ -444,13 +511,13 @@ const speechTool = getToolById('speech-time-calculator');
 		<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
 			<div class="flex items-center justify-between gap-2">
 				<span class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
-					Estimated pages
+					{t('wordsToPages.ui.kpiPagesLabel')}
 				</span>
 				<span
 					id="wtp-badge-pages"
 					class="shrink-0 rounded-full border border-[#1d463b] bg-[#153d33] px-2 py-0.5 text-[11px] font-medium text-[#afe3d0] tabular-nums dark:border-transparent dark:bg-hairline-soft dark:text-ink"
 				>
-					Double-spaced
+					{t('wordsToPages.ui.spacingDouble')}
 				</span>
 			</div>
 			<div class="my-1.5 flex items-baseline gap-2">
@@ -459,11 +526,11 @@ const speechTool = getToolById('speech-time-calculator');
 					aria-live="polite"
 					class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
 				>
-					0.0 pages
+					{t('wordsToPages.client.pagesPlural', { count: '0.0' })}
 				</output>
 			</div>
 			<p id="wtp-metric-pages-sub" class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-				0 full pages · 0 print sheets
+				{t('wordsToPages.client.pagesSub', { full: t('wordsToPages.client.fullPagePlural', { count: 0 }), sheets: t('wordsToPages.client.sheetPlural', { count: 0 }) })}
 			</p>
 		</article>
 
@@ -471,13 +538,13 @@ const speechTool = getToolById('speech-time-calculator');
 		<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
 			<div class="flex items-center justify-between gap-2">
 				<span class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
-					Total words
+					{t('wordsToPages.ui.kpiWordsLabel')}
 				</span>
 				<span
 					id="wtp-badge-mode"
 					class="shrink-0 rounded-full border border-[#1d463b] bg-[#153d33] px-2 py-0.5 text-[11px] font-medium text-[#afe3d0] dark:border-transparent dark:bg-hairline-soft dark:text-ink"
 				>
-					Words to pages
+					{t('wordsToPages.ui.tabWordsToPages')}
 				</span>
 			</div>
 			<div class="my-1.5 flex items-baseline gap-2">
@@ -486,11 +553,11 @@ const speechTool = getToolById('speech-time-calculator');
 					aria-live="polite"
 					class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
 				>
-					0 words
+					{t('wordsToPages.client.wordsPlural', { count: 0 })}
 				</output>
 			</div>
 			<p id="wtp-metric-chars-sub" class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-				0 chars (with spaces) · 0 no spaces
+				{t('wordsToPages.client.charsSub', { withSpaces: 0, noSpaces: 0 })}
 			</p>
 		</article>
 
@@ -498,7 +565,7 @@ const speechTool = getToolById('speech-time-calculator');
 		<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
 			<div class="flex items-center justify-between gap-2">
 				<span class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
-					Silent reading time
+					{t('wordsToPages.ui.kpiReadingLabel')}
 				</span>
 				<span
 					class="shrink-0 rounded-full border border-[#1d463b] bg-[#153d33] px-2 py-0.5 text-[11px] font-medium text-[#afe3d0] tabular-nums dark:border-transparent dark:bg-hairline-soft dark:text-ink"
@@ -512,11 +579,11 @@ const speechTool = getToolById('speech-time-calculator');
 					aria-live="polite"
 					class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
 				>
-					0 min 0 sec
+					{t('wordsToPages.client.zeroTime')}
 				</output>
 			</div>
 			<p class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-				Average adult reading pace
+				{t('wordsToPages.ui.kpiReadingSub')}
 			</p>
 		</article>
 
@@ -524,7 +591,7 @@ const speechTool = getToolById('speech-time-calculator');
 		<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
 			<div class="flex items-center justify-between gap-2">
 				<span class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
-					Speaking time
+					{t('wordsToPages.ui.kpiSpeakingLabel')}
 				</span>
 				<span
 					class="shrink-0 rounded-full border border-[#1d463b] bg-[#153d33] px-2 py-0.5 text-[11px] font-medium text-[#afe3d0] tabular-nums dark:border-transparent dark:bg-hairline-soft dark:text-ink"
@@ -538,63 +605,152 @@ const speechTool = getToolById('speech-time-calculator');
 					aria-live="polite"
 					class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
 				>
-					0 min 0 sec
+					{t('wordsToPages.client.zeroTime')}
 				</output>
 			</div>
 			<p class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-				Read-aloud presentation pace
+				{t('wordsToPages.ui.kpiSpeakingSub')}
 			</p>
 		</article>
 	</div>
 
 	<!-- Related Tools Navigation Strip -->
-	<aside aria-label="Related reading and text utilities" class="mt-6 border-t border-hairline pt-3">
+	<aside aria-label={t('wordsToPages.ui.relatedAriaLabel')} class="mt-6 border-t border-hairline pt-3">
 		<p class="text-xs text-mute">
-			Related tools:{' '}
+			{t('wordsToPages.ui.relatedToolsLabel')}{' '}
 			{
 				readingTool?.status === 'live' ? (
 					<a
-						href={localePath(readingTool.slug, Astro.url)}
+						href={getLocalizedPath(readingTool.slug, locale)}
 						class="font-medium text-ink underline decoration-hairline underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
 					>
-						{readingTool.shortName}
+						{t(`${readingTool.dictKey}.shortName`)}
 					</a>
 				) : (
-					<span>{readingTool?.shortName ?? 'Reading Time Counter'}</span>
+					<span>{readingTool ? t(`${readingTool.dictKey}.shortName`) : t('readingTimeCalculator.shortName')}</span>
 				)
 			}
 			{' · '}
 			{
 				wordCounterTool?.status === 'live' ? (
 					<a
-						href={localePath(wordCounterTool.slug, Astro.url)}
+						href={getLocalizedPath(wordCounterTool.slug, locale)}
 						class="font-medium text-ink underline decoration-hairline underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
 					>
-						{wordCounterTool.shortName}
+						{t(`${wordCounterTool.dictKey}.shortName`)}
 					</a>
 				) : (
-					<span>{wordCounterTool?.shortName ?? 'Word Counter'}</span>
+					<span>{wordCounterTool ? t(`${wordCounterTool.dictKey}.shortName`) : t('wordCounter.shortName')}</span>
 				)
 			}
 			{' · '}
 			{
 				speechTool?.status === 'live' ? (
 					<a
-						href={localePath(speechTool.slug, Astro.url)}
+						href={getLocalizedPath(speechTool.slug, locale)}
 						class="font-medium text-ink underline decoration-hairline underline-offset-2 transition-colors hover:text-primary hover:decoration-primary"
 					>
-						{speechTool.shortName}
+						{t(`${speechTool.dictKey}.shortName`)}
 					</a>
 				) : (
-					<span>{speechTool?.shortName ?? 'Speech Calculator'}</span>
+					<span>{speechTool ? t(`${speechTool.dictKey}.shortName`) : t('speechCalculator.shortName')}</span>
 				)
 			}.
 		</p>
 	</aside>
 </section>
 
+<script
+	type="application/json"
+	id="wtp-i18n"
+	set:html={JSON.stringify(clientI18n).replace(/</g, '\\u003c')}
+/>
+
 <script>
+	interface WtpClientI18n {
+		zeroTime: string;
+		timeHrMin: string;
+		timeMinSec: string;
+		spacingSingle: string;
+		spacing15: string;
+		spacingDouble: string;
+		spacingCustom: string;
+		spacingOther: string;
+		activeSpacingDisplay: string;
+		customOverride: string;
+		autoCalculated: string;
+		shortFormats: Record<string, string>;
+		modePasted: string;
+		modeW2P: string;
+		modeP2W: string;
+		parsedPasted: string;
+		parsedWords: string;
+		shorthandHint: string;
+		microstats: string;
+		pagesSingular: string;
+		pagesPlural: string;
+		fullPageSingular: string;
+		fullPagePlural: string;
+		sheetSingular: string;
+		sheetPlural: string;
+		doubleSidedSheetSingular: string;
+		doubleSidedSheetPlural: string;
+		pagesSub: string;
+		wordsSingular: string;
+		wordsPlural: string;
+		charsSub: string;
+		forWordSingular: string;
+		forWordsPlural: string;
+		copyResult: string;
+		copyLink: string;
+		copied: string;
+		copyHeader: string;
+		copyEstimatedPages: string;
+		copyTotalWords: string;
+		copyCharacters: string;
+		copyParagraphs: string;
+		copyWpp: string;
+		copySilentReading: string;
+		copySpeakingTime: string;
+		copyFooter: string;
+		pageUrl: string;
+	}
+
 	function initWordsToPagesCalculator() {
+		const i18nEl = document.getElementById('wtp-i18n');
+		const i18n: WtpClientI18n = i18nEl?.textContent
+			? (JSON.parse(i18nEl.textContent) as WtpClientI18n)
+			: ({} as WtpClientI18n);
+
+		function fmt(template: string, vars: Record<string, string | number>): string {
+			return template.replace(/\{(\w+)\}/g, (_, k: string) => String(vars[k] ?? `{${k}}`));
+		}
+
+		function formatPagesText(valStr: string): string {
+			const isOne = valStr === '1' || valStr === '1.0';
+			return fmt(isOne ? i18n.pagesSingular : i18n.pagesPlural, { count: valStr });
+		}
+
+		function formatWordsText(count: number): string {
+			return fmt(count === 1 ? i18n.wordsSingular : i18n.wordsPlural, {
+				count: count.toLocaleString(),
+			});
+		}
+
+		function formatFullPagesText(count: number): string {
+			return fmt(count === 1 ? i18n.fullPageSingular : i18n.fullPagePlural, { count });
+		}
+
+		function formatSheetsText(count: number): string {
+			return fmt(count === 1 ? i18n.sheetSingular : i18n.sheetPlural, { count });
+		}
+
+		function formatDoubleSidedSheetsText(count: number): string {
+			return fmt(count === 1 ? i18n.doubleSidedSheetSingular : i18n.doubleSidedSheetPlural, {
+				count,
+			});
+		}
+
 		const SILENT_WPM = 238;
 		const SPEAKING_WPM = 183;
 
@@ -784,28 +940,28 @@ const speechTool = getToolById('speech-time-calculator');
 		}
 
 		function formatTime(totalSeconds: number): string {
-			if (totalSeconds <= 0) return '0 min 0 sec';
+			if (totalSeconds <= 0) return i18n.zeroTime;
 			const minutes = Math.floor(totalSeconds / 60);
 			const seconds = totalSeconds % 60;
 			if (minutes >= 60) {
 				const hours = Math.floor(minutes / 60);
 				const remMins = minutes % 60;
-				return `${hours} hr ${remMins} min`;
+				return fmt(i18n.timeHrMin, { h: hours, m: remMins });
 			}
-			return `${minutes} min ${seconds} sec`;
+			return fmt(i18n.timeMinSec, { m: minutes, s: seconds });
 		}
 
 		function getSpacingLabel(): string {
-			if (customRateActive) return 'Custom rate';
+			if (customRateActive) return i18n.spacingCustom;
 			switch (activeSpacing) {
 				case '1.0':
-					return 'Single-spaced';
+					return i18n.spacingSingle;
 				case '1.5':
-					return '1.5-spaced';
+					return i18n.spacing15;
 				case '2.0':
-					return 'Double-spaced';
+					return i18n.spacingDouble;
 				default:
-					return `${activeSpacing} spacing`;
+					return fmt(i18n.spacingOther, { spacing: activeSpacing });
 			}
 		}
 
@@ -860,7 +1016,10 @@ const speechTool = getToolById('speech-time-calculator');
 
 			const wpp = computeWppFromSettings();
 			if (activeSpacingDisplay) {
-				activeSpacingDisplay.textContent = `${getSpacingLabel()} (${wpp} w/p)`;
+				activeSpacingDisplay.textContent = fmt(i18n.activeSpacingDisplay, {
+					label: getSpacingLabel(),
+					wpp,
+				});
 			}
 
 			if (wppInput && !customRateActive) {
@@ -869,11 +1028,11 @@ const speechTool = getToolById('speech-time-calculator');
 
 			if (wppStatus) {
 				if (customRateActive) {
-					wppStatus.textContent = 'Custom override';
+					wppStatus.textContent = i18n.customOverride;
 					wppStatus.classList.remove('text-mute');
 					wppStatus.classList.add('text-ink', 'font-medium');
 				} else {
-					wppStatus.textContent = 'Auto-calculated';
+					wppStatus.textContent = i18n.autoCalculated;
 					wppStatus.classList.remove('text-ink', 'font-medium');
 					wppStatus.classList.add('text-mute');
 				}
@@ -882,17 +1041,7 @@ const speechTool = getToolById('speech-time-calculator');
 			if (typographySummary) {
 				const fontText = selectFont?.options[selectFont.selectedIndex]?.text.split(' ')[0] || 'Times';
 				const sizeText = selectSize?.options[selectSize.selectedIndex]?.text || '12 pt';
-				const formatMapNames: Record<string, string> = {
-					letter: 'Letter',
-					a4: 'A4',
-					a5: 'A5',
-					b5: 'B5',
-					legal: 'Legal',
-					digest: '5×8" Digest',
-					trade: '5.5×8.5" Trade',
-					hardcover: '6×9" Hardcover',
-				};
-				const formatText = formatMapNames[selectFormat?.value || ''] || 'Letter';
+				const formatText = i18n.shortFormats[selectFormat?.value || ''] || i18n.shortFormats.letter;
 				typographySummary.textContent = `${fontText} · ${sizeText} · ${formatText}`;
 			}
 		}
@@ -918,10 +1067,18 @@ const speechTool = getToolById('speech-time-calculator');
 				badgeMode.textContent =
 					mode === 'w2p'
 						? state.source === 'paste'
-							? 'Pasted text'
-							: 'Words to pages'
-						: 'Pages to words';
+							? i18n.modePasted
+							: i18n.modeW2P
+						: i18n.modeP2W;
 			}
+		}
+
+		function formatMicrostats(words: number, chars: number, paragraphs: number): string {
+			return fmt(i18n.microstats, {
+				words: words.toLocaleString(),
+				chars: chars.toLocaleString(),
+				paragraphs: paragraphs.toLocaleString(),
+			});
 		}
 
 		function recalculate() {
@@ -943,12 +1100,16 @@ const speechTool = getToolById('speech-time-calculator');
 				if (wordsParsedBadge) {
 					wordsParsedBadge.textContent =
 						metrics.words > 0
-							? `= ${metrics.words.toLocaleString()} words (pasted)`
-							: 'Accepts shorthand: e.g. 1.5k or 2.5k';
+							? fmt(i18n.parsedPasted, { words: metrics.words.toLocaleString() })
+							: i18n.shorthandHint;
 				}
 
 				if (directMicrostats) {
-					directMicrostats.textContent = `${metrics.words.toLocaleString()} words · ${metrics.charsWithSpaces.toLocaleString()} chars · ${metrics.paragraphs.toLocaleString()} paragraphs`;
+					directMicrostats.textContent = formatMicrostats(
+						metrics.words,
+						metrics.charsWithSpaces,
+						metrics.paragraphs,
+					);
 				}
 				if (directClearBtn) {
 					directClearBtn.classList.toggle('hidden', text.length === 0);
@@ -964,11 +1125,13 @@ const speechTool = getToolById('speech-time-calculator');
 
 				if (wordsParsedBadge) {
 					if (raw.toLowerCase().includes('k') || raw.toLowerCase().includes('m')) {
-						wordsParsedBadge.textContent = `= ${parsed.toLocaleString()} words`;
+						wordsParsedBadge.textContent = fmt(i18n.parsedWords, {
+							words: parsed.toLocaleString(),
+						});
 						wordsParsedBadge.classList.add('text-ink', 'font-medium');
 						wordsParsedBadge.classList.remove('text-mute');
 					} else {
-						wordsParsedBadge.textContent = 'Accepts shorthand: e.g. 1.5k or 2.5k';
+						wordsParsedBadge.textContent = i18n.shorthandHint;
 						wordsParsedBadge.classList.remove('text-ink', 'font-medium');
 						wordsParsedBadge.classList.add('text-mute');
 					}
@@ -976,7 +1139,11 @@ const speechTool = getToolById('speech-time-calculator');
 
 				if (!directPaste?.value.trim()) {
 					if (directMicrostats) {
-						directMicrostats.textContent = `${parsed.toLocaleString()} words · ${state.charsWithSpaces.toLocaleString()} chars · ${state.paragraphs.toLocaleString()} paragraphs`;
+						directMicrostats.textContent = formatMicrostats(
+							parsed,
+							state.charsWithSpaces,
+							state.paragraphs,
+						);
 					}
 					if (directClearBtn) directClearBtn.classList.add('hidden');
 				}
@@ -991,7 +1158,11 @@ const speechTool = getToolById('speech-time-calculator');
 
 				if (!directPaste?.value.trim()) {
 					if (directMicrostats) {
-						directMicrostats.textContent = `${state.currentWords.toLocaleString()} words · ${state.charsWithSpaces.toLocaleString()} chars · ${state.paragraphs.toLocaleString()} paragraphs`;
+						directMicrostats.textContent = formatMicrostats(
+							state.currentWords,
+							state.charsWithSpaces,
+							state.paragraphs,
+						);
 					}
 					if (directClearBtn) directClearBtn.classList.add('hidden');
 				}
@@ -1009,12 +1180,15 @@ const speechTool = getToolById('speech-time-calculator');
 
 			// 1. Estimated pages
 			if (metricPages) {
-				metricPages.textContent = `${p.toFixed(1)} pages`;
+				metricPages.textContent = formatPagesText(p.toFixed(1));
 			}
 			if (metricPagesSub) {
 				const fullPages = Math.ceil(p);
 				const sheets = Math.ceil(p / 2);
-				metricPagesSub.textContent = `${fullPages} full pages · ${sheets} print sheets`;
+				metricPagesSub.textContent = fmt(i18n.pagesSub, {
+					full: formatFullPagesText(fullPages),
+					sheets: formatSheetsText(sheets),
+				});
 			}
 			if (badgePages) {
 				badgePages.textContent = getSpacingLabel();
@@ -1022,10 +1196,13 @@ const speechTool = getToolById('speech-time-calculator');
 
 			// 2. Total words
 			if (metricWords) {
-				metricWords.textContent = `${w.toLocaleString()} words`;
+				metricWords.textContent = formatWordsText(w);
 			}
 			if (metricCharsSub) {
-				metricCharsSub.textContent = `${state.charsWithSpaces.toLocaleString()} chars (with spaces) · ${state.charsNoSpaces.toLocaleString()} no spaces`;
+				metricCharsSub.textContent = fmt(i18n.charsSub, {
+					withSpaces: state.charsWithSpaces.toLocaleString(),
+					noSpaces: state.charsNoSpaces.toLocaleString(),
+				});
 			}
 
 			// 3. Silent reading time
@@ -1043,19 +1220,21 @@ const speechTool = getToolById('speech-time-calculator');
 
 			// Live Format Comparison Strip
 			if (compBaseBadge) {
-				compBaseBadge.textContent = `For ${w.toLocaleString()} words`;
+				compBaseBadge.textContent = fmt(w === 1 ? i18n.forWordSingular : i18n.forWordsPlural, {
+					words: w.toLocaleString(),
+				});
 			}
 			if (compSingle) {
 				const pages = w > 0 ? (w / 500).toFixed(1) : '0';
-				compSingle.textContent = `${pages} pages`;
+				compSingle.textContent = formatPagesText(pages);
 			}
 			if (comp15) {
 				const pages = w > 0 ? (w / 330).toFixed(1) : '0';
-				comp15.textContent = `${pages} pages`;
+				comp15.textContent = formatPagesText(pages);
 			}
 			if (compDouble) {
 				const pages = w > 0 ? (w / 250).toFixed(1) : '0';
-				compDouble.textContent = `${pages} pages`;
+				compDouble.textContent = formatPagesText(pages);
 			}
 		}
 
@@ -1084,7 +1263,7 @@ const speechTool = getToolById('speech-time-calculator');
 			if (wordsInput) wordsInput.value = '';
 			state.source = 'numeric';
 			recalculate();
-			if (directMicrostats) directMicrostats.textContent = '0 words · 0 chars · 0 paragraphs';
+			if (directMicrostats) directMicrostats.textContent = formatMicrostats(0, 0, 0);
 			if (directClearBtn) directClearBtn.classList.add('hidden');
 		});
 
@@ -1182,17 +1361,24 @@ const speechTool = getToolById('speech-time-calculator');
 			const speakingSec = w > 0 ? Math.round((w / SPEAKING_WPM) * 60) : 0;
 
 			const text = [
-				'Wordora Words to Pages Conversion',
+				i18n.copyHeader,
 				'──────────────────────────────────',
-				`Estimated Pages: ${p.toFixed(1)} pages (${Math.ceil(p)} full pages, ${Math.ceil(p / 2)} double-sided sheets)`,
-				`Total Words: ${w.toLocaleString()} words`,
-				`Characters: ${state.charsWithSpaces.toLocaleString()} (with spaces) · ${state.charsNoSpaces.toLocaleString()} (no spaces)`,
-				`Paragraphs: ${state.paragraphs.toLocaleString()}`,
-				`Words per Page: ${wpp} w/p (${getSpacingLabel()})`,
-				`Silent Reading Time: ${formatTime(silentSec)} (238 WPM)`,
-				`Speaking Time: ${formatTime(speakingSec)} (183 WPM)`,
+				fmt(i18n.copyEstimatedPages, {
+					pages: formatPagesText(p.toFixed(1)),
+					full: formatFullPagesText(Math.ceil(p)),
+					sheets: formatDoubleSidedSheetsText(Math.ceil(p / 2)),
+				}),
+				fmt(i18n.copyTotalWords, { words: formatWordsText(w) }),
+				fmt(i18n.copyCharacters, {
+					withSpaces: state.charsWithSpaces.toLocaleString(),
+					noSpaces: state.charsNoSpaces.toLocaleString(),
+				}),
+				fmt(i18n.copyParagraphs, { paragraphs: state.paragraphs.toLocaleString() }),
+				fmt(i18n.copyWpp, { wpp, spacing: getSpacingLabel() }),
+				fmt(i18n.copySilentReading, { time: formatTime(silentSec) }),
+				fmt(i18n.copySpeakingTime, { time: formatTime(speakingSec) }),
 				'──────────────────────────────────',
-				'Calculate online at https://wordora.site/words-to-pages/',
+				fmt(i18n.copyFooter, { url: i18n.pageUrl }),
 			].join('\n');
 
 			try {
@@ -1209,11 +1395,10 @@ const speechTool = getToolById('speech-time-calculator');
 				document.body.removeChild(ta);
 			}
 
-			const origText = btnCopyResult.textContent;
-			btnCopyResult.textContent = 'Copied!';
+			btnCopyResult.textContent = i18n.copied;
 			btnCopyResult.classList.add('text-primary');
 			setTimeout(() => {
-				btnCopyResult.textContent = origText;
+				btnCopyResult.textContent = i18n.copyResult;
 				btnCopyResult.classList.remove('text-primary');
 			}, 1800);
 		});
@@ -1270,11 +1455,10 @@ const speechTool = getToolById('speech-time-calculator');
 				document.body.removeChild(ta);
 			}
 
-			const origText = btnCopyLink.textContent;
-			btnCopyLink.textContent = 'Copied!';
+			btnCopyLink.textContent = i18n.copied;
 			btnCopyLink.classList.add('text-primary');
 			setTimeout(() => {
-				btnCopyLink.textContent = origText;
+				btnCopyLink.textContent = i18n.copyLink;
 				btnCopyLink.classList.remove('text-primary');
 			}, 1800);
 		});
@@ -1291,7 +1475,7 @@ const speechTool = getToolById('speech-time-calculator');
 			if (pagesInput) pagesInput.value = '';
 			if (directPaste) directPaste.value = '';
 			if (directClearBtn) directClearBtn.classList.add('hidden');
-			if (directMicrostats) directMicrostats.textContent = '0 words · 0 chars · 0 paragraphs';
+			if (directMicrostats) directMicrostats.textContent = formatMicrostats(0, 0, 0);
 
 			if (selectFont) selectFont.value = DEFAULTS.font;
 			if (selectSize) selectSize.value = DEFAULTS.size;

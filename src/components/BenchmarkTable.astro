@@ -1,10 +1,19 @@
 ---
+import { getLocaleFromUrl, useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
 interface BenchmarkRow {
 	words: number;
 	useCase: string;
 }
 
-const benchmarkRows: BenchmarkRow[] = [
+const defaultBenchmarkRows: BenchmarkRow[] = [
 	{ words: 100, useCase: 'Short email, social post, or brief update' },
 	{ words: 250, useCase: '1 double-spaced page or short memo' },
 	{ words: 300, useCase: 'Quick blog update or announcement' },
@@ -22,17 +31,26 @@ const benchmarkRows: BenchmarkRow[] = [
 	{ words: 10000, useCase: '20 single-spaced pages or in-depth report' },
 ];
 
+const localizedUseCases = t.raw<Record<string, string>>('readingTimeCalculator.benchmark.useCases') ?? {};
+const benchmarkRows: BenchmarkRow[] = defaultBenchmarkRows.map((row) => ({
+	words: row.words,
+	useCase: localizedUseCases[String(row.words)] ?? row.useCase,
+}));
+
+const unitMin = t('readingTimeCalculator.benchmark.unitMin');
+const unitSec = t('readingTimeCalculator.benchmark.unitSec');
+
 function formatMinSec(words: number, wpm: number): string {
 	const totalSec = Math.round((words / wpm) * 60);
 	const mins = Math.floor(totalSec / 60);
 	const secs = totalSec % 60;
-	if (mins === 0) return `${secs} sec`;
-	if (secs === 0) return `${mins} min`;
-	return `${mins} min ${secs} sec`;
+	if (mins === 0) return `${secs} ${unitSec}`;
+	if (secs === 0) return `${mins} ${unitMin}`;
+	return `${mins} ${unitMin} ${secs} ${unitSec}`;
 }
 
 function formatDecimalMinutes(words: number, wpm: number): string {
-	return `${(words / wpm).toFixed(1)} min`;
+	return `${(words / wpm).toFixed(1)} ${unitMin}`;
 }
 ---
 
@@ -44,14 +62,14 @@ function formatDecimalMinutes(words: number, wpm: number): string {
 					id="benchmarks-heading"
 					class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 				>
-					Reading time by word count
+					{t('readingTimeCalculator.benchmark.heading')}
 				</h2>
 				<p class="mt-2 max-w-2xl text-[15px] leading-[24px] text-body">
-					Compare average silent reading time (238 WPM) and read-aloud speaking time (130 WPM) for common document lengths.
+					{t('readingTimeCalculator.benchmark.subtitle')}
 				</p>
 			</div>
 			<p class="text-[13px] text-mute">
-				Click any row to load that word count into the calculator
+				{t('readingTimeCalculator.benchmark.clickHint')}
 			</p>
 		</div>
 
@@ -59,12 +77,12 @@ function formatDecimalMinutes(words: number, wpm: number): string {
 			<table class="w-full border-collapse text-left">
 				<thead>
 					<tr class="border-b border-hairline bg-canvas-muted text-[13px] font-semibold text-ink">
-						<th scope="col" class="py-3.5 pl-5 pr-4">Word count</th>
-						<th scope="col" class="px-4 py-3.5">Silent reading (238 WPM)</th>
-						<th scope="col" class="px-4 py-3.5">Read aloud (130 WPM)</th>
-						<th scope="col" class="hidden px-4 py-3.5 sm:table-cell">Fast reader (300 WPM)</th>
-						<th scope="col" class="hidden px-4 py-3.5 md:table-cell">Pages (single / double)</th>
-						<th scope="col" class="hidden py-3.5 pl-4 pr-5 lg:table-cell">Typical length</th>
+						<th scope="col" class="py-3.5 pl-5 pr-4">{t('readingTimeCalculator.benchmark.colWordCount')}</th>
+						<th scope="col" class="px-4 py-3.5">{t('readingTimeCalculator.benchmark.colSilent')}</th>
+						<th scope="col" class="px-4 py-3.5">{t('readingTimeCalculator.benchmark.colAloud')}</th>
+						<th scope="col" class="hidden px-4 py-3.5 sm:table-cell">{t('readingTimeCalculator.benchmark.colFast')}</th>
+						<th scope="col" class="hidden px-4 py-3.5 md:table-cell">{t('readingTimeCalculator.benchmark.colPages')}</th>
+						<th scope="col" class="hidden py-3.5 pl-4 pr-5 lg:table-cell">{t('readingTimeCalculator.benchmark.colTypical')}</th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-hairline text-[14px]">
@@ -72,16 +90,17 @@ function formatDecimalMinutes(words: number, wpm: number): string {
 						benchmarkRows.map((row) => {
 							const singlePg = (row.words / 500).toFixed(1).replace(/\.0$/, '');
 							const doublePg = (row.words / 250).toFixed(1).replace(/\.0$/, '');
+							const formattedWords = row.words.toLocaleString(locale);
 							return (
 								<tr
 									data-benchmark-words={row.words}
 									tabindex="0"
 									role="button"
-									aria-label={`Load ${row.words} words into calculator`}
+									aria-label={t('readingTimeCalculator.benchmark.rowAria', { count: formattedWords })}
 									class="benchmark-row group cursor-pointer transition-colors hover:bg-hairline-soft/70 focus:bg-hairline-soft/70 focus:outline-none"
 								>
 									<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums group-hover:text-vercel-blue">
-										{row.words.toLocaleString()} words
+										{t('readingTimeCalculator.benchmark.wordsCell', { count: formattedWords })}
 									</td>
 									<td class="whitespace-nowrap px-4 py-3.5 tabular-nums">
 										<span class="font-medium text-ink">{formatMinSec(row.words, 238)}</span>
@@ -99,7 +118,7 @@ function formatDecimalMinutes(words: number, wpm: number): string {
 										{formatMinSec(row.words, 300)}
 									</td>
 									<td class="hidden whitespace-nowrap px-4 py-3.5 text-[14px] text-body tabular-nums md:table-cell">
-										{singlePg} / {doublePg} pages
+										{t('readingTimeCalculator.benchmark.pagesCell', { single: singlePg, double: doublePg })}
 									</td>
 									<td class="hidden py-3.5 pl-4 pr-5 text-[14px] text-body lg:table-cell">
 										{row.useCase}

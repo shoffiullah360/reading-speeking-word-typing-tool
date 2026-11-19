@@ -70,7 +70,898 @@
 		"badge": "Flagship",
 		"title": "Reading Time Calculator — Estimate Words & Pages to Minutes",
 		"metaDescription": "Use Wordora's free Reading Time Calculator to estimate exact reading duration from pasted text, word counts, or pages. Adjust WPM speed instantly—no signup.",
-		"h1": "Reading Time Calculator"
+		"h1": "Reading Time Calculator",
+		"ui": {
+			"workspaceAria": "Reading Time Calculator and Counter Workspace",
+			"inputModeAria": "Input mode",
+			"tabPaste": "Paste text",
+			"tabWords": "Word count",
+			"tabPages": "Pages",
+			"btnSample": "Sample text",
+			"btnUpload": "Upload .txt",
+			"btnClear": "Clear",
+			"dropzoneTitle": "Drop your .txt file here",
+			"privacyNote": "Runs privately in your browser",
+			"textareaLabel": "Paste or type your text to calculate reading time",
+			"textareaPlaceholder": "Paste or type your text here, or drag and drop a .txt file...",
+			"wordsLabel": "Words:",
+			"charsLabel": "Characters:",
+			"withoutSpacesLabel": "Without spaces:",
+			"paragraphsLabel": "Paragraphs:",
+			"initialMiniCounter": "0 words · 0 characters",
+			"enterWordCount": "Enter word count",
+			"enterWordCountSub": "Type the word count of your article, book chapter, or script to see how long it takes to read.",
+			"wordsUnit": "words",
+			"quickWordCounts": "Quick word counts",
+			"nWords": "{count} words",
+			"singleSpacedLabel": "Single-spaced pages (500 words/page)",
+			"doubleSpacedLabel": "Double-spaced pages (250 words/page)",
+			"nPages": "{count} pages",
+			"onePage": "1 page",
+			"convertPagesTitle": "Convert pages to reading time",
+			"convertPagesSub": "Estimate total words and reading time based on standard page density or paperback format.",
+			"numberOfPages": "Number of pages",
+			"pagesUnit": "pages",
+			"lineSpacingLabel": "Line spacing / page density",
+			"lineSpacingAria": "Page Line Spacing",
+			"singleSpaced": "Single spaced",
+			"wpp500": "500 words/page",
+			"doubleSpaced": "Double spaced",
+			"wpp250": "250 words/page",
+			"paperback": "Paperback",
+			"wpp300": "300 words/page",
+			"quickPageCounts": "Quick page counts",
+			"estimatedWordCount": "Estimated word count",
+			"basedOnWppBefore": "Based on ",
+			"basedOnWppAfter": " words per page.",
+			"silentSpeedTitle": "Silent reading speed",
+			"silentSliderAria": "Silent reading speed in words per minute (100 to 400)",
+			"aloudSpeedTitle": "Read aloud speed",
+			"aloudSliderAria": "Read aloud speed in words per minute (100 to 300)",
+			"speedSlow": "Slow",
+			"speedAverage": "Average",
+			"speedFast": "Fast",
+			"speedSkimming": "Skimming",
+			"statSilentTime": "Silent reading time",
+			"statSilentSub": "Average adult reading pace",
+			"statAloudTime": "Read aloud time",
+			"statAloudSub": "Natural speaking pace",
+			"statWordCharCount": "Word & character count",
+			"charactersUnit": "characters",
+			"sentencesUnit": "sentences",
+			"estimatedFromWords": "Estimated from word count",
+			"statReadingLevel": "Reading level",
+			"relatedToolsAria": "Related reading and speech tools",
+			"relatedBeforeSpeech": "Timing a speech or presentation instead? Try our ",
+			"relatedBetweenTools": " or check your personal reading speed with the ",
+			"relatedAfterTools": ".",
+			"btnCopyResult": "Copy result",
+			"btnResetAloud": "Reset read aloud to 183 WPM"
+		},
+		"client": {
+			"sampleText": "Good writing is a transaction of time. Every sentence asks the reader for a few seconds of attention, and every paragraph must earn the right to lead into the next. When authors, editors, and speakers measure reading time accurately, they respect that reader's attention.\n\nResearch in cognitive psychology shows that the average adult reads silent non-fiction at approximately 238 words per minute (WPM). Technical documentation, legal agreements, and academic papers naturally call for a slower, more deliberate pace closer to 180 WPM, while light fiction often flows at 260 to 300 WPM.\n\nWhen reading aloud—whether delivering a talk, recording a podcast script, or narrating an audiobook—our natural pace shifts to an average of 183 words per minute, leaving room for pauses, breathing, and emphasis.",
+			"zeroDuration": "0 min 0 sec",
+			"unitMin": "min",
+			"unitSec": "sec",
+			"wordSingular": "word",
+			"wordPlural": "words",
+			"charSingular": "character",
+			"charPlural": "characters",
+			"pagePlural": "pages",
+			"pasteToCheckLevel": "Paste text to check reading level",
+			"syllablesAndLetters": "{syllables} syllables/word · {letters} letters/word",
+			"enterWordCountPrompt": "Enter a word count",
+			"estimatedGeneralReading": "Estimated for general reading",
+			"enterPageCountPrompt": "Enter a page count",
+			"spacingSingle": "single spaced",
+			"spacingDouble": "double spaced",
+			"spacingPaperback": "paperback",
+			"wppDetail": "{wpp} words per page ({spacing})",
+			"modePaste": "Text input",
+			"modeWords": "Word count",
+			"modePages": "Pages",
+			"statusCleared": "Text cleared",
+			"statusSampleLoaded": "Sample article loaded",
+			"statusInvalidFile": "Please upload a .txt or .md file",
+			"statusLoadedFile": "Loaded {filename}",
+			"copySummary": "Silent reading: {silent} ({silentWpm} WPM) | Read aloud: {speaking} ({speakingWpm} WPM) | {words} {wordUnit}",
+			"copied": "Copied!",
+			"copyResult": "Copy result",
+			"difficultyLabels": {
+				"—": "—",
+				"Standard": "Standard",
+				"Easy": "Easy",
+				"Medium": "Medium",
+				"Hard": "Hard"
+			}
+		},
+		"benchmark": {
+			"heading": "Reading time by word count",
+			"subtitle": "Compare average silent reading time (238 WPM) and read-aloud speaking time (130 WPM) for common document lengths.",
+			"clickHint": "Click any row to load that word count into the calculator",
+			"colWordCount": "Word count",
+			"colSilent": "Silent reading (238 WPM)",
+			"colAloud": "Read aloud (130 WPM)",
+			"colFast": "Fast reader (300 WPM)",
+			"colPages": "Pages (single / double)",
+			"colTypical": "Typical length",
+			"unitMin": "min",
+			"unitSec": "sec",
+			"rowAria": "Load {count} words into calculator",
+			"wordsCell": "{count} words",
+			"pagesCell": "{single} / {double} pages",
+			"useCases": {
+				"100": "Short email, social post, or brief update",
+				"250": "1 double-spaced page or short memo",
+				"300": "Quick blog update or announcement",
+				"500": "1 single-spaced page or newsletter",
+				"750": "3 double-spaced pages or op-ed column",
+				"1000": "2 single-spaced pages or standard article",
+				"1250": "5-minute speech or feature story",
+				"1500": "In-depth blog post or tutorial",
+				"2000": "Detailed guide or long-form article",
+				"2500": "5 single-spaced pages or essay",
+				"3000": "Case study or technical guide",
+				"4000": "Academic paper or short story",
+				"5000": "10 single-spaced pages or whitepaper",
+				"7500": "Long research paper or book chapter",
+				"10000": "20 single-spaced pages or in-depth report"
+			}
+		},
+		"faq": {
+			"heading": "Frequently Asked Questions",
+			"items": [
+				{
+					"question": "Can you read 2000 words per minute?",
+					"answer": "No, reading 2,000 words per minute with full comprehension is not humanly possible. Eye-tracking studies show that human vision and language processing cap true comprehension around 700 to 900 WPM. Anyone claiming 2,000 WPM is skimming headlines or scanning keywords rather than reading every word."
+				},
+				{
+					"question": "How long is a 2 minute read?",
+					"answer": "A 2-minute read is approximately 450 to 500 words at the average adult silent reading speed of 238 WPM (or 600 words for a fast reader at 300 WPM). That equals roughly one single-spaced page or two double-spaced pages—ideal for a concise newsletter or LinkedIn post."
+				},
+				{
+					"question": "How many words is a 3 minute read?",
+					"answer": "A 3-minute read is roughly 700 to 750 words for an average adult reader (238 WPM), or about 550 words if read out loud at 183 WPM. Most short blog posts, op-eds, and daily email digests fall right in this 3-minute window."
+				},
+				{
+					"question": "How many words take 7 minutes to read?",
+					"answer": "Roughly 1,650 to 1,700 words take 7 minutes to read silently at the average pace of 238 WPM (specifically, 1,666 words). For a faster reader at 300 WPM, a 7-minute read covers about 2,100 words, which matches a detailed tutorial or feature article."
+				},
+				{
+					"question": "How many words take 20 minutes to read?",
+					"answer": "At the average adult reading speed of 238 WPM, 4,760 words take 20 minutes to read silently—about 16 pages of a standard paperback novel. A fast reader at 300 WPM can cover 6,000 words (roughly 20 paperback pages) in the same 20 minutes."
+				},
+				{
+					"question": "How many words take 2 minutes to read out loud?",
+					"answer": "At the natural read-aloud speed of 183 WPM, 366 words take 2 minutes to read out loud. If you are delivering a deliberate speech or pitch at 150 WPM with pauses, aim for 300 words so you finish comfortably within two minutes."
+				},
+				{
+					"question": "How many words take 5 minutes to read out loud?",
+					"answer": "Reading out loud at 183 WPM covers roughly 915 words in 5 minutes. For a 5-minute presentation or wedding toast where you pause for emphasis, 750 words (150 WPM) is the safest target so you never feel rushed."
+				},
+				{
+					"question": "How many words takes 10 minutes to read out loud?",
+					"answer": "A 10-minute read-aloud equals about 1,830 words at a natural 183 WPM pace, or 1,500 words at a steady 150 WPM presentation pace. That equals roughly six double-spaced script pages."
+				},
+				{
+					"question": "How many words can I read out loud in 15 minutes?",
+					"answer": "You can read approximately 2,745 words out loud in 15 minutes at 183 WPM, or 2,250 words at a relaxed 150 WPM speaking pace. Most 15-minute conference talks and podcast segments fall right between 2,200 and 2,500 words."
+				},
+				{
+					"question": "Is reading 100 pages in 2 hours fast?",
+					"answer": "Yes, reading 100 standard paperback pages (~30,000 words) in 2 hours equals 50 pages per hour, or 250 WPM—which is faster than the 238 WPM adult average. If the book has dense pages (400+ words per page), finishing 100 pages in 2 hours puts you at 330+ WPM."
+				},
+				{
+					"question": "Is reading 200 pages in 3 hours good?",
+					"answer": "Yes, finishing 200 paperback pages (~60,000 words) in 3 hours equals 67 pages per hour, or 333 WPM. That is roughly 40% faster than the average adult reader and places you in the fast-reader tier."
+				},
+				{
+					"question": "What is the difference between silent reading speed and speaking speed?",
+					"answer": "Silent reading averages 238 WPM because your eyes process multiple words at once without moving your vocal cords. Speaking and reading out loud average 183 WPM (and 130–160 WPM for formal presentations) because pronouncing words and pausing for breath naturally take longer."
+				},
+				{
+					"question": "How does the reading level indicator work?",
+					"answer": "When you paste text into the calculator, it analyzes average sentence length and syllable count per word to estimate readability (such as Easy, Standard, or Academic). Longer sentences and complex multi-syllable words usually mean readers will spend slightly more time absorbing the text."
+				},
+				{
+					"question": "Is my pasted text or uploaded .txt file kept private?",
+					"answer": "Yes, 100%. All word counts, reading time estimates, and readability checks run locally inside your web browser using JavaScript. Your text or uploaded .txt file is never sent to, stored on, or logged by any server."
+				}
+			]
+		},
+		"schema": {
+			"featureList": [
+				"Real-time silent reading time calculator (100 to 400 WPM, default 238 WPM)",
+				"Read aloud speed timer (100 to 300 WPM, default 183 WPM)",
+				"Multi-input system: Paste Text, Direct Word Count, and Pages Count converter",
+				"Drag-and-drop .txt file reader with 100% client-side privacy",
+				"Dynamic reading difficulty badge based on word length and syllable density"
+			]
+		},
+		"page": {
+			"heroSubtitle": "Paste your text, enter a word count, or convert pages to see how long it takes to read silently or out loud. Runs privately in your browser.",
+			"howCalculated": {
+				"h2": "How Is Reading Time Calculated?",
+				"p1": "Reading time is the estimated number of minutes it takes an average person to read a piece of text from start to finish. Whether you are checking the length of a blog post, an essay, or a study chapter, the math behind calculating reading time is simple.",
+				"p2": "To calculate reading time manually, divide the total word count of your document by your reading speed in words per minute (WPM):",
+				"formula": "Reading Time (in minutes) = Total Word Count ÷ Words Per Minute (WPM)",
+				"p3": "For example, if an article has 1,000 words and you read at the average adult silent reading speed of 238 WPM, the math looks like this:",
+				"exampleSteps": [
+					"1,000 ÷ 238 = 4.20 minutes",
+					"Multiply the decimal (0.20) by 60 to find the exact seconds: 0.20 × 60 = 12 seconds",
+					"Total estimated reading time: 4 minutes and 12 seconds"
+				],
+				"h3": "Why Different Tools Show Slightly Different Reading Times",
+				"p4": "If you compare different reading time estimators—such as Medium, Grammarly, or Wordora—you might notice small differences of 15 to 30 seconds for the exact same article. That happens for three practical reasons:",
+				"reasons": [
+					{
+						"lead": "Default WPM benchmarks:",
+						"text": " Some platforms still use an older rough estimate of 200 or 250 WPM, while modern calculators use 238 WPM, which comes from psychologist Marc Brysbaert's review of 190 reading studies."
+					},
+					{
+						"lead": "Reading silently vs. reading out loud:",
+						"text": " Calculating reading time for a silent blog read uses ~238 WPM, whereas estimating the reading time of a speech or script read aloud uses a slower pace of 183 WPM."
+					},
+					{
+						"lead": "Visual breaks and pauses:",
+						"text": " When estimating reading time for an article with images, charts, or bulleted lists, readers naturally pause for a few seconds to scan visuals—so adding a 10% buffer gives a more realistic estimate for real-world readers."
+					}
+				]
+			},
+			"ageSpeed": {
+				"h2": "Average Reading Speed by Age, Grade & Reader Level",
+				"p1": "For most adults reading non-fiction silently, the average reading speed is 238 words per minute (WPM), while fiction averages around 260 WPM. However, reading speed changes significantly based on age, school grade level, and how familiar you are with the topic.",
+				"h3Chart": "Average Words Per Minute (WPM) Reading Chart by Age & Grade",
+				"pChart": "Children start out reading out loud word by word, which keeps early reading speeds low. As silent reading develops in middle school, speed climbs steadily before leveling off in adulthood:",
+				"headers": [
+					"Reader Group / Grade Level",
+					"Typical Age",
+					"Average Reading Speed (WPM)",
+					"Reading Mode"
+				],
+				"rows": [
+					[
+						"1st Grade",
+						"6–7 years",
+						"53–80 WPM",
+						"Out loud"
+					],
+					[
+						"2nd Grade",
+						"7–8 years",
+						"89–115 WPM",
+						"Out loud"
+					],
+					[
+						"3rd Grade",
+						"8–9 years",
+						"107–135 WPM",
+						"Out loud / Silent"
+					],
+					[
+						"4th & 5th Grade",
+						"9–11 years",
+						"123–160 WPM",
+						"Mostly silent"
+					],
+					[
+						"Middle School (6th–8th)",
+						"11–14 years",
+						"150–204 WPM",
+						"Silent"
+					],
+					[
+						"High School (9th–12th)",
+						"14–18 years",
+						"200–250 WPM",
+						"Silent"
+					],
+					[
+						"College Student",
+						"18–22 years",
+						"250–300 WPM",
+						"Silent (study & skimming)"
+					],
+					[
+						"Average Adult (US & Global)",
+						"23+ years",
+						"238 WPM",
+						"Silent non-fiction"
+					],
+					[
+						"Fast / Avid Reader",
+						"Adult",
+						"300–450 WPM",
+						"Silent"
+					],
+					[
+						"Top 1% of Readers",
+						"Adult",
+						"500–700 WPM",
+						"Silent with comprehension"
+					]
+				],
+				"h3Fast": "Is Reading 250, 300, or 400 Words Per Minute Fast?",
+				"fastItems": [
+					{
+						"lead": "250 WPM:",
+						"text": " Slightly above the adult average of 238 WPM. If you read at 250 WPM, you finish roughly one double-spaced page per minute or about 40–45 paperback pages per hour."
+					},
+					{
+						"lead": "300 WPM:",
+						"text": " Considered a good, fast reading rate—roughly 25% faster than average. Many regular book readers and college students naturally reach 300 WPM on familiar topics."
+					},
+					{
+						"lead": "400 WPM:",
+						"text": " Very fast. Only about the top 5% of readers maintain 400 WPM without skipping words or losing comprehension."
+					}
+				],
+				"h3Myths": "Famous Readers & Common Reading Speed Myths",
+				"pMyths": "Online claims often exaggerate how fast famous leaders read, so it helps to separate real benchmarks from myths:",
+				"mythItems": [
+					{
+						"lead": "Bill Gates and Elon Musk:",
+						"text": " Bill Gates is known to read about 50 books a year and has mentioned reading roughly 150 pages per hour on dense non-fiction, which equals around 600–750 WPM depending on page density—though he also takes detailed margin notes that slow down his overall session pace. Elon Musk grew up reading science fiction for hours a day, relying on high reading volume rather than trick speed-reading methods."
+					},
+					{
+						"lead": "John F. Kennedy (JFK):",
+						"text": " Popular stories claimed JFK could read 1,200 WPM, but reading researchers note that anything above 800–900 WPM crosses into skimming rather than full word-by-word comprehension."
+					},
+					{
+						"lead": "IQ and ADHD:",
+						"text": " High IQ does not automatically guarantee faster reading, though strong vocabulary reduces pauses on unfamiliar words. Readers with ADHD often read slower when distracted or re-reading lines, yet can read much faster than average when hyperfocused on a topic they genuinely enjoy."
+					}
+				],
+				"h3OwnWpm": "How Can You Calculate Your Own WPM?",
+				"ownWpmBefore": "Set a timer for 1 minute, read an article silently at your normal pace, and count the words you covered—or use our interactive ",
+				"ownWpmLink": "Reading Speed Test",
+				"ownWpmAfter": " to get your exact WPM score in 60 seconds."
+			},
+			"wordsToMinutes": {
+				"h2": "Words to Minutes Conversion Guide (200 to 3,000+ Words)",
+				"p1": "Converting words to minutes helps writers, students, and content creators plan how long an email, essay, or article will hold a reader's attention. While the interactive table below gives quick numbers from 100 to 10,000 words, here is what the most commonly searched word counts look like in real-world reading at the average adult pace of 238 WPM:",
+				"groups": [
+					{
+						"h3": "Short-Form Text: 200 to 600 Words (Under 3 Minutes)",
+						"items": [
+							{
+								"lead": "200 words (50 seconds silent / 1 min 6 sec aloud):",
+								"text": " About two short paragraphs—roughly the length of a concise cold email, a product description, or a LinkedIn update. Most people finish reading 200 words in well under a minute."
+							},
+							{
+								"lead": "300 words (1 min 16 sec silent / 1 min 38 sec aloud):",
+								"text": " The standard length of a cover letter, a brief news announcement, or a single double-spaced page plus a few lines."
+							},
+							{
+								"lead": "500 words (2 min 6 sec silent / 2 min 44 sec aloud):",
+								"text": " A classic short blog post, a high school response essay, or a two-page double-spaced document. Five hundred words is short enough that busy readers almost always finish it in one sitting."
+							},
+							{
+								"lead": "600 words (2 min 31 sec silent / 3 min 17 sec aloud):",
+								"text": " Slightly longer than a 500-word op-ed, giving enough room for an introduction, three clear points, and a short takeaway."
+							}
+						]
+					},
+					{
+						"h3": "Medium-Length Articles & Essays: 800 to 1,000 Words (3 to 4.5 Minutes)",
+						"items": [
+							{
+								"lead": "800 words (3 min 22 sec silent / 4 min 22 sec aloud):",
+								"text": " A standard newspaper column or a crisp tutorial. Converting 800 words to minutes shows it sits right in the sweet spot for mobile readers who want depth without scrolling for ten minutes."
+							},
+							{
+								"lead": "1,000 words (4 min 12 sec silent / 5 min 28 sec aloud):",
+								"text": " One of the most common benchmarks for college essays, freelance articles, and newsletter issues. At 238 WPM, 1,000 words takes 4 minutes and 12 seconds to read silently—or about 3 minutes and 20 seconds for a fast reader at 300 WPM."
+							}
+						]
+					},
+					{
+						"h3": "Long-Form Guides & Research Papers: 2,000 to 3,000 Words (8 to 13 Minutes)",
+						"items": [
+							{
+								"lead": "2,000 words (8 min 24 sec silent / 10 min 56 sec aloud):",
+								"text": " A detailed how-to guide, an in-depth product review, or an 8-page double-spaced paper. Readers usually need eight to nine quiet minutes to absorb a 2,000-word piece."
+							},
+							{
+								"lead": "2,500 words (10 min 30 sec silent / 13 min 40 sec aloud):",
+								"text": " A comprehensive pillar article or a 10-page double-spaced assignment. Converting 2,500 words to minutes crosses the ten-minute mark, where subheadings and bullet lists become essential for readability."
+							},
+							{
+								"lead": "3,000 words (12 min 36 sec silent / 16 min 24 sec aloud):",
+								"text": " A long-form feature story, a whitepaper, or a 12-page university essay. A fast reader at 300 WPM finishes 3,000 words in 10 minutes flat, while an average reader takes about 12.5 minutes."
+							}
+						]
+					}
+				]
+			},
+			"minutesToWords": {
+				"h2": "Minutes to Words Guide: How Much Can You Read in 2 to 30 Minutes?",
+				"p1": "Sometimes you do not start with a word count—you start with a block of free time. Whether you have a 2-minute coffee break, a 10-minute commute, or a 30-minute evening study session, converting minutes to words shows exactly how much text you can finish before the clock runs out.",
+				"p2": "To calculate how many words fit into a set number of minutes, multiply your available time by your reading speed:",
+				"formula": "Total Words = Minutes Available × Words Per Minute (WPM)",
+				"h3Chart": "Minutes to Words Reference Chart (2 to 100 Minutes)",
+				"pChart": "The table below shows how many words you can read silently at the average adult pace (238 WPM) compared to a fast reader (300 WPM) and reading out loud (183 WPM):",
+				"headers": [
+					"Reading Time",
+					"Average Silent Reader (238 WPM)",
+					"Fast Silent Reader (300 WPM)",
+					"Reading Out Loud (183 WPM)",
+					"Typical Real-World Equivalent"
+				],
+				"rows": [
+					[
+						"2 minutes",
+						"~476 words",
+						"600 words",
+						"~366 words",
+						"Short email or quick news brief"
+					],
+					[
+						"3 minutes",
+						"~714 words",
+						"900 words",
+						"~549 words",
+						"Standard Medium post or newsletter"
+					],
+					[
+						"5 minutes",
+						"~1,190 words",
+						"1,500 words",
+						"~915 words",
+						"Detailed blog post or 2.5 book pages"
+					],
+					[
+						"7 minutes",
+						"~1,666 words",
+						"2,100 words",
+						"~1,281 words",
+						"In-depth tutorial or feature article"
+					],
+					[
+						"10 minutes",
+						"~2,380 words",
+						"3,000 words",
+						"~1,830 words",
+						"Long-form guide or ~8 paperback pages"
+					],
+					[
+						"15 minutes",
+						"~3,570 words",
+						"4,500 words",
+						"~2,745 words",
+						"One full novel chapter (12–15 pages)"
+					],
+					[
+						"20 minutes",
+						"~4,760 words",
+						"6,000 words",
+						"~3,660 words",
+						"Daily reading goal (~16 paperback pages)"
+					],
+					[
+						"30 minutes",
+						"~7,140 words",
+						"9,000 words",
+						"~5,490 words",
+						"Two to three chapters (~25 pages)"
+					],
+					[
+						"100 minutes",
+						"~23,800 words",
+						"30,000 words",
+						"~18,300 words",
+						"A short novella (~80–100 pages)"
+					]
+				],
+				"h3Quick": "Quick Answers to Common Time-to-Word Questions",
+				"quickItems": [
+					{
+						"lead": "How long is a 2-minute or 3-minute read?",
+						"text": " A 2-minute read is roughly 450 to 500 words, while a 3-minute read sits right around 700 to 750 words—the ideal length for concise online articles and daily newsletters."
+					},
+					{
+						"lead": "How many words is a 5-minute or 7-minute reading time?",
+						"text": " Five minutes of silent reading covers about 1,190 words, and 7 minutes of reading covers roughly 1,666 words—which is why many editors aim for 1,500-word guides."
+					},
+					{
+						"lead": "Can you read 3,000 words in 15 minutes?",
+						"text": " Yes. At the average adult pace of 238 WPM, reading 3,000 words takes 12 minutes and 36 seconds, leaving you more than two minutes to spare inside a 15-minute window."
+					},
+					{
+						"lead": "How much can you read in 20 or 30 minutes?",
+						"text": " In 20 minutes, an average reader finishes 4,760 words, and in 30 minutes you can comfortably read 7,140 words—nearly 25 pages of a standard paperback book."
+					}
+				],
+				"h3Habit": "Why Read 20 Minutes Per Day? (The Daily Habit Math)",
+				"pHabit": "Educators and literacy researchers often recommend reading at least 20 to 30 minutes daily. At 238 WPM, reading just 20 minutes a day adds up to 4,760 words per day, 142,800 words per month, and roughly 1.73 million words per year—enough to finish 18 to 20 average-length books annually without ever needing a marathon study session."
+			},
+			"readAloud": {
+				"h2": "How Long Does It Take to Read Out Loud? (Speeches, Scripts & Talks)",
+				"p1": "Reading out loud is noticeably slower than reading silently because your mouth has to form every word and you naturally pause at commas and periods. While silent reading averages 238 WPM, the average reading speed out loud is 183 WPM, and a comfortable public speaking or presentation pace sits between 130 and 160 WPM.",
+				"h3Chart": "Read-Aloud & Speech Time Conversion Chart (200 to 6,000 Words)",
+				"pChart": "Use the chart below to check how long a script, podcast intro, or keynote speech takes at a natural read-aloud pace (183 WPM) versus a deliberate presentation pace (150 WPM):",
+				"headers": [
+					"Word Count",
+					"Natural Read-Aloud Pace (183 WPM)",
+					"Presentation / Speech Pace (150 WPM)",
+					"Slow & Emphatic Pace (130 WPM)",
+					"Common Use Case"
+				],
+				"rows": [
+					[
+						"200 words",
+						"1 min 6 sec",
+						"1 min 20 sec",
+						"1 min 32 sec",
+						"Short video hook or toast"
+					],
+					[
+						"300 words",
+						"1 min 38 sec",
+						"2 min 0 sec",
+						"2 min 18 sec",
+						"2-minute pitch or classroom update"
+					],
+					[
+						"500 words",
+						"2 min 44 sec",
+						"3 min 20 sec",
+						"3 min 51 sec",
+						"Short wedding toast or YouTube intro"
+					],
+					[
+						"600 words",
+						"3 min 17 sec",
+						"4 min 0 sec",
+						"4 min 37 sec",
+						"4-minute persuasive speech"
+					],
+					[
+						"750 words",
+						"4 min 6 sec",
+						"5 min 0 sec",
+						"5 min 46 sec",
+						"Standard 5-minute presentation"
+					],
+					[
+						"1,000 words",
+						"5 min 28 sec",
+						"6 min 40 sec",
+						"7 min 42 sec",
+						"6-to-7-minute talk or podcast segment"
+					],
+					[
+						"2,000 words",
+						"10 min 56 sec",
+						"13 min 20 sec",
+						"15 min 23 sec",
+						"15-minute conference session"
+					],
+					[
+						"2,500 words",
+						"13 min 40 sec",
+						"16 min 40 sec",
+						"19 min 14 sec",
+						"TED-style 18-minute keynote"
+					],
+					[
+						"3,000 words",
+						"16 min 24 sec",
+						"20 min 0 sec",
+						"23 min 5 sec",
+						"20-minute lecture or webinar"
+					],
+					[
+						"6,000 words",
+						"32 min 47 sec",
+						"40 min 0 sec",
+						"46 min 9 sec",
+						"40-to-45-minute keynote or sermon"
+					]
+				],
+				"h3Answers": "Direct Answers to Common Speaking & Read-Aloud Questions",
+				"items": [
+					{
+						"lead": "How many words take 2, 5, 10, or 15 minutes to read out loud?",
+						"text": " At 183 WPM, a 2-minute read-aloud is about 366 words, 5 minutes is 915 words, 10 minutes is 1,830 words, and 15 minutes covers roughly 2,745 words (or ~2,250 words at a relaxed 150 WPM presentation pace)."
+					},
+					{
+						"lead": "Can you speak 1,000 words in 7 minutes or 3,000 words in 20 minutes?",
+						"text": " Yes to both. Speaking 1,000 words in 7 minutes requires a very comfortable 143 WPM, and delivering 3,000 words in 20 minutes equals exactly 150 WPM—both are ideal presentation speeds."
+					},
+					{
+						"lead": "Can I speak 2,000 words in 10 minutes?",
+						"text": " That requires 200 WPM, which feels rushed for most listeners unless you are reading a fast-paced voiceover without pauses."
+					},
+					{
+						"lead": "Is an 8-minute speech too long, and how many words is a 1-hour talk?",
+						"text": " An 8-minute speech (roughly 1,100 to 1,300 words) is an ideal length for classroom talks, pitches, and ceremonies—long enough to make a clear point without losing the room. A 1-hour talk typically contains 7,500 to 9,000 spoken words once you include natural pauses and slide transitions."
+					},
+					{
+						"lead": "How long should a read-aloud take for kids or classrooms?",
+						"text": " For elementary classroom read-alouds, teachers usually keep sessions to 10 to 15 minutes (around 1,500 to 2,200 words) so younger listeners stay engaged."
+					}
+				],
+				"ctaBefore": "If you are rehearsing a timed presentation with pauses and Q&A buffers, try our dedicated ",
+				"ctaLink": "Speech Time Calculator",
+				"ctaAfter": " for slide-by-slide pacing."
+			},
+			"wordsPerPage": {
+				"h2": "How Many Words Per Page? (Single-Spaced, Double-Spaced & Books)",
+				"p1": "A standard page holds 250 words double-spaced or 500 words single-spaced when typed in a 12-point font (such as Times New Roman or Arial) with 1-inch margins. Printed books and novels average 275 to 300 words per page.",
+				"h3Chart": "Words Per Page Reference Chart by Format & Paper Size",
+				"headers": [
+					"Document or Book Format",
+					"Spacing & Font Setup",
+					"Average Words Per Page",
+					"10 Pages Equals",
+					"100,000 Words Equals"
+				],
+				"rows": [
+					[
+						"Academic Essay / Manuscript",
+						"Double-spaced, 12pt font",
+						"250 words",
+						"2,500 words",
+						"400 pages"
+					],
+					[
+						"Paperback Novel / Trade Book",
+						"Standard 6\" × 9\" print layout",
+						"300 words",
+						"3,000 words",
+						"~333 pages"
+					],
+					[
+						"Mass-Market Paperback",
+						"Compact 4.25\" × 6.87\" trim",
+						"275 words",
+						"2,750 words",
+						"~364 pages"
+					],
+					[
+						"Business Report / Word Doc",
+						"Single-spaced, 12pt font",
+						"500 words",
+						"5,000 words",
+						"200 pages"
+					],
+					[
+						"A4 Sheet (Single-Spaced)",
+						"12pt font, standard margins",
+						"520–550 words",
+						"~5,350 words",
+						"~187 pages"
+					],
+					[
+						"A4 Sheet (Double-Spaced)",
+						"12pt font, standard margins",
+						"260–275 words",
+						"~2,675 words",
+						"~374 pages"
+					]
+				],
+				"h3Answers": "Quick Answers for Word, A4 & Book Page Conversions",
+				"items": [
+					{
+						"lead": "How many words per page in Microsoft Word or Google Docs?",
+						"text": " Using default 1-inch margins and 12pt Arial or Times New Roman, 1 page is 500 words single-spaced and 250 words double-spaced. Switching to 11pt Calibri (Word's default) fits roughly 550 to 600 words on a single-spaced page."
+					},
+					{
+						"lead": "How many words per page in a novel?",
+						"text": " Publishing editors use 250 to 300 words per page as the standard benchmark. A typical 80,000-word novel prints out to roughly 270 to 320 pages, while 100,000 words equals 333 paperback pages (or 400 double-spaced manuscript pages)."
+					},
+					{
+						"lead": "How does A4 paper compare to US Letter?",
+						"text": " Because A4 paper is slightly taller than US Letter (11.7 inches vs. 11 inches), a single-spaced A4 page holds about 5% to 8% more words—roughly 530 words instead of 500."
+					}
+				],
+				"ctaBefore": "Need to convert a specific word count into exact page numbers across different font sizes? Use our ",
+				"ctaLink": "Words to Pages Calculator",
+				"ctaAfter": "."
+			},
+			"readPages": {
+				"h2": "How Long Does It Take to Read 5, 10, 20 & 100 Pages?",
+				"p1": "At the average adult reading speed of 238 WPM, reading 10 pages of a standard paperback novel (3,000 words) takes about 12 minutes and 36 seconds, while 10 double-spaced pages (2,500 words) takes 10 minutes and 30 seconds. On average, an adult reads 45 to 55 paperback pages per hour, or roughly 1.2 to 1.5 minutes per page.",
+				"h3Chart": "Pages to Minutes Conversion Chart (1 to 200 Pages)",
+				"headers": [
+					"Page Count",
+					"Double-Spaced (250 wpp) @ 238 WPM",
+					"Paperback Novel (300 wpp) @ 238 WPM",
+					"Dense Textbook / PDF (450 wpp) @ 200 WPM",
+					"Reading Out Loud (183 WPM)"
+				],
+				"rows": [
+					[
+						"1 page",
+						"1 min 3 sec",
+						"1 min 16 sec",
+						"2 min 15 sec",
+						"1 min 22 sec – 1 min 38 sec"
+					],
+					[
+						"5 pages",
+						"5 min 15 sec",
+						"6 min 18 sec",
+						"11 min 15 sec",
+						"6 min 50 sec – 8 min 12 sec"
+					],
+					[
+						"8 pages",
+						"8 min 24 sec",
+						"10 min 5 sec",
+						"18 min 0 sec",
+						"10 min 56 sec – 13 min 7 sec"
+					],
+					[
+						"10 pages",
+						"10 min 30 sec",
+						"12 min 36 sec",
+						"22 min 30 sec",
+						"13 min 40 sec – 16 min 24 sec"
+					],
+					[
+						"12 pages",
+						"12 min 36 sec",
+						"15 min 8 sec",
+						"27 min 0 sec",
+						"16 min 24 sec – 19 min 40 sec"
+					],
+					[
+						"20 pages",
+						"21 min 0 sec",
+						"25 min 13 sec",
+						"45 min 0 sec",
+						"27 min 20 sec – 32 min 47 sec"
+					],
+					[
+						"50 pages",
+						"52 min 31 sec",
+						"1 hr 3 min",
+						"1 hr 52 min",
+						"1 hr 8 min – 1 hr 22 min"
+					],
+					[
+						"100 pages",
+						"1 hr 45 min",
+						"2 hr 6 min",
+						"3 hr 45 min",
+						"2 hr 17 min – 2 hr 44 min"
+					],
+					[
+						"200 pages",
+						"3 hr 30 min",
+						"4 hr 12 min",
+						"7 hr 30 min",
+						"4 hr 33 min – 5 hr 28 min"
+					]
+				],
+				"h3Answers": "Quick Answers to Common Page-Reading Questions",
+				"items": [
+					{
+						"lead": "Why does 10 pages of a textbook, PDF, or the Quran take longer than a novel?",
+						"text": " A paperback novel uses wide margins and familiar dialogue (~300 words/page). By contrast, a 10-page college textbook or academic PDF often packs 450–600 words per page plus charts and terminology, taking 25 to 45 minutes to study properly. Similarly, reading 10 pages of the Quran (Uthmani script) with careful pronunciation and reflection typically takes 15 to 25 minutes, depending on your familiarity with Arabic."
+					},
+					{
+						"lead": "Is it normal if it takes me an hour to read 10 pages?",
+						"text": " Yes, if you are reading dense technical material, studying a foreign language, highlighting key points, or taking notes. For casual fiction, however, 10 pages per hour (~50 WPM) means you are either re-reading lines frequently or getting distracted."
+					},
+					{
+						"lead": "Is reading 100 pages in 2 hours or 200 pages in 3 hours good?",
+						"text": " Reading 100 paperback pages in 2 hours equals 50 pages per hour (~250 WPM)—a solid, above-average pace. Finishing 200 pages in 3 hours equals 67 pages per hour (~333 WPM), which puts you comfortably in the fast-reader tier."
+					},
+					{
+						"lead": "How many pages per day does an average reader finish?",
+						"text": " Reading just 20 to 30 minutes a day covers 15 to 25 paperback pages daily, or roughly 500 to 750 pages per month."
+					}
+				]
+			},
+			"books": {
+				"h2": "Estimated Reading Time for Books, Novels & Manga",
+				"p1": "An average 300-page paperback book contains roughly 85,000 to 90,000 words and takes 6 hours to 6 hours and 18 minutes to read at the average adult speed of 238 WPM. Longer classics and religious texts take anywhere from 8 hours to over 50 hours, while a single volume of manga takes about 35 to 45 minutes.",
+				"h3Chart": "Popular Books & Manga Reading Time Chart (238 WPM vs. 300 WPM)",
+				"headers": [
+					"Book Title or Format",
+					"Approximate Word Count",
+					"Typical Page Count",
+					"Average Reader (238 WPM)",
+					"Fast Reader (300 WPM)"
+				],
+				"rows": [
+					[
+						"Standard 300-Page Book",
+						"~90,000 words",
+						"300 pages",
+						"6 hr 18 min",
+						"5 hr 0 min"
+					],
+					[
+						"The Odyssey (Homer)",
+						"~121,000 words",
+						"~400 pages",
+						"8 hr 28 min",
+						"6 hr 43 min"
+					],
+					[
+						"The Count of Monte Cristo",
+						"~464,000 words",
+						"~1,276 pages",
+						"32 hr 30 min",
+						"25 hr 47 min"
+					],
+					[
+						"The Bible (KJV / ESV)",
+						"~783,000 words",
+						"~1,200 pages",
+						"54 hr 50 min",
+						"43 hr 30 min"
+					],
+					[
+						"1 Volume of Manga",
+						"~8,000–12,000 words",
+						"~190–200 pages",
+						"35–45 min",
+						"25–35 min"
+					]
+				],
+				"h3Breakdown": "Quick Breakdown for Long Books & Graphic Formats",
+				"items": [
+					{
+						"lead": "How long to read a 300-page book?",
+						"text": " At 300 words per page (90,000 words total), reading a 300-page book takes 6 hours and 18 minutes of continuous reading. Broken into a 30-minute daily habit, you will finish it in 12 to 13 days."
+					},
+					{
+						"lead": "How long to read The Odyssey?",
+						"text": " Most English translations of Homer's The Odyssey run around 121,000 words, taking 8 hours and 28 minutes at 238 WPM—or slightly longer (~10 hours) if you pause to read footnotes on Greek mythology."
+					},
+					{
+						"lead": "How long to read The Count of Monte Cristo?",
+						"text": " Alexandre Dumas's unabridged classic is roughly 464,000 words long, requiring 32.5 hours of reading time—about one month at an hour per day."
+					},
+					{
+						"lead": "How long to read the Bible?",
+						"text": " Depending on the translation, the Bible contains roughly 750,000 to 783,000 words. At 238 WPM, reading it cover to cover takes 52 to 55 hours silently (or about 71 hours out loud at 183 WPM), which equals roughly 9 to 10 minutes a day to finish in one year."
+					},
+					{
+						"lead": "How long to read manga?",
+						"text": " A standard 200-page manga volume has far fewer words per page (~45–60 words) than a novel, so an average reader finishes one volume in 35 to 45 minutes (around 12–15 seconds per page)."
+					}
+				],
+				"ctaBefore": "Listening to the audio edition instead? Compare narration speeds with our ",
+				"ctaLink": "Audiobook Speed Calculator",
+				"ctaAfter": "."
+			},
+			"apps": {
+				"h2": "How to Check Reading Time in Word, Google Docs & Kindle",
+				"p1": "Neither Microsoft Word nor Google Docs displays an automatic reading time badge out of the box, but both show your exact word count so you can calculate reading duration in seconds. Amazon Kindle, by contrast, tracks your personal reading speed automatically and shows live time estimates at the bottom of your screen.",
+				"h3Steps": "Step-by-Step Guide by App & File Type",
+				"items": [
+					{
+						"lead": "Microsoft Word:",
+						"text": " Look at the bottom-left status bar for your total word count (or press Ctrl + Shift + G on Windows / Cmd + Shift + G on Mac). Enter that number into the Word count tab of our free online reading time calculator above—or divide your word count by 238 for silent reading and 183 for read-aloud time."
+					},
+					{
+						"lead": "Google Docs:",
+						"text": " Open your document and press Ctrl + Shift + C (Cmd + Shift + C on Mac), or click Tools > Word count from the top menu. Copy the word count into our calculator, or paste your draft directly into the Paste text tab for instant silent and spoken estimates."
+					},
+					{
+						"lead": "Amazon Kindle:",
+						"text": " Tap the bottom-left corner of your Kindle screen while reading any eBook to cycle through display modes until you see \"Time left in chapter\" or \"Time left in book.\" Kindle calculates this dynamically from your actual page-turn speed on that specific book."
+					},
+					{
+						"lead": "PDF Files & Web Articles:",
+						"text": " Open the PDF, press Ctrl + A (Cmd + A) to select all text, copy it (Ctrl + C), and paste it into Wordora's Paste text box—or enter the PDF's page count in the Pages tab using 450–500 words per page for dense single-spaced layouts. For blog posts and websites, paste the article text directly to see whether it hits the ideal 5-to-7-minute reader sweet spot."
+					},
+					{
+						"lead": "Other Languages (such as Chinese, Spanish, or French):",
+						"text": " Standard English WPM benchmarks apply best to alphabetic languages like English, Spanish, and French. For character-based languages like Chinese, average adult reading speed is typically 400 to 600 characters per minute rather than space-separated words."
+					}
+				],
+				"ctaBefore": "Need a detailed breakdown of words, characters, sentences, and paragraphs before timing your draft? Open our ",
+				"ctaLink": "Word Counter",
+				"ctaAfter": "."
+			}
+		}
 	},
 	"readingSpeedTest": {
 		"name": "Reading Speed Test (WPM)",
@@ -79,7 +970,1013 @@
 		"metric": "Live WPM Timer · 238 WPM Avg",
 		"title": "Reading Speed Test & Online WPM Reading Tester | Wordora",
 		"metaDescription": "Take a free 1-minute reading speed test and words per minute reading test. Use our online reading speed tester to test your reading speed (WPM) and compare by grade level.",
-		"h1": "Reading Speed Test"
+		"h1": "Reading Speed Test",
+		"ui": {
+			"workspaceAria": "Reading Speed Test and RSVP Speed Trainer Workspace",
+			"stepsNavAria": "Reading test progress steps",
+			"stepSetup": "1. Setup",
+			"stepRead": "2. Read",
+			"stepQuiz": "3. Quiz",
+			"stepResults": "4. Results",
+			"pastResults": "Past Results",
+			"readingModeLabel": "Reading mode",
+			"readingModeAria": "Reading test mode selector",
+			"modeStandard": "Standard Test",
+			"modeRsvp": "RSVP Trainer",
+			"difficultyLabel": "Passage difficulty",
+			"difficultyAria": "Passage difficulty or custom text",
+			"diffBeginner": "Beginner",
+			"diffIntermediate": "Intermediate",
+			"diffChallenge": "Challenge",
+			"diffCustom": "Custom Text",
+			"shuffleBtn": "Shuffle",
+			"customLabel": "Paste your article, study notes, or draft",
+			"zeroWords": "0 words",
+			"customPlaceholder": "Paste or type at least 15 words here to time your reading speed or practice in the RSVP Speed Trainer...",
+			"customHintDefault": "Custom text automatically bypasses the multiple-choice quiz (Speed Only).",
+			"testOptions": "Test Options",
+			"quizLengthLabel": "Memory comprehension quiz",
+			"quizOption3": "3 Questions (Recommended)",
+			"quizOption5": "5 Questions (Full Check)",
+			"quizOption0": "No Quiz (Speed Only)",
+			"fontSizeLabel": "Reading font size",
+			"fontSizeAria": "Passage font size",
+			"fontSmall": "A- Small",
+			"fontDefault": "A Default",
+			"fontLarge": "A+ Large",
+			"startTestBtn": "Start Reading Test",
+			"cancelBtn": "Cancel",
+			"finishHint": "Click Finish Reading as soon as you reach the last word.",
+			"finishReadingBtn": "Finish Reading",
+			"rsvpHeading": "RSVP Speed Trainer",
+			"rsvpChunkAria": "RSVP chunk mode",
+			"rsvpWordByWord": "Word-by-word",
+			"rsvpSentenceBySentence": "Sentence-by-sentence",
+			"rsvpTargetSpeedLabel": "Target training speed",
+			"rsvpReady": "Ready",
+			"rsvpPause": "Pause",
+			"rsvpRestart": "Restart",
+			"rsvpFinishSession": "Finish Session",
+			"quizHeadingDefault": "Memory comprehension check",
+			"quizIntro": "The passage is hidden so you can answer from memory. Your accuracy determines your comprehension-adjusted Effective WPM.",
+			"quizHelperDefault": "Select an answer for every question to continue.",
+			"submitQuizBtn": "Submit & View Results",
+			"resultsEyebrow": "Reading speed test complete",
+			"resultsHeading": "Your Reading Performance",
+			"copyResultBtn": "Copy Result",
+			"takeAnotherBtn": "Take Another Test",
+			"resultsMetricsAria": "Test result summary metrics",
+			"kpiRawSpeed": "Raw Speed",
+			"kpiComprehension": "Comprehension",
+			"kpiEffectiveWpm": "Effective WPM",
+			"kpiEffectiveSubDefault": "Raw WPM × accuracy",
+			"kpiReaderProfile": "Reader Profile",
+			"skimWarningHtml": "<strong class=\"font-semibold text-ink\">Note on 700+ WPM speeds:</strong> Reading faster than 700 WPM indicates rapid skimming or scanning rather than full word-by-word comprehension. Human eye fixations physiologically cap deep silent reading near 400–500 WPM.",
+			"ageComparisonHeading": "Age group comparison",
+			"ageLabel": "Age:",
+			"ageOptUnder13": "Under 13 (165 WPM)",
+			"ageOpt13_17": "13–17 (205 WPM)",
+			"ageOpt18_24": "18–24 (245 WPM)",
+			"ageOpt25_34": "25–34 (238 WPM)",
+			"ageOpt35Plus": "35+ (230 WPM)",
+			"peerAvgInitial": "238 WPM Peer Avg",
+			"peerBenchmarkTitle": "Peer Benchmark Average",
+			"comparisonDetailDefault": "Comparing your reading speed against your selected age group benchmark.",
+			"booksPerYearHeading": "Books a year at your speed",
+			"booksPerYearSub": "Standard 90,000-word non-fiction books",
+			"dailyMinsAria": "Daily reading minutes",
+			"minPerDay": "min/day",
+			"estimatedAnnualBooks": "Estimated annual books:",
+			"booksPerYearInitial": "19.3 books / yr",
+			"booksPerYearSubInitial": "At 238 WPM pace · ~1,737,400 words/year",
+			"answerReviewHeading": "Answer Review & Explanations",
+			"historyHeading": "Your Last 10 Test Results",
+			"historySub": "Stored privately in your browser’s local storage.",
+			"clearHistoryBtn": "Clear history",
+			"backToTestBtn": "Back to Test",
+			"historyEmpty": "No reading speed tests saved yet. Complete a test to track your WPM and accuracy over time.",
+			"historyColPassage": "Passage & difficulty",
+			"historyColRawWpm": "Raw WPM",
+			"historyColComp": "Comprehension",
+			"historyColEffectiveWpm": "Effective WPM",
+			"historyColWhen": "When",
+			"relatedToolsAria": "Related reading tools",
+			"relatedBefore1": "Now that you know your personal WPM, use it in our",
+			"relatedBefore2": ", plan your next listen with the",
+			"relatedBefore3": ", or pace a presentation with the"
+		},
+		"client": {
+			"ageBenchmarks": {
+				"under13": "Under 13",
+				"13-17": "Ages 13–17",
+				"18-24": "Ages 18–24",
+				"25-34": "Ages 25–34",
+				"35plus": "Ages 35+"
+			},
+			"profiles": {
+				"careful": "Careful Reader",
+				"steady": "Steady Reader",
+				"average": "Average Reader",
+				"fast": "Fast Reader",
+				"speed": "Speed Reader",
+				"skimmer": "Rapid Skimmer"
+			},
+			"customDefaultParagraph": "When you read a page of text, your eyes move in quick jumps called saccades and pause briefly on clusters of letters. Paste your own article or notes in Setup to test your silent reading speed on any custom text.",
+			"customPassageTitle": "Your Custom Text Passage",
+			"customPassageTopic": "Custom pasted text",
+			"customDifficultyLabel": "Custom text",
+			"wordSingular": "word",
+			"wordsPlural": "words",
+			"passageMeta": "{topic} · Passage {index} of {total} · {words} words",
+			"modeStandardLabel": "Standard Test",
+			"modeRsvpLabel": "RSVP Trainer ({wpm} WPM)",
+			"quizSpeedOnlyLabel": "Speed only (no quiz)",
+			"quizCountLabel": "{count}-question memory quiz",
+			"setupSummary": "{mode} · {words} words · {quiz}",
+			"rsvpProgress": "{done} / {total} words",
+			"rsvpTimeRemaining": "~{mins}:{secs} at {wpm} WPM",
+			"rsvpPlay": "Play",
+			"rsvpPause": "Pause",
+			"rsvpResume": "Resume",
+			"rsvpReady": "Ready",
+			"customMinWordsError": "Please paste or type at least 10 words before starting.",
+			"customReadyHint": "Custom text ready. Click Start Reading Test below.",
+			"rawSpeedRecorded": "Raw speed recorded: {wpm} WPM",
+			"quizHeadingCount": "{count}-question memory check",
+			"quizProgress": "{answered} of {total} selected",
+			"quizHelperRemainingSingular": "Select {remaining} more answer to view your results.",
+			"quizHelperRemainingPlural": "Select {remaining} more answers to view your results.",
+			"quizHelperReady": "All questions answered. Click Submit & View Results.",
+			"ageBenchmarkLabel": "{avg} WPM ({label} avg)",
+			"comparisonExactHtml": "Your reading rate of <strong class=\"font-semibold text-ink tabular-nums\">{rawWpm} WPM</strong> matches the <strong class=\"font-semibold text-ink tabular-nums\">{peerAvg} WPM</strong> benchmark for {ageLabel}.",
+			"comparisonFasterHtml": "At <strong class=\"font-semibold text-ink tabular-nums\">{rawWpm} WPM</strong>, you read <strong class=\"font-semibold text-ink tabular-nums\">{diff} WPM faster</strong> (+{pctDiff}%) than the {ageLabel} benchmark ({peerAvg} WPM).",
+			"comparisonSlowerHtml": "At <strong class=\"font-semibold text-ink tabular-nums\">{rawWpm} WPM</strong>, you are <strong class=\"font-semibold text-ink tabular-nums\">{diff} WPM below</strong> ({pctDiff}% slower than) the {ageLabel} benchmark ({peerAvg} WPM).",
+			"booksPerYearOutput": "{books} books / yr",
+			"booksPerYearSub": "At {wpm} WPM pace · ~{words} words/year",
+			"resRawSub": "{words} words in {seconds}s",
+			"speedOnlyShort": "Speed only",
+			"quizBypassed": "Quiz bypassed",
+			"effectiveSpeedOnlySub": "Unadjusted speed-only WPM",
+			"resCompSub": "{correct} of {total} correct",
+			"resEffectiveSub": "{rawWpm} WPM × {accuracy}% accuracy",
+			"resPercentile": "Faster than {percentile}% of adult readers · {profile}",
+			"reviewSummaryBadge": "{correct} of {total} correct ({accuracy}%)",
+			"noAnswer": "No answer",
+			"badgeCorrect": "Correct",
+			"badgeIncorrect": "Incorrect",
+			"yourAnswerLabel": "Your answer:",
+			"correctAnswerLabel": "Correct answer:",
+			"historyAverageSingular": "Average ({count} test)",
+			"historyAveragePlural": "Average ({count} tests)",
+			"copySummary": "Reading Speed Test (Wordora): {rawWpm} WPM Raw · {effectiveWpm} Effective WPM · {profile} (faster than {percentile}% of adult readers) — {url}",
+			"copiedLabel": "Copied!",
+			"copyResultLabel": "Copy Result"
+		},
+		"passages": [
+			{
+				"id": "beg-1",
+				"difficulty": "beginner",
+				"difficultyLabel": "Beginner (~150w)",
+				"topic": "Cognitive science",
+				"title": "How the Human Eye Reads Printed Text",
+				"paragraphs": [
+					"When you read a page of text, it feels as though your eyes glide smoothly across every line from left to right. In reality, human vision works through a rapid sequence of tiny, darting movements called saccades, separated by brief pauses known as fixations. During each fixation, which lasts roughly a quarter of a second, your eyes focus on a cluster of seven to nine letters while peripheral vision previews the shapes of upcoming words.",
+					"Skilled readers rarely stop on every single word. Instead, the brain automatically skips predictable short words like \"the\" or \"and\" and uses context to fill in the meaning. When a sentence introduces an unfamiliar term or an unexpected grammar shift, the eyes perform a quick backward jump called a regression to verify the phrase. Understanding this natural rhythm explains why clear typography and comfortable line spacing make sustained reading feel effortless."
+				],
+				"questions": [
+					{
+						"question": "What are the brief pauses called when your eyes focus on a cluster of letters?",
+						"options": [
+							"Fixations",
+							"Transitions",
+							"Intervals",
+							"Reflections"
+						],
+						"correctIndex": 0,
+						"explanation": "Your eyes pause in brief stops called fixations between rapid darting movements."
+					},
+					{
+						"question": "Approximately how long does each pause last while reading?",
+						"options": [
+							"Roughly two full seconds",
+							"Roughly a quarter of a second",
+							"Roughly ten seconds",
+							"Half a minute"
+						],
+						"correctIndex": 1,
+						"explanation": "Each fixation lasts about a quarter of a second (250 milliseconds)."
+					},
+					{
+						"question": "How many letters do the eyes typically focus on during a single pause?",
+						"options": [
+							"One single letter",
+							"Seven to nine letters",
+							"Thirty to forty letters",
+							"An entire paragraph"
+						],
+						"correctIndex": 1,
+						"explanation": "Foveal vision captures a sharp cluster of seven to nine letters per fixation."
+					},
+					{
+						"question": "What triggers a backward eye jump (a regression) during silent reading?",
+						"options": [
+							"Predictable short words like \"the\" or \"and\"",
+							"An unfamiliar term or unexpected grammar shift",
+							"Wide page margins at the bottom of a book",
+							"Reading in natural daylight"
+						],
+						"correctIndex": 1,
+						"explanation": "Regressions happen when the brain encounters an unfamiliar word or confusing syntax."
+					},
+					{
+						"question": "What role does peripheral vision play while you read a line of text?",
+						"options": [
+							"It previews the shapes of upcoming words",
+							"It counts the page numbers at the bottom",
+							"It closes off completely during fixations",
+							"It reads the previous page backward"
+						],
+						"correctIndex": 0,
+						"explanation": "Peripheral vision previews upcoming word shapes to guide where the eye lands next."
+					}
+				]
+			},
+			{
+				"id": "beg-2",
+				"difficulty": "beginner",
+				"difficultyLabel": "Beginner (~150w)",
+				"topic": "Environmental design",
+				"title": "Why Coffee Shops Help People Focus",
+				"paragraphs": [
+					"Many writers and students discover that they get more work done at a busy neighborhood cafe than in a completely silent room. Psychologists call this phenomenon the coffee shop effect. While jarring noises like a nearby phone conversation or a slamming door break concentration, a steady background hum of espresso machines, quiet chatter, and clinking cups creates a gentle layer of ambient sound around seventy decibels.",
+					"That moderate level of background noise masks sudden acoustic spikes and prevents the brain from feeling isolated. Combined with subtle visual activity—seeing other people typing, reading, or sketching at nearby tables—a cafe triggers mild social facilitation. Knowing that others around you are working quietly encourages you to stay on task too, turning an ordinary room full of strangers into a supportive workspace."
+				],
+				"questions": [
+					{
+						"question": "What do psychologists call the productivity boost experienced in busy cafes?",
+						"options": [
+							"The acoustic echo effect",
+							"The coffee shop effect",
+							"The espresso reflex",
+							"Silent room syndrome"
+						],
+						"correctIndex": 1,
+						"explanation": "Researchers refer to improved focus in moderate ambient noise as the coffee shop effect."
+					},
+					{
+						"question": "Approximately what decibel level is the steady background hum mentioned in the passage?",
+						"options": [
+							"Around ten decibels",
+							"Around seventy decibels",
+							"Around one hundred thirty decibels",
+							"Zero decibels"
+						],
+						"correctIndex": 1,
+						"explanation": "A gentle layer of ambient cafe sound sits near seventy decibels."
+					},
+					{
+						"question": "How does steady ambient noise help protect concentration?",
+						"options": [
+							"It masks sudden acoustic spikes that would otherwise startle the brain",
+							"It makes the room completely silent",
+							"It forces people to read out loud",
+							"It lowers the temperature of the room"
+						],
+						"correctIndex": 0,
+						"explanation": "Moderate background hum masks sudden sharp noises so they feel less disruptive."
+					},
+					{
+						"question": "What psychological effect is triggered by seeing other people working at nearby tables?",
+						"options": [
+							"Visual fatigue",
+							"Social facilitation",
+							"Memory regression",
+							"Sensory overload"
+						],
+						"correctIndex": 1,
+						"explanation": "Seeing others focus nearby triggers social facilitation, motivating you to stay on task."
+					},
+					{
+						"question": "Which sound is described as jarring enough to break concentration?",
+						"options": [
+							"Quiet background chatter",
+							"A nearby phone conversation or slamming door",
+							"The hum of an espresso machine",
+							"Softly clinking coffee cups"
+						],
+						"correctIndex": 1,
+						"explanation": "Sudden, distinct noises like a slamming door or loud phone call pull attention away."
+					}
+				]
+			},
+			{
+				"id": "int-1",
+				"difficulty": "intermediate",
+				"difficultyLabel": "Intermediate (~300w)",
+				"topic": "History of books & media",
+				"title": "Why Silent Reading Was Once Considered Unusual",
+				"paragraphs": [
+					"Today we take silent reading for granted—whether browsing an article on a laptop, reviewing notes before a meeting, or reading a novel on a quiet train. Yet for much of early recorded history, reading was predominantly a spoken performance. Ancient Greek and Roman manuscripts were written in continuous streams of capital letters without spaces between words or punctuation marks to signal where a thought ended.",
+					"Because the eye had no visual gaps to separate one word from the next, readers sounded out syllables aloud so their ears could recognize familiar phrases. When fourth-century scholars observed someone reading a page without moving their lips or making a sound, they found the habit remarkable enough to record in their journals. Libraries in the ancient world were not hushed halls; they hummed with the low murmur of dozens of scholars reciting texts to themselves.",
+					"The shift toward effortless silent reading began in the early Middle Ages when scribes in Ireland and Britain started inserting clear blank spaces between words and introducing commas, periods, and paragraph breaks. Once words stood apart as distinct visual shapes on the page, the human brain could recognize whole words at a glance without pronouncing them first. That simple layout breakthrough dramatically accelerated reading speed, enabled private reflection, and laid the foundation for modern publishing."
+				],
+				"questions": [
+					{
+						"question": "How were ancient Greek and Roman manuscripts typically written?",
+						"options": [
+							"With wide spaces and color-coded punctuation",
+							"In continuous streams of capital letters without spaces between words",
+							"In bulleted lists with bold headings",
+							"Using lowercase cursive with numbered sentences"
+						],
+						"correctIndex": 1,
+						"explanation": "Ancient manuscripts used continuous capital letters (scriptura continua) without word spaces."
+					},
+					{
+						"question": "Why did ancient readers pronounce syllables aloud while reading?",
+						"options": [
+							"Hearing the syllables helped their ears recognize familiar phrases across unspaced text",
+							"Ancient laws forbade silent reading in public",
+							"Scrolls were written in musical notation",
+							"Rooms were too dark to see the ink clearly"
+						],
+						"correctIndex": 0,
+						"explanation": "Without visual spaces, sounding out words let the ear detect where one word ended and another began."
+					},
+					{
+						"question": "What were ancient libraries like compared to modern libraries?",
+						"options": [
+							"They hummed with the murmur of scholars reciting texts aloud",
+							"They enforced strict silence with heavy fines",
+							"They only allowed one visitor inside per day",
+							"They stored only spoken audio recordings"
+						],
+						"correctIndex": 0,
+						"explanation": "Ancient libraries were filled with the low murmur of readers speaking texts aloud."
+					},
+					{
+						"question": "Who began inserting clear blank spaces between words in the early Middle Ages?",
+						"options": [
+							"Roman senate clerks",
+							"Scribes in Ireland and Britain",
+							"Nineteenth-century newspaper editors",
+							"Ancient Athenian playwrights"
+						],
+						"correctIndex": 1,
+						"explanation": "Irish and British scribes pioneered word spacing and punctuation in the early Middle Ages."
+					},
+					{
+						"question": "What did distinct visual word shapes allow the human brain to do?",
+						"options": [
+							"Recognize whole words at a glance without pronouncing them first",
+							"Memorize entire books after a single glance at the cover",
+							"Read in total darkness",
+							"Write without using vowels"
+						],
+						"correctIndex": 0,
+						"explanation": "Clear spaces gave each word a distinct visual silhouette that the brain could decode silently."
+					}
+				]
+			},
+			{
+				"id": "int-2",
+				"difficulty": "intermediate",
+				"difficultyLabel": "Intermediate (~300w)",
+				"topic": "Maritime history & science",
+				"title": "How Marine Chronometers Solved Longitude at Sea",
+				"paragraphs": [
+					"For centuries, sailors crossing open oceans could determine their latitude—how far north or south they were—by measuring the height of the sun at noon or the angle of the North Star at night. Calculating longitude, which measures east-to-west position, proved far more dangerous and elusive. Without a reliable way to know their exact longitude, ships routinely drifted off course, missed supply islands, or struck uncharted reefs in the dark.",
+					"The key to longitude lay in keeping accurate time. Because the Earth rotates three hundred sixty degrees every twenty-four hours, it turns fifteen degrees every single hour. If a navigator knew the exact time at a fixed home port while simultaneously observing local noon aboard the ship, each hour of difference revealed fifteen degrees of longitude east or west. Unfortunately, early pendulum clocks failed aboard rolling wooden ships because ocean waves and shifting temperatures threw their gears out of rhythm.",
+					"In the eighteenth century, a self-taught English carpenter and clockmaker named John Harrison spent decades designing compact spring-driven sea watches known as marine chronometers. By pairing metals that expanded at different rates to cancel out temperature changes and eliminating pendulums altogether, Harrison’s fourth timepiece lost less than five seconds across an eighty-one-day voyage to Jamaica. His invention transformed global navigation and made ocean travel vastly safer."
+				],
+				"questions": [
+					{
+						"question": "How did sailors traditionally determine their north-to-south latitude at sea?",
+						"options": [
+							"By measuring the height of the sun at noon or the North Star at night",
+							"By dropping a weighted rope to the ocean floor",
+							"By listening to radio beacons from shore",
+							"By tasting the salinity of the seawater"
+						],
+						"correctIndex": 0,
+						"explanation": "Navigators measured the angle of the sun or the North Star above the horizon to find latitude."
+					},
+					{
+						"question": "How many degrees does the Earth rotate in a single hour?",
+						"options": [
+							"Five degrees",
+							"Fifteen degrees",
+							"Ninety degrees",
+							"Three hundred sixty degrees"
+						],
+						"correctIndex": 1,
+						"explanation": "Dividing 360 degrees by 24 hours equals 15 degrees of rotation per hour."
+					},
+					{
+						"question": "Why did early pendulum clocks fail on ocean voyages?",
+						"options": [
+							"Rolling waves and temperature swings disrupted their pendulums and gears",
+							"Saltwater dissolved their glass faces",
+							"They could only run for thirty minutes at a time",
+							"Magnetic compasses stopped their hands from moving"
+						],
+						"correctIndex": 0,
+						"explanation": "A pitching ship deck and changing climate ruined the steady swing of a pendulum."
+					},
+					{
+						"question": "What was John Harrison’s original trade before building marine chronometers?",
+						"options": [
+							"Royal Navy admiral",
+							"Self-taught carpenter and clockmaker",
+							"University astronomer",
+							"Glass lens grinder"
+						],
+						"correctIndex": 1,
+						"explanation": "John Harrison was a self-taught English carpenter who mastered precision clockmaking."
+					},
+					{
+						"question": "How accurate was Harrison’s fourth timepiece on its eighty-one-day voyage to Jamaica?",
+						"options": [
+							"It lost less than five seconds",
+							"It lost roughly two hours",
+							"It stopped working halfway across the Atlantic",
+							"It gained ten minutes per week"
+						],
+						"correctIndex": 0,
+						"explanation": "Harrison’s H4 marine watch lost under five seconds across the entire 81-day Atlantic crossing."
+					}
+				]
+			},
+			{
+				"id": "chal-1",
+				"difficulty": "challenge",
+				"difficultyLabel": "Challenge (~500w)",
+				"topic": "Attention & learning",
+				"title": "Deep Reading vs. Rapid Skimming in a Digital World",
+				"paragraphs": [
+					"Over the past two decades, the average person’s daily diet of written words has grown substantially. Between emails, messaging apps, documentation, and news feeds, modern readers process thousands of words before lunch. To cope with this volume, our brains naturally develop an adaptive habit known as non-linear skimming: we scan headings, look for bullet points, and jump across paragraphs in an F-shaped pattern to extract key facts as quickly as possible.",
+					"Skimming is a genuinely useful skill when triaging an inbox or searching a technical manual for a specific setting. However, cognitive researchers have found that using a skimming mindset for every piece of writing comes with a subtle trade-off. When we rush past sentences at 400 or 500 words per minute, working memory has less time to connect new ideas with existing knowledge, notice nuanced arguments, or recall details an hour later.",
+					"Deep reading operates on a different cadence. At a comfortable silent pace—typically between 200 and 280 words per minute for most adults—the brain allocates time for inference and mental imagery. Instead of merely decoding surface words, you pause for fractions of a second at the end of clauses to weigh whether a claim makes sense. Studies comparing comprehension across formats consistently show that readers who slow down slightly on dense non-fiction retain significantly more information than those who race to the bottom of the screen.",
+					"Another factor influencing comprehension is physical spatial memory. When you read a printed book, your fingers feel the thickness of the pages on the left versus the right, and your eyes remember whether an important paragraph sat near the top-left corner or bottom-right corner of a two-page spread. On a continuously scrolling screen, text moves upward through a single frame, removing those fixed geographic landmarks that help anchor long-term recall.",
+					"Fortunately, switching between rapid scanning and deep focus is a skill anyone can deliberately practice. Giving yourself a distraction-free page, choosing a comfortable column width, and setting aside even fifteen uninterrupted minutes signals to your attention system that there is no need to rush. By matching your reading speed to the purpose of the text—skimming lightly for quick lookups and settling into a steady cadence for complex ideas—you get the best of both worlds: efficiency when you need answers fast, and lasting understanding when depth matters most."
+				],
+				"questions": [
+					{
+						"question": "What reading pattern do people commonly use when quickly scanning digital pages?",
+						"options": [
+							"Reading from the bottom paragraph upward",
+							"Non-linear skimming in an F-shaped pattern across headings and bullets",
+							"Reading every word twice out loud",
+							"Diagonal spiral reading from the center outward"
+						],
+						"correctIndex": 1,
+						"explanation": "Digital readers frequently scan headings and openings in an F-shaped pattern."
+					},
+					{
+						"question": "What happens when a reader rushes through dense non-fiction at 400–500 WPM?",
+						"options": [
+							"Working memory has less time to connect ideas and retain details",
+							"Long-term comprehension automatically doubles",
+							"Eye fixations last several seconds per letter",
+							"Spatial memory landmarks become stronger"
+						],
+						"correctIndex": 0,
+						"explanation": "Rushing at 400–500 WPM deprives working memory of the time needed to link and store complex ideas."
+					},
+					{
+						"question": "What typical silent reading range supports strong inference and deep reading for most adults?",
+						"options": [
+							"Between 50 and 80 WPM",
+							"Between 200 and 280 WPM",
+							"Between 550 and 700 WPM",
+							"Over 850 WPM"
+						],
+						"correctIndex": 1,
+						"explanation": "A steady silent cadence of 200 to 280 WPM gives the brain room for inference and imagery."
+					},
+					{
+						"question": "How do printed books support spatial memory differently than scrolling screens?",
+						"options": [
+							"Fixed page corners and page thickness provide physical landmarks for recall",
+							"Printed ink glows in the dark to boost memory",
+							"Printed books use a faster refresh rate",
+							"Paper pages automatically summarize each chapter"
+						],
+						"correctIndex": 0,
+						"explanation": "Physical pages provide fixed visual corners and tactile thickness cues that anchor memory."
+					},
+					{
+						"question": "What practical strategy does the passage recommend at the end?",
+						"options": [
+							"Eliminating all digital screens permanently",
+							"Matching your reading speed to the purpose of the text",
+							"Forcing yourself to read every email at 100 WPM",
+							"Skimming novels at 600 WPM"
+						],
+						"correctIndex": 1,
+						"explanation": "Skim lightly for quick lookups, and slow down to a steady pace when reading for depth."
+					}
+				]
+			},
+			{
+				"id": "chal-2",
+				"difficulty": "challenge",
+				"difficultyLabel": "Challenge (~500w)",
+				"topic": "Neuroscience & health",
+				"title": "How the Brain Consolidates Memory During Sleep",
+				"paragraphs": [
+					"For much of the twentieth century, scientists viewed sleep as a passive shutdown—a nightly maintenance period when the brain simply rested to conserve energy after waking hours. Modern neuroimaging and electrical recordings tell a very different story. Far from turning off, the sleeping brain runs a highly coordinated series of biological routines that sort, strengthen, and reorganize everything you learned during the day.",
+					"Throughout waking life, new experiences and facts are temporarily recorded in the hippocampus, a seahorse-shaped structure deep inside the temporal lobe that acts like a fast-writing notepad. Because the hippocampus has limited storage capacity, those fresh traces are fragile and easily overwritten by the next day’s events. To become permanent knowledge, memories must be transferred outward to the neocortex, the wrinkled outer layer of the brain responsible for long-term storage and complex reasoning.",
+					"That transfer happens primarily during deep slow-wave sleep. As brain waves slow into rhythmic oscillations, the hippocampus replays the day’s neural firing patterns at high speed, sending bursts of electrical activity called sharp-wave ripples toward the neocortex. Each replay strengthens the synaptic connections between cortical neurons, gradually weaving new vocabulary, motor skills, or conceptual insights into your existing web of knowledge so you can recall them effortlessly weeks later.",
+					"Later in the night, rapid eye movement (REM) sleep takes over a complementary role. While deep slow-wave sleep cements factual details and procedures, REM sleep cross-references new memories with older experiences stored years ago. By testing unexpected associations in a neurochemically relaxed environment, the dreaming brain spots creative patterns and strips away the raw emotional sting of stressful events, leaving behind useful lessons without the initial anxiety.",
+					"At the same time, a microscopic plumbing network known as the glymphatic system opens channels between brain cells, allowing cerebrospinal fluid to flush away metabolic byproducts that accumulate during focused thinking. This nightly combination of synaptic filing and cellular cleanup explains why pulling an all-nighter before an exam or presentation backfires: without uninterrupted sleep cycles, the brain’s temporary notepad stays cluttered and newly studied material never locks into long-term memory."
+				],
+				"questions": [
+					{
+						"question": "Which brain structure acts like a fast-writing temporary notepad for new daily facts?",
+						"options": [
+							"The hippocampus",
+							"The cerebellum",
+							"The optic nerve",
+							"The spinal cord"
+						],
+						"correctIndex": 0,
+						"explanation": "The hippocampus temporarily encodes fresh daily experiences before long-term transfer."
+					},
+					{
+						"question": "Where are memories transferred for permanent long-term storage?",
+						"options": [
+							"To the neocortex",
+							"To the inner ear",
+							"To the retina",
+							"To the brain stem"
+						],
+						"correctIndex": 0,
+						"explanation": "During sleep, memories move from the hippocampus to the neocortex for durable storage."
+					},
+					{
+						"question": "During which stage of sleep does the hippocampus replay neural patterns to cement facts?",
+						"options": [
+							"Deep slow-wave sleep",
+							"Brief afternoon daydreaming",
+							"The first thirty seconds after waking up",
+							"Light blinking while reading"
+						],
+						"correctIndex": 0,
+						"explanation": "Deep slow-wave sleep drives high-speed neural replay and synaptic consolidation."
+					},
+					{
+						"question": "What special role does REM sleep play in memory processing?",
+						"options": [
+							"It cross-references new memories with older experiences and softens emotional stress",
+							"It erases all childhood memories to save space",
+							"It stops all electrical activity in the cortex",
+							"It prevents the eyes from moving"
+						],
+						"correctIndex": 0,
+						"explanation": "REM sleep builds creative associations across older memories and reduces emotional reactivity."
+					},
+					{
+						"question": "What is the function of the brain’s glymphatic system during sleep?",
+						"options": [
+							"It flushes away metabolic byproducts using cerebrospinal fluid",
+							"It translates spoken language into visual images",
+							"It increases heart rate and blood pressure",
+							"It blocks oxygen from reaching neurons"
+						],
+						"correctIndex": 0,
+						"explanation": "The glymphatic system clears metabolic waste from between brain cells during sleep."
+					}
+				]
+			}
+		],
+		"page": {
+			"heroSubtitle": "Measure your natural silent reading rate in Words Per Minute (WPM), compare your pace against the 238 WPM adult average, and check your comprehension with 3 quick questions.",
+			"schemaFeatures": [
+				"Calibrated non-fiction passages in Short (~150 words), Medium (~300 words), and Long (~500 words) lengths",
+				"Live stopwatch timer with Start Reading and Finish Reading controls",
+				"Instant Words Per Minute (WPM) calculation and comparison against the 238 WPM adult silent reading average",
+				"3-question and 5-question reading comprehension check with Effective WPM score",
+				"RSVP speed trainer mode for progressive pacing drills from 150 to 800 WPM",
+				"100% private client-side execution in your browser"
+			],
+			"howTo": {
+				"heading": "How to Use This Reading Speed Tester & Words Per Minute Reading Test",
+				"introHtml": "Follow these four quick steps in our online <strong class=\"font-semibold text-ink\">reading speed tester</strong> to <strong class=\"font-semibold text-ink\">test your reading speed</strong> and get an accurate baseline of both your raw pace and your real-world comprehension score:",
+				"steps": [
+					{
+						"title": "Configure Your Test (Setup)",
+						"bodyHtml": "Choose <strong class=\"font-semibold text-ink\">Standard Reading Test</strong> to measure your natural silent pace, or <strong class=\"font-semibold text-ink\">RSVP Speed Trainer</strong> to practice paced flashing at 150–800 WPM. Pick a difficulty level (<strong class=\"font-semibold text-ink\">Beginner</strong>, <strong class=\"font-semibold text-ink\">Intermediate</strong>, or <strong class=\"font-semibold text-ink\">Challenge</strong>) or <strong class=\"font-semibold text-ink\">Paste Your Text</strong>, set your quiz length and font size, and click <strong class=\"font-semibold text-ink\">Start Reading Test</strong>."
+					},
+					{
+						"title": "Read Silently at Your Natural Pace (Read)",
+						"bodyHtml": "Read the passage smoothly from start to finish without rushing or skimming. As soon as your eyes reach the final word, click <strong class=\"font-semibold text-ink\">Finish Reading</strong> so the timer records your exact elapsed seconds."
+					},
+					{
+						"title": "Answer the Recall Questions (Quiz)",
+						"bodyHtml": "The passage hides automatically after you finish reading so you cannot scan back for answers. Complete the quick comprehension questions from memory to verify how much information you actually retained."
+					},
+					{
+						"title": "Review Your Raw & Effective WPM (Results)",
+						"bodyHtml": "See your <strong class=\"font-semibold text-ink\">Raw WPM</strong>, <strong class=\"font-semibold text-ink\">Comprehension Accuracy</strong>, and <strong class=\"font-semibold text-ink\">Effective WPM</strong> compared against the <strong class=\"font-semibold text-ink\">238 WPM adult average</strong>, and track your improvement over time inside <strong class=\"font-semibold text-ink\">Past Results</strong>."
+					}
+				]
+			},
+			"wpmGuide": {
+				"heading": "How to Test Reading Speed: Reading WPM Test (Raw WPM vs. Effective WPM)",
+				"p1Html": "Most people who guess how fast they read end up off by a wide margin. Without a stopwatch and a known word count, it is almost impossible to tell whether you are moving steadily through a page or quietly losing minutes to re-reading the same lines. Taking a calibrated <strong class=\"font-semibold text-ink\">reading wpm test</strong> and <strong class=\"font-semibold text-ink\">words per minute reading test</strong> removes the guesswork by timing a clean, uninterrupted passage and converting your elapsed seconds into <strong class=\"font-semibold text-ink\">Words Per Minute (WPM)</strong> using a simple ratio:",
+				"formula1": "WPM = (Total Words Read ÷ Elapsed Seconds) × 60",
+				"p2Html": "If you finish a 300-word passage in 75 seconds, your raw reading speed is 240 WPM. That number gives you an honest starting point—provided the test prevents two common mistakes. First, you should not be able to read ahead before the timer starts, which is why the test above keeps the passage hidden until you click <strong class=\"font-semibold text-ink\">Start Reading Test</strong>. Second, once you finish reading, the text disappears before you answer comprehension questions so your score reflects genuine recall rather than scanning back for answers.",
+				"sub1Heading": "Why Raw WPM Alone Only Tells Half the Story",
+				"sub1P1": "Anyone can sweep their eyes across 500 words in fifteen seconds, log an impressive 2,000 WPM, and walk away unable to summarize a single sentence. In cognitive science and reading research, speed without understanding is classified as skimming—not reading.",
+				"sub1P2Html": "To measure real-world reading ability, educators and researchers rely on <strong class=\"font-semibold text-ink\">Effective WPM</strong>, which adjusts your raw pace by how much you actually understood and remembered:",
+				"formula2": "Effective WPM = Raw WPM × Comprehension Accuracy",
+				"sub1P3": "Consider two readers tackling the same 300-word article:",
+				"sub1BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Reader A</strong> moves at a calm, focused <strong class=\"font-semibold text-ink\">290 WPM</strong> and answers 4 out of 5 comprehension questions correctly (<strong class=\"font-semibold text-ink\">80% accuracy</strong>). Their Effective WPM is <strong class=\"font-semibold text-ink\">232 WPM</strong>.",
+					"<strong class=\"font-semibold text-ink\">Reader B</strong> races through the text at <strong class=\"font-semibold text-ink\">420 WPM</strong> but misses three questions (<strong class=\"font-semibold text-ink\">40% accuracy</strong>). Their Effective WPM drops to <strong class=\"font-semibold text-ink\">168 WPM</strong>."
+				],
+				"sub1P4": "Even though Reader B finished faster on the clock, Reader A absorbed substantially more usable information per minute. Whenever you test yourself, treat Effective WPM—not raw speed—as the score you want to improve over time.",
+				"sub2Heading": "Choosing the Right Mode for Your Goal",
+				"sub2P1": "Different reading tasks call for different ways of testing and practicing, which is why the tool above includes three distinct options:",
+				"sub2BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Standard Reading Test (Beginner, Intermediate, and Challenge):</strong> Choose this when you want an accurate baseline of your natural silent reading speed. Short passages (~150 words) work well for a quick check, while longer passages (~500 words) reveal whether your focus and stamina hold up over multiple paragraphs.",
+					"<strong class=\"font-semibold text-ink\">Paste Your Text:</strong> Your reading speed changes depending on what is in front of you. A familiar news story reads much faster than a dense university chapter or a legal contract. Paste an excerpt from whatever you are currently studying or editing to see your true pace on real material.",
+					"<strong class=\"font-semibold text-ink\">RSVP Speed Trainer (One Word or Sentence at a Time):</strong> Rapid Serial Visual Presentation flashes words in a fixed spot so your eyes do not have to jump across lines. Rather than using RSVP to measure your everyday baseline, treat it as a training drill to practice steady forward pacing at a target WPM without habitual backtracking."
+				],
+				"sub2OutroHtml": "Once you know your personal WPM, you can plug that number into our <a href=\"/reading-time-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Reading Time Calculator</a> to see exactly how many minutes an article, study chapter, or full book will take you to finish."
+			},
+			"averages": {
+				"heading": "Average Reading Speed by Age, Grade Level, and Reader Profile",
+				"p1Html": "When people ask, <em class=\"italic text-ink\">\"What is the average reading speed?\"</em> they usually expect a single magic number. In reality, reading researchers—including decades of eye-tracking studies summarized by cognitive psychologist Marc Brysbaert—have shown that a single universal average is mostly a convenient fiction. Your reading speed shifts dramatically depending on your age, schooling, vocabulary familiarity, and whether you are reading silently or out loud.",
+				"p2Html": "Across large-scale meta-analyses of English-language studies, the <strong class=\"font-semibold text-ink\">average adult silent reading speed for standard non-fiction is 238 words per minute (WPM)</strong>, while general fiction averages slightly higher at <strong class=\"font-semibold text-ink\">260 WPM</strong>. For most healthy adults, anything between <strong class=\"font-semibold text-ink\">200 and 300 WPM</strong> with at least 75% comprehension is a solid, functional pace.",
+				"sub1Heading": "How Reading Speed Develops From Childhood to Older Adulthood",
+				"sub1P1": "Reading fluency builds in predictable stages. Young children spend most of their mental effort decoding individual letters and syllables, which keeps early elementary speeds modest. As word recognition becomes automatic between 3rd and 8th grade, silent reading overtakes oral speech (~183 WPM) and climbs steadily through high school and university.",
+				"tableHeaders": [
+					"Age / Grade Level",
+					"Typical Age",
+					"Silent Reading Speed (WPM)",
+					"What Happens at This Stage"
+				],
+				"tableRows": [
+					[
+						"1st Grade",
+						"6–7 years",
+						"53 – 80 WPM",
+						"Phonics decoding and sounding out individual words aloud"
+					],
+					[
+						"2nd Grade",
+						"7–8 years",
+						"89 – 110 WPM",
+						"Recognizing common sight words and building sentence rhythm"
+					],
+					[
+						"3rd Grade",
+						"8–9 years",
+						"107 – 135 WPM",
+						"Transitioning from learning to read to reading for meaning"
+					],
+					[
+						"4th & 5th Grade (KS2)",
+						"9–11 years",
+						"123 – 160 WPM",
+						"Silent reading begins pulling ahead of spoken reading pace"
+					],
+					[
+						"Middle School (6th–8th Grade)",
+						"11–14 years",
+						"150 – 204 WPM",
+						"Expanding academic vocabulary and multi-paragraph stamina"
+					],
+					[
+						"High School (9th–12th Grade)",
+						"14–18 years",
+						"200 – 250 WPM",
+						"Approaching adult baseline across textbooks and literature"
+					],
+					[
+						"College / University Student",
+						"18–22 years",
+						"240 – 300 WPM",
+						"Peak daily reading volume and rapid synthesis of arguments"
+					],
+					[
+						"Average Adult (US & Global)",
+						"23–59 years",
+						"238 WPM (200–300)",
+						"Benchmark silent reading rate for everyday non-fiction prose"
+					],
+					[
+						"Older Adults (60–64+ Years)",
+						"60+ years",
+						"190 – 225 WPM",
+						"Slightly slower visual processing, offset by deep vocabulary"
+					],
+					[
+						"Fast / Avid Reader",
+						"Adult",
+						"300 – 450 WPM",
+						"Minimal backtracking and strong phrase-level chunking"
+					],
+					[
+						"Top 1% of Readers",
+						"Adult",
+						"500 – 700 WPM",
+						"Upper physiological limit while maintaining high comprehension"
+					]
+				],
+				"sub2Heading": "Why Older Adults Often Read Slightly Slower—Yet Understand More",
+				"sub2P1Html": "If you are in your 60s or 70s and notice your score sitting around <strong class=\"font-semibold text-ink\">195 to 215 WPM</strong> rather than 250 WPM, that slight dip is completely normal. Eye-tracking research shows that older readers make slightly longer eye pauses (<em>fixations</em>) and occasional backward checks to verify fine print or complex phrasing. However, because older adults possess substantially larger vocabularies and broader background knowledge than college students, their <strong class=\"font-semibold text-ink\">comprehension and retention scores frequently match or beat younger readers</strong>.",
+				"sub3Heading": "Where Does the \"Top 1%\" Really Sit?",
+				"sub3P1Html": "Online speed-reading ads often claim that top readers cruise at 1,500 or 2,000 WPM. Controlled laboratory tests tell a very different story. Even among PhD students, editors, and lifelong bookworms, sustained reading with strong comprehension rarely exceeds <strong class=\"font-semibold text-ink\">500 to 700 WPM</strong>. If your score lands above <strong class=\"font-semibold text-ink\">320 WPM</strong> with 80% or higher quiz accuracy, you are already reading faster than roughly <strong class=\"font-semibold text-ink\">80% of the adult population</strong>."
+			},
+			"conversion": {
+				"heading": "WPM to Pages per Minute & Pages per Hour Conversion Chart",
+				"p1Html": "Knowing that you read at <strong class=\"font-semibold text-ink\">238 WPM</strong> is useful, but most people plan their study sessions and book goals in <strong class=\"font-semibold text-ink\">pages</strong>, not words. Because page density changes depending on font size, margins, and book format, converting WPM into pages per hour requires a clear baseline.",
+				"p2": "In publishing and academic writing, two standard benchmarks apply:",
+				"bulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Standard Double-Spaced Page (Essays, Reports, Manuscripts):</strong> Averages <strong class=\"font-semibold text-ink\">250 words per page</strong>.",
+					"<strong class=\"font-semibold text-ink\">Standard Trade Paperback / Non-Fiction Book Page:</strong> Averages <strong class=\"font-semibold text-ink\">275 to 300 words per page</strong> (we use <strong class=\"font-semibold text-ink\">300 words per page</strong> below for realistic book planning)."
+				],
+				"p3Html": "At the adult average of <strong class=\"font-semibold text-ink\">238 WPM</strong>, you read <strong class=\"font-semibold text-ink\">14,280 words per hour</strong>, which works out to roughly <strong class=\"font-semibold text-ink\">47.6 paperback pages per hour</strong> (just under 0.8 pages per minute).",
+				"sub1Heading": "Reading Speed Conversion Table: Words, Pages per Minute, and Pages per Hour",
+				"tableHeaders": [
+					"Reader Tier",
+					"Words per Minute (WPM)",
+					"Words per Hour",
+					"Double-Spaced Pages / Hr (~250w)",
+					"Paperback Pages / Hr (~300w)",
+					"Time for a 300-Page Book"
+				],
+				"tableRows": [
+					[
+						"Slow / Careful Study",
+						"130 WPM",
+						"7,800",
+						"31.2 pages/hr",
+						"26.0 pages/hr",
+						"~11 hrs 32 mins"
+					],
+					[
+						"Developing / Deliberate",
+						"150 WPM",
+						"9,000",
+						"36.0 pages/hr",
+						"30.0 pages/hr",
+						"10 hrs 00 mins"
+					],
+					[
+						"Lower Adult Average",
+						"200 WPM",
+						"12,000",
+						"48.0 pages/hr",
+						"40.0 pages/hr",
+						"7 hrs 30 mins"
+					],
+					[
+						"Adult Benchmark Average",
+						"238 WPM",
+						"14,280",
+						"57.1 pages/hr",
+						"47.6 pages/hr",
+						"6 hrs 18 mins"
+					],
+					[
+						"Above-Average Reader",
+						"300 WPM",
+						"18,000",
+						"72.0 pages/hr",
+						"60.0 pages/hr",
+						"5 hrs 00 mins"
+					],
+					[
+						"Fast / Proficient Reader",
+						"400 WPM",
+						"24,000",
+						"96.0 pages/hr",
+						"80.0 pages/hr",
+						"3 hrs 45 mins"
+					],
+					[
+						"Very Fast Reader",
+						"500 WPM",
+						"30,000",
+						"120.0 pages/hr",
+						"100.0 pages/hr",
+						"3 hrs 00 mins"
+					],
+					[
+						"Upper Comprehension Limit",
+						"700 WPM",
+						"42,000",
+						"168.0 pages/hr",
+						"140.0 pages/hr",
+						"2 hrs 09 mins"
+					],
+					[
+						"Rapid Skimming",
+						"1,000 WPM",
+						"60,000",
+						"240.0 pages/hr",
+						"200.0 pages/hr",
+						"1 hr 30 mins (low recall)"
+					]
+				],
+				"sub2Heading": "Is 100 Pages an Hour Fast—and Is 20 Pages an Hour Slow?",
+				"sub2BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">100 pages an hour</strong> in a standard 300-word-per-page book equals <strong class=\"font-semibold text-ink\">500 WPM</strong> (or about <strong class=\"font-semibold text-ink\">415 WPM</strong> in a looser 250-word-per-page novel). That places you in the <strong class=\"font-semibold text-ink\">top 1% to 2% of natural readers</strong>, provided you are actually absorbing the plot or arguments rather than skipping paragraphs.",
+					"<strong class=\"font-semibold text-ink\">20 pages an hour</strong> translates to roughly <strong class=\"font-semibold text-ink\">100 WPM</strong>. For casual fiction, that is slower than the adult average—often caused by frequent backtracking or reading in a noisy environment. However, if you are working through dense organic chemistry, legal statutes, or philosophy, 20 pages an hour is completely normal because you are pausing to analyze formulas and logic."
+				],
+				"sub3Heading": "Screen vs. Paper: Does Format Change Your Page Rate?",
+				"sub3P1Html": "Controlled studies comparing printed books against backlit laptops and tablets consistently find that people read <strong class=\"font-semibold text-ink\">5% to 10% slower on screens</strong> when tackling long, complex texts, and often experience slightly lower recall due to scrolling fatigue and visual glare. E-ink readers (like Kindle) perform nearly identically to physical paper. If you want to convert an exact word count into page totals for manuscripts or printed books, check our <a href=\"/words-to-pages/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Words to Pages Converter</a>."
+			},
+			"science": {
+				"heading": "The Cognitive Science of Reading: Saccades, Fixations, and Subvocalization",
+				"p1": "To understand why some people read effortlessly at 400 WPM while others stall at 170 WPM, you have to look at what your eyes and brain are actually doing on the page. Reading feels like a smooth, continuous glide from left to right—but in reality, your eyes move in a rapid series of tiny hops and stops.",
+				"sub1Heading": "1. Saccades and Fixations: How Your Eyes Capture Words",
+				"sub1P1Html": "During silent reading, your eyes perform quick, ballistic jumps called <strong class=\"font-semibold text-ink\">saccades</strong> (each taking roughly 20 to 35 milliseconds), separated by brief pauses called <strong class=\"font-semibold text-ink\">fixations</strong> (each lasting about 200 to 250 milliseconds). Your brain only absorbs visual information while the eye is stopped during a fixation—never while it is moving.",
+				"sub1BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Perceptual Span:</strong> During a single fixation in English, sharp central vision captures roughly <strong class=\"font-semibold text-ink\">7 to 9 letter spaces</strong> to the right of your gaze, while peripheral vision previews upcoming word shapes and spaces.",
+					"<strong class=\"font-semibold text-ink\">Why Fast Readers Move Differently:</strong> Fast readers do not move their eyeballs faster; rather, they recognize familiar word patterns more quickly, make slightly shorter fixations, and absorb 2 to 3 short words per stop instead of halting on every single word."
+				],
+				"sub2Heading": "2. Regressions: The Hidden Habit That Slows You Down",
+				"sub2P1Html": "Roughly <strong class=\"font-semibold text-ink\">10% to 15% of all eye movements</strong> during normal reading are <strong class=\"font-semibold text-ink\">regressions</strong>—quick backward jumps to re-read a word or phrase you already passed.",
+				"sub2BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Helpful vs. Habitual Regressions:</strong> When you hit a confusing sentence or an unexpected plot twist, a quick backward glance helps comprehension. However, many readers develop a nervous habit of constantly double-checking lines even when they understood them the first time, cutting their effective speed by 20% to 30%."
+				],
+				"sub3Heading": "3. Subvocalization: Should You Silence Your Inner Voice?",
+				"sub3P1Html": "<strong class=\"font-semibold text-ink\">Subvocalization</strong> is the faint internal voice you \"hear\" in your head as you read, accompanied by microscopic muscle signals in your vocal cords. Commercial speed-reading courses often claim that eliminating subvocalization is the secret to reading 1,000+ WPM.",
+				"sub3P2": "Cognitive science tells a more nuanced truth:",
+				"sub3BulletsHtml": [
+					"Your inner voice is tied directly to phonological memory—it helps your brain hold complex clauses together and verify meaning.",
+					"Trying to force zero inner voice on dense non-fiction usually destroys comprehension. Instead of trying to eliminate subvocalization completely, skilled readers simply <strong class=\"font-semibold text-ink\">reduce word-by-word pronunciation</strong> by grouping familiar phrases together visually."
+				],
+				"sub4Heading": "Is Speed Reading at 800 to 1,000+ WPM Really Possible?",
+				"sub4P1Html": "Because human eye fixations and lexical recognition have hard biological speed limits, cognitive psychologists—including Keith Rayner and Elizabeth Schotter—have demonstrated that <strong class=\"font-semibold text-ink\">true reading with full comprehension tops out around 700 to 900 WPM</strong>. Anyone claiming 1,500 or 2,000 WPM is <strong class=\"font-semibold text-ink\">skimming</strong> (sampling keywords and guessing the rest), which can be useful for previewing a long report, but is no substitute for deep reading."
+			},
+			"improve": {
+				"heading": "How to Increase Your Reading Speed Without Losing Comprehension",
+				"p1Html": "Improving your reading speed does not require expensive courses or mystical eye exercises. Because reading is a cognitive skill built on pattern recognition, vocabulary, and attention, most adults and students can realistically increase their comfortable reading pace by <strong class=\"font-semibold text-ink\">30% to 50% over four to six weeks</strong>—for example, moving from 220 WPM to 310 WPM—while keeping comprehension above 80%.",
+				"p2": "Here are five evidence-backed techniques that genuinely work:",
+				"tips": [
+					{
+						"heading": "1. Use a Visual Pacer (The Pointer Method)",
+						"bodyHtml": "Your eyes are naturally drawn to motion. When you guide your gaze smoothly under each line using your fingertip, a pen, or a cursor on screen, two things happen immediately: your eyes spend less time wandering, and <strong class=\"font-semibold text-ink\">habitual regressions drop sharply</strong>. Set a steady, slightly brisk sweep across each line so your eyes keep moving forward rather than stalling on familiar words."
+					},
+					{
+						"heading": "2. Group Words Into Meaningful Phrases (Chunking)",
+						"bodyHtml": "Instead of stopping on every individual word (<em>The</em> / <em>quick</em> / <em>brown</em> / <em>fox</em>), train yourself to absorb <strong class=\"font-semibold text-ink\">2 to 4 words per eye fixation</strong> (<em>The quick brown fox</em> / <em>jumps over</em> / <em>the lazy dog</em>). Start by focusing slightly inside the left margin and stopping a word or two before the right margin—letting your peripheral vision capture the first and last words of each line automatically."
+					},
+					{
+						"heading": "3. Preview Structure Before Reading Deeply",
+						"bodyHtml": "For non-fiction books, textbooks, and long articles, spend <strong class=\"font-semibold text-ink\">60 seconds scanning headings, bolded terms, tables, and the opening and closing paragraphs</strong> before you start reading word-for-word. When your brain already knows the roadmap of an author's argument, it processes unfamiliar sentences much faster and retains key points with far less effort."
+					},
+					{
+						"heading": "4. Practice Progressive RSVP Pacing Drills",
+						"bodyHtml": "Switch the tool above to <strong class=\"font-semibold text-ink\">RSVP Speed Trainer</strong> and set the pace <strong class=\"font-semibold text-ink\">30 to 50 WPM faster than your current baseline</strong> for a short 2-minute drill. Because words appear one at a time in a fixed spot, you experience what faster forward processing feels like without backward jumps. Afterward, return to normal page reading at a slightly slower, comfortable speed—your everyday pace will naturally feel easier and quicker."
+					},
+					{
+						"heading": "5. Build Domain Vocabulary and Read Daily",
+						"bodyHtml": "The single strongest predictor of reading speed is <strong class=\"font-semibold text-ink\">instant word recognition</strong>. Whenever you read heavily in a specific field—whether software engineering, medicine, law, or history—your brain stores common terminology as single visual units. Reading for just <strong class=\"font-semibold text-ink\">20 to 30 minutes every day</strong> on progressively richer material compounds both speed and comprehension far more reliably than occasional cramming."
+					}
+				]
+			},
+			"myths": {
+				"heading": "Reading Speed, IQ, Neurodiversity (ADHD), and Famous Readers",
+				"p1": "Whenever reading speed comes up in online discussions, three popular questions follow right behind: whether fast readers have higher IQs, how conditions like ADHD affect reading pace, and whether famous polymaths really devour books at superhuman speeds. Separating cognitive science from internet folklore helps you set realistic expectations for your own progress.",
+				"sub1Heading": "Is Reading Speed Related to IQ?",
+				"sub1P1Html": "No—reading speed is <strong class=\"font-semibold text-ink\">not a direct measure of intelligence</strong>. Cognitive psychology studies consistently show only a weak correlation between general IQ and words per minute.",
+				"sub1BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">What Actually Drives Speed:</strong> Reading speed depends primarily on <strong class=\"font-semibold text-ink\">visual decoding fluency</strong>, <strong class=\"font-semibold text-ink\">print exposure (how much you read)</strong>, and <strong class=\"font-semibold text-ink\">vocabulary familiarity</strong>, rather than raw reasoning power.",
+					"<strong class=\"font-semibold text-ink\">Why Deep Thinkers Often Read Slowly:</strong> Many high-IQ scientists, philosophers, and lawyers deliberately read at <strong class=\"font-semibold text-ink\">150 to 220 WPM</strong> because they pause to question assumptions, connect ideas across chapters, and evaluate evidence. Reading slowly to think deeply is a strength, not a limitation."
+				],
+				"sub2Heading": "Do People With ADHD Read Faster or Slower?",
+				"sub2P1": "Attention-Deficit/Hyperactivity Disorder (ADHD) affects reading pace in two opposite directions depending on interest and environment:",
+				"sub2BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Slower Pace on Routine Text:</strong> Because ADHD impacts working memory and sustained visual attention, readers often lose their place on the page, skip lines, or re-read the same paragraph multiple times—pulling everyday reading speed down toward <strong class=\"font-semibold text-ink\">140 to 190 WPM</strong>.",
+					"<strong class=\"font-semibold text-ink\">Hyperfocus on Engaging Topics:</strong> When an ADHD reader encounters a subject that genuinely sparks curiosity, intense <strong class=\"font-semibold text-ink\">hyperfocus</strong> can lock in attention and push reading pace well above <strong class=\"font-semibold text-ink\">300 WPM</strong>. Using a visual pacer (like a finger or cursor) or short timed blocks often helps bridge that gap on routine study material."
+				],
+				"sub3Heading": "Famous Readers: Myth vs. Reality (JFK and Bill Gates)",
+				"sub3BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">John F. Kennedy (The 1,200 WPM Myth):</strong> Newspaper stories from the 1960s famously claimed President Kennedy could read 1,200 WPM after taking a speed-reading course. Even his instructors later acknowledged that 1,200 WPM reflected <strong class=\"font-semibold text-ink\">rapid skimming of morning newspapers and briefings</strong>, not word-for-word reading of complex books.",
+					"<strong class=\"font-semibold text-ink\">Bill Gates (~500–600 WPM With Margin Notes):</strong> Bill Gates reads roughly 50 non-fiction books a year at an estimated <strong class=\"font-semibold text-ink\">500 to 600 WPM</strong>—fast, yet entirely within the upper physiological range of practiced adult readers. Notably, he refuses to start a book he will not finish and writes notes in the margins to ensure deep retention rather than chasing raw speed."
+				]
+			},
+			"formats": {
+				"heading": "How Content Type and Format Change Your Reading Speed",
+				"p1": "A skilled reader never uses the exact same speed for every piece of text. Just as you shift gears when driving from a flat highway onto a winding mountain road, your brain automatically adjusts its reading pace depending on sentence complexity, unfamiliar vocabulary, and why you are reading in the first place.",
+				"sub1Heading": "Reading Speed Across Different Text Types",
+				"tableHeaders": [
+					"Content Type / Reading Mode",
+					"Typical Adult Speed (WPM)",
+					"Why Your Pace Shifts"
+				],
+				"tableRows": [
+					[
+						"Light Narrative Fiction",
+						"260 – 320 WPM",
+						"Familiar conversational vocabulary and forward plot momentum"
+					],
+					[
+						"General Non-Fiction & News",
+						"238 WPM (220–260)",
+						"Balanced mix of narrative explanations and factual concepts"
+					],
+					[
+						"Dense Academic / Technical Prose",
+						"120 – 180 WPM",
+						"Frequent pauses to decode formulas, jargon, and logical steps"
+					],
+					[
+						"Proofreading & Line Editing",
+						"100 – 150 WPM",
+						"Deliberate word-by-word inspection to catch typos and grammar"
+					],
+					[
+						"Reading Out Loud (Oral Pace)",
+						"150 – 183 WPM",
+						"Limited by physical articulation, breathing, and vocal pacing"
+					],
+					[
+						"Audiobook Narration (1.0x)",
+						"150 – 160 WPM",
+						"Professional studio narration paced for clear listener comprehension"
+					]
+				],
+				"sub2Heading": "Why Reading Out Loud Is Slower Than Silent Reading",
+				"sub2P1Html": "When you read out loud, your speed is capped by how fast your lips, tongue, and vocal cords can physically form words—averaging <strong class=\"font-semibold text-ink\">183 WPM</strong> for adults, and closer to <strong class=\"font-semibold text-ink\">130 to 150 WPM</strong> when delivering a clear public presentation. Silent reading removes that physical bottleneck, allowing your eyes and brain to process phrases roughly <strong class=\"font-semibold text-ink\">30% to 50% faster</strong> than spoken speech.",
+				"sub2BulletsHtml": [
+					"If you are preparing a talk, podcast script, or wedding toast, use our <a href=\"/speech-time-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Speech Time Calculator</a> to convert your word count into exact speaking minutes.",
+					"If you prefer listening to books or comparing narration speeds (1.0x vs. 1.5x), try our <a href=\"/audiobook-speed-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Audiobook Speed Calculator</a> to see how quickly you can finish your next title."
+				],
+				"sub3Heading": "Matching Your Speed to Your Purpose",
+				"sub3P1Html": "Trying to read a dense philosophy textbook at 350 WPM is just as counterproductive as reading a casual beach novel at 130 WPM. True reading mastery is <strong class=\"font-semibold text-ink\">flexibility</strong>: slowing down when every clause carries heavy meaning, and letting your eyes glide smoothly when the prose is straightforward."
+			},
+			"faqHeading": "Frequently Asked Questions"
+		},
+		"faq": [
+			{
+				"question": "How do I test my reading speed accurately?",
+				"answer": "To measure your true reading speed, time yourself reading an unfamiliar passage silently at your natural pace without pausing or re-reading lines, then answer comprehension questions from memory. Divide the total word count by your reading time in seconds and multiply by 60 to get your raw WPM, then multiply that score by your quiz accuracy percentage to find your Effective WPM."
+			},
+			{
+				"question": "What is a good reading speed score for an adult?",
+				"answer": "For most adults reading standard non-fiction, a good reading speed is between 238 and 300 WPM with at least 75% to 80% comprehension. Scores above 320 WPM with strong recall put you ahead of roughly 80% of adult readers, while scores above 400 WPM are considered fast."
+			},
+			{
+				"question": "How many words per minute should a 6th grader read?",
+				"answer": "A typical 6th grader (ages 11–12) reads roughly <strong class=\"font-semibold text-ink\">150 to 205 words per minute (WPM)</strong> during silent reading with at least 75% comprehension, and about <strong class=\"font-semibold text-ink\">130 to 160 WPM</strong> when reading aloud for oral fluency benchmarks."
+			},
+			{
+				"question": "Is 200 WPM a slow reading speed?",
+				"answer": "No, 200 WPM is not unusually slow—it sits right at the lower end of the normal adult range (200 to 300 WPM). If you are reading dense technical textbooks, academic papers, or material in a second language, 200 WPM is a healthy, careful pace that supports deep understanding."
+			},
+			{
+				"question": "Is reading 400 WPM fast?",
+				"answer": "Yes, 400 WPM is nearly 70% faster than the adult average of 238 WPM. At 400 WPM, you can read roughly 24,000 words per hour—or about 80 standard paperback pages per hour—making it a strong, efficient pace for university students, researchers, and avid readers."
+			},
+			{
+				"question": "Is 500 WPM considered fast reading?",
+				"answer": "Yes, 500 WPM is very fast and places you in roughly the top 1% to 2% of natural adult readers, provided your comprehension stays above 75%. At 500 WPM, you read 30,000 words—or roughly 100 paperback pages—every hour."
+			},
+			{
+				"question": "Are 800, 900, or 1,000 WPM reading speeds humanly possible?",
+				"answer": "Eye-tracking and cognitive psychology research shows that 700 to 900 WPM is the upper biological ceiling for genuine reading with full comprehension. Speeds of 1,000 WPM or higher are classified as skimming—where your eyes sample keywords and skip filler words rather than reading every sentence."
+			},
+			{
+				"question": "What is the top 1% of reading speeds?",
+				"answer": "Among adults who maintain high comprehension (80% or higher on recall tests), the top 1% of readers typically read between 500 and 700 WPM. Claims of 1,500+ WPM almost always reflect rapid skimming rather than full-text comprehension."
+			},
+			{
+				"question": "How fast is 100 pages an hour, and is 20 pages an hour slow?",
+				"answer": "Reading 100 standard paperback pages (~300 words per page) in an hour equals 500 WPM, which is exceptionally fast. Conversely, 20 pages an hour equals roughly 100 WPM—slow for casual fiction, though completely normal when studying complex STEM textbooks, legal documents, or philosophy."
+			},
+			{
+				"question": "Can you read 3,000 words in 15 minutes?",
+				"answer": "Yes—reading 3,000 words in 15 minutes requires an average speed of 200 WPM (3,000 divided by 15 equals 200). Because 200 WPM is right at the baseline adult reading speed, almost any adult reader can finish a 3,000-word article in 15 minutes comfortably."
+			},
+			{
+				"question": "Is reading 200 pages a day a lot?",
+				"answer": "Yes, 200 pages a day is a heavy daily reading volume. At 300 words per page (60,000 words total), finishing 200 pages takes an average adult reader (238 WPM) roughly 4 hours and 12 minutes of focused reading per day, or about 2 hours for a fast 500 WPM reader."
+			},
+			{
+				"question": "What is the 50-page book rule?",
+				"answer": "The 50-page book rule (popularized by librarian Nancy Pearl) is a practical reading habit: give any new book 50 pages to capture your interest, and if it still feels like a chore by page 50, put it down guilt-free and move on to a better book. For readers over age 50, the rule playfully adjusts to subtracting your age from 100 (100 minus age equals pages to try)."
+			},
+			{
+				"question": "What is the 5-finger rule for books?",
+				"answer": "The 5-finger rule is a quick way for kids, parents, and students to check if a book matches their reading level. Open to any full page and raise one finger for each unfamiliar or difficult word: 0–1 fingers means the book is very easy, 2–3 fingers is the ideal \"just right\" challenge, and 4–5 fingers means the vocabulary may be too frustrating without help."
+			},
+			{
+				"question": "Is reading speed related to IQ?",
+				"answer": "No—reading speed has only a weak correlation with general IQ. How fast you read is driven much more by instant word recognition, vocabulary size, and daily reading practice than raw intelligence, and many brilliant thinkers intentionally read slowly to analyze complex ideas."
+			},
+			{
+				"question": "Do people with ADHD read faster or slower?",
+				"answer": "People with ADHD can experience both depending on the text. Routine or uninteresting passages often result in slower speeds (140 to 190 WPM) due to attentional drift and re-reading lines, while high-interest topics can trigger hyperfocus, pushing reading speeds above 300 WPM."
+			}
+		]
 	},
 	"audiobookCalculator": {
 		"name": "Audiobook Speed & Listening Time Calculator",
@@ -88,7 +1985,545 @@
 		"metric": "0.5x – 3.0x Playback Speed",
 		"title": "Audiobook Speed, Length & Percentage Calculator | Wordora",
 		"metaDescription": "Free audiobook calculator, audiobook length calculator, and audiobook percentage calculator. Check exact listening time left at 1.25x, 1.5x, 1.75x, or 2x playback speed.",
-		"h1": "Audiobook Calculator"
+		"h1": "Audiobook Calculator",
+		"ui": {
+			"workspaceAriaLabel": "Audiobook Speed and Listening Time Calculator Workspace",
+			"inputModeAriaLabel": "Audiobook input mode",
+			"modeByLength": "By Length",
+			"modeByWords": "By Words",
+			"modeRemaining": "Remaining",
+			"lengthTitle": "Audiobook duration (at 1.0x speed)",
+			"lengthSubtitle": "Enter the hours, minutes, and seconds of your audiobook.",
+			"hoursLabel": "Hours",
+			"minutesLabel": "Minutes",
+			"secondsLabel": "Seconds",
+			"unitHr": "hr",
+			"unitMin": "min",
+			"unitSec": "sec",
+			"wordsTitle": "Total book word count",
+			"wordsSubtitle": "Estimated at standard audiobook narration (~155 WPM).",
+			"unitWords": "words",
+			"wordsPresetsLabel": "Common book word counts",
+			"wordsPresets": [
+				{
+					"words": 40000,
+					"label": "40,000 words (Novella)"
+				},
+				{
+					"words": 65000,
+					"label": "65,000 words (Non-fiction)"
+				},
+				{
+					"words": 90000,
+					"label": "90,000 words (Novel)"
+				},
+				{
+					"words": 120000,
+					"label": "120,000 words (Long novel)"
+				},
+				{
+					"words": 180000,
+					"label": "180,000 words (Epic)"
+				}
+			],
+			"remainingTitle": "Track how much listening you have left",
+			"remainingSubtitle": "Enter total length along with elapsed time, remaining time, or percentage completed.",
+			"totalLengthLabel": "Total length",
+			"totalHoursAria": "Total length hours",
+			"totalMinutesAria": "Total length minutes",
+			"totalSecondsAria": "Total length seconds",
+			"elapsedLabel": "Elapsed time (already listened)",
+			"listenedHoursAria": "Already listened hours",
+			"listenedMinutesAria": "Already listened minutes",
+			"listenedSecondsAria": "Already listened seconds",
+			"remainingTimeLabel": "Remaining time (at 1.0x)",
+			"remainingHoursAria": "Remaining hours",
+			"remainingMinutesAria": "Remaining minutes",
+			"remainingSecondsAria": "Remaining seconds",
+			"pctCompletedLabel": "Percentage completed (%)",
+			"initialPctLeft": "0.0% left",
+			"pctSliderAria": "Percentage completed slider",
+			"pctPresetsLabel": "Quick percentage presets",
+			"listeningProgressLabel": "Listening progress",
+			"initialProgressPct": "0.0% completed · 0.0% left",
+			"progressBarAria": "Audiobook listening progress",
+			"initialListened": "0 hr 0 min listened",
+			"initialRemaining": "0 hr 0 min remaining",
+			"playbackSpeedLabel": "Playback speed",
+			"speedPresetsAria": "Playback speed presets",
+			"customSpeedSliderLabel": "Custom speed slider (0.5x – 3.0x)",
+			"quickPresetsSummary": "Quick Presets (Common lengths & popular books)",
+			"commonLengthsLabel": "Common audiobook lengths",
+			"durationPresets": [
+				{
+					"hours": 4,
+					"minutes": 0,
+					"label": "4 hr (Short book)"
+				},
+				{
+					"hours": 7,
+					"minutes": 30,
+					"label": "7 hr 30 min"
+				},
+				{
+					"hours": 10,
+					"minutes": 0,
+					"label": "10 hr (Average)"
+				},
+				{
+					"hours": 14,
+					"minutes": 0,
+					"label": "14 hr"
+				},
+				{
+					"hours": 20,
+					"minutes": 0,
+					"label": "20 hr (Biography)"
+				},
+				{
+					"hours": 30,
+					"minutes": 0,
+					"label": "30 hr (Epic)"
+				}
+			],
+			"popularBooksLabel": "Popular books",
+			"popularBooks": [
+				{
+					"hours": 5,
+					"minutes": 35,
+					"label": "Atomic Habits 5h 35m"
+				},
+				{
+					"hours": 11,
+					"minutes": 5,
+					"label": "The Hobbit 11h 5m"
+				},
+				{
+					"hours": 21,
+					"minutes": 2,
+					"label": "Dune 21h 2m"
+				},
+				{
+					"hours": 45,
+					"minutes": 30,
+					"label": "The Way of Kings 45h 30m"
+				}
+			],
+			"schedulePlannerSummary": "Daily Schedule Planner",
+			"initialAtSpeed": "At 1.0x speed",
+			"minutesPerDayLabel": "Minutes per day",
+			"unitMinPerDay": "min/day",
+			"targetDaysLabel": "Or set target days to finish",
+			"unitDays": "days",
+			"targetResultPlaceholder": "Enter an audiobook length to see your daily goal",
+			"adjustedListeningTimeLabel": "Adjusted listening time",
+			"zeroDuration": "0 hr 0 min",
+			"initialTotalMinutes": "0 total minutes of listening",
+			"timeSavedLabel": "Time saved",
+			"originalPace": "Original pace",
+			"zeroMin": "0 min",
+			"initialComparedTo": "Compared to 0 hr 0 min at 1.0x",
+			"originalLengthLabel": "Original length",
+			"badgeModeLength": "By length",
+			"initialWordsPages": "0 words · 0 pages",
+			"dailyFinishEstimateLabel": "Daily finish estimate",
+			"zeroDays": "0 days",
+			"initialAtDailyMin": "At 0 min/day",
+			"compareSpeedsSummary": "Compare All Speeds & Schedule Stats",
+			"speedComparisonLabel": "Speed comparison",
+			"initialForBook": "For 0 hr 0 min book",
+			"silentReadLabel": "Silent read",
+			"dailyScheduleBreakdownLabel": "Daily schedule breakdown",
+			"daysToFinishLabel": "Days to finish",
+			"weeksEstimateLabel": "Weeks estimate",
+			"finishByLabel": "Finish by",
+			"booksPerYearLabel": "Books / year",
+			"copyResult": "Copy result",
+			"copyLink": "Copy link",
+			"resetDefaults": "Reset defaults",
+			"relatedAriaLabel": "Related reading and page tools",
+			"relatedPrefix": "Prefer reading on the page? Check your silent pace with the",
+			"relatedMid1": ", estimate article duration in the",
+			"relatedMid2": ", or convert book length with"
+		},
+		"client": {
+			"dateLocale": "en-US",
+			"unitHr": "hr",
+			"unitMin": "min",
+			"unitSec": "sec",
+			"zeroDuration": "0 hr 0 min",
+			"zeroMin": "0 min",
+			"zeroDays": "0 days",
+			"oneDay": "1 day",
+			"manyDays": "{n} days",
+			"weeksTemplate": "~{n} weeks",
+			"pctLeft": "{pct}% left",
+			"progressPct": "{done}% completed · {left}% left",
+			"listenedDuration": "{duration} listened",
+			"remainingDuration": "{duration} remaining",
+			"atSpeed": "At {speed} speed",
+			"totalMinutesListening": "{n} total minutes of listening",
+			"timeSaved": "Time saved",
+			"timeAdded": "Time added",
+			"originalPace": "Original pace",
+			"pctShorter": "{pct}% shorter",
+			"pctLonger": "+{pct}% longer",
+			"comparedTo": "Compared to {duration} at 1.0x",
+			"standardPace": "Standard 1.0x narration pace",
+			"slowerThan": "Slower than {duration} at 1.0x",
+			"badgeModeLength": "By length",
+			"badgeModeWords": "By word count",
+			"pctCompletedBadge": "{pct}% completed",
+			"wordsPagesEst": "~{words} words · ~{pages} pages",
+			"zeroWordsPages": "0 words · 0 pages",
+			"atDailyMin": "At {min} min/day",
+			"dailyFinishesSub": "{weeks} · finishes {date}",
+			"setDailyPrompt": "Set daily minutes in Schedule Planner",
+			"targetPlaceholder": "Enter an audiobook length to see your daily goal",
+			"targetGoal": "Listen {duration} per day at {speed}",
+			"targetOver24h": "{goal} (more than 24 hours a day)",
+			"forBookBadge": "For {duration} book",
+			"copied": "Copied!",
+			"copyLineLength": "Audiobook length: {duration} at 1.0x",
+			"copyLineSpeed": "Playback speed: {speed}",
+			"copyLineAdjusted": "Adjusted listening time: {duration}",
+			"copyLineDiff": "{label}: {duration}",
+			"copyLineEstimate": "Estimated length: ~{words} words · ~{pages} pages",
+			"copyLineSchedule": "Daily schedule: {min} min/day → {days} ({weeks}, finishes {date})"
+		},
+		"page": {
+			"heroSubtitle": "See how long any audiobook takes to finish across custom playback speeds, how much time you save, and how many days it takes on your daily listening schedule.",
+			"schemaFeatures": [
+				"Three input modes: By Audiobook Length, By Word Count (~155 WPM narration), and Remaining Progress with bidirectional percentage sync",
+				"Playback speed preset pills (0.75x, 1.0x, 1.25x, 1.5x, 1.75x, 2.0x) and fine-grained custom slider (0.5x – 3.0x)",
+				"Bidirectional audiobook percentage calculator syncing Percentage Completed (%), Elapsed Time, and Remaining Time",
+				"Instant Adjusted Listening Time, Time Saved, and Estimated Print Pages (~275 words/page)",
+				"Daily Listening Schedule builder with finish date estimate and reverse target-days goal planner",
+				"Side-by-side comparison across playback speeds and silent reading time (238 WPM)"
+			],
+			"guide": {
+				"title": "How to Use This Audiobook Calculator, Audiobook Length Calculator & Percentage Calculator",
+				"p1Html": "Whether you are starting a 30-hour fantasy epic or squeezing a non-fiction bestseller into your morning commute, this <strong class=\"font-semibold text-ink\">audiobook calculator</strong> shows your exact listening time at any playback rate. Instead of doing mental base-60 math, you can use it as an <strong class=\"font-semibold text-ink\">audiobook length calculator</strong> and <strong class=\"font-semibold text-ink\">audiobook speed calculator</strong> to compare narration speeds from <strong class=\"font-semibold text-ink\">0.5x to 3.0x</strong>, estimate equivalent print pages, and map out your exact finish date.",
+				"p2Html": "If you are mid-book and wondering how to calculate audiobook speed or track your completion rate for a reading journal, switch to the <strong class=\"font-semibold text-ink\">Remaining Progress</strong> tab. It works as a bidirectional <strong class=\"font-semibold text-ink\">audiobook percentage calculator</strong>: enter your elapsed time, remaining time, or percentage completed, and every figure updates instantaneously.",
+				"formula1": "Adjusted Listening Time = Original 1.0x Duration ÷ Playback Speed",
+				"formula2": "Percentage Read (%) = (Elapsed Time ÷ Total Length) × 100",
+				"steps": [
+					{
+						"title": "Enter Length or Progress",
+						"bodyHtml": "Enter a <strong class=\"font-semibold text-ink\">10 hr 0 min</strong> audiobook in <strong class=\"font-semibold text-ink\">By Audiobook Length</strong>, or open <strong class=\"font-semibold text-ink\">Remaining Progress</strong> and slide to <strong class=\"font-semibold text-ink\">35%</strong> (<strong class=\"font-semibold text-ink\">3 hr 30 min</strong> elapsed, <strong class=\"font-semibold text-ink\">6 hr 30 min</strong> left at 1.0x)."
+					},
+					{
+						"title": "Select Playback Speed",
+						"bodyHtml": "Pick a preset pill or dial the slider. A 10-hour book at <strong class=\"font-semibold text-ink\">1.25x</strong> drops to <strong class=\"font-semibold text-ink\">8 hr 0 min</strong> (saving <strong class=\"font-semibold text-ink\">2 hours</strong>), while <strong class=\"font-semibold text-ink\">6 hr 30 min</strong> remaining at <strong class=\"font-semibold text-ink\">1.5x</strong> takes just <strong class=\"font-semibold text-ink\">4 hr 20 min</strong>."
+					},
+					{
+						"title": "Plan Your Daily Schedule",
+						"bodyHtml": "Set your daily listening habit (such as <strong class=\"font-semibold text-ink\">45 min/day</strong>) or enter your target days to see your calendar finish date and estimated print page count."
+					}
+				]
+			},
+			"speedChart": {
+				"title": "Audiobook Playback Speed Chart & Common Listening Time Cheat Sheet",
+				"introHtml": "Playback speed works as a direct inverse time multiplier, making it easy to use an <strong class=\"font-semibold text-ink\">audiobook pace calculator</strong> benchmark to see how much faster you will finish any title. Because standard studio narration averages roughly 155 words per minute at 1.0x, nudging your app up to 1.25x or 1.5x brings spoken audio right in line with natural silent reading speeds. Whether you are checking a <strong class=\"font-semibold text-ink\">6 hour audiobook at 1.5 speed</strong> (4 hr 0 min), a <strong class=\"font-semibold text-ink\">12 hour audiobook at 1.5 speed</strong> (8 hr 0 min), <strong class=\"font-semibold text-ink\">7 hours at 1.6 speed</strong> (4 hr 22 min 30 sec), or <strong class=\"font-semibold text-ink\">2 hours at 2.5 speed</strong> (48 min), the tables below give you instant reference numbers.",
+				"multiplierTableTitle": "Playback Speed Multiplier & Time Saved Reference",
+				"multiplierHeaders": [
+					"Playback Speed",
+					"Effective WPM (~155 Base)",
+					"Time Saved (%)",
+					"10-Hour Book Duration",
+					"Best Use Case"
+				],
+				"multiplierRows": [
+					[
+						"0.75x (Slower)",
+						"~116 WPM",
+						"-33% (Takes longer)",
+						"13 hr 20 min",
+						"Complex non-fiction, dense accents, or language learning"
+					],
+					[
+						"1.0x (Original)",
+						"~155 WPM",
+						"0% (Baseline)",
+						"10 hr 0 min",
+						"Dramatized casts, poetry, and immersive fiction"
+					],
+					[
+						"1.25x (Sweet Spot)",
+						"~194 WPM",
+						"20% saved",
+						"8 hr 0 min",
+						"Natural conversational pace for most memoirs & fiction"
+					],
+					[
+						"1.5x (Fast)",
+						"~233 WPM",
+						"33.3% saved",
+						"6 hr 40 min",
+						"Business books, self-help, and crisp studio narration"
+					],
+					[
+						"1.6x (Brisk)",
+						"~248 WPM",
+						"37.5% saved",
+						"6 hr 15 min",
+						"Experienced listeners who find 1.5x slightly too slow"
+					],
+					[
+						"1.75x (Rapid)",
+						"~271 WPM",
+						"42.9% saved",
+						"5 hr 43 min",
+						"Re-reads, familiar topics, and clear narrators"
+					],
+					[
+						"2.0x (Double)",
+						"~310 WPM",
+						"50% saved",
+						"5 hr 0 min",
+						"Light entertainment, summaries, and speed-listening pros"
+					],
+					[
+						"2.5x (Maximum)",
+						"~388 WPM",
+						"60% saved",
+						"4 hr 0 min",
+						"Skimming familiar material or short chapters"
+					]
+				],
+				"lookupTableTitle": "Quick Listening Time Lookup by Book Length",
+				"lookupHeaders": [
+					"Original Length (1.0x)",
+					"At 1.25x",
+					"At 1.5x",
+					"At 1.6x",
+					"At 2.0x",
+					"At 2.5x"
+				],
+				"lookupRows": [
+					{
+						"cells": [
+							"2 Hours (Short / Novella)",
+							"1 hr 36 min",
+							"1 hr 20 min",
+							"1 hr 15 min",
+							"1 hr 0 min",
+							"48 min"
+						],
+						"highlightCol": 5
+					},
+					{
+						"cells": [
+							"6 Hours (Short Non-Fiction)",
+							"4 hr 48 min",
+							"4 hr 0 min",
+							"3 hr 45 min",
+							"3 hr 0 min",
+							"2 hr 24 min"
+						],
+						"highlightCol": 2
+					},
+					{
+						"cells": [
+							"7 Hours (Focused Guide)",
+							"5 hr 36 min",
+							"4 hr 40 min",
+							"4 hr 22 min 30 sec",
+							"3 hr 30 min",
+							"2 hr 48 min"
+						],
+						"highlightCol": 3
+					},
+					{
+						"cells": [
+							"10 Hours (Average Audiobook)",
+							"8 hr 0 min",
+							"6 hr 40 min",
+							"6 hr 15 min",
+							"5 hr 0 min",
+							"4 hr 0 min"
+						],
+						"highlightCol": 1
+					},
+					{
+						"cells": [
+							"12 Hours (Standard Novel)",
+							"9 hr 36 min",
+							"8 hr 0 min",
+							"7 hr 30 min",
+							"6 hr 0 min",
+							"4 hr 48 min"
+						],
+						"highlightCol": 2
+					},
+					{
+						"cells": [
+							"20 Hours (Biography / Sci-Fi)",
+							"16 hr 0 min",
+							"13 hr 20 min",
+							"12 hr 30 min",
+							"10 hr 0 min",
+							"8 hr 0 min"
+						],
+						"highlightCol": -1
+					}
+				]
+			},
+			"lengthConverter": {
+				"title": "Audiobook Length Calculator: Word Count & Print Pages Converter",
+				"p1Html": "In the publishing industry, Amazon's ACX and Audible use a universal studio narration benchmark of <strong class=\"font-semibold text-ink\">155 words per minute (9,300 words per finished hour)</strong>. Authors, voice actors, and publishers rely on an <strong class=\"font-semibold text-ink\">audiobook length calculator</strong> to budget studio recording time from a manuscript word count, while listeners use it in reverse to see how big a book actually is.",
+				"p2Html": "Because a standard trade paperback averages roughly <strong class=\"font-semibold text-ink\">275 words per page</strong>, this tool also works as an <strong class=\"font-semibold text-ink\">audiobook time to page calculator</strong> and <strong class=\"font-semibold text-ink\">audiobook page calculator</strong>. At 1.0x speed, every hour of audio equals about <strong class=\"font-semibold text-ink\">33.8 printed pages</strong>—meaning a 10-hour audiobook corresponds to roughly 93,000 words or 338 paperback pages. If you want to convert custom manuscript formatting or font spacing, try our <a href=\"/words-to-pages/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Words to Pages Calculator</a>.",
+				"p3Html": "Comparing <strong class=\"font-semibold text-ink\">audiobook listening (155 WPM at 1.0x)</strong> against <strong class=\"font-semibold text-ink\">silent reading (~238 WPM for the average adult)</strong> explains why unabridged audiobooks feel slower than reading on paper. At 1.0x speed, listening takes roughly 35% longer than reading the physical book silently, whereas bumping playback to <strong class=\"font-semibold text-ink\">1.5x (~233 WPM)</strong> matches natural silent print reading almost word for word. You can benchmark your own silent reading pace with our <a href=\"/reading-speed-test/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Reading Speed Test</a> or check article durations in the <a href=\"/reading-time-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Reading Time Counter</a>.",
+				"tableTitle": "Audiobook Hours to Word Count & Print Pages Table",
+				"headers": [
+					"Audiobook Hours (1.0x)",
+					"Estimated Word Count (~155 WPM)",
+					"Estimated Print Pages (~275 Words/Page)",
+					"Silent Reading Time (~238 WPM)",
+					"Typical Book Format"
+				],
+				"rows": [
+					[
+						"1 Hour",
+						"~9,300 words",
+						"~34 pages",
+						"39 min",
+						"Short essay or novella excerpt"
+					],
+					[
+						"3 Hours",
+						"~27,900 words",
+						"~101 pages",
+						"1 hr 57 min",
+						"Short business guide or novella"
+					],
+					[
+						"6 Hours",
+						"~55,800 words",
+						"~203 pages",
+						"3 hr 54 min",
+						"Concise non-fiction (e.g., Atomic Habits)"
+					],
+					[
+						"10 Hours",
+						"~93,000 words",
+						"~338 pages",
+						"6 hr 31 min",
+						"Standard novel or hardcover non-fiction"
+					],
+					[
+						"15 Hours",
+						"~139,500 words",
+						"~507 pages",
+						"9 hr 46 min",
+						"Spotify monthly quota limit / full-length thriller"
+					],
+					[
+						"25 Hours",
+						"~232,500 words",
+						"~845 pages",
+						"16 hr 17 min",
+						"Epic fantasy, history, or unabridged biography"
+					]
+				]
+			},
+			"platforms": {
+				"title": "Spotify, Audible & Libby: How Listening Time Limits & Percentages Work",
+				"introHtml": "Every major audiobook platform tracks listening hours and completion percentages slightly differently. Understanding how quota rules and progress bars work on <strong class=\"font-semibold text-ink\">Spotify</strong>, <strong class=\"font-semibold text-ink\">Audible</strong>, <strong class=\"font-semibold text-ink\">Kindle</strong>, and <strong class=\"font-semibold text-ink\">Libby</strong> helps you avoid mid-chapter cutoffs and log accurate progress in Goodreads or StoryGraph.",
+				"spotifyTitle": "1. Spotify Audiobook Listening Time Limit (15-Hour Monthly Quota)",
+				"spotifyParagraphsHtml": [
+					"Spotify includes <strong class=\"font-semibold text-ink\">15 hours of audiobook listening per billing month</strong> with <strong class=\"font-semibold text-ink\">Spotify Premium Individual</strong>, <strong class=\"font-semibold text-ink\">Spotify Duo</strong>, and <strong class=\"font-semibold text-ink\">Spotify Family</strong> plans. On Duo and Family subscriptions, only the primary <strong class=\"font-semibold text-ink\">plan manager</strong> receives the included 15-hour monthly allowance—secondary sub-accounts do not get separate hours unless purchased as 10-hour top-ups.",
+					"<strong class=\"font-semibold text-ink\">Crucial playback speed rule:</strong> Spotify deducts from your 15-hour quota based on the book's <strong class=\"font-semibold text-ink\">original 1.0x catalog length</strong>, not your actual wall-clock listening time. Listening to a 15-hour audiobook at <strong class=\"font-semibold text-ink\">1.5x speed</strong> takes you 10 hours in real life, but it still consumes all <strong class=\"font-semibold text-ink\">15 hours</strong> of your monthly Spotify allowance.",
+					"<strong class=\"font-semibold text-ink\">How to check Spotify audiobook listening time left:</strong> Open the Spotify mobile app and tap <strong class=\"font-semibold text-ink\">Profile picture → Settings and privacy → Account → Subscription → Track your included hours</strong>. Once you see your remaining quota, enter those hours into the <strong class=\"font-semibold text-ink\">Remaining Progress</strong> or <strong class=\"font-semibold text-ink\">Daily listening schedule</strong> panel above to plan your exact finish date before your billing cycle resets."
+				],
+				"audibleTitle": "2. Audiobook Percentage Calculator for Audible, Kindle & Libby",
+				"audibleParagraphsHtml": [
+					"Readers frequently search <strong class=\"font-semibold text-ink\">how to find percentage on Audible</strong> or check their <strong class=\"font-semibold text-ink\">Audible percentage read</strong> when updating reading trackers. While <strong class=\"font-semibold text-ink\">Kindle Whispersync</strong> and library apps like <strong class=\"font-semibold text-ink\">Libby</strong> prominently display completion percentage (<strong class=\"font-semibold text-ink\">%</strong>) on the main player screen, Audible's mobile player focuses on <strong class=\"font-semibold text-ink\">chapter time remaining</strong> and <strong class=\"font-semibold text-ink\">total time left</strong> (with overall percentage tucked inside your web library or book details view).",
+					"Instead of digging through menus or guessing your progress, open the <strong class=\"font-semibold text-ink\">Remaining Progress</strong> tab in the <strong class=\"font-semibold text-ink\">audiobook percentage calculator</strong> above. It works in both directions:"
+				],
+				"audibleBulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Time Left → Percentage:</strong> Enter your total book length and Audible's <strong class=\"font-semibold text-ink\">Remaining time (at 1.0x)</strong> to get your exact <strong class=\"font-semibold text-ink\">% completed</strong> for Goodreads or StoryGraph.",
+					"<strong class=\"font-semibold text-ink\">Percentage → Hours & Minutes Left:</strong> Type or slide your <strong class=\"font-semibold text-ink\">Percentage completed (%)</strong> from Libby or Kindle to see your exact elapsed time and adjusted time remaining at <strong class=\"font-semibold text-ink\">1.25x</strong>, <strong class=\"font-semibold text-ink\">1.5x</strong>, or <strong class=\"font-semibold text-ink\">2.0x</strong> speed."
+				]
+			},
+			"comprehension": {
+				"title": "How to Choose the Best Audiobook Playback Speed Without Losing Comprehension",
+				"introHtml": "Cognitive psychology research shows that the human brain can comfortably process and comprehend spoken language at <strong class=\"font-semibold text-ink\">250 to 300 words per minute (WPM)</strong>. However, professional studio narration at <strong class=\"font-semibold text-ink\">1.0x</strong> is deliberately recorded around <strong class=\"font-semibold text-ink\">150 to 160 WPM</strong> for maximum vocal clarity. That 100-WPM gap is why 1.0x narration can sometimes let your mind wander—and why <strong class=\"font-semibold text-ink\">1.25x to 1.5x (~194–233 WPM)</strong> is the natural sweet spot for most listeners using an <strong class=\"font-semibold text-ink\">audiobook playback speed calculator</strong>.",
+				"trainingTitle": "3-Step Speed-Up Training Method",
+				"trainingIntroHtml": "If you want to build a faster listening habit using an <strong class=\"font-semibold text-ink\">audiobook speed up calculator</strong> workflow without sacrificing retention, train your ear gradually:",
+				"steps": [
+					{
+						"title": "Warm Up at 1.15x–1.25x",
+						"bodyHtml": "Start at <strong class=\"font-semibold text-ink\">1.15x or 1.25x</strong> for the first 10 minutes of a new book so your auditory cortex adapts to the narrator's voice, cadence, and pitch."
+					},
+					{
+						"title": "Step Up by 0.10x",
+						"bodyHtml": "Increase playback in <strong class=\"font-semibold text-ink\">0.10x increments</strong> (<strong class=\"font-semibold text-ink\">1.25x → 1.35x → 1.5x</strong>) across chapters rather than jumping straight from 1.0x to 2.0x."
+					},
+					{
+						"title": "Match Speed to Genre",
+						"bodyHtml": "Keep dense philosophy, sci-fi world-building, or unfamiliar accents at <strong class=\"font-semibold text-ink\">1.0x–1.2x</strong>, while pushing conversational memoirs and business books to <strong class=\"font-semibold text-ink\">1.5x–1.75x</strong>."
+					}
+				],
+				"habitTitle": "The Daily Habit Compound Effect (33+ Books a Year)",
+				"habitBodyHtml": "Small playback adjustments compound dramatically over a year. Listening for just <strong class=\"font-semibold text-ink\">45 minutes per day at 1.25x</strong> (which covers 56 minutes of 1.0x audio during a daily commute or walk) finishes a standard 10-hour audiobook in <strong class=\"font-semibold text-ink\">11 days</strong>—adding up to <strong class=\"font-semibold text-ink\">33+ books per year</strong> without carving out a single extra hour from your schedule."
+			}
+		},
+		"faq": {
+			"title": "Frequently Asked Questions About Audiobook Speed, Time & Percentages",
+			"items": [
+				{
+					"question": "How do you calculate audiobook listening time at a faster speed?",
+					"answer": "Divide the original 1.0x length (in total minutes) by your playback speed multiplier. For example, a 10-hour (600-minute) audiobook at 1.5x speed takes 600 ÷ 1.5 = 400 minutes, which equals 6 hours and 40 minutes (saving 3 hours and 20 minutes).",
+					"answerHtml": "Divide the original 1.0x length (in total minutes) by your playback speed multiplier. For example, a 10-hour (600-minute) audiobook at 1.5x speed takes <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">600 ÷ 1.5 = 400 minutes</code>, which equals <strong class=\"font-semibold text-ink\">6 hours and 40 minutes</strong> (saving 3 hours and 20 minutes)."
+				},
+				{
+					"question": "How long is a 6-hour audiobook at 1.5x speed?",
+					"answer": "A 6-hour audiobook played at 1.5x speed takes exactly 4 hours and 0 minutes, saving you 2 hours (33.3% shorter). At 1.25x it takes 4 hours 48 minutes, and at 2.0x it takes 3 hours.",
+					"answerHtml": "A 6-hour audiobook played at <strong class=\"font-semibold text-ink\">1.5x speed</strong> takes exactly <strong class=\"font-semibold text-ink\">4 hours and 0 minutes</strong>, saving you 2 hours (33.3% shorter). At 1.25x it takes 4 hours 48 minutes, and at 2.0x it takes 3 hours."
+				},
+				{
+					"question": "How long is a 12-hour audiobook at 1.5x speed?",
+					"answer": "A 12-hour audiobook at 1.5x speed takes exactly 8 hours and 0 minutes, cutting 4 hours off the original runtime.",
+					"answerHtml": "A 12-hour audiobook at <strong class=\"font-semibold text-ink\">1.5x speed</strong> takes exactly <strong class=\"font-semibold text-ink\">8 hours and 0 minutes</strong>, cutting 4 hours off the original runtime."
+				},
+				{
+					"question": "How long does 2 hours take at 2.5x speed, or 7 hours at 1.6x speed?",
+					"answer": "Two hours (120 minutes) at 2.5x speed takes 48 minutes (saving 1 hour 12 minutes). A 7-hour (420-minute) audiobook at 1.6x speed takes 4 hours, 22 minutes, and 30 seconds.",
+					"answerHtml": "Two hours (120 minutes) at <strong class=\"font-semibold text-ink\">2.5x speed</strong> takes <strong class=\"font-semibold text-ink\">48 minutes</strong> (saving 1 hour 12 minutes). A 7-hour (420-minute) audiobook at <strong class=\"font-semibold text-ink\">1.6x speed</strong> takes <strong class=\"font-semibold text-ink\">4 hours, 22 minutes, and 30 seconds</strong>."
+				},
+				{
+					"question": "How do I use an audiobook percentage calculator and audiobook length calculator together?",
+					"answer": "To calculate your completion percentage, divide your elapsed listening time by the total audiobook length and multiply by 100 ((Elapsed ÷ Total) × 100), then divide the remaining time by your playback speed to find your adjusted length left. Or open the Remaining Progress tab in this audiobook percentage calculator and audiobook length calculator to enter either your percentage completed or elapsed time and convert both ways automatically.",
+					"answerHtml": "To calculate your completion percentage, divide your elapsed listening time by the total audiobook length and multiply by 100 (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">(Elapsed ÷ Total) × 100</code>), then divide the remaining time by your playback speed to find your adjusted length left. Or open the <strong class=\"font-semibold text-ink\">Remaining Progress</strong> tab in this <strong class=\"font-semibold text-ink\">audiobook percentage calculator</strong> and <strong class=\"font-semibold text-ink\">audiobook length calculator</strong> to enter either your percentage completed or elapsed time and convert both ways automatically."
+				},
+				{
+					"question": "Does Audible show percentage completed, and how can I find it?",
+					"answer": "Audible's mobile player screen displays chapter time remaining and overall time left rather than a prominent percentage badge. You can check your completion percentage in Audible's web library, via Kindle Whispersync, or by entering your total length and time left into this calculator's Remaining Progress tab.",
+					"answerHtml": "Audible's mobile player screen displays chapter time remaining and overall time left rather than a prominent percentage badge. You can check your completion percentage in Audible's web library, via Kindle Whispersync, or by entering your total length and time left into this calculator's <strong class=\"font-semibold text-ink\">Remaining Progress</strong> tab."
+				},
+				{
+					"question": "Does listening at 1.5x or 2x save my Spotify 15-hour audiobook limit?",
+					"answer": "No. Spotify deducts from your monthly 15-hour audiobook listening limit (included with Premium Individual, Duo plan managers, and Family plan managers) based on the book's original 1.0x runtime, regardless of playback speed.",
+					"answerHtml": "No. Spotify deducts from your monthly <strong class=\"font-semibold text-ink\">15-hour audiobook listening limit</strong> (included with Premium Individual, Duo plan managers, and Family plan managers) based on the book's <strong class=\"font-semibold text-ink\">original 1.0x runtime</strong>, regardless of playback speed."
+				},
+				{
+					"question": "How do I check how many audiobook hours I have left on Spotify?",
+					"answer": "Open the Spotify mobile or desktop app, tap your Profile picture > Settings and privacy > Account > Subscription (or Track your included hours) to see your exact remaining monthly audiobook hours and renewal date.",
+					"answerHtml": "Open the Spotify mobile or desktop app, tap your <strong class=\"font-semibold text-ink\">Profile picture &gt; Settings and privacy &gt; Account &gt; Subscription</strong> (or <strong class=\"font-semibold text-ink\">Track your included hours</strong>) to see your exact remaining monthly audiobook hours and renewal date."
+				},
+				{
+					"question": "How many words and pages are in a 10-hour audiobook?",
+					"answer": "Using the industry-standard narration pace of 155 words per minute (9,300 words per hour) and 275 words per print page, a 10-hour audiobook equals roughly 93,000 words or ~338 printed pages (~34 pages per hour).",
+					"answerHtml": "Using the industry-standard narration pace of <strong class=\"font-semibold text-ink\">155 words per minute</strong> (9,300 words per hour) and <strong class=\"font-semibold text-ink\">275 words per print page</strong>, a 10-hour audiobook equals roughly <strong class=\"font-semibold text-ink\">93,000 words</strong> or <strong class=\"font-semibold text-ink\">~338 printed pages</strong> (~34 pages per hour)."
+				},
+				{
+					"question": "Is listening to audiobooks at 1.5x or 2x speed still effective for comprehension?",
+					"answer": "Yes, for most non-fiction, memoirs, and familiar topics. Because average human speech comprehension reaches 250–300 WPM while 1.0x narration averages 155 WPM, 1.25x (~194 WPM) and 1.5x (~233 WPM) feel natural for most listeners once adapted.",
+					"answerHtml": "Yes, for most non-fiction, memoirs, and familiar topics. Because average human speech comprehension reaches 250–300 WPM while 1.0x narration averages 155 WPM, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">1.25x</code> (~194 WPM) and <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">1.5x</code> (~233 WPM) feel natural for most listeners once adapted."
+				}
+			]
+		}
 	},
 	"wordsToPages": {
 		"name": "Words to Pages Converter",
@@ -97,7 +2532,653 @@
 		"metric": "250 / 500 Words per Page",
 		"title": "Words to Pages Calculator & Book Page Count Converter | Wordora",
 		"metaDescription": "Free words to pages calculator and words per page calculator. Convert essay word count to pages, estimate book page count by word count, or check how many words is 7 pages.",
-		"h1": "Words to Pages Converter"
+		"h1": "Words to Pages Converter",
+		"ui": {
+			"workspaceLabel": "Words to Pages and Pages to Words Converter Workspace",
+			"modesLabel": "Words to pages converter modes",
+			"tabWordsToPages": "Words to pages",
+			"tabPagesToWords": "Pages to words",
+			"copyResult": "Copy result",
+			"copyLink": "Copy link",
+			"resetDefaults": "Reset defaults",
+			"enterWordCount": "Enter word count",
+			"shorthandHint": "Accepts shorthand: e.g. 1.5k or 2.5k",
+			"wordsPlaceholder": "e.g. 1,500 or 1.5k",
+			"unitWords": "words",
+			"wordPresetsLabel": "Common document & essay presets",
+			"enterPageCount": "Enter target page count",
+			"pagesHint": "Calculates target words to write",
+			"pagesPlaceholder": "e.g. 6",
+			"unitPages": "pages",
+			"pagePresetsLabel": "Common page count presets",
+			"pagesPreset": "{count} pages",
+			"pasteLabel": "Or paste / type your text",
+			"clear": "Clear",
+			"pastePlaceholder": "Paste your essay or draft here to count words, characters, and pages...",
+			"liveSynced": "Live synced",
+			"comparisonHeading": "Format comparison for current word count",
+			"compSingle": "Single",
+			"compDouble": "Double",
+			"lineSpacingHeading": "Line spacing",
+			"spacingSingle": "Single-spaced",
+			"spacing15": "1.5-spaced",
+			"spacingDouble": "Double-spaced",
+			"spacingCustom": "Custom rate",
+			"wordsPerPageLabel": "Words per page",
+			"unitWpp": "w / page",
+			"fontSettingsHeading": "Font & page settings",
+			"defaultTypographySummary": "Times · 12 pt · Letter",
+			"fontFamilyLabel": "Font Family",
+			"fontSizeLabel": "Font Size",
+			"pageFormatLabel": "Page Format",
+			"marginsLabel": "Margins",
+			"orientationLabel": "Orientation",
+			"formats": {
+				"letter": "US Letter (8.5×11 in)",
+				"a4": "A4 (210×297 mm)",
+				"a5": "A5 (148×210 mm)",
+				"b5": "B5 (176×250 mm)",
+				"legal": "US Legal (8.5×14 in)",
+				"digest": "Novel Digest (5×8 in · ~250 w/p)",
+				"trade": "Trade Paperback (5.5×8.5 in · ~275 w/p)",
+				"hardcover": "Standard Hardcover / Book (6×9 in · ~300 w/p)"
+			},
+			"margins": {
+				"normal": "Normal (1 in / 2.5 cm)",
+				"narrow": "Narrow (0.5 in / 1.27 cm)",
+				"moderate": "Moderate (0.75×1 in)",
+				"wide": "Wide (1×1.25 in)"
+			},
+			"orientations": {
+				"portrait": "Portrait",
+				"landscape": "Landscape"
+			},
+			"kpiPagesLabel": "Estimated pages",
+			"kpiWordsLabel": "Total words",
+			"kpiReadingLabel": "Silent reading time",
+			"kpiReadingSub": "Average adult reading pace",
+			"kpiSpeakingLabel": "Speaking time",
+			"kpiSpeakingSub": "Read-aloud presentation pace",
+			"relatedAriaLabel": "Related reading and text utilities",
+			"relatedToolsLabel": "Related tools:"
+		},
+		"client": {
+			"zeroTime": "0 min 0 sec",
+			"timeHrMin": "{h} hr {m} min",
+			"timeMinSec": "{m} min {s} sec",
+			"spacingSingle": "Single-spaced",
+			"spacing15": "1.5-spaced",
+			"spacingDouble": "Double-spaced",
+			"spacingCustom": "Custom rate",
+			"spacingOther": "{spacing} spacing",
+			"activeSpacingDisplay": "{label} ({wpp} w/p)",
+			"customOverride": "Custom override",
+			"autoCalculated": "Auto-calculated",
+			"shortFormats": {
+				"letter": "Letter",
+				"a4": "A4",
+				"a5": "A5",
+				"b5": "B5",
+				"legal": "Legal",
+				"digest": "5×8\" Digest",
+				"trade": "5.5×8.5\" Trade",
+				"hardcover": "6×9\" Hardcover"
+			},
+			"modePasted": "Pasted text",
+			"modeW2P": "Words to pages",
+			"modeP2W": "Pages to words",
+			"parsedPasted": "= {words} words (pasted)",
+			"parsedWords": "= {words} words",
+			"shorthandHint": "Accepts shorthand: e.g. 1.5k or 2.5k",
+			"microstats": "{words} words · {chars} chars · {paragraphs} paragraphs",
+			"pagesSingular": "{count} page",
+			"pagesPlural": "{count} pages",
+			"fullPageSingular": "{count} full page",
+			"fullPagePlural": "{count} full pages",
+			"sheetSingular": "{count} print sheet",
+			"sheetPlural": "{count} print sheets",
+			"doubleSidedSheetSingular": "{count} double-sided sheet",
+			"doubleSidedSheetPlural": "{count} double-sided sheets",
+			"pagesSub": "{full} · {sheets}",
+			"wordsSingular": "{count} word",
+			"wordsPlural": "{count} words",
+			"charsSub": "{withSpaces} chars (with spaces) · {noSpaces} no spaces",
+			"forWordSingular": "For {words} word",
+			"forWordsPlural": "For {words} words",
+			"copyResult": "Copy result",
+			"copyLink": "Copy link",
+			"copied": "Copied!",
+			"copyHeader": "Wordora Words to Pages Conversion",
+			"copyEstimatedPages": "Estimated Pages: {pages} ({full}, {sheets})",
+			"copyTotalWords": "Total Words: {words}",
+			"copyCharacters": "Characters: {withSpaces} (with spaces) · {noSpaces} (no spaces)",
+			"copyParagraphs": "Paragraphs: {paragraphs}",
+			"copyWpp": "Words per Page: {wpp} w/p ({spacing})",
+			"copySilentReading": "Silent Reading Time: {time} (238 WPM)",
+			"copySpeakingTime": "Speaking Time: {time} (183 WPM)",
+			"copyFooter": "Calculate online at {url}"
+		},
+		"page": {
+			"subtitle": "Convert word counts into pages—or pages into target word counts—across single, 1.5, and double spacing, standard fonts, and book layouts.",
+			"schemaFeatures": [
+				"Two-way instant conversion between Words to Pages and Pages to Words",
+				"Line spacing presets for Single-spaced (~500 words/page), 1.5-spaced (~330 words/page), Double-spaced (~250 words/page), and custom words-per-page",
+				"Font and size presets for 12pt Times New Roman / Arial, 11pt Calibri, and Paperback Book (~275 words/page)",
+				"Quick document word count presets (500, 1,000, 1,500, 2,500, 5,000, and 10,000 words)",
+				"Live silent reading time (238 WPM) and speaking time (183 WPM) estimates"
+			],
+			"s1Title": "Words to Pages Calculator & Page Count Calculator Quick Reference Charts",
+			"s1IntroHtml": "Using this <strong class=\"font-semibold text-ink\">words to pages calculator</strong> and <strong class=\"font-semibold text-ink\">words to pages converter</strong> under standard academic formatting—12-point Times New Roman font, 1-inch margins, and US Letter paper—<strong class=\"font-semibold text-ink\">1 double-spaced page holds roughly 250 words</strong>, while <strong class=\"font-semibold text-ink\">1 single-spaced page holds roughly 500 words</strong>. For printed books, a standard <strong class=\"font-semibold text-ink\">5.5\" × 8.5\" trade paperback averages 275 words per page</strong>, making our <strong class=\"font-semibold text-ink\">page count calculator</strong> estimates predictable once you match your document layout.",
+			"w2pTableTitle": "Words to Pages Conversion Table",
+			"w2pTableHeaders": [
+				"Word Count",
+				"Single (1.0)",
+				"1.5-Spaced",
+				"Double (2.0)",
+				"Paperback (~275 w/p)"
+			],
+			"w2pTableRows": [
+				[
+					"100 words",
+					"0.2 pages",
+					"0.3 pages",
+					"0.4 pages",
+					"0.4 pages"
+				],
+				[
+					"250 words",
+					"0.5 pages",
+					"0.8 pages",
+					"1.0 page",
+					"0.9 pages"
+				],
+				[
+					"500 words",
+					"1.0 page",
+					"1.5 pages",
+					"2.0 pages",
+					"1.8 pages"
+				],
+				[
+					"750 words",
+					"1.5 pages",
+					"2.3 pages",
+					"3.0 pages",
+					"2.7 pages"
+				],
+				[
+					"1,000 words",
+					"2.0 pages",
+					"3.0 pages",
+					"4.0 pages",
+					"3.6 pages"
+				],
+				[
+					"1,500 words",
+					"3.0 pages",
+					"4.5 pages",
+					"6.0 pages",
+					"5.5 pages"
+				],
+				[
+					"1,750 words",
+					"3.5 pages",
+					"5.3 pages",
+					"7.0 pages",
+					"6.4 pages"
+				],
+				[
+					"2,000 words",
+					"4.0 pages",
+					"6.0 pages",
+					"8.0 pages",
+					"7.3 pages"
+				],
+				[
+					"2,500 words",
+					"5.0 pages",
+					"7.5 pages",
+					"10.0 pages",
+					"9.1 pages"
+				],
+				[
+					"3,000 words",
+					"6.0 pages",
+					"9.0 pages",
+					"12.0 pages",
+					"10.9 pages"
+				],
+				[
+					"5,000 words",
+					"10.0 pages",
+					"15.0 pages",
+					"20.0 pages",
+					"18.2 pages"
+				],
+				[
+					"10,000 words",
+					"20.0 pages",
+					"30.0 pages",
+					"40.0 pages",
+					"36.4 pages"
+				],
+				[
+					"20,000 words",
+					"40.0 pages",
+					"60.0 pages",
+					"80.0 pages",
+					"72.7 pages"
+				],
+				[
+					"50,000 words",
+					"100.0 pages",
+					"150.0 pages",
+					"200.0 pages",
+					"181.8 pages"
+				],
+				[
+					"70,000 words",
+					"140.0 pages",
+					"210.0 pages",
+					"280.0 pages",
+					"254.5 pages"
+				],
+				[
+					"100,000 words",
+					"200.0 pages",
+					"300.0 pages",
+					"400.0 pages",
+					"363.6 pages"
+				],
+				[
+					"250,000 words",
+					"500.0 pages",
+					"750.0 pages",
+					"1,000.0 pages",
+					"909.1 pages"
+				]
+			],
+			"p2wTableTitle": "Pages to Words Conversion Table",
+			"p2wTableHeaders": [
+				"Page Count",
+				"Double-Spaced (250 w/p)",
+				"Paperback Book (275 w/p)",
+				"Single-Spaced (500 w/p)"
+			],
+			"p2wTableRows": [
+				[
+					"1 page",
+					"250 words",
+					"275 words",
+					"500 words"
+				],
+				[
+					"2 pages",
+					"500 words",
+					"550 words",
+					"1,000 words"
+				],
+				[
+					"3 pages",
+					"750 words",
+					"825 words",
+					"1,500 words"
+				],
+				[
+					"5 pages",
+					"1,250 words",
+					"1,375 words",
+					"2,500 words"
+				],
+				[
+					"7 pages",
+					"1,750 words",
+					"1,925 words",
+					"3,500 words"
+				],
+				[
+					"10 pages",
+					"2,500 words",
+					"2,750 words",
+					"5,000 words"
+				],
+				[
+					"15 pages",
+					"3,750 words",
+					"4,125 words",
+					"7,500 words"
+				],
+				[
+					"20 pages",
+					"5,000 words",
+					"5,500 words",
+					"10,000 words"
+				],
+				[
+					"25 pages",
+					"6,250 words",
+					"6,875 words",
+					"12,500 words"
+				],
+				[
+					"50 pages",
+					"12,500 words",
+					"13,750 words",
+					"25,000 words"
+				],
+				[
+					"100 pages",
+					"25,000 words",
+					"27,500 words",
+					"50,000 words"
+				],
+				[
+					"200 pages",
+					"50,000 words",
+					"55,000 words",
+					"100,000 words"
+				],
+				[
+					"300 pages",
+					"75,000 words",
+					"82,500 words",
+					"150,000 words"
+				],
+				[
+					"400 pages",
+					"100,000 words",
+					"110,000 words",
+					"200,000 words"
+				],
+				[
+					"500 pages",
+					"125,000 words",
+					"137,500 words",
+					"250,000 words"
+				]
+			],
+			"formulaW2pHtml": "<strong class=\"font-semibold text-ink\">Convert Words to Pages Formula:</strong> <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">Pages = Total Words ÷ Words per Page</code> — Example: 1,500 words ÷ 250 words/page (double-spaced) = <strong class=\"font-semibold text-ink\">6.0 pages</strong>.",
+			"formulaP2wHtml": "<strong class=\"font-semibold text-ink\">Convert Pages to Words Formula:</strong> <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">Total Words = Page Count × Words per Page</code> — Example: 300 pages × 275 words/page (paperback) = <strong class=\"font-semibold text-ink\">82,500 words</strong>.",
+			"s2Title": "Words Per Page Calculator Matrix by Font Family, Font Size & Paper Size",
+			"s2IntroHtml": "The \"250 words per double-spaced page\" rule is only a baseline for 12-point Times New Roman on US Letter paper with 1-inch margins. Using this <strong class=\"font-semibold text-ink\">words per page calculator</strong> guide shows how changing your typeface, font size, margins, or paper dimensions can shift your final page count by <strong class=\"font-semibold text-ink\">10% to 25%</strong> without changing a single word of your draft.",
+			"fontMatrixTitle": "Detailed Words-Per-Page Matrix (1-Inch Margins, US Letter)",
+			"fontMatrixHeaders": [
+				"Font Family",
+				"10 pt (Single / Double)",
+				"11 pt (Single / Double)",
+				"12 pt (Single / Double)",
+				"14 pt (Single / Double)"
+			],
+			"fontMatrixRows": [
+				[
+					"Times New Roman",
+					"680 / 340 w/p",
+					"580 / 290 w/p",
+					"500 / 250 w/p",
+					"380 / 190 w/p"
+				],
+				[
+					"Calibri",
+					"710 / 355 w/p",
+					"600 / 300 w/p",
+					"520 / 260 w/p",
+					"400 / 200 w/p"
+				],
+				[
+					"Arial",
+					"640 / 320 w/p",
+					"540 / 270 w/p",
+					"450 / 225 w/p",
+					"340 / 170 w/p"
+				],
+				[
+					"Georgia",
+					"620 / 310 w/p",
+					"520 / 260 w/p",
+					"440 / 220 w/p",
+					"330 / 165 w/p"
+				],
+				[
+					"Verdana",
+					"540 / 270 w/p",
+					"460 / 230 w/p",
+					"390 / 195 w/p",
+					"290 / 145 w/p"
+				],
+				[
+					"Courier New",
+					"490 / 245 w/p",
+					"420 / 210 w/p",
+					"360 / 180 w/p",
+					"270 / 135 w/p"
+				]
+			],
+			"paperMarginsTitle": "How Paper Size & Margins Affect Page Density (US Letter vs. A4)",
+			"paperMarginsCards": [
+				"<strong class=\"font-semibold text-ink\">US Letter (8.5 × 11 in) vs. A4 (210 × 297 mm):</strong> Standard A4 paper is slightly narrower and taller than US Letter, giving it roughly <strong class=\"font-semibold text-ink\">6% more printable area</strong> at 1-inch margins. A 10-page US Letter document typically condenses to <strong class=\"font-semibold text-ink\">9.4 pages on A4</strong>.",
+				"<strong class=\"font-semibold text-ink\">Margin Width (1 in vs. 0.5 in):</strong> Switching from standard 1-inch margins to narrow 0.5-inch margins expands the printable text block by nearly <strong class=\"font-semibold text-ink\">28%</strong>, fitting roughly <strong class=\"font-semibold text-ink\">320 words per double-spaced page</strong> instead of 250.",
+				"<strong class=\"font-semibold text-ink\">Proportional vs. Monospace Fonts:</strong> Proportional fonts like Calibri and Times New Roman pack narrower characters tightly together, whereas monospaced fonts like Courier New assign equal width to every letter—stretching a 1,000-word essay from <strong class=\"font-semibold text-ink\">4.0 pages to 5.6 pages</strong>."
+			],
+			"s3Title": "Academic Style Guides & Book Page Calculator Word Count Benchmarks",
+			"s3IntroHtml": "Whether you are formatting a university research paper or using a <strong class=\"font-semibold text-ink\">book page calculator word count</strong> benchmark to estimate the physical spine width of a self-published novel, your target industry sets strict layout rules that directly control words per page.",
+			"academicTitle": "Academic Formatting Standards (MLA 9, APA 7, Chicago, Harvard)",
+			"academicHeaders": [
+				"Citation & Style Guide",
+				"Required Font & Spacing",
+				"Margins",
+				"Average Words per Page"
+			],
+			"academicRows": [
+				[
+					"MLA 9th Edition",
+					"12pt Times New Roman, double-spaced",
+					"1 inch (all sides)",
+					"~250 words/page"
+				],
+				[
+					"APA 7th Edition",
+					"12pt Times New Roman or 11pt Calibri/Arial, double-spaced",
+					"1 inch (all sides)",
+					"~250–280 words/page"
+				],
+				[
+					"Chicago / Turabian",
+					"12pt Times New Roman, double-spaced (footnotes single-spaced)",
+					"1 inch (all sides)",
+					"~250 words/page"
+				],
+				[
+					"Harvard Style",
+					"12pt Arial or Times New Roman, 1.5 or double-spaced",
+					"1 inch (2.54 cm)",
+					"~250–330 words/page"
+				]
+			],
+			"academicNote": "Note: Academic word-to-page estimates apply to body paragraphs only—title pages, abstracts, reference lists, and appendices add extra pages.",
+			"bookTrimTitle": "Printed Book Trim Sizes & Fiction Length Benchmarks (Novel, Novella, AO3)",
+			"bookTrimHeaders": [
+				"Format or Story Category",
+				"Standard Trim / Word Range",
+				"Words per Page",
+				"Typical Printed Page Count"
+			],
+			"bookTrimRows": [
+				[
+					"Novel Digest Paperback",
+					"5\" × 8\" trim (11pt Garamond/serif)",
+					"~250 words/page",
+					"200–320 pages (50k–80k words)"
+				],
+				[
+					"Trade Paperback Novel",
+					"5.5\" × 8.5\" trim (industry standard fiction)",
+					"~275 words/page",
+					"250–365 pages (70k–100k words)"
+				],
+				[
+					"Nonfiction / Hardcover Book",
+					"6\" × 9\" trim (wider line measure)",
+					"~300 words/page",
+					"200–335 pages (60k–100k words)"
+				],
+				[
+					"Short Story & Novella",
+					"1,500–7,500 words (Short) / 16,000–40,000 words (Novella)",
+					"~275 words/page",
+					"6–27 pages (Short) / 60–145 pages (Novella)"
+				],
+				[
+					"Epic Fantasy / Sci-Fi Novel",
+					"120,000–250,000+ words",
+					"~300 words/page",
+					"400–835+ pages"
+				],
+				[
+					"AO3 & Web Fiction Chapters",
+					"2,000–5,000 words per chapter (50k–150k full fic)",
+					"~250–275 words/page",
+					"8–20 pages/chapter (180–550 pages full)"
+				]
+			],
+			"s4Title": "Common Word-to-Page Breakdowns & Real-World Book Examples",
+			"s4Intro": "Students, writers, and editors frequently search for exact page counts at specific word milestones. Below are direct breakdowns using standard 12-point Times New Roman formatting (1-inch margins), followed by real-world word and page counts from well-known books and speeches.",
+			"milestonesTitle": "Direct Answers for Popular Word & Page Milestones",
+			"milestonesItems": [
+				"<strong class=\"font-semibold text-ink\">How many pages is 500 words?</strong> <strong class=\"font-semibold text-ink\">500 words</strong> equals <strong class=\"font-semibold text-ink\">1.0 page single-spaced</strong> or <strong class=\"font-semibold text-ink\">2.0 pages double-spaced</strong>—the classic length of a high school 5-paragraph essay, scholarship statement, or short blog post.",
+				"<strong class=\"font-semibold text-ink\">How many pages is 1,000 words?</strong> <strong class=\"font-semibold text-ink\">1,000 words</strong> equals <strong class=\"font-semibold text-ink\">2.0 pages single-spaced</strong> or <strong class=\"font-semibold text-ink\">4.0 pages double-spaced</strong> (about 3.6 pages in 11pt Calibri). Most undergraduate response papers fall into this range.",
+				"<strong class=\"font-semibold text-ink\">How many pages is 1,500 words?</strong> <strong class=\"font-semibold text-ink\">1,500 words</strong> equals <strong class=\"font-semibold text-ink\">3.0 pages single-spaced</strong> or <strong class=\"font-semibold text-ink\">6.0 pages double-spaced</strong>—a standard length for college argumentative essays and in-depth feature articles.",
+				"<strong class=\"font-semibold text-ink\">How many words is 7 pages?</strong> <strong class=\"font-semibold text-ink\">7 pages</strong> equals <strong class=\"font-semibold text-ink\">1,750 words double-spaced</strong> (at 250 words per page) or <strong class=\"font-semibold text-ink\">3,500 words single-spaced</strong> (at 500 words per page), and roughly <strong class=\"font-semibold text-ink\">1,925 words</strong> in a standard trade paperback.",
+				"<strong class=\"font-semibold text-ink\">How many pages is 2,000 words?</strong> <strong class=\"font-semibold text-ink\">2,000 words</strong> equals <strong class=\"font-semibold text-ink\">4.0 pages single-spaced</strong>, <strong class=\"font-semibold text-ink\">6.0 pages at 1.5 spacing</strong>, or <strong class=\"font-semibold text-ink\">8.0 pages double-spaced</strong>, commonly required for mid-term research papers.",
+				"<strong class=\"font-semibold text-ink\">How many pages is 5,000 words?</strong> <strong class=\"font-semibold text-ink\">5,000 words</strong> equals <strong class=\"font-semibold text-ink\">10.0 pages single-spaced</strong> or <strong class=\"font-semibold text-ink\">20.0 pages double-spaced</strong> (roughly 18 pages in a 5.5\" × 8.5\" paperback), typical for a capstone paper or long-form novelette.",
+				"<strong class=\"font-semibold text-ink\">How many pages is 100,000 words?</strong> <strong class=\"font-semibold text-ink\">100,000 words</strong> equals <strong class=\"font-semibold text-ink\">200 pages single-spaced</strong> or <strong class=\"font-semibold text-ink\">400 pages double-spaced</strong> in manuscript form, and prints at roughly <strong class=\"font-semibold text-ink\">330 to 365 pages</strong> in a standard trade paperback novel.",
+				"<strong class=\"font-semibold text-ink\">How many words is a 300-page book?</strong> A <strong class=\"font-semibold text-ink\">300-page printed novel</strong> typically contains <strong class=\"font-semibold text-ink\">75,000 to 90,000 words</strong> (averaging 250–300 words per page depending on trim size and chapter breaks)."
+			],
+			"realWorldTitle": "Real-World Word Count & Page Count Benchmarks",
+			"realWorldHeaders": [
+				"Title & Format",
+				"Approximate Word Count",
+				"Printed Page Count",
+				"Category"
+			],
+			"realWorldRows": [
+				[
+					"5-Minute Keynote or TED-Style Speech",
+					"~650–750 words (at 130–150 WPM)",
+					"2.5–3 pages (double-spaced)",
+					"Spoken Presentation"
+				],
+				[
+					"Dr. Martin Luther King Jr. — I Have a Dream",
+					"1,667 words",
+					"~6.7 pages (double-spaced)",
+					"Historic Speech"
+				],
+				[
+					"F. Scott Fitzgerald — The Great Gatsby",
+					"47,094 words",
+					"~180 pages (paperback)",
+					"Classic Novel"
+				],
+				[
+					"J.K. Rowling — Harry Potter and the Sorcerer's Stone",
+					"76,944 words",
+					"~309 pages (US paperback)",
+					"Middle-Grade Fantasy"
+				],
+				[
+					"George Orwell — 1984",
+					"88,942 words",
+					"~328 pages (paperback)",
+					"Dystopian Novel"
+				],
+				[
+					"J.R.R. Tolkien — The Hobbit",
+					"95,356 words",
+					"~310 pages (paperback)",
+					"Fantasy Novel"
+				],
+				[
+					"Frank Herbert — Dune",
+					"187,240 words",
+					"~658 pages (trade paperback)",
+					"Epic Sci-Fi Novel"
+				],
+				[
+					"Brandon Sanderson — Words of Radiance",
+					"398,288 words",
+					"~1,088 pages (hardcover)",
+					"Epic Fantasy Novel"
+				]
+			],
+			"s5Title": "How to Use the Words to Pages Converter & Tips to Hit Your Page Target",
+			"stepsTitle": "How to Convert Words to Pages (or Pages to Words) in 3 Steps",
+			"stepsItems": [
+				"<strong class=\"font-semibold text-ink\">Enter a Number or Paste Your Draft:</strong> Type any word count—including shorthand like <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink tabular-nums\">1.5k</code> or <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink tabular-nums\">10k</code>—into the input box, switch to the <strong class=\"font-semibold text-ink\">Pages to words</strong> tab to reverse-calculate from a target page limit, or paste your full draft directly into the text box for an exact word, character, and paragraph count.",
+				"<strong class=\"font-semibold text-ink\">Match Your Document Layout:</strong> Select your line spacing (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Single</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">1.5</code>, or <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Double</code>), font family (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Times New Roman</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Arial</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Calibri</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Georgia</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Verdana</code>, or <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Courier New</code>), font size (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink tabular-nums\">10pt–14pt</code>), paper format (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">US Letter</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">A4</code>, or book trim sizes), and margin width.",
+				"<strong class=\"font-semibold text-ink\">Read Your Instant Document Metrics:</strong> View your exact decimal page count, rounded full pages, double-sided print sheets, silent reading time (238 WPM), and read-aloud speaking time (183 WPM) in the summary bar below—all calculated locally in your browser without uploading your text."
+			],
+			"tipsTitle": "Practical Writing Tips to Hit—or Trim—Your Target Page Count",
+			"tipsItems": [
+				"<strong class=\"font-semibold text-ink\">Need to Expand a Short Draft Without Fluff?</strong> Break dense walls of text into shorter, focused paragraphs, add concrete examples or data citations for every main claim, and include brief transition sentences between sections rather than changing fonts or inflating margins.",
+				"<strong class=\"font-semibold text-ink\">Need to Trim an Over-Length Paper?</strong> Cut redundant qualifier phrases (such as <em>\"in order to\"</em>, <em>\"due to the fact that\"</em>, or <em>\"it is important to note that\"</em>), combine repetitive sentences, and tighten passive constructions into direct active verbs.",
+				"<strong class=\"font-semibold text-ink\">Working with Apple Pages (.pages) Files?</strong> If you drafted in Apple Pages and need an exact word or Microsoft Word count, open the file in Pages and choose <strong class=\"font-semibold text-ink\">File &gt; Export To &gt; Word (.docx)</strong>—then paste the text above to verify how it paginates in Times New Roman or Calibri."
+			],
+			"faqTitle": "Frequently Asked Questions"
+		},
+		"faq": [
+			{
+				"question": "How many words are in 1 page?",
+				"answerHtml": "Under standard formatting (12-point Times New Roman, 1-inch margins, US Letter paper), <strong class=\"font-semibold text-ink\">1 single-spaced page contains about 500 words</strong> and <strong class=\"font-semibold text-ink\">1 double-spaced page contains about 250 words</strong>. In a 5.5\" × 8.5\" trade paperback novel, 1 page averages <strong class=\"font-semibold text-ink\">275 words</strong>."
+			},
+			{
+				"question": "Is 1,000 words 4 pages?",
+				"answerHtml": "Yes—<strong class=\"font-semibold text-ink\">1,000 words equals 4.0 pages double-spaced</strong> using 12-point Times New Roman and 1-inch margins. If your document is single-spaced, 1,000 words equals <strong class=\"font-semibold text-ink\">2.0 pages</strong>, and in 11-point Calibri double-spaced it takes about <strong class=\"font-semibold text-ink\">3.8 pages</strong>."
+			},
+			{
+				"question": "Is 1,500 words 4 or 6 pages?",
+				"answerHtml": "<strong class=\"font-semibold text-ink\">1,500 words is 6.0 pages double-spaced</strong> (at 250 words per page) and <strong class=\"font-semibold text-ink\">3.0 pages single-spaced</strong> (at 500 words per page). At 1.5 line spacing, 1,500 words fills <strong class=\"font-semibold text-ink\">4.5 pages</strong>."
+			},
+			{
+				"question": "How many words is 7 pages?",
+				"answerHtml": "Under standard academic formatting (12-point Times New Roman, 1-inch margins), <strong class=\"font-semibold text-ink\">7 pages is 1,750 words double-spaced</strong> (at 250 words per page) or <strong class=\"font-semibold text-ink\">3,500 words single-spaced</strong> (at 500 words per page). At 1.5 line spacing, 7 pages equals roughly <strong class=\"font-semibold text-ink\">2,310 words</strong>, and in a standard 5.5\" × 8.5\" trade paperback book (~275 words per page), 7 pages is about <strong class=\"font-semibold text-ink\">1,925 words</strong>."
+			},
+			{
+				"question": "Is 5,000 words 20 pages?",
+				"answerHtml": "Yes—<strong class=\"font-semibold text-ink\">5,000 words equals 20.0 pages double-spaced</strong> or <strong class=\"font-semibold text-ink\">10.0 pages single-spaced</strong> in standard academic formatting. Printed in a 5.5\" × 8.5\" paperback book, 5,000 words is roughly <strong class=\"font-semibold text-ink\">18.2 pages</strong>."
+			},
+			{
+				"question": "How many pages is a 70,000-word book?",
+				"answerHtml": "A <strong class=\"font-semibold text-ink\">70,000-word novel</strong> prints at roughly <strong class=\"font-semibold text-ink\">255 pages</strong> in a standard 5.5\" × 8.5\" trade paperback (~275 words/page), <strong class=\"font-semibold text-ink\">280 pages</strong> in a 5\" × 8\" digest paperback (~250 words/page), or <strong class=\"font-semibold text-ink\">233 pages</strong> in a 6\" × 9\" hardcover (~300 words/page)."
+			},
+			{
+				"question": "How many words should a 300-page book be?",
+				"answerHtml": "A <strong class=\"font-semibold text-ink\">300-page printed book</strong> typically contains <strong class=\"font-semibold text-ink\">75,000 to 90,000 words</strong>, depending on trim size, font size, margins, and chapter spacing. Most commercial fiction novels fall squarely within this 300-page benchmark."
+			},
+			{
+				"question": "How many pages is 100,000 words?",
+				"answerHtml": "<strong class=\"font-semibold text-ink\">100,000 words</strong> equals <strong class=\"font-semibold text-ink\">400 pages double-spaced</strong> or <strong class=\"font-semibold text-ink\">200 pages single-spaced</strong> in manuscript format, and prints at <strong class=\"font-semibold text-ink\">333 to 365 pages</strong> in a standard trade paperback novel."
+			},
+			{
+				"question": "Does font choice (Times New Roman vs. Arial vs. Calibri) change page count?",
+				"answerHtml": "Yes. At 12-point double-spaced, <strong class=\"font-semibold text-ink\">Calibri</strong> fits about <strong class=\"font-semibold text-ink\">260 words/page</strong>, <strong class=\"font-semibold text-ink\">Times New Roman</strong> fits <strong class=\"font-semibold text-ink\">250 words/page</strong>, <strong class=\"font-semibold text-ink\">Arial</strong> fits <strong class=\"font-semibold text-ink\">225 words/page</strong>, and monospaced <strong class=\"font-semibold text-ink\">Courier New</strong> fits only <strong class=\"font-semibold text-ink\">180 words/page</strong>—creating up to a 25% difference in total page count."
+			},
+			{
+				"question": "Does A4 paper hold more words per page than US Letter?",
+				"answerHtml": "Yes. Standard <strong class=\"font-semibold text-ink\">A4 paper (210 × 297 mm)</strong> is taller than <strong class=\"font-semibold text-ink\">US Letter (8.5 × 11 in)</strong> and provides roughly <strong class=\"font-semibold text-ink\">6% more printable area</strong> with 1-inch margins, fitting about <strong class=\"font-semibold text-ink\">265 double-spaced words per page</strong> instead of 250."
+			},
+			{
+				"question": "How many words is a 5-minute speech in pages?",
+				"answerHtml": "Spoken at a natural conversational pace of <strong class=\"font-semibold text-ink\">130 to 150 words per minute</strong>, a <strong class=\"font-semibold text-ink\">5-minute speech is 650 to 750 words</strong>, which equals <strong class=\"font-semibold text-ink\">2.6 to 3.0 pages double-spaced</strong> (or 1.3 to 1.5 pages single-spaced)."
+			},
+			{
+				"question": "Do headings, block quotes, and images change my page count?",
+				"answerHtml": "Yes. Word-to-page formulas measure continuous body paragraphs. Chapter headings, bulleted lists, tables, block quotes, title pages, and reference lists add extra vertical whitespace and will increase your final page count by <strong class=\"font-semibold text-ink\">5% to 15%</strong>."
+			},
+			{
+				"question": "Is this Words to Pages Converter free and private?",
+				"answerHtml": "Yes. Wordora's Words to Pages Converter is <strong class=\"font-semibold text-ink\">100% free with no limits or sign-up</strong>, and all word counting and page calculations run locally inside your browser—your text is never uploaded or stored on any server."
+			}
+		]
 	},
 	"wordCounter": {
 		"name": "Word & Character Counter",

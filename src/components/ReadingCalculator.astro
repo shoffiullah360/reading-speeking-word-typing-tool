@@ -1,12 +1,61 @@
 ---
-import { localePath } from '../i18n/ui';
+import { getLocaleFromUrl, getLocalizedPath, useTranslations, type Locale } from '../i18n/ui';
 import { getToolById } from '../config/site';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 
 const speechTool = getToolById('speech-time-calculator');
 const speedTestTool = getToolById('reading-speed-test');
+
+const speechToolName = speechTool ? t(`${speechTool.dictKey}.shortName`) : 'Speech Time Calculator';
+const speedTestToolName = speedTestTool ? t(`${speedTestTool.dictKey}.shortName`) : 'Reading Speed Test';
+
+const clientI18n = {
+	locale,
+	sampleText: t('readingTimeCalculator.client.sampleText'),
+	zeroDuration: t('readingTimeCalculator.client.zeroDuration'),
+	unitMin: t('readingTimeCalculator.client.unitMin'),
+	unitSec: t('readingTimeCalculator.client.unitSec'),
+	wordSingular: t('readingTimeCalculator.client.wordSingular'),
+	wordPlural: t('readingTimeCalculator.client.wordPlural'),
+	charSingular: t('readingTimeCalculator.client.charSingular'),
+	charPlural: t('readingTimeCalculator.client.charPlural'),
+	pagePlural: t('readingTimeCalculator.client.pagePlural'),
+	pasteToCheckLevel: t('readingTimeCalculator.client.pasteToCheckLevel'),
+	syllablesAndLetters: t('readingTimeCalculator.client.syllablesAndLetters'),
+	enterWordCountPrompt: t('readingTimeCalculator.client.enterWordCountPrompt'),
+	estimatedGeneralReading: t('readingTimeCalculator.client.estimatedGeneralReading'),
+	enterPageCountPrompt: t('readingTimeCalculator.client.enterPageCountPrompt'),
+	spacingSingle: t('readingTimeCalculator.client.spacingSingle'),
+	spacingDouble: t('readingTimeCalculator.client.spacingDouble'),
+	spacingPaperback: t('readingTimeCalculator.client.spacingPaperback'),
+	wppDetail: t('readingTimeCalculator.client.wppDetail'),
+	modePaste: t('readingTimeCalculator.client.modePaste'),
+	modeWords: t('readingTimeCalculator.client.modeWords'),
+	modePages: t('readingTimeCalculator.client.modePages'),
+	statusCleared: t('readingTimeCalculator.client.statusCleared'),
+	statusSampleLoaded: t('readingTimeCalculator.client.statusSampleLoaded'),
+	statusInvalidFile: t('readingTimeCalculator.client.statusInvalidFile'),
+	statusLoadedFile: t('readingTimeCalculator.client.statusLoadedFile'),
+	copySummary: t('readingTimeCalculator.client.copySummary'),
+	copied: t('readingTimeCalculator.client.copied'),
+	copyResult: t('readingTimeCalculator.client.copyResult'),
+	difficultyLabels: t.raw<Record<string, string>>('readingTimeCalculator.client.difficultyLabels') ?? {
+		'—': '—',
+		Standard: 'Standard',
+		Easy: 'Easy',
+		Medium: 'Medium',
+		Hard: 'Hard',
+	},
+};
 ---
 
-<section id="calculator" aria-label="Reading Time Calculator and Counter Workspace" class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6">
+<section id="calculator" aria-label={t('readingTimeCalculator.ui.workspaceAria')} class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6">
 	<!-- Main Dual-Column Workspace -->
 	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-x-6 lg:gap-y-5">
 		<!-- Left Column: Multi-Input System (3 Interactive Tabs) -->
@@ -15,7 +64,7 @@ const speedTestTool = getToolById('reading-speed-test');
 			<div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-5 py-3">
 				<div
 					role="tablist"
-					aria-label="Input mode"
+					aria-label={t('readingTimeCalculator.ui.inputModeAria')}
 					class="inline-flex items-center gap-1"
 				>
 					<button
@@ -27,7 +76,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						data-tab="paste"
 						class="calc-tab-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all"
 					>
-						Paste text
+						{t('readingTimeCalculator.ui.tabPaste')}
 					</button>
 					<button
 						type="button"
@@ -38,7 +87,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						data-tab="words"
 						class="calc-tab-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
 					>
-						Word count
+						{t('readingTimeCalculator.ui.tabWords')}
 					</button>
 					<button
 						type="button"
@@ -49,7 +98,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						data-tab="pages"
 						class="calc-tab-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
 					>
-						Pages
+						{t('readingTimeCalculator.ui.tabPages')}
 					</button>
 				</div>
 
@@ -60,7 +109,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						id="btn-load-sample"
 						class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-body transition-colors hover:bg-hairline-soft hover:text-ink"
 					>
-						Sample text
+						{t('readingTimeCalculator.ui.btnSample')}
 					</button>
 					<label
 						for="file-upload-input"
@@ -71,7 +120,7 @@ const speedTestTool = getToolById('reading-speed-test');
 							<polyline points="17 8 12 3 7 8" />
 							<line x1="12" y1="3" x2="12" y2="15" />
 						</svg>
-						Upload .txt
+						{t('readingTimeCalculator.ui.btnUpload')}
 						<input id="file-upload-input" type="file" accept=".txt,text/plain,.md" class="sr-only" />
 					</label>
 					<button
@@ -79,7 +128,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						id="btn-clear-text"
 						class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-vercel-error"
 					>
-						Clear
+						{t('readingTimeCalculator.ui.btnClear')}
 					</button>
 				</div>
 			</div>
@@ -102,33 +151,33 @@ const speedTestTool = getToolById('reading-speed-test');
 						<line x1="12" y1="18" x2="12" y2="12" />
 						<line x1="9" y1="15" x2="15" y2="15" />
 					</svg>
-					<p class="text-[14px] font-medium text-ink">Drop your .txt file here</p>
-					<p class="text-[12px] text-mute">Runs privately in your browser</p>
+					<p class="text-[14px] font-medium text-ink">{t('readingTimeCalculator.ui.dropzoneTitle')}</p>
+					<p class="text-[12px] text-mute">{t('readingTimeCalculator.ui.privacyNote')}</p>
 				</div>
 
-				<label for="reading-textarea" class="sr-only">Paste or type your text to calculate reading time</label>
+				<label for="reading-textarea" class="sr-only">{t('readingTimeCalculator.ui.textareaLabel')}</label>
 				<textarea
 					id="reading-textarea"
 					rows="9"
-					placeholder="Paste or type your text here, or drag and drop a .txt file..."
+					placeholder={t('readingTimeCalculator.ui.textareaPlaceholder')}
 					class="w-full flex-1 resize-y bg-transparent font-sans text-[15px] leading-[24px] text-ink placeholder:text-faint focus:outline-none"
 				></textarea>
 
 				<!-- Bottom Status Bar inside Paste Panel -->
 				<div class="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-hairline pt-2.5 text-[13px] text-mute">
 					<div class="flex flex-wrap items-center gap-4 tabular-nums">
-						<span>Words: <strong id="inline-word-counter" class="font-medium text-ink">0</strong></span>
-						<span>Characters: <strong id="inline-char-counter" class="font-medium text-ink">0</strong></span>
-						<span>Without spaces: <strong id="inline-char-nospace-counter" class="font-medium text-ink">0</strong></span>
-						<span>Paragraphs: <strong id="inline-para-counter" class="font-medium text-ink">0</strong></span>
+						<span>{t('readingTimeCalculator.ui.wordsLabel')} <strong id="inline-word-counter" class="font-medium text-ink">0</strong></span>
+						<span>{t('readingTimeCalculator.ui.charsLabel')} <strong id="inline-char-counter" class="font-medium text-ink">0</strong></span>
+						<span>{t('readingTimeCalculator.ui.withoutSpacesLabel')} <strong id="inline-char-nospace-counter" class="font-medium text-ink">0</strong></span>
+						<span>{t('readingTimeCalculator.ui.paragraphsLabel')} <strong id="inline-para-counter" class="font-medium text-ink">0</strong></span>
 					</div>
 					<div class="flex flex-wrap items-center gap-3">
 						<span id="inline-mini-counter" class="text-[12px] text-mute tabular-nums">
-							0 words · 0 characters
+							{t('readingTimeCalculator.ui.initialMiniCounter')}
 						</span>
 						<span class="text-hairline" aria-hidden="true">·</span>
 						<span id="file-status-msg" class="text-[12px] text-mute">
-							Runs privately in your browser
+							{t('readingTimeCalculator.ui.privacyNote')}
 						</span>
 					</div>
 				</div>
@@ -143,10 +192,10 @@ const speedTestTool = getToolById('reading-speed-test');
 			>
 				<div>
 					<label for="direct-word-input" class="block text-[15px] font-medium text-ink">
-						Enter word count
+						{t('readingTimeCalculator.ui.enterWordCount')}
 					</label>
 					<p class="mt-1 mb-3.5 text-[14px] text-body">
-						Type the word count of your article, book chapter, or script to see how long it takes to read.
+						{t('readingTimeCalculator.ui.enterWordCountSub')}
 					</p>
 
 					<div class="relative flex items-center">
@@ -160,14 +209,14 @@ const speedTestTool = getToolById('reading-speed-test');
 							class="w-full rounded-sm border border-hairline bg-canvas px-4 py-2.5 text-[20px] font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 						/>
 						<span class="pointer-events-none absolute right-4 text-[14px] text-mute">
-							words
+							{t('readingTimeCalculator.ui.wordsUnit')}
 						</span>
 					</div>
 
 					<!-- Quick Word Count Presets -->
 					<div class="mt-4">
 						<span class="mb-2 block text-[13px] font-medium text-mute">
-							Quick word counts
+							{t('readingTimeCalculator.ui.quickWordCounts')}
 						</span>
 						<div class="flex flex-wrap gap-2">
 							<button
@@ -175,35 +224,35 @@ const speedTestTool = getToolById('reading-speed-test');
 								data-word-preset="300"
 								class="word-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								300 words
+								{t('readingTimeCalculator.ui.nWords', { count: (300).toLocaleString(locale) })}
 							</button>
 							<button
 								type="button"
 								data-word-preset="500"
 								class="word-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								500 words
+								{t('readingTimeCalculator.ui.nWords', { count: (500).toLocaleString(locale) })}
 							</button>
 							<button
 								type="button"
 								data-word-preset="1000"
 								class="word-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								1,000 words
+								{t('readingTimeCalculator.ui.nWords', { count: (1000).toLocaleString(locale) })}
 							</button>
 							<button
 								type="button"
 								data-word-preset="1500"
 								class="word-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-3 py-1.5 text-[13px] font-medium text-on-primary tabular-nums transition-colors"
 							>
-								1,500 words
+								{t('readingTimeCalculator.ui.nWords', { count: (1500).toLocaleString(locale) })}
 							</button>
 							<button
 								type="button"
 								data-word-preset="2500"
 								class="word-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								2,500 words
+								{t('readingTimeCalculator.ui.nWords', { count: (2500).toLocaleString(locale) })}
 							</button>
 						</div>
 					</div>
@@ -211,12 +260,12 @@ const speedTestTool = getToolById('reading-speed-test');
 
 				<div class="mt-5 space-y-2 border-t border-hairline pt-3.5 text-[14px]">
 					<div class="flex items-center justify-between">
-						<span class="text-body">Single-spaced pages (500 words/page)</span>
-						<strong id="words-to-single-pages" class="font-medium text-ink tabular-nums">3.0 pages</strong>
+						<span class="text-body">{t('readingTimeCalculator.ui.singleSpacedLabel')}</span>
+						<strong id="words-to-single-pages" class="font-medium text-ink tabular-nums">{t('readingTimeCalculator.ui.nPages', { count: '3.0' })}</strong>
 					</div>
 					<div class="flex items-center justify-between">
-						<span class="text-body">Double-spaced pages (250 words/page)</span>
-						<strong id="words-to-double-pages" class="font-medium text-ink tabular-nums">6.0 pages</strong>
+						<span class="text-body">{t('readingTimeCalculator.ui.doubleSpacedLabel')}</span>
+						<strong id="words-to-double-pages" class="font-medium text-ink tabular-nums">{t('readingTimeCalculator.ui.nPages', { count: '6.0' })}</strong>
 					</div>
 				</div>
 			</div>
@@ -230,16 +279,16 @@ const speedTestTool = getToolById('reading-speed-test');
 			>
 				<div>
 					<label for="pages-count-input" class="block text-[15px] font-medium text-ink">
-						Convert pages to reading time
+						{t('readingTimeCalculator.ui.convertPagesTitle')}
 					</label>
 					<p class="mt-1 mb-3.5 text-[14px] text-body">
-						Estimate total words and reading time based on standard page density or paperback format.
+						{t('readingTimeCalculator.ui.convertPagesSub')}
 					</p>
 
 					<div class="space-y-4">
 						<div>
 							<label for="pages-count-input" class="mb-1.5 block text-[13px] font-medium text-mute">
-								Number of pages
+								{t('readingTimeCalculator.ui.numberOfPages')}
 							</label>
 							<div class="relative flex items-center">
 								<input
@@ -252,16 +301,16 @@ const speedTestTool = getToolById('reading-speed-test');
 									class="w-full rounded-sm border border-hairline bg-canvas px-4 py-2.5 text-[20px] font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 								/>
 								<span class="pointer-events-none absolute right-3.5 text-[13px] text-mute">
-									pages
+									{t('readingTimeCalculator.ui.pagesUnit')}
 								</span>
 							</div>
 						</div>
 
 						<div>
 							<span class="mb-1.5 block text-[13px] font-medium text-mute">
-								Line spacing / page density
+								{t('readingTimeCalculator.ui.lineSpacingLabel')}
 							</span>
-							<div class="grid grid-cols-3 gap-2" role="group" aria-label="Page Line Spacing">
+							<div class="grid grid-cols-3 gap-2" role="group" aria-label={t('readingTimeCalculator.ui.lineSpacingAria')}>
 								<button
 									type="button"
 									id="spacing-btn-single"
@@ -269,8 +318,8 @@ const speedTestTool = getToolById('reading-speed-test');
 									data-wpp="500"
 									class="spacing-option-btn flex cursor-pointer flex-col items-start rounded-sm border border-primary bg-primary p-2.5 text-left text-on-primary transition-all"
 								>
-									<span class="text-[13px] font-semibold">Single spaced</span>
-									<span class="text-[12px] opacity-80 tabular-nums">500 words/page</span>
+									<span class="text-[13px] font-semibold">{t('readingTimeCalculator.ui.singleSpaced')}</span>
+									<span class="text-[12px] opacity-80 tabular-nums">{t('readingTimeCalculator.ui.wpp500')}</span>
 								</button>
 								<button
 									type="button"
@@ -279,8 +328,8 @@ const speedTestTool = getToolById('reading-speed-test');
 									data-wpp="250"
 									class="spacing-option-btn flex cursor-pointer flex-col items-start rounded-sm border border-hairline bg-canvas p-2.5 text-left text-ink transition-all hover:border-ink"
 								>
-									<span class="text-[13px] font-semibold">Double spaced</span>
-									<span class="text-[12px] text-mute tabular-nums">250 words/page</span>
+									<span class="text-[13px] font-semibold">{t('readingTimeCalculator.ui.doubleSpaced')}</span>
+									<span class="text-[12px] text-mute tabular-nums">{t('readingTimeCalculator.ui.wpp250')}</span>
 								</button>
 								<button
 									type="button"
@@ -289,8 +338,8 @@ const speedTestTool = getToolById('reading-speed-test');
 									data-wpp="300"
 									class="spacing-option-btn flex cursor-pointer flex-col items-start rounded-sm border border-hairline bg-canvas p-2.5 text-left text-ink transition-all hover:border-ink"
 								>
-									<span class="text-[13px] font-semibold">Paperback</span>
-									<span class="text-[12px] text-mute tabular-nums">300 words/page</span>
+									<span class="text-[13px] font-semibold">{t('readingTimeCalculator.ui.paperback')}</span>
+									<span class="text-[12px] text-mute tabular-nums">{t('readingTimeCalculator.ui.wpp300')}</span>
 								</button>
 							</div>
 						</div>
@@ -299,7 +348,7 @@ const speedTestTool = getToolById('reading-speed-test');
 					<!-- Quick Page Presets -->
 					<div class="mt-4">
 						<span class="mb-2 block text-[13px] font-medium text-mute">
-							Quick page counts
+							{t('readingTimeCalculator.ui.quickPageCounts')}
 						</span>
 						<div class="flex flex-wrap gap-2">
 							<button
@@ -307,56 +356,56 @@ const speedTestTool = getToolById('reading-speed-test');
 								data-page-preset="1"
 								class="page-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								1 page
+								{t('readingTimeCalculator.ui.onePage')}
 							</button>
 							<button
 								type="button"
 								data-page-preset="2"
 								class="page-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								2 pages
+								{t('readingTimeCalculator.ui.nPages', { count: 2 })}
 							</button>
 							<button
 								type="button"
 								data-page-preset="5"
 								class="page-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-3 py-1.5 text-[13px] font-medium text-on-primary tabular-nums transition-colors"
 							>
-								5 pages
+								{t('readingTimeCalculator.ui.nPages', { count: 5 })}
 							</button>
 							<button
 								type="button"
 								data-page-preset="10"
 								class="page-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								10 pages
+								{t('readingTimeCalculator.ui.nPages', { count: 10 })}
 							</button>
 							<button
 								type="button"
 								data-page-preset="20"
 								class="page-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								20 pages
+								{t('readingTimeCalculator.ui.nPages', { count: 20 })}
 							</button>
 							<button
 								type="button"
 								data-page-preset="50"
 								class="page-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								50 pages
+								{t('readingTimeCalculator.ui.nPages', { count: 50 })}
 							</button>
 							<button
 								type="button"
 								data-page-preset="100"
 								class="page-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								100 pages
+								{t('readingTimeCalculator.ui.nPages', { count: 100 })}
 							</button>
 							<button
 								type="button"
 								data-page-preset="300"
 								class="page-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 							>
-								300 pages
+								{t('readingTimeCalculator.ui.nPages', { count: 300 })}
 							</button>
 						</div>
 					</div>
@@ -364,13 +413,13 @@ const speedTestTool = getToolById('reading-speed-test');
 
 				<div class="mt-5 border-t border-hairline pt-3.5">
 					<div class="flex items-center justify-between text-[14px]">
-						<span class="text-body">Estimated word count</span>
+						<span class="text-body">{t('readingTimeCalculator.ui.estimatedWordCount')}</span>
 						<strong id="pages-derived-words" class="text-[15px] font-semibold text-ink tabular-nums">
-							2,500 words
+							{t('readingTimeCalculator.ui.nWords', { count: (2500).toLocaleString(locale) })}
 						</strong>
 					</div>
 					<p class="mt-1 text-[13px] text-mute">
-						Based on <span id="pages-wpp-label" class="tabular-nums">500</span> words per page.
+						{t('readingTimeCalculator.ui.basedOnWppBefore')}<span id="pages-wpp-label" class="tabular-nums">500</span>{t('readingTimeCalculator.ui.basedOnWppAfter')}
 					</p>
 				</div>
 			</div>
@@ -382,7 +431,7 @@ const speedTestTool = getToolById('reading-speed-test');
 			<div class="p-4 sm:p-5">
 				<div class="flex items-baseline justify-between gap-2">
 					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
-						Silent reading speed
+						{t('readingTimeCalculator.ui.silentSpeedTitle')}
 					</h2>
 					<div class="flex items-baseline gap-1 text-ink tabular-nums">
 						<span id="silent-wpm-display" class="text-[17px] font-semibold">238</span>
@@ -391,7 +440,7 @@ const speedTestTool = getToolById('reading-speed-test');
 				</div>
 
 				<div class="my-3">
-					<label for="silent-wpm-slider" class="sr-only">Silent reading speed in words per minute (100 to 400)</label>
+					<label for="silent-wpm-slider" class="sr-only">{t('readingTimeCalculator.ui.silentSliderAria')}</label>
 					<input
 						id="silent-wpm-slider"
 						type="range"
@@ -402,9 +451,9 @@ const speedTestTool = getToolById('reading-speed-test');
 						class="geist-slider"
 					/>
 					<div class="mt-1 flex justify-between text-[12px] text-mute">
-						<span>Slow</span>
-						<span>Average</span>
-						<span>Fast</span>
+						<span>{t('readingTimeCalculator.ui.speedSlow')}</span>
+						<span>{t('readingTimeCalculator.ui.speedAverage')}</span>
+						<span>{t('readingTimeCalculator.ui.speedFast')}</span>
 					</div>
 				</div>
 
@@ -414,7 +463,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						data-silent-preset="130"
 						class="silent-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-2 text-center transition-all hover:border-ink"
 					>
-						<span class="block text-[12px] font-medium text-ink">Slow</span>
+						<span class="block text-[12px] font-medium text-ink">{t('readingTimeCalculator.ui.speedSlow')}</span>
 						<span class="text-[11px] text-mute tabular-nums">130 WPM</span>
 					</button>
 					<button
@@ -422,7 +471,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						data-silent-preset="238"
 						class="silent-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-2.5 py-2 text-center text-on-primary transition-all"
 					>
-						<span class="block text-[12px] font-medium">Average</span>
+						<span class="block text-[12px] font-medium">{t('readingTimeCalculator.ui.speedAverage')}</span>
 						<span class="text-[11px] opacity-80 tabular-nums">238 WPM</span>
 					</button>
 					<button
@@ -430,7 +479,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						data-silent-preset="300"
 						class="silent-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-2 text-center transition-all hover:border-ink"
 					>
-						<span class="block text-[12px] font-medium text-ink">Fast</span>
+						<span class="block text-[12px] font-medium text-ink">{t('readingTimeCalculator.ui.speedFast')}</span>
 						<span class="text-[11px] text-mute tabular-nums">300 WPM</span>
 					</button>
 					<button
@@ -438,7 +487,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						data-silent-preset="400"
 						class="silent-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-2 text-center transition-all hover:border-ink"
 					>
-						<span class="block text-[12px] font-medium text-ink">Skimming</span>
+						<span class="block text-[12px] font-medium text-ink">{t('readingTimeCalculator.ui.speedSkimming')}</span>
 						<span class="text-[11px] text-mute tabular-nums">400 WPM</span>
 					</button>
 				</div>
@@ -448,7 +497,7 @@ const speedTestTool = getToolById('reading-speed-test');
 			<div class="p-4 sm:p-5">
 				<div class="flex items-baseline justify-between gap-2">
 					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
-						Read aloud speed
+						{t('readingTimeCalculator.ui.aloudSpeedTitle')}
 					</h2>
 					<div class="flex items-baseline gap-1 text-ink tabular-nums">
 						<span id="speaking-wpm-display" class="text-[17px] font-semibold">183</span>
@@ -457,7 +506,7 @@ const speedTestTool = getToolById('reading-speed-test');
 				</div>
 
 				<div class="my-3">
-					<label for="speaking-wpm-slider" class="sr-only">Read aloud speed in words per minute (100 to 300)</label>
+					<label for="speaking-wpm-slider" class="sr-only">{t('readingTimeCalculator.ui.aloudSliderAria')}</label>
 					<input
 						id="speaking-wpm-slider"
 						type="range"
@@ -468,9 +517,9 @@ const speedTestTool = getToolById('reading-speed-test');
 						class="geist-slider"
 					/>
 					<div class="mt-1 flex justify-between text-[12px] text-mute">
-						<span>Slow</span>
-						<span>Average</span>
-						<span>Fast</span>
+						<span>{t('readingTimeCalculator.ui.speedSlow')}</span>
+						<span>{t('readingTimeCalculator.ui.speedAverage')}</span>
+						<span>{t('readingTimeCalculator.ui.speedFast')}</span>
 					</div>
 				</div>
 
@@ -480,7 +529,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						data-speaking-preset="100"
 						class="speaking-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-2 text-center transition-all hover:border-ink"
 					>
-						<span class="block text-[12px] font-medium text-ink">Slow</span>
+						<span class="block text-[12px] font-medium text-ink">{t('readingTimeCalculator.ui.speedSlow')}</span>
 						<span class="text-[11px] text-mute tabular-nums">100 WPM</span>
 					</button>
 					<button
@@ -488,7 +537,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						data-speaking-preset="183"
 						class="speaking-preset-btn cursor-pointer rounded-sm border border-primary bg-primary px-2.5 py-2 text-center text-on-primary transition-all"
 					>
-						<span class="block text-[12px] font-medium">Average</span>
+						<span class="block text-[12px] font-medium">{t('readingTimeCalculator.ui.speedAverage')}</span>
 						<span class="text-[11px] opacity-80 tabular-nums">183 WPM</span>
 					</button>
 					<button
@@ -496,7 +545,7 @@ const speedTestTool = getToolById('reading-speed-test');
 						data-speaking-preset="300"
 						class="speaking-preset-btn cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-2 text-center transition-all hover:border-ink"
 					>
-						<span class="block text-[12px] font-medium text-ink">Fast</span>
+						<span class="block text-[12px] font-medium text-ink">{t('readingTimeCalculator.ui.speedFast')}</span>
 						<span class="text-[11px] text-mute tabular-nums">300 WPM</span>
 					</button>
 				</div>
@@ -509,7 +558,7 @@ const speedTestTool = getToolById('reading-speed-test');
 			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
 				<div class="flex items-center justify-between gap-2">
 					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
-						Silent reading time
+						{t('readingTimeCalculator.ui.statSilentTime')}
 					</span>
 					<span
 						id="badge-silent-wpm"
@@ -524,11 +573,11 @@ const speedTestTool = getToolById('reading-speed-test');
 						aria-live="polite"
 						class="block font-sans text-xl leading-[28px] font-semibold tracking-[-1px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[32px] lg:text-[28px] dark:text-ink"
 					>
-						0 min 0 sec
+						{t('readingTimeCalculator.client.zeroDuration')}
 					</output>
 				</div>
 				<p id="metric-silent-sub" class="text-[12px] text-[#e2f5ee]/80 dark:text-mute">
-					Average adult reading pace
+					{t('readingTimeCalculator.ui.statSilentSub')}
 				</p>
 			</article>
 
@@ -536,7 +585,7 @@ const speedTestTool = getToolById('reading-speed-test');
 			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
 				<div class="flex items-center justify-between gap-2">
 					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
-						Read aloud time
+						{t('readingTimeCalculator.ui.statAloudTime')}
 					</span>
 					<span
 						id="badge-speaking-wpm"
@@ -551,11 +600,11 @@ const speedTestTool = getToolById('reading-speed-test');
 						aria-live="polite"
 						class="block font-sans text-xl leading-[28px] font-semibold tracking-[-1px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[32px] lg:text-[28px] dark:text-ink"
 					>
-						0 min 0 sec
+						{t('readingTimeCalculator.client.zeroDuration')}
 					</output>
 				</div>
 				<p id="metric-speaking-sub" class="text-[12px] text-[#e2f5ee]/80 dark:text-mute">
-					Natural speaking pace
+					{t('readingTimeCalculator.ui.statAloudSub')}
 				</p>
 			</article>
 
@@ -563,13 +612,13 @@ const speedTestTool = getToolById('reading-speed-test');
 			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
 				<div class="flex items-center justify-between gap-2">
 					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
-						Word &amp; character count
+						{t('readingTimeCalculator.ui.statWordCharCount')}
 					</span>
 					<span
 						id="badge-active-mode"
 						class="text-[12px] text-[#afe3d0]/80 dark:text-mute"
 					>
-						Text input
+						{t('readingTimeCalculator.client.modePaste')}
 					</span>
 				</div>
 				<div class="my-1.5 flex items-baseline gap-2">
@@ -580,15 +629,15 @@ const speedTestTool = getToolById('reading-speed-test');
 					>
 						0
 					</output>
-					<span class="text-[14px] text-[#e2f5ee] dark:text-body">words</span>
+					<span class="text-[14px] text-[#e2f5ee] dark:text-body">{t('readingTimeCalculator.ui.wordsUnit')}</span>
 				</div>
 				<div>
 					<div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-[#e2f5ee]/85 sm:gap-4 dark:text-mute">
-						<span><strong id="metric-char-count" class="font-semibold text-white tabular-nums dark:text-ink">0</strong> characters</span>
-						<span><strong id="metric-sentence-count" class="font-semibold text-white tabular-nums dark:text-ink">0</strong> sentences</span>
+						<span><strong id="metric-char-count" class="font-semibold text-white tabular-nums dark:text-ink">0</strong> {t('readingTimeCalculator.ui.charactersUnit')}</span>
+						<span><strong id="metric-sentence-count" class="font-semibold text-white tabular-nums dark:text-ink">0</strong> {t('readingTimeCalculator.ui.sentencesUnit')}</span>
 					</div>
 					<p id="metric-count-estimated-note" class="mt-0.5 hidden text-[11px] text-[#e2f5ee]/75 dark:text-mute">
-						Estimated from word count
+						{t('readingTimeCalculator.ui.estimatedFromWords')}
 					</p>
 				</div>
 			</article>
@@ -597,7 +646,7 @@ const speedTestTool = getToolById('reading-speed-test');
 			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
 				<div class="flex items-center justify-between gap-2">
 					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
-						Reading level
+						{t('readingTimeCalculator.ui.statReadingLevel')}
 					</span>
 					<span
 						id="difficulty-dot"
@@ -615,7 +664,7 @@ const speedTestTool = getToolById('reading-speed-test');
 					</output>
 				</div>
 				<p id="metric-difficulty-detail" class="text-[12px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-					Paste text to check reading level
+					{t('readingTimeCalculator.client.pasteToCheckLevel')}
 				</p>
 			</article>
 		</div>
@@ -623,52 +672,52 @@ const speedTestTool = getToolById('reading-speed-test');
 
 	<!-- Related Tools Note (Clean Inline Bar, Protected Against Draft Links) -->
 	<aside
-		aria-label="Related reading and speech tools"
+		aria-label={t('readingTimeCalculator.ui.relatedToolsAria')}
 		class="mt-4 flex flex-col items-start justify-between gap-3 pt-1 text-[14px] text-body sm:flex-row sm:items-center"
 	>
 		<p class="leading-[22px]">
-			Timing a speech or presentation instead? Try our{' '}
+			{t('readingTimeCalculator.ui.relatedBeforeSpeech')}
 			{
 				speechTool?.status === 'live' ? (
 					<a
-						href={localePath(speechTool.slug, Astro.url)}
+						href={getLocalizedPath(speechTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{speechTool.shortName}
+						{speechToolName}
 					</a>
 				) : (
 					<span
 						aria-disabled="true"
 						class="inline-flex items-center gap-1.5 font-medium text-ink"
 					>
-						<span>{speechTool?.shortName ?? 'Speech Time Calculator'}</span>
+						<span>{speechToolName}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
-			}{' '}
-			or check your personal reading speed with the{' '}
+			}
+			{t('readingTimeCalculator.ui.relatedBetweenTools')}
 			{
 				speedTestTool?.status === 'live' ? (
 					<a
-						href={localePath(speedTestTool.slug, Astro.url)}
+						href={getLocalizedPath(speedTestTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{speedTestTool.shortName}
+						{speedTestToolName}
 					</a>
 				) : (
 					<span
 						aria-disabled="true"
 						class="inline-flex items-center gap-1.5 font-medium text-ink"
 					>
-						<span>{speedTestTool?.shortName ?? 'Reading Speed Test'}</span>
+						<span>{speedTestToolName}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
-			}.
+			}{t('readingTimeCalculator.ui.relatedAfterTools')}
 		</p>
 		<div class="flex shrink-0 flex-wrap items-center gap-3">
 			<button
@@ -676,21 +725,122 @@ const speedTestTool = getToolById('reading-speed-test');
 				id="btn-copy-result"
 				class="cursor-pointer rounded-sm border border-[#5ec4a3] bg-[#afe3d0] px-3.5 py-1.5 text-[13px] font-semibold text-[#0f2e26] transition-all hover:bg-[#c5eedf] dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:border-ink dark:hover:bg-hairline-soft"
 			>
-				Copy result
+				{t('readingTimeCalculator.ui.btnCopyResult')}
 			</button>
 			<button
 				type="button"
 				data-quick-action="speech-mode"
 				class="cursor-pointer text-[13px] font-medium text-body underline decoration-hairline underline-offset-4 transition-colors hover:text-ink"
 			>
-				Reset read aloud to 183 WPM
+				{t('readingTimeCalculator.ui.btnResetAloud')}
 			</button>
 		</div>
 	</aside>
 </section>
 
+<script type="application/json" id="rtc-i18n" set:html={JSON.stringify(clientI18n).replace(/</g, '\\u003c')} />
+
 <script>
+	interface RtcClientI18n {
+		locale: string;
+		sampleText: string;
+		zeroDuration: string;
+		unitMin: string;
+		unitSec: string;
+		wordSingular: string;
+		wordPlural: string;
+		charSingular: string;
+		charPlural: string;
+		pagePlural: string;
+		pasteToCheckLevel: string;
+		syllablesAndLetters: string;
+		enterWordCountPrompt: string;
+		estimatedGeneralReading: string;
+		enterPageCountPrompt: string;
+		spacingSingle: string;
+		spacingDouble: string;
+		spacingPaperback: string;
+		wppDetail: string;
+		modePaste: string;
+		modeWords: string;
+		modePages: string;
+		statusCleared: string;
+		statusSampleLoaded: string;
+		statusInvalidFile: string;
+		statusLoadedFile: string;
+		copySummary: string;
+		copied: string;
+		copyResult: string;
+		difficultyLabels: Record<string, string>;
+	}
+
 	function initReadingCalculator() {
+		const fallbackI18n: RtcClientI18n = {
+			locale: 'en',
+			sampleText: `Good writing is a transaction of time. Every sentence asks the reader for a few seconds of attention, and every paragraph must earn the right to lead into the next. When authors, editors, and speakers measure reading time accurately, they respect that reader's attention.
+
+Research in cognitive psychology shows that the average adult reads silent non-fiction at approximately 238 words per minute (WPM). Technical documentation, legal agreements, and academic papers naturally call for a slower, more deliberate pace closer to 180 WPM, while light fiction often flows at 260 to 300 WPM.
+
+When reading aloud—whether delivering a talk, recording a podcast script, or narrating an audiobook—our natural pace shifts to an average of 183 words per minute, leaving room for pauses, breathing, and emphasis.`,
+			zeroDuration: '0 min 0 sec',
+			unitMin: 'min',
+			unitSec: 'sec',
+			wordSingular: 'word',
+			wordPlural: 'words',
+			charSingular: 'character',
+			charPlural: 'characters',
+			pagePlural: 'pages',
+			pasteToCheckLevel: 'Paste text to check reading level',
+			syllablesAndLetters: '{syllables} syllables/word · {letters} letters/word',
+			enterWordCountPrompt: 'Enter a word count',
+			estimatedGeneralReading: 'Estimated for general reading',
+			enterPageCountPrompt: 'Enter a page count',
+			spacingSingle: 'single spaced',
+			spacingDouble: 'double spaced',
+			spacingPaperback: 'paperback',
+			wppDetail: '{wpp} words per page ({spacing})',
+			modePaste: 'Text input',
+			modeWords: 'Word count',
+			modePages: 'Pages',
+			statusCleared: 'Text cleared',
+			statusSampleLoaded: 'Sample article loaded',
+			statusInvalidFile: 'Please upload a .txt or .md file',
+			statusLoadedFile: 'Loaded {filename}',
+			copySummary:
+				'Silent reading: {silent} ({silentWpm} WPM) | Read aloud: {speaking} ({speakingWpm} WPM) | {words} {wordUnit}',
+			copied: 'Copied!',
+			copyResult: 'Copy result',
+			difficultyLabels: {
+				'—': '—',
+				Standard: 'Standard',
+				Easy: 'Easy',
+				Medium: 'Medium',
+				Hard: 'Hard',
+			},
+		};
+
+		let i18n: RtcClientI18n = fallbackI18n;
+		const i18nEl = document.getElementById('rtc-i18n');
+		if (i18nEl?.textContent) {
+			try {
+				const parsed = JSON.parse(i18nEl.textContent) as Partial<RtcClientI18n>;
+				i18n = {
+					...fallbackI18n,
+					...parsed,
+					difficultyLabels: {
+						...fallbackI18n.difficultyLabels,
+						...(parsed.difficultyLabels ?? {}),
+					},
+				};
+			} catch {
+				// Use fallback English strings if JSON fails to parse
+			}
+		}
+
+		function fmt(template: string, vars: Record<string, string | number>): string {
+			return template.replace(/\{(\w+)\}/g, (_, key: string) => String(vars[key] ?? `{${key}}`));
+		}
+
 		// State
 		let activeTab: 'paste' | 'words' | 'pages' = 'paste';
 		let silentWpm = 238;
@@ -756,19 +906,15 @@ const speedTestTool = getToolById('reading-speed-test');
 
 		let currentActiveWords = 0;
 
-		const defaultSampleText = `Good writing is a transaction of time. Every sentence asks the reader for a few seconds of attention, and every paragraph must earn the right to lead into the next. When authors, editors, and speakers measure reading time accurately, they respect that reader's attention.
-
-Research in cognitive psychology shows that the average adult reads silent non-fiction at approximately 238 words per minute (WPM). Technical documentation, legal agreements, and academic papers naturally call for a slower, more deliberate pace closer to 180 WPM, while light fiction often flows at 260 to 300 WPM.
-
-When reading aloud—whether delivering a talk, recording a podcast script, or narrating an audiobook—our natural pace shifts to an average of 183 words per minute, leaving room for pauses, breathing, and emphasis.`;
+		const defaultSampleText = i18n.sampleText;
 
 		// Helper: Format total minutes float into "X min Y sec"
 		function formatDuration(words: number, wpm: number): string {
-			if (words <= 0 || wpm <= 0) return '0 min 0 sec';
+			if (words <= 0 || wpm <= 0) return i18n.zeroDuration;
 			const totalSeconds = Math.round((words / wpm) * 60);
 			const minutes = Math.floor(totalSeconds / 60);
 			const seconds = totalSeconds % 60;
-			return `${minutes.toLocaleString()} min ${seconds} sec`;
+			return `${minutes.toLocaleString(i18n.locale)} ${i18n.unitMin} ${seconds} ${i18n.unitSec}`;
 		}
 
 		// Helper: Count syllables in a word accurately
@@ -861,17 +1007,20 @@ When reading aloud—whether delivering a talk, recording a podcast script, or n
 				difficulty = stats.difficulty;
 
 				if (words === 0) {
-					difficultyDetail = 'Paste text to check reading level';
+					difficultyDetail = i18n.pasteToCheckLevel;
 				} else {
-					difficultyDetail = `${stats.avgSyllables.toFixed(1)} syllables/word · ${stats.avgWordLength.toFixed(1)} letters/word`;
+					difficultyDetail = fmt(i18n.syllablesAndLetters, {
+						syllables: stats.avgSyllables.toFixed(1),
+						letters: stats.avgWordLength.toFixed(1),
+					});
 				}
 
-				if (inlineWordCounter) inlineWordCounter.textContent = words.toLocaleString();
-				if (inlineCharCounter) inlineCharCounter.textContent = stats.charsTotal.toLocaleString();
-				if (inlineCharNoSpaceCounter) inlineCharNoSpaceCounter.textContent = stats.charsNoSpaces.toLocaleString();
-				if (inlineParaCounter) inlineParaCounter.textContent = stats.paragraphs.toLocaleString();
+				if (inlineWordCounter) inlineWordCounter.textContent = words.toLocaleString(i18n.locale);
+				if (inlineCharCounter) inlineCharCounter.textContent = stats.charsTotal.toLocaleString(i18n.locale);
+				if (inlineCharNoSpaceCounter) inlineCharNoSpaceCounter.textContent = stats.charsNoSpaces.toLocaleString(i18n.locale);
+				if (inlineParaCounter) inlineParaCounter.textContent = stats.paragraphs.toLocaleString(i18n.locale);
 				if (inlineMiniCounter) {
-					inlineMiniCounter.textContent = `${words.toLocaleString()} ${words === 1 ? 'word' : 'words'} · ${stats.charsTotal.toLocaleString()} ${stats.charsTotal === 1 ? 'character' : 'characters'}`;
+					inlineMiniCounter.textContent = `${words.toLocaleString(i18n.locale)} ${words === 1 ? i18n.wordSingular : i18n.wordPlural} · ${stats.charsTotal.toLocaleString(i18n.locale)} ${stats.charsTotal === 1 ? i18n.charSingular : i18n.charPlural}`;
 				}
 			} else if (activeTab === 'words') {
 				const val = directWordInput ? parseInt(directWordInput.value, 10) : 0;
@@ -880,13 +1029,13 @@ When reading aloud—whether delivering a talk, recording a podcast script, or n
 				sentences = Math.max(0, Math.round(words / 18));
 				difficulty = words === 0 ? '—' : 'Standard';
 				difficultyDetail =
-					words === 0 ? 'Enter a word count' : 'Estimated for general reading';
+					words === 0 ? i18n.enterWordCountPrompt : i18n.estimatedGeneralReading;
 
 				if (wordsToSinglePages) {
-					wordsToSinglePages.textContent = `${(words / 500).toFixed(1)} pages`;
+					wordsToSinglePages.textContent = `${(words / 500).toFixed(1)} ${i18n.pagePlural}`;
 				}
 				if (wordsToDoublePages) {
-					wordsToDoublePages.textContent = `${(words / 250).toFixed(1)} pages`;
+					wordsToDoublePages.textContent = `${(words / 250).toFixed(1)} ${i18n.pagePlural}`;
 				}
 			} else if (activeTab === 'pages') {
 				const pgVal = pagesCountInput ? parseFloat(pagesCountInput.value) : 0;
@@ -897,17 +1046,17 @@ When reading aloud—whether delivering a talk, recording a podcast script, or n
 				difficulty = words === 0 ? '—' : 'Standard';
 				const spacingLabel =
 					pageSpacingWpp === 500
-						? 'single spaced'
+						? i18n.spacingSingle
 						: pageSpacingWpp === 250
-							? 'double spaced'
-							: 'paperback';
+							? i18n.spacingDouble
+							: i18n.spacingPaperback;
 				difficultyDetail =
 					words === 0
-						? 'Enter a page count'
-						: `${pageSpacingWpp} words per page (${spacingLabel})`;
+						? i18n.enterPageCountPrompt
+						: fmt(i18n.wppDetail, { wpp: pageSpacingWpp, spacing: spacingLabel });
 
 				if (pagesDerivedWords) {
-					pagesDerivedWords.textContent = `${words.toLocaleString()} words`;
+					pagesDerivedWords.textContent = `${words.toLocaleString(i18n.locale)} ${words === 1 ? i18n.wordSingular : i18n.wordPlural}`;
 				}
 				if (pagesWppLabel) {
 					pagesWppLabel.textContent = String(pageSpacingWpp);
@@ -924,19 +1073,19 @@ When reading aloud—whether delivering a talk, recording a podcast script, or n
 				metricSpeakingTime.textContent = formatDuration(words, speakingWpm);
 			}
 			if (metricWordCount) {
-				metricWordCount.textContent = words.toLocaleString();
+				metricWordCount.textContent = words.toLocaleString(i18n.locale);
 			}
 			if (metricCharCount) {
-				metricCharCount.textContent = chars.toLocaleString();
+				metricCharCount.textContent = chars.toLocaleString(i18n.locale);
 			}
 			if (metricSentenceCount) {
-				metricSentenceCount.textContent = sentences.toLocaleString();
+				metricSentenceCount.textContent = sentences.toLocaleString(i18n.locale);
 			}
 			if (metricCountEstimatedNote) {
 				metricCountEstimatedNote.classList.toggle('hidden', activeTab === 'paste');
 			}
 			if (metricDifficultyBadge) {
-				metricDifficultyBadge.textContent = difficulty;
+				metricDifficultyBadge.textContent = i18n.difficultyLabels[difficulty] ?? difficulty;
 			}
 			if (metricDifficultyDetail) {
 				metricDifficultyDetail.textContent = difficultyDetail;
@@ -1026,7 +1175,7 @@ When reading aloud—whether delivering a talk, recording a podcast script, or n
 
 			if (badgeActiveMode) {
 				badgeActiveMode.textContent =
-					targetTab === 'paste' ? 'Text input' : targetTab === 'words' ? 'Word count' : 'Pages';
+					targetTab === 'paste' ? i18n.modePaste : targetTab === 'words' ? i18n.modeWords : i18n.modePages;
 			}
 
 			updateAllMetrics();
@@ -1046,7 +1195,7 @@ When reading aloud—whether delivering a talk, recording a podcast script, or n
 			if (textarea) {
 				textarea.value = '';
 				textarea.focus();
-				if (fileStatusMsg) fileStatusMsg.textContent = 'Text cleared';
+				if (fileStatusMsg) fileStatusMsg.textContent = i18n.statusCleared;
 				updateAllMetrics();
 			}
 		});
@@ -1054,7 +1203,7 @@ When reading aloud—whether delivering a talk, recording a podcast script, or n
 		btnLoadSample?.addEventListener('click', () => {
 			if (textarea) {
 				textarea.value = defaultSampleText;
-				if (fileStatusMsg) fileStatusMsg.textContent = 'Sample article loaded';
+				if (fileStatusMsg) fileStatusMsg.textContent = i18n.statusSampleLoaded;
 				updateAllMetrics();
 			}
 		});
@@ -1069,7 +1218,7 @@ When reading aloud—whether delivering a talk, recording a podcast script, or n
 
 			if (!isText) {
 				if (fileStatusMsg) {
-					fileStatusMsg.textContent = 'Please upload a .txt or .md file';
+					fileStatusMsg.textContent = i18n.statusInvalidFile;
 				}
 				return;
 			}
@@ -1083,7 +1232,7 @@ When reading aloud—whether delivering a talk, recording a podcast script, or n
 					else updateAllMetrics();
 				}
 				if (fileStatusMsg) {
-					fileStatusMsg.textContent = `Loaded ${file.name}`;
+					fileStatusMsg.textContent = fmt(i18n.statusLoadedFile, { filename: file.name });
 				}
 			};
 			reader.readAsText(file);
@@ -1253,15 +1402,22 @@ When reading aloud—whether delivering a talk, recording a podcast script, or n
 		btnCopyResult?.addEventListener('click', async () => {
 			const silentStr = formatDuration(currentActiveWords, silentWpm);
 			const speakingStr = formatDuration(currentActiveWords, speakingWpm);
-			const summaryText = `Silent reading: ${silentStr} (${silentWpm} WPM) | Read aloud: ${speakingStr} (${speakingWpm} WPM) | ${currentActiveWords.toLocaleString()} ${currentActiveWords === 1 ? 'word' : 'words'}`;
+			const summaryText = fmt(i18n.copySummary, {
+				silent: silentStr,
+				silentWpm,
+				speaking: speakingStr,
+				speakingWpm,
+				words: currentActiveWords.toLocaleString(i18n.locale),
+				wordUnit: currentActiveWords === 1 ? i18n.wordSingular : i18n.wordPlural,
+			});
 
 			try {
 				await navigator.clipboard.writeText(summaryText);
 				if (btnCopyResult) {
-					btnCopyResult.textContent = 'Copied!';
+					btnCopyResult.textContent = i18n.copied;
 					if (copyResetTimer) clearTimeout(copyResetTimer);
 					copyResetTimer = setTimeout(() => {
-						if (btnCopyResult) btnCopyResult.textContent = 'Copy result';
+						if (btnCopyResult) btnCopyResult.textContent = i18n.copyResult;
 					}, 1800);
 				}
 			} catch {

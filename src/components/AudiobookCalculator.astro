@@ -1,15 +1,38 @@
 ---
-import { localePath } from '../i18n/ui';
+import { getLocaleFromUrl, getLocalizedPath, useTranslations, type Locale } from '../i18n/ui';
 import { getToolById } from '../config/site';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 
 const readingCounterTool = getToolById('reading-time-calculator');
 const speedTestTool = getToolById('reading-speed-test');
 const wordsToPagesTool = getToolById('words-to-pages');
+
+interface WordsPreset {
+	words: number;
+	label: string;
+}
+
+interface DurationPreset {
+	hours: number;
+	minutes: number;
+	label: string;
+}
+
+const wordsPresets = t.raw<WordsPreset[]>('audiobookCalculator.ui.wordsPresets') ?? [];
+const durationPresets = t.raw<DurationPreset[]>('audiobookCalculator.ui.durationPresets') ?? [];
+const popularBooks = t.raw<DurationPreset[]>('audiobookCalculator.ui.popularBooks') ?? [];
+const clientI18n = t.raw<Record<string, string>>('audiobookCalculator.client') ?? {};
 ---
 
 <section
 	id="audiobook-calculator-workspace"
-	aria-label="Audiobook Speed and Listening Time Calculator Workspace"
+	aria-label={t('audiobookCalculator.ui.workspaceAriaLabel')}
 	class="mx-auto max-w-[1140px] px-4 pt-4 pb-14 sm:px-6"
 >
 	<!-- Unified 2-Column Split-Studio Card (Matching SpeechCalculator.astro) -->
@@ -21,7 +44,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<div class="flex flex-wrap items-center justify-between gap-3">
 					<div
 						role="tablist"
-						aria-label="Audiobook input mode"
+						aria-label={t('audiobookCalculator.ui.inputModeAriaLabel')}
 						class="inline-flex flex-wrap rounded-full border border-hairline bg-canvas p-1"
 					>
 						<button
@@ -33,7 +56,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							data-mode="length"
 							class="ab-mode-btn cursor-pointer rounded-full bg-[#afe3d0] px-4 py-1.5 text-[13px] font-semibold text-[#0f2e26] transition-all"
 						>
-							By Length
+							{t('audiobookCalculator.ui.modeByLength')}
 						</button>
 						<button
 							type="button"
@@ -44,7 +67,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							data-mode="words"
 							class="ab-mode-btn cursor-pointer rounded-full bg-transparent px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink"
 						>
-							By Words
+							{t('audiobookCalculator.ui.modeByWords')}
 						</button>
 						<button
 							type="button"
@@ -55,7 +78,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							data-mode="remaining"
 							class="ab-mode-btn cursor-pointer rounded-full bg-transparent px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink"
 						>
-							Remaining
+							{t('audiobookCalculator.ui.modeRemaining')}
 						</button>
 					</div>
 				</div>
@@ -69,17 +92,17 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				>
 					<div>
 						<h2 class="text-[14px] font-medium text-ink">
-							Audiobook duration (at 1.0x speed)
+							{t('audiobookCalculator.ui.lengthTitle')}
 						</h2>
 						<p class="mt-0.5 text-[13px] text-mute">
-							Enter the hours, minutes, and seconds of your audiobook.
+							{t('audiobookCalculator.ui.lengthSubtitle')}
 						</p>
 					</div>
 
 					<div class="grid grid-cols-3 gap-3">
 						<div>
 							<label for="ab-hours-input" class="mb-1.5 block text-[12px] font-medium text-mute">
-								Hours
+								{t('audiobookCalculator.ui.hoursLabel')}
 							</label>
 							<div class="relative flex items-center">
 								<input
@@ -92,14 +115,14 @@ const wordsToPagesTool = getToolById('words-to-pages');
 									class="w-full rounded-2xl border border-hairline bg-canvas px-3.5 py-3 pr-9 text-[22px] font-semibold text-ink tabular-nums focus:border-[#0f2e26] focus:bg-canvas-elevated focus:outline-none dark:focus:border-[#afe3d0]"
 								/>
 								<span class="pointer-events-none absolute right-3.5 text-[12px] text-mute">
-									hr
+									{t('audiobookCalculator.ui.unitHr')}
 								</span>
 							</div>
 						</div>
 
 						<div>
 							<label for="ab-minutes-input" class="mb-1.5 block text-[12px] font-medium text-mute">
-								Minutes
+								{t('audiobookCalculator.ui.minutesLabel')}
 							</label>
 							<div class="relative flex items-center">
 								<input
@@ -112,14 +135,14 @@ const wordsToPagesTool = getToolById('words-to-pages');
 									class="w-full rounded-2xl border border-hairline bg-canvas px-3.5 py-3 pr-11 text-[22px] font-semibold text-ink tabular-nums focus:border-[#0f2e26] focus:bg-canvas-elevated focus:outline-none dark:focus:border-[#afe3d0]"
 								/>
 								<span class="pointer-events-none absolute right-3.5 text-[12px] text-mute">
-									min
+									{t('audiobookCalculator.ui.unitMin')}
 								</span>
 							</div>
 						</div>
 
 						<div>
 							<label for="ab-seconds-input" class="mb-1.5 block text-[12px] font-medium text-mute">
-								Seconds
+								{t('audiobookCalculator.ui.secondsLabel')}
 							</label>
 							<div class="relative flex items-center">
 								<input
@@ -132,7 +155,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 									class="w-full rounded-2xl border border-hairline bg-canvas px-3.5 py-3 pr-11 text-[22px] font-semibold text-ink tabular-nums focus:border-[#0f2e26] focus:bg-canvas-elevated focus:outline-none dark:focus:border-[#afe3d0]"
 								/>
 								<span class="pointer-events-none absolute right-3.5 text-[12px] text-mute">
-									sec
+									{t('audiobookCalculator.ui.unitSec')}
 								</span>
 							</div>
 						</div>
@@ -149,10 +172,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 					<div class="flex flex-wrap items-baseline justify-between gap-2">
 						<div>
 							<label for="ab-words-input" class="block text-[14px] font-medium text-ink">
-								Total book word count
+								{t('audiobookCalculator.ui.wordsTitle')}
 							</label>
 							<p class="mt-0.5 text-[13px] text-mute">
-								Estimated at standard audiobook narration (~155 WPM).
+								{t('audiobookCalculator.ui.wordsSubtitle')}
 							</p>
 						</div>
 					</div>
@@ -168,24 +191,18 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							class="w-full rounded-2xl border border-hairline bg-canvas px-4 py-3 pr-16 text-[22px] font-semibold text-ink tabular-nums focus:border-[#0f2e26] focus:bg-canvas-elevated focus:outline-none dark:focus:border-[#afe3d0]"
 						/>
 						<span class="pointer-events-none absolute right-4 text-[12px] text-mute">
-							words
+							{t('audiobookCalculator.ui.unitWords')}
 						</span>
 					</div>
 
 					<!-- Common Book Word Count Presets -->
 					<div>
 						<span class="mb-2 block text-[12px] font-medium text-mute">
-							Common book word counts
+							{t('audiobookCalculator.ui.wordsPresetsLabel')}
 						</span>
 						<div class="flex flex-wrap gap-1.5">
 							{
-								[
-									{ words: 40000, label: '40,000 words (Novella)' },
-									{ words: 65000, label: '65,000 words (Non-fiction)' },
-									{ words: 90000, label: '90,000 words (Novel)' },
-									{ words: 120000, label: '120,000 words (Long novel)' },
-									{ words: 180000, label: '180,000 words (Epic)' },
-								].map((preset) => (
+								wordsPresets.map((preset) => (
 									<button
 										type="button"
 										data-words-preset={preset.words}
@@ -208,17 +225,17 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				>
 					<div>
 						<h2 class="text-[14px] font-medium text-ink">
-							Track how much listening you have left
+							{t('audiobookCalculator.ui.remainingTitle')}
 						</h2>
 						<p class="mt-0.5 text-[13px] text-mute">
-							Enter total length along with elapsed time, remaining time, or percentage completed.
+							{t('audiobookCalculator.ui.remainingSubtitle')}
 						</p>
 					</div>
 
 					<div class="space-y-3.5">
 						<div>
 							<span class="mb-1.5 block text-[12px] font-medium text-mute">
-								Total length
+								{t('audiobookCalculator.ui.totalLengthLabel')}
 							</span>
 							<div class="grid grid-cols-3 gap-2.5">
 								<div class="relative flex items-center">
@@ -229,10 +246,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 										max="500"
 										step="1"
 										value="0"
-										aria-label="Total length hours"
+										aria-label={t('audiobookCalculator.ui.totalHoursAria')}
 										class="w-full rounded-xl border border-hairline bg-canvas px-3 py-2 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 									/>
-									<span class="pointer-events-none absolute right-3 text-[12px] text-mute">hr</span>
+									<span class="pointer-events-none absolute right-3 text-[12px] text-mute">{t('audiobookCalculator.ui.unitHr')}</span>
 								</div>
 								<div class="relative flex items-center">
 									<input
@@ -242,10 +259,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 										max="59"
 										step="1"
 										value="0"
-										aria-label="Total length minutes"
+										aria-label={t('audiobookCalculator.ui.totalMinutesAria')}
 										class="w-full rounded-xl border border-hairline bg-canvas px-3 py-2 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 									/>
-									<span class="pointer-events-none absolute right-3 text-[12px] text-mute">min</span>
+									<span class="pointer-events-none absolute right-3 text-[12px] text-mute">{t('audiobookCalculator.ui.unitMin')}</span>
 								</div>
 								<div class="relative flex items-center">
 									<input
@@ -255,10 +272,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 										max="59"
 										step="1"
 										value="0"
-										aria-label="Total length seconds"
+										aria-label={t('audiobookCalculator.ui.totalSecondsAria')}
 										class="w-full rounded-xl border border-hairline bg-canvas px-3 py-2 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 									/>
-									<span class="pointer-events-none absolute right-3 text-[12px] text-mute">sec</span>
+									<span class="pointer-events-none absolute right-3 text-[12px] text-mute">{t('audiobookCalculator.ui.unitSec')}</span>
 								</div>
 							</div>
 						</div>
@@ -266,7 +283,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
 							<div>
 								<span class="mb-1.5 block text-[12px] font-medium text-mute">
-									Elapsed time (already listened)
+									{t('audiobookCalculator.ui.elapsedLabel')}
 								</span>
 								<div class="grid grid-cols-3 gap-2">
 									<div class="relative flex items-center">
@@ -277,10 +294,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											max="500"
 											step="1"
 											value="0"
-											aria-label="Already listened hours"
+											aria-label={t('audiobookCalculator.ui.listenedHoursAria')}
 											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-7 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
-										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">hr</span>
+										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">{t('audiobookCalculator.ui.unitHr')}</span>
 									</div>
 									<div class="relative flex items-center">
 										<input
@@ -290,10 +307,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											max="59"
 											step="1"
 											value="0"
-											aria-label="Already listened minutes"
+											aria-label={t('audiobookCalculator.ui.listenedMinutesAria')}
 											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-8 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
-										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">min</span>
+										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">{t('audiobookCalculator.ui.unitMin')}</span>
 									</div>
 									<div class="relative flex items-center">
 										<input
@@ -303,17 +320,17 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											max="59"
 											step="1"
 											value="0"
-											aria-label="Already listened seconds"
+											aria-label={t('audiobookCalculator.ui.listenedSecondsAria')}
 											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-8 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
-										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">sec</span>
+										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">{t('audiobookCalculator.ui.unitSec')}</span>
 									</div>
 								</div>
 							</div>
 
 							<div>
 								<span class="mb-1.5 block text-[12px] font-medium text-mute">
-									Remaining time (at 1.0x)
+									{t('audiobookCalculator.ui.remainingTimeLabel')}
 								</span>
 								<div class="grid grid-cols-3 gap-2">
 									<div class="relative flex items-center">
@@ -324,10 +341,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											max="500"
 											step="1"
 											value="0"
-											aria-label="Remaining hours"
+											aria-label={t('audiobookCalculator.ui.remainingHoursAria')}
 											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-7 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
-										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">hr</span>
+										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">{t('audiobookCalculator.ui.unitHr')}</span>
 									</div>
 									<div class="relative flex items-center">
 										<input
@@ -337,10 +354,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											max="59"
 											step="1"
 											value="0"
-											aria-label="Remaining minutes"
+											aria-label={t('audiobookCalculator.ui.remainingMinutesAria')}
 											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-8 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
-										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">min</span>
+										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">{t('audiobookCalculator.ui.unitMin')}</span>
 									</div>
 									<div class="relative flex items-center">
 										<input
@@ -350,10 +367,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											max="59"
 											step="1"
 											value="0"
-											aria-label="Remaining seconds"
+											aria-label={t('audiobookCalculator.ui.remainingSecondsAria')}
 											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-8 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
-										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">sec</span>
+										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">{t('audiobookCalculator.ui.unitSec')}</span>
 									</div>
 								</div>
 							</div>
@@ -363,7 +380,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<div class="rounded-2xl border border-hairline bg-canvas p-4">
 							<div class="flex flex-wrap items-center justify-between gap-2">
 								<label for="ab-pct-completed-input" class="text-[12px] font-medium text-body">
-									Percentage completed (%)
+									{t('audiobookCalculator.ui.pctCompletedLabel')}
 								</label>
 								<div class="flex items-center gap-2">
 									<div class="relative flex w-28 items-center">
@@ -382,7 +399,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 										id="ab-pct-remaining-badge"
 										class="rounded-full bg-hairline-soft px-2.5 py-0.5 text-[11px] font-medium text-ink tabular-nums"
 									>
-										0.0% left
+										{t('audiobookCalculator.ui.initialPctLeft')}
 									</span>
 								</div>
 							</div>
@@ -395,14 +412,14 @@ const wordsToPagesTool = getToolById('words-to-pages');
 									max="100"
 									step="0.1"
 									value="0"
-									aria-label="Percentage completed slider"
+									aria-label={t('audiobookCalculator.ui.pctSliderAria')}
 									class="geist-slider"
 								/>
 							</div>
 
 							<div class="mt-2.5 flex flex-wrap items-center justify-between gap-2">
 								<span class="text-[11px] font-medium text-mute">
-									Quick percentage presets
+									{t('audiobookCalculator.ui.pctPresetsLabel')}
 								</span>
 								<div class="flex flex-wrap gap-1.5">
 									{
@@ -423,15 +440,15 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<!-- Live Progress Bar & Remaining Time -->
 						<div class="rounded-2xl border border-hairline bg-canvas p-4">
 							<div class="mb-1.5 flex items-baseline justify-between gap-2">
-								<span class="text-[12px] font-medium text-body">Listening progress</span>
+								<span class="text-[12px] font-medium text-body">{t('audiobookCalculator.ui.listeningProgressLabel')}</span>
 								<span id="ab-progress-pct" class="text-[13px] font-semibold text-ink tabular-nums">
-									0.0% completed · 0.0% left
+									{t('audiobookCalculator.ui.initialProgressPct')}
 								</span>
 							</div>
 							<div
 								id="ab-progress-track"
 								role="progressbar"
-								aria-label="Audiobook listening progress"
+								aria-label={t('audiobookCalculator.ui.progressBarAria')}
 								aria-valuemin="0"
 								aria-valuemax="100"
 								aria-valuenow="0"
@@ -440,8 +457,8 @@ const wordsToPagesTool = getToolById('words-to-pages');
 								<div id="ab-progress-fill" class="h-full rounded-full bg-[#0f2e26] transition-all dark:bg-[#afe3d0]" style="width: 0%"></div>
 							</div>
 							<div class="mt-1.5 flex flex-wrap items-baseline justify-between gap-1 text-[11px] text-mute tabular-nums">
-								<span id="ab-progress-listened">0 hr 0 min listened</span>
-								<span id="ab-progress-remaining" class="font-medium text-ink">0 hr 0 min remaining</span>
+								<span id="ab-progress-listened">{t('audiobookCalculator.ui.initialListened')}</span>
+								<span id="ab-progress-remaining" class="font-medium text-ink">{t('audiobookCalculator.ui.initialRemaining')}</span>
 							</div>
 						</div>
 					</div>
@@ -451,7 +468,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<div class="border-t border-hairline pt-6">
 					<div class="mb-3 flex items-baseline justify-between gap-2">
 						<span class="text-[13px] font-medium text-ink">
-							Playback speed
+							{t('audiobookCalculator.ui.playbackSpeedLabel')}
 						</span>
 						<span
 							id="ab-active-speed-display"
@@ -464,7 +481,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 					<!-- Quick Preset Speed Pills (0.75x, 1.0x, 1.25x, 1.5x, 1.75x, 2.0x) -->
 					<div
 						role="group"
-						aria-label="Playback speed presets"
+						aria-label={t('audiobookCalculator.ui.speedPresetsAria')}
 						class="grid grid-cols-3 gap-2 sm:grid-cols-6"
 					>
 						{
@@ -488,7 +505,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 					<div class="mt-4 rounded-2xl border border-hairline bg-canvas px-4 py-3.5">
 						<div class="mb-1.5 flex items-center justify-between">
 							<label for="ab-speed-slider" class="text-[12px] font-medium text-mute">
-								Custom speed slider (0.5x – 3.0x)
+								{t('audiobookCalculator.ui.customSpeedSliderLabel')}
 							</label>
 							<output
 								id="ab-slider-value"
@@ -522,24 +539,17 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<!-- Collapsible 1: Quick Presets -->
 				<details open class="group rounded-2xl border border-hairline bg-canvas px-4 py-3">
 					<summary class="flex cursor-pointer list-none items-center justify-between text-[13px] font-medium text-body transition-colors hover:text-ink">
-						<span>Quick Presets (Common lengths & popular books)</span>
+						<span>{t('audiobookCalculator.ui.quickPresetsSummary')}</span>
 						<span class="inline-block text-[12px] text-mute transition-transform duration-200 group-open:rotate-180">▾</span>
 					</summary>
 					<div class="mt-3.5 space-y-3 border-t border-hairline pt-3.5">
 						<div>
 							<span class="mb-1.5 block text-[12px] font-medium text-mute">
-								Common audiobook lengths
+								{t('audiobookCalculator.ui.commonLengthsLabel')}
 							</span>
 							<div class="flex flex-wrap gap-1.5">
 								{
-									[
-										{ hours: 4, minutes: 0, label: '4 hr (Short book)' },
-										{ hours: 7, minutes: 30, label: '7 hr 30 min' },
-										{ hours: 10, minutes: 0, label: '10 hr (Average)' },
-										{ hours: 14, minutes: 0, label: '14 hr' },
-										{ hours: 20, minutes: 0, label: '20 hr (Biography)' },
-										{ hours: 30, minutes: 0, label: '30 hr (Epic)' },
-									].map((preset) => (
+									durationPresets.map((preset) => (
 										<button
 											type="button"
 											data-hours-preset={preset.hours}
@@ -555,16 +565,11 @@ const wordsToPagesTool = getToolById('words-to-pages');
 
 						<div>
 							<span class="mb-1.5 block text-[12px] font-medium text-mute">
-								Popular books
+								{t('audiobookCalculator.ui.popularBooksLabel')}
 							</span>
 							<div class="flex flex-wrap gap-1.5">
 								{
-									[
-										{ hours: 5, minutes: 35, label: 'Atomic Habits 5h 35m' },
-										{ hours: 11, minutes: 5, label: 'The Hobbit 11h 5m' },
-										{ hours: 21, minutes: 2, label: 'Dune 21h 2m' },
-										{ hours: 45, minutes: 30, label: 'The Way of Kings 45h 30m' },
-									].map((book) => (
+									popularBooks.map((book) => (
 										<button
 											type="button"
 											data-hours-preset={book.hours}
@@ -585,9 +590,9 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<details open class="group rounded-2xl border border-hairline bg-canvas px-4 py-3">
 					<summary class="flex cursor-pointer list-none items-center justify-between text-[13px] font-medium text-body transition-colors hover:text-ink">
 						<div class="flex items-center gap-2">
-							<span>Daily Schedule Planner</span>
+							<span>{t('audiobookCalculator.ui.schedulePlannerSummary')}</span>
 							<span id="ab-schedule-speed-badge" class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] text-mute tabular-nums">
-								At 1.0x speed
+								{t('audiobookCalculator.ui.initialAtSpeed')}
 							</span>
 						</div>
 						<span class="inline-block text-[12px] text-mute transition-transform duration-200 group-open:rotate-180">▾</span>
@@ -596,7 +601,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
 							<div class="rounded-xl border border-hairline bg-canvas-elevated p-3">
 								<label for="ab-daily-minutes" class="mb-1 block text-[12px] font-medium text-body">
-									Minutes per day
+									{t('audiobookCalculator.ui.minutesPerDayLabel')}
 								</label>
 								<div class="relative flex items-center">
 									<input
@@ -609,7 +614,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 										class="w-full rounded-xl border border-hairline bg-canvas px-3 py-1.5 pr-14 text-base font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
 									/>
 									<span class="pointer-events-none absolute right-3 text-[11px] text-mute">
-										min/day
+										{t('audiobookCalculator.ui.unitMinPerDay')}
 									</span>
 								</div>
 								<div class="mt-2 flex flex-wrap gap-1">
@@ -629,7 +634,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 
 							<div class="rounded-xl border border-hairline bg-canvas-elevated p-3">
 								<label for="ab-target-days" class="mb-1 block text-[12px] font-medium text-body">
-									Or set target days to finish
+									{t('audiobookCalculator.ui.targetDaysLabel')}
 								</label>
 								<div class="relative flex items-center">
 									<input
@@ -642,11 +647,11 @@ const wordsToPagesTool = getToolById('words-to-pages');
 										class="w-full rounded-xl border border-hairline bg-canvas px-3 py-1.5 pr-12 text-base font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
 									/>
 									<span class="pointer-events-none absolute right-3 text-[11px] text-mute">
-										days
+										{t('audiobookCalculator.ui.unitDays')}
 									</span>
 								</div>
 								<p id="ab-target-result" class="mt-2 text-[11px] leading-[15px] text-mute tabular-nums">
-									Enter an audiobook length to see your daily goal
+									{t('audiobookCalculator.ui.targetResultPlaceholder')}
 								</p>
 							</div>
 						</div>
@@ -662,13 +667,13 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<div>
 					<div class="flex items-center justify-between gap-2">
 						<span class="text-[12px] font-medium text-[#afe3d0]/80">
-							Adjusted listening time
+							{t('audiobookCalculator.ui.adjustedListeningTimeLabel')}
 						</span>
 						<span
 							id="ab-badge-speed"
 							class="rounded-full border border-[#afe3d0]/25 bg-[#153d33] px-2.5 py-0.5 text-[11px] font-medium text-[#afe3d0] tabular-nums"
 						>
-							At 1.0x speed
+							{t('audiobookCalculator.ui.initialAtSpeed')}
 						</span>
 					</div>
 					<output
@@ -676,10 +681,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						aria-live="polite"
 						class="mt-2 block font-sans text-[42px] leading-[48px] font-semibold tracking-[-1.5px] text-[#afe3d0] tabular-nums sm:text-[48px] sm:leading-[54px]"
 					>
-						0 hr 0 min
+						{t('audiobookCalculator.ui.zeroDuration')}
 					</output>
 					<p id="ab-metric-adjusted-sub" class="mt-2 text-[14px] text-[#d1fae5]/80 tabular-nums">
-						0 total minutes of listening
+						{t('audiobookCalculator.ui.initialTotalMinutes')}
 					</p>
 				</div>
 
@@ -689,13 +694,13 @@ const wordsToPagesTool = getToolById('words-to-pages');
 					<div class="rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/60 p-4">
 						<div class="flex items-center justify-between gap-1.5">
 							<span id="ab-label-saved" class="text-[12px] font-medium text-[#afe3d0]/80">
-								Time saved
+								{t('audiobookCalculator.ui.timeSavedLabel')}
 							</span>
 							<span
 								id="ab-badge-saved-pct"
 								class="text-[11px] text-[#afe3d0]/70 tabular-nums"
 							>
-								Original pace
+								{t('audiobookCalculator.ui.originalPace')}
 							</span>
 						</div>
 						<output
@@ -703,10 +708,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							aria-live="polite"
 							class="mt-1.5 block font-sans text-[22px] leading-[28px] font-semibold text-white tabular-nums"
 						>
-							0 min
+							{t('audiobookCalculator.ui.zeroMin')}
 						</output>
 						<p id="ab-metric-saved-sub" class="mt-1 truncate text-[11px] text-[#d1fae5]/70 tabular-nums">
-							Compared to 0 hr 0 min at 1.0x
+							{t('audiobookCalculator.ui.initialComparedTo')}
 						</p>
 					</div>
 
@@ -714,10 +719,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 					<div class="rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/60 p-4">
 						<div class="flex items-center justify-between gap-1.5">
 							<span class="text-[12px] font-medium text-[#afe3d0]/80">
-								Original length
+								{t('audiobookCalculator.ui.originalLengthLabel')}
 							</span>
 							<span id="ab-badge-mode" class="text-[11px] text-[#afe3d0]/70">
-								By length
+								{t('audiobookCalculator.ui.badgeModeLength')}
 							</span>
 						</div>
 						<output
@@ -725,10 +730,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							aria-live="polite"
 							class="mt-1.5 block font-sans text-[22px] leading-[28px] font-semibold text-white tabular-nums"
 						>
-							0 hr 0 min
+							{t('audiobookCalculator.ui.zeroDuration')}
 						</output>
 						<p id="ab-metric-words-est" class="mt-1 truncate text-[11px] text-[#d1fae5]/70 tabular-nums">
-							0 words · 0 pages
+							{t('audiobookCalculator.ui.initialWordsPages')}
 						</p>
 					</div>
 				</div>
@@ -737,7 +742,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<div class="flex items-center justify-between gap-3 rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/60 px-4 py-3">
 					<div>
 						<span class="block text-[12px] font-medium text-[#afe3d0]/80">
-							Daily finish estimate
+							{t('audiobookCalculator.ui.dailyFinishEstimateLabel')}
 						</span>
 						<span id="ab-metric-days-sub" class="text-[11px] text-[#d1fae5]/75 tabular-nums">
 							—
@@ -749,10 +754,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							aria-live="polite"
 							class="block text-[18px] font-semibold text-[#afe3d0] tabular-nums"
 						>
-							0 days
+							{t('audiobookCalculator.ui.zeroDays')}
 						</output>
 						<span id="ab-metric-daily-label" class="text-[11px] text-[#afe3d0]/70 tabular-nums">
-							At 0 min/day
+							{t('audiobookCalculator.ui.initialAtDailyMin')}
 						</span>
 					</div>
 				</div>
@@ -760,7 +765,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				<!-- Collapsible inside Emerald Panel: Compare All Speeds & Schedule Stats -->
 				<details open class="group rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/45 px-4 py-3">
 					<summary class="flex cursor-pointer list-none items-center justify-between text-[13px] font-medium text-[#afe3d0] transition-colors hover:text-white">
-						<span>Compare All Speeds & Schedule Stats</span>
+						<span>{t('audiobookCalculator.ui.compareSpeedsSummary')}</span>
 						<span class="inline-block text-[12px] text-[#afe3d0]/75 transition-transform duration-200 group-open:rotate-180">▾</span>
 					</summary>
 
@@ -768,33 +773,33 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<!-- 6-Speed Comparison Breakdown -->
 						<div>
 							<div class="mb-2 flex items-center justify-between text-[11px] text-[#afe3d0]/75">
-								<span>Speed comparison</span>
-								<span id="ab-comparison-base-badge" class="tabular-nums">For 0 hr 0 min book</span>
+								<span>{t('audiobookCalculator.ui.speedComparisonLabel')}</span>
+								<span id="ab-comparison-base-badge" class="tabular-nums">{t('audiobookCalculator.ui.initialForBook')}</span>
 							</div>
 							<div class="grid grid-cols-2 gap-2 text-[12px]">
 								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
 									<span class="text-[#d1fae5]/80 tabular-nums">1.0x</span>
-									<strong id="ab-comp-100" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+									<strong id="ab-comp-100" class="font-semibold text-white tabular-nums">{t('audiobookCalculator.ui.zeroDuration')}</strong>
 								</div>
 								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
 									<span class="text-[#d1fae5]/80 tabular-nums">1.25x</span>
-									<strong id="ab-comp-125" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+									<strong id="ab-comp-125" class="font-semibold text-white tabular-nums">{t('audiobookCalculator.ui.zeroDuration')}</strong>
 								</div>
 								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
 									<span class="text-[#d1fae5]/80 tabular-nums">1.5x</span>
-									<strong id="ab-comp-150" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+									<strong id="ab-comp-150" class="font-semibold text-white tabular-nums">{t('audiobookCalculator.ui.zeroDuration')}</strong>
 								</div>
 								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
 									<span class="text-[#d1fae5]/80 tabular-nums">1.75x</span>
-									<strong id="ab-comp-175" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+									<strong id="ab-comp-175" class="font-semibold text-white tabular-nums">{t('audiobookCalculator.ui.zeroDuration')}</strong>
 								</div>
 								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
 									<span class="text-[#d1fae5]/80 tabular-nums">2.0x</span>
-									<strong id="ab-comp-200" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+									<strong id="ab-comp-200" class="font-semibold text-white tabular-nums">{t('audiobookCalculator.ui.zeroDuration')}</strong>
 								</div>
 								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
-									<span class="text-[#d1fae5]/80">Silent read</span>
-									<strong id="ab-comp-silent" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+									<span class="text-[#d1fae5]/80">{t('audiobookCalculator.ui.silentReadLabel')}</span>
+									<strong id="ab-comp-silent" class="font-semibold text-white tabular-nums">{t('audiobookCalculator.ui.zeroDuration')}</strong>
 								</div>
 							</div>
 						</div>
@@ -802,29 +807,29 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<!-- Daily Schedule Detailed Breakdown -->
 						<div>
 							<span class="mb-2 block text-[11px] text-[#afe3d0]/75">
-								Daily schedule breakdown
+								{t('audiobookCalculator.ui.dailyScheduleBreakdownLabel')}
 							</span>
 							<div class="grid grid-cols-2 gap-2 text-[12px]">
 								<div class="rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
-									<span class="block text-[11px] text-[#afe3d0]/70">Days to finish</span>
+									<span class="block text-[11px] text-[#afe3d0]/70">{t('audiobookCalculator.ui.daysToFinishLabel')}</span>
 									<strong id="ab-sched-days" class="mt-0.5 block font-semibold text-white tabular-nums">
-										0 days
+										{t('audiobookCalculator.ui.zeroDays')}
 									</strong>
 								</div>
 								<div class="rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
-									<span class="block text-[11px] text-[#afe3d0]/70">Weeks estimate</span>
+									<span class="block text-[11px] text-[#afe3d0]/70">{t('audiobookCalculator.ui.weeksEstimateLabel')}</span>
 									<strong id="ab-sched-weeks" class="mt-0.5 block font-semibold text-white tabular-nums">
 										—
 									</strong>
 								</div>
 								<div class="rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
-									<span class="block text-[11px] text-[#afe3d0]/70">Finish by</span>
+									<span class="block text-[11px] text-[#afe3d0]/70">{t('audiobookCalculator.ui.finishByLabel')}</span>
 									<strong id="ab-sched-finish" class="mt-0.5 block text-[11px] leading-[15px] font-semibold text-white">
 										—
 									</strong>
 								</div>
 								<div class="rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
-									<span class="block text-[11px] text-[#afe3d0]/70">Books / year</span>
+									<span class="block text-[11px] text-[#afe3d0]/70">{t('audiobookCalculator.ui.booksPerYearLabel')}</span>
 									<strong id="ab-sched-books" class="mt-0.5 block font-semibold text-white tabular-nums">
 										—
 									</strong>
@@ -842,7 +847,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 					id="ab-btn-copy-result"
 					class="w-full cursor-pointer rounded-2xl border border-[#afe3d0]/40 bg-[#afe3d0] px-5 py-3.5 text-center text-[14px] font-semibold text-[#0f2e26] transition-all hover:bg-[#c5eedf] active:scale-[0.99]"
 				>
-					Copy result
+					{t('audiobookCalculator.ui.copyResult')}
 				</button>
 
 				<div class="mt-3 flex items-center justify-center gap-5 text-[12px] text-[#afe3d0]/75">
@@ -851,7 +856,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						id="ab-btn-copy-link"
 						class="cursor-pointer font-medium transition-colors hover:text-white"
 					>
-						Copy link
+						{t('audiobookCalculator.ui.copyLink')}
 					</button>
 					<span aria-hidden="true" class="text-[#afe3d0]/30">·</span>
 					<button
@@ -859,7 +864,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						id="ab-btn-reset"
 						class="cursor-pointer font-medium transition-colors hover:text-white"
 					>
-						Reset defaults
+						{t('audiobookCalculator.ui.resetDefaults')}
 					</button>
 				</div>
 			</div>
@@ -868,60 +873,58 @@ const wordsToPagesTool = getToolById('words-to-pages');
 
 	<!-- Related Tools Note (Protected Against Draft Links) -->
 	<aside
-		aria-label="Related reading and page tools"
+		aria-label={t('audiobookCalculator.ui.relatedAriaLabel')}
 		class="mt-5 flex flex-col items-start justify-between gap-3 pt-1 text-[14px] text-body sm:flex-row sm:items-center"
 	>
 		<p class="leading-[22px]">
-			Prefer reading on the page? Check your silent pace with the{' '}
+			{t('audiobookCalculator.ui.relatedPrefix')}{' '}
 			{
 				speedTestTool?.status === 'live' ? (
 					<a
-						href={localePath(speedTestTool.slug, Astro.url)}
+						href={getLocalizedPath(speedTestTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{speedTestTool.shortName}
+						{t('readingSpeedTest.shortName')}
 					</a>
 				) : (
 					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-						<span>{speedTestTool?.shortName ?? 'Reading Speed Test'}</span>
+						<span>{t('readingSpeedTest.shortName')}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
-			}
-			, estimate article duration in the{' '}
+			}{t('audiobookCalculator.ui.relatedMid1')}{' '}
 			{
 				readingCounterTool?.status === 'live' ? (
 					<a
-						href={localePath(readingCounterTool.slug, Astro.url)}
+						href={getLocalizedPath(readingCounterTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{readingCounterTool.shortName}
+						{t('readingTimeCalculator.shortName')}
 					</a>
 				) : (
 					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-						<span>{readingCounterTool?.shortName ?? 'Reading Time Counter'}</span>
+						<span>{t('readingTimeCalculator.shortName')}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
-			}
-			, or convert book length with{' '}
+			}{t('audiobookCalculator.ui.relatedMid2')}{' '}
 			{
 				wordsToPagesTool?.status === 'live' ? (
 					<a
-						href={localePath(wordsToPagesTool.slug, Astro.url)}
+						href={getLocalizedPath(wordsToPagesTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{wordsToPagesTool.shortName}
+						{t('wordsToPages.shortName')}
 					</a>
 				) : (
 					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-						<span>{wordsToPagesTool?.shortName ?? 'Words to Pages'}</span>
+						<span>{t('wordsToPages.shortName')}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
@@ -930,8 +933,111 @@ const wordsToPagesTool = getToolById('words-to-pages');
 	</aside>
 </section>
 
+<script type="application/json" id="abc-i18n" set:html={JSON.stringify(clientI18n).replace(/</g, '\\u003c')} />
+
 <script>
+	interface AudiobookClientI18n {
+		dateLocale: string;
+		unitHr: string;
+		unitMin: string;
+		unitSec: string;
+		zeroDuration: string;
+		zeroMin: string;
+		zeroDays: string;
+		oneDay: string;
+		manyDays: string;
+		weeksTemplate: string;
+		pctLeft: string;
+		progressPct: string;
+		listenedDuration: string;
+		remainingDuration: string;
+		atSpeed: string;
+		totalMinutesListening: string;
+		timeSaved: string;
+		timeAdded: string;
+		originalPace: string;
+		pctShorter: string;
+		pctLonger: string;
+		comparedTo: string;
+		standardPace: string;
+		slowerThan: string;
+		badgeModeLength: string;
+		badgeModeWords: string;
+		pctCompletedBadge: string;
+		wordsPagesEst: string;
+		zeroWordsPages: string;
+		atDailyMin: string;
+		dailyFinishesSub: string;
+		setDailyPrompt: string;
+		targetPlaceholder: string;
+		targetGoal: string;
+		targetOver24h: string;
+		forBookBadge: string;
+		copied: string;
+		copyLineLength: string;
+		copyLineSpeed: string;
+		copyLineAdjusted: string;
+		copyLineDiff: string;
+		copyLineEstimate: string;
+		copyLineSchedule: string;
+	}
+
 	function initAudiobookCalculator() {
+		const i18nEl = document.getElementById('abc-i18n');
+		const i18n: AudiobookClientI18n = i18nEl?.textContent
+			? (JSON.parse(i18nEl.textContent) as AudiobookClientI18n)
+			: {
+					dateLocale: 'en-US',
+					unitHr: 'hr',
+					unitMin: 'min',
+					unitSec: 'sec',
+					zeroDuration: '0 hr 0 min',
+					zeroMin: '0 min',
+					zeroDays: '0 days',
+					oneDay: '1 day',
+					manyDays: '{n} days',
+					weeksTemplate: '~{n} weeks',
+					pctLeft: '{pct}% left',
+					progressPct: '{done}% completed · {left}% left',
+					listenedDuration: '{duration} listened',
+					remainingDuration: '{duration} remaining',
+					atSpeed: 'At {speed} speed',
+					totalMinutesListening: '{n} total minutes of listening',
+					timeSaved: 'Time saved',
+					timeAdded: 'Time added',
+					originalPace: 'Original pace',
+					pctShorter: '{pct}% shorter',
+					pctLonger: '+{pct}% longer',
+					comparedTo: 'Compared to {duration} at 1.0x',
+					standardPace: 'Standard 1.0x narration pace',
+					slowerThan: 'Slower than {duration} at 1.0x',
+					badgeModeLength: 'By length',
+					badgeModeWords: 'By word count',
+					pctCompletedBadge: '{pct}% completed',
+					wordsPagesEst: '~{words} words · ~{pages} pages',
+					zeroWordsPages: '0 words · 0 pages',
+					atDailyMin: 'At {min} min/day',
+					dailyFinishesSub: '{weeks} · finishes {date}',
+					setDailyPrompt: 'Set daily minutes in Schedule Planner',
+					targetPlaceholder: 'Enter an audiobook length to see your daily goal',
+					targetGoal: 'Listen {duration} per day at {speed}',
+					targetOver24h: '{goal} (more than 24 hours a day)',
+					forBookBadge: 'For {duration} book',
+					copied: 'Copied!',
+					copyLineLength: 'Audiobook length: {duration} at 1.0x',
+					copyLineSpeed: 'Playback speed: {speed}',
+					copyLineAdjusted: 'Adjusted listening time: {duration}',
+					copyLineDiff: '{label}: {duration}',
+					copyLineEstimate: 'Estimated length: ~{words} words · ~{pages} pages',
+					copyLineSchedule: 'Daily schedule: {min} min/day → {days} ({weeks}, finishes {date})',
+				};
+
+		const loc = i18n.dateLocale || 'en-US';
+
+		function fmt(template: string, vars: Record<string, string | number>): string {
+			return template.replace(/\{(\w+)\}/g, (_, k: string) => String(vars[k] ?? `{${k}}`));
+		}
+
 		const NARRATION_WPM = 155; // Standard audiobook narration rate (~155 WPM / ~9,300 words per hour)
 		const WORDS_PER_PAGE = 275; // Standard trade book page (~275 words/page)
 		const SILENT_WPM = 238;
@@ -1084,30 +1190,30 @@ const wordsToPagesTool = getToolById('words-to-pages');
 		function formatDuration(totalSeconds: number, includeSeconds = true): string {
 			const { hours, minutes, seconds } = splitSeconds(totalSeconds);
 			if (hours === 0 && minutes === 0 && seconds === 0) {
-				return '0 hr 0 min';
+				return i18n.zeroDuration;
 			}
 			const parts: string[] = [];
 			if (hours > 0) {
-				parts.push(`${hours.toLocaleString()} hr`);
-				parts.push(`${minutes} min`);
-				if (includeSeconds && seconds > 0) parts.push(`${seconds} sec`);
+				parts.push(`${hours.toLocaleString(loc)} ${i18n.unitHr}`);
+				parts.push(`${minutes} ${i18n.unitMin}`);
+				if (includeSeconds && seconds > 0) parts.push(`${seconds} ${i18n.unitSec}`);
 			} else if (minutes > 0) {
-				parts.push(`${minutes} min`);
-				if (includeSeconds && seconds > 0) parts.push(`${seconds} sec`);
+				parts.push(`${minutes} ${i18n.unitMin}`);
+				if (includeSeconds && seconds > 0) parts.push(`${seconds} ${i18n.unitSec}`);
 			} else {
-				parts.push(`${seconds} sec`);
+				parts.push(`${seconds} ${i18n.unitSec}`);
 			}
 			return parts.join(' ');
 		}
 
 		function formatDaysCount(days: number): string {
-			if (days <= 0) return '0 days';
-			return days === 1 ? '1 day' : `${days.toLocaleString()} days`;
+			if (days <= 0) return i18n.zeroDays;
+			return days === 1 ? i18n.oneDay : fmt(i18n.manyDays, { n: days.toLocaleString(loc) });
 		}
 
 		function formatWeeks(days: number): string {
 			if (days <= 0) return '—';
-			return `~${(days / 7).toFixed(1)} weeks`;
+			return fmt(i18n.weeksTemplate, { n: (days / 7).toFixed(1) });
 		}
 
 		function formatFinishDate(days: number, long = false): string {
@@ -1116,14 +1222,14 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			date.setHours(12, 0, 0, 0);
 			date.setDate(date.getDate() + days - 1);
 			if (long) {
-				return date.toLocaleDateString('en-US', {
+				return date.toLocaleDateString(loc, {
 					weekday: 'long',
 					month: 'long',
 					day: 'numeric',
 					year: 'numeric',
 				});
 			}
-			return date.toLocaleDateString('en-US', {
+			return date.toLocaleDateString(loc, {
 				month: 'short',
 				day: 'numeric',
 				year: 'numeric',
@@ -1334,12 +1440,25 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				remainingPctCompleted = pct;
 				remainingPctLeft = pctLeft;
 
-				if (pctRemainingBadge) pctRemainingBadge.textContent = `${pctLeft.toFixed(1)}% left`;
-				if (progressPct) progressPct.textContent = `${pct.toFixed(1)}% completed · ${pctLeft.toFixed(1)}% left`;
+				if (pctRemainingBadge) pctRemainingBadge.textContent = fmt(i18n.pctLeft, { pct: pctLeft.toFixed(1) });
+				if (progressPct) {
+					progressPct.textContent = fmt(i18n.progressPct, {
+						done: pct.toFixed(1),
+						left: pctLeft.toFixed(1),
+					});
+				}
 				if (progressFill) progressFill.style.width = `${pct}%`;
 				if (progressTrack) progressTrack.setAttribute('aria-valuenow', String(Math.round(pct * 10) / 10));
-				if (progressListened) progressListened.textContent = `${formatDuration(listenedSeconds)} listened`;
-				if (progressRemaining) progressRemaining.textContent = `${formatDuration(baseSeconds)} remaining`;
+				if (progressListened) {
+					progressListened.textContent = fmt(i18n.listenedDuration, {
+						duration: formatDuration(listenedSeconds),
+					});
+				}
+				if (progressRemaining) {
+					progressRemaining.textContent = fmt(i18n.remainingDuration, {
+						duration: formatDuration(baseSeconds),
+					});
+				}
 			}
 
 			const adjustedSeconds = playbackSpeed > 0 ? baseSeconds / playbackSpeed : 0;
@@ -1354,40 +1473,48 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			current.totalWords = totalWords;
 
 			// Stat 1: Adjusted listening time
-			if (badgeSpeed) badgeSpeed.textContent = `At ${speedStr} speed`;
+			if (badgeSpeed) badgeSpeed.textContent = fmt(i18n.atSpeed, { speed: speedStr });
 			if (metricAdjustedTime) metricAdjustedTime.textContent = adjustedFormatted;
 			if (metricAdjustedSub) {
 				if (mode === 'remaining') {
-					metricAdjustedSub.textContent = `${remainingPctCompleted.toFixed(1)}% completed · ${remainingPctLeft.toFixed(1)}% left`;
+					metricAdjustedSub.textContent = fmt(i18n.progressPct, {
+						done: remainingPctCompleted.toFixed(1),
+						left: remainingPctLeft.toFixed(1),
+					});
 				} else {
-					metricAdjustedSub.textContent = `${Math.round(adjustedSeconds / 60).toLocaleString()} total minutes of listening`;
+					metricAdjustedSub.textContent = fmt(i18n.totalMinutesListening, {
+						n: Math.round(adjustedSeconds / 60).toLocaleString(loc),
+					});
 				}
 			}
 
 			// Stat 2: Time saved or added
 			if (baseSeconds <= 0 || Math.abs(playbackSpeed - 1.0) < 0.001) {
-				if (labelSaved) labelSaved.textContent = 'Time saved';
+				if (labelSaved) labelSaved.textContent = i18n.timeSaved;
 				if (badgeSavedPct) {
-					badgeSavedPct.textContent = Math.abs(playbackSpeed - 1.0) < 0.001 ? 'Original pace' : '0% shorter';
+					badgeSavedPct.textContent =
+						Math.abs(playbackSpeed - 1.0) < 0.001 ? i18n.originalPace : fmt(i18n.pctShorter, { pct: 0 });
 				}
-				if (metricTimeSaved) metricTimeSaved.textContent = '0 min';
+				if (metricTimeSaved) metricTimeSaved.textContent = i18n.zeroMin;
 				if (metricSavedSub) {
 					metricSavedSub.textContent =
-						baseSeconds <= 0 ? 'Compared to 0 hr 0 min at 1.0x' : 'Standard 1.0x narration pace';
+						baseSeconds <= 0
+							? fmt(i18n.comparedTo, { duration: i18n.zeroDuration })
+							: i18n.standardPace;
 				}
 			} else if (diffSeconds > 0) {
 				const pctSaved = Math.round((diffSeconds / Math.max(1, baseSeconds)) * 100);
-				if (labelSaved) labelSaved.textContent = 'Time saved';
-				if (badgeSavedPct) badgeSavedPct.textContent = `${pctSaved}% shorter`;
+				if (labelSaved) labelSaved.textContent = i18n.timeSaved;
+				if (badgeSavedPct) badgeSavedPct.textContent = fmt(i18n.pctShorter, { pct: pctSaved });
 				if (metricTimeSaved) metricTimeSaved.textContent = formatDuration(diffSeconds);
-				if (metricSavedSub) metricSavedSub.textContent = `Compared to ${baseFormatted} at 1.0x`;
+				if (metricSavedSub) metricSavedSub.textContent = fmt(i18n.comparedTo, { duration: baseFormatted });
 			} else {
 				const addedSeconds = Math.abs(diffSeconds);
 				const pctAdded = Math.round((addedSeconds / Math.max(1, baseSeconds)) * 100);
-				if (labelSaved) labelSaved.textContent = 'Time added';
-				if (badgeSavedPct) badgeSavedPct.textContent = `+${pctAdded}% longer`;
+				if (labelSaved) labelSaved.textContent = i18n.timeAdded;
+				if (badgeSavedPct) badgeSavedPct.textContent = fmt(i18n.pctLonger, { pct: pctAdded });
 				if (metricTimeSaved) metricTimeSaved.textContent = `+${formatDuration(addedSeconds)}`;
-				if (metricSavedSub) metricSavedSub.textContent = `Slower than ${baseFormatted} at 1.0x`;
+				if (metricSavedSub) metricSavedSub.textContent = fmt(i18n.slowerThan, { duration: baseFormatted });
 			}
 
 			// Stat 3: Original 1.0x length
@@ -1395,17 +1522,20 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			if (badgeMode) {
 				badgeMode.textContent =
 					mode === 'length'
-						? 'By length'
+						? i18n.badgeModeLength
 						: mode === 'words'
-							? 'By word count'
-							: `${remainingPctCompleted.toFixed(1)}% completed`;
+							? i18n.badgeModeWords
+							: fmt(i18n.pctCompletedBadge, { pct: remainingPctCompleted.toFixed(1) });
 			}
 			if (metricBaseTime) metricBaseTime.textContent = baseFormatted;
 			if (metricWordsEst) {
 				metricWordsEst.textContent =
 					totalWords > 0
-						? `~${totalWords.toLocaleString()} words · ~${estPages.toLocaleString()} pages`
-						: '0 words · 0 pages';
+						? fmt(i18n.wordsPagesEst, {
+								words: totalWords.toLocaleString(loc),
+								pages: estPages.toLocaleString(loc),
+							})
+						: i18n.zeroWordsPages;
 			}
 
 			// Stat 4 & schedule: custom daily listening minutes
@@ -1419,14 +1549,16 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			current.days = days;
 			current.finishDate = finishLong;
 
-			if (metricDailyLabel) metricDailyLabel.textContent = `At ${dailyMinutes || 0} min/day`;
+			if (metricDailyLabel) metricDailyLabel.textContent = fmt(i18n.atDailyMin, { min: dailyMinutes || 0 });
 			if (metricDailyDays) metricDailyDays.textContent = formatDaysCount(days);
 			if (metricDailySub) {
 				metricDailySub.textContent =
-					days > 0 ? `${formatWeeks(days)} · finishes ${finishShort}` : 'Set daily minutes in Schedule Planner';
+					days > 0
+						? fmt(i18n.dailyFinishesSub, { weeks: formatWeeks(days), date: finishShort })
+						: i18n.setDailyPrompt;
 			}
 
-			if (scheduleSpeedBadge) scheduleSpeedBadge.textContent = `At ${speedStr} speed`;
+			if (scheduleSpeedBadge) scheduleSpeedBadge.textContent = fmt(i18n.atSpeed, { speed: speedStr });
 			if (schedDays) schedDays.textContent = formatDaysCount(days);
 			if (schedWeeks) schedWeeks.textContent = formatWeeks(days);
 			if (schedFinish) schedFinish.textContent = finishLong;
@@ -1437,18 +1569,21 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			const targetDays = targetDaysRaw > 0 ? clamp(targetDaysRaw, 1, 365) : 0;
 			if (targetResult) {
 				if (baseSeconds <= 0 || targetDays <= 0) {
-					targetResult.textContent = 'Enter an audiobook length to see your daily goal';
+					targetResult.textContent = i18n.targetPlaceholder;
 				} else {
 					const neededPerDay = adjustedSeconds / targetDays;
-					const goalText = `Listen ${formatDuration(neededPerDay, false)} per day at ${speedStr}`;
+					const goalText = fmt(i18n.targetGoal, {
+						duration: formatDuration(neededPerDay, false),
+						speed: speedStr,
+					});
 					targetResult.textContent =
-						neededPerDay > 86400 ? `${goalText} (more than 24 hours a day)` : goalText;
+						neededPerDay > 86400 ? fmt(i18n.targetOver24h, { goal: goalText }) : goalText;
 				}
 			}
 
 			// Speed comparison grid
 			if (comparisonBaseBadge) {
-				comparisonBaseBadge.textContent = `For ${baseFormatted} book`;
+				comparisonBaseBadge.textContent = fmt(i18n.forBookBadge, { duration: baseFormatted });
 			}
 			if (comp100) comp100.textContent = formatDuration(baseSeconds / 1.0);
 			if (comp125) comp125.textContent = formatDuration(baseSeconds / 1.25);
@@ -1469,7 +1604,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				btn.dataset.originalLabel = btn.textContent?.trim() ?? '';
 			}
 			const original = btn.dataset.originalLabel;
-			btn.textContent = 'Copied!';
+			btn.textContent = i18n.copied;
 			const existing = copyTimers.get(btn);
 			if (existing) window.clearTimeout(existing);
 			const timer = window.setTimeout(() => {
@@ -1521,19 +1656,27 @@ const wordsToPagesTool = getToolById('words-to-pages');
 
 		function buildResultText(): string {
 			const speedStr = formatSpeedLabel(playbackSpeed);
-			const savedLabel = current.diffSeconds >= 0 ? 'Time saved' : 'Time added';
+			const savedLabel = current.diffSeconds >= 0 ? i18n.timeSaved : i18n.timeAdded;
 			const savedValue = formatDuration(Math.abs(current.diffSeconds));
 			const estPages = Math.round(current.totalWords / WORDS_PER_PAGE);
 			const lines = [
-				`Audiobook length: ${formatDuration(current.baseSeconds)} at 1.0x`,
-				`Playback speed: ${speedStr}`,
-				`Adjusted listening time: ${formatDuration(current.adjustedSeconds)}`,
-				`${savedLabel}: ${savedValue}`,
-				`Estimated length: ~${current.totalWords.toLocaleString()} words · ~${estPages.toLocaleString()} pages`,
+				fmt(i18n.copyLineLength, { duration: formatDuration(current.baseSeconds) }),
+				fmt(i18n.copyLineSpeed, { speed: speedStr }),
+				fmt(i18n.copyLineAdjusted, { duration: formatDuration(current.adjustedSeconds) }),
+				fmt(i18n.copyLineDiff, { label: savedLabel, duration: savedValue }),
+				fmt(i18n.copyLineEstimate, {
+					words: current.totalWords.toLocaleString(loc),
+					pages: estPages.toLocaleString(loc),
+				}),
 			];
 			if (current.days > 0) {
 				lines.push(
-					`Daily schedule: ${current.dailyMinutes} min/day → ${formatDaysCount(current.days)} (~${(current.days / 7).toFixed(1)} weeks, finishes ${current.finishDate})`,
+					fmt(i18n.copyLineSchedule, {
+						min: current.dailyMinutes,
+						days: formatDaysCount(current.days),
+						weeks: formatWeeks(current.days),
+						date: current.finishDate,
+					}),
 				);
 			}
 			lines.push(buildShareUrl());

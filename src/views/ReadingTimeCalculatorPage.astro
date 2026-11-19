@@ -3,89 +3,36 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import ReadingCalculator from "../components/ReadingCalculator.astro";
 import BenchmarkTable from "../components/BenchmarkTable.astro";
-import FAQSection, { type FAQItem } from "../components/FAQSection.astro";
+import FAQSection, { faqItems as defaultFaqItems, type FAQItem } from "../components/FAQSection.astro";
 import Footer from "../components/Footer.astro";
 import { resolveCanonicalUrl } from "../config/site";
-
 import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "../i18n/ui";
+
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
+
+interface LeadItem {
+	lead: string;
+	text: string;
+}
+
+interface WordsGroup {
+	h3: string;
+	items: LeadItem[];
+}
 
 const pageTitle = t("readingTimeCalculator.title");
 const pageDescription = t("readingTimeCalculator.metaDescription");
 const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/reading-time-calculator/", locale));
 
-const faqs: FAQItem[] = [
-	{
-		question: "Can you read 2000 words per minute?",
-		answer:
-			"No, reading 2,000 words per minute with full comprehension is not humanly possible. Eye-tracking studies show that human vision and language processing cap true comprehension around 700 to 900 WPM. Anyone claiming 2,000 WPM is skimming headlines or scanning keywords rather than reading every word.",
-	},
-	{
-		question: "How long is a 2 minute read?",
-		answer:
-			"A 2-minute read is approximately 450 to 500 words at the average adult silent reading speed of 238 WPM (or 600 words for a fast reader at 300 WPM). That equals roughly one single-spaced page or two double-spaced pages—ideal for a concise newsletter or LinkedIn post.",
-	},
-	{
-		question: "How many words is a 3 minute read?",
-		answer:
-			"A 3-minute read is roughly 700 to 750 words for an average adult reader (238 WPM), or about 550 words if read out loud at 183 WPM. Most short blog posts, op-eds, and daily email digests fall right in this 3-minute window.",
-	},
-	{
-		question: "How many words take 7 minutes to read?",
-		answer:
-			"Roughly 1,650 to 1,700 words take 7 minutes to read silently at the average pace of 238 WPM (specifically, 1,666 words). For a faster reader at 300 WPM, a 7-minute read covers about 2,100 words, which matches a detailed tutorial or feature article.",
-	},
-	{
-		question: "How many words take 20 minutes to read?",
-		answer:
-			"At the average adult reading speed of 238 WPM, 4,760 words take 20 minutes to read silently—about 16 pages of a standard paperback novel. A fast reader at 300 WPM can cover 6,000 words (roughly 20 paperback pages) in the same 20 minutes.",
-	},
-	{
-		question: "How many words take 2 minutes to read out loud?",
-		answer:
-			"At the natural read-aloud speed of 183 WPM, 366 words take 2 minutes to read out loud. If you are delivering a deliberate speech or pitch at 150 WPM with pauses, aim for 300 words so you finish comfortably within two minutes.",
-	},
-	{
-		question: "How many words take 5 minutes to read out loud?",
-		answer:
-			"Reading out loud at 183 WPM covers roughly 915 words in 5 minutes. For a 5-minute presentation or wedding toast where you pause for emphasis, 750 words (150 WPM) is the safest target so you never feel rushed.",
-	},
-	{
-		question: "How many words takes 10 minutes to read out loud?",
-		answer:
-			"A 10-minute read-aloud equals about 1,830 words at a natural 183 WPM pace, or 1,500 words at a steady 150 WPM presentation pace. That equals roughly six double-spaced script pages.",
-	},
-	{
-		question: "How many words can I read out loud in 15 minutes?",
-		answer:
-			"You can read approximately 2,745 words out loud in 15 minutes at 183 WPM, or 2,250 words at a relaxed 150 WPM speaking pace. Most 15-minute conference talks and podcast segments fall right between 2,200 and 2,500 words.",
-	},
-	{
-		question: "Is reading 100 pages in 2 hours fast?",
-		answer:
-			"Yes, reading 100 standard paperback pages (~30,000 words) in 2 hours equals 50 pages per hour, or 250 WPM—which is faster than the 238 WPM adult average. If the book has dense pages (400+ words per page), finishing 100 pages in 2 hours puts you at 330+ WPM.",
-	},
-	{
-		question: "Is reading 200 pages in 3 hours good?",
-		answer:
-			"Yes, finishing 200 paperback pages (~60,000 words) in 3 hours equals 67 pages per hour, or 333 WPM. That is roughly 40% faster than the average adult reader and places you in the fast-reader tier.",
-	},
-	{
-		question: "What is the difference between silent reading speed and speaking speed?",
-		answer:
-			"Silent reading averages 238 WPM because your eyes process multiple words at once without moving your vocal cords. Speaking and reading out loud average 183 WPM (and 130–160 WPM for formal presentations) because pronouncing words and pausing for breath naturally take longer.",
-	},
-	{
-		question: "How does the reading level indicator work?",
-		answer:
-			"When you paste text into the calculator, it analyzes average sentence length and syllable count per word to estimate readability (such as Easy, Standard, or Academic). Longer sentences and complex multi-syllable words usually mean readers will spend slightly more time absorbing the text.",
-	},
-	{
-		question: "Is my pasted text or uploaded .txt file kept private?",
-		answer:
-			"Yes, 100%. All word counts, reading time estimates, and readability checks run locally inside your web browser using JavaScript. Your text or uploaded .txt file is never sent to, stored on, or logged by any server.",
-	},
+const faqs: FAQItem[] = t.raw<FAQItem[]>("readingTimeCalculator.faq.items") ?? defaultFaqItems;
+
+const featureList: string[] = t.raw<string[]>("readingTimeCalculator.schema.featureList") ?? [
+	"Real-time silent reading time calculator (100 to 400 WPM, default 238 WPM)",
+	"Read aloud speed timer (100 to 300 WPM, default 183 WPM)",
+	"Multi-input system: Paste Text, Direct Word Count, and Pages Count converter",
+	"Drag-and-drop .txt file reader with 100% client-side privacy",
+	"Dynamic reading difficulty badge based on word length and syllable density",
 ];
 
 const softwareAppSchema = {
@@ -102,18 +49,13 @@ const softwareAppSchema = {
 		priceCurrency: "USD",
 	},
 	description: pageDescription,
-	featureList: [
-		"Real-time silent reading time calculator (100 to 400 WPM, default 238 WPM)",
-		"Read aloud speed timer (100 to 300 WPM, default 183 WPM)",
-		"Multi-input system: Paste Text, Direct Word Count, and Pages Count converter",
-		"Drag-and-drop .txt file reader with 100% client-side privacy",
-		"Dynamic reading difficulty badge based on word length and syllable density",
-	],
+	featureList,
 };
 
 const faqPageSchema = {
 	"@context": "https://schema.org",
 	"@type": "FAQPage",
+	inLanguage: locale,
 	mainEntity: faqs.map((item) => ({
 		"@type": "Question",
 		name: item.question,
@@ -123,6 +65,38 @@ const faqPageSchema = {
 		},
 	})),
 };
+
+const exampleSteps = t.raw<string[]>("readingTimeCalculator.page.howCalculated.exampleSteps") ?? [];
+const calcReasons = t.raw<LeadItem[]>("readingTimeCalculator.page.howCalculated.reasons") ?? [];
+
+const ageHeaders = t.raw<string[]>("readingTimeCalculator.page.ageSpeed.headers") ?? [];
+const ageRows = t.raw<string[][]>("readingTimeCalculator.page.ageSpeed.rows") ?? [];
+const fastItems = t.raw<LeadItem[]>("readingTimeCalculator.page.ageSpeed.fastItems") ?? [];
+const mythItems = t.raw<LeadItem[]>("readingTimeCalculator.page.ageSpeed.mythItems") ?? [];
+
+const wordsGroups = t.raw<WordsGroup[]>("readingTimeCalculator.page.wordsToMinutes.groups") ?? [];
+
+const minHeaders = t.raw<string[]>("readingTimeCalculator.page.minutesToWords.headers") ?? [];
+const minRows = t.raw<string[][]>("readingTimeCalculator.page.minutesToWords.rows") ?? [];
+const minQuickItems = t.raw<LeadItem[]>("readingTimeCalculator.page.minutesToWords.quickItems") ?? [];
+
+const aloudHeaders = t.raw<string[]>("readingTimeCalculator.page.readAloud.headers") ?? [];
+const aloudRows = t.raw<string[][]>("readingTimeCalculator.page.readAloud.rows") ?? [];
+const aloudItems = t.raw<LeadItem[]>("readingTimeCalculator.page.readAloud.items") ?? [];
+
+const wppHeaders = t.raw<string[]>("readingTimeCalculator.page.wordsPerPage.headers") ?? [];
+const wppRows = t.raw<string[][]>("readingTimeCalculator.page.wordsPerPage.rows") ?? [];
+const wppItems = t.raw<LeadItem[]>("readingTimeCalculator.page.wordsPerPage.items") ?? [];
+
+const readPagesHeaders = t.raw<string[]>("readingTimeCalculator.page.readPages.headers") ?? [];
+const readPagesRows = t.raw<string[][]>("readingTimeCalculator.page.readPages.rows") ?? [];
+const readPagesItems = t.raw<LeadItem[]>("readingTimeCalculator.page.readPages.items") ?? [];
+
+const booksHeaders = t.raw<string[]>("readingTimeCalculator.page.books.headers") ?? [];
+const booksRows = t.raw<string[][]>("readingTimeCalculator.page.books.rows") ?? [];
+const booksItems = t.raw<LeadItem[]>("readingTimeCalculator.page.books.items") ?? [];
+
+const appsItems = t.raw<LeadItem[]>("readingTimeCalculator.page.apps.items") ?? [];
 ---
 
 <Layout
@@ -156,13 +130,13 @@ const faqPageSchema = {
 				<p
 					class="mt-3 max-w-2xl text-[16px] leading-[25px] font-normal text-body"
 				>
-					Paste your text, enter a word count, or convert pages to see how long it takes to read silently or out loud. Runs privately in your browser.
+					{t("readingTimeCalculator.page.heroSubtitle")}
 				</p>
 			</div>
 		</section>
 
 		<!-- Flagship Interactive Calculator Workspace -->
-		<ReadingCalculator />
+		<ReadingCalculator locale={locale} />
 
 		<!-- Editorial Content: How Is Reading Time Calculated? -->
 		<section
@@ -175,51 +149,47 @@ const faqPageSchema = {
 						id="how-reading-time-is-calculated"
 						class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 					>
-						How Is Reading Time Calculated?
+						{t("readingTimeCalculator.page.howCalculated.h2")}
 					</h2>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						Reading time is the estimated number of minutes it takes an average person to read a piece of text from start to finish. Whether you are checking the length of a blog post, an essay, or a study chapter, the math behind calculating reading time is simple.
+						{t("readingTimeCalculator.page.howCalculated.p1")}
 					</p>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						To calculate reading time manually, divide the total word count of your document by your reading speed in words per minute (WPM):
+						{t("readingTimeCalculator.page.howCalculated.p2")}
 					</p>
 
 					<div class="whisper-shadow my-6 rounded-md border border-hairline bg-canvas-elevated px-5 py-4 text-[15px] leading-relaxed font-semibold text-ink sm:text-[16px]">
-						Reading Time (in minutes) = Total Word Count ÷ Words Per Minute (WPM)
+						{t("readingTimeCalculator.page.howCalculated.formula")}
 					</div>
 
 					<p class="text-[16px] leading-relaxed text-body">
-						For example, if an article has 1,000 words and you read at the average adult silent reading speed of 238 WPM, the math looks like this:
+						{t("readingTimeCalculator.page.howCalculated.p3")}
 					</p>
 
 					<ul class="mt-4 list-disc space-y-2 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>1,000 ÷ 238 = 4.20 minutes</li>
-						<li>Multiply the decimal (0.20) by 60 to find the exact seconds: 0.20 × 60 = 12 seconds</li>
-						<li>Total estimated reading time: 4 minutes and 12 seconds</li>
+						{exampleSteps.map((step) => <li>{step}</li>)}
 					</ul>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Why Different Tools Show Slightly Different Reading Times
+						{t("readingTimeCalculator.page.howCalculated.h3")}
 					</h3>
 
 					<p class="mt-3 text-[16px] leading-relaxed text-body">
-						If you compare different reading time estimators—such as Medium, Grammarly, or Wordora—you might notice small differences of 15 to 30 seconds for the exact same article. That happens for three practical reasons:
+						{t("readingTimeCalculator.page.howCalculated.p4")}
 					</p>
 
 					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">Default WPM benchmarks:</strong> Some platforms still use an older rough estimate of 200 or 250 WPM, while modern calculators use 238 WPM, which comes from psychologist Marc Brysbaert's review of 190 reading studies.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Reading silently vs. reading out loud:</strong> Calculating reading time for a silent blog read uses ~238 WPM, whereas estimating the reading time of a speech or script read aloud uses a slower pace of 183 WPM.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Visual breaks and pauses:</strong> When estimating reading time for an article with images, charts, or bulleted lists, readers naturally pause for a few seconds to scan visuals—so adding a 10% buffer gives a more realistic estimate for real-world readers.
-						</li>
+						{
+							calcReasons.map((item) => (
+								<li>
+									<strong class="font-semibold text-ink">{item.lead}</strong>{item.text}
+								</li>
+							))
+						}
 					</ul>
 				</div>
 			</div>
@@ -236,21 +206,21 @@ const faqPageSchema = {
 						id="average-reading-speed-by-age"
 						class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 					>
-						Average Reading Speed by Age, Grade & Reader Level
+						{t("readingTimeCalculator.page.ageSpeed.h2")}
 					</h2>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						For most adults reading non-fiction silently, the average reading speed is 238 words per minute (WPM), while fiction averages around 260 WPM. However, reading speed changes significantly based on age, school grade level, and how familiar you are with the topic.
+						{t("readingTimeCalculator.page.ageSpeed.p1")}
 					</p>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Average Words Per Minute (WPM) Reading Chart by Age & Grade
+						{t("readingTimeCalculator.page.ageSpeed.h3Chart")}
 					</h3>
 
 					<p class="mt-3 text-[16px] leading-relaxed text-body">
-						Children start out reading out loud word by word, which keeps early reading speeds low. As silent reading develops in middle school, speed climbs steadily before leveling off in adulthood:
+						{t("readingTimeCalculator.page.ageSpeed.pChart")}
 					</p>
 				</div>
 
@@ -258,73 +228,23 @@ const faqPageSchema = {
 					<table class="w-full border-collapse text-left">
 						<thead>
 							<tr class="border-b border-hairline bg-canvas-muted text-[13px] font-semibold text-ink">
-								<th scope="col" class="py-3.5 pl-5 pr-4">Reader Group / Grade Level</th>
-								<th scope="col" class="px-4 py-3.5">Typical Age</th>
-								<th scope="col" class="px-4 py-3.5">Average Reading Speed (WPM)</th>
-								<th scope="col" class="py-3.5 pl-4 pr-5">Reading Mode</th>
+								<th scope="col" class="py-3.5 pl-5 pr-4">{ageHeaders[0]}</th>
+								<th scope="col" class="px-4 py-3.5">{ageHeaders[1]}</th>
+								<th scope="col" class="px-4 py-3.5">{ageHeaders[2]}</th>
+								<th scope="col" class="py-3.5 pl-4 pr-5">{ageHeaders[3]}</th>
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-hairline text-[14px]">
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">1st Grade</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">6–7 years</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">53–80 WPM</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Out loud</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">2nd Grade</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">7–8 years</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">89–115 WPM</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Out loud</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">3rd Grade</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">8–9 years</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">107–135 WPM</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Out loud / Silent</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">4th & 5th Grade</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">9–11 years</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">123–160 WPM</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Mostly silent</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">Middle School (6th–8th)</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">11–14 years</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">150–204 WPM</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Silent</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">High School (9th–12th)</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">14–18 years</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">200–250 WPM</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Silent</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">College Student</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">18–22 years</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">250–300 WPM</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Silent (study & skimming)</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">Average Adult (US & Global)</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">23+ years</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">238 WPM</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Silent non-fiction</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">Fast / Avid Reader</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body">Adult</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">300–450 WPM</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Silent</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">Top 1% of Readers</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body">Adult</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">500–700 WPM</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Silent with comprehension</td>
-							</tr>
+							{
+								ageRows.map((row) => (
+									<tr>
+										<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">{row[0]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">{row[1]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">{row[2]}</td>
+										<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">{row[3]}</td>
+									</tr>
+								))
+							}
 						</tbody>
 					</table>
 				</div>
@@ -333,51 +253,47 @@ const faqPageSchema = {
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Is Reading 250, 300, or 400 Words Per Minute Fast?
+						{t("readingTimeCalculator.page.ageSpeed.h3Fast")}
 					</h3>
 
 					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">250 WPM:</strong> Slightly above the adult average of 238 WPM. If you read at 250 WPM, you finish roughly one double-spaced page per minute or about 40–45 paperback pages per hour.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">300 WPM:</strong> Considered a good, fast reading rate—roughly 25% faster than average. Many regular book readers and college students naturally reach 300 WPM on familiar topics.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">400 WPM:</strong> Very fast. Only about the top 5% of readers maintain 400 WPM without skipping words or losing comprehension.
-						</li>
+						{
+							fastItems.map((item) => (
+								<li>
+									<strong class="font-semibold text-ink">{item.lead}</strong>{item.text}
+								</li>
+							))
+						}
 					</ul>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Famous Readers & Common Reading Speed Myths
+						{t("readingTimeCalculator.page.ageSpeed.h3Myths")}
 					</h3>
 
 					<p class="mt-3 text-[16px] leading-relaxed text-body">
-						Online claims often exaggerate how fast famous leaders read, so it helps to separate real benchmarks from myths:
+						{t("readingTimeCalculator.page.ageSpeed.pMyths")}
 					</p>
 
 					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">Bill Gates and Elon Musk:</strong> Bill Gates is known to read about 50 books a year and has mentioned reading roughly 150 pages per hour on dense non-fiction, which equals around 600–750 WPM depending on page density—though he also takes detailed margin notes that slow down his overall session pace. Elon Musk grew up reading science fiction for hours a day, relying on high reading volume rather than trick speed-reading methods.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">John F. Kennedy (JFK):</strong> Popular stories claimed JFK could read 1,200 WPM, but reading researchers note that anything above 800–900 WPM crosses into skimming rather than full word-by-word comprehension.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">IQ and ADHD:</strong> High IQ does not automatically guarantee faster reading, though strong vocabulary reduces pauses on unfamiliar words. Readers with ADHD often read slower when distracted or re-reading lines, yet can read much faster than average when hyperfocused on a topic they genuinely enjoy.
-						</li>
+						{
+							mythItems.map((item) => (
+								<li>
+									<strong class="font-semibold text-ink">{item.lead}</strong>{item.text}
+								</li>
+							))
+						}
 					</ul>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						How Can You Calculate Your Own WPM?
+						{t("readingTimeCalculator.page.ageSpeed.h3OwnWpm")}
 					</h3>
 
 					<p class="mt-3 text-[16px] leading-relaxed text-body">
-						Set a timer for 1 minute, read an article silently at your normal pace, and count the words you covered—or use our interactive <a href={getLocalizedPath("/reading-speed-test/", locale)} class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">Reading Speed Test</a> to get your exact WPM score in 60 seconds.
+						{t("readingTimeCalculator.page.ageSpeed.ownWpmBefore")}<a href={getLocalizedPath("/reading-speed-test/", locale)} class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">{t("readingTimeCalculator.page.ageSpeed.ownWpmLink")}</a>{t("readingTimeCalculator.page.ageSpeed.ownWpmAfter")}
 					</p>
 				</div>
 			</div>
@@ -394,73 +310,37 @@ const faqPageSchema = {
 						id="words-to-minutes-conversion-guide"
 						class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 					>
-						Words to Minutes Conversion Guide (200 to 3,000+ Words)
+						{t("readingTimeCalculator.page.wordsToMinutes.h2")}
 					</h2>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						Converting words to minutes helps writers, students, and content creators plan how long an email, essay, or article will hold a reader's attention. While the interactive table below gives quick numbers from 100 to 10,000 words, here is what the most commonly searched word counts look like in real-world reading at the average adult pace of 238 WPM:
+						{t("readingTimeCalculator.page.wordsToMinutes.p1")}
 					</p>
 
-					<h3
-						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
-					>
-						Short-Form Text: 200 to 600 Words (Under 3 Minutes)
-					</h3>
+					{
+						wordsGroups.map((group) => (
+							<>
+								<h3 class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]">
+									{group.h3}
+								</h3>
 
-					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">200 words (50 seconds silent / 1 min 6 sec aloud):</strong> About two short paragraphs—roughly the length of a concise cold email, a product description, or a LinkedIn update. Most people finish reading 200 words in well under a minute.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">300 words (1 min 16 sec silent / 1 min 38 sec aloud):</strong> The standard length of a cover letter, a brief news announcement, or a single double-spaced page plus a few lines.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">500 words (2 min 6 sec silent / 2 min 44 sec aloud):</strong> A classic short blog post, a high school response essay, or a two-page double-spaced document. Five hundred words is short enough that busy readers almost always finish it in one sitting.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">600 words (2 min 31 sec silent / 3 min 17 sec aloud):</strong> Slightly longer than a 500-word op-ed, giving enough room for an introduction, three clear points, and a short takeaway.
-						</li>
-					</ul>
-
-					<h3
-						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
-					>
-						Medium-Length Articles & Essays: 800 to 1,000 Words (3 to 4.5 Minutes)
-					</h3>
-
-					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">800 words (3 min 22 sec silent / 4 min 22 sec aloud):</strong> A standard newspaper column or a crisp tutorial. Converting 800 words to minutes shows it sits right in the sweet spot for mobile readers who want depth without scrolling for ten minutes.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">1,000 words (4 min 12 sec silent / 5 min 28 sec aloud):</strong> One of the most common benchmarks for college essays, freelance articles, and newsletter issues. At 238 WPM, 1,000 words takes 4 minutes and 12 seconds to read silently—or about 3 minutes and 20 seconds for a fast reader at 300 WPM.
-						</li>
-					</ul>
-
-					<h3
-						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
-					>
-						Long-Form Guides & Research Papers: 2,000 to 3,000 Words (8 to 13 Minutes)
-					</h3>
-
-					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">2,000 words (8 min 24 sec silent / 10 min 56 sec aloud):</strong> A detailed how-to guide, an in-depth product review, or an 8-page double-spaced paper. Readers usually need eight to nine quiet minutes to absorb a 2,000-word piece.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">2,500 words (10 min 30 sec silent / 13 min 40 sec aloud):</strong> A comprehensive pillar article or a 10-page double-spaced assignment. Converting 2,500 words to minutes crosses the ten-minute mark, where subheadings and bullet lists become essential for readability.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">3,000 words (12 min 36 sec silent / 16 min 24 sec aloud):</strong> A long-form feature story, a whitepaper, or a 12-page university essay. A fast reader at 300 WPM finishes 3,000 words in 10 minutes flat, while an average reader takes about 12.5 minutes.
-						</li>
-					</ul>
+								<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
+									{group.items.map((item) => (
+										<li>
+											<strong class="font-semibold text-ink">{item.lead}</strong>{item.text}
+										</li>
+									))}
+								</ul>
+							</>
+						))
+					}
 				</div>
 			</div>
 		</section>
 
 		<!-- Featured Snippet Benchmark Table (100 to 10,000 Words) -->
 		<div class="mt-10 md:mt-12">
-			<BenchmarkTable />
+			<BenchmarkTable locale={locale} />
 		</div>
 
 		<!-- Editorial Content: Minutes to Words Guide: How Much Can You Read in 2 to 30 Minutes? -->
@@ -474,29 +354,29 @@ const faqPageSchema = {
 						id="minutes-to-words-guide"
 						class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 					>
-						Minutes to Words Guide: How Much Can You Read in 2 to 30 Minutes?
+						{t("readingTimeCalculator.page.minutesToWords.h2")}
 					</h2>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						Sometimes you do not start with a word count—you start with a block of free time. Whether you have a 2-minute coffee break, a 10-minute commute, or a 30-minute evening study session, converting minutes to words shows exactly how much text you can finish before the clock runs out.
+						{t("readingTimeCalculator.page.minutesToWords.p1")}
 					</p>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						To calculate how many words fit into a set number of minutes, multiply your available time by your reading speed:
+						{t("readingTimeCalculator.page.minutesToWords.p2")}
 					</p>
 
 					<div class="whisper-shadow my-6 rounded-md border border-hairline bg-canvas-elevated px-5 py-4 text-[15px] leading-relaxed font-semibold text-ink sm:text-[16px]">
-						Total Words = Minutes Available × Words Per Minute (WPM)
+						{t("readingTimeCalculator.page.minutesToWords.formula")}
 					</div>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Minutes to Words Reference Chart (2 to 100 Minutes)
+						{t("readingTimeCalculator.page.minutesToWords.h3Chart")}
 					</h3>
 
 					<p class="mt-3 text-[16px] leading-relaxed text-body">
-						The table below shows how many words you can read silently at the average adult pace (238 WPM) compared to a fast reader (300 WPM) and reading out loud (183 WPM):
+						{t("readingTimeCalculator.page.minutesToWords.pChart")}
 					</p>
 				</div>
 
@@ -504,77 +384,25 @@ const faqPageSchema = {
 					<table class="w-full border-collapse text-left">
 						<thead>
 							<tr class="border-b border-hairline bg-canvas-muted text-[13px] font-semibold text-ink">
-								<th scope="col" class="py-3.5 pl-5 pr-4">Reading Time</th>
-								<th scope="col" class="px-4 py-3.5">Average Silent Reader (238 WPM)</th>
-								<th scope="col" class="px-4 py-3.5">Fast Silent Reader (300 WPM)</th>
-								<th scope="col" class="px-4 py-3.5">Reading Out Loud (183 WPM)</th>
-								<th scope="col" class="py-3.5 pl-4 pr-5">Typical Real-World Equivalent</th>
+								<th scope="col" class="py-3.5 pl-5 pr-4">{minHeaders[0]}</th>
+								<th scope="col" class="px-4 py-3.5">{minHeaders[1]}</th>
+								<th scope="col" class="px-4 py-3.5">{minHeaders[2]}</th>
+								<th scope="col" class="px-4 py-3.5">{minHeaders[3]}</th>
+								<th scope="col" class="py-3.5 pl-4 pr-5">{minHeaders[4]}</th>
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-hairline text-[14px]">
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">2 minutes</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">~476 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">600 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~366 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Short email or quick news brief</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">3 minutes</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">~714 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">900 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~549 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Standard Medium post or newsletter</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">5 minutes</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">~1,190 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">1,500 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~915 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Detailed blog post or 2.5 book pages</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">7 minutes</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">~1,666 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">2,100 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~1,281 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">In-depth tutorial or feature article</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">10 minutes</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">~2,380 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">3,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~1,830 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Long-form guide or ~8 paperback pages</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">15 minutes</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">~3,570 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">4,500 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~2,745 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">One full novel chapter (12–15 pages)</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">20 minutes</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">~4,760 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">6,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~3,660 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Daily reading goal (~16 paperback pages)</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">30 minutes</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">~7,140 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">9,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~5,490 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Two to three chapters (~25 pages)</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">100 minutes</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">~23,800 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">30,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~18,300 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">A short novella (~80–100 pages)</td>
-							</tr>
+							{
+								minRows.map((row) => (
+									<tr>
+										<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">{row[0]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">{row[1]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">{row[2]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">{row[3]}</td>
+										<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">{row[4]}</td>
+									</tr>
+								))
+							}
 						</tbody>
 					</table>
 				</div>
@@ -583,32 +411,27 @@ const faqPageSchema = {
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Quick Answers to Common Time-to-Word Questions
+						{t("readingTimeCalculator.page.minutesToWords.h3Quick")}
 					</h3>
 
 					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">How long is a 2-minute or 3-minute read?</strong> A 2-minute read is roughly 450 to 500 words, while a 3-minute read sits right around 700 to 750 words—the ideal length for concise online articles and daily newsletters.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">How many words is a 5-minute or 7-minute reading time?</strong> Five minutes of silent reading covers about 1,190 words, and 7 minutes of reading covers roughly 1,666 words—which is why many editors aim for 1,500-word guides.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Can you read 3,000 words in 15 minutes?</strong> Yes. At the average adult pace of 238 WPM, reading 3,000 words takes 12 minutes and 36 seconds, leaving you more than two minutes to spare inside a 15-minute window.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">How much can you read in 20 or 30 minutes?</strong> In 20 minutes, an average reader finishes 4,760 words, and in 30 minutes you can comfortably read 7,140 words—nearly 25 pages of a standard paperback book.
-						</li>
+						{
+							minQuickItems.map((item) => (
+								<li>
+									<strong class="font-semibold text-ink">{item.lead}</strong>{item.text}
+								</li>
+							))
+						}
 					</ul>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Why Read 20 Minutes Per Day? (The Daily Habit Math)
+						{t("readingTimeCalculator.page.minutesToWords.h3Habit")}
 					</h3>
 
 					<p class="mt-3 text-[16px] leading-relaxed text-body">
-						Educators and literacy researchers often recommend reading at least 20 to 30 minutes daily. At 238 WPM, reading just 20 minutes a day adds up to 4,760 words per day, 142,800 words per month, and roughly 1.73 million words per year—enough to finish 18 to 20 average-length books annually without ever needing a marathon study session.
+						{t("readingTimeCalculator.page.minutesToWords.pHabit")}
 					</p>
 				</div>
 			</div>
@@ -625,21 +448,21 @@ const faqPageSchema = {
 						id="how-long-to-read-out-loud"
 						class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 					>
-						How Long Does It Take to Read Out Loud? (Speeches, Scripts & Talks)
+						{t("readingTimeCalculator.page.readAloud.h2")}
 					</h2>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						Reading out loud is noticeably slower than reading silently because your mouth has to form every word and you naturally pause at commas and periods. While silent reading averages 238 WPM, the average reading speed out loud is 183 WPM, and a comfortable public speaking or presentation pace sits between 130 and 160 WPM.
+						{t("readingTimeCalculator.page.readAloud.p1")}
 					</p>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Read-Aloud & Speech Time Conversion Chart (200 to 6,000 Words)
+						{t("readingTimeCalculator.page.readAloud.h3Chart")}
 					</h3>
 
 					<p class="mt-3 text-[16px] leading-relaxed text-body">
-						Use the chart below to check how long a script, podcast intro, or keynote speech takes at a natural read-aloud pace (183 WPM) versus a deliberate presentation pace (150 WPM):
+						{t("readingTimeCalculator.page.readAloud.pChart")}
 					</p>
 				</div>
 
@@ -647,84 +470,25 @@ const faqPageSchema = {
 					<table class="w-full border-collapse text-left">
 						<thead>
 							<tr class="border-b border-hairline bg-canvas-muted text-[13px] font-semibold text-ink">
-								<th scope="col" class="py-3.5 pl-5 pr-4">Word Count</th>
-								<th scope="col" class="px-4 py-3.5">Natural Read-Aloud Pace (183 WPM)</th>
-								<th scope="col" class="px-4 py-3.5">Presentation / Speech Pace (150 WPM)</th>
-								<th scope="col" class="px-4 py-3.5">Slow & Emphatic Pace (130 WPM)</th>
-								<th scope="col" class="py-3.5 pl-4 pr-5">Common Use Case</th>
+								<th scope="col" class="py-3.5 pl-5 pr-4">{aloudHeaders[0]}</th>
+								<th scope="col" class="px-4 py-3.5">{aloudHeaders[1]}</th>
+								<th scope="col" class="px-4 py-3.5">{aloudHeaders[2]}</th>
+								<th scope="col" class="px-4 py-3.5">{aloudHeaders[3]}</th>
+								<th scope="col" class="py-3.5 pl-4 pr-5">{aloudHeaders[4]}</th>
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-hairline text-[14px]">
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">200 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">1 min 6 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">1 min 20 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">1 min 32 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Short video hook or toast</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">300 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">1 min 38 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">2 min 0 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">2 min 18 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">2-minute pitch or classroom update</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">500 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">2 min 44 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">3 min 20 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">3 min 51 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Short wedding toast or YouTube intro</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">600 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">3 min 17 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">4 min 0 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">4 min 37 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">4-minute persuasive speech</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">750 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">4 min 6 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">5 min 0 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">5 min 46 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">Standard 5-minute presentation</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">1,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">5 min 28 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">6 min 40 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">7 min 42 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">6-to-7-minute talk or podcast segment</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">2,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">10 min 56 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">13 min 20 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">15 min 23 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">15-minute conference session</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">2,500 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">13 min 40 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">16 min 40 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">19 min 14 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">TED-style 18-minute keynote</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">3,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">16 min 24 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">20 min 0 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">23 min 5 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">20-minute lecture or webinar</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">6,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">32 min 47 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">40 min 0 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">46 min 9 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">40-to-45-minute keynote or sermon</td>
-							</tr>
+							{
+								aloudRows.map((row) => (
+									<tr>
+										<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">{row[0]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">{row[1]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">{row[2]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">{row[3]}</td>
+										<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body">{row[4]}</td>
+									</tr>
+								))
+							}
 						</tbody>
 					</table>
 				</div>
@@ -733,29 +497,21 @@ const faqPageSchema = {
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Direct Answers to Common Speaking & Read-Aloud Questions
+						{t("readingTimeCalculator.page.readAloud.h3Answers")}
 					</h3>
 
 					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">How many words take 2, 5, 10, or 15 minutes to read out loud?</strong> At 183 WPM, a 2-minute read-aloud is about 366 words, 5 minutes is 915 words, 10 minutes is 1,830 words, and 15 minutes covers roughly 2,745 words (or ~2,250 words at a relaxed 150 WPM presentation pace).
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Can you speak 1,000 words in 7 minutes or 3,000 words in 20 minutes?</strong> Yes to both. Speaking 1,000 words in 7 minutes requires a very comfortable 143 WPM, and delivering 3,000 words in 20 minutes equals exactly 150 WPM—both are ideal presentation speeds.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Can I speak 2,000 words in 10 minutes?</strong> That requires 200 WPM, which feels rushed for most listeners unless you are reading a fast-paced voiceover without pauses.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Is an 8-minute speech too long, and how many words is a 1-hour talk?</strong> An 8-minute speech (roughly 1,100 to 1,300 words) is an ideal length for classroom talks, pitches, and ceremonies—long enough to make a clear point without losing the room. A 1-hour talk typically contains 7,500 to 9,000 spoken words once you include natural pauses and slide transitions.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">How long should a read-aloud take for kids or classrooms?</strong> For elementary classroom read-alouds, teachers usually keep sessions to 10 to 15 minutes (around 1,500 to 2,200 words) so younger listeners stay engaged.
-						</li>
+						{
+							aloudItems.map((item) => (
+								<li>
+									<strong class="font-semibold text-ink">{item.lead}</strong>{item.text}
+								</li>
+							))
+						}
 					</ul>
 
 					<p class="mt-6 text-[16px] leading-relaxed text-body">
-						If you are rehearsing a timed presentation with pauses and Q&A buffers, try our dedicated <a href={getLocalizedPath("/speech-time-calculator/", locale)} class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">Speech Time Calculator</a> for slide-by-slide pacing.
+						{t("readingTimeCalculator.page.readAloud.ctaBefore")}<a href={getLocalizedPath("/speech-time-calculator/", locale)} class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">{t("readingTimeCalculator.page.readAloud.ctaLink")}</a>{t("readingTimeCalculator.page.readAloud.ctaAfter")}
 					</p>
 				</div>
 			</div>
@@ -772,17 +528,17 @@ const faqPageSchema = {
 						id="how-many-words-per-page"
 						class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 					>
-						How Many Words Per Page? (Single-Spaced, Double-Spaced & Books)
+						{t("readingTimeCalculator.page.wordsPerPage.h2")}
 					</h2>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						A standard page holds 250 words double-spaced or 500 words single-spaced when typed in a 12-point font (such as Times New Roman or Arial) with 1-inch margins. Printed books and novels average 275 to 300 words per page.
+						{t("readingTimeCalculator.page.wordsPerPage.p1")}
 					</p>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Words Per Page Reference Chart by Format & Paper Size
+						{t("readingTimeCalculator.page.wordsPerPage.h3Chart")}
 					</h3>
 				</div>
 
@@ -790,56 +546,25 @@ const faqPageSchema = {
 					<table class="w-full border-collapse text-left">
 						<thead>
 							<tr class="border-b border-hairline bg-canvas-muted text-[13px] font-semibold text-ink">
-								<th scope="col" class="py-3.5 pl-5 pr-4">Document or Book Format</th>
-								<th scope="col" class="px-4 py-3.5">Spacing & Font Setup</th>
-								<th scope="col" class="px-4 py-3.5">Average Words Per Page</th>
-								<th scope="col" class="px-4 py-3.5">10 Pages Equals</th>
-								<th scope="col" class="py-3.5 pl-4 pr-5">100,000 Words Equals</th>
+								<th scope="col" class="py-3.5 pl-5 pr-4">{wppHeaders[0]}</th>
+								<th scope="col" class="px-4 py-3.5">{wppHeaders[1]}</th>
+								<th scope="col" class="px-4 py-3.5">{wppHeaders[2]}</th>
+								<th scope="col" class="px-4 py-3.5">{wppHeaders[3]}</th>
+								<th scope="col" class="py-3.5 pl-4 pr-5">{wppHeaders[4]}</th>
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-hairline text-[14px]">
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">Academic Essay / Manuscript</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body">Double-spaced, 12pt font</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">250 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">2,500 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">400 pages</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">Paperback Novel / Trade Book</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body">Standard 6" × 9" print layout</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">300 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">3,000 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">~333 pages</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">Mass-Market Paperback</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body">Compact 4.25" × 6.87" trim</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">275 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">2,750 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">~364 pages</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">Business Report / Word Doc</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body">Single-spaced, 12pt font</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">500 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">5,000 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">200 pages</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">A4 Sheet (Single-Spaced)</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body">12pt font, standard margins</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">520–550 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~5,350 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">~187 pages</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">A4 Sheet (Double-Spaced)</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body">12pt font, standard margins</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">260–275 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~2,675 words</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">~374 pages</td>
-							</tr>
+							{
+								wppRows.map((row) => (
+									<tr>
+										<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">{row[0]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body">{row[1]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">{row[2]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">{row[3]}</td>
+										<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">{row[4]}</td>
+									</tr>
+								))
+							}
 						</tbody>
 					</table>
 				</div>
@@ -848,23 +573,21 @@ const faqPageSchema = {
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Quick Answers for Word, A4 & Book Page Conversions
+						{t("readingTimeCalculator.page.wordsPerPage.h3Answers")}
 					</h3>
 
 					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">How many words per page in Microsoft Word or Google Docs?</strong> Using default 1-inch margins and 12pt Arial or Times New Roman, 1 page is 500 words single-spaced and 250 words double-spaced. Switching to 11pt Calibri (Word's default) fits roughly 550 to 600 words on a single-spaced page.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">How many words per page in a novel?</strong> Publishing editors use 250 to 300 words per page as the standard benchmark. A typical 80,000-word novel prints out to roughly 270 to 320 pages, while 100,000 words equals 333 paperback pages (or 400 double-spaced manuscript pages).
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">How does A4 paper compare to US Letter?</strong> Because A4 paper is slightly taller than US Letter (11.7 inches vs. 11 inches), a single-spaced A4 page holds about 5% to 8% more words—roughly 530 words instead of 500.
-						</li>
+						{
+							wppItems.map((item) => (
+								<li>
+									<strong class="font-semibold text-ink">{item.lead}</strong>{item.text}
+								</li>
+							))
+						}
 					</ul>
 
 					<p class="mt-6 text-[16px] leading-relaxed text-body">
-						Need to convert a specific word count into exact page numbers across different font sizes? Use our <a href={getLocalizedPath("/words-to-pages/", locale)} class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">Words to Pages Calculator</a>.
+						{t("readingTimeCalculator.page.wordsPerPage.ctaBefore")}<a href={getLocalizedPath("/words-to-pages/", locale)} class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">{t("readingTimeCalculator.page.wordsPerPage.ctaLink")}</a>{t("readingTimeCalculator.page.wordsPerPage.ctaAfter")}
 					</p>
 				</div>
 			</div>
@@ -881,17 +604,17 @@ const faqPageSchema = {
 						id="how-long-to-read-pages"
 						class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 					>
-						How Long Does It Take to Read 5, 10, 20 & 100 Pages?
+						{t("readingTimeCalculator.page.readPages.h2")}
 					</h2>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						At the average adult reading speed of 238 WPM, reading 10 pages of a standard paperback novel (3,000 words) takes about 12 minutes and 36 seconds, while 10 double-spaced pages (2,500 words) takes 10 minutes and 30 seconds. On average, an adult reads 45 to 55 paperback pages per hour, or roughly 1.2 to 1.5 minutes per page.
+						{t("readingTimeCalculator.page.readPages.p1")}
 					</p>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Pages to Minutes Conversion Chart (1 to 200 Pages)
+						{t("readingTimeCalculator.page.readPages.h3Chart")}
 					</h3>
 				</div>
 
@@ -899,77 +622,25 @@ const faqPageSchema = {
 					<table class="w-full border-collapse text-left">
 						<thead>
 							<tr class="border-b border-hairline bg-canvas-muted text-[13px] font-semibold text-ink">
-								<th scope="col" class="py-3.5 pl-5 pr-4">Page Count</th>
-								<th scope="col" class="px-4 py-3.5">Double-Spaced (250 wpp) @ 238 WPM</th>
-								<th scope="col" class="px-4 py-3.5">Paperback Novel (300 wpp) @ 238 WPM</th>
-								<th scope="col" class="px-4 py-3.5">Dense Textbook / PDF (450 wpp) @ 200 WPM</th>
-								<th scope="col" class="py-3.5 pl-4 pr-5">Reading Out Loud (183 WPM)</th>
+								<th scope="col" class="py-3.5 pl-5 pr-4">{readPagesHeaders[0]}</th>
+								<th scope="col" class="px-4 py-3.5">{readPagesHeaders[1]}</th>
+								<th scope="col" class="px-4 py-3.5">{readPagesHeaders[2]}</th>
+								<th scope="col" class="px-4 py-3.5">{readPagesHeaders[3]}</th>
+								<th scope="col" class="py-3.5 pl-4 pr-5">{readPagesHeaders[4]}</th>
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-hairline text-[14px]">
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">1 page</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">1 min 3 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">1 min 16 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">2 min 15 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">1 min 22 sec – 1 min 38 sec</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">5 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">5 min 15 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">6 min 18 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">11 min 15 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">6 min 50 sec – 8 min 12 sec</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">8 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">8 min 24 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">10 min 5 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">18 min 0 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">10 min 56 sec – 13 min 7 sec</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">10 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">10 min 30 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">12 min 36 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">22 min 30 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">13 min 40 sec – 16 min 24 sec</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">12 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">12 min 36 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">15 min 8 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">27 min 0 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">16 min 24 sec – 19 min 40 sec</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">20 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">21 min 0 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">25 min 13 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">45 min 0 sec</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">27 min 20 sec – 32 min 47 sec</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">50 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">52 min 31 sec</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">1 hr 3 min</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">1 hr 52 min</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">1 hr 8 min – 1 hr 22 min</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">100 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">1 hr 45 min</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">2 hr 6 min</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">3 hr 45 min</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">2 hr 17 min – 2 hr 44 min</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">200 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">3 hr 30 min</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">4 hr 12 min</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">7 hr 30 min</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">4 hr 33 min – 5 hr 28 min</td>
-							</tr>
+							{
+								readPagesRows.map((row) => (
+									<tr>
+										<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink tabular-nums">{row[0]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">{row[1]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">{row[2]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">{row[3]}</td>
+										<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">{row[4]}</td>
+									</tr>
+								))
+							}
 						</tbody>
 					</table>
 				</div>
@@ -978,22 +649,17 @@ const faqPageSchema = {
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Quick Answers to Common Page-Reading Questions
+						{t("readingTimeCalculator.page.readPages.h3Answers")}
 					</h3>
 
 					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">Why does 10 pages of a textbook, PDF, or the Quran take longer than a novel?</strong> A paperback novel uses wide margins and familiar dialogue (~300 words/page). By contrast, a 10-page college textbook or academic PDF often packs 450–600 words per page plus charts and terminology, taking 25 to 45 minutes to study properly. Similarly, reading 10 pages of the Quran (Uthmani script) with careful pronunciation and reflection typically takes 15 to 25 minutes, depending on your familiarity with Arabic.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Is it normal if it takes me an hour to read 10 pages?</strong> Yes, if you are reading dense technical material, studying a foreign language, highlighting key points, or taking notes. For casual fiction, however, 10 pages per hour (~50 WPM) means you are either re-reading lines frequently or getting distracted.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Is reading 100 pages in 2 hours or 200 pages in 3 hours good?</strong> Reading 100 paperback pages in 2 hours equals 50 pages per hour (~250 WPM)—a solid, above-average pace. Finishing 200 pages in 3 hours equals 67 pages per hour (~333 WPM), which puts you comfortably in the fast-reader tier.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">How many pages per day does an average reader finish?</strong> Reading just 20 to 30 minutes a day covers 15 to 25 paperback pages daily, or roughly 500 to 750 pages per month.
-						</li>
+						{
+							readPagesItems.map((item) => (
+								<li>
+									<strong class="font-semibold text-ink">{item.lead}</strong>{item.text}
+								</li>
+							))
+						}
 					</ul>
 				</div>
 			</div>
@@ -1010,17 +676,17 @@ const faqPageSchema = {
 						id="estimated-reading-time-books"
 						class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 					>
-						Estimated Reading Time for Books, Novels & Manga
+						{t("readingTimeCalculator.page.books.h2")}
 					</h2>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						An average 300-page paperback book contains roughly 85,000 to 90,000 words and takes 6 hours to 6 hours and 18 minutes to read at the average adult speed of 238 WPM. Longer classics and religious texts take anywhere from 8 hours to over 50 hours, while a single volume of manga takes about 35 to 45 minutes.
+						{t("readingTimeCalculator.page.books.p1")}
 					</p>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Popular Books & Manga Reading Time Chart (238 WPM vs. 300 WPM)
+						{t("readingTimeCalculator.page.books.h3Chart")}
 					</h3>
 				</div>
 
@@ -1028,49 +694,25 @@ const faqPageSchema = {
 					<table class="w-full border-collapse text-left">
 						<thead>
 							<tr class="border-b border-hairline bg-canvas-muted text-[13px] font-semibold text-ink">
-								<th scope="col" class="py-3.5 pl-5 pr-4">Book Title or Format</th>
-								<th scope="col" class="px-4 py-3.5">Approximate Word Count</th>
-								<th scope="col" class="px-4 py-3.5">Typical Page Count</th>
-								<th scope="col" class="px-4 py-3.5">Average Reader (238 WPM)</th>
-								<th scope="col" class="py-3.5 pl-4 pr-5">Fast Reader (300 WPM)</th>
+								<th scope="col" class="py-3.5 pl-5 pr-4">{booksHeaders[0]}</th>
+								<th scope="col" class="px-4 py-3.5">{booksHeaders[1]}</th>
+								<th scope="col" class="px-4 py-3.5">{booksHeaders[2]}</th>
+								<th scope="col" class="px-4 py-3.5">{booksHeaders[3]}</th>
+								<th scope="col" class="py-3.5 pl-4 pr-5">{booksHeaders[4]}</th>
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-hairline text-[14px]">
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">Standard 300-Page Book</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~90,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">300 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">6 hr 18 min</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">5 hr 0 min</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">The Odyssey (Homer)</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~121,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~400 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">8 hr 28 min</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">6 hr 43 min</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">The Count of Monte Cristo</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~464,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~1,276 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">32 hr 30 min</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">25 hr 47 min</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">The Bible (KJV / ESV)</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~783,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~1,200 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">54 hr 50 min</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">43 hr 30 min</td>
-							</tr>
-							<tr>
-								<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">1 Volume of Manga</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~8,000–12,000 words</td>
-								<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">~190–200 pages</td>
-								<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">35–45 min</td>
-								<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">25–35 min</td>
-							</tr>
+							{
+								booksRows.map((row) => (
+									<tr>
+										<td class="whitespace-nowrap py-3.5 pl-5 pr-4 font-semibold text-ink">{row[0]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">{row[1]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 text-body tabular-nums">{row[2]}</td>
+										<td class="whitespace-nowrap px-4 py-3.5 font-medium text-ink tabular-nums">{row[3]}</td>
+										<td class="whitespace-nowrap py-3.5 pl-4 pr-5 text-body tabular-nums">{row[4]}</td>
+									</tr>
+								))
+							}
 						</tbody>
 					</table>
 				</div>
@@ -1079,29 +721,21 @@ const faqPageSchema = {
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Quick Breakdown for Long Books & Graphic Formats
+						{t("readingTimeCalculator.page.books.h3Breakdown")}
 					</h3>
 
 					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">How long to read a 300-page book?</strong> At 300 words per page (90,000 words total), reading a 300-page book takes 6 hours and 18 minutes of continuous reading. Broken into a 30-minute daily habit, you will finish it in 12 to 13 days.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">How long to read The Odyssey?</strong> Most English translations of Homer's The Odyssey run around 121,000 words, taking 8 hours and 28 minutes at 238 WPM—or slightly longer (~10 hours) if you pause to read footnotes on Greek mythology.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">How long to read The Count of Monte Cristo?</strong> Alexandre Dumas's unabridged classic is roughly 464,000 words long, requiring 32.5 hours of reading time—about one month at an hour per day.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">How long to read the Bible?</strong> Depending on the translation, the Bible contains roughly 750,000 to 783,000 words. At 238 WPM, reading it cover to cover takes 52 to 55 hours silently (or about 71 hours out loud at 183 WPM), which equals roughly 9 to 10 minutes a day to finish in one year.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">How long to read manga?</strong> A standard 200-page manga volume has far fewer words per page (~45–60 words) than a novel, so an average reader finishes one volume in 35 to 45 minutes (around 12–15 seconds per page).
-						</li>
+						{
+							booksItems.map((item) => (
+								<li>
+									<strong class="font-semibold text-ink">{item.lead}</strong>{item.text}
+								</li>
+							))
+						}
 					</ul>
 
 					<p class="mt-6 text-[16px] leading-relaxed text-body">
-						Listening to the audio edition instead? Compare narration speeds with our <a href={getLocalizedPath("/audiobook-speed-calculator/", locale)} class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">Audiobook Speed Calculator</a>.
+						{t("readingTimeCalculator.page.books.ctaBefore")}<a href={getLocalizedPath("/audiobook-speed-calculator/", locale)} class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">{t("readingTimeCalculator.page.books.ctaLink")}</a>{t("readingTimeCalculator.page.books.ctaAfter")}
 					</p>
 				</div>
 			</div>
@@ -1118,48 +752,39 @@ const faqPageSchema = {
 						id="how-to-check-reading-time-apps"
 						class="text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 					>
-						How to Check Reading Time in Word, Google Docs & Kindle
+						{t("readingTimeCalculator.page.apps.h2")}
 					</h2>
 
 					<p class="mt-4 text-[16px] leading-relaxed text-body">
-						Neither Microsoft Word nor Google Docs displays an automatic reading time badge out of the box, but both show your exact word count so you can calculate reading duration in seconds. Amazon Kindle, by contrast, tracks your personal reading speed automatically and shows live time estimates at the bottom of your screen.
+						{t("readingTimeCalculator.page.apps.p1")}
 					</p>
 
 					<h3
 						class="mt-10 text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px] sm:leading-[30px]"
 					>
-						Step-by-Step Guide by App & File Type
+						{t("readingTimeCalculator.page.apps.h3Steps")}
 					</h3>
 
 					<ul class="mt-4 list-disc space-y-3 pl-5 text-[16px] leading-relaxed text-body marker:text-mute">
-						<li>
-							<strong class="font-semibold text-ink">Microsoft Word:</strong> Look at the bottom-left status bar for your total word count (or press Ctrl + Shift + G on Windows / Cmd + Shift + G on Mac). Enter that number into the Word count tab of our free online reading time calculator above—or divide your word count by 238 for silent reading and 183 for read-aloud time.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Google Docs:</strong> Open your document and press Ctrl + Shift + C (Cmd + Shift + C on Mac), or click Tools &gt; Word count from the top menu. Copy the word count into our calculator, or paste your draft directly into the Paste text tab for instant silent and spoken estimates.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Amazon Kindle:</strong> Tap the bottom-left corner of your Kindle screen while reading any eBook to cycle through display modes until you see "Time left in chapter" or "Time left in book." Kindle calculates this dynamically from your actual page-turn speed on that specific book.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">PDF Files & Web Articles:</strong> Open the PDF, press Ctrl + A (Cmd + A) to select all text, copy it (Ctrl + C), and paste it into Wordora's Paste text box—or enter the PDF's page count in the Pages tab using 450–500 words per page for dense single-spaced layouts. For blog posts and websites, paste the article text directly to see whether it hits the ideal 5-to-7-minute reader sweet spot.
-						</li>
-						<li>
-							<strong class="font-semibold text-ink">Other Languages (such as Chinese, Spanish, or French):</strong> Standard English WPM benchmarks apply best to alphabetic languages like English, Spanish, and French. For character-based languages like Chinese, average adult reading speed is typically 400 to 600 characters per minute rather than space-separated words.
-						</li>
+						{
+							appsItems.map((item) => (
+								<li>
+									<strong class="font-semibold text-ink">{item.lead}</strong>{item.text}
+								</li>
+							))
+						}
 					</ul>
 
 					<p class="mt-6 text-[16px] leading-relaxed text-body">
-						Need a detailed breakdown of words, characters, sentences, and paragraphs before timing your draft? Open our <a href={getLocalizedPath("/word-counter/", locale)} class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">Word Counter</a>.
+						{t("readingTimeCalculator.page.apps.ctaBefore")}<a href={getLocalizedPath("/word-counter/", locale)} class="font-medium text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink">{t("readingTimeCalculator.page.apps.ctaLink")}</a>{t("readingTimeCalculator.page.apps.ctaAfter")}
 					</p>
 				</div>
 			</div>
 		</section>
 
 		<!-- Comprehensive FAQ Accordion Section -->
-		<FAQSection faqs={faqs} />
+		<FAQSection faqs={faqs} locale={locale} />
 	</main>
 
 	<Footer />
 </Layout>
-

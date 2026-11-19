@@ -70,7 +70,898 @@
 		"badge": "Estrella",
 		"title": "Calculadora de tiempo de lectura — de palabras y páginas a minutos",
 		"metaDescription": "Usa la calculadora gratuita de tiempo de lectura de Wordora para estimar cuánto se tarda en leer un texto, un número de palabras o de páginas. Ajusta las WPM al instante, sin registrarte.",
-		"h1": "Calculadora de tiempo de lectura"
+		"h1": "Calculadora de tiempo de lectura",
+		"ui": {
+			"workspaceAria": "Área de trabajo de la calculadora y contador de tiempo de lectura",
+			"inputModeAria": "Modo de entrada",
+			"tabPaste": "Pegar texto",
+			"tabWords": "N.º de palabras",
+			"tabPages": "Páginas",
+			"btnSample": "Texto de ejemplo",
+			"btnUpload": "Subir .txt",
+			"btnClear": "Limpiar",
+			"dropzoneTitle": "Suelta aquí tu archivo .txt",
+			"privacyNote": "Funciona de forma privada en tu navegador",
+			"textareaLabel": "Pega o escribe tu texto para calcular el tiempo de lectura",
+			"textareaPlaceholder": "Pega o escribe tu texto aquí, o arrastra y suelta un archivo .txt...",
+			"wordsLabel": "Palabras:",
+			"charsLabel": "Caracteres:",
+			"withoutSpacesLabel": "Sin espacios:",
+			"paragraphsLabel": "Párrafos:",
+			"initialMiniCounter": "0 palabras · 0 caracteres",
+			"enterWordCount": "Introduce el número de palabras",
+			"enterWordCountSub": "Escribe cuántas palabras tiene tu artículo, capítulo o guion para saber cuánto se tarda en leer.",
+			"wordsUnit": "palabras",
+			"quickWordCounts": "Cantidades rápidas",
+			"nWords": "{count} palabras",
+			"singleSpacedLabel": "Páginas a espacio sencillo (500 palabras/pág.)",
+			"doubleSpacedLabel": "Páginas a doble espacio (250 palabras/pág.)",
+			"nPages": "{count} páginas",
+			"onePage": "1 página",
+			"convertPagesTitle": "Convertir páginas en tiempo de lectura",
+			"convertPagesSub": "Estima el total de palabras y el tiempo de lectura según la densidad estándar de página o el formato de libro de bolsillo.",
+			"numberOfPages": "Número de páginas",
+			"pagesUnit": "páginas",
+			"lineSpacingLabel": "Interlineado / densidad de página",
+			"lineSpacingAria": "Interlineado de página",
+			"singleSpaced": "Espacio sencillo",
+			"wpp500": "500 palabras/pág.",
+			"doubleSpaced": "Doble espacio",
+			"wpp250": "250 palabras/pág.",
+			"paperback": "Libro de bolsillo",
+			"wpp300": "300 palabras/pág.",
+			"quickPageCounts": "Páginas rápidas",
+			"estimatedWordCount": "Palabras estimadas",
+			"basedOnWppBefore": "Calculado con ",
+			"basedOnWppAfter": " palabras por página.",
+			"silentSpeedTitle": "Velocidad de lectura silenciosa",
+			"silentSliderAria": "Velocidad de lectura silenciosa en palabras por minuto (de 100 a 400)",
+			"aloudSpeedTitle": "Velocidad en voz alta",
+			"aloudSliderAria": "Velocidad de lectura en voz alta en palabras por minuto (de 100 a 300)",
+			"speedSlow": "Lenta",
+			"speedAverage": "Media",
+			"speedFast": "Rápida",
+			"speedSkimming": "Ojeo",
+			"statSilentTime": "Tiempo de lectura silenciosa",
+			"statSilentSub": "Ritmo medio de lectura adulta",
+			"statAloudTime": "Tiempo en voz alta",
+			"statAloudSub": "Ritmo natural al hablar",
+			"statWordCharCount": "Palabras y caracteres",
+			"charactersUnit": "caracteres",
+			"sentencesUnit": "frases",
+			"estimatedFromWords": "Estimado según las palabras",
+			"statReadingLevel": "Nivel de lectura",
+			"relatedToolsAria": "Herramientas relacionadas de lectura y oratoria",
+			"relatedBeforeSpeech": "¿Prefieres cronometrar un discurso o una presentación? Prueba nuestra ",
+			"relatedBetweenTools": " o comprueba tu velocidad personal con el ",
+			"relatedAfterTools": ".",
+			"btnCopyResult": "Copiar resultado",
+			"btnResetAloud": "Restablecer voz alta a 183 WPM"
+		},
+		"client": {
+			"sampleText": "Escribir bien es un intercambio de tiempo. Cada frase pide al lector unos segundos de atención, y cada párrafo debe ganarse el derecho a llevarlo hasta el siguiente. Cuando autores, editores y oradores miden con precisión el tiempo de lectura, respetan esa atención.\n\nLa investigación en psicología cognitiva muestra que un adulto lee textos de no ficción en silencio a una media aproximada de 238 palabras por minuto (WPM). La documentación técnica, los contratos legales y los artículos académicos suelen exigir un ritmo más pausado, cercano a 180 WPM, mientras que la ficción ligera fluye entre 260 y 300 WPM.\n\nAl leer en voz alta —ya sea en una charla, al grabar un pódcast o al narrar un audiolibro—, el ritmo natural baja a una media de 183 palabras por minuto, dejando espacio para las pausas, la respiración y el énfasis.",
+			"zeroDuration": "0 min 0 seg",
+			"unitMin": "min",
+			"unitSec": "seg",
+			"wordSingular": "palabra",
+			"wordPlural": "palabras",
+			"charSingular": "carácter",
+			"charPlural": "caracteres",
+			"pagePlural": "páginas",
+			"pasteToCheckLevel": "Pega un texto para ver el nivel de lectura",
+			"syllablesAndLetters": "{syllables} sílabas/palabra · {letters} letras/palabra",
+			"enterWordCountPrompt": "Introduce un número de palabras",
+			"estimatedGeneralReading": "Estimación para lectura general",
+			"enterPageCountPrompt": "Introduce un número de páginas",
+			"spacingSingle": "espacio sencillo",
+			"spacingDouble": "doble espacio",
+			"spacingPaperback": "libro de bolsillo",
+			"wppDetail": "{wpp} palabras por página ({spacing})",
+			"modePaste": "Entrada de texto",
+			"modeWords": "N.º de palabras",
+			"modePages": "Páginas",
+			"statusCleared": "Texto borrado",
+			"statusSampleLoaded": "Artículo de ejemplo cargado",
+			"statusInvalidFile": "Sube un archivo .txt o .md",
+			"statusLoadedFile": "Cargado: {filename}",
+			"copySummary": "Lectura silenciosa: {silent} ({silentWpm} WPM) | En voz alta: {speaking} ({speakingWpm} WPM) | {words} {wordUnit}",
+			"copied": "¡Copiado!",
+			"copyResult": "Copiar resultado",
+			"difficultyLabels": {
+				"—": "—",
+				"Standard": "Estándar",
+				"Easy": "Fácil",
+				"Medium": "Media",
+				"Hard": "Difícil"
+			}
+		},
+		"benchmark": {
+			"heading": "Tiempo de lectura según el número de palabras",
+			"subtitle": "Compara el tiempo medio de lectura silenciosa (238 WPM) y de lectura en voz alta (130 WPM) en extensiones habituales.",
+			"clickHint": "Haz clic en cualquier fila para cargar esas palabras en la calculadora",
+			"colWordCount": "N.º de palabras",
+			"colSilent": "Lectura silenciosa (238 WPM)",
+			"colAloud": "En voz alta (130 WPM)",
+			"colFast": "Lector rápido (300 WPM)",
+			"colPages": "Páginas (sencillo / doble)",
+			"colTypical": "Extensión habitual",
+			"unitMin": "min",
+			"unitSec": "seg",
+			"rowAria": "Cargar {count} palabras en la calculadora",
+			"wordsCell": "{count} palabras",
+			"pagesCell": "{single} / {double} páginas",
+			"useCases": {
+				"100": "Correo breve, publicación social o aviso corto",
+				"250": "1 página a doble espacio o nota corta",
+				"300": "Entrada breve de blog o anuncio",
+				"500": "1 página a espacio sencillo o boletín",
+				"750": "3 páginas a doble espacio o columna de opinión",
+				"1000": "2 páginas a espacio sencillo o artículo estándar",
+				"1250": "Discurso de 5 minutos o reportaje breve",
+				"1500": "Artículo detallado o tutorial completo",
+				"2000": "Guía exhaustiva o artículo extenso",
+				"2500": "5 páginas a espacio sencillo o ensayo",
+				"3000": "Caso práctico o guía técnica",
+				"4000": "Trabajo académico o relato corto",
+				"5000": "10 páginas a espacio sencillo o informe técnico",
+				"7500": "Artículo de investigación largo o capítulo de libro",
+				"10000": "20 páginas a espacio sencillo o informe en profundidad"
+			}
+		},
+		"faq": {
+			"heading": "Preguntas frecuentes",
+			"items": [
+				{
+					"question": "¿Se pueden leer 2.000 palabras por minuto?",
+					"answer": "No, leer 2.000 palabras por minuto con comprensión total no es humanamente posible. Los estudios de seguimiento ocular demuestran que la visión y el procesamiento del lenguaje sitúan el límite real de comprensión entre 700 y 900 WPM. Quien afirma leer a 2.000 WPM está hojeando titulares o buscando palabras clave en lugar de leer cada palabra."
+				},
+				{
+					"question": "¿Cuánto mide una lectura de 2 minutos?",
+					"answer": "Una lectura de 2 minutos equivale a unas 450 o 500 palabras a la velocidad media adulta de lectura silenciosa de 238 WPM (o unas 600 palabras para un lector rápido a 300 WPM). Eso corresponde aproximadamente a una página a espacio sencillo o dos a doble espacio: ideal para un boletín conciso o una publicación de LinkedIn."
+				},
+				{
+					"question": "¿Cuántas palabras tiene una lectura de 3 minutos?",
+					"answer": "Una lectura de 3 minutos ronda las 700 a 750 palabras para un lector adulto promedio (238 WPM), o unas 550 palabras si se lee en voz alta a 183 WPM. La mayoría de los artículos breves de blog, columnas de opinión y resúmenes diarios por correo entran justo en esta franja."
+				},
+				{
+					"question": "¿Cuántas palabras se tardan 7 minutos en leer?",
+					"answer": "Se necesitan 7 minutos para leer en silencio entre 1.650 y 1.700 palabras al ritmo medio de 238 WPM (exactamente 1.666 palabras). Un lector más rápido a 300 WPM cubre unas 2.100 palabras en 7 minutos, la extensión típica de un tutorial detallado o un reportaje."
+				},
+				{
+					"question": "¿Cuántas palabras se leen en 20 minutos?",
+					"answer": "A la velocidad media adulta de 238 WPM, en 20 minutos de lectura silenciosa se leen unas 4.760 palabras, lo que equivale a unas 16 páginas de una novela de bolsillo. Un lector rápido a 300 WPM puede cubrir 6.000 palabras (unas 20 páginas) en esos mismos 20 minutos."
+				},
+				{
+					"question": "¿Cuántas palabras se tardan 2 minutos en leer en voz alta?",
+					"answer": "Al ritmo natural de lectura en voz alta de 183 WPM, 366 palabras duran 2 minutos. Si vas a dar un discurso pausado o una presentación a 150 WPM, apunta a unas 300 palabras para terminar con holgura dentro de los dos minutos."
+				},
+				{
+					"question": "¿Cuántas palabras se tardan 5 minutos en leer en voz alta?",
+					"answer": "Leer en voz alta a 183 WPM cubre unas 915 palabras en 5 minutos. Para una presentación o un brindis de 5 minutos en el que hagas pausas para dar énfasis, 750 palabras (150 WPM) es el objetivo más seguro para no ir con prisas."
+				},
+				{
+					"question": "¿Cuántas palabras son 10 minutos leyendo en voz alta?",
+					"answer": "Diez minutos de lectura en voz alta equivalen a unas 1.830 palabras a un ritmo natural de 183 WPM, o a 1.500 palabras a un ritmo pausado de presentación de 150 WPM. Eso supone aproximadamente seis páginas de guion a doble espacio."
+				},
+				{
+					"question": "¿Cuántas palabras puedo leer en voz alta en 15 minutos?",
+					"answer": "Puedes leer aproximadamente 2.745 palabras en voz alta en 15 minutos a 183 WPM, o 2.250 palabras a un ritmo relajado de 150 WPM. La mayoría de las charlas de 15 minutos y bloques de pódcast se sitúan entre 2.200 y 2.500 palabras."
+				},
+				{
+					"question": "¿Leer 100 páginas en 2 horas es rápido?",
+					"answer": "Sí: leer 100 páginas estándar de bolsillo (~30.000 palabras) en 2 horas equivale a 50 páginas por hora, o 250 WPM, por encima de la media adulta de 238 WPM. Si el libro tiene páginas densas (más de 400 palabras por página), terminar 100 páginas en 2 horas te sitúa por encima de las 330 WPM."
+				},
+				{
+					"question": "¿Leer 200 páginas en 3 horas está bien?",
+					"answer": "Sí, terminar 200 páginas de bolsillo (~60.000 palabras) en 3 horas supone 67 páginas por hora, es decir, 333 WPM. Es alrededor de un 40 % más rápido que la media adulta y te coloca en el nivel de lector rápido."
+				},
+				{
+					"question": "¿Cuál es la diferencia entre la velocidad de lectura silenciosa y al hablar?",
+					"answer": "La lectura silenciosa promedia 238 WPM porque tus ojos procesan varias palabras a la vez sin articular sonidos. Hablar y leer en voz alta promedian 183 WPM (y entre 130 y 160 WPM en presentaciones formales) porque pronunciar cada palabra y hacer pausas para respirar lleva naturalmente más tiempo."
+				},
+				{
+					"question": "¿Cómo funciona el indicador de nivel de lectura?",
+					"answer": "Cuando pegas un texto en la calculadora, esta analiza la longitud media de las palabras y la cantidad de sílabas por palabra para estimar la dificultad (Fácil, Media o Difícil). Las frases más largas y las palabras polisílabas complejas suelen hacer que el lector necesite un poco más de tiempo para asimilar el texto."
+				},
+				{
+					"question": "¿Se mantienen privados el texto que pego y el archivo .txt que subo?",
+					"answer": "Sí, al 100 %. Todos los conteos de palabras, estimaciones de tiempo y análisis de legibilidad se ejecutan localmente en tu navegador mediante JavaScript. Tu texto o archivo .txt nunca se envía, guarda ni registra en ningún servidor."
+				}
+			]
+		},
+		"schema": {
+			"featureList": [
+				"Calculadora de tiempo de lectura silenciosa en tiempo real (de 100 a 400 WPM, predeterminada en 238 WPM)",
+				"Temporizador de lectura en voz alta (de 100 a 300 WPM, predeterminado en 183 WPM)",
+				"Sistema multientrada: pegar texto, número de palabras y conversor de páginas",
+				"Lector de archivos .txt por arrastrar y soltar con 100 % de privacidad en el navegador",
+				"Indicador dinámico de nivel de lectura según la longitud de las palabras y la densidad silábica"
+			]
+		},
+		"page": {
+			"heroSubtitle": "Pega tu texto, introduce un número de palabras o convierte páginas para ver cuánto se tarda en leer en silencio o en voz alta. Funciona de forma privada en tu navegador.",
+			"howCalculated": {
+				"h2": "¿Cómo se calcula el tiempo de lectura?",
+				"p1": "El tiempo de lectura es el número estimado de minutos que tarda una persona promedio en leer un texto de principio a fin. Tanto si revisas la extensión de una entrada de blog, un ensayo o un tema de estudio, el cálculo es muy sencillo.",
+				"p2": "Para calcular el tiempo de lectura manualmente, divide el número total de palabras del documento entre tu velocidad de lectura en palabras por minuto (WPM):",
+				"formula": "Tiempo de lectura (en minutos) = Total de palabras ÷ Palabras por minuto (WPM)",
+				"p3": "Por ejemplo, si un artículo tiene 1.000 palabras y lees a la velocidad media adulta en silencio de 238 WPM, la operación es la siguiente:",
+				"exampleSteps": [
+					"1.000 ÷ 238 = 4,20 minutos",
+					"Multiplica la parte decimal (0,20) por 60 para obtener los segundos exactos: 0,20 × 60 = 12 segundos",
+					"Tiempo total estimado de lectura: 4 minutos y 12 segundos"
+				],
+				"h3": "Por qué distintas herramientas muestran tiempos ligeramente diferentes",
+				"p4": "Si comparas varios estimadores de tiempo de lectura —como Medium, Grammarly o Wordora—, es normal notar diferencias de 15 a 30 segundos para el mismo artículo. Esto ocurre por tres motivos prácticos:",
+				"reasons": [
+					{
+						"lead": "Referencias de WPM predeterminadas:",
+						"text": " Algunas plataformas siguen usando una aproximación antigua de 200 o 250 WPM, mientras que las calculadoras modernas emplean 238 WPM, cifra respaldada por la revisión de 190 estudios de lectura del psicólogo Marc Brysbaert."
+					},
+					{
+						"lead": "Lectura silenciosa frente a lectura en voz alta:",
+						"text": " Estimar la lectura silenciosa de un blog usa unas 238 WPM, mientras que calcular la duración de un discurso o guion leído en voz alta requiere un ritmo más lento de 183 WPM."
+					},
+					{
+						"lead": "Pausas y elementos visuales:",
+						"text": " Cuando un artículo incluye imágenes, gráficos o listas, el lector suele detenerse unos segundos a observarlos; añadir un margen del 10 % ofrece una estimación más realista."
+					}
+				]
+			},
+			"ageSpeed": {
+				"h2": "Velocidad media de lectura por edad, curso y nivel lector",
+				"p1": "Para la mayoría de los adultos que leen textos de no ficción en silencio, la velocidad media es de 238 palabras por minuto (WPM), mientras que la ficción ronda las 260 WPM. Sin embargo, el ritmo varía notablemente según la edad, el nivel escolar y la familiaridad con el tema.",
+				"h3Chart": "Tabla de palabras por minuto (WPM) según edad y nivel educativo",
+				"pChart": "Al principio, los niños leen en voz alta palabra por palabra, lo que mantiene la velocidad baja. Al consolidarse la lectura silenciosa en secundaria, el ritmo sube con rapidez antes de estabilizarse en la edad adulta:",
+				"headers": [
+					"Grupo lector / Nivel escolar",
+					"Edad habitual",
+					"Velocidad media (WPM)",
+					"Modo de lectura"
+				],
+				"rows": [
+					[
+						"1.º de primaria",
+						"6–7 años",
+						"53–80 WPM",
+						"En voz alta"
+					],
+					[
+						"2.º de primaria",
+						"7–8 años",
+						"89–115 WPM",
+						"En voz alta"
+					],
+					[
+						"3.º de primaria",
+						"8–9 años",
+						"107–135 WPM",
+						"En voz alta / Silenciosa"
+					],
+					[
+						"4.º y 5.º de primaria",
+						"9–11 años",
+						"123–160 WPM",
+						"Principalmente silenciosa"
+					],
+					[
+						"Secundaria inicial (11–14)",
+						"11–14 años",
+						"150–204 WPM",
+						"Silenciosa"
+					],
+					[
+						"Bachillerato / Secundaria superior",
+						"14–18 años",
+						"200–250 WPM",
+						"Silenciosa"
+					],
+					[
+						"Estudiante universitario",
+						"18–22 años",
+						"250–300 WPM",
+						"Silenciosa (estudio y ojeo)"
+					],
+					[
+						"Adulto promedio (global)",
+						"23+ años",
+						"238 WPM",
+						"Silenciosa (no ficción)"
+					],
+					[
+						"Lector rápido / habitual",
+						"Adulto",
+						"300–450 WPM",
+						"Silenciosa"
+					],
+					[
+						"Top 1 % de lectores",
+						"Adulto",
+						"500–700 WPM",
+						"Silenciosa con comprensión"
+					]
+				],
+				"h3Fast": "¿Leer a 250, 300 o 400 palabras por minuto es rápido?",
+				"fastItems": [
+					{
+						"lead": "250 WPM:",
+						"text": " Ligeramente por encima de la media adulta de 238 WPM. A 250 WPM terminas aproximadamente una página a doble espacio por minuto o entre 40 y 45 páginas de bolsillo por hora."
+					},
+					{
+						"lead": "300 WPM:",
+						"text": " Se considera una velocidad buena y ágil, alrededor de un 25 % más rápida que la media. Muchos lectores habituales y universitarios alcanzan de forma natural 300 WPM en temas conocidos."
+					},
+					{
+						"lead": "400 WPM:",
+						"text": " Muy rápido. Solo en torno al 5 % superior de los lectores mantiene 400 WPM sin saltarse palabras ni perder comprensión."
+					}
+				],
+				"h3Myths": "Lectores famosos y mitos frecuentes sobre la velocidad de lectura",
+				"pMyths": "En internet suelen exagerarse las cifras de lectura de personajes célebres, así que conviene separar los datos reales de los mitos:",
+				"mythItems": [
+					{
+						"lead": "Bill Gates y Elon Musk:",
+						"text": " Se sabe que Bill Gates lee unos 50 libros al año y ha comentado que avanza a unas 150 páginas por hora en no ficción densa, lo que equivale a 600–750 WPM según la densidad de página, aunque también toma abundantes notas al margen que moderan su ritmo real. Elon Musk creció leyendo ciencia ficción durante horas cada día, apoyándose en el hábito constante más que en trucos de lectura rápida."
+					},
+					{
+						"lead": "John F. Kennedy (JFK):",
+						"text": " Algunas anécdotas populares afirmaban que JFK leía a 1.200 WPM, pero los investigadores señalan que por encima de 800–900 WPM ya se trata de lectura exploratoria (ojeo) y no de comprensión palabra por palabra."
+					},
+					{
+						"lead": "Coeficiente intelectual y TDAH:",
+						"text": " Un CI alto no garantiza automáticamente leer más rápido, aunque un vocabulario amplio reduce las pausas ante términos desconocidos. Quienes tienen TDAH pueden leer más despacio si se distraen o releen líneas, pero a menudo leen mucho más rápido que la media cuando están hiperenfocados en un tema que les apasiona."
+					}
+				],
+				"h3OwnWpm": "¿Cómo puedes calcular tus propias WPM?",
+				"ownWpmBefore": "Pon un cronómetro de 1 minuto, lee un artículo en silencio a tu ritmo normal y cuenta las palabras que recorriste —o usa nuestro ",
+				"ownWpmLink": "Test de velocidad de lectura",
+				"ownWpmAfter": " interactivo para obtener tu puntuación exacta de WPM en 60 segundos."
+			},
+			"wordsToMinutes": {
+				"h2": "Guía de conversión de palabras a minutos (de 200 a más de 3.000 palabras)",
+				"p1": "Convertir palabras en minutos ayuda a escritores, estudiantes y creadores de contenido a calcular cuánto tiempo retendrá la atención un correo, un ensayo o un artículo. Además de la tabla interactiva de 100 a 10.000 palabras que verás abajo, así se traducen las extensiones más consultadas al ritmo adulto medio de 238 WPM:",
+				"groups": [
+					{
+						"h3": "Textos breves: de 200 a 600 palabras (menos de 3 minutos)",
+						"items": [
+							{
+								"lead": "200 palabras (50 seg en silencio / 1 min 6 seg en voz alta):",
+								"text": " Un par de párrafos cortos, ideal para un correo conciso, una ficha de producto o una publicación en LinkedIn. Casi todo el mundo lee 200 palabras en menos de un minuto."
+							},
+							{
+								"lead": "300 palabras (1 min 16 seg en silencio / 1 min 38 seg en voz alta):",
+								"text": " La extensión habitual de una carta de presentación, un anuncio breve o algo más de una página a doble espacio."
+							},
+							{
+								"lead": "500 palabras (2 min 6 seg en silencio / 2 min 44 seg en voz alta):",
+								"text": " Un artículo corto de blog, una redacción escolar o dos páginas a doble espacio. Es lo bastante breve como para que la mayoría de los lectores lo terminen de una sola vez."
+							},
+							{
+								"lead": "600 palabras (2 min 31 seg en silencio / 3 min 17 seg en voz alta):",
+								"text": " Algo más amplio que una columna de 500 palabras, con margen suficiente para una introducción, tres ideas claras y una conclusión breve."
+							}
+						]
+					},
+					{
+						"h3": "Artículos y ensayos medios: de 800 a 1.000 palabras (de 3 a 4,5 minutos)",
+						"items": [
+							{
+								"lead": "800 palabras (3 min 22 seg en silencio / 4 min 22 seg en voz alta):",
+								"text": " Una columna periodística estándar o un tutorial directo. Se sitúa en el punto óptimo para lectores en el móvil que buscan profundidad sin desplazarse durante diez minutos."
+							},
+							{
+								"lead": "1.000 palabras (4 min 12 seg en silencio / 5 min 28 seg en voz alta):",
+								"text": " Una de las referencias más frecuentes para ensayos universitarios, artículos editoriales y boletines. A 238 WPM se lee en 4 minutos y 12 segundos en silencio, o en unos 3 minutos y 20 segundos para un lector rápido a 300 WPM."
+							}
+						]
+					},
+					{
+						"h3": "Guías extensas y trabajos de investigación: de 2.000 a 3.000 palabras (de 8 a 13 minutos)",
+						"items": [
+							{
+								"lead": "2.000 palabras (8 min 24 seg en silencio / 10 min 56 seg en voz alta):",
+								"text": " Una guía práctica detallada, una reseña a fondo o un trabajo de 8 páginas a doble espacio. El lector suele necesitar entre ocho y nueve minutos tranquilos para absorberlo bien."
+							},
+							{
+								"lead": "2.500 palabras (10 min 30 seg en silencio / 13 min 40 seg en voz alta):",
+								"text": " Un artículo pilar completo o un trabajo de 10 páginas a doble espacio. Al superar los diez minutos de lectura, los subtítulos y las listas se vuelven imprescindibles."
+							},
+							{
+								"lead": "3.000 palabras (12 min 36 seg en silencio / 16 min 24 seg en voz alta):",
+								"text": " Un reportaje largo, un informe técnico o un ensayo universitario de 12 páginas. Un lector rápido a 300 WPM lo termina en 10 minutos exactos, mientras que un lector medio tarda unos 12 minutos y medio."
+							}
+						]
+					}
+				]
+			},
+			"minutesToWords": {
+				"h2": "Guía de minutos a palabras: ¿cuánto puedes leer en 2 a 30 minutos?",
+				"p1": "A veces no partes de un número de palabras, sino de un rato libre disponible. Ya sea una pausa de 2 minutos, un trayecto de 10 minutos o una sesión de estudio de 30 minutos, convertir minutos en palabras te muestra exactamente cuánto texto puedes completar antes de que se acabe el tiempo.",
+				"p2": "Para calcular cuántas palabras caben en un número determinado de minutos, multiplica el tiempo disponible por tu velocidad de lectura:",
+				"formula": "Total de palabras = Minutos disponibles × Palabras por minuto (WPM)",
+				"h3Chart": "Tabla de referencia de minutos a palabras (de 2 a 100 minutos)",
+				"pChart": "La siguiente tabla muestra cuántas palabras puedes leer en silencio al ritmo medio adulto (238 WPM) frente a un lector rápido (300 WPM) y a la lectura en voz alta (183 WPM):",
+				"headers": [
+					"Tiempo de lectura",
+					"Lector silencioso medio (238 WPM)",
+					"Lector silencioso rápido (300 WPM)",
+					"Lectura en voz alta (183 WPM)",
+					"Equivalencia habitual"
+				],
+				"rows": [
+					[
+						"2 minutos",
+						"~476 palabras",
+						"600 palabras",
+						"~366 palabras",
+						"Correo breve o noticia corta"
+					],
+					[
+						"3 minutos",
+						"~714 palabras",
+						"900 palabras",
+						"~549 palabras",
+						"Artículo estándar de Medium o boletín"
+					],
+					[
+						"5 minutos",
+						"~1.190 palabras",
+						"1.500 palabras",
+						"~915 palabras",
+						"Entrada detallada o 2,5 páginas de libro"
+					],
+					[
+						"7 minutos",
+						"~1.666 palabras",
+						"2.100 palabras",
+						"~1.281 palabras",
+						"Tutorial completo o reportaje"
+					],
+					[
+						"10 minutos",
+						"~2.380 palabras",
+						"3.000 palabras",
+						"~1.830 palabras",
+						"Guía extensa o ~8 páginas de bolsillo"
+					],
+					[
+						"15 minutos",
+						"~3.570 palabras",
+						"4.500 palabras",
+						"~2.745 palabras",
+						"Un capítulo entero de novela (12–15 páginas)"
+					],
+					[
+						"20 minutos",
+						"~4.760 palabras",
+						"6.000 palabras",
+						"~3.660 palabras",
+						"Meta diaria de lectura (~16 páginas de bolsillo)"
+					],
+					[
+						"30 minutos",
+						"~7.140 palabras",
+						"9.000 palabras",
+						"~5.490 palabras",
+						"Dos o tres capítulos (~25 páginas)"
+					],
+					[
+						"100 minutos",
+						"~23.800 palabras",
+						"30.000 palabras",
+						"~18.300 palabras",
+						"Una novela corta (~80–100 páginas)"
+					]
+				],
+				"h3Quick": "Respuestas rápidas sobre minutos y palabras",
+				"quickItems": [
+					{
+						"lead": "¿Cuántas palabras tiene una lectura de 2 o 3 minutos?",
+						"text": " Una lectura de 2 minutos ronda entre 450 y 500 palabras, mientras que una de 3 minutos se sitúa entre 700 y 750 palabras: la longitud ideal para artículos concisos y boletines diarios."
+					},
+					{
+						"lead": "¿Cuántas palabras son 5 o 7 minutos de lectura?",
+						"text": " Cinco minutos de lectura silenciosa cubren unas 1.190 palabras, y 7 minutos abarcan cerca de 1.666 palabras, motivo por el cual muchos editores apuntan a guías de 1.500 palabras."
+					},
+					{
+						"lead": "¿Se pueden leer 3.000 palabras en 15 minutos?",
+						"text": " Sí. Al ritmo medio adulto de 238 WPM, leer 3.000 palabras lleva 12 minutos y 36 segundos, por lo que todavía te sobran más de dos minutos."
+					},
+					{
+						"lead": "¿Cuánto se puede leer en 20 o 30 minutos?",
+						"text": " En 20 minutos un lector promedio lee 4.760 palabras, y en 30 minutos llega cómodamente a 7.140 palabras: casi 25 páginas de un libro de bolsillo."
+					}
+				],
+				"h3Habit": "¿Por qué leer 20 minutos al día? (Las cuentas del hábito diario)",
+				"pHabit": "Docentes e investigadores suelen recomendar leer al menos 20 o 30 minutos diarios. A 238 WPM, dedicar solo 20 minutos al día suma 4.760 palabras diarias, 142.800 al mes y cerca de 1,73 millones de palabras al año: suficiente para terminar entre 18 y 20 libros de extensión media al año sin necesidad de maratones."
+			},
+			"readAloud": {
+				"h2": "¿Cuánto se tarda en leer en voz alta? (Discursos, guiones y charlas)",
+				"p1": "Leer en voz alta es notablemente más lento que leer en silencio porque debes pronunciar cada palabra y hacer pausas naturales en comas y puntos. Mientras la lectura silenciosa promedia 238 WPM, la lectura en voz alta promedia 183 WPM, y un ritmo cómodo para hablar en público o presentar se sitúa entre 130 y 160 WPM.",
+				"h3Chart": "Tabla de lectura en voz alta y discursos (de 200 a 6.000 palabras)",
+				"pChart": "Usa la tabla siguiente para comprobar cuánto dura un guion, la introducción de un pódcast o una ponencia a ritmo natural de lectura en voz alta (183 WPM) frente a un ritmo pausado de presentación (150 WPM):",
+				"headers": [
+					"N.º de palabras",
+					"Voz alta natural (183 WPM)",
+					"Ritmo de presentación (150 WPM)",
+					"Ritmo lento y enfático (130 WPM)",
+					"Uso habitual"
+				],
+				"rows": [
+					[
+						"200 palabras",
+						"1 min 6 seg",
+						"1 min 20 seg",
+						"1 min 32 seg",
+						"Introducción de vídeo o brindis breve"
+					],
+					[
+						"300 palabras",
+						"1 min 38 seg",
+						"2 min 0 seg",
+						"2 min 18 seg",
+						"Pitch de 2 minutos o resumen en clase"
+					],
+					[
+						"500 palabras",
+						"2 min 44 seg",
+						"3 min 20 seg",
+						"3 min 51 seg",
+						"Brindis de boda corto o intro de YouTube"
+					],
+					[
+						"600 palabras",
+						"3 min 17 seg",
+						"4 min 0 seg",
+						"4 min 37 seg",
+						"Discurso persuasivo de 4 minutos"
+					],
+					[
+						"750 palabras",
+						"4 min 6 seg",
+						"5 min 0 seg",
+						"5 min 46 seg",
+						"Presentación estándar de 5 minutos"
+					],
+					[
+						"1.000 palabras",
+						"5 min 28 seg",
+						"6 min 40 seg",
+						"7 min 42 seg",
+						"Charla o segmento de pódcast de 6–7 min"
+					],
+					[
+						"2.000 palabras",
+						"10 min 56 seg",
+						"13 min 20 seg",
+						"15 min 23 seg",
+						"Sesión de conferencia de 15 minutos"
+					],
+					[
+						"2.500 palabras",
+						"13 min 40 seg",
+						"16 min 40 seg",
+						"19 min 14 seg",
+						"Charla tipo TED de 18 minutos"
+					],
+					[
+						"3.000 palabras",
+						"16 min 24 seg",
+						"20 min 0 seg",
+						"23 min 5 seg",
+						"Clase magistral o seminario de 20 minutos"
+					],
+					[
+						"6.000 palabras",
+						"32 min 47 seg",
+						"40 min 0 seg",
+						"46 min 9 seg",
+						"Ponencia principal o sermón de 40–45 minutos"
+					]
+				],
+				"h3Answers": "Respuestas directas sobre oratoria y lectura en voz alta",
+				"items": [
+					{
+						"lead": "¿Cuántas palabras duran 2, 5, 10 o 15 minutos en voz alta?",
+						"text": " A 183 WPM, 2 minutos en voz alta son unas 366 palabras, 5 minutos son 915, 10 minutos son 1.830 y 15 minutos cubren alrededor de 2.745 palabras (o unas 2.250 a un ritmo relajado de presentación de 150 WPM)."
+					},
+					{
+						"lead": "¿Se pueden decir 1.000 palabras en 7 minutos o 3.000 en 20 minutos?",
+						"text": " Sí en ambos casos. Decir 1.000 palabras en 7 minutos equivale a unas muy cómodas 143 WPM, y exponer 3.000 palabras en 20 minutos equivale exactamente a 150 WPM: dos velocidades ideales para presentar."
+					},
+					{
+						"lead": "¿Puedo hablar 2.000 palabras en 10 minutos?",
+						"text": " Eso exige 200 WPM, un ritmo que resulta apresurado para la mayoría de los oyentes salvo en locuciones rápidas sin pausas."
+					},
+					{
+						"lead": "¿Un discurso de 8 minutos es demasiado largo y cuántas palabras tiene una charla de 1 hora?",
+						"text": " Un discurso de 8 minutos (entre 1.100 y 1.300 palabras) es una duración ideal para exposiciones, presentaciones y ceremonias: suficiente para desarrollar una idea clara sin perder al público. Una charla de 1 hora suele contener entre 7.500 y 9.000 palabras habladas si incluyes pausas naturales y cambios de diapositiva."
+					},
+					{
+						"lead": "¿Cuánto debería durar una lectura en voz alta en clase o para niños?",
+						"text": " En lecturas en voz alta de primaria, el profesorado suele mantener las sesiones entre 10 y 15 minutos (de 1.500 a 2.200 palabras) para conservar la atención del grupo."
+					}
+				],
+				"ctaBefore": "Si estás ensayando una presentación cronometrada con pausas y turno de preguntas, prueba nuestra ",
+				"ctaLink": "Calculadora de tiempo de discurso",
+				"ctaAfter": " para ajustar el ritmo diapositiva a diapositiva."
+			},
+			"wordsPerPage": {
+				"h2": "¿Cuántas palabras tiene una página? (Espacio sencillo, doble y libros)",
+				"p1": "Una página estándar contiene 250 palabras a doble espacio o 500 palabras a espacio sencillo cuando se escribe con letra de 12 puntos (como Times New Roman o Arial) y márgenes de 2,5 cm. Los libros impresos y las novelas promedian entre 275 y 300 palabras por página.",
+				"h3Chart": "Tabla de palabras por página según formato y tamaño de papel",
+				"headers": [
+					"Formato de documento o libro",
+					"Interlineado y fuente",
+					"Media de palabras por página",
+					"10 páginas equivalen a",
+					"100.000 palabras equivalen a"
+				],
+				"rows": [
+					[
+						"Ensayo académico / Manuscrito",
+						"Doble espacio, 12 pt",
+						"250 palabras",
+						"2.500 palabras",
+						"400 páginas"
+					],
+					[
+						"Novela / Libro en rústica",
+						"Formato estándar 15 × 23 cm",
+						"300 palabras",
+						"3.000 palabras",
+						"~333 páginas"
+					],
+					[
+						"Edición de bolsillo compacta",
+						"Formato compacto 11 × 17 cm",
+						"275 palabras",
+						"2.750 palabras",
+						"~364 páginas"
+					],
+					[
+						"Informe / Documento de Word",
+						"Espacio sencillo, 12 pt",
+						"500 palabras",
+						"5.000 palabras",
+						"200 páginas"
+					],
+					[
+						"Hoja A4 (espacio sencillo)",
+						"Fuente 12 pt, márgenes estándar",
+						"520–550 palabras",
+						"~5.350 palabras",
+						"~187 páginas"
+					],
+					[
+						"Hoja A4 (doble espacio)",
+						"Fuente 12 pt, márgenes estándar",
+						"260–275 palabras",
+						"~2.675 palabras",
+						"~374 páginas"
+					]
+				],
+				"h3Answers": "Respuestas rápidas sobre páginas en Word, A4 y libros",
+				"items": [
+					{
+						"lead": "¿Cuántas palabras caben en una página de Microsoft Word o Google Docs?",
+						"text": " Con márgenes estándar de 2,5 cm y Arial o Times New Roman a 12 pt, 1 página tiene 500 palabras a espacio sencillo y 250 a doble espacio. Si usas Calibri a 11 pt (predeterminada en Word), caben entre 550 y 600 palabras a espacio sencillo."
+					},
+					{
+						"lead": "¿Cuántas palabras tiene una página de novela?",
+						"text": " En el sector editorial se utilizan entre 250 y 300 palabras por página como referencia. Una novela típica de 80.000 palabras ocupa unas 270 a 320 páginas impresas, mientras que 100.000 palabras equivalen a 333 páginas de libro (o 400 páginas de manuscrito a doble espacio)."
+					},
+					{
+						"lead": "¿En qué se diferencia el papel A4 del tamaño Carta (US Letter)?",
+						"text": " Como el formato A4 es ligeramente más alto que el tamaño Carta (29,7 cm frente a 27,9 cm), una página A4 a espacio sencillo admite entre un 5 % y un 8 % más de texto: unas 530 palabras en lugar de 500."
+					}
+				],
+				"ctaBefore": "¿Necesitas convertir un número concreto de palabras en páginas exactas según la fuente y el tamaño? Usa nuestro conversor de ",
+				"ctaLink": "Palabras a páginas",
+				"ctaAfter": "."
+			},
+			"readPages": {
+				"h2": "¿Cuánto se tarda en leer 5, 10, 20 y 100 páginas?",
+				"p1": "A la velocidad media adulta de 238 WPM, leer 10 páginas de una novela estándar (3.000 palabras) lleva unos 12 minutos y 36 segundos, mientras que 10 páginas a doble espacio (2.500 palabras) toman 10 minutos y 30 segundos. De media, un adulto lee entre 45 y 55 páginas de bolsillo por hora, o alrededor de 1,2 a 1,5 minutos por página.",
+				"h3Chart": "Tabla de páginas a minutos (de 1 a 200 páginas)",
+				"headers": [
+					"Páginas",
+					"Doble espacio (250 pal./pág.) a 238 WPM",
+					"Novela (300 pal./pág.) a 238 WPM",
+					"Manual denso / PDF (450 pal./pág.) a 200 WPM",
+					"En voz alta (183 WPM)"
+				],
+				"rows": [
+					[
+						"1 página",
+						"1 min 3 seg",
+						"1 min 16 seg",
+						"2 min 15 seg",
+						"1 min 22 seg – 1 min 38 seg"
+					],
+					[
+						"5 páginas",
+						"5 min 15 seg",
+						"6 min 18 seg",
+						"11 min 15 seg",
+						"6 min 50 seg – 8 min 12 seg"
+					],
+					[
+						"8 páginas",
+						"8 min 24 seg",
+						"10 min 5 seg",
+						"18 min 0 seg",
+						"10 min 56 seg – 13 min 7 seg"
+					],
+					[
+						"10 páginas",
+						"10 min 30 seg",
+						"12 min 36 seg",
+						"22 min 30 seg",
+						"13 min 40 seg – 16 min 24 seg"
+					],
+					[
+						"12 páginas",
+						"12 min 36 seg",
+						"15 min 8 seg",
+						"27 min 0 seg",
+						"16 min 24 seg – 19 min 40 seg"
+					],
+					[
+						"20 páginas",
+						"21 min 0 seg",
+						"25 min 13 seg",
+						"45 min 0 seg",
+						"27 min 20 seg – 32 min 47 seg"
+					],
+					[
+						"50 páginas",
+						"52 min 31 seg",
+						"1 h 3 min",
+						"1 h 52 min",
+						"1 h 8 min – 1 h 22 min"
+					],
+					[
+						"100 páginas",
+						"1 h 45 min",
+						"2 h 6 min",
+						"3 h 45 min",
+						"2 h 17 min – 2 h 44 min"
+					],
+					[
+						"200 páginas",
+						"3 h 30 min",
+						"4 h 12 min",
+						"7 h 30 min",
+						"4 h 33 min – 5 h 28 min"
+					]
+				],
+				"h3Answers": "Respuestas rápidas sobre la lectura por páginas",
+				"items": [
+					{
+						"lead": "¿Por qué 10 páginas de un manual, un PDF o el Corán llevan más tiempo que una novela?",
+						"text": " Una novela suele tener márgenes amplios y diálogos fluidos (~300 palabras por página). En cambio, un libro universitario o un PDF académico concentra entre 450 y 600 palabras por página más gráficos y terminología, por lo que estudiarlo bien requiere de 25 a 45 minutos. Del mismo modo, leer 10 páginas del Corán (escritura utmaní) con pronunciación cuidada y reflexión suele llevar entre 15 y 25 minutos, según tu soltura con el árabe."
+					},
+					{
+						"lead": "¿Es normal tardar una hora en leer 10 páginas?",
+						"text": " Sí, si estás estudiando material técnico denso, leyendo en un idioma extranjero, subrayando o tomando apuntes. En cambio, en lectura de ocio, 10 páginas por hora (~50 WPM) suele indicar distracciones o relectura frecuente."
+					},
+					{
+						"lead": "¿Es un buen ritmo leer 100 páginas en 2 horas o 200 páginas en 3 horas?",
+						"text": " Leer 100 páginas de bolsillo en 2 horas supone 50 páginas por hora (~250 WPM), un ritmo sólido por encima de la media. Terminar 200 páginas en 3 horas equivale a 67 páginas por hora (~333 WPM), claramente dentro del nivel de lector rápido."
+					},
+					{
+						"lead": "¿Cuántas páginas al día termina un lector promedio?",
+						"text": " Leer entre 20 y 30 minutos al día equivale a unas 15 a 25 páginas diarias, es decir, entre 500 y 750 páginas al mes."
+					}
+				]
+			},
+			"books": {
+				"h2": "Tiempo estimado de lectura para libros, novelas y manga",
+				"p1": "Un libro estándar de 300 páginas contiene entre 85.000 y 90.000 palabras y requiere de 6 horas a 6 horas y 18 minutos al ritmo adulto medio de 238 WPM. Los clásicos extensos y los textos religiosos oscilan entre 8 y más de 50 horas, mientras que un tomo de manga suele leerse en unos 35 a 45 minutos.",
+				"h3Chart": "Tabla de tiempo de lectura de libros conocidos y manga (238 WPM frente a 300 WPM)",
+				"headers": [
+					"Libro o formato",
+					"Palabras aproximadas",
+					"Páginas habituales",
+					"Lector medio (238 WPM)",
+					"Lector rápido (300 WPM)"
+				],
+				"rows": [
+					[
+						"Libro estándar de 300 páginas",
+						"~90.000 palabras",
+						"300 páginas",
+						"6 h 18 min",
+						"5 h 0 min"
+					],
+					[
+						"La Odisea (Homero)",
+						"~121.000 palabras",
+						"~400 páginas",
+						"8 h 28 min",
+						"6 h 43 min"
+					],
+					[
+						"El conde de Montecristo",
+						"~464.000 palabras",
+						"~1.276 páginas",
+						"32 h 30 min",
+						"25 h 47 min"
+					],
+					[
+						"La Biblia (edición completa)",
+						"~783.000 palabras",
+						"~1.200 páginas",
+						"54 h 50 min",
+						"43 h 30 min"
+					],
+					[
+						"1 tomo de manga",
+						"~8.000–12.000 palabras",
+						"~190–200 páginas",
+						"35–45 min",
+						"25–35 min"
+					]
+				],
+				"h3Breakdown": "Desglose rápido para obras extensas y formatos gráficos",
+				"items": [
+					{
+						"lead": "¿Cuánto se tarda en leer un libro de 300 páginas?",
+						"text": " Con 300 palabras por página (90.000 palabras en total), leer un libro de 300 páginas toma 6 horas y 18 minutos de lectura continua. Con un hábito de 30 minutos diarios, lo terminarás en 12 o 13 días."
+					},
+					{
+						"lead": "¿Cuánto se tarda en leer La Odisea?",
+						"text": " La mayoría de las ediciones de La Odisea de Homero rondan las 121.000 palabras, lo que supone 8 horas y 28 minutos a 238 WPM —o unas 10 horas si te detienes a leer notas sobre mitología griega."
+					},
+					{
+						"lead": "¿Cuánto se tarda en leer El conde de Montecristo?",
+						"text": " La versión íntegra del clásico de Alejandro Dumas supera las 464.000 palabras, lo que requiere unas 32,5 horas de lectura: alrededor de un mes leyendo una hora al día."
+					},
+					{
+						"lead": "¿Cuánto se tarda en leer la Biblia?",
+						"text": " Según la traducción, la Biblia contiene entre 750.000 y 783.000 palabras. A 238 WPM, leerla de principio a fin lleva de 52 a 55 horas en silencio (o unas 71 horas en voz alta a 183 WPM), es decir, unos 9 o 10 minutos al día para completarla en un año."
+					},
+					{
+						"lead": "¿Cuánto se tarda en leer un tomo de manga?",
+						"text": " Un volumen estándar de 200 páginas tiene muchas menos palabras por página (~45–60) que una novela, por lo que un lector medio termina un tomo en 35 a 45 minutos (unos 12–15 segundos por página)."
+					}
+				],
+				"ctaBefore": "¿Prefieres escuchar la edición en audio? Compara velocidades de narración con nuestra ",
+				"ctaLink": "Calculadora de audiolibros",
+				"ctaAfter": "."
+			},
+			"apps": {
+				"h2": "Cómo ver el tiempo de lectura en Word, Google Docs y Kindle",
+				"p1": "Ni Microsoft Word ni Google Docs muestran de serie una insignia automática de tiempo de lectura, pero ambos indican el número exacto de palabras para que puedas calcular la duración en segundos. Amazon Kindle, en cambio, registra tu velocidad real de lectura y muestra estimaciones en vivo en la parte inferior de la pantalla.",
+				"h3Steps": "Guía paso a paso por aplicación y tipo de archivo",
+				"items": [
+					{
+						"lead": "Microsoft Word:",
+						"text": " Consulta el total de palabras en la barra de estado inferior izquierda (o pulsa Ctrl + Shift + G en Windows / Cmd + Shift + G en Mac). Introduce ese número en la pestaña N.º de palabras de nuestra calculadora gratuita, o divídelo por 238 para lectura silenciosa y por 183 para voz alta."
+					},
+					{
+						"lead": "Google Docs:",
+						"text": " Abre tu documento y pulsa Ctrl + Shift + C (Cmd + Shift + C en Mac), o ve al menú Herramientas > Contar palabras. Copia esa cifra en la calculadora o pega tu borrador directamente en la pestaña Pegar texto para obtener el cálculo al instante."
+					},
+					{
+						"lead": "Amazon Kindle:",
+						"text": " Toca la esquina inferior izquierda de la pantalla mientras lees cualquier libro electrónico para alternar entre los modos hasta ver «Tiempo restante en el capítulo» o «Tiempo restante en el libro». Kindle calcula esta cifra de forma dinámica según tu ritmo real al pasar página."
+					},
+					{
+						"lead": "Archivos PDF y artículos web:",
+						"text": " Abre el PDF, pulsa Ctrl + A (Cmd + A) para seleccionar todo el texto, cópialo (Ctrl + C) y pégalo en la pestaña Pegar texto de Wordora —o introduce el número de páginas del PDF en la pestaña Páginas usando 450–500 palabras por página en diseños densos. En blogs y artículos web, pega el texto para comprobar si se acerca al punto óptimo de 5 a 7 minutos."
+					},
+					{
+						"lead": "Otros idiomas (como chino, inglés o francés):",
+						"text": " Las referencias estándar de WPM se aplican muy bien a idiomas alfabéticos como el español, el inglés o el francés. En idiomas basados en caracteres, como el chino, la velocidad adulta media suele medirse entre 400 y 600 caracteres por minuto en lugar de palabras separadas por espacios."
+					}
+				],
+				"ctaBefore": "¿Necesitas un desglose detallado de palabras, caracteres, frases y párrafos antes de medir tu borrador? Abre nuestro ",
+				"ctaLink": "Contador de palabras",
+				"ctaAfter": "."
+			}
+		}
 	},
 	"readingSpeedTest": {
 		"name": "Test de velocidad de lectura (WPM)",
@@ -79,7 +970,1013 @@
 		"metric": "Cronómetro de WPM en vivo · 238 WPM de media",
 		"title": "Test de velocidad de lectura online: mide tus palabras por minuto | Wordora",
 		"metaDescription": "Haz gratis un test de velocidad de lectura de 1 minuto y mide tus palabras por minuto (WPM). Compara tu resultado con el de tu nivel escolar.",
-		"h1": "Test de velocidad de lectura"
+		"h1": "Test de velocidad de lectura",
+		"ui": {
+			"workspaceAria": "Espacio del test de velocidad de lectura y entrenador RSVP",
+			"stepsNavAria": "Pasos de progreso del test de lectura",
+			"stepSetup": "1. Configurar",
+			"stepRead": "2. Leer",
+			"stepQuiz": "3. Cuestionario",
+			"stepResults": "4. Resultados",
+			"pastResults": "Historial",
+			"readingModeLabel": "Modo de lectura",
+			"readingModeAria": "Selector de modo del test de lectura",
+			"modeStandard": "Test estándar",
+			"modeRsvp": "Entrenador RSVP",
+			"difficultyLabel": "Dificultad del texto",
+			"difficultyAria": "Dificultad del texto o texto propio",
+			"diffBeginner": "Básico",
+			"diffIntermediate": "Intermedio",
+			"diffChallenge": "Desafío",
+			"diffCustom": "Texto propio",
+			"shuffleBtn": "Cambiar texto",
+			"customLabel": "Pega tu artículo, apuntes o borrador",
+			"zeroWords": "0 palabras",
+			"customPlaceholder": "Pega o escribe al menos 15 palabras aquí para medir tu velocidad de lectura o practicar en el entrenador RSVP...",
+			"customHintDefault": "El texto propio omite automáticamente el cuestionario de opción múltiple (solo velocidad).",
+			"testOptions": "Opciones del test",
+			"quizLengthLabel": "Cuestionario de comprensión",
+			"quizOption3": "3 preguntas (Recomendado)",
+			"quizOption5": "5 preguntas (Completo)",
+			"quizOption0": "Sin cuestionario (Solo velocidad)",
+			"fontSizeLabel": "Tamaño de letra",
+			"fontSizeAria": "Tamaño de letra del texto",
+			"fontSmall": "A- Pequeña",
+			"fontDefault": "A Estándar",
+			"fontLarge": "A+ Grande",
+			"startTestBtn": "Iniciar test de lectura",
+			"cancelBtn": "Cancelar",
+			"finishHint": "Haz clic en Terminar lectura en cuanto llegues a la última palabra.",
+			"finishReadingBtn": "Terminar lectura",
+			"rsvpHeading": "Entrenador de velocidad RSVP",
+			"rsvpChunkAria": "Modo de fragmentos RSVP",
+			"rsvpWordByWord": "Palabra por palabra",
+			"rsvpSentenceBySentence": "Frase por frase",
+			"rsvpTargetSpeedLabel": "Velocidad objetivo de práctica",
+			"rsvpReady": "Listo",
+			"rsvpPause": "Pausar",
+			"rsvpRestart": "Reiniciar",
+			"rsvpFinishSession": "Finalizar sesión",
+			"quizHeadingDefault": "Comprobación de comprensión",
+			"quizIntro": "El texto se oculta para que respondas de memoria. Tu precisión determina tus WPM efectivas ajustadas por comprensión.",
+			"quizHelperDefault": "Selecciona una respuesta para cada pregunta para continuar.",
+			"submitQuizBtn": "Enviar y ver resultados",
+			"resultsEyebrow": "Test de velocidad de lectura completado",
+			"resultsHeading": "Tu rendimiento de lectura",
+			"copyResultBtn": "Copiar resultado",
+			"takeAnotherBtn": "Hacer otro test",
+			"resultsMetricsAria": "Métricas resumidas del resultado",
+			"kpiRawSpeed": "Velocidad bruta",
+			"kpiComprehension": "Comprensión",
+			"kpiEffectiveWpm": "WPM efectivas",
+			"kpiEffectiveSubDefault": "WPM brutas × precisión",
+			"kpiReaderProfile": "Perfil lector",
+			"skimWarningHtml": "<strong class=\"font-semibold text-ink\">Nota sobre velocidades de 700+ WPM:</strong> Leer por encima de 700 WPM indica un escaneo o lectura rápida superficial más que una comprensión completa palabra por palabra. Las fijaciones oculares humanas sitúan el límite fisiológico de la lectura silenciosa profunda cerca de las 400–500 WPM.",
+			"ageComparisonHeading": "Comparación por grupo de edad",
+			"ageLabel": "Edad:",
+			"ageOptUnder13": "Menor de 13 (165 WPM)",
+			"ageOpt13_17": "13–17 (205 WPM)",
+			"ageOpt18_24": "18–24 (245 WPM)",
+			"ageOpt25_34": "25–34 (238 WPM)",
+			"ageOpt35Plus": "35+ (230 WPM)",
+			"peerAvgInitial": "238 WPM media de referencia",
+			"peerBenchmarkTitle": "Media de referencia del grupo",
+			"comparisonDetailDefault": "Comparando tu velocidad de lectura con la media de referencia de tu grupo de edad.",
+			"booksPerYearHeading": "Libros al año a tu ritmo",
+			"booksPerYearSub": "Libros estándar de no ficción de 90.000 palabras",
+			"dailyMinsAria": "Minutos diarios de lectura",
+			"minPerDay": "min/día",
+			"estimatedAnnualBooks": "Libros estimados al año:",
+			"booksPerYearInitial": "19,3 libros / año",
+			"booksPerYearSubInitial": "A 238 WPM · ~1.737.400 palabras/año",
+			"answerReviewHeading": "Revisión de respuestas y explicaciones",
+			"historyHeading": "Tus últimos 10 resultados",
+			"historySub": "Guardados de forma privada en el almacenamiento local de tu navegador.",
+			"clearHistoryBtn": "Borrar historial",
+			"backToTestBtn": "Volver al test",
+			"historyEmpty": "Aún no hay resultados guardados. Completa un test para hacer seguimiento de tus WPM y tu precisión.",
+			"historyColPassage": "Texto y dificultad",
+			"historyColRawWpm": "WPM brutas",
+			"historyColComp": "Comprensión",
+			"historyColEffectiveWpm": "WPM efectivas",
+			"historyColWhen": "Hora",
+			"relatedToolsAria": "Herramientas de lectura relacionadas",
+			"relatedBefore1": "Ahora que conoces tus WPM personales, úsalas en nuestra",
+			"relatedBefore2": ", planifica tu próxima escucha con la",
+			"relatedBefore3": " o ajusta el ritmo de tu exposición con la"
+		},
+		"client": {
+			"ageBenchmarks": {
+				"under13": "Menores de 13 años",
+				"13-17": "13–17 años",
+				"18-24": "18–24 años",
+				"25-34": "25–34 años",
+				"35plus": "35+ años"
+			},
+			"profiles": {
+				"careful": "Lector pausado",
+				"steady": "Lector constante",
+				"average": "Lector medio",
+				"fast": "Lector rápido",
+				"speed": "Lector veloz",
+				"skimmer": "Escaneo rápido"
+			},
+			"customDefaultParagraph": "Al leer una página, tus ojos se desplazan mediante pequeños saltos llamados sacadas y se detienen brevemente sobre grupos de letras. Pega tu propio artículo o apuntes en Configurar para medir tu velocidad de lectura silenciosa con cualquier texto.",
+			"customPassageTitle": "Tu texto personalizado",
+			"customPassageTopic": "Texto pegado personalizado",
+			"customDifficultyLabel": "Texto propio",
+			"wordSingular": "palabra",
+			"wordsPlural": "palabras",
+			"passageMeta": "{topic} · Texto {index} de {total} · {words} palabras",
+			"modeStandardLabel": "Test estándar",
+			"modeRsvpLabel": "Entrenador RSVP ({wpm} WPM)",
+			"quizSpeedOnlyLabel": "Solo velocidad (sin cuestionario)",
+			"quizCountLabel": "Cuestionario de {count} preguntas",
+			"setupSummary": "{mode} · {words} palabras · {quiz}",
+			"rsvpProgress": "{done} / {total} palabras",
+			"rsvpTimeRemaining": "~{mins}:{secs} a {wpm} WPM",
+			"rsvpPlay": "Iniciar",
+			"rsvpPause": "Pausar",
+			"rsvpResume": "Reanudar",
+			"rsvpReady": "Listo",
+			"customMinWordsError": "Pega o escribe al menos 10 palabras antes de empezar.",
+			"customReadyHint": "Texto propio listo. Haz clic abajo en Iniciar test de lectura.",
+			"rawSpeedRecorded": "Velocidad bruta registrada: {wpm} WPM",
+			"quizHeadingCount": "Cuestionario de memoria ({count} preguntas)",
+			"quizProgress": "{answered} de {total} respondidas",
+			"quizHelperRemainingSingular": "Responde {remaining} pregunta más para ver tus resultados.",
+			"quizHelperRemainingPlural": "Responde {remaining} preguntas más para ver tus resultados.",
+			"quizHelperReady": "Todas las preguntas respondidas. Haz clic en Enviar y ver resultados.",
+			"ageBenchmarkLabel": "{avg} WPM (media {label})",
+			"comparisonExactHtml": "Tu ritmo de <strong class=\"font-semibold text-ink tabular-nums\">{rawWpm} WPM</strong> coincide exactamente con la referencia de <strong class=\"font-semibold text-ink tabular-nums\">{peerAvg} WPM</strong> para {ageLabel}.",
+			"comparisonFasterHtml": "Con <strong class=\"font-semibold text-ink tabular-nums\">{rawWpm} WPM</strong>, lees <strong class=\"font-semibold text-ink tabular-nums\">{diff} WPM más rápido</strong> (+{pctDiff}%) que la media de {ageLabel} ({peerAvg} WPM).",
+			"comparisonSlowerHtml": "Con <strong class=\"font-semibold text-ink tabular-nums\">{rawWpm} WPM</strong>, estás <strong class=\"font-semibold text-ink tabular-nums\">{diff} WPM por debajo</strong> ({pctDiff}% más despacio) de la media de {ageLabel} ({peerAvg} WPM).",
+			"booksPerYearOutput": "{books} libros / año",
+			"booksPerYearSub": "A {wpm} WPM · ~{words} palabras/año",
+			"resRawSub": "{words} palabras en {seconds} s",
+			"speedOnlyShort": "Solo velocidad",
+			"quizBypassed": "Cuestionario omitido",
+			"effectiveSpeedOnlySub": "WPM sin ajuste por cuestionario",
+			"resCompSub": "{correct} de {total} correctas",
+			"resEffectiveSub": "{rawWpm} WPM × {accuracy}% de precisión",
+			"resPercentile": "Más rápido que el {percentile}% de los adultos · {profile}",
+			"reviewSummaryBadge": "{correct} de {total} correctas ({accuracy}%)",
+			"noAnswer": "Sin respuesta",
+			"badgeCorrect": "Correcta",
+			"badgeIncorrect": "Incorrecta",
+			"yourAnswerLabel": "Tu respuesta:",
+			"correctAnswerLabel": "Respuesta correcta:",
+			"historyAverageSingular": "Promedio ({count} test)",
+			"historyAveragePlural": "Promedio ({count} tests)",
+			"copySummary": "Test de velocidad de lectura (Wordora): {rawWpm} WPM brutas · {effectiveWpm} WPM efectivas · {profile} (más rápido que el {percentile}% de los adultos) — {url}",
+			"copiedLabel": "¡Copiado!",
+			"copyResultLabel": "Copiar resultado"
+		},
+		"passages": [
+			{
+				"id": "beg-1",
+				"difficulty": "beginner",
+				"difficultyLabel": "Básico (~150 palabras)",
+				"topic": "Ciencia cognitiva",
+				"title": "Cómo lee el ojo humano el texto impreso",
+				"paragraphs": [
+					"Cuando lees una página de texto, parece que tus ojos se deslizan con suavidad de izquierda a derecha a lo largo de cada línea. En realidad, la visión humana funciona mediante una rápida secuencia de pequeños saltos llamados sacadas, separados por breves pausas conocidas como fijaciones. Durante cada fijación, que dura aproximadamente un cuarto de segundo, tus ojos se enfocan en un grupo de siete a nueve letras mientras la visión periférica anticipa la forma de las palabras siguientes.",
+					"Los lectores experimentados rara vez se detienen en cada palabra. En lugar de eso, el cerebro omite automáticamente palabras cortas y predecibles como \"el\" o \"y\" y utiliza el contexto para completar el sentido. Cuando una frase introduce un término poco familiar o un giro gramatical inesperado, los ojos realizan un rápido salto hacia atrás llamado regresión para verificar la frase. Comprender este ritmo natural explica por qué una tipografía clara y un interlineado cómodo hacen que la lectura prolongada resulte fluida."
+				],
+				"questions": [
+					{
+						"question": "¿Cómo se llaman las breves pausas en las que tus ojos se enfocan en un grupo de letras?",
+						"options": [
+							"Fijaciones",
+							"Transiciones",
+							"Intervalos",
+							"Reflexiones"
+						],
+						"correctIndex": 0,
+						"explanation": "Tus ojos hacen breves detenciones llamadas fijaciones entre los rápidos movimientos sacádicos."
+					},
+					{
+						"question": "¿Cuánto dura aproximadamente cada pausa mientras lees?",
+						"options": [
+							"Unos dos segundos completos",
+							"Aproximadamente un cuarto de segundo",
+							"Unos diez segundos",
+							"Medio minuto"
+						],
+						"correctIndex": 1,
+						"explanation": "Cada fijación dura alrededor de un cuarto de segundo (250 milisegundos)."
+					},
+					{
+						"question": "¿En cuántas letras suelen enfocarse los ojos durante una sola pausa?",
+						"options": [
+							"Una sola letra",
+							"De siete a nueve letras",
+							"De treinta a cuarenta letras",
+							"Un párrafo completo"
+						],
+						"correctIndex": 1,
+						"explanation": "La visión central capta con nitidez un grupo de siete a nueve letras por fijación."
+					},
+					{
+						"question": "¿Qué provoca un salto ocular hacia atrás (una regresión) durante la lectura silenciosa?",
+						"options": [
+							"Palabras cortas predecibles como \"el\" o \"y\"",
+							"Un término poco familiar o un giro gramatical inesperado",
+							"Márgenes amplios al pie de la página",
+							"Leer con luz natural"
+						],
+						"correctIndex": 1,
+						"explanation": "Las regresiones ocurren cuando el cerebro encuentra una palabra desconocida o una sintaxis confusa."
+					},
+					{
+						"question": "¿Qué función cumple la visión periférica mientras lees una línea de texto?",
+						"options": [
+							"Anticipa la forma de las palabras siguientes",
+							"Cuenta los números de página en la parte inferior",
+							"Se desactiva por completo durante las fijaciones",
+							"Lee la página anterior hacia atrás"
+						],
+						"correctIndex": 0,
+						"explanation": "La visión periférica previsualiza la silueta de las palabras próximas para guiar el siguiente salto del ojo."
+					}
+				]
+			},
+			{
+				"id": "beg-2",
+				"difficulty": "beginner",
+				"difficultyLabel": "Básico (~150 palabras)",
+				"topic": "Diseño ambiental",
+				"title": "Por qué las cafeterías ayudan a concentrarse",
+				"paragraphs": [
+					"Muchos escritores y estudiantes descubren que rinden más en una cafetería animada del barrio que en una habitación completamente silenciosa. Los psicólogos llaman a este fenómeno el efecto cafetería. Mientras que los ruidos bruscos —como una llamada telefónica cercana o un portazo— rompen la concentración, un murmullo constante de máquinas de espresso, conversaciones suaves y tintineo de tazas crea una capa agradable de sonido ambiental en torno a los setenta decibelios.",
+					"Ese nivel moderado de ruido de fondo enmascara los picos acústicos repentinos y evita que el cerebro se sienta aislado. Combinado con una sutil actividad visual —ver a otras personas escribiendo, leyendo o dibujando en mesas cercanas—, la cafetería activa una ligera facilitación social. Saber que quienes te rodean trabajan en calma te anima a mantener el enfoque, convirtiendo un local lleno de desconocidos en un espacio de trabajo estimulante."
+				],
+				"questions": [
+					{
+						"question": "¿Cómo llaman los psicólogos al aumento de productividad que se experimenta en cafeterías concurridas?",
+						"options": [
+							"El efecto eco acústico",
+							"El efecto cafetería",
+							"El reflejo del espresso",
+							"El síndrome del cuarto silencioso"
+						],
+						"correctIndex": 1,
+						"explanation": "Los investigadores denominan efecto cafetería a la mejora del enfoque en un ambiente con ruido moderado."
+					},
+					{
+						"question": "¿Aproximadamente a qué nivel de decibelios corresponde el murmullo constante mencionado en el texto?",
+						"options": [
+							"Alrededor de diez decibelios",
+							"Alrededor de setenta decibelios",
+							"Alrededor de ciento treinta decibelios",
+							"Cero decibelios"
+						],
+						"correctIndex": 1,
+						"explanation": "El sonido ambiental suave de una cafetería suele situarse cerca de los setenta decibelios."
+					},
+					{
+						"question": "¿Cómo ayuda el ruido ambiental constante a proteger la concentración?",
+						"options": [
+							"Enmascara los picos acústicos repentinos que de otro modo sobresaltarían al cerebro",
+							"Hace que la sala quede en silencio absoluto",
+							"Obliga a las personas a leer en voz alta",
+							"Reduce la temperatura del local"
+						],
+						"correctIndex": 0,
+						"explanation": "Un murmullo moderado atenúa el impacto de ruidos agudos inesperados para que resulten menos molestos."
+					},
+					{
+						"question": "¿Qué efecto psicológico se activa al ver a otras personas trabajando en mesas cercanas?",
+						"options": [
+							"Fatiga visual",
+							"Facilitación social",
+							"Regresión de memoria",
+							"Sobrecarga sensorial"
+						],
+						"correctIndex": 1,
+						"explanation": "Ver a otros concentrados cerca activa la facilitación social y te motiva a seguir con tu tarea."
+					},
+					{
+						"question": "¿Qué sonido describe el texto como lo bastante brusco para romper la concentración?",
+						"options": [
+							"Conversaciones suaves de fondo",
+							"Una llamada telefónica cercana o un portazo",
+							"El zumbido de una máquina de espresso",
+							"El tintineo suave de las tazas"
+						],
+						"correctIndex": 1,
+						"explanation": "Los ruidos repentinos y nítidos, como un portazo o una llamada cercana, desvían la atención."
+					}
+				]
+			},
+			{
+				"id": "int-1",
+				"difficulty": "intermediate",
+				"difficultyLabel": "Intermedio (~300 palabras)",
+				"topic": "Historia del libro y los medios",
+				"title": "Por qué la lectura silenciosa se consideraba inusual en la Antigüedad",
+				"paragraphs": [
+					"Hoy damos por sentada la lectura silenciosa, ya sea al repasar un artículo en el portátil, revisar apuntes antes de una reunión o leer una novela en un tren tranquilo. Sin embargo, durante gran parte de la historia antigua, leer era ante todo una actividad en voz alta. Los manuscritos griegos y romanos se escribían en cadenas continuas de letras mayúsculas, sin espacios entre palabras ni signos de puntuación que indicaran dónde terminaba una idea.",
+					"Como el ojo no tenía separaciones visuales para distinguir una palabra de la siguiente, los lectores pronunciaban las sílabas en voz alta para que su oído reconociera frases familiares. Cuando algunos eruditos del siglo IV vieron a alguien leer una página sin mover los labios ni emitir sonido alguno, consideraron aquel hábito lo bastante sorprendente como para anotarlo en sus diarios. Las bibliotecas de la Antigüedad no eran salas silenciosas; zumbaban con el murmullo bajo de decenas de estudiosos recitando textos para sí mismos.",
+					"El cambio hacia la lectura silenciosa fluida comenzó a principios de la Edad Media, cuando escribas de Irlanda y Gran Bretaña empezaron a insertar espacios en blanco claros entre las palabras e introdujeron comas, puntos y saltos de párrafo. Una vez que cada palabra adquirió una forma visual independiente sobre la página, el cerebro humano pudo reconocer palabras enteras de un vistazo sin tener que pronunciarlas antes. Aquel sencillo avance de diseño aceleró enormemente la velocidad de lectura, permitió la reflexión privada y sentó las bases de la edición moderna."
+				],
+				"questions": [
+					{
+						"question": "¿Cómo se escribían habitualmente los manuscritos griegos y romanos antiguos?",
+						"options": [
+							"Con espacios amplios y puntuación en colores",
+							"En cadenas continuas de mayúsculas sin espacios entre palabras",
+							"En listas con viñetas y subtítulos en negrita",
+							"En cursiva minúscula con frases numeradas"
+						],
+						"correctIndex": 1,
+						"explanation": "Los manuscritos antiguos usaban letras mayúsculas continuas (scriptura continua) sin espacios entre palabras."
+					},
+					{
+						"question": "¿Por qué pronunciaban las sílabas en voz alta los lectores de la Antigüedad?",
+						"options": [
+							"Escuchar las sílabas ayudaba a su oído a reconocer frases familiares en textos sin espacios",
+							"Las leyes antiguas prohibían leer en silencio en público",
+							"Los pergaminos estaban escritos en notación musical",
+							"Las salas eran demasiado oscuras para ver bien la tinta"
+						],
+						"correctIndex": 0,
+						"explanation": "Sin espacios visuales, leer en voz alta permitía que el oído distinguiera dónde terminaba una palabra y empezaba la siguiente."
+					},
+					{
+						"question": "¿Cómo eran las bibliotecas antiguas comparadas con las actuales?",
+						"options": [
+							"Zumbaban con el murmullo de eruditos recitando textos en voz alta",
+							"Imponían silencio estricto bajo fuertes multas",
+							"Solo permitían la entrada de un visitante al día",
+							"Almacenaban únicamente grabaciones habladas"
+						],
+						"correctIndex": 0,
+						"explanation": "En las bibliotecas antiguas se oía el murmullo constante de lectores pronunciando los textos en voz alta."
+					},
+					{
+						"question": "¿Quiénes empezaron a introducir espacios claros entre las palabras a principios de la Edad Media?",
+						"options": [
+							"Los funcionarios del Senado romano",
+							"Escribas de Irlanda y Gran Bretaña",
+							"Editores de periódicos del siglo XIX",
+							"Dramaturgos de la Atenas clásica"
+						],
+						"correctIndex": 1,
+						"explanation": "Los escribas irlandeses y británicos impulsaron la separación entre palabras y la puntuación medieval."
+					},
+					{
+						"question": "¿Qué permitió al cerebro humano que las palabras tuvieran formas visuales diferenciadas?",
+						"options": [
+							"Reconocer palabras enteras de un vistazo sin pronunciarlas primero",
+							"Memorizar libros completos con solo mirar la portada",
+							"Leer en completa oscuridad",
+							"Escribir sin utilizar vocales"
+						],
+						"correctIndex": 0,
+						"explanation": "Los espacios dieron a cada palabra una silueta visual propia que el cerebro puede descifrar en silencio."
+					}
+				]
+			},
+			{
+				"id": "int-2",
+				"difficulty": "intermediate",
+				"difficultyLabel": "Intermedio (~300 palabras)",
+				"topic": "Historia marítima y ciencia",
+				"title": "Cómo los cronómetros marinos resolvieron la longitud en el mar",
+				"paragraphs": [
+					"Durante siglos, los marinos que cruzaban mar abierto podían calcular su latitud —cuán al norte o al sur se encontraban— midiendo la altura del sol al mediodía o el ángulo de la estrella Polar por la noche. Calcular la longitud, que mide la posición de este a oeste, resultaba mucho más peligroso y difícil. Sin una forma fiable de conocer su longitud exacta, los barcos se desviaban con frecuencia de su rumbo, pasaban de largo islas de abastecimiento o chocaban contra arrecifes no cartografiados en la oscuridad.",
+					"La clave de la longitud estaba en medir el tiempo con precisión. Como la Tierra gira trescientos sesenta grados cada veinticuatro horas, rota quince grados en una sola hora. Si un navegante conocía la hora exacta de un puerto de referencia mientras observaba al mismo tiempo el mediodía local a bordo, cada hora de diferencia revelaba quince grados de longitud al este o al oeste. Por desgracia, los primeros relojes de péndulo fallaban en los barcos de madera en movimiento porque las olas y los cambios de temperatura alteraban el ritmo de sus engranajes.",
+					"En el siglo XVIII, un carpintero y relojero inglés autodidacta llamado John Harrison dedicó décadas a diseñar relojes marinos compactos accionados por resorte, conocidos como cronómetros marinos. Al combinar metales que se dilataban a distinto ritmo para compensar los cambios de temperatura y eliminar por completo los péndulos, el cuarto reloj de Harrison se atrasó menos de cinco segundos durante una travesía de ochenta y un días hasta Jamaica. Su invento transformó la navegación mundial e hizo los viajes oceánicos mucho más seguros."
+				],
+				"questions": [
+					{
+						"question": "¿Cómo determinaban tradicionalmente los marinos su latitud norte-sur en el mar?",
+						"options": [
+							"Midiendo la altura del sol al mediodía o la estrella Polar por la noche",
+							"Lanzando una cuerda con peso hasta el fondo marino",
+							"Escuchando balizas de radio desde la costa",
+							"Probando la salinidad del agua del mar"
+						],
+						"correctIndex": 0,
+						"explanation": "Los navegantes medían el ángulo del sol o de la estrella Polar sobre el horizonte para calcular la latitud."
+					},
+					{
+						"question": "¿Cuántos grados gira la Tierra en una sola hora?",
+						"options": [
+							"Cinco grados",
+							"Quince grados",
+							"Noventa grados",
+							"Trescientos sesenta grados"
+						],
+						"correctIndex": 1,
+						"explanation": "Dividir 360 grados entre 24 horas equivale a 15 grados de rotación por hora."
+					},
+					{
+						"question": "¿Por qué fallaban los primeros relojes de péndulo en las travesías oceánicas?",
+						"options": [
+							"El balanceo de las olas y los cambios de temperatura alteraban sus péndulos y engranajes",
+							"El agua salada disolvía sus esferas de cristal",
+							"Solo podían funcionar durante treinta minutos seguidos",
+							"Las brújulas magnéticas detenían sus manecillas"
+						],
+						"correctIndex": 0,
+						"explanation": "El cabeceo de la cubierta y los cambios de clima arruinaban la oscilación regular del péndulo."
+					},
+					{
+						"question": "¿Cuál era el oficio original de John Harrison antes de fabricar cronómetros marinos?",
+						"options": [
+							"Almirante de la Marina Real",
+							"Carpintero y relojero autodidacta",
+							"Astrónomo universitario",
+							"Tallador de lentes de vidrio"
+						],
+						"correctIndex": 1,
+						"explanation": "John Harrison era un carpintero inglés autodidacta que dominó la relojería de precisión."
+					},
+					{
+						"question": "¿Qué precisión demostró el cuarto reloj de Harrison en su viaje de ochenta y un días a Jamaica?",
+						"options": [
+							"Se atrasó menos de cinco segundos",
+							"Perdió alrededor de dos horas",
+							"Dejó de funcionar a mitad del Atlántico",
+							"Se adelantó diez minutos por semana"
+						],
+						"correctIndex": 0,
+						"explanation": "El cronómetro marino H4 de Harrison perdió menos de cinco segundos durante toda la travesía de 81 días."
+					}
+				]
+			},
+			{
+				"id": "chal-1",
+				"difficulty": "challenge",
+				"difficultyLabel": "Desafío (~500 palabras)",
+				"topic": "Atención y aprendizaje",
+				"title": "Lectura profunda frente a escaneo rápido en un mundo digital",
+				"paragraphs": [
+					"En las últimas dos décadas, la dieta diaria de palabras escritas de una persona media ha crecido de forma notable. Entre correos electrónicos, aplicaciones de mensajería, documentación y titulares de noticias, los lectores modernos procesan miles de palabras antes de la hora de comer. Para afrontar este volumen, nuestro cerebro desarrolla de manera natural un hábito adaptativo llamado escaneo no lineal: recorremos títulos, buscamos listas con viñetas y saltamos entre párrafos siguiendo un patrón en forma de F para extraer datos clave lo más rápido posible.",
+					"Escanear es una destreza realmente útil al ordenar la bandeja de entrada o buscar un ajuste concreto en un manual técnico. Sin embargo, los investigadores cognitivos han comprobado que aplicar esta mentalidad apresurada a cualquier texto conlleva un coste sutil. Cuando pasamos por encima de las frases a 400 o 500 palabras por minuto, la memoria de trabajo dispone de menos tiempo para conectar ideas nuevas con conocimientos previos, percibir matices en un argumento o recordar detalles una hora después.",
+					"La lectura profunda sigue una cadencia distinta. A un ritmo silencioso cómodo —normalmente entre 200 y 280 palabras por minuto en la mayoría de los adultos—, el cerebro dedica tiempo a la inferencia y a crear imágenes mentales. En vez de descifrar palabras en la superficie, haces micro-pausas al final de las cláusulas para evaluar si una afirmación tiene sentido. Los estudios que comparan la comprensión entre formatos muestran sistemáticamente que quienes reducen ligeramente el paso en textos densos de no ficción retienen mucha más información que quienes corren hasta el final de la pantalla.",
+					"Otro factor que influye en la comprensión es la memoria espacial física. Al leer un libro impreso, tus dedos perciben el grosor de las páginas a la izquierda frente a la derecha, y tus ojos recuerdan si un párrafo importante estaba cerca de la esquina superior izquierda o inferior derecha de una doble página. En una pantalla de desplazamiento continuo, el texto sube a través de un único marco, eliminando esas referencias geográficas fijas que ayudan a anclar el recuerdo a largo plazo.",
+					"Por suerte, alternar entre el escaneo rápido y el enfoque profundo es una habilidad que cualquiera puede entrenar deliberadamente. Ofrecerte una página libre de distracciones, elegir un ancho de columna cómodo y reservar aunque sean quince minutos sin interrupciones le indica a tu sistema de atención que no hace falta correr. Al adaptar tu velocidad de lectura al propósito del texto —escaneando con ligereza para consultas rápidas y asentándote en un ritmo constante ante ideas complejas— obtienes lo mejor de ambos mundos: eficiencia cuando necesitas respuestas rápidas y comprensión duradera cuando importa la profundidad."
+				],
+				"questions": [
+					{
+						"question": "¿Qué patrón de lectura suele emplearse al explorar rápidamente páginas digitales?",
+						"options": [
+							"Leer desde el último párrafo hacia arriba",
+							"Escaneo no lineal en forma de F sobre títulos y viñetas",
+							"Leer cada palabra dos veces en voz alta",
+							"Lectura en espiral diagonal desde el centro hacia fuera"
+						],
+						"correctIndex": 1,
+						"explanation": "Los lectores digitales suelen recorrer encabezados e inicios de párrafo con un patrón en forma de F."
+					},
+					{
+						"question": "¿Qué ocurre cuando un lector avanza con prisa por un texto denso de no ficción a 400–500 WPM?",
+						"options": [
+							"La memoria de trabajo tiene menos tiempo para conectar ideas y retener detalles",
+							"La comprensión a largo plazo se duplica automáticamente",
+							"Las fijaciones oculares duran varios segundos por letra",
+							"Las referencias de memoria espacial se vuelven más sólidas"
+						],
+						"correctIndex": 0,
+						"explanation": "Leer con prisa a 400–500 WPM resta tiempo a la memoria de trabajo para integrar y almacenar ideas complejas."
+					},
+					{
+						"question": "¿Qué rango habitual de lectura silenciosa favorece una buena inferencia y lectura profunda en adultos?",
+						"options": [
+							"Entre 50 y 80 WPM",
+							"Entre 200 y 280 WPM",
+							"Entre 550 y 700 WPM",
+							"Más de 850 WPM"
+						],
+						"correctIndex": 1,
+						"explanation": "Una cadencia silenciosa constante de 200 a 280 WPM da margen al cerebro para inferir y visualizar."
+					},
+					{
+						"question": "¿Cómo apoyan los libros impresos la memoria espacial a diferencia de las pantallas con desplazamiento?",
+						"options": [
+							"Las esquinas fijas y el grosor de las páginas ofrecen referencias físicas para el recuerdo",
+							"La tinta impresa brilla en la oscuridad para reforzar la memoria",
+							"Los libros impresos tienen una frecuencia de refresco más alta",
+							"Las páginas de papel resumen automáticamente cada capítulo"
+						],
+						"correctIndex": 0,
+						"explanation": "El libro físico aporta esquinas fijas y sensación táctil de avance que ayudan a anclar los recuerdos."
+					},
+					{
+						"question": "¿Qué estrategia práctica recomienda el texto al final?",
+						"options": [
+							"Eliminar todas las pantallas digitales para siempre",
+							"Adaptar tu velocidad de lectura al propósito del texto",
+							"Obligarte a leer cada correo electrónico a 100 WPM",
+							"Escanear novelas a 600 WPM"
+						],
+						"correctIndex": 1,
+						"explanation": "Escanea con agilidad para búsquedas puntuales y baja el ritmo a una cadencia constante cuando busques profundidad."
+					}
+				]
+			},
+			{
+				"id": "chal-2",
+				"difficulty": "challenge",
+				"difficultyLabel": "Desafío (~500 palabras)",
+				"topic": "Neurociencia y salud",
+				"title": "Cómo consolida el cerebro la memoria durante el sueño",
+				"paragraphs": [
+					"Durante buena parte del siglo XX, los científicos consideraron el sueño como un apagado pasivo: un periodo nocturno de mantenimiento en el que el cerebro simplemente descansaba para ahorrar energía tras la vigilia. La neuroimagen moderna y los registros eléctricos cuentan una historia muy distinta. Lejos de desconectarse, el cerebro dormido ejecuta una serie muy coordinada de rutinas biológicas que ordenan, refuerzan y reorganizan todo lo que aprendiste durante el día.",
+					"A lo largo de la jornada, las experiencias y los datos nuevos se graban temporalmente en el hipocampo, una estructura con forma de caballito de mar situada en lo profundo del lóbulo temporal que funciona como un bloc de notas de escritura rápida. Como el hipocampo tiene una capacidad de almacenamiento limitada, esos rastros recientes son frágiles y los acontecimientos del día siguiente pueden sobrescribirlos fácilmente. Para convertirse en conocimiento permanente, los recuerdos deben transferirse hacia el neocórtex, la capa externa plegada del cerebro encargada del almacenamiento a largo plazo y del razonamiento complejo.",
+					"Esa transferencia ocurre sobre todo durante el sueño profundo de ondas lentas. A medida que las ondas cerebrales se ralentizan en oscilaciones rítmicas, el hipocampo reproduce a gran velocidad los patrones de actividad neuronal del día y envía ráfagas eléctricas llamadas ondas agudas hacia el neocórtex. Cada repetición refuerza las conexiones sinápticas entre neuronas corticales, tejiendo gradualmente nuevo vocabulario, habilidades motoras o ideas conceptuales en tu red de conocimientos previos para que puedas evocarlos sin esfuerzo semanas después.",
+					"Más avanzada la noche, el sueño de movimientos oculares rápidos (REM) asume una función complementaria. Mientras el sueño profundo de ondas lentas consolida datos concretos y procedimientos, el sueño REM cruza los recuerdos recientes con experiencias antiguas almacenadas años atrás. Al probar asociaciones inesperadas en un entorno neuroquímicamente relajado, el cerebro que sueña descubre patrones creativos y suaviza la carga emocional de los sucesos estresantes, conservando lecciones útiles sin la ansiedad inicial.",
+					"Al mismo tiempo, una red microscópica de drenaje conocida como el sistema glinfático abre canales entre las células cerebrales, permitiendo que el líquido cefalorraquídeo arrastre los residuos metabólicos acumulados durante el pensamiento intenso. Esta combinación nocturna de archivo sináptico y limpieza celular explica por qué pasar la noche en vela antes de un examen o una presentación resulta contraproducente: sin ciclos de sueño ininterrumpidos, el bloc temporal del cerebro queda saturado y el material recién estudiado nunca se fija en la memoria a largo plazo."
+				],
+				"questions": [
+					{
+						"question": "¿Qué estructura cerebral actúa como un bloc de notas temporal de escritura rápida para los datos nuevos del día?",
+						"options": [
+							"El hipocampo",
+							"El cerebelo",
+							"El nervio óptico",
+							"La médula espinal"
+						],
+						"correctIndex": 0,
+						"explanation": "El hipocampo registra de forma temporal las experiencias recientes antes de su transferencia a largo plazo."
+					},
+					{
+						"question": "¿Hacia dónde se transfieren los recuerdos para su almacenamiento permanente a largo plazo?",
+						"options": [
+							"Hacia el neocórtex",
+							"Hacia el oído interno",
+							"Hacia la retina",
+							"Hacia el tronco encefálico"
+						],
+						"correctIndex": 0,
+						"explanation": "Durante el sueño, los recuerdos pasan del hipocampo al neocórtex para guardarse de forma duradera."
+					},
+					{
+						"question": "¿Durante qué fase del sueño reproduce el hipocampo los patrones neuronales para consolidar hechos?",
+						"options": [
+							"Durante el sueño profundo de ondas lentas",
+							"Durante una breve ensoñación diurna",
+							"Durante los primeros treinta segundos tras despertar",
+							"Durante el parpadeo ligero al leer"
+						],
+						"correctIndex": 0,
+						"explanation": "El sueño profundo de ondas lentas impulsa la repetición neuronal rápida y la consolidación sináptica."
+					},
+					{
+						"question": "¿Qué papel especial desempeña el sueño REM en el procesamiento de la memoria?",
+						"options": [
+							"Cruza los recuerdos nuevos con experiencias antiguas y atenúa el estrés emocional",
+							"Borra todos los recuerdos de la infancia para liberar espacio",
+							"Detiene toda la actividad eléctrica en la corteza cerebral",
+							"Impide que los ojos se muevan"
+						],
+						"correctIndex": 0,
+						"explanation": "El sueño REM crea asociaciones creativas con recuerdos previos y reduce la reactividad emocional."
+					},
+					{
+						"question": "¿Cuál es la función del sistema glinfático del cerebro durante el sueño?",
+						"options": [
+							"Arrastra los residuos metabólicos mediante el líquido cefalorraquídeo",
+							"Traduce el lenguaje hablado en imágenes visuales",
+							"Aumenta la frecuencia cardíaca y la presión arterial",
+							"Bloquea la llegada de oxígeno a las neuronas"
+						],
+						"correctIndex": 0,
+						"explanation": "El sistema glinfático elimina los desechos metabólicos entre las células cerebrales mientras dormimos."
+					}
+				]
+			}
+		],
+		"page": {
+			"heroSubtitle": "Mide tu velocidad natural de lectura silenciosa en palabras por minuto (WPM), compara tu ritmo con la media adulta de 238 WPM y evalúa tu comprensión con 3 preguntas rápidas.",
+			"schemaFeatures": [
+				"Textos calibrados de no ficción en longitudes corta (~150 palabras), media (~300 palabras) y larga (~500 palabras)",
+				"Cronómetro en vivo con controles de Iniciar lectura y Terminar lectura",
+				"Cálculo instantáneo de palabras por minuto (WPM) y comparación con la media adulta de 238 WPM en lectura silenciosa",
+				"Comprobación de comprensión lectora de 3 y 5 preguntas con puntuación de WPM efectivas",
+				"Modo entrenador RSVP para practicar el ritmo progresivo entre 150 y 800 WPM",
+				"Ejecución 100 % privada en tu navegador sin enviar datos"
+			],
+			"howTo": {
+				"heading": "Cómo usar este test de velocidad de lectura en palabras por minuto",
+				"introHtml": "Sigue estos cuatro pasos rápidos en nuestro <strong class=\"font-semibold text-ink\">medidor de velocidad lectora</strong> online para <strong class=\"font-semibold text-ink\">evaluar tu velocidad de lectura</strong> y obtener una referencia precisa tanto de tu ritmo bruto como de tu comprensión real:",
+				"steps": [
+					{
+						"title": "Configura tu prueba (Configurar)",
+						"bodyHtml": "Elige <strong class=\"font-semibold text-ink\">Test estándar</strong> para medir tu ritmo silencioso natural, o <strong class=\"font-semibold text-ink\">Entrenador RSVP</strong> para practicar la proyección rítmica entre 150 y 800 WPM. Selecciona un nivel de dificultad (<strong class=\"font-semibold text-ink\">Básico</strong>, <strong class=\"font-semibold text-ink\">Intermedio</strong> o <strong class=\"font-semibold text-ink\">Desafío</strong>) o <strong class=\"font-semibold text-ink\">Texto propio</strong>, ajusta el cuestionario y el tamaño de letra, y pulsa <strong class=\"font-semibold text-ink\">Iniciar test de lectura</strong>."
+					},
+					{
+						"title": "Lee en silencio a tu ritmo natural (Leer)",
+						"bodyHtml": "Lee el pasaje de principio a fin con fluidez, sin apresurarte ni saltar líneas. En cuanto tus ojos alcancen la última palabra, haz clic en <strong class=\"font-semibold text-ink\">Terminar lectura</strong> para registrar los segundos exactos."
+					},
+					{
+						"title": "Responde las preguntas de memoria (Cuestionario)",
+						"bodyHtml": "El texto se oculta automáticamente al terminar para que no puedas volver atrás a buscar respuestas. Completa el breve cuestionario de memoria para comprobar cuánta información retuviste realmente."
+					},
+					{
+						"title": "Revisa tus WPM brutas y efectivas (Resultados)",
+						"bodyHtml": "Consulta tus <strong class=\"font-semibold text-ink\">WPM brutas</strong>, tu <strong class=\"font-semibold text-ink\">precisión de comprensión</strong> y tus <strong class=\"font-semibold text-ink\">WPM efectivas</strong> frente a la <strong class=\"font-semibold text-ink\">media adulta de 238 WPM</strong>, y sigue tu evolución en el <strong class=\"font-semibold text-ink\">Historial</strong>."
+					}
+				]
+			},
+			"wpmGuide": {
+				"heading": "Cómo medir la velocidad de lectura: WPM brutas frente a WPM efectivas",
+				"p1Html": "La mayoría de las personas que calculan a ojo qué tan rápido leen se equivocan por un margen amplio. Sin un cronómetro y un recuento de palabras exacto, resulta casi imposible saber si avanzas con regularidad o si pierdes minutos releyendo las mismas líneas. Hacer un <strong class=\"font-semibold text-ink\">test calibrado de WPM</strong> elimina las suposiciones cronometrando un pasaje limpio y convirtiendo los segundos transcurridos en <strong class=\"font-semibold text-ink\">palabras por minuto (WPM)</strong> mediante una fórmula sencilla:",
+				"formula1": "WPM = (Total de palabras leídas ÷ Segundos transcurridos) × 60",
+				"p2Html": "Si terminas un pasaje de 300 palabras en 75 segundos, tu velocidad bruta es de 240 WPM. Esa cifra te ofrece un punto de partida honesto, siempre que la prueba evite dos errores habituales. Primero, no debes poder leer por adelantado antes de iniciar el cronómetro, por eso el test mantiene el texto oculto hasta que haces clic en <strong class=\"font-semibold text-ink\">Iniciar test de lectura</strong>. Segundo, al terminar, el pasaje desaparece antes del cuestionario para medir tu recuerdo real y no tu capacidad de rastrear respuestas.",
+				"sub1Heading": "Por qué las WPM brutas solo cuentan la mitad de la historia",
+				"sub1P1": "Cualquiera puede deslizar la vista sobre 500 palabras en quince segundos, registrar unas llamativas 2.000 WPM y terminar sin poder resumir ni una sola frase. En ciencia cognitiva e investigación lectora, la velocidad sin comprensión se clasifica como escaneo rápido, no como lectura.",
+				"sub1P2Html": "Para medir la capacidad lectora real, los educadores e investigadores utilizan las <strong class=\"font-semibold text-ink\">WPM efectivas</strong>, que ajustan tu ritmo bruto según lo que realmente comprendiste y recordaste:",
+				"formula2": "WPM efectivas = WPM brutas × Precisión de comprensión",
+				"sub1P3": "Piensa en dos lectores que abordan el mismo artículo de 300 palabras:",
+				"sub1BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">El lector A</strong> lee a un ritmo sereno y concentrado de <strong class=\"font-semibold text-ink\">290 WPM</strong> y acierta 4 de 5 preguntas de comprensión (<strong class=\"font-semibold text-ink\">80 % de precisión</strong>). Sus WPM efectivas son <strong class=\"font-semibold text-ink\">232 WPM</strong>.",
+					"<strong class=\"font-semibold text-ink\">El lector B</strong> corre por el texto a <strong class=\"font-semibold text-ink\">420 WPM</strong>, pero falla tres preguntas (<strong class=\"font-semibold text-ink\">40 % de precisión</strong>). Sus WPM efectivas caen a <strong class=\"font-semibold text-ink\">168 WPM</strong>."
+				],
+				"sub1P4": "Aunque el lector B acabó antes en el reloj, el lector A absorbió bastante más información útil por minuto. Siempre que te pongas a prueba, toma las WPM efectivas —y no la velocidad bruta— como la métrica que conviene mejorar con el tiempo.",
+				"sub2Heading": "Cómo elegir el modo adecuado para tu objetivo",
+				"sub2P1": "Cada necesidad de lectura requiere una forma distinta de medir y practicar; por eso la herramienta incluye tres opciones:",
+				"sub2BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Test estándar (Básico, Intermedio y Desafío):</strong> Úsalo cuando quieras una referencia exacta de tu velocidad natural en silencio. Los textos cortos (~150 palabras) sirven para una comprobación rápida, mientras que los largos (~500 palabras) muestran si tu foco y resistencia se mantienen a lo largo de varios párrafos.",
+					"<strong class=\"font-semibold text-ink\">Texto propio:</strong> Tu velocidad cambia según lo que tengas delante. Una noticia cotidiana se lee mucho más rápido que un capítulo universitario denso o un contrato legal. Pega un fragmento de lo que estés estudiando o editando para medir tu ritmo real en material auténtico.",
+					"<strong class=\"font-semibold text-ink\">Entrenador RSVP (una palabra o una frase cada vez):</strong> La Presentación Visual Serial Rápida proyecta las palabras en un punto fijo para que tus ojos no tengan que saltar entre líneas. En lugar de usar RSVP para medir tu línea base cotidiana, trátalo como un ejercicio para entrenar un avance constante a una velocidad objetivo sin retrocesos habituales."
+				],
+				"sub2OutroHtml": "Una vez conozcas tus WPM personales, introdúcelas en nuestra <a href=\"/reading-time-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Calculadora de tiempo de lectura</a> para saber exactamente cuántos minutos tardarás en terminar un artículo, un tema de estudio o un libro completo."
+			},
+			"averages": {
+				"heading": "Velocidad media de lectura por edad, nivel escolar y perfil lector",
+				"p1Html": "Cuando alguien pregunta <em class=\"italic text-ink\">«¿Cuál es la velocidad media de lectura?»</em> suele esperar una única cifra mágica. En realidad, los investigadores —incluidas décadas de estudios de seguimiento ocular resumidos por el psicólogo cognitivo Marc Brysbaert— demuestran que un promedio universal único es más bien una simplificación. Tu velocidad varía notablemente según la edad, la formación, el vocabulario y si lees en silencio o en voz alta.",
+				"p2Html": "En los grandes metaanálisis de estudios de lectura, la <strong class=\"font-semibold text-ink\">velocidad media de lectura silenciosa en adultos para no ficción estándar es de 238 palabras por minuto (WPM)</strong>, mientras que la ficción general promedia algo más, en torno a <strong class=\"font-semibold text-ink\">260 WPM</strong>. Para la mayoría de los adultos, cualquier cifra entre <strong class=\"font-semibold text-ink\">200 y 300 WPM</strong> con al menos un 75 % de comprensión constituye un ritmo sólido y funcional.",
+				"sub1Heading": "Cómo evoluciona la velocidad de lectura desde la infancia hasta la madurez",
+				"sub1P1": "La fluidez lectora se construye en etapas predecibles. Los niños pequeños dedican gran parte de su esfuerzo mental a descifrar letras y sílabas, lo que mantiene moderadas las velocidades iniciales de primaria. A medida que el reconocimiento de palabras se automatiza entre 3.º y 8.º grado, la lectura silenciosa supera al habla oral (~183 WPM) y sigue creciendo durante la secundaria y la universidad.",
+				"tableHeaders": [
+					"Edad / Nivel educativo",
+					"Edad típica",
+					"Lectura silenciosa (WPM)",
+					"Qué ocurre en esta etapa"
+				],
+				"tableRows": [
+					[
+						"1.º de primaria",
+						"6–7 años",
+						"53 – 80 WPM",
+						"Decodificación fonética y lectura de palabras sueltas en voz alta"
+					],
+					[
+						"2.º de primaria",
+						"7–8 años",
+						"89 – 110 WPM",
+						"Reconocimiento de palabras frecuentes y ritmo inicial de frase"
+					],
+					[
+						"3.º de primaria",
+						"8–9 años",
+						"107 – 135 WPM",
+						"Paso de aprender a leer a leer para comprender el significado"
+					],
+					[
+						"4.º y 5.º de primaria",
+						"9–11 años",
+						"123 – 160 WPM",
+						"La lectura silenciosa empieza a superar al ritmo de lectura oral"
+					],
+					[
+						"Secundaria inicial (6.º–8.º)",
+						"11–14 años",
+						"150 – 204 WPM",
+						"Ampliación de vocabulario académico y resistencia en textos largos"
+					],
+					[
+						"Bachillerato / Secundaria (9.º–12.º)",
+						"14–18 años",
+						"200 – 250 WPM",
+						"Acercamiento a la media adulta en manuales y literatura"
+					],
+					[
+						"Estudiante universitario",
+						"18–22 años",
+						"240 – 300 WPM",
+						"Máximo volumen diario de lectura y rápida síntesis de argumentos"
+					],
+					[
+						"Adulto medio (global)",
+						"23–59 años",
+						"238 WPM (200–300)",
+						"Ritmo silencioso de referencia en textos cotidianos de no ficción"
+					],
+					[
+						"Adultos mayores (60–64+ años)",
+						"60+ años",
+						"190 – 225 WPM",
+						"Procesamiento visual algo más lento compensado por amplio vocabulario"
+					],
+					[
+						"Lector rápido / habitual",
+						"Adulto",
+						"300 – 450 WPM",
+						"Retrocesos mínimos y lectura fluida por bloques de frases"
+					],
+					[
+						"Top 1 % de lectores",
+						"Adulto",
+						"500 – 700 WPM",
+						"Límite fisiológico superior manteniendo una comprensión alta"
+					]
+				],
+				"sub2Heading": "Por qué los adultos mayores suelen leer algo más despacio, pero comprenden más",
+				"sub2P1Html": "Si tienes 60 o 70 años y ves que tu puntuación ronda entre <strong class=\"font-semibold text-ink\">195 y 215 WPM</strong> en lugar de 250 WPM, ese ligero descenso es completamente normal. Los estudios de seguimiento ocular muestran que los lectores mayores hacen pausas oculares (<em>fijaciones</em>) un poco más largas y comprobaciones ocasionales hacia atrás para verificar letra pequeña o giros complejos. Sin embargo, al contar con vocabularios mucho más amplios y mayor conocimiento del mundo que los universitarios, sus <strong class=\"font-semibold text-ink\">resultados de comprensión y retención suelen igualar o superar a los de lectores más jóvenes</strong>.",
+				"sub3Heading": "¿Dónde se sitúa realmente el «top 1 %»?",
+				"sub3P1Html": "Los anuncios de lectura rápida suelen prometer que los mejores lectores leen a 1.500 o 2.000 WPM. Las pruebas controladas en laboratorio cuentan una historia muy distinta. Incluso entre doctorandos, editores y grandes lectores de toda la vida, la lectura sostenida con buena comprensión rara vez supera las <strong class=\"font-semibold text-ink\">500 a 700 WPM</strong>. Si obtienes más de <strong class=\"font-semibold text-ink\">320 WPM</strong> con un 80 % o más de aciertos en el cuestionario, ya lees más rápido que aproximadamente el <strong class=\"font-semibold text-ink\">80 % de la población adulta</strong>."
+			},
+			"conversion": {
+				"heading": "Tabla de conversión de WPM a páginas por minuto y por hora",
+				"p1Html": "Saber que lees a <strong class=\"font-semibold text-ink\">238 WPM</strong> resulta útil, pero casi todo el mundo organiza sus sesiones de estudio y metas de lectura en <strong class=\"font-semibold text-ink\">páginas</strong>, no en palabras. Como la densidad de una página cambia según la tipografía, los márgenes y el formato del libro, convertir WPM en páginas por hora requiere una referencia clara.",
+				"p2": "En edición y redacción académica se aplican dos referencias estándar:",
+				"bulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Página estándar a doble espacio (trabajos, informes, manuscritos):</strong> Promedia <strong class=\"font-semibold text-ink\">250 palabras por página</strong>.",
+					"<strong class=\"font-semibold text-ink\">Página de libro de bolsillo / no ficción estándar:</strong> Promedia entre <strong class=\"font-semibold text-ink\">275 y 300 palabras por página</strong> (abajo usamos <strong class=\"font-semibold text-ink\">300 palabras por página</strong> para planificar libros de forma realista)."
+				],
+				"p3Html": "Con la media adulta de <strong class=\"font-semibold text-ink\">238 WPM</strong>, lees <strong class=\"font-semibold text-ink\">14.280 palabras por hora</strong>, lo que equivale aproximadamente a <strong class=\"font-semibold text-ink\">47,6 páginas de libro por hora</strong> (algo menos de 0,8 páginas por minuto).",
+				"sub1Heading": "Tabla de conversión de velocidad lectora: palabras y páginas por hora",
+				"tableHeaders": [
+					"Nivel lector",
+					"Palabras por minuto (WPM)",
+					"Palabras por hora",
+					"Págs. doble espacio / h (~250 p.)",
+					"Págs. libro / h (~300 p.)",
+					"Tiempo para un libro de 300 págs."
+				],
+				"tableRows": [
+					[
+						"Estudio lento / detallado",
+						"130 WPM",
+						"7.800",
+						"31,2 págs./h",
+						"26,0 págs./h",
+						"~11 h 32 min"
+					],
+					[
+						"En desarrollo / pausado",
+						"150 WPM",
+						"9.000",
+						"36,0 págs./h",
+						"30,0 págs./h",
+						"10 h 00 min"
+					],
+					[
+						"Media adulta baja",
+						"200 WPM",
+						"12.000",
+						"48,0 págs./h",
+						"40,0 págs./h",
+						"7 h 30 min"
+					],
+					[
+						"Media adulta de referencia",
+						"238 WPM",
+						"14.280",
+						"57,1 págs./h",
+						"47,6 págs./h",
+						"6 h 18 min"
+					],
+					[
+						"Por encima de la media",
+						"300 WPM",
+						"18.000",
+						"72,0 págs./h",
+						"60,0 págs./h",
+						"5 h 00 min"
+					],
+					[
+						"Lector rápido / fluido",
+						"400 WPM",
+						"24.000",
+						"96,0 págs./h",
+						"80,0 págs./h",
+						"3 h 45 min"
+					],
+					[
+						"Lector muy rápido",
+						"500 WPM",
+						"30.000",
+						"120,0 págs./h",
+						"100,0 págs./h",
+						"3 h 00 min"
+					],
+					[
+						"Límite alto de comprensión",
+						"700 WPM",
+						"42.000",
+						"168,0 págs./h",
+						"140,0 págs./h",
+						"2 h 09 min"
+					],
+					[
+						"Escaneo rápido",
+						"1.000 WPM",
+						"60.000",
+						"240,0 págs./h",
+						"200,0 págs./h",
+						"1 h 30 min (baja retención)"
+					]
+				],
+				"sub2Heading": "¿Es rápido leer 100 páginas por hora y lento leer 20 páginas por hora?",
+				"sub2BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">100 páginas por hora</strong> en un libro estándar de 300 palabras por página equivalen a <strong class=\"font-semibold text-ink\">500 WPM</strong> (o unas <strong class=\"font-semibold text-ink\">415 WPM</strong> en una novela más abierta de 250 palabras por página). Eso te sitúa en el <strong class=\"font-semibold text-ink\">top 1 % a 2 % de lectores naturales</strong>, siempre que asimiles la trama o los argumentos en lugar de saltarte párrafos.",
+					"<strong class=\"font-semibold text-ink\">20 páginas por hora</strong> equivalen aproximadamente a <strong class=\"font-semibold text-ink\">100 WPM</strong>. En ficción ligera es más lento que la media adulta —a menudo por retrocesos frecuentes o distracciones—, pero si estás estudiando química orgánica, leyes o filosofía densa, 20 páginas por hora es un ritmo totalmente normal porque te detienes a analizar fórmulas y razonamientos."
+				],
+				"sub3Heading": "Pantalla frente a papel: ¿cambia el formato tu ritmo por página?",
+				"sub3P1Html": "Los estudios controlados que comparan libros impresos con portátiles y tabletas retroiluminadas hallan de forma constante que la gente lee entre un <strong class=\"font-semibold text-ink\">5 % y un 10 % más despacio en pantalla</strong> ante textos largos y complejos, con una retención ligeramente menor por la fatiga del desplazamiento y el brillo. Los lectores de tinta electrónica (como Kindle) rinden casi igual que el papel. Si quieres convertir un número exacto de palabras en páginas para manuscritos o libros, prueba nuestro <a href=\"/words-to-pages/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Conversor de palabras a páginas</a>."
+			},
+			"science": {
+				"heading": "La ciencia cognitiva de la lectura: sacadas, fijaciones y subvocalización",
+				"p1": "Para entender por qué unas personas leen sin esfuerzo a 400 WPM mientras otras se frenan en 170 WPM, hay que observar qué hacen realmente tus ojos y tu cerebro sobre la página. Leer se siente como un deslizamiento continuo de izquierda a derecha, pero en realidad tus ojos avanzan en una rápida sucesión de pequeños saltos y paradas.",
+				"sub1Heading": "1. Sacadas y fijaciones: cómo captan palabras tus ojos",
+				"sub1P1Html": "Durante la lectura silenciosa, tus ojos realizan saltos rápidos llamados <strong class=\"font-semibold text-ink\">sacadas</strong> (cada uno dura unos 20 a 35 milisegundos), separados por breves pausas llamadas <strong class=\"font-semibold text-ink\">fijaciones</strong> (de unos 200 a 250 milisegundos cada una). Tu cerebro solo absorbe información visual mientras el ojo permanece quieto en una fijación, nunca durante el salto.",
+				"sub1BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Amplitud perceptiva:</strong> Durante una sola fijación, la visión central nítida abarca unos <strong class=\"font-semibold text-ink\">7 a 9 espacios de letra</strong> hacia la derecha de tu mirada, mientras que la visión periférica anticipa formas y espacios de las palabras próximas.",
+					"<strong class=\"font-semibold text-ink\">Por qué los lectores rápidos se mueven distinto:</strong> No mueven los globos oculares más rápido; más bien reconocen patrones conocidos antes, hacen fijaciones algo más breves y captan de 2 a 3 palabras cortas por parada en vez de frenar en cada palabra."
+				],
+				"sub2Heading": "2. Regresiones: el hábito oculto que frena tu ritmo",
+				"sub2P1Html": "Aproximadamente entre el <strong class=\"font-semibold text-ink\">10 % y el 15 % de todos los movimientos oculares</strong> en la lectura normal son <strong class=\"font-semibold text-ink\">regresiones</strong>: saltos rápidos hacia atrás para releer una palabra o frase por la que ya habías pasado.",
+				"sub2BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Regresiones útiles frente a habituales:</strong> Ante una frase confusa o un giro inesperado, mirar atrás un instante ayuda a comprender. Sin embargo, muchos lectores adquieren el hábito nervioso de comprobar líneas que ya habían entendido a la primera, reduciendo su velocidad efectiva entre un 20 % y un 30 %."
+				],
+				"sub3Heading": "3. Subvocalización: ¿conviene silenciar la voz interior?",
+				"sub3P1Html": "La <strong class=\"font-semibold text-ink\">subvocalización</strong> es esa tenue voz interna que «escuchas» en tu mente al leer, acompañada de señales musculares microscópicas en las cuerdas vocales. Muchos cursos comerciales afirman que eliminarla por completo es el secreto para superar las 1.000 WPM.",
+				"sub3P2": "La ciencia cognitiva muestra una realidad más matizada:",
+				"sub3BulletsHtml": [
+					"Tu voz interior está ligada directamente a la memoria fonológica: ayuda al cerebro a sostener frases complejas y verificar su sentido.",
+					"Forzar el silencio mental absoluto en textos densos suele hundir la comprensión. En vez de intentar eliminarla por completo, los lectores hábiles simplemente <strong class=\"font-semibold text-ink\">reducen la pronunciación palabra por palabra</strong> agrupando visualmente frases familiares."
+				],
+				"sub4Heading": "¿Es realmente posible leer con comprensión a 800 o más de 1.000 WPM?",
+				"sub4P1Html": "Debido a los límites biológicos de las fijaciones oculares y el reconocimiento léxico, psicólogos cognitivos como Keith Rayner y Elizabeth Schotter han demostrado que <strong class=\"font-semibold text-ink\">la lectura real con comprensión plena toca techo entre 700 y 900 WPM</strong>. Quien asegura leer a 1.500 o 2.000 WPM está <strong class=\"font-semibold text-ink\">escaneando</strong> (captando palabras clave e intuyendo el resto), algo útil para ojear un informe largo, pero que no sustituye a la lectura profunda."
+			},
+			"improve": {
+				"heading": "Cómo aumentar tu velocidad de lectura sin perder comprensión",
+				"p1Html": "Mejorar tu ritmo de lectura no requiere cursos costosos ni ejercicios oculares milagrosos. Como leer es una destreza cognitiva apoyada en el reconocimiento de patrones, el vocabulario y la atención, la mayoría de los adultos y estudiantes pueden aumentar su ritmo cómodo entre un <strong class=\"font-semibold text-ink\">30 % y un 50 % en cuatro a seis semanas</strong> —por ejemplo, pasar de 220 a 310 WPM— manteniendo la comprensión por encima del 80 %.",
+				"p2": "Estas cinco técnicas respaldadas por la evidencia funcionan de verdad:",
+				"tips": [
+					{
+						"heading": "1. Usa una guía visual (el método del puntero)",
+						"bodyHtml": "Tus ojos siguen el movimiento de forma natural. Cuando guías la vista suavemente bajo cada línea con el dedo, un bolígrafo o el cursor en pantalla, ocurren dos cosas de inmediato: tus ojos divagan menos y <strong class=\"font-semibold text-ink\">las regresiones habituales caen drásticamente</strong>. Mantén un barrido constante y ligeramente ágil para avanzar sin atascarte en palabras conocidas."
+					},
+					{
+						"heading": "2. Agrupa palabras en frases con sentido (bloqueo visual)",
+						"bodyHtml": "En lugar de detenerte en cada palabra suelta (<em>El</em> / <em>rápido</em> / <em>zorro</em> / <em>marrón</em>), entrénate para captar <strong class=\"font-semibold text-ink\">de 2 a 4 palabras por fijación ocular</strong> (<em>El rápido zorro marrón</em> / <em>salta sobre</em> / <em>el perro perezoso</em>). Empieza enfocando ligeramente dentro del margen izquierdo y detente una o dos palabras antes del derecho, dejando que la visión periférica capte los extremos."
+					},
+					{
+						"heading": "3. Previsualiza la estructura antes de leer a fondo",
+						"bodyHtml": "En libros de no ficción, manuales y artículos extensos, dedica <strong class=\"font-semibold text-ink\">60 segundos a recorrer subtítulos, términos en negrita, tablas y los párrafos inicial y final</strong> antes de leer palabra por palabra. Cuando tu cerebro ya conoce el mapa del argumento, procesa las frases nuevas mucho más rápido y retiene mejor las ideas clave."
+					},
+					{
+						"heading": "4. Practica sesiones progresivas con el entrenador RSVP",
+						"bodyHtml": "Cambia la herramienta superior al modo <strong class=\"font-semibold text-ink\">Entrenador RSVP</strong> y ajusta el ritmo entre <strong class=\"font-semibold text-ink\">30 y 50 WPM por encima de tu línea base actual</strong> durante una breve práctica de 2 minutos. Al aparecer las palabras en un punto fijo, entrenas un avance fluido sin retrocesos. Después vuelve a la lectura normal a un ritmo algo más cómodo: notarás que tu velocidad cotidiana fluye con mayor facilidad."
+					},
+					{
+						"heading": "5. Amplía tu vocabulario especializado y lee a diario",
+						"bodyHtml": "El predictor más sólido de la velocidad lectora es el <strong class=\"font-semibold text-ink\">reconocimiento instantáneo de palabras</strong>. Cuando lees con frecuencia sobre un campo concreto —ingeniería de software, medicina, derecho o historia—, tu cerebro almacena su terminología como unidades visuales únicas. Leer solo <strong class=\"font-semibold text-ink\">20 o 30 minutos al día</strong> material cada vez más rico mejora tanto la velocidad como la comprensión de forma constante."
+					}
+				]
+			},
+			"myths": {
+				"heading": "Velocidad de lectura, cociente intelectual, neurodiversidad (TDAH) y lectores célebres",
+				"p1": "Cada vez que se habla de velocidad lectora surgen tres preguntas populares: si leer rápido equivale a tener mayor cociente intelectual, cómo influye el TDAH en el ritmo de lectura y si algunos personajes célebres realmente devoraban libros a velocidades sobrehumanas. Separar la ciencia cognitiva de los mitos de internet te ayuda a fijar metas realistas.",
+				"sub1Heading": "¿Está relacionada la velocidad de lectura con el cociente intelectual (CI)?",
+				"sub1P1Html": "No: la velocidad de lectura <strong class=\"font-semibold text-ink\">no es una medida directa de la inteligencia</strong>. Los estudios de psicología cognitiva muestran sistemáticamente solo una correlación débil entre el CI general y las palabras por minuto.",
+				"sub1BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Qué impulsa realmente la velocidad:</strong> El ritmo depende sobre todo de la <strong class=\"font-semibold text-ink\">fluidez de decodificación visual</strong>, la <strong class=\"font-semibold text-ink\">exposición a la lectura (cuánto lees)</strong> y la <strong class=\"font-semibold text-ink\">familiaridad con el vocabulario</strong>, más que del razonamiento abstracto.",
+					"<strong class=\"font-semibold text-ink\">Por qué quienes piensan a fondo suelen leer despacio:</strong> Muchos científicos, filósofos y juristas con alto CI leen deliberadamente entre <strong class=\"font-semibold text-ink\">150 y 220 WPM</strong> porque se detienen a cuestionar supuestos, conectar capítulos y evaluar pruebas. Leer despacio para reflexionar es una fortaleza, no una limitación."
+				],
+				"sub2Heading": "¿Las personas con TDAH leen más rápido o más despacio?",
+				"sub2P1": "El trastorno por déficit de atención e hiperactividad (TDAH) afecta al ritmo de lectura en dos direcciones opuestas según el interés y el entorno:",
+				"sub2BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Ritmo más lento en textos rutinarios:</strong> Como el TDAH repercute en la memoria de trabajo y la atención visual sostenida, es frecuente perder la línea, saltarse renglones o releer el mismo párrafo varias veces, situando la velocidad cotidiana en torno a <strong class=\"font-semibold text-ink\">140 a 190 WPM</strong>.",
+					"<strong class=\"font-semibold text-ink\">Hiperfoco en temas apasionantes:</strong> Cuando un lector con TDAH encuentra un tema que despierta su curiosidad genuina, el <strong class=\"font-semibold text-ink\">hiperfoco</strong> puede fijar la atención y elevar el ritmo por encima de <strong class=\"font-semibold text-ink\">300 WPM</strong>. Usar un puntero visual o bloques breves cronometrados suele ayudar mucho con textos de estudio."
+				],
+				"sub3Heading": "Lectores famosos: mito frente a realidad (JFK y Bill Gates)",
+				"sub3BulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">John F. Kennedy (el mito de las 1.200 WPM):</strong> Artículos de prensa de los años 60 afirmaron que el presidente Kennedy leía a 1.200 WPM tras un curso de lectura rápida. Incluso sus instructores reconocieron después que esa cifra correspondía al <strong class=\"font-semibold text-ink\">escaneo rápido de periódicos y resúmenes diarios</strong>, no a la lectura palabra por palabra de libros complejos.",
+					"<strong class=\"font-semibold text-ink\">Bill Gates (~500–600 WPM con anotaciones al margen):</strong> Bill Gates lee unos 50 libros de no ficción al año a un ritmo estimado de <strong class=\"font-semibold text-ink\">500 a 600 WPM</strong>: muy rápido, pero plenamente dentro del rango fisiológico superior de lectores adultos entrenados. Además, suele escribir notas en los márgenes para afianzar la comprensión en lugar de perseguir velocidad pura."
+				]
+			},
+			"formats": {
+				"heading": "Cómo cambian tu velocidad de lectura el tipo de contenido y el formato",
+				"p1": "Un lector hábil nunca usa la misma velocidad para cualquier texto. Igual que cambias de marcha al pasar de una autopista recta a una carretera de montaña, tu cerebro ajusta automáticamente el ritmo según la complejidad sintáctica, el vocabulario nuevo y el propósito de tu lectura.",
+				"sub1Heading": "Velocidad de lectura según el tipo de texto",
+				"tableHeaders": [
+					"Tipo de contenido / Modo de lectura",
+					"Velocidad adulta típica (WPM)",
+					"Por qué cambia el ritmo"
+				],
+				"tableRows": [
+					[
+						"Ficción narrativa ligera",
+						"260 – 320 WPM",
+						"Vocabulario cotidiano familiar y fuerte impulso de la trama"
+					],
+					[
+						"No ficción general y noticias",
+						"238 WPM (220–260)",
+						"Equilibrio entre explicaciones narrativas y datos concretos"
+					],
+					[
+						"Textos académicos o técnicos densos",
+						"120 – 180 WPM",
+						"Pausas frecuentes para descifrar fórmulas, jerga y pasos lógicos"
+					],
+					[
+						"Corrección de pruebas y edición",
+						"100 – 150 WPM",
+						"Inspección deliberada palabra por palabra para detectar erratas"
+					],
+					[
+						"Lectura en voz alta (ritmo oral)",
+						"150 – 183 WPM",
+						"Limitada por la articulación física, la respiración y la dicción"
+					],
+					[
+						"Narración de audiolibros (1,0x)",
+						"150 – 160 WPM",
+						"Locución profesional calibrada para una escucha clara y cómoda"
+					]
+				],
+				"sub2Heading": "Por qué leer en voz alta es más lento que leer en silencio",
+				"sub2P1Html": "Al leer en voz alta, tu velocidad tiene un tope físico marcado por la rapidez con la que tus labios, lengua y cuerdas vocales articulan las palabras: una media de <strong class=\"font-semibold text-ink\">183 WPM</strong> en adultos, y cerca de <strong class=\"font-semibold text-ink\">130 a 150 WPM</strong> en una presentación clara ante el público. La lectura silenciosa elimina ese cuello de botella físico, permitiendo procesar frases entre un <strong class=\"font-semibold text-ink\">30 % y un 50 % más rápido</strong>.",
+				"sub2BulletsHtml": [
+					"Si estás preparando una charla, un guion de pódcast o un discurso, usa nuestra <a href=\"/speech-time-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Calculadora de tiempo de discurso</a> para convertir tus palabras en minutos exactos de exposición.",
+					"Si prefieres escuchar libros o comparar velocidades de narración (1,0x frente a 1,5x), prueba nuestra <a href=\"/audiobook-speed-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Calculadora de audiolibros</a> para saber cuánto tardarás en terminar tu próximo título."
+				],
+				"sub3Heading": "Adapta tu velocidad a tu propósito",
+				"sub3P1Html": "Intentar leer un manual denso de filosofía a 350 WPM resulta tan contraproducente como leer una novela ligera de vacaciones a 130 WPM. El verdadero dominio lector es la <strong class=\"font-semibold text-ink\">flexibilidad</strong>: reducir la marcha cuando cada cláusula encierra un peso conceptual alto y deslizarse con soltura cuando la prosa es directa."
+			},
+			"faqHeading": "Preguntas frecuentes"
+		},
+		"faq": [
+			{
+				"question": "¿Cómo puedo medir mi velocidad de lectura con precisión?",
+				"answer": "Para medir tu velocidad real, cronométrate leyendo un texto desconocido en silencio y a tu ritmo natural, sin pausas ni relecturas, y luego responde preguntas de comprensión de memoria. Divide el total de palabras entre los segundos empleados y multiplica por 60 para obtener tus WPM brutas; después multiplica ese resultado por tu porcentaje de aciertos para conocer tus WPM efectivas."
+			},
+			{
+				"question": "¿Cuál es una buena velocidad de lectura para un adulto?",
+				"answer": "Para la mayoría de los adultos leyendo no ficción estándar, una buena velocidad se sitúa entre 238 y 300 WPM con al menos un 75 % a 80 % de comprensión. Superar las 320 WPM con buena retención te coloca por delante de aproximadamente el 80 % de los lectores adultos, y más de 400 WPM se considera rápido."
+			},
+			{
+				"question": "¿Cuántas palabras por minuto debería leer un alumno de 6.º grado?",
+				"answer": "Un estudiante típico de 6.º grado (11–12 años) lee aproximadamente entre <strong class=\"font-semibold text-ink\">150 y 205 palabras por minuto (WPM)</strong> en lectura silenciosa con al menos un 75 % de comprensión, y alrededor de <strong class=\"font-semibold text-ink\">130 a 160 WPM</strong> al leer en voz alta en pruebas de fluidez oral."
+			},
+			{
+				"question": "¿Es lenta una velocidad de lectura de 200 WPM?",
+				"answer": "No, 200 WPM no es inusualmente lento: está justo en el extremo inferior del rango adulto normal (200 a 300 WPM). Si lees manuales técnicos densos, artículos académicos o textos en un segundo idioma, 200 WPM es un ritmo saludable y cuidadoso que favorece la comprensión profunda."
+			},
+			{
+				"question": "¿Es rápido leer a 400 WPM?",
+				"answer": "Sí, 400 WPM es casi un 70 % más rápido que la media adulta de 238 WPM. A ese ritmo lees unas 24.000 palabras por hora —alrededor de 80 páginas de libro estándar por hora—, lo que supone un ritmo excelente para universitarios, investigadores y lectores habituales."
+			},
+			{
+				"question": "¿Se considera lectura rápida leer a 500 WPM?",
+				"answer": "Sí, 500 WPM es muy rápido y te sitúa aproximadamente en el 1 % a 2 % superior de los lectores adultos naturales, siempre que mantengas una comprensión superior al 75 %. A 500 WPM lees 30.000 palabras —unas 100 páginas de libro— cada hora."
+			},
+			{
+				"question": "¿Son humanamente posibles velocidades de 800, 900 o 1.000 WPM?",
+				"answer": "La investigación en seguimiento ocular y psicología cognitiva indica que entre 700 y 900 WPM está el techo biológico superior para leer de verdad con comprensión completa. Velocidades de 1.000 WPM o más se clasifican como escaneo rápido, donde el ojo capta palabras clave y omite palabras de relleno en lugar de leer cada frase."
+			},
+			{
+				"question": "¿Qué velocidad alcanza el top 1 % de lectores?",
+				"answer": "Entre adultos que mantienen una comprensión alta (80 % o más en pruebas de recuerdo), el top 1 % suele leer entre 500 y 700 WPM. Las cifras de más de 1.500 WPM reflejan casi siempre un escaneo veloz y no una comprensión integral del texto."
+			},
+			{
+				"question": "¿Es rápido leer 100 páginas por hora y lento leer 20 páginas por hora?",
+				"answer": "Leer 100 páginas estándar de libro (~300 palabras por página) en una hora equivale a 500 WPM, un ritmo excepcionalmente rápido. En cambio, 20 páginas por hora equivalen a unas 100 WPM: lento para ficción ligera, pero totalmente normal al estudiar libros complejos de ciencia, derecho o filosofía."
+			},
+			{
+				"question": "¿Se pueden leer 3.000 palabras en 15 minutos?",
+				"answer": "Sí: leer 3.000 palabras en 15 minutos requiere una media de 200 WPM (3.000 dividido entre 15 equivale a 200). Como 200 WPM está dentro de la velocidad adulta habitual, casi cualquier lector adulto puede terminar un artículo de 3.000 palabras en 15 minutos con comodidad."
+			},
+			{
+				"question": "¿Leer 200 páginas al día es mucho?",
+				"answer": "Sí, 200 páginas al día es un volumen diario muy alto. Con 300 palabras por página (60.000 palabras en total), un lector adulto medio (238 WPM) necesitaría unas 4 horas y 12 minutos de lectura concentrada al día, o unas 2 horas para un lector rápido de 500 WPM."
+			},
+			{
+				"question": "¿Qué es la regla de las 50 páginas en los libros?",
+				"answer": "La regla de las 50 páginas (popularizada por la bibliotecaria Nancy Pearl) es un hábito práctico: dale a cualquier libro nuevo 50 páginas para captar tu interés y, si al llegar a la página 50 sigue pareciéndote una obligación, déjalo sin culpa y pasa a otro libro. Para mayores de 50 años, la regla propone restar tu edad a 100 para decidir cuántas páginas probar."
+			},
+			{
+				"question": "¿Qué es la regla de los 5 dedos para elegir libros?",
+				"answer": "La regla de los 5 dedos ayuda a niños, familias y docentes a comprobar si un libro encaja con el nivel lector. Abre una página completa y levanta un dedo por cada palabra desconocida o difícil: 0–1 dedos indica un libro muy fácil, 2–3 dedos es el reto ideal y 4–5 dedos sugiere que el vocabulario puede resultar frustrante sin ayuda."
+			},
+			{
+				"question": "¿Está relacionada la velocidad de lectura con el CI?",
+				"answer": "No: la velocidad de lectura tiene solo una correlación débil con el CI general. Tu rapidez depende mucho más del reconocimiento instantáneo de palabras, la amplitud de vocabulario y la práctica diaria que de la inteligencia pura, y muchos pensadores brillantes leen despacio a propósito para analizar ideas complejas."
+			},
+			{
+				"question": "¿Las personas con TDAH leen más rápido o más despacio?",
+				"answer": "Las personas con TDAH pueden experimentar ambas cosas según el texto. Los pasajes rutinarios o poco atractivos suelen producir velocidades más lentas (140 a 190 WPM) por distracciones y relecturas, mientras que los temas de gran interés pueden activar el hiperfoco y superar las 300 WPM."
+			}
+		]
 	},
 	"audiobookCalculator": {
 		"name": "Calculadora de velocidad y tiempo de escucha de audiolibros",
@@ -88,7 +1985,545 @@
 		"metric": "Velocidad de 0,5x a 3,0x",
 		"title": "Calculadora de audiolibros: velocidad, duración y porcentaje | Wordora",
 		"metaDescription": "Calculadora gratuita de audiolibros para conocer su duración y el porcentaje escuchado. Comprueba cuánto tiempo te queda a 1,25x, 1,5x, 1,75x o 2x.",
-		"h1": "Calculadora de audiolibros"
+		"h1": "Calculadora de audiolibros",
+		"ui": {
+			"workspaceAriaLabel": "Espacio de trabajo de la calculadora de velocidad y tiempo de escucha de audiolibros",
+			"inputModeAriaLabel": "Modo de entrada del audiolibro",
+			"modeByLength": "Por duración",
+			"modeByWords": "Por palabras",
+			"modeRemaining": "Restante",
+			"lengthTitle": "Duración del audiolibro (a velocidad 1.0x)",
+			"lengthSubtitle": "Introduce las horas, minutos y segundos de tu audiolibro.",
+			"hoursLabel": "Horas",
+			"minutesLabel": "Minutos",
+			"secondsLabel": "Segundos",
+			"unitHr": "h",
+			"unitMin": "min",
+			"unitSec": "s",
+			"wordsTitle": "Número total de palabras del libro",
+			"wordsSubtitle": "Calculado según una narración estándar de audiolibro (~155 WPM).",
+			"unitWords": "palabras",
+			"wordsPresetsLabel": "Extensiones habituales de libros",
+			"wordsPresets": [
+				{
+					"words": 40000,
+					"label": "40.000 palabras (Novela corta)"
+				},
+				{
+					"words": 65000,
+					"label": "65.000 palabras (No ficción)"
+				},
+				{
+					"words": 90000,
+					"label": "90.000 palabras (Novela)"
+				},
+				{
+					"words": 120000,
+					"label": "120.000 palabras (Novela larga)"
+				},
+				{
+					"words": 180000,
+					"label": "180.000 palabras (Épica)"
+				}
+			],
+			"remainingTitle": "Calcula cuánto te falta por escuchar",
+			"remainingSubtitle": "Introduce la duración total junto con el tiempo escuchado, el tiempo restante o el porcentaje completado.",
+			"totalLengthLabel": "Duración total",
+			"totalHoursAria": "Horas de duración total",
+			"totalMinutesAria": "Minutos de duración total",
+			"totalSecondsAria": "Segundos de duración total",
+			"elapsedLabel": "Tiempo transcurrido (ya escuchado)",
+			"listenedHoursAria": "Horas ya escuchadas",
+			"listenedMinutesAria": "Minutos ya escuchados",
+			"listenedSecondsAria": "Segundos ya escuchados",
+			"remainingTimeLabel": "Tiempo restante (a 1.0x)",
+			"remainingHoursAria": "Horas restantes",
+			"remainingMinutesAria": "Minutos restantes",
+			"remainingSecondsAria": "Segundos restantes",
+			"pctCompletedLabel": "Porcentaje completado (%)",
+			"initialPctLeft": "0.0% restante",
+			"pctSliderAria": "Control deslizante de porcentaje completado",
+			"pctPresetsLabel": "Porcentajes rápidos",
+			"listeningProgressLabel": "Progreso de escucha",
+			"initialProgressPct": "0.0% completado · 0.0% restante",
+			"progressBarAria": "Progreso de escucha del audiolibro",
+			"initialListened": "0 h 0 min escuchado",
+			"initialRemaining": "0 h 0 min restante",
+			"playbackSpeedLabel": "Velocidad de reproducción",
+			"speedPresetsAria": "Velocidades predefinidas de reproducción",
+			"customSpeedSliderLabel": "Control de velocidad personalizada (0.5x – 3.0x)",
+			"quickPresetsSummary": "Ajustes rápidos (duraciones habituales y libros populares)",
+			"commonLengthsLabel": "Duraciones habituales de audiolibros",
+			"durationPresets": [
+				{
+					"hours": 4,
+					"minutes": 0,
+					"label": "4 h (Libro corto)"
+				},
+				{
+					"hours": 7,
+					"minutes": 30,
+					"label": "7 h 30 min"
+				},
+				{
+					"hours": 10,
+					"minutes": 0,
+					"label": "10 h (Promedio)"
+				},
+				{
+					"hours": 14,
+					"minutes": 0,
+					"label": "14 h"
+				},
+				{
+					"hours": 20,
+					"minutes": 0,
+					"label": "20 h (Biografía)"
+				},
+				{
+					"hours": 30,
+					"minutes": 0,
+					"label": "30 h (Épica)"
+				}
+			],
+			"popularBooksLabel": "Libros populares",
+			"popularBooks": [
+				{
+					"hours": 5,
+					"minutes": 35,
+					"label": "Hábitos atómicos 5h 35m"
+				},
+				{
+					"hours": 11,
+					"minutes": 5,
+					"label": "El hobbit 11h 5m"
+				},
+				{
+					"hours": 21,
+					"minutes": 2,
+					"label": "Dune 21h 2m"
+				},
+				{
+					"hours": 45,
+					"minutes": 30,
+					"label": "El camino de los reyes 45h 30m"
+				}
+			],
+			"schedulePlannerSummary": "Planificador de escucha diaria",
+			"initialAtSpeed": "A velocidad 1.0x",
+			"minutesPerDayLabel": "Minutos al día",
+			"unitMinPerDay": "min/día",
+			"targetDaysLabel": "O fija los días objetivo para terminar",
+			"unitDays": "días",
+			"targetResultPlaceholder": "Introduce la duración de un audiolibro para ver tu meta diaria",
+			"adjustedListeningTimeLabel": "Tiempo de escucha ajustado",
+			"zeroDuration": "0 h 0 min",
+			"initialTotalMinutes": "0 minutos totales de escucha",
+			"timeSavedLabel": "Tiempo ahorrado",
+			"originalPace": "Ritmo original",
+			"zeroMin": "0 min",
+			"initialComparedTo": "Frente a 0 h 0 min a 1.0x",
+			"originalLengthLabel": "Duración original",
+			"badgeModeLength": "Por duración",
+			"initialWordsPages": "0 palabras · 0 páginas",
+			"dailyFinishEstimateLabel": "Estimación diaria",
+			"zeroDays": "0 días",
+			"initialAtDailyMin": "A 0 min/día",
+			"compareSpeedsSummary": "Comparar velocidades y estadísticas del plan",
+			"speedComparisonLabel": "Comparativa de velocidades",
+			"initialForBook": "Para un libro de 0 h 0 min",
+			"silentReadLabel": "Lectura silenciosa",
+			"dailyScheduleBreakdownLabel": "Desglose del plan diario",
+			"daysToFinishLabel": "Días para terminar",
+			"weeksEstimateLabel": "Semanas estimadas",
+			"finishByLabel": "Fecha estimada",
+			"booksPerYearLabel": "Libros / año",
+			"copyResult": "Copiar resultado",
+			"copyLink": "Copiar enlace",
+			"resetDefaults": "Restablecer valores",
+			"relatedAriaLabel": "Herramientas relacionadas de lectura y páginas",
+			"relatedPrefix": "¿Prefieres leer en papel? Comprueba tu ritmo silencioso con el",
+			"relatedMid1": ", calcula la duración de un artículo en la",
+			"relatedMid2": " o convierte la extensión de un libro con"
+		},
+		"client": {
+			"dateLocale": "es-ES",
+			"unitHr": "h",
+			"unitMin": "min",
+			"unitSec": "s",
+			"zeroDuration": "0 h 0 min",
+			"zeroMin": "0 min",
+			"zeroDays": "0 días",
+			"oneDay": "1 día",
+			"manyDays": "{n} días",
+			"weeksTemplate": "~{n} semanas",
+			"pctLeft": "{pct}% restante",
+			"progressPct": "{done}% completado · {left}% restante",
+			"listenedDuration": "{duration} escuchado",
+			"remainingDuration": "{duration} restante",
+			"atSpeed": "A velocidad {speed}",
+			"totalMinutesListening": "{n} minutos totales de escucha",
+			"timeSaved": "Tiempo ahorrado",
+			"timeAdded": "Tiempo añadido",
+			"originalPace": "Ritmo original",
+			"pctShorter": "{pct}% más corto",
+			"pctLonger": "+{pct}% más largo",
+			"comparedTo": "Frente a {duration} a 1.0x",
+			"standardPace": "Ritmo estándar de narración a 1.0x",
+			"slowerThan": "Más lento que {duration} a 1.0x",
+			"badgeModeLength": "Por duración",
+			"badgeModeWords": "Por palabras",
+			"pctCompletedBadge": "{pct}% completado",
+			"wordsPagesEst": "~{words} palabras · ~{pages} páginas",
+			"zeroWordsPages": "0 palabras · 0 páginas",
+			"atDailyMin": "A {min} min/día",
+			"dailyFinishesSub": "{weeks} · terminas el {date}",
+			"setDailyPrompt": "Indica los minutos diarios en el planificador",
+			"targetPlaceholder": "Introduce la duración de un audiolibro para ver tu meta diaria",
+			"targetGoal": "Escucha {duration} al día a {speed}",
+			"targetOver24h": "{goal} (más de 24 horas al día)",
+			"forBookBadge": "Para un libro de {duration}",
+			"copied": "¡Copiado!",
+			"copyLineLength": "Duración del audiolibro: {duration} a 1.0x",
+			"copyLineSpeed": "Velocidad de reproducción: {speed}",
+			"copyLineAdjusted": "Tiempo de escucha ajustado: {duration}",
+			"copyLineDiff": "{label}: {duration}",
+			"copyLineEstimate": "Extensión estimada: ~{words} palabras · ~{pages} páginas",
+			"copyLineSchedule": "Plan diario: {min} min/día → {days} ({weeks}, terminas el {date})"
+		},
+		"page": {
+			"heroSubtitle": "Descubre cuánto tardarás en terminar cualquier audiolibro a tu velocidad de reproducción preferida, cuánto tiempo ahorras y en cuántos días lo acabarás según tu rutina diaria.",
+			"schemaFeatures": [
+				"Tres modos de entrada: por duración del audiolibro, por número de palabras (narración a ~155 WPM) y progreso restante con sincronización bidireccional de porcentaje",
+				"Botones rápidos de velocidad (0.75x, 1.0x, 1.25x, 1.5x, 1.75x, 2.0x) y control deslizante preciso (0.5x – 3.0x)",
+				"Calculadora bidireccional de porcentaje de audiolibro que sincroniza porcentaje completado (%), tiempo transcurrido y tiempo restante",
+				"Cálculo instantáneo de tiempo de escucha ajustado, tiempo ahorrado y páginas impresas estimadas (~275 palabras/página)",
+				"Planificador diario de escucha con fecha estimada de finalización y cálculo inverso según días objetivo",
+				"Comparativa lado a lado entre velocidades de reproducción y tiempo de lectura silenciosa (238 WPM)"
+			],
+			"guide": {
+				"title": "Cómo usar esta calculadora de audiolibros, duración y porcentaje",
+				"p1Html": "Tanto si vas a empezar una novela de fantasía épica de 30 horas como si quieres aprovechar tu trayecto diario con un éxito de no ficción, esta <strong class=\"font-semibold text-ink\">calculadora de audiolibros</strong> te muestra el tiempo exacto de escucha a cualquier velocidad. En lugar de hacer cálculos mentales con horas y minutos, puedes usarla como <strong class=\"font-semibold text-ink\">calculadora de duración</strong> y <strong class=\"font-semibold text-ink\">calculadora de velocidad de audiolibros</strong> para comparar ritmos de <strong class=\"font-semibold text-ink\">0.5x a 3.0x</strong>, estimar las páginas equivalentes en papel y saber exactamente qué día terminarás.",
+				"p2Html": "Si ya vas por la mitad de un libro y quieres calcular el porcentaje leído para tu diario de lectura, cambia a la pestaña <strong class=\"font-semibold text-ink\">Restante</strong>. Funciona como una <strong class=\"font-semibold text-ink\">calculadora de porcentaje de audiolibros</strong> bidireccional: introduce el tiempo escuchado, el tiempo que queda o el porcentaje completado y todos los datos se actualizan al instante.",
+				"formula1": "Tiempo de escucha ajustado = Duración original a 1.0x ÷ Velocidad de reproducción",
+				"formula2": "Porcentaje leído (%) = (Tiempo transcurrido ÷ Duración total) × 100",
+				"steps": [
+					{
+						"title": "Introduce la duración o tu progreso",
+						"bodyHtml": "Introduce un audiolibro de <strong class=\"font-semibold text-ink\">10 h 0 min</strong> en <strong class=\"font-semibold text-ink\">Por duración</strong>, o abre <strong class=\"font-semibold text-ink\">Restante</strong> y desliza hasta el <strong class=\"font-semibold text-ink\">35%</strong> (<strong class=\"font-semibold text-ink\">3 h 30 min</strong> escuchadas y <strong class=\"font-semibold text-ink\">6 h 30 min</strong> restantes a 1.0x)."
+					},
+					{
+						"title": "Elige la velocidad de reproducción",
+						"bodyHtml": "Selecciona un botón rápido o mueve el deslizador. Un libro de 10 horas a <strong class=\"font-semibold text-ink\">1.25x</strong> baja a <strong class=\"font-semibold text-ink\">8 h 0 min</strong> (ahorras <strong class=\"font-semibold text-ink\">2 horas</strong>), mientras que <strong class=\"font-semibold text-ink\">6 h 30 min</strong> restantes a <strong class=\"font-semibold text-ink\">1.5x</strong> se quedan en solo <strong class=\"font-semibold text-ink\">4 h 20 min</strong>."
+					},
+					{
+						"title": "Planifica tu rutina diaria",
+						"bodyHtml": "Indica cuántos minutos escuchas al día (por ejemplo, <strong class=\"font-semibold text-ink\">45 min/día</strong>) o fija un objetivo de días para ver tu fecha de finalización y las páginas impresas estimadas."
+					}
+				]
+			},
+			"speedChart": {
+				"title": "Tabla de velocidades de audiolibros y guía rápida de tiempos de escucha",
+				"introHtml": "La velocidad de reproducción actúa como un multiplicador inverso directo del tiempo, lo que facilita usar una <strong class=\"font-semibold text-ink\">calculadora de ritmo de audiolibros</strong> para comprobar cuánto antes terminarás cualquier título. Como la narración profesional en estudio promedia unas 155 palabras por minuto a 1.0x, subir el reproductor a 1.25x o 1.5x acerca el audio hablado a la velocidad natural de lectura silenciosa. Tanto si buscas cuánto dura un <strong class=\"font-semibold text-ink\">audiolibro de 6 horas a 1.5x</strong> (4 h 0 min), un <strong class=\"font-semibold text-ink\">audiolibro de 12 horas a 1.5x</strong> (8 h 0 min), <strong class=\"font-semibold text-ink\">7 horas a 1.6x</strong> (4 h 22 min 30 s) o <strong class=\"font-semibold text-ink\">2 horas a 2.5x</strong> (48 min), las tablas siguientes te ofrecen referencias inmediatas.",
+				"multiplierTableTitle": "Referencia de multiplicadores de velocidad y tiempo ahorrado",
+				"multiplierHeaders": [
+					"Velocidad de reproducción",
+					"WPM efectivos (base ~155)",
+					"Tiempo ahorrado (%)",
+					"Libro de 10 horas",
+					"Mejor caso de uso"
+				],
+				"multiplierRows": [
+					[
+						"0.75x (Más lento)",
+						"~116 WPM",
+						"-33% (Dura más)",
+						"13 h 20 min",
+						"No ficción compleja, acentos marcados o aprendizaje de idiomas"
+					],
+					[
+						"1.0x (Original)",
+						"~155 WPM",
+						"0% (Referencia)",
+						"10 h 0 min",
+						"Elencos dramatizados, poesía y ficción inmersiva"
+					],
+					[
+						"1.25x (Punto ideal)",
+						"~194 WPM",
+						"20% ahorrado",
+						"8 h 0 min",
+						"Ritmo conversacional natural para memorias y ficción"
+					],
+					[
+						"1.5x (Rápido)",
+						"~233 WPM",
+						"33.3% ahorrado",
+						"6 h 40 min",
+						"Libros de negocios, desarrollo personal y narración clara"
+					],
+					[
+						"1.6x (Ágil)",
+						"~248 WPM",
+						"37.5% ahorrado",
+						"6 h 15 min",
+						"Oyentes con experiencia a los que 1.5x les resulta algo lento"
+					],
+					[
+						"1.75x (Veloz)",
+						"~271 WPM",
+						"42.9% ahorrado",
+						"5 h 43 min",
+						"Relecturas, temas conocidos y narradores muy claros"
+					],
+					[
+						"2.0x (Doble)",
+						"~310 WPM",
+						"50% ahorrado",
+						"5 h 0 min",
+						"Lecturas ligeras, resúmenes y oyentes acostumbrados a alta velocidad"
+					],
+					[
+						"2.5x (Máximo)",
+						"~388 WPM",
+						"60% ahorrado",
+						"4 h 0 min",
+						"Repasar material conocido o capítulos breves"
+					]
+				],
+				"lookupTableTitle": "Consulta rápida de tiempo de escucha según la duración del libro",
+				"lookupHeaders": [
+					"Duración original (1.0x)",
+					"A 1.25x",
+					"A 1.5x",
+					"A 1.6x",
+					"A 2.0x",
+					"A 2.5x"
+				],
+				"lookupRows": [
+					{
+						"cells": [
+							"2 horas (Corto / Novela breve)",
+							"1 h 36 min",
+							"1 h 20 min",
+							"1 h 15 min",
+							"1 h 0 min",
+							"48 min"
+						],
+						"highlightCol": 5
+					},
+					{
+						"cells": [
+							"6 horas (No ficción breve)",
+							"4 h 48 min",
+							"4 h 0 min",
+							"3 h 45 min",
+							"3 h 0 min",
+							"2 h 24 min"
+						],
+						"highlightCol": 2
+					},
+					{
+						"cells": [
+							"7 horas (Guía práctica)",
+							"5 h 36 min",
+							"4 h 40 min",
+							"4 h 22 min 30 s",
+							"3 h 30 min",
+							"2 h 48 min"
+						],
+						"highlightCol": 3
+					},
+					{
+						"cells": [
+							"10 horas (Audiolibro promedio)",
+							"8 h 0 min",
+							"6 h 40 min",
+							"6 h 15 min",
+							"5 h 0 min",
+							"4 h 0 min"
+						],
+						"highlightCol": 1
+					},
+					{
+						"cells": [
+							"12 horas (Novela estándar)",
+							"9 h 36 min",
+							"8 h 0 min",
+							"7 h 30 min",
+							"6 h 0 min",
+							"4 h 48 min"
+						],
+						"highlightCol": 2
+					},
+					{
+						"cells": [
+							"20 horas (Biografía / Ciencia ficción)",
+							"16 h 0 min",
+							"13 h 20 min",
+							"12 h 30 min",
+							"10 h 0 min",
+							"8 h 0 min"
+						],
+						"highlightCol": -1
+					}
+				]
+			},
+			"lengthConverter": {
+				"title": "Calculadora de duración de audiolibros: conversor de palabras y páginas impresas",
+				"p1Html": "En la industria editorial, plataformas como ACX de Amazon y Audible utilizan un estándar universal de narración en estudio de <strong class=\"font-semibold text-ink\">155 palabras por minuto (9.300 palabras por hora terminada)</strong>. Autores, actores de voz y editoriales emplean una <strong class=\"font-semibold text-ink\">calculadora de duración de audiolibros</strong> para estimar las horas de grabación a partir del manuscrito, mientras que los oyentes la usan a la inversa para hacerse una idea real de la extensión del libro.",
+				"p2Html": "Dado que una edición de bolsillo estándar tiene alrededor de <strong class=\"font-semibold text-ink\">275 palabras por página</strong>, esta herramienta también sirve como <strong class=\"font-semibold text-ink\">conversor de horas de audiolibro a páginas</strong>. A velocidad 1.0x, cada hora de audio equivale a unas <strong class=\"font-semibold text-ink\">33,8 páginas impresas</strong>, por lo que un audiolibro de 10 horas corresponde a unas 93.000 palabras o 338 páginas. Si necesitas convertir manuscritos con tipografía o interlineado personalizados, prueba nuestro <a href=\"/words-to-pages/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Conversor de palabras a páginas</a>.",
+				"p3Html": "Comparar la <strong class=\"font-semibold text-ink\">escucha de audiolibros (155 WPM a 1.0x)</strong> con la <strong class=\"font-semibold text-ink\">lectura silenciosa (~238 WPM en un adulto promedio)</strong> explica por qué los audiolibros íntegros se perciben más lentos que leer en papel. A 1.0x, escuchar lleva aproximadamente un 35% más de tiempo que leer en silencio, mientras que subir la velocidad a <strong class=\"font-semibold text-ink\">1.5x (~233 WPM)</strong> iguala casi palabra por palabra el ritmo natural de lectura silenciosa. Puedes medir tu propio ritmo con nuestro <a href=\"/reading-speed-test/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Test de velocidad de lectura</a> o calcular la duración de un artículo en la <a href=\"/reading-time-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Calculadora de tiempo de lectura</a>.",
+				"tableTitle": "Tabla de horas de audiolibro a número de palabras y páginas impresas",
+				"headers": [
+					"Horas de audiolibro (1.0x)",
+					"Palabras estimadas (~155 WPM)",
+					"Páginas impresas (~275 palabras/pág.)",
+					"Lectura silenciosa (~238 WPM)",
+					"Formato de libro habitual"
+				],
+				"rows": [
+					[
+						"1 hora",
+						"~9.300 palabras",
+						"~34 páginas",
+						"39 min",
+						"Ensayo corto o fragmento de novela breve"
+					],
+					[
+						"3 horas",
+						"~27.900 palabras",
+						"~101 páginas",
+						"1 h 57 min",
+						"Guía breve de negocios o novela corta"
+					],
+					[
+						"6 horas",
+						"~55.800 palabras",
+						"~203 páginas",
+						"3 h 54 min",
+						"No ficción concisa (p. ej., Hábitos atómicos)"
+					],
+					[
+						"10 horas",
+						"~93.000 palabras",
+						"~338 páginas",
+						"6 h 31 min",
+						"Novela estándar o ensayo en tapa dura"
+					],
+					[
+						"15 horas",
+						"~139.500 palabras",
+						"~507 páginas",
+						"9 h 46 min",
+						"Límite mensual de Spotify / thriller extenso"
+					],
+					[
+						"25 horas",
+						"~232.500 palabras",
+						"~845 páginas",
+						"16 h 17 min",
+						"Fantasía épica, historia o biografía íntegra"
+					]
+				]
+			},
+			"platforms": {
+				"title": "Spotify, Audible y Libby: cómo funcionan los límites de horas y porcentajes",
+				"introHtml": "Cada plataforma de audiolibros registra las horas escuchadas y el porcentaje completado de una manera distinta. Conocer cómo funcionan los límites y las barras de progreso en <strong class=\"font-semibold text-ink\">Spotify</strong>, <strong class=\"font-semibold text-ink\">Audible</strong>, <strong class=\"font-semibold text-ink\">Kindle</strong> y <strong class=\"font-semibold text-ink\">Libby</strong> te ayuda a evitar cortes a mitad de un capítulo y a registrar tu avance exacto en Goodreads o StoryGraph.",
+				"spotifyTitle": "1. Límite de escucha de audiolibros en Spotify (cuota mensual de 15 horas)",
+				"spotifyParagraphsHtml": [
+					"Spotify incluye <strong class=\"font-semibold text-ink\">15 horas de escucha de audiolibros por ciclo de facturación</strong> en los planes <strong class=\"font-semibold text-ink\">Spotify Premium Individual</strong>, <strong class=\"font-semibold text-ink\">Spotify Duo</strong> y <strong class=\"font-semibold text-ink\">Spotify Familiar</strong>. En las suscripciones Duo y Familiar, solo el <strong class=\"font-semibold text-ink\">administrador del plan</strong> dispone de las 15 horas mensuales incluidas; las cuentas secundarias no reciben horas aparte salvo que se compren recargas de 10 horas.",
+					"<strong class=\"font-semibold text-ink\">Regla clave sobre la velocidad de reproducción:</strong> Spotify descuenta de tu cuota de 15 horas según la <strong class=\"font-semibold text-ink\">duración original del catálogo a 1.0x</strong>, no según el tiempo real que pasas escuchando. Escuchar un audiolibro de 15 horas a <strong class=\"font-semibold text-ink\">1.5x</strong> te llevará 10 horas reales, pero consumirá igualmente las <strong class=\"font-semibold text-ink\">15 horas</strong> completas de tu cuota mensual.",
+					"<strong class=\"font-semibold text-ink\">Cómo ver cuántas horas de audiolibros te quedan en Spotify:</strong> abre la app móvil de Spotify y pulsa <strong class=\"font-semibold text-ink\">Foto de perfil → Configuración y privacidad → Cuenta → Suscripción → Controla tus horas incluidas</strong>. Cuando veas tus horas disponibles, introdúcelas en la pestaña <strong class=\"font-semibold text-ink\">Restante</strong> o en el <strong class=\"font-semibold text-ink\">Planificador de escucha diaria</strong> de arriba para calcular cuándo terminarás antes de que se renueve el ciclo."
+				],
+				"audibleTitle": "2. Calculadora de porcentaje de audiolibros para Audible, Kindle y Libby",
+				"audibleParagraphsHtml": [
+					"Muchos lectores buscan <strong class=\"font-semibold text-ink\">cómo ver el porcentaje en Audible</strong> cuando actualizan su progreso de lectura. Mientras que <strong class=\"font-semibold text-ink\">Kindle Whispersync</strong> y aplicaciones de biblioteca como <strong class=\"font-semibold text-ink\">Libby</strong> muestran el porcentaje completado (<strong class=\"font-semibold text-ink\">%</strong>) de forma visible en el reproductor principal, la app móvil de Audible destaca el <strong class=\"font-semibold text-ink\">tiempo restante del capítulo</strong> y el <strong class=\"font-semibold text-ink\">tiempo total restante</strong> (dejando el porcentaje general en la biblioteca web o en los detalles del título).",
+					"En lugar de buscar entre menús o calcularlo a ojo, abre la pestaña <strong class=\"font-semibold text-ink\">Restante</strong> en la <strong class=\"font-semibold text-ink\">calculadora de porcentaje de audiolibros</strong> de arriba. Funciona en ambos sentidos:"
+				],
+				"audibleBulletsHtml": [
+					"<strong class=\"font-semibold text-ink\">Tiempo restante → Porcentaje:</strong> introduce la duración total del libro y el <strong class=\"font-semibold text-ink\">Tiempo restante (a 1.0x)</strong> de Audible para obtener tu <strong class=\"font-semibold text-ink\">% completado</strong> exacto para Goodreads o StoryGraph.",
+					"<strong class=\"font-semibold text-ink\">Porcentaje → Horas y minutos restantes:</strong> escribe o desliza tu <strong class=\"font-semibold text-ink\">Porcentaje completado (%)</strong> de Libby o Kindle para ver el tiempo exacto escuchado y cuánto te queda a velocidad <strong class=\"font-semibold text-ink\">1.25x</strong>, <strong class=\"font-semibold text-ink\">1.5x</strong> o <strong class=\"font-semibold text-ink\">2.0x</strong>."
+				]
+			},
+			"comprehension": {
+				"title": "Cómo elegir la mejor velocidad para audiolibros sin perder comprensión",
+				"introHtml": "Estudios de psicología cognitiva demuestran que el cerebro humano puede procesar y comprender el habla cómodamente entre <strong class=\"font-semibold text-ink\">250 y 300 palabras por minuto (WPM)</strong>. Sin embargo, la narración profesional en estudio a <strong class=\"font-semibold text-ink\">1.0x</strong> se graba deliberadamente entre <strong class=\"font-semibold text-ink\">150 y 160 WPM</strong> para ofrecer la máxima claridad vocal. Esa diferencia de 100 WPM explica por qué a 1.0x a veces te distraes y por qué el rango de <strong class=\"font-semibold text-ink\">1.25x a 1.5x (~194–233 WPM)</strong> es el punto óptimo natural para la mayoría de oyentes.",
+				"trainingTitle": "Método de 3 pasos para acostumbrar el oído a mayor velocidad",
+				"trainingIntroHtml": "Si quieres escuchar más rápido sin sacrificar la retención, entrena el oído de forma progresiva:",
+				"steps": [
+					{
+						"title": "Empieza entre 1.15x y 1.25x",
+						"bodyHtml": "Comienza a <strong class=\"font-semibold text-ink\">1.15x o 1.25x</strong> durante los primeros 10 minutos de un libro nuevo para que tu oído se adapte a la voz, la cadencia y el tono del narrador."
+					},
+					{
+						"title": "Sube de 0.10x en 0.10x",
+						"bodyHtml": "Aumenta la velocidad en <strong class=\"font-semibold text-ink\">incrementos de 0.10x</strong> (<strong class=\"font-semibold text-ink\">1.25x → 1.35x → 1.5x</strong>) entre capítulos en lugar de saltar directamente de 1.0x a 2.0x."
+					},
+					{
+						"title": "Adapta la velocidad al género",
+						"bodyHtml": "Mantén la filosofía densa, la ciencia ficción compleja o los acentos poco familiares entre <strong class=\"font-semibold text-ink\">1.0x y 1.2x</strong>, y sube memorias amenas o libros de negocios a <strong class=\"font-semibold text-ink\">1.5x–1.75x</strong>."
+					}
+				],
+				"habitTitle": "El efecto compuesto del hábito diario (más de 33 libros al año)",
+				"habitBodyHtml": "Pequeños ajustes de velocidad tienen un impacto enorme a lo largo del año. Escuchar solo <strong class=\"font-semibold text-ink\">45 minutos al día a 1.25x</strong> (que equivalen a 56 minutos de audio a 1.0x durante un paseo o trayecto diario) te permite terminar un audiolibro estándar de 10 horas en <strong class=\"font-semibold text-ink\">11 días</strong>, lo que suma <strong class=\"font-semibold text-ink\">más de 33 libros al año</strong> sin añadir ni una sola hora extra a tu agenda."
+			}
+		},
+		"faq": {
+			"title": "Preguntas frecuentes sobre velocidad, duración y porcentaje de audiolibros",
+			"items": [
+				{
+					"question": "¿Cómo se calcula el tiempo de escucha de un audiolibro a mayor velocidad?",
+					"answer": "Divide la duración original a 1.0x (en minutos totales) entre el multiplicador de velocidad. Por ejemplo, un audiolibro de 10 horas (600 minutos) a 1.5x tarda 600 ÷ 1.5 = 400 minutos, lo que equivale a 6 horas y 40 minutos (un ahorro de 3 horas y 20 minutos).",
+					"answerHtml": "Divide la duración original a 1.0x (en minutos totales) entre el multiplicador de velocidad. Por ejemplo, un audiolibro de 10 horas (600 minutos) a 1.5x tarda <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">600 ÷ 1.5 = 400 minutos</code>, lo que equivale a <strong class=\"font-semibold text-ink\">6 horas y 40 minutos</strong> (un ahorro de 3 horas y 20 minutos)."
+				},
+				{
+					"question": "¿Cuánto dura un audiolibro de 6 horas a velocidad 1.5x?",
+					"answer": "Un audiolibro de 6 horas reproducido a 1.5x dura exactamente 4 horas y 0 minutos, ahorrándote 2 horas (un 33.3% menos). A 1.25x dura 4 horas y 48 minutos, y a 2.0x dura 3 horas.",
+					"answerHtml": "Un audiolibro de 6 horas reproducido a <strong class=\"font-semibold text-ink\">velocidad 1.5x</strong> dura exactamente <strong class=\"font-semibold text-ink\">4 horas y 0 minutos</strong>, ahorrándote 2 horas (un 33.3% menos). A 1.25x dura 4 horas y 48 minutos, y a 2.0x dura 3 horas."
+				},
+				{
+					"question": "¿Cuánto dura un audiolibro de 12 horas a velocidad 1.5x?",
+					"answer": "Un audiolibro de 12 horas a velocidad 1.5x dura exactamente 8 horas y 0 minutos, recortando 4 horas de la duración original.",
+					"answerHtml": "Un audiolibro de 12 horas a <strong class=\"font-semibold text-ink\">velocidad 1.5x</strong> dura exactamente <strong class=\"font-semibold text-ink\">8 horas y 0 minutos</strong>, recortando 4 horas de la duración original."
+				},
+				{
+					"question": "¿Cuánto tardan 2 horas a 2.5x o 7 horas a 1.6x?",
+					"answer": "Dos horas (120 minutos) a velocidad 2.5x tardan 48 minutos (ahorras 1 hora y 12 minutos). Un audiolibro de 7 horas (420 minutos) a velocidad 1.6x tarda 4 horas, 22 minutos y 30 segundos.",
+					"answerHtml": "Dos horas (120 minutos) a <strong class=\"font-semibold text-ink\">velocidad 2.5x</strong> tardan <strong class=\"font-semibold text-ink\">48 minutos</strong> (ahorras 1 hora y 12 minutos). Un audiolibro de 7 horas (420 minutos) a <strong class=\"font-semibold text-ink\">velocidad 1.6x</strong> tarda <strong class=\"font-semibold text-ink\">4 horas, 22 minutos y 30 segundos</strong>."
+				},
+				{
+					"question": "¿Cómo uso juntas la calculadora de porcentaje y la calculadora de duración de audiolibros?",
+					"answer": "Para calcular tu porcentaje completado, divide el tiempo escuchado entre la duración total y multiplica por 100 ((Escuchado ÷ Total) × 100); después divide el tiempo restante entre tu velocidad de reproducción para conocer cuánto te falta realmente. También puedes abrir la pestaña Restante en esta calculadora para introducir tu porcentaje o el tiempo transcurrido y convertir ambos valores automáticamente.",
+					"answerHtml": "Para calcular tu porcentaje completado, divide el tiempo escuchado entre la duración total y multiplica por 100 (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">(Escuchado ÷ Total) × 100</code>); después divide el tiempo restante entre tu velocidad de reproducción para conocer cuánto te falta realmente. También puedes abrir la pestaña <strong class=\"font-semibold text-ink\">Restante</strong> en esta <strong class=\"font-semibold text-ink\">calculadora de porcentaje</strong> y <strong class=\"font-semibold text-ink\">duración de audiolibros</strong> para introducir tu porcentaje o el tiempo transcurrido y convertir ambos valores automáticamente."
+				},
+				{
+					"question": "¿Audible muestra el porcentaje completado y cómo puedo encontrarlo?",
+					"answer": "La pantalla del reproductor móvil de Audible muestra el tiempo restante del capítulo y el tiempo total restante en lugar de un indicador grande de porcentaje. Puedes ver tu porcentaje completado en la biblioteca web de Audible, mediante Kindle Whispersync o introduciendo la duración total y el tiempo restante en la pestaña Restante de esta calculadora.",
+					"answerHtml": "La pantalla del reproductor móvil de Audible muestra el tiempo restante del capítulo y el tiempo total restante en lugar de un indicador grande de porcentaje. Puedes ver tu porcentaje completado en la biblioteca web de Audible, mediante Kindle Whispersync o introduciendo la duración total y el tiempo restante en la pestaña <strong class=\"font-semibold text-ink\">Restante</strong> de esta calculadora."
+				},
+				{
+					"question": "¿Escuchar a 1.5x o 2x ahorra horas del límite mensual de 15 horas de Spotify?",
+					"answer": "No. Spotify descuenta de tu límite mensual de 15 horas de audiolibros (incluido en Premium Individual y para los administradores de planes Duo y Familiar) en función de la duración original a 1.0x del libro, sin importar la velocidad de reproducción.",
+					"answerHtml": "No. Spotify descuenta de tu <strong class=\"font-semibold text-ink\">límite mensual de 15 horas de audiolibros</strong> (incluido en Premium Individual y para los administradores de planes Duo y Familiar) en función de la <strong class=\"font-semibold text-ink\">duración original a 1.0x</strong> del libro, sin importar la velocidad de reproducción."
+				},
+				{
+					"question": "¿Cómo compruebo cuántas horas de audiolibros me quedan en Spotify?",
+					"answer": "Abre la app móvil o de escritorio de Spotify y ve a Foto de perfil > Configuración y privacidad > Cuenta > Suscripción (o Controla tus horas incluidas) para ver las horas mensuales restantes y la fecha de renovación.",
+					"answerHtml": "Abre la app móvil o de escritorio de Spotify y ve a <strong class=\"font-semibold text-ink\">Foto de perfil &gt; Configuración y privacidad &gt; Cuenta &gt; Suscripción</strong> (o <strong class=\"font-semibold text-ink\">Controla tus horas incluidas</strong>) para ver las horas mensuales restantes y la fecha de renovación."
+				},
+				{
+					"question": "¿Cuántas palabras y páginas tiene un audiolibro de 10 horas?",
+					"answer": "Con el ritmo estándar del sector de 155 palabras por minuto (9.300 palabras por hora) y 275 palabras por página impresa, un audiolibro de 10 horas equivale aproximadamente a 93.000 palabras o unas 338 páginas impresas (~34 páginas por hora).",
+					"answerHtml": "Con el ritmo estándar del sector de <strong class=\"font-semibold text-ink\">155 palabras por minuto</strong> (9.300 palabras por hora) y <strong class=\"font-semibold text-ink\">275 palabras por página impresa</strong>, un audiolibro de 10 horas equivale aproximadamente a <strong class=\"font-semibold text-ink\">93.000 palabras</strong> o <strong class=\"font-semibold text-ink\">~338 páginas impresas</strong> (~34 páginas por hora)."
+				},
+				{
+					"question": "¿Sigue siendo eficaz para la comprensión escuchar audiolibros a 1.5x o 2x?",
+					"answer": "Sí, en la mayoría de libros de no ficción, memorias y temas conocidos. Como la comprensión media del habla humana alcanza entre 250 y 300 WPM mientras que la narración a 1.0x promedia 155 WPM, las velocidades de 1.25x (~194 WPM) y 1.5x (~233 WPM) resultan naturales para la mayoría de oyentes tras una breve adaptación.",
+					"answerHtml": "Sí, en la mayoría de libros de no ficción, memorias y temas conocidos. Como la comprensión media del habla humana alcanza entre 250 y 300 WPM mientras que la narración a 1.0x promedia 155 WPM, las velocidades de <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">1.25x</code> (~194 WPM) y <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">1.5x</code> (~233 WPM) resultan naturales para la mayoría de oyentes tras una breve adaptación."
+				}
+			]
+		}
 	},
 	"wordsToPages": {
 		"name": "Conversor de palabras a páginas",
@@ -97,7 +2532,653 @@
 		"metric": "250 / 500 palabras por página",
 		"title": "Calculadora de palabras a páginas y conversor de páginas de libro | Wordora",
 		"metaDescription": "Calculadora gratuita de palabras a páginas. Convierte las palabras de un trabajo en páginas, estima las páginas de un libro o descubre cuántas palabras tiene un texto de 7 páginas.",
-		"h1": "Conversor de palabras a páginas"
+		"h1": "Conversor de palabras a páginas",
+		"ui": {
+			"workspaceLabel": "Área de trabajo del conversor de palabras a páginas y de páginas a palabras",
+			"modesLabel": "Modos del conversor de palabras a páginas",
+			"tabWordsToPages": "Palabras a páginas",
+			"tabPagesToWords": "Páginas a palabras",
+			"copyResult": "Copiar resultado",
+			"copyLink": "Copiar enlace",
+			"resetDefaults": "Restablecer",
+			"enterWordCount": "Introduce el número de palabras",
+			"shorthandHint": "Admite abreviaturas: p. ej., 1.5k o 2.5k",
+			"wordsPlaceholder": "p. ej., 1,500 o 1.5k",
+			"unitWords": "palabras",
+			"wordPresetsLabel": "Longitudes habituales de trabajos y textos",
+			"enterPageCount": "Introduce el número de páginas objetivo",
+			"pagesHint": "Calcula cuántas palabras debes escribir",
+			"pagesPlaceholder": "p. ej., 6",
+			"unitPages": "páginas",
+			"pagePresetsLabel": "Objetivos habituales de páginas",
+			"pagesPreset": "{count} páginas",
+			"pasteLabel": "O pega / escribe tu texto",
+			"clear": "Limpiar",
+			"pastePlaceholder": "Pega aquí tu ensayo o borrador para contar palabras, caracteres y páginas...",
+			"liveSynced": "Sincronizado en vivo",
+			"comparisonHeading": "Comparativa de formato para el conteo actual",
+			"compSingle": "Sencillo",
+			"compDouble": "Doble",
+			"lineSpacingHeading": "Interlineado",
+			"spacingSingle": "Sencillo",
+			"spacing15": "1,5 líneas",
+			"spacingDouble": "Doble",
+			"spacingCustom": "Personalizado",
+			"wordsPerPageLabel": "Palabras por página",
+			"unitWpp": "pal. / pág.",
+			"fontSettingsHeading": "Ajustes de fuente y página",
+			"defaultTypographySummary": "Times · 12 pt · Carta",
+			"fontFamilyLabel": "Tipo de letra",
+			"fontSizeLabel": "Tamaño de fuente",
+			"pageFormatLabel": "Formato de página",
+			"marginsLabel": "Márgenes",
+			"orientationLabel": "Orientación",
+			"formats": {
+				"letter": "Carta EE. UU. (8,5×11 pulg.)",
+				"a4": "A4 (210×297 mm)",
+				"a5": "A5 (148×210 mm)",
+				"b5": "B5 (176×250 mm)",
+				"legal": "Oficio EE. UU. (8,5×14 pulg.)",
+				"digest": "Novela de bolsillo (5×8 pulg. · ~250 p/pág.)",
+				"trade": "Rústica comercial (5,5×8,5 pulg. · ~275 p/pág.)",
+				"hardcover": "Tapa dura / Libro estándar (6×9 pulg. · ~300 p/pág.)"
+			},
+			"margins": {
+				"normal": "Normales (2,5 cm / 1 pulg.)",
+				"narrow": "Estrechos (1,27 cm / 0,5 pulg.)",
+				"moderate": "Moderados (0,75×1 pulg.)",
+				"wide": "Anchos (1×1,25 pulg.)"
+			},
+			"orientations": {
+				"portrait": "Vertical",
+				"landscape": "Horizontal"
+			},
+			"kpiPagesLabel": "Páginas estimadas",
+			"kpiWordsLabel": "Total de palabras",
+			"kpiReadingLabel": "Tiempo de lectura silenciosa",
+			"kpiReadingSub": "Ritmo medio de lectura adulta",
+			"kpiSpeakingLabel": "Tiempo de lectura en voz alta",
+			"kpiSpeakingSub": "Ritmo de exposición oral",
+			"relatedAriaLabel": "Herramientas relacionadas de lectura y texto",
+			"relatedToolsLabel": "Herramientas relacionadas:"
+		},
+		"client": {
+			"zeroTime": "0 min 0 s",
+			"timeHrMin": "{h} h {m} min",
+			"timeMinSec": "{m} min {s} s",
+			"spacingSingle": "Sencillo",
+			"spacing15": "1,5 líneas",
+			"spacingDouble": "Doble",
+			"spacingCustom": "Personalizado",
+			"spacingOther": "Interlineado {spacing}",
+			"activeSpacingDisplay": "{label} ({wpp} p/pág.)",
+			"customOverride": "Valor personalizado",
+			"autoCalculated": "Calculado automáticamente",
+			"shortFormats": {
+				"letter": "Carta",
+				"a4": "A4",
+				"a5": "A5",
+				"b5": "B5",
+				"legal": "Oficio",
+				"digest": "5×8\" Bolsillo",
+				"trade": "5,5×8,5\" Rústica",
+				"hardcover": "6×9\" Tapa dura"
+			},
+			"modePasted": "Texto pegado",
+			"modeW2P": "Palabras a páginas",
+			"modeP2W": "Páginas a palabras",
+			"parsedPasted": "= {words} palabras (pegadas)",
+			"parsedWords": "= {words} palabras",
+			"shorthandHint": "Admite abreviaturas: p. ej., 1.5k o 2.5k",
+			"microstats": "{words} palabras · {chars} car. · {paragraphs} párrafos",
+			"pagesSingular": "{count} página",
+			"pagesPlural": "{count} páginas",
+			"fullPageSingular": "{count} página completa",
+			"fullPagePlural": "{count} páginas completas",
+			"sheetSingular": "{count} hoja impresa",
+			"sheetPlural": "{count} hojas impresas",
+			"doubleSidedSheetSingular": "{count} hoja a doble cara",
+			"doubleSidedSheetPlural": "{count} hojas a doble cara",
+			"pagesSub": "{full} · {sheets}",
+			"wordsSingular": "{count} palabra",
+			"wordsPlural": "{count} palabras",
+			"charsSub": "{withSpaces} car. (con espacios) · {noSpaces} sin espacios",
+			"forWordSingular": "Para {words} palabra",
+			"forWordsPlural": "Para {words} palabras",
+			"copyResult": "Copiar resultado",
+			"copyLink": "Copiar enlace",
+			"copied": "¡Copiado!",
+			"copyHeader": "Conversión de palabras a páginas — Wordora",
+			"copyEstimatedPages": "Páginas estimadas: {pages} ({full}, {sheets})",
+			"copyTotalWords": "Total de palabras: {words}",
+			"copyCharacters": "Caracteres: {withSpaces} (con espacios) · {noSpaces} (sin espacios)",
+			"copyParagraphs": "Párrafos: {paragraphs}",
+			"copyWpp": "Palabras por página: {wpp} p/pág. ({spacing})",
+			"copySilentReading": "Lectura silenciosa: {time} (238 WPM)",
+			"copySpeakingTime": "Lectura en voz alta: {time} (183 WPM)",
+			"copyFooter": "Calcula online en {url}"
+		},
+		"page": {
+			"subtitle": "Convierte cualquier número de palabras en páginas —o páginas en palabras objetivo— con interlineado sencillo, de 1,5 o doble, fuentes estándar y formatos de libro.",
+			"schemaFeatures": [
+				"Conversión bidireccional instantánea entre palabras a páginas y páginas a palabras",
+				"Ajustes de interlineado sencillo (~500 palabras/página), 1,5 líneas (~330 palabras/página), doble (~250 palabras/página) y tasa personalizada",
+				"Ajustes de fuente y tamaño para Times New Roman / Arial 12 pt, Calibri 11 pt y libro en rústica (~275 palabras/página)",
+				"Atajos rápidos de conteo de palabras para documentos (500, 1.000, 1.500, 2.500, 5.000 y 10.000 palabras)",
+				"Estimaciones en vivo de tiempo de lectura silenciosa (238 WPM) y en voz alta (183 WPM)"
+			],
+			"s1Title": "Tablas de referencia rápida de la calculadora de palabras a páginas",
+			"s1IntroHtml": "Con esta <strong class=\"font-semibold text-ink\">calculadora de palabras a páginas</strong> y <strong class=\"font-semibold text-ink\">conversor de palabras a páginas</strong> bajo formato académico estándar —Times New Roman de 12 pt, márgenes de 2,54 cm (1 pulgada) y papel Carta— <strong class=\"font-semibold text-ink\">1 página a doble espacio contiene unas 250 palabras</strong>, mientras que <strong class=\"font-semibold text-ink\">1 página a espacio sencillo contiene unas 500 palabras</strong>. En libros impresos, una edición estándar en <strong class=\"font-semibold text-ink\">rústica comercial de 5,5\" × 8,5\" promedia 275 palabras por página</strong>, por lo que puedes prever la extensión final con precisión ajustando el diseño de tu documento.",
+			"w2pTableTitle": "Tabla de conversión de palabras a páginas",
+			"w2pTableHeaders": [
+				"Palabras",
+				"Sencillo (1,0)",
+				"1,5 líneas",
+				"Doble (2,0)",
+				"Libro rústica (~275 p/pág.)"
+			],
+			"w2pTableRows": [
+				[
+					"100 palabras",
+					"0,2 páginas",
+					"0,3 páginas",
+					"0,4 páginas",
+					"0,4 páginas"
+				],
+				[
+					"250 palabras",
+					"0,5 páginas",
+					"0,8 páginas",
+					"1,0 página",
+					"0,9 páginas"
+				],
+				[
+					"500 palabras",
+					"1,0 página",
+					"1,5 páginas",
+					"2,0 páginas",
+					"1,8 páginas"
+				],
+				[
+					"750 palabras",
+					"1,5 páginas",
+					"2,3 páginas",
+					"3,0 páginas",
+					"2,7 páginas"
+				],
+				[
+					"1.000 palabras",
+					"2,0 páginas",
+					"3,0 páginas",
+					"4,0 páginas",
+					"3,6 páginas"
+				],
+				[
+					"1.500 palabras",
+					"3,0 páginas",
+					"4,5 páginas",
+					"6,0 páginas",
+					"5,5 páginas"
+				],
+				[
+					"1.750 palabras",
+					"3,5 páginas",
+					"5,3 páginas",
+					"7,0 páginas",
+					"6,4 páginas"
+				],
+				[
+					"2.000 palabras",
+					"4,0 páginas",
+					"6,0 páginas",
+					"8,0 páginas",
+					"7,3 páginas"
+				],
+				[
+					"2.500 palabras",
+					"5,0 páginas",
+					"7,5 páginas",
+					"10,0 páginas",
+					"9,1 páginas"
+				],
+				[
+					"3.000 palabras",
+					"6,0 páginas",
+					"9,0 páginas",
+					"12,0 páginas",
+					"10,9 páginas"
+				],
+				[
+					"5.000 palabras",
+					"10,0 páginas",
+					"15,0 páginas",
+					"20,0 páginas",
+					"18,2 páginas"
+				],
+				[
+					"10.000 palabras",
+					"20,0 páginas",
+					"30,0 páginas",
+					"40,0 páginas",
+					"36,4 páginas"
+				],
+				[
+					"20.000 palabras",
+					"40,0 páginas",
+					"60,0 páginas",
+					"80,0 páginas",
+					"72,7 páginas"
+				],
+				[
+					"50.000 palabras",
+					"100,0 páginas",
+					"150,0 páginas",
+					"200,0 páginas",
+					"181,8 páginas"
+				],
+				[
+					"70.000 palabras",
+					"140,0 páginas",
+					"210,0 páginas",
+					"280,0 páginas",
+					"254,5 páginas"
+				],
+				[
+					"100.000 palabras",
+					"200,0 páginas",
+					"300,0 páginas",
+					"400,0 páginas",
+					"363,6 páginas"
+				],
+				[
+					"250.000 palabras",
+					"500,0 páginas",
+					"750,0 páginas",
+					"1.000,0 páginas",
+					"909,1 páginas"
+				]
+			],
+			"p2wTableTitle": "Tabla de conversión de páginas a palabras",
+			"p2wTableHeaders": [
+				"Páginas",
+				"Doble espacio (250 p/pág.)",
+				"Libro rústica (275 p/pág.)",
+				"Espacio sencillo (500 p/pág.)"
+			],
+			"p2wTableRows": [
+				[
+					"1 página",
+					"250 palabras",
+					"275 palabras",
+					"500 palabras"
+				],
+				[
+					"2 páginas",
+					"500 palabras",
+					"550 palabras",
+					"1.000 palabras"
+				],
+				[
+					"3 páginas",
+					"750 palabras",
+					"825 palabras",
+					"1.500 palabras"
+				],
+				[
+					"5 páginas",
+					"1.250 palabras",
+					"1.375 palabras",
+					"2.500 palabras"
+				],
+				[
+					"7 páginas",
+					"1.750 palabras",
+					"1.925 palabras",
+					"3.500 palabras"
+				],
+				[
+					"10 páginas",
+					"2.500 palabras",
+					"2.750 palabras",
+					"5.000 palabras"
+				],
+				[
+					"15 páginas",
+					"3.750 palabras",
+					"4.125 palabras",
+					"7.500 palabras"
+				],
+				[
+					"20 páginas",
+					"5.000 palabras",
+					"5.500 palabras",
+					"10.000 palabras"
+				],
+				[
+					"25 páginas",
+					"6.250 palabras",
+					"6.875 palabras",
+					"12.500 palabras"
+				],
+				[
+					"50 páginas",
+					"12.500 palabras",
+					"13.750 palabras",
+					"25.000 palabras"
+				],
+				[
+					"100 páginas",
+					"25.000 palabras",
+					"27.500 palabras",
+					"50.000 palabras"
+				],
+				[
+					"200 páginas",
+					"50.000 palabras",
+					"55.000 palabras",
+					"100.000 palabras"
+				],
+				[
+					"300 páginas",
+					"75.000 palabras",
+					"82.500 palabras",
+					"150.000 palabras"
+				],
+				[
+					"400 páginas",
+					"100.000 palabras",
+					"110.000 palabras",
+					"200.000 palabras"
+				],
+				[
+					"500 páginas",
+					"125.000 palabras",
+					"137.500 palabras",
+					"250.000 palabras"
+				]
+			],
+			"formulaW2pHtml": "<strong class=\"font-semibold text-ink\">Fórmula de palabras a páginas:</strong> <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">Páginas = Total de palabras ÷ Palabras por página</code> — Ejemplo: 1.500 palabras ÷ 250 palabras/página (doble espacio) = <strong class=\"font-semibold text-ink\">6,0 páginas</strong>.",
+			"formulaP2wHtml": "<strong class=\"font-semibold text-ink\">Fórmula de páginas a palabras:</strong> <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums\">Total de palabras = Número de páginas × Palabras por página</code> — Ejemplo: 300 páginas × 275 palabras/página (rústica) = <strong class=\"font-semibold text-ink\">82.500 palabras</strong>.",
+			"s2Title": "Matriz de palabras por página según fuente, tamaño y formato de papel",
+			"s2IntroHtml": "La regla de las «250 palabras por página a doble espacio» es solo una referencia para Times New Roman de 12 pt en papel Carta con márgenes de 2,54 cm. Esta guía de <strong class=\"font-semibold text-ink\">palabras por página</strong> muestra cómo cambiar la tipografía, el tamaño de letra, los márgenes o el tamaño del papel puede variar la extensión final entre un <strong class=\"font-semibold text-ink\">10 % y un 25 %</strong> sin modificar una sola palabra de tu borrador.",
+			"fontMatrixTitle": "Matriz detallada de palabras por página (márgenes de 2,54 cm, papel Carta)",
+			"fontMatrixHeaders": [
+				"Tipo de letra",
+				"10 pt (Sencillo / Doble)",
+				"11 pt (Sencillo / Doble)",
+				"12 pt (Sencillo / Doble)",
+				"14 pt (Sencillo / Doble)"
+			],
+			"fontMatrixRows": [
+				[
+					"Times New Roman",
+					"680 / 340 p/pág.",
+					"580 / 290 p/pág.",
+					"500 / 250 p/pág.",
+					"380 / 190 p/pág."
+				],
+				[
+					"Calibri",
+					"710 / 355 p/pág.",
+					"600 / 300 p/pág.",
+					"520 / 260 p/pág.",
+					"400 / 200 p/pág."
+				],
+				[
+					"Arial",
+					"640 / 320 p/pág.",
+					"540 / 270 p/pág.",
+					"450 / 225 p/pág.",
+					"340 / 170 p/pág."
+				],
+				[
+					"Georgia",
+					"620 / 310 p/pág.",
+					"520 / 260 p/pág.",
+					"440 / 220 p/pág.",
+					"330 / 165 p/pág."
+				],
+				[
+					"Verdana",
+					"540 / 270 p/pág.",
+					"460 / 230 p/pág.",
+					"390 / 195 p/pág.",
+					"290 / 145 p/pág."
+				],
+				[
+					"Courier New",
+					"490 / 245 p/pág.",
+					"420 / 210 p/pág.",
+					"360 / 180 p/pág.",
+					"270 / 135 p/pág."
+				]
+			],
+			"paperMarginsTitle": "Cómo afectan el tamaño de papel y los márgenes a la densidad (Carta vs. A4)",
+			"paperMarginsCards": [
+				"<strong class=\"font-semibold text-ink\">Carta EE. UU. (8,5 × 11 pulg.) vs. A4 (210 × 297 mm):</strong> El papel A4 es ligeramente más estrecho y alto que el formato Carta, lo que aporta aproximadamente un <strong class=\"font-semibold text-ink\">6 % más de área imprimible</strong> con márgenes de 2,54 cm. Un documento de 10 páginas en Carta suele quedar en unas <strong class=\"font-semibold text-ink\">9,4 páginas en A4</strong>.",
+				"<strong class=\"font-semibold text-ink\">Ancho de márgenes (2,54 cm vs. 1,27 cm):</strong> Pasar de márgenes normales de 1 pulgada a márgenes estrechos de 0,5 pulgadas amplía la caja de texto casi un <strong class=\"font-semibold text-ink\">28 %</strong>, permitiendo unas <strong class=\"font-semibold text-ink\">320 palabras por página a doble espacio</strong> en lugar de 250.",
+				"<strong class=\"font-semibold text-ink\">Fuentes proporcionales vs. monoespaciadas:</strong> Las fuentes proporcionales como Calibri y Times New Roman compactan las letras estrechas, mientras que las monoespaciadas como Courier New dan el mismo ancho a cada carácter, estirando un ensayo de 1.000 palabras de <strong class=\"font-semibold text-ink\">4,0 a 5,6 páginas</strong>."
+			],
+			"s3Title": "Normas académicas y referencias de páginas para libros y novelas",
+			"s3IntroHtml": "Tanto si maquetas un trabajo universitario como si calculas la extensión y el grosor del lomo de una novela autopublicada, cada ámbito editorial aplica reglas de diseño concretas que determinan cuántas palabras caben por página.",
+			"academicTitle": "Estándares de formato académico (MLA 9, APA 7, Chicago, Harvard)",
+			"academicHeaders": [
+				"Norma o estilo de citación",
+				"Fuente e interlineado requeridos",
+				"Márgenes",
+				"Media de palabras por página"
+			],
+			"academicRows": [
+				[
+					"MLA 9.ª edición",
+					"Times New Roman 12 pt, doble espacio",
+					"2,54 cm (todos los lados)",
+					"~250 palabras/página"
+				],
+				[
+					"APA 7.ª edición",
+					"Times New Roman 12 pt o Calibri/Arial 11 pt, doble espacio",
+					"2,54 cm (todos los lados)",
+					"~250–280 palabras/página"
+				],
+				[
+					"Chicago / Turabian",
+					"Times New Roman 12 pt, doble espacio (notas al pie en sencillo)",
+					"2,54 cm (todos los lados)",
+					"~250 palabras/página"
+				],
+				[
+					"Estilo Harvard",
+					"Arial o Times New Roman 12 pt, 1,5 líneas o doble espacio",
+					"2,54 cm (1 pulgada)",
+					"~250–330 palabras/página"
+				]
+			],
+			"academicNote": "Nota: Las estimaciones académicas se aplican únicamente a los párrafos del cuerpo; portadas, resúmenes, bibliografías y anexos añaden páginas adicionales.",
+			"bookTrimTitle": "Formatos de libro impreso y extensión habitual en ficción (novela, novela corta, AO3)",
+			"bookTrimHeaders": [
+				"Formato o categoría",
+				"Tamaño estándar / Rango de palabras",
+				"Palabras por página",
+				"Extensión impresa habitual"
+			],
+			"bookTrimRows": [
+				[
+					"Novela de bolsillo (Digest)",
+					"Formato 5\" × 8\" (Garamond/serif 11 pt)",
+					"~250 palabras/página",
+					"200–320 páginas (50k–80k palabras)"
+				],
+				[
+					"Novela en rústica comercial",
+					"Formato 5,5\" × 8,5\" (estándar en ficción)",
+					"~275 palabras/página",
+					"250–365 páginas (70k–100k palabras)"
+				],
+				[
+					"No ficción / Libro tapa dura",
+					"Formato 6\" × 9\" (líneas más anchas)",
+					"~300 palabras/página",
+					"200–335 páginas (60k–100k palabras)"
+				],
+				[
+					"Relato corto y novela corta",
+					"1.500–7.500 palabras (relato) / 16.000–40.000 (novela corta)",
+					"~275 palabras/página",
+					"6–27 páginas (relato) / 60–145 páginas (novela corta)"
+				],
+				[
+					"Novela de fantasía épica / ciencia ficción",
+					"120.000–250.000+ palabras",
+					"~300 palabras/página",
+					"400–835+ páginas"
+				],
+				[
+					"Capítulos en AO3 y ficción web",
+					"2.000–5.000 palabras por capítulo (50k–150k obra completa)",
+					"~250–275 palabras/página",
+					"8–20 páginas/capítulo (180–550 páginas en total)"
+				]
+			],
+			"s4Title": "Equivalencias más buscadas y ejemplos de libros reales",
+			"s4Intro": "Estudiantes, escritores y editores consultan a menudo la extensión exacta de ciertas cifras redondas. A continuación tienes respuestas directas usando el formato estándar de Times New Roman de 12 pt (márgenes de 2,54 cm), seguidas de ejemplos reales de libros y discursos conocidos.",
+			"milestonesTitle": "Respuestas directas para los hitos de palabras y páginas más consultados",
+			"milestonesItems": [
+				"<strong class=\"font-semibold text-ink\">¿Cuántas páginas son 500 palabras?</strong> <strong class=\"font-semibold text-ink\">500 palabras</strong> equivalen a <strong class=\"font-semibold text-ink\">1,0 página a espacio sencillo</strong> o <strong class=\"font-semibold text-ink\">2,0 páginas a doble espacio</strong>: la extensión clásica de una redacción breve, carta de motivación o entrada corta de blog.",
+				"<strong class=\"font-semibold text-ink\">¿Cuántas páginas son 1.000 palabras?</strong> <strong class=\"font-semibold text-ink\">1.000 palabras</strong> equivalen a <strong class=\"font-semibold text-ink\">2,0 páginas a espacio sencillo</strong> o <strong class=\"font-semibold text-ink\">4,0 páginas a doble espacio</strong> (unas 3,6 páginas en Calibri de 11 pt). Es la longitud habitual de muchos trabajos universitarios breves.",
+				"<strong class=\"font-semibold text-ink\">¿Cuántas páginas son 1.500 palabras?</strong> <strong class=\"font-semibold text-ink\">1.500 palabras</strong> equivalen a <strong class=\"font-semibold text-ink\">3,0 páginas a espacio sencillo</strong> o <strong class=\"font-semibold text-ink\">6,0 páginas a doble espacio</strong>: una medida estándar para ensayos argumentativos y reportajes a fondo.",
+				"<strong class=\"font-semibold text-ink\">¿Cuántas palabras son 7 páginas?</strong> <strong class=\"font-semibold text-ink\">7 páginas</strong> equivalen a <strong class=\"font-semibold text-ink\">1.750 palabras a doble espacio</strong> (250 palabras por página) o <strong class=\"font-semibold text-ink\">3.500 palabras a espacio sencillo</strong> (500 palabras por página), y unas <strong class=\"font-semibold text-ink\">1.925 palabras</strong> en un libro en rústica comercial.",
+				"<strong class=\"font-semibold text-ink\">¿Cuántas páginas son 2.000 palabras?</strong> <strong class=\"font-semibold text-ink\">2.000 palabras</strong> equivalen a <strong class=\"font-semibold text-ink\">4,0 páginas a espacio sencillo</strong>, <strong class=\"font-semibold text-ink\">6,0 páginas a 1,5 líneas</strong> o <strong class=\"font-semibold text-ink\">8,0 páginas a doble espacio</strong>, muy habitual en trabajos de investigación intermedios.",
+				"<strong class=\"font-semibold text-ink\">¿Cuántas páginas son 5.000 palabras?</strong> <strong class=\"font-semibold text-ink\">5.000 palabras</strong> equivalen a <strong class=\"font-semibold text-ink\">10,0 páginas a espacio sencillo</strong> o <strong class=\"font-semibold text-ink\">20,0 páginas a doble espacio</strong> (unas 18 páginas en rústica de 5,5\" × 8,5\"), típico de un trabajo de fin de asignatura o relato largo.",
+				"<strong class=\"font-semibold text-ink\">¿Cuántas páginas son 100.000 palabras?</strong> <strong class=\"font-semibold text-ink\">100.000 palabras</strong> equivalen a <strong class=\"font-semibold text-ink\">200 páginas a espacio sencillo</strong> o <strong class=\"font-semibold text-ink\">400 páginas a doble espacio</strong> en manuscrito, y se imprimen en unas <strong class=\"font-semibold text-ink\">330 a 365 páginas</strong> en una novela en rústica estándar.",
+				"<strong class=\"font-semibold text-ink\">¿Cuántas palabras tiene un libro de 300 páginas?</strong> Una <strong class=\"font-semibold text-ink\">novela impresa de 300 páginas</strong> suele contener entre <strong class=\"font-semibold text-ink\">75.000 y 90.000 palabras</strong> (una media de 250–300 palabras por página según el tamaño del libro y los saltos de capítulo)."
+			],
+			"realWorldTitle": "Ejemplos reales de palabras y páginas en libros y discursos",
+			"realWorldHeaders": [
+				"Título y formato",
+				"Palabras aproximadas",
+				"Páginas impresas",
+				"Categoría"
+			],
+			"realWorldRows": [
+				[
+					"Discurso de 5 minutos o charla estilo TED",
+					"~650–750 palabras (a 130–150 WPM)",
+					"2,5–3 páginas (doble espacio)",
+					"Presentación oral"
+				],
+				[
+					"Dr. Martin Luther King Jr. — Tengo un sueño (I Have a Dream)",
+					"1.667 palabras",
+					"~6,7 páginas (doble espacio)",
+					"Discurso histórico"
+				],
+				[
+					"F. Scott Fitzgerald — El gran Gatsby",
+					"47.094 palabras",
+					"~180 páginas (rústica)",
+					"Novela clásica"
+				],
+				[
+					"J.K. Rowling — Harry Potter y la piedra filosofal",
+					"76.944 palabras",
+					"~309 páginas (rústica EE. UU.)",
+					"Fantasía juvenil"
+				],
+				[
+					"George Orwell — 1984",
+					"88.942 palabras",
+					"~328 páginas (rústica)",
+					"Novela distópica"
+				],
+				[
+					"J.R.R. Tolkien — El hobbit",
+					"95.356 palabras",
+					"~310 páginas (rústica)",
+					"Novela de fantasía"
+				],
+				[
+					"Frank Herbert — Dune",
+					"187.240 palabras",
+					"~658 páginas (rústica comercial)",
+					"Ciencia ficción épica"
+				],
+				[
+					"Brandon Sanderson — Palabras radiantes",
+					"398.288 palabras",
+					"~1.088 páginas (tapa dura)",
+					"Fantasía épica"
+				]
+			],
+			"s5Title": "Cómo usar el conversor de palabras a páginas y consejos para clavar tu extensión",
+			"stepsTitle": "Cómo convertir palabras a páginas (o páginas a palabras) en 3 pasos",
+			"stepsItems": [
+				"<strong class=\"font-semibold text-ink\">Introduce una cifra o pega tu borrador:</strong> Escribe cualquier número de palabras —incluso abreviaturas como <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink tabular-nums\">1.5k</code> o <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink tabular-nums\">10k</code>—, cambia a la pestaña <strong class=\"font-semibold text-ink\">Páginas a palabras</strong> para calcular desde un límite de páginas o pega tu texto completo para obtener el recuento exacto de palabras, caracteres y párrafos.",
+				"<strong class=\"font-semibold text-ink\">Ajusta el diseño de tu documento:</strong> Elige el interlineado (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Sencillo</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">1,5</code> o <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Doble</code>), la tipografía (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Times New Roman</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Arial</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Calibri</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Georgia</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Verdana</code> o <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Courier New</code>), el tamaño (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink tabular-nums\">10 pt–14 pt</code>), el formato de papel (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">Carta</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">A4</code> o tamaños de libro) y los márgenes.",
+				"<strong class=\"font-semibold text-ink\">Consulta tus métricas al instante:</strong> Revisa el número exacto de páginas decimales, las páginas completas redondeadas, las hojas impresas a doble cara, el tiempo de lectura silenciosa (238 WPM) y el tiempo en voz alta (183 WPM) en las tarjetas inferiores; todo se calcula localmente en tu navegador sin enviar tu texto a ningún servidor."
+			],
+			"tipsTitle": "Consejos prácticos para alcanzar —o recortar— tu número objetivo de páginas",
+			"tipsItems": [
+				"<strong class=\"font-semibold text-ink\">¿Necesitas ampliar un borrador corto sin relleno?</strong> Divide los bloques densos en párrafos más breves y enfocados, añade ejemplos concretos o citas de datos para cada idea principal e incluye frases de transición claras entre apartados en lugar de agrandar la fuente o los márgenes.",
+				"<strong class=\"font-semibold text-ink\">¿Necesitas acortar un trabajo demasiado largo?</strong> Elimina muletillas y locuciones redundantes (como <em>«con el objetivo de»</em>, <em>«debido al hecho de que»</em> o <em>«es importante señalar que»</em>), fusiona frases repetitivas y sustituye construcciones pasivas por verbos activos directos.",
+				"<strong class=\"font-semibold text-ink\">¿Trabajas con archivos de Apple Pages (.pages)?</strong> Si escribiste en Apple Pages y necesitas comprobar la extensión exacta en Microsoft Word, abre el documento en Pages y selecciona <strong class=\"font-semibold text-ink\">Archivo &gt; Exportar a &gt; Word (.docx)</strong>; después pega el texto arriba para verificar cómo pagina en Times New Roman o Calibri."
+			],
+			"faqTitle": "Preguntas frecuentes"
+		},
+		"faq": [
+			{
+				"question": "¿Cuántas palabras hay en 1 página?",
+				"answerHtml": "Con el formato estándar (Times New Roman de 12 pt, márgenes de 2,54 cm y papel Carta), <strong class=\"font-semibold text-ink\">1 página a espacio sencillo contiene unas 500 palabras</strong> y <strong class=\"font-semibold text-ink\">1 página a doble espacio contiene unas 250 palabras</strong>. En una novela en rústica comercial de 5,5\" × 8,5\", cada página promedia <strong class=\"font-semibold text-ink\">275 palabras</strong>."
+			},
+			{
+				"question": "¿1.000 palabras son 4 páginas?",
+				"answerHtml": "Sí: <strong class=\"font-semibold text-ink\">1.000 palabras equivalen a 4,0 páginas a doble espacio</strong> con Times New Roman de 12 pt y márgenes de 2,54 cm. Si el documento va a espacio sencillo, 1.000 palabras ocupan <strong class=\"font-semibold text-ink\">2,0 páginas</strong>, y en Calibri de 11 pt a doble espacio unas <strong class=\"font-semibold text-ink\">3,8 páginas</strong>."
+			},
+			{
+				"question": "¿1.500 palabras son 4 o 6 páginas?",
+				"answerHtml": "<strong class=\"font-semibold text-ink\">1.500 palabras son 6,0 páginas a doble espacio</strong> (a 250 palabras por página) y <strong class=\"font-semibold text-ink\">3,0 páginas a espacio sencillo</strong> (a 500 palabras por página). Con interlineado de 1,5 líneas, 1.500 palabras ocupan <strong class=\"font-semibold text-ink\">4,5 páginas</strong>."
+			},
+			{
+				"question": "¿Cuántas palabras son 7 páginas?",
+				"answerHtml": "Bajo formato académico estándar (Times New Roman 12 pt, márgenes de 2,54 cm), <strong class=\"font-semibold text-ink\">7 páginas son 1.750 palabras a doble espacio</strong> (250 palabras por página) o <strong class=\"font-semibold text-ink\">3.500 palabras a espacio sencillo</strong> (500 palabras por página). A 1,5 líneas equivalen a unas <strong class=\"font-semibold text-ink\">2.310 palabras</strong>, y en un libro en rústica de 5,5\" × 8,5\" (~275 palabras/página) a unas <strong class=\"font-semibold text-ink\">1.925 palabras</strong>."
+			},
+			{
+				"question": "¿5.000 palabras son 20 páginas?",
+				"answerHtml": "Sí: <strong class=\"font-semibold text-ink\">5.000 palabras equivalen a 20,0 páginas a doble espacio</strong> o <strong class=\"font-semibold text-ink\">10,0 páginas a espacio sencillo</strong> en formato académico estándar. Impresas en un libro en rústica de 5,5\" × 8,5\", 5.000 palabras son aproximadamente <strong class=\"font-semibold text-ink\">18,2 páginas</strong>."
+			},
+			{
+				"question": "¿Cuántas páginas tiene un libro de 70.000 palabras?",
+				"answerHtml": "Una <strong class=\"font-semibold text-ink\">novela de 70.000 palabras</strong> tiene unas <strong class=\"font-semibold text-ink\">255 páginas</strong> en rústica comercial de 5,5\" × 8,5\" (~275 palabras/página), <strong class=\"font-semibold text-ink\">280 páginas</strong> en edición de bolsillo de 5\" × 8\" (~250 palabras/página) o <strong class=\"font-semibold text-ink\">233 páginas</strong> en tapa dura de 6\" × 9\" (~300 palabras/página)."
+			},
+			{
+				"question": "¿Cuántas palabras debe tener un libro de 300 páginas?",
+				"answerHtml": "Un <strong class=\"font-semibold text-ink\">libro impreso de 300 páginas</strong> suele contener entre <strong class=\"font-semibold text-ink\">75.000 y 90.000 palabras</strong>, según el tamaño del papel, el cuerpo de letra, los márgenes y el espaciado entre capítulos. La mayoría de las novelas comerciales de ficción encajan en este rango."
+			},
+			{
+				"question": "¿Cuántas páginas son 100.000 palabras?",
+				"answerHtml": "<strong class=\"font-semibold text-ink\">100.000 palabras</strong> equivalen a <strong class=\"font-semibold text-ink\">400 páginas a doble espacio</strong> o <strong class=\"font-semibold text-ink\">200 páginas a espacio sencillo</strong> en formato de manuscrito, y ocupan entre <strong class=\"font-semibold text-ink\">333 y 365 páginas</strong> en una novela estándar en rústica."
+			},
+			{
+				"question": "¿Cambia el número de páginas según la fuente (Times New Roman vs. Arial vs. Calibri)?",
+				"answerHtml": "Sí. A 12 pt y doble espacio, <strong class=\"font-semibold text-ink\">Calibri</strong> admite unas <strong class=\"font-semibold text-ink\">260 palabras/página</strong>, <strong class=\"font-semibold text-ink\">Times New Roman</strong> unas <strong class=\"font-semibold text-ink\">250 palabras/página</strong>, <strong class=\"font-semibold text-ink\">Arial</strong> unas <strong class=\"font-semibold text-ink\">225 palabras/página</strong> y la monoespaciada <strong class=\"font-semibold text-ink\">Courier New</strong> solo <strong class=\"font-semibold text-ink\">180 palabras/página</strong>, lo que puede suponer hasta un 25 % de diferencia total."
+			},
+			{
+				"question": "¿Caben más palabras en papel A4 que en papel Carta?",
+				"answerHtml": "Sí. El <strong class=\"font-semibold text-ink\">papel A4 estándar (210 × 297 mm)</strong> es más alto que el <strong class=\"font-semibold text-ink\">Carta EE. UU. (8,5 × 11 pulg.)</strong> y ofrece cerca de un <strong class=\"font-semibold text-ink\">6 % más de superficie imprimible</strong> con márgenes de 2,54 cm, cabiendo unas <strong class=\"font-semibold text-ink\">265 palabras a doble espacio por página</strong> en vez de 250."
+			},
+			{
+				"question": "¿Cuántas páginas ocupa un discurso de 5 minutos?",
+				"answerHtml": "A un ritmo natural de conversación de <strong class=\"font-semibold text-ink\">130 a 150 palabras por minuto</strong>, un <strong class=\"font-semibold text-ink\">discurso de 5 minutos tiene entre 650 y 750 palabras</strong>, lo que equivale a <strong class=\"font-semibold text-ink\">2,6 a 3,0 páginas a doble espacio</strong> (o 1,3 a 1,5 páginas a espacio sencillo)."
+			},
+			{
+				"question": "¿Los títulos, citas en bloque e imágenes cambian el conteo de páginas?",
+				"answerHtml": "Sí. Las fórmulas de palabras por página calculan párrafos continuos de cuerpo de texto. Los encabezados de capítulo, listas con viñetas, tablas, citas en bloque, portadas y bibliografías añaden espacio vertical y aumentan la extensión final entre un <strong class=\"font-semibold text-ink\">5 % y un 15 %</strong>."
+			},
+			{
+				"question": "¿Este conversor de palabras a páginas es gratuito y privado?",
+				"answerHtml": "Sí. El conversor de palabras a páginas de Wordora es <strong class=\"font-semibold text-ink\">100 % gratuito, sin límites ni registro</strong>, y todos los cálculos se ejecutan en tu navegador: tu texto nunca se sube ni se guarda en ningún servidor."
+			}
+		]
 	},
 	"wordCounter": {
 		"name": "Contador de palabras y caracteres",

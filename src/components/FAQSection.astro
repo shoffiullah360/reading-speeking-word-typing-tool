@@ -1,4 +1,6 @@
 ---
+import { getLocaleFromUrl, useTranslations, type Locale } from '../i18n/ui';
+
 export interface FAQItem {
 	question: string;
 	answer: string;
@@ -79,9 +81,12 @@ export const faqItems: FAQItem[] = [
 
 interface Props {
 	faqs?: FAQItem[];
+	locale?: Locale;
 }
 
-const { faqs = faqItems } = Astro.props;
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+const faqs = Astro.props.faqs ?? t.raw<FAQItem[]>('readingTimeCalculator.faq.items') ?? faqItems;
 ---
 
 <section id="faq" aria-labelledby="faq-heading" class="mt-10 pb-14 md:mt-12 sm:pb-20">
@@ -91,7 +96,7 @@ const { faqs = faqItems } = Astro.props;
 				id="faq-heading"
 				class="text-center text-[26px] leading-[34px] font-semibold tracking-[-0.8px] text-ink sm:text-[30px] sm:leading-[38px]"
 			>
-				Frequently Asked Questions
+				{t('readingTimeCalculator.faq.heading')}
 			</h2>
 
 			<div class="whisper-shadow mt-8 divide-y divide-hairline rounded-md border border-hairline bg-canvas-elevated px-6">

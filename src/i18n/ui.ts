@@ -77,8 +77,25 @@ function lookup(source: unknown, key: string): unknown {
 	return node;
 }
 
+function isPlainObject(v: unknown): v is Record<string, unknown> {
+	return !!v && typeof v === 'object' && !Array.isArray(v);
+}
+
+function deepMergeFallback(base: unknown, override: unknown): unknown {
+	if (override === undefined) return base;
+	if (!isPlainObject(base) || !isPlainObject(override)) return override;
+	const merged: Record<string, unknown> = { ...base };
+	for (const k of Object.keys(override)) {
+		merged[k] = deepMergeFallback(base[k], override[k]);
+	}
+	return merged;
+}
+
 function resolve(locale: Locale, key: string): unknown {
-	return lookup(dictionaries[locale], key) ?? lookup(dictionaries[defaultLocale], key);
+	const fallback = lookup(dictionaries[defaultLocale], key);
+	if (locale === defaultLocale) return fallback;
+	const localized = lookup(dictionaries[locale], key);
+	return deepMergeFallback(fallback, localized);
 }
 
 export interface Translator {
