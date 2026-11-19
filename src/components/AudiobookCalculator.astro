@@ -9,21 +9,19 @@ const wordsToPagesTool = getToolById('words-to-pages');
 <section
 	id="audiobook-calculator-workspace"
 	aria-label="Audiobook Speed and Listening Time Calculator Workspace"
-	class="mx-auto max-w-[1200px] px-4 pt-3 pb-8 sm:px-6"
+	class="mx-auto max-w-[1140px] px-4 pt-4 pb-14 sm:px-6"
 >
-	<!-- Main Dual-Column Workspace -->
-	<div class="grid grid-cols-1 gap-4 lg:grid-cols-12">
-		<!-- Left Column: Input Card + 2x2 Mint KPI Output Grid -->
-		<div class="flex flex-col gap-4 lg:col-span-7">
-			<!-- Main White Input Card (Length, Word Count, Remaining Progress & Speed Breakdown) -->
-			<div class="whisper-shadow shadow-xs flex flex-col rounded-md border border-hairline bg-canvas-elevated">
-			<div>
-				<!-- Tab Bar Header: Length, Word Count & Remaining Progress -->
-				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-4 py-2.5">
+	<!-- Unified 2-Column Split-Studio Card (Matching SpeechCalculator.astro) -->
+	<div class="whisper-shadow overflow-hidden rounded-3xl border border-hairline bg-canvas-elevated lg:grid lg:grid-cols-12">
+		<!-- Left Column (~60% width / 7 cols): Clean Inputs, Playback Speed, and Collapsible Presets & Schedule -->
+		<div class="flex flex-col justify-between p-6 sm:p-8 lg:col-span-7 lg:p-10">
+			<div class="space-y-6">
+				<!-- Top Mode Pills: By Length | By Words | Remaining -->
+				<div class="flex flex-wrap items-center justify-between gap-3">
 					<div
 						role="tablist"
 						aria-label="Audiobook input mode"
-						class="inline-flex items-center gap-1"
+						class="inline-flex flex-wrap rounded-full border border-hairline bg-canvas p-1"
 					>
 						<button
 							type="button"
@@ -32,9 +30,9 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							aria-selected="true"
 							aria-controls="ab-panel-length"
 							data-mode="length"
-							class="ab-mode-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all"
+							class="ab-mode-btn cursor-pointer rounded-full bg-[#afe3d0] px-4 py-1.5 text-[13px] font-semibold text-[#0f2e26] transition-all"
 						>
-							By Audiobook Length
+							By Length
 						</button>
 						<button
 							type="button"
@@ -43,9 +41,9 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							aria-selected="false"
 							aria-controls="ab-panel-words"
 							data-mode="words"
-							class="ab-mode-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
+							class="ab-mode-btn cursor-pointer rounded-full bg-transparent px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink"
 						>
-							By Word Count
+							By Words
 						</button>
 						<button
 							type="button"
@@ -54,33 +52,9 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							aria-selected="false"
 							aria-controls="ab-panel-remaining"
 							data-mode="remaining"
-							class="ab-mode-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink"
+							class="ab-mode-btn cursor-pointer rounded-full bg-transparent px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink"
 						>
-							Remaining Progress
-						</button>
-					</div>
-
-					<div class="flex flex-wrap items-center gap-1">
-						<button
-							type="button"
-							id="ab-btn-copy-result"
-							class="cursor-pointer rounded-sm border border-[#5ec4a3] bg-[#afe3d0] px-2.5 py-1 text-[13px] font-semibold text-[#0f2e26] transition-colors hover:bg-[#c5eedf] dark:border-transparent dark:bg-transparent dark:font-medium dark:text-mute dark:hover:bg-hairline-soft dark:hover:text-ink"
-						>
-							Copy result
-						</button>
-						<button
-							type="button"
-							id="ab-btn-copy-link"
-							class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
-						>
-							Copy link
-						</button>
-						<button
-							type="button"
-							id="ab-btn-reset"
-							class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
-						>
-							Reset defaults
+							Remaining
 						</button>
 					</div>
 				</div>
@@ -90,18 +64,20 @@ const wordsToPagesTool = getToolById('words-to-pages');
 					id="ab-panel-length"
 					role="tabpanel"
 					aria-labelledby="ab-tab-btn-length"
-					class="p-4"
+					class="space-y-4"
 				>
-					<h2 class="text-[14px] font-medium text-ink">
-						Enter audiobook duration (at 1.0x speed)
-					</h2>
-					<p class="mt-1 mb-3 text-[13px] text-body">
-						Enter the total or remaining hours, minutes, and seconds of your audiobook to see how fast you will finish.
-					</p>
+					<div>
+						<h2 class="text-[14px] font-medium text-ink">
+							Audiobook duration (at 1.0x speed)
+						</h2>
+						<p class="mt-0.5 text-[13px] text-mute">
+							Enter the hours, minutes, and seconds of your audiobook.
+						</p>
+					</div>
 
-					<div class="grid grid-cols-3 gap-2.5">
+					<div class="grid grid-cols-3 gap-3">
 						<div>
-							<label for="ab-hours-input" class="mb-1 block text-[12px] font-medium text-body">
+							<label for="ab-hours-input" class="mb-1.5 block text-[12px] font-medium text-mute">
 								Hours
 							</label>
 							<div class="relative flex items-center">
@@ -112,16 +88,16 @@ const wordsToPagesTool = getToolById('words-to-pages');
 									max="500"
 									step="1"
 									value="0"
-									class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-lg font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+									class="w-full rounded-2xl border border-hairline bg-canvas px-3.5 py-3 pr-9 text-[22px] font-semibold text-ink tabular-nums focus:border-[#0f2e26] focus:bg-canvas-elevated focus:outline-none dark:focus:border-[#afe3d0]"
 								/>
-								<span class="pointer-events-none absolute right-3 text-[12px] text-mute">
+								<span class="pointer-events-none absolute right-3.5 text-[12px] text-mute">
 									hr
 								</span>
 							</div>
 						</div>
 
 						<div>
-							<label for="ab-minutes-input" class="mb-1 block text-[12px] font-medium text-body">
+							<label for="ab-minutes-input" class="mb-1.5 block text-[12px] font-medium text-mute">
 								Minutes
 							</label>
 							<div class="relative flex items-center">
@@ -132,16 +108,16 @@ const wordsToPagesTool = getToolById('words-to-pages');
 									max="59"
 									step="1"
 									value="0"
-									class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-lg font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+									class="w-full rounded-2xl border border-hairline bg-canvas px-3.5 py-3 pr-11 text-[22px] font-semibold text-ink tabular-nums focus:border-[#0f2e26] focus:bg-canvas-elevated focus:outline-none dark:focus:border-[#afe3d0]"
 								/>
-								<span class="pointer-events-none absolute right-3 text-[12px] text-mute">
+								<span class="pointer-events-none absolute right-3.5 text-[12px] text-mute">
 									min
 								</span>
 							</div>
 						</div>
 
 						<div>
-							<label for="ab-seconds-input" class="mb-1 block text-[12px] font-medium text-body">
+							<label for="ab-seconds-input" class="mb-1.5 block text-[12px] font-medium text-mute">
 								Seconds
 							</label>
 							<div class="relative flex items-center">
@@ -152,67 +128,12 @@ const wordsToPagesTool = getToolById('words-to-pages');
 									max="59"
 									step="1"
 									value="0"
-									class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-lg font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+									class="w-full rounded-2xl border border-hairline bg-canvas px-3.5 py-3 pr-11 text-[22px] font-semibold text-ink tabular-nums focus:border-[#0f2e26] focus:bg-canvas-elevated focus:outline-none dark:focus:border-[#afe3d0]"
 								/>
-								<span class="pointer-events-none absolute right-3 text-[12px] text-mute">
+								<span class="pointer-events-none absolute right-3.5 text-[12px] text-mute">
 									sec
 								</span>
 							</div>
-						</div>
-					</div>
-
-					<!-- Common Audiobook Duration Presets -->
-					<div class="mt-3">
-						<span class="mb-1.5 block text-[12px] font-medium text-mute">
-							Common audiobook lengths
-						</span>
-						<div class="flex flex-wrap gap-1.5">
-							{
-								[
-									{ hours: 4, minutes: 0, label: '4 hr (Short book)' },
-									{ hours: 7, minutes: 30, label: '7 hr 30 min' },
-									{ hours: 10, minutes: 0, label: '10 hr (Average)' },
-									{ hours: 14, minutes: 0, label: '14 hr' },
-									{ hours: 20, minutes: 0, label: '20 hr (Biography)' },
-									{ hours: 30, minutes: 0, label: '30 hr (Epic)' },
-								].map((preset) => (
-									<button
-										type="button"
-										data-hours-preset={preset.hours}
-										data-minutes-preset={preset.minutes}
-										class="ab-duration-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
-									>
-										{preset.label}
-									</button>
-								))
-							}
-						</div>
-					</div>
-
-					<!-- Popular Books Presets -->
-					<div class="mt-3">
-						<span class="mb-1.5 block text-[12px] font-medium text-mute">
-							Popular books
-						</span>
-						<div class="flex flex-wrap gap-1.5">
-							{
-								[
-									{ hours: 5, minutes: 35, label: 'Atomic Habits 5h 35m' },
-									{ hours: 11, minutes: 5, label: 'The Hobbit 11h 5m' },
-									{ hours: 21, minutes: 2, label: 'Dune 21h 2m' },
-									{ hours: 45, minutes: 30, label: 'The Way of Kings 45h 30m' },
-								].map((book) => (
-									<button
-										type="button"
-										data-hours-preset={book.hours}
-										data-minutes-preset={book.minutes}
-										data-seconds-preset="0"
-										class="ab-duration-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
-									>
-										{book.label}
-									</button>
-								))
-							}
 						</div>
 					</div>
 				</div>
@@ -222,19 +143,18 @@ const wordsToPagesTool = getToolById('words-to-pages');
 					id="ab-panel-words"
 					role="tabpanel"
 					aria-labelledby="ab-tab-btn-words"
-					class="hidden p-4"
+					class="hidden space-y-4"
 				>
 					<div class="flex flex-wrap items-baseline justify-between gap-2">
-						<label for="ab-words-input" class="block text-[14px] font-medium text-ink">
-							Enter total book word count
-						</label>
-						<span class="text-[12px] text-mute tabular-nums">
-							Standard audiobook narration: ~155 WPM
-						</span>
+						<div>
+							<label for="ab-words-input" class="block text-[14px] font-medium text-ink">
+								Total book word count
+							</label>
+							<p class="mt-0.5 text-[13px] text-mute">
+								Estimated at standard audiobook narration (~155 WPM).
+							</p>
+						</div>
 					</div>
-					<p class="mt-1 mb-3 text-[13px] text-body">
-						Estimate audiobook duration from a manuscript or book word count using professional narration pacing (~155 words per minute, or ~9,300 words per hour).
-					</p>
 
 					<div class="relative flex items-center">
 						<input
@@ -244,16 +164,16 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							max="5000000"
 							step="1000"
 							value="0"
-							class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-lg font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+							class="w-full rounded-2xl border border-hairline bg-canvas px-4 py-3 pr-16 text-[22px] font-semibold text-ink tabular-nums focus:border-[#0f2e26] focus:bg-canvas-elevated focus:outline-none dark:focus:border-[#afe3d0]"
 						/>
-						<span class="pointer-events-none absolute right-3 text-[12px] text-mute">
+						<span class="pointer-events-none absolute right-4 text-[12px] text-mute">
 							words
 						</span>
 					</div>
 
 					<!-- Common Book Word Count Presets -->
-					<div class="mt-3">
-						<span class="mb-1.5 block text-[12px] font-medium text-mute">
+					<div>
+						<span class="mb-2 block text-[12px] font-medium text-mute">
 							Common book word counts
 						</span>
 						<div class="flex flex-wrap gap-1.5">
@@ -268,7 +188,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 									<button
 										type="button"
 										data-words-preset={preset.words}
-										class="ab-words-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-xs font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+										class="ab-words-preset cursor-pointer rounded-full border border-hairline bg-canvas px-3 py-1 text-xs font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 									>
 										{preset.label}
 									</button>
@@ -283,18 +203,20 @@ const wordsToPagesTool = getToolById('words-to-pages');
 					id="ab-panel-remaining"
 					role="tabpanel"
 					aria-labelledby="ab-tab-btn-remaining"
-					class="hidden p-4"
+					class="hidden space-y-4"
 				>
-					<h2 class="text-[14px] font-medium text-ink">
-						Track how much listening you have left
-					</h2>
-					<p class="mt-1 mb-3 text-[13px] text-body">
-						Enter the full audiobook length along with your elapsed time, remaining time, or percentage completed to see your exact progress and remaining listening time.
-					</p>
+					<div>
+						<h2 class="text-[14px] font-medium text-ink">
+							Track how much listening you have left
+						</h2>
+						<p class="mt-0.5 text-[13px] text-mute">
+							Enter total length along with elapsed time, remaining time, or percentage completed.
+						</p>
+					</div>
 
-					<div class="space-y-3">
+					<div class="space-y-3.5">
 						<div>
-							<span class="mb-1 block text-[12px] font-medium text-body">
+							<span class="mb-1.5 block text-[12px] font-medium text-mute">
 								Total length
 							</span>
 							<div class="grid grid-cols-3 gap-2.5">
@@ -307,7 +229,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 										step="1"
 										value="0"
 										aria-label="Total length hours"
-										class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-lg font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+										class="w-full rounded-xl border border-hairline bg-canvas px-3 py-2 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 									/>
 									<span class="pointer-events-none absolute right-3 text-[12px] text-mute">hr</span>
 								</div>
@@ -320,7 +242,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 										step="1"
 										value="0"
 										aria-label="Total length minutes"
-										class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-lg font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+										class="w-full rounded-xl border border-hairline bg-canvas px-3 py-2 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 									/>
 									<span class="pointer-events-none absolute right-3 text-[12px] text-mute">min</span>
 								</div>
@@ -333,7 +255,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 										step="1"
 										value="0"
 										aria-label="Total length seconds"
-										class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-lg font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+										class="w-full rounded-xl border border-hairline bg-canvas px-3 py-2 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 									/>
 									<span class="pointer-events-none absolute right-3 text-[12px] text-mute">sec</span>
 								</div>
@@ -342,7 +264,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 
 						<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
 							<div>
-								<span class="mb-1 block text-[12px] font-medium text-body">
+								<span class="mb-1.5 block text-[12px] font-medium text-mute">
 									Elapsed time (already listened)
 								</span>
 								<div class="grid grid-cols-3 gap-2">
@@ -355,7 +277,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											step="1"
 											value="0"
 											aria-label="Already listened hours"
-											class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-2 pr-7 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-7 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
 										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">hr</span>
 									</div>
@@ -368,7 +290,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											step="1"
 											value="0"
 											aria-label="Already listened minutes"
-											class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-2 pr-8 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-8 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
 										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">min</span>
 									</div>
@@ -381,7 +303,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											step="1"
 											value="0"
 											aria-label="Already listened seconds"
-											class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-2 pr-8 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-8 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
 										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">sec</span>
 									</div>
@@ -389,7 +311,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 							</div>
 
 							<div>
-								<span class="mb-1 block text-[12px] font-medium text-body">
+								<span class="mb-1.5 block text-[12px] font-medium text-mute">
 									Remaining time (at 1.0x)
 								</span>
 								<div class="grid grid-cols-3 gap-2">
@@ -402,7 +324,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											step="1"
 											value="0"
 											aria-label="Remaining hours"
-											class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-2 pr-7 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-7 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
 										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">hr</span>
 									</div>
@@ -415,7 +337,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											step="1"
 											value="0"
 											aria-label="Remaining minutes"
-											class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-2 pr-8 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-8 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
 										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">min</span>
 									</div>
@@ -428,7 +350,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											step="1"
 											value="0"
 											aria-label="Remaining seconds"
-											class="w-full rounded-sm border border-hairline bg-canvas px-2.5 py-2 pr-8 text-base font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
+											class="w-full rounded-xl border border-hairline bg-canvas px-2.5 py-2 pr-8 text-sm font-semibold text-ink tabular-nums focus:border-ink focus:bg-canvas-elevated focus:outline-none"
 										/>
 										<span class="pointer-events-none absolute right-2 text-[11px] text-mute">sec</span>
 									</div>
@@ -437,7 +359,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						</div>
 
 						<!-- Percentage Completed (%) Input, Slider & Quick Presets -->
-						<div class="rounded-sm border border-hairline bg-canvas p-3">
+						<div class="rounded-2xl border border-hairline bg-canvas p-4">
 							<div class="flex flex-wrap items-center justify-between gap-2">
 								<label for="ab-pct-completed-input" class="text-[12px] font-medium text-body">
 									Percentage completed (%)
@@ -451,13 +373,13 @@ const wordsToPagesTool = getToolById('words-to-pages');
 											max="100"
 											step="0.1"
 											value="0"
-											class="w-full rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1 pr-6 text-right text-sm font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
+											class="w-full rounded-xl border border-hairline bg-canvas-elevated px-2.5 py-1 pr-6 text-right text-sm font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
 										/>
-										<span class="pointer-events-none absolute right-2 text-[12px] text-mute">%</span>
+										<span class="pointer-events-none absolute right-2.5 text-[12px] text-mute">%</span>
 									</div>
 									<span
 										id="ab-pct-remaining-badge"
-										class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-ink tabular-nums"
+										class="rounded-full bg-hairline-soft px-2.5 py-0.5 text-[11px] font-medium text-ink tabular-nums"
 									>
 										0.0% left
 									</span>
@@ -477,17 +399,17 @@ const wordsToPagesTool = getToolById('words-to-pages');
 								/>
 							</div>
 
-							<div class="mt-2 flex flex-wrap items-center justify-between gap-2">
+							<div class="mt-2.5 flex flex-wrap items-center justify-between gap-2">
 								<span class="text-[11px] font-medium text-mute">
 									Quick percentage presets
 								</span>
-								<div class="flex flex-wrap gap-1">
+								<div class="flex flex-wrap gap-1.5">
 									{
 										[10, 25, 50, 75, 90].map((pct) => (
 											<button
 												type="button"
 												data-pct-preset={pct}
-												class="ab-pct-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2 py-0.5 text-[11px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+												class="ab-pct-preset cursor-pointer rounded-full border border-hairline bg-canvas-elevated px-2.5 py-0.5 text-[11px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
 											>
 												{pct}%
 											</button>
@@ -496,354 +418,448 @@ const wordsToPagesTool = getToolById('words-to-pages');
 								</div>
 							</div>
 						</div>
+
+						<!-- Live Progress Bar & Remaining Time -->
+						<div class="rounded-2xl border border-hairline bg-canvas p-4">
+							<div class="mb-1.5 flex items-baseline justify-between gap-2">
+								<span class="text-[12px] font-medium text-body">Listening progress</span>
+								<span id="ab-progress-pct" class="text-[13px] font-semibold text-ink tabular-nums">
+									0.0% completed · 0.0% left
+								</span>
+							</div>
+							<div
+								id="ab-progress-track"
+								role="progressbar"
+								aria-label="Audiobook listening progress"
+								aria-valuemin="0"
+								aria-valuemax="100"
+								aria-valuenow="0"
+								class="h-2 w-full overflow-hidden rounded-full bg-hairline-soft"
+							>
+								<div id="ab-progress-fill" class="h-full rounded-full bg-[#0f2e26] transition-all dark:bg-[#afe3d0]" style="width: 0%"></div>
+							</div>
+							<div class="mt-1.5 flex flex-wrap items-baseline justify-between gap-1 text-[11px] text-mute tabular-nums">
+								<span id="ab-progress-listened">0 hr 0 min listened</span>
+								<span id="ab-progress-remaining" class="font-medium text-ink">0 hr 0 min remaining</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Playback Speed Section (Always Visible, Cleanly Spaced) -->
+				<div class="border-t border-hairline pt-6">
+					<div class="mb-3 flex items-baseline justify-between gap-2">
+						<span class="text-[13px] font-medium text-ink">
+							Playback speed
+						</span>
+						<span
+							id="ab-active-speed-display"
+							class="text-[13px] font-semibold text-ink tabular-nums"
+						>
+							1.0x (~155 WPM)
+						</span>
 					</div>
 
-					<!-- Live Progress Bar & Remaining Time -->
-					<div class="mt-3 rounded-sm border border-hairline bg-canvas p-3">
-						<div class="mb-1.5 flex items-baseline justify-between gap-2">
-							<span class="text-[12px] font-medium text-body">Listening progress</span>
-							<span id="ab-progress-pct" class="text-[13px] font-semibold text-ink tabular-nums">
-								0.0% completed · 0.0% left
+					<!-- Quick Preset Speed Pills (0.75x, 1.0x, 1.25x, 1.5x, 1.75x, 2.0x) -->
+					<div
+						role="group"
+						aria-label="Playback speed presets"
+						class="grid grid-cols-3 gap-2 sm:grid-cols-6"
+					>
+						{
+							[0.75, 1.0, 1.25, 1.5, 1.75, 2.0].map((spd) => (
+								<button
+									type="button"
+									data-speed-preset={spd}
+									class={`ab-speed-pill cursor-pointer rounded-xl border py-2.5 text-center text-[13px] font-medium tabular-nums transition-all ${
+										spd === 1.0
+											? 'border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] dark:border-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]'
+											: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+									}`}
+								>
+									{spd === 1 || spd === 2 ? `${spd.toFixed(1)}x` : `${spd}x`}
+								</button>
+							))
+						}
+					</div>
+
+					<!-- Fine-Grained Custom Speed Slider (0.5x – 3.0x) -->
+					<div class="mt-4 rounded-2xl border border-hairline bg-canvas px-4 py-3.5">
+						<div class="mb-1.5 flex items-center justify-between">
+							<label for="ab-speed-slider" class="text-[12px] font-medium text-mute">
+								Custom speed slider (0.5x – 3.0x)
+							</label>
+							<output
+								id="ab-slider-value"
+								for="ab-speed-slider"
+								class="text-[13px] font-semibold text-ink tabular-nums"
+							>
+								1.0x
+							</output>
+						</div>
+						<input
+							id="ab-speed-slider"
+							type="range"
+							min="0.5"
+							max="3.0"
+							step="0.05"
+							value="1.0"
+							class="geist-slider"
+						/>
+						<div class="mt-1 flex justify-between text-[11px] text-mute tabular-nums">
+							<span>0.5x</span>
+							<span>1.0x</span>
+							<span>2.0x</span>
+							<span>3.0x</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Bottom Collapsible Toggles: Quick Presets & Daily Schedule Planner -->
+			<div class="mt-6 space-y-2.5 border-t border-hairline pt-5">
+				<!-- Collapsible 1: Quick Presets -->
+				<details class="group rounded-2xl border border-hairline bg-canvas px-4 py-3">
+					<summary class="flex cursor-pointer list-none items-center justify-between text-[13px] font-medium text-body transition-colors hover:text-ink">
+						<span>Quick Presets (Common lengths & popular books)</span>
+						<span class="text-[12px] text-mute transition-transform group-open:rotate-180">▾</span>
+					</summary>
+					<div class="mt-3.5 space-y-3 border-t border-hairline pt-3.5">
+						<div>
+							<span class="mb-1.5 block text-[12px] font-medium text-mute">
+								Common audiobook lengths
+							</span>
+							<div class="flex flex-wrap gap-1.5">
+								{
+									[
+										{ hours: 4, minutes: 0, label: '4 hr (Short book)' },
+										{ hours: 7, minutes: 30, label: '7 hr 30 min' },
+										{ hours: 10, minutes: 0, label: '10 hr (Average)' },
+										{ hours: 14, minutes: 0, label: '14 hr' },
+										{ hours: 20, minutes: 0, label: '20 hr (Biography)' },
+										{ hours: 30, minutes: 0, label: '30 hr (Epic)' },
+									].map((preset) => (
+										<button
+											type="button"
+											data-hours-preset={preset.hours}
+											data-minutes-preset={preset.minutes}
+											class="ab-duration-preset cursor-pointer rounded-full border border-hairline bg-canvas-elevated px-3 py-1 text-xs font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+										>
+											{preset.label}
+										</button>
+									))
+								}
+							</div>
+						</div>
+
+						<div>
+							<span class="mb-1.5 block text-[12px] font-medium text-mute">
+								Popular books
+							</span>
+							<div class="flex flex-wrap gap-1.5">
+								{
+									[
+										{ hours: 5, minutes: 35, label: 'Atomic Habits 5h 35m' },
+										{ hours: 11, minutes: 5, label: 'The Hobbit 11h 5m' },
+										{ hours: 21, minutes: 2, label: 'Dune 21h 2m' },
+										{ hours: 45, minutes: 30, label: 'The Way of Kings 45h 30m' },
+									].map((book) => (
+										<button
+											type="button"
+											data-hours-preset={book.hours}
+											data-minutes-preset={book.minutes}
+											data-seconds-preset="0"
+											class="ab-duration-preset cursor-pointer rounded-full border border-hairline bg-canvas-elevated px-3 py-1 text-xs font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+										>
+											{book.label}
+										</button>
+									))
+								}
+							</div>
+						</div>
+					</div>
+				</details>
+
+				<!-- Collapsible 2: Daily Schedule Planner -->
+				<details class="group rounded-2xl border border-hairline bg-canvas px-4 py-3">
+					<summary class="flex cursor-pointer list-none items-center justify-between text-[13px] font-medium text-body transition-colors hover:text-ink">
+						<div class="flex items-center gap-2">
+							<span>Daily Schedule Planner</span>
+							<span id="ab-schedule-speed-badge" class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] text-mute tabular-nums">
+								At 1.0x speed
 							</span>
 						</div>
-						<div
-							id="ab-progress-track"
-							role="progressbar"
-							aria-label="Audiobook listening progress"
-							aria-valuemin="0"
-							aria-valuemax="100"
-							aria-valuenow="0"
-							class="h-1.5 w-full overflow-hidden rounded-full bg-hairline-soft"
-						>
-							<div id="ab-progress-fill" class="h-full rounded-full bg-primary transition-all" style="width: 0%"></div>
+						<span class="text-[12px] text-mute transition-transform group-open:rotate-180">▾</span>
+					</summary>
+					<div class="mt-3.5 space-y-3 border-t border-hairline pt-3.5">
+						<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+							<div class="rounded-xl border border-hairline bg-canvas-elevated p-3">
+								<label for="ab-daily-minutes" class="mb-1 block text-[12px] font-medium text-body">
+									Minutes per day
+								</label>
+								<div class="relative flex items-center">
+									<input
+										id="ab-daily-minutes"
+										type="number"
+										min="0"
+										max="1440"
+										step="1"
+										value="0"
+										class="w-full rounded-xl border border-hairline bg-canvas px-3 py-1.5 pr-14 text-base font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
+									/>
+									<span class="pointer-events-none absolute right-3 text-[11px] text-mute">
+										min/day
+									</span>
+								</div>
+								<div class="mt-2 flex flex-wrap gap-1">
+									{
+										[15, 30, 45, 60, 90].map((mins) => (
+											<button
+												type="button"
+												data-daily-preset={mins}
+												class="ab-daily-preset cursor-pointer rounded-full border border-hairline bg-canvas px-2.5 py-0.5 text-[11px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
+											>
+												{mins}m
+											</button>
+										))
+									}
+								</div>
+							</div>
+
+							<div class="rounded-xl border border-hairline bg-canvas-elevated p-3">
+								<label for="ab-target-days" class="mb-1 block text-[12px] font-medium text-body">
+									Or set target days to finish
+								</label>
+								<div class="relative flex items-center">
+									<input
+										id="ab-target-days"
+										type="number"
+										min="0"
+										max="365"
+										step="1"
+										value="0"
+										class="w-full rounded-xl border border-hairline bg-canvas px-3 py-1.5 pr-12 text-base font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
+									/>
+									<span class="pointer-events-none absolute right-3 text-[11px] text-mute">
+										days
+									</span>
+								</div>
+								<p id="ab-target-result" class="mt-2 text-[11px] leading-[15px] text-mute tabular-nums">
+									Enter an audiobook length to see your daily goal
+								</p>
+							</div>
 						</div>
-						<div class="mt-1.5 flex flex-wrap items-baseline justify-between gap-1 text-[11px] text-mute tabular-nums">
-							<span id="ab-progress-listened">0 hr 0 min listened</span>
-							<span id="ab-progress-remaining" class="font-medium text-ink">0 hr 0 min remaining</span>
-						</div>
 					</div>
-				</div>
+				</details>
 			</div>
+		</div>
 
-			<!-- Instant Playback Speed Comparison Grid -->
-			<div class="border-t border-hairline px-4 py-3">
-				<div class="mb-2 flex items-center justify-between gap-2">
-					<h2 class="text-[13px] font-semibold text-ink">
-						Listening time across popular playback speeds
-					</h2>
-					<span id="ab-comparison-base-badge" class="text-[11px] text-mute tabular-nums">
-						For 0 hr 0 min book
-					</span>
-				</div>
-
-				<div class="grid grid-cols-1 gap-1.5 sm:grid-cols-3">
-					<div class="flex items-center justify-between gap-2 rounded-sm border border-hairline bg-canvas px-2 py-1.5 text-xs">
-						<span class="text-body tabular-nums">1.0x <span class="text-mute">(Original)</span></span>
-						<strong id="ab-comp-100" class="font-semibold text-ink tabular-nums">0 hr 0 min</strong>
-					</div>
-					<div class="flex items-center justify-between gap-2 rounded-sm border border-hairline bg-canvas px-2 py-1.5 text-xs">
-						<span class="text-body tabular-nums">1.25x <span class="text-mute">(-20%)</span></span>
-						<strong id="ab-comp-125" class="font-semibold text-ink tabular-nums">0 hr 0 min</strong>
-					</div>
-					<div class="flex items-center justify-between gap-2 rounded-sm border border-hairline bg-canvas px-2 py-1.5 text-xs">
-						<span class="text-body tabular-nums">1.5x <span class="text-mute">(-33%)</span></span>
-						<strong id="ab-comp-150" class="font-semibold text-ink tabular-nums">0 hr 0 min</strong>
-					</div>
-					<div class="flex items-center justify-between gap-2 rounded-sm border border-hairline bg-canvas px-2 py-1.5 text-xs">
-						<span class="text-body tabular-nums">1.75x <span class="text-mute">(-43%)</span></span>
-						<strong id="ab-comp-175" class="font-semibold text-ink tabular-nums">0 hr 0 min</strong>
-					</div>
-					<div class="flex items-center justify-between gap-2 rounded-sm border border-hairline bg-canvas px-2 py-1.5 text-xs">
-						<span class="text-body tabular-nums">2.0x <span class="text-mute">(-50%)</span></span>
-						<strong id="ab-comp-200" class="font-semibold text-ink tabular-nums">0 hr 0 min</strong>
-					</div>
-					<div class="flex items-center justify-between gap-2 rounded-sm border border-hairline bg-canvas px-2 py-1.5 text-xs">
-						<span class="text-body">Silent read <span class="text-mute tabular-nums">(238 WPM)</span></span>
-						<strong id="ab-comp-silent" class="font-semibold text-ink tabular-nums">0 hr 0 min</strong>
-					</div>
-				</div>
-			</div>
-			</div>
-
-			<!-- 2x2 Deep Forest Emerald KPI Output Grid (Directly Beneath the Left Input Card) -->
-			<div class="grid flex-1 grid-cols-2 gap-3">
-				<!-- Stat 1: Adjusted listening time -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
+		<!-- Right Column (~40% width / 5 cols): Deep Forest Emerald (#0f2e26) Result Panel -->
+		<div class="flex flex-col justify-between bg-[#0f2e26] p-6 text-[#f0fdf7] sm:p-8 lg:col-span-5 lg:p-10">
+			<div class="space-y-6">
+				<!-- Primary Readout: Adjusted Listening Time -->
+				<div>
 					<div class="flex items-center justify-between gap-2">
-						<span class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
+						<span class="text-[12px] font-medium text-[#afe3d0]/80">
 							Adjusted listening time
 						</span>
 						<span
 							id="ab-badge-speed"
-							class="shrink-0 rounded-full border border-[#1d463b] bg-[#153d33] px-2 py-0.5 text-[11px] font-medium text-[#afe3d0] tabular-nums dark:border-transparent dark:bg-hairline-soft dark:text-ink"
+							class="rounded-full border border-[#afe3d0]/25 bg-[#153d33] px-2.5 py-0.5 text-[11px] font-medium text-[#afe3d0] tabular-nums"
 						>
 							At 1.0x speed
 						</span>
 					</div>
-					<div class="my-1.5 flex items-baseline gap-2">
-						<output
-							id="ab-metric-adjusted-time"
-							aria-live="polite"
-							class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
-						>
-							0 hr 0 min
-						</output>
-					</div>
-					<p id="ab-metric-adjusted-sub" class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
+					<output
+						id="ab-metric-adjusted-time"
+						aria-live="polite"
+						class="mt-2 block font-sans text-[42px] leading-[48px] font-semibold tracking-[-1.5px] text-[#afe3d0] tabular-nums sm:text-[48px] sm:leading-[54px]"
+					>
+						0 hr 0 min
+					</output>
+					<p id="ab-metric-adjusted-sub" class="mt-2 text-[14px] text-[#d1fae5]/80 tabular-nums">
 						0 total minutes of listening
 					</p>
-				</article>
+				</div>
 
-				<!-- Stat 2: Time saved (or added) -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
-					<div class="flex items-center justify-between gap-2">
-						<span id="ab-label-saved" class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
-							Time saved
-						</span>
-						<span
-							id="ab-badge-saved-pct"
-							class="shrink-0 text-[11px] text-[#afe3d0]/80 tabular-nums dark:text-mute"
-						>
-							Original pace
-						</span>
-					</div>
-					<div class="my-1.5 flex items-baseline gap-2">
+				<!-- 2 Stat Boxes: Time Saved & Original 1.0x Length -->
+				<div class="grid grid-cols-2 gap-3">
+					<!-- Stat Box 1: Time Saved / Added -->
+					<div class="rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/60 p-4">
+						<div class="flex items-center justify-between gap-1.5">
+							<span id="ab-label-saved" class="text-[12px] font-medium text-[#afe3d0]/80">
+								Time saved
+							</span>
+							<span
+								id="ab-badge-saved-pct"
+								class="text-[11px] text-[#afe3d0]/70 tabular-nums"
+							>
+								Original pace
+							</span>
+						</div>
 						<output
 							id="ab-metric-time-saved"
 							aria-live="polite"
-							class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
+							class="mt-1.5 block font-sans text-[22px] leading-[28px] font-semibold text-white tabular-nums"
 						>
 							0 min
 						</output>
+						<p id="ab-metric-saved-sub" class="mt-1 truncate text-[11px] text-[#d1fae5]/70 tabular-nums">
+							Compared to 0 hr 0 min at 1.0x
+						</p>
 					</div>
-					<p id="ab-metric-saved-sub" class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-						Compared to 0 hr 0 min at 1.0x
-					</p>
-				</article>
 
-				<!-- Stat 3: Original 1.0x length -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
-					<div class="flex items-center justify-between gap-2">
-						<span class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
-							Original 1.0x length
-						</span>
-						<span id="ab-badge-mode" class="shrink-0 text-[11px] text-[#afe3d0]/80 dark:text-mute">
-							By length
-						</span>
-					</div>
-					<div class="my-1.5">
+					<!-- Stat Box 2: Original 1.0x Length -->
+					<div class="rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/60 p-4">
+						<div class="flex items-center justify-between gap-1.5">
+							<span class="text-[12px] font-medium text-[#afe3d0]/80">
+								Original length
+							</span>
+							<span id="ab-badge-mode" class="text-[11px] text-[#afe3d0]/70">
+								By length
+							</span>
+						</div>
 						<output
 							id="ab-metric-base-time"
 							aria-live="polite"
-							class="block font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
+							class="mt-1.5 block font-sans text-[22px] leading-[28px] font-semibold text-white tabular-nums"
 						>
 							0 hr 0 min
 						</output>
-					</div>
-					<p id="ab-metric-words-est" class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-						0 words · 0 pages
-					</p>
-				</article>
-
-				<!-- Stat 4: Daily listening schedule preview -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
-					<div class="flex items-center justify-between gap-2">
-						<span class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
-							Daily finish estimate
-						</span>
-						<span id="ab-metric-daily-label" class="shrink-0 text-[11px] text-[#afe3d0]/80 tabular-nums dark:text-mute">
-							At 0 min/day
-						</span>
-					</div>
-					<div class="my-1.5">
-						<output
-							id="ab-metric-days-45"
-							aria-live="polite"
-							class="block font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
-						>
-							0 days
-						</output>
-					</div>
-					<p id="ab-metric-days-sub" class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-						—
-					</p>
-				</article>
-			</div>
-		</div>
-
-		<!-- Right Column: Playback Speed Selector & Daily Listening Schedule -->
-		<div class="flex flex-col gap-4 lg:col-span-5">
-			<!-- Card 1: Playback Speed Selector (Preset Pills + 0.5x–3.0x Slider) -->
-			<div class="whisper-shadow h-fit rounded-2xl border border-hairline bg-canvas-elevated p-5">
-				<div class="flex items-baseline justify-between gap-2">
-					<h2 class="text-[15px] font-semibold tracking-[-0.3px] text-ink">
-						Playback speed
-					</h2>
-					<span
-						id="ab-active-speed-display"
-						class="text-[13px] font-semibold text-ink tabular-nums"
-					>
-						1.0x (~155 WPM)
-					</span>
-				</div>
-				<p class="mt-1 mb-3 text-[12px] text-body">
-					Choose a quick preset speed or dial in a custom playback rate between 0.5x and 3.0x.
-				</p>
-
-				<!-- Quick Preset Speed Pills (0.75x, 1.0x, 1.25x, 1.5x, 1.75x, 2.0x) -->
-				<div
-					role="group"
-					aria-label="Playback speed presets"
-					class="grid grid-cols-3 gap-1.5 sm:grid-cols-6"
-				>
-					{
-						[0.75, 1.0, 1.25, 1.5, 1.75, 2.0].map((spd) => (
-							<button
-								type="button"
-								data-speed-preset={spd}
-								class={`ab-speed-pill cursor-pointer rounded-sm border py-1.5 text-center text-xs font-medium tabular-nums transition-all ${
-									spd === 1.0
-										? 'border-primary bg-primary text-on-primary'
-										: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
-								}`}
-							>
-								{spd === 1 || spd === 2 ? `${spd.toFixed(1)}x` : `${spd}x`}
-							</button>
-						))
-					}
-				</div>
-
-				<!-- Fine-Grained Custom Speed Slider (0.5x – 3.0x) -->
-				<div class="mt-3 rounded-sm border border-hairline bg-canvas p-3">
-					<div class="mb-1.5 flex items-center justify-between">
-						<label for="ab-speed-slider" class="text-[12px] font-medium text-body">
-							Custom playback speed
-						</label>
-						<output
-							id="ab-slider-value"
-							for="ab-speed-slider"
-							class="text-[13px] font-semibold text-ink tabular-nums"
-						>
-							1.0x
-						</output>
-					</div>
-					<input
-						id="ab-speed-slider"
-						type="range"
-						min="0.5"
-						max="3.0"
-						step="0.05"
-						value="1.0"
-						class="geist-slider"
-					/>
-					<div class="mt-1 flex justify-between text-[10px] text-mute tabular-nums">
-						<span>0.5x (Slower)</span>
-						<span>1.0x</span>
-						<span>2.0x</span>
-						<span>3.0x (Max)</span>
-					</div>
-				</div>
-			</div>
-
-			<!-- Card 2: Custom Daily Listening Schedule -->
-			<div class="whisper-shadow h-fit rounded-2xl border border-hairline bg-canvas-elevated p-5">
-				<div class="flex items-baseline justify-between gap-2">
-					<h2 class="text-[15px] font-semibold tracking-[-0.3px] text-ink">
-						Daily listening schedule
-					</h2>
-					<span id="ab-schedule-speed-badge" class="text-[11px] text-mute tabular-nums">
-						At 1.0x speed
-					</span>
-				</div>
-				<p class="mt-1 mb-3 text-[12px] text-body">
-					Set how long you listen each day and see exactly when you will finish this audiobook.
-				</p>
-
-				<!-- Manual Daily Listening Input + Reverse Goal Mode -->
-				<div class="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-					<div class="rounded-sm border border-hairline bg-canvas p-2.5">
-						<label for="ab-daily-minutes" class="mb-1 block text-[12px] font-medium text-body">
-							Minutes per day
-						</label>
-						<div class="relative flex items-center">
-							<input
-								id="ab-daily-minutes"
-								type="number"
-								min="0"
-								max="1440"
-								step="1"
-								value="0"
-								class="w-full rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1.5 pr-14 text-lg font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
-							/>
-							<span class="pointer-events-none absolute right-2.5 text-[11px] text-mute">
-								min / day
-							</span>
-						</div>
-						<div class="mt-1.5 flex flex-wrap gap-1">
-							{
-								[15, 30, 45, 60, 90].map((mins) => (
-									<button
-										type="button"
-										data-daily-preset={mins}
-										class="ab-daily-preset cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-2 py-0.5 text-[11px] font-medium text-body tabular-nums transition-colors hover:border-ink hover:text-ink"
-									>
-										{mins}m
-									</button>
-								))
-							}
-						</div>
-					</div>
-
-					<div class="rounded-sm border border-hairline bg-canvas p-2.5">
-						<label for="ab-target-days" class="mb-1 block text-[12px] font-medium text-body">
-							Or set target days to finish
-						</label>
-						<div class="relative flex items-center">
-							<input
-								id="ab-target-days"
-								type="number"
-								min="0"
-								max="365"
-								step="1"
-								value="0"
-								class="w-full rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1.5 pr-12 text-lg font-semibold text-ink tabular-nums focus:border-ink focus:outline-none"
-							/>
-							<span class="pointer-events-none absolute right-2.5 text-[11px] text-mute">
-								days
-							</span>
-						</div>
-						<p id="ab-target-result" class="mt-1.5 text-[11px] leading-[15px] text-body tabular-nums">
-							Enter an audiobook length to see your daily goal
+						<p id="ab-metric-words-est" class="mt-1 truncate text-[11px] text-[#d1fae5]/70 tabular-nums">
+							0 words · 0 pages
 						</p>
 					</div>
 				</div>
 
-				<!-- Live Schedule Result -->
-				<div class="mt-2.5 grid grid-cols-2 gap-2">
-					<div class="rounded-sm border border-hairline bg-canvas p-2.5">
-						<span class="block text-[11px] text-mute">Days to finish</span>
-						<strong id="ab-sched-days" class="mt-0.5 block text-base font-semibold text-ink tabular-nums">
+				<!-- Daily Finish Preview Pill -->
+				<div class="flex items-center justify-between gap-3 rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/60 px-4 py-3">
+					<div>
+						<span class="block text-[12px] font-medium text-[#afe3d0]/80">
+							Daily finish estimate
+						</span>
+						<span id="ab-metric-days-sub" class="text-[11px] text-[#d1fae5]/75 tabular-nums">
+							—
+						</span>
+					</div>
+					<div class="text-right">
+						<output
+							id="ab-metric-days-45"
+							aria-live="polite"
+							class="block text-[18px] font-semibold text-[#afe3d0] tabular-nums"
+						>
 							0 days
-						</strong>
+						</output>
+						<span id="ab-metric-daily-label" class="text-[11px] text-[#afe3d0]/70 tabular-nums">
+							At 0 min/day
+						</span>
 					</div>
-					<div class="rounded-sm border border-hairline bg-canvas p-2.5">
-						<span class="block text-[11px] text-mute">Weeks estimate</span>
-						<strong id="ab-sched-weeks" class="mt-0.5 block text-base font-semibold text-ink tabular-nums">
-							—
-						</strong>
+				</div>
+
+				<!-- Collapsible inside Emerald Panel: Compare All Speeds & Schedule Stats -->
+				<details class="group rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/45 px-4 py-3">
+					<summary class="flex cursor-pointer list-none items-center justify-between text-[13px] font-medium text-[#afe3d0] transition-colors hover:text-white">
+						<span>Compare All Speeds & Schedule Stats</span>
+						<span class="text-[12px] text-[#afe3d0]/75 transition-transform group-open:rotate-180">▾</span>
+					</summary>
+
+					<div class="mt-4 space-y-4 border-t border-[#afe3d0]/15 pt-4">
+						<!-- 6-Speed Comparison Breakdown -->
+						<div>
+							<div class="mb-2 flex items-center justify-between text-[11px] text-[#afe3d0]/75">
+								<span>Speed comparison</span>
+								<span id="ab-comparison-base-badge" class="tabular-nums">For 0 hr 0 min book</span>
+							</div>
+							<div class="grid grid-cols-2 gap-2 text-[12px]">
+								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
+									<span class="text-[#d1fae5]/80 tabular-nums">1.0x</span>
+									<strong id="ab-comp-100" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+								</div>
+								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
+									<span class="text-[#d1fae5]/80 tabular-nums">1.25x</span>
+									<strong id="ab-comp-125" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+								</div>
+								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
+									<span class="text-[#d1fae5]/80 tabular-nums">1.5x</span>
+									<strong id="ab-comp-150" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+								</div>
+								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
+									<span class="text-[#d1fae5]/80 tabular-nums">1.75x</span>
+									<strong id="ab-comp-175" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+								</div>
+								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
+									<span class="text-[#d1fae5]/80 tabular-nums">2.0x</span>
+									<strong id="ab-comp-200" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+								</div>
+								<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
+									<span class="text-[#d1fae5]/80">Silent read</span>
+									<strong id="ab-comp-silent" class="font-semibold text-white tabular-nums">0 hr 0 min</strong>
+								</div>
+							</div>
+						</div>
+
+						<!-- Daily Schedule Detailed Breakdown -->
+						<div>
+							<span class="mb-2 block text-[11px] text-[#afe3d0]/75">
+								Daily schedule breakdown
+							</span>
+							<div class="grid grid-cols-2 gap-2 text-[12px]">
+								<div class="rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
+									<span class="block text-[11px] text-[#afe3d0]/70">Days to finish</span>
+									<strong id="ab-sched-days" class="mt-0.5 block font-semibold text-white tabular-nums">
+										0 days
+									</strong>
+								</div>
+								<div class="rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
+									<span class="block text-[11px] text-[#afe3d0]/70">Weeks estimate</span>
+									<strong id="ab-sched-weeks" class="mt-0.5 block font-semibold text-white tabular-nums">
+										—
+									</strong>
+								</div>
+								<div class="rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
+									<span class="block text-[11px] text-[#afe3d0]/70">Finish by</span>
+									<strong id="ab-sched-finish" class="mt-0.5 block text-[11px] leading-[15px] font-semibold text-white">
+										—
+									</strong>
+								</div>
+								<div class="rounded-xl border border-[#afe3d0]/10 bg-[#0f2e26]/60 px-3 py-2">
+									<span class="block text-[11px] text-[#afe3d0]/70">Books / year</span>
+									<strong id="ab-sched-books" class="mt-0.5 block font-semibold text-white tabular-nums">
+										—
+									</strong>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="rounded-sm border border-hairline bg-canvas p-2.5">
-						<span class="block text-[11px] text-mute">Finish by</span>
-						<strong id="ab-sched-finish" class="mt-0.5 block text-[12px] leading-[16px] font-semibold text-ink">
-							—
-						</strong>
-					</div>
-					<div class="rounded-sm border border-hairline bg-canvas p-2.5">
-						<span class="block text-[11px] text-mute">Books this length / year</span>
-						<strong id="ab-sched-books" class="mt-0.5 block text-base font-semibold text-ink tabular-nums">
-							—
-						</strong>
-					</div>
+				</details>
+			</div>
+
+			<!-- Bottom Action Area: Prominent Mint Copy Result + Subtle Copy Link & Reset Links -->
+			<div class="mt-8 pt-2">
+				<button
+					type="button"
+					id="ab-btn-copy-result"
+					class="w-full cursor-pointer rounded-2xl border border-[#afe3d0]/40 bg-[#afe3d0] px-5 py-3.5 text-center text-[14px] font-semibold text-[#0f2e26] transition-all hover:bg-[#c5eedf] active:scale-[0.99]"
+				>
+					Copy result
+				</button>
+
+				<div class="mt-3 flex items-center justify-center gap-5 text-[12px] text-[#afe3d0]/75">
+					<button
+						type="button"
+						id="ab-btn-copy-link"
+						class="cursor-pointer font-medium transition-colors hover:text-white"
+					>
+						Copy link
+					</button>
+					<span aria-hidden="true" class="text-[#afe3d0]/30">·</span>
+					<button
+						type="button"
+						id="ab-btn-reset"
+						class="cursor-pointer font-medium transition-colors hover:text-white"
+					>
+						Reset defaults
+					</button>
 				</div>
 			</div>
 		</div>
@@ -852,7 +868,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 	<!-- Related Tools Note (Protected Against Draft Links) -->
 	<aside
 		aria-label="Related reading and page tools"
-		class="mt-4 flex flex-col items-start justify-between gap-3 pt-1 text-[14px] text-body sm:flex-row sm:items-center"
+		class="mt-5 flex flex-col items-start justify-between gap-3 pt-1 text-[14px] text-body sm:flex-row sm:items-center"
 	>
 		<p class="leading-[22px]">
 			Prefer reading on the page? Check your silent pace with the{' '}
@@ -1144,9 +1160,9 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			speedPillBtns.forEach((btn) => {
 				const presetVal = Number(btn.dataset.speedPreset);
 				const isMatch = Math.abs(presetVal - playbackSpeed) < 0.001;
-				btn.className = `ab-speed-pill cursor-pointer rounded-sm border py-1.5 text-center text-xs font-medium tabular-nums transition-all ${
+				btn.className = `ab-speed-pill cursor-pointer rounded-xl border py-2.5 text-center text-[13px] font-medium tabular-nums transition-all ${
 					isMatch
-						? 'border-primary bg-primary text-on-primary'
+						? 'border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] dark:border-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]'
 						: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
 				}`;
 			});
@@ -1158,10 +1174,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				const pm = Number(btn.dataset.minutesPreset);
 				const ps = Number(btn.dataset.secondsPreset ?? 0) || 0;
 				const isMatch = (h > 0 || m > 0 || s > 0) && ph === h && pm === m && ps === s;
-				btn.className = `ab-duration-preset cursor-pointer rounded-sm border px-2.5 py-1 text-xs font-medium tabular-nums transition-colors ${
+				btn.className = `ab-duration-preset cursor-pointer rounded-full border px-3 py-1 text-xs font-medium tabular-nums transition-colors ${
 					isMatch
-						? 'border-primary bg-primary text-on-primary'
-						: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+						? 'border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] dark:border-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]'
+						: 'border-hairline bg-canvas-elevated text-body hover:border-ink hover:text-ink'
 				}`;
 			});
 		}
@@ -1170,9 +1186,9 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			wordsPresetBtns.forEach((btn) => {
 				const pw = Number(btn.dataset.wordsPreset);
 				const isMatch = w > 0 && pw === w;
-				btn.className = `ab-words-preset cursor-pointer rounded-sm border px-2.5 py-1 text-xs font-medium tabular-nums transition-colors ${
+				btn.className = `ab-words-preset cursor-pointer rounded-full border px-3 py-1 text-xs font-medium tabular-nums transition-colors ${
 					isMatch
-						? 'border-primary bg-primary text-on-primary'
+						? 'border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] dark:border-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]'
 						: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
 				}`;
 			});
@@ -1182,10 +1198,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			dailyPresetBtns.forEach((btn) => {
 				const preset = Number(btn.dataset.dailyPreset);
 				const isMatch = minutes > 0 && preset === minutes;
-				btn.className = `ab-daily-preset cursor-pointer rounded-sm border px-2 py-0.5 text-[11px] font-medium tabular-nums transition-colors ${
+				btn.className = `ab-daily-preset cursor-pointer rounded-full border px-2.5 py-0.5 text-[11px] font-medium tabular-nums transition-colors ${
 					isMatch
-						? 'border-primary bg-primary text-on-primary'
-						: 'border-hairline bg-canvas-elevated text-body hover:border-ink hover:text-ink'
+						? 'border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] dark:border-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]'
+						: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
 				}`;
 			});
 		}
@@ -1194,10 +1210,10 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			pctPresetBtns.forEach((btn) => {
 				const preset = Number(btn.dataset.pctPreset);
 				const isMatch = pct > 0 && Math.abs(preset - pct) < 0.05;
-				btn.className = `ab-pct-preset cursor-pointer rounded-sm border px-2 py-0.5 text-[11px] font-medium tabular-nums transition-colors ${
+				btn.className = `ab-pct-preset cursor-pointer rounded-full border px-2.5 py-0.5 text-[11px] font-medium tabular-nums transition-colors ${
 					isMatch
-						? 'border-primary bg-primary text-on-primary'
-						: 'border-hairline bg-canvas text-body hover:border-ink hover:text-ink'
+						? 'border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] dark:border-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]'
+						: 'border-hairline bg-canvas-elevated text-body hover:border-ink hover:text-ink'
 				}`;
 			});
 		}
@@ -1271,8 +1287,8 @@ const wordsToPagesTool = getToolById('words-to-pages');
 				const active = btn.dataset.mode === mode;
 				btn.setAttribute('aria-selected', active ? 'true' : 'false');
 				btn.className = active
-					? 'ab-mode-btn cursor-pointer rounded-pill-category bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-all'
-					: 'ab-mode-btn cursor-pointer rounded-pill-category bg-transparent px-3.5 py-1.5 text-[13px] font-medium text-body transition-all hover:bg-hairline-soft hover:text-ink';
+					? 'ab-mode-btn cursor-pointer rounded-full bg-[#afe3d0] px-4 py-1.5 text-[13px] font-semibold text-[#0f2e26] transition-all'
+					: 'ab-mode-btn cursor-pointer rounded-full bg-transparent px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink';
 			});
 			panelLength?.classList.toggle('hidden', mode !== 'length');
 			panelWords?.classList.toggle('hidden', mode !== 'words');
@@ -1406,7 +1422,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			if (metricDailyDays) metricDailyDays.textContent = formatDaysCount(days);
 			if (metricDailySub) {
 				metricDailySub.textContent =
-					days > 0 ? `${formatWeeks(days)} · finishes ${finishShort}` : '—';
+					days > 0 ? `${formatWeeks(days)} · finishes ${finishShort}` : 'Set daily minutes in Schedule Planner';
 			}
 
 			if (scheduleSpeedBadge) scheduleSpeedBadge.textContent = `At ${speedStr} speed`;
@@ -1734,4 +1750,3 @@ const wordsToPagesTool = getToolById('words-to-pages');
 
 	initAudiobookCalculator();
 </script>
-
