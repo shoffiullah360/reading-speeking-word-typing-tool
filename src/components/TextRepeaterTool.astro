@@ -1,9 +1,24 @@
 ---
+import { getLocaleFromUrl, useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const clientI18n = {
+	locale,
+	copied: t('textRepeater.client.copied'),
+	btnCopy: t('textRepeater.client.btnCopy'),
+	downloadFilename: t('textRepeater.client.downloadFilename'),
+};
 ---
 
 <section
 	id="text-repeater-workspace"
-	aria-label="Text Repeater Workspace"
+	aria-label={t('textRepeater.ui.workspaceAria')}
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
 	<!-- Unified Stacked Studio Card -->
@@ -12,21 +27,21 @@
 		<div class="bg-white p-6 sm:p-8 dark:bg-canvas-elevated">
 			<div class="mb-3 flex items-center justify-between">
 				<label for="tr-input" class="text-[14px] font-semibold text-ink">
-					Text or phrase to repeat
+					{t('textRepeater.ui.inputLabel')}
 				</label>
-				<span class="text-[12px] text-mute">Instant live repetition</span>
+				<span class="text-[12px] text-mute">{t('textRepeater.ui.inputBadge')}</span>
 			</div>
 
 			<textarea
 				id="tr-input"
-				placeholder="Type or paste text, emojis, or a phrase to repeat..."
+				placeholder={t('textRepeater.ui.inputPlaceholder')}
 				class="h-32 w-full resize-y rounded-2xl border border-hairline bg-canvas-elevated p-3.5 font-sans text-[15px] leading-[24px] text-ink placeholder:text-faint transition-colors focus:border-[#0f2e26] focus:outline-none sm:h-36 sm:p-4 dark:focus:border-[#afe3d0]"
-			>I love you ❤️</textarea>
+			>{t('textRepeater.ui.defaultText')}</textarea>
 
 			<!-- Compact Quick Insert Bar -->
 			<div class="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-hairline/60 pt-3">
 				<div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-					<span class="mr-1 text-[12px] font-medium text-mute">Quick insert:</span>
+					<span class="mr-1 text-[12px] font-medium text-mute">{t('textRepeater.ui.quickInsert')}</span>
 					<button
 						type="button"
 						class="tr-chip cursor-pointer rounded-full border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-body transition-colors hover:border-ink hover:bg-canvas-muted hover:text-ink active:scale-95 sm:text-[13px]"
@@ -60,18 +75,18 @@
 					<button
 						type="button"
 						class="tr-chip cursor-pointer rounded-full border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-body transition-colors hover:border-ink hover:bg-canvas-muted hover:text-ink active:scale-95 sm:text-[13px]"
-						data-chip="Happy Birthday 🎂"
-					>Happy Birthday 🎂</button>
+						data-chip={t('textRepeater.ui.chipBirthday')}
+					>{t('textRepeater.ui.chipBirthday')}</button>
 					<button
 						type="button"
 						class="tr-chip cursor-pointer rounded-full border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-body transition-colors hover:border-ink hover:bg-canvas-muted hover:text-ink active:scale-95 sm:text-[13px]"
-						data-chip="I love you ❤️"
-					>I love you ❤️</button>
+						data-chip={t('textRepeater.ui.chipLove')}
+					>{t('textRepeater.ui.chipLove')}</button>
 					<button
 						type="button"
 						class="tr-chip cursor-pointer rounded-full border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-body transition-colors hover:border-ink hover:bg-canvas-muted hover:text-ink active:scale-95 sm:text-[13px]"
-						data-chip="Sorry 🥺"
-					>Sorry 🥺</button>
+						data-chip={t('textRepeater.ui.chipSorry')}
+					>{t('textRepeater.ui.chipSorry')}</button>
 				</div>
 
 				<div class="flex items-center gap-3">
@@ -83,7 +98,7 @@
 						<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
 						</svg>
-						<span>Paste</span>
+						<span>{t('textRepeater.ui.btnPaste')}</span>
 					</button>
 					<button
 						type="button"
@@ -93,7 +108,7 @@
 						<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
 						</svg>
-						<span>Clear</span>
+						<span>{t('textRepeater.ui.btnClear')}</span>
 					</button>
 				</div>
 			</div>
@@ -105,9 +120,9 @@
 			<div>
 				<div class="flex flex-wrap items-center justify-between gap-2">
 					<label for="tr-count" class="text-[13px] font-medium text-[#afe3d0]">
-						Repetition count (1 – 10,000)
+						{t('textRepeater.ui.countLabel')}
 					</label>
-					<span class="text-[12px] text-white/60">Live real-time generator</span>
+					<span class="text-[12px] text-white/60">{t('textRepeater.ui.countBadge')}</span>
 				</div>
 
 				<div class="mt-2.5 flex flex-wrap items-center gap-3">
@@ -116,7 +131,7 @@
 						<button
 							type="button"
 							id="tr-count-dec"
-							aria-label="Decrease repetitions"
+							aria-label={t('textRepeater.ui.decreaseAria')}
 							class="flex h-9 w-9 cursor-pointer select-none items-center justify-center rounded-xl border border-[#afe3d0]/25 bg-white/[0.06] text-[16px] font-semibold text-white transition-all hover:bg-white/[0.12] active:scale-95"
 						>
 							−
@@ -132,7 +147,7 @@
 						<button
 							type="button"
 							id="tr-count-inc"
-							aria-label="Increase repetitions"
+							aria-label={t('textRepeater.ui.increaseAria')}
 							class="flex h-9 w-9 cursor-pointer select-none items-center justify-center rounded-xl border border-[#afe3d0]/25 bg-white/[0.06] text-[16px] font-semibold text-white transition-all hover:bg-white/[0.12] active:scale-95"
 						>
 							+
@@ -148,7 +163,7 @@
 									data-repeat-preset={preset}
 									class="tr-preset-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-2.5 py-1 text-[12px] font-medium text-white/90 tabular-nums transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08] sm:px-3 sm:py-1.5 sm:text-[13px]"
 								>
-									{preset.toLocaleString()}x
+									{preset.toLocaleString(locale)}x
 								</button>
 							))
 						}
@@ -159,69 +174,69 @@
 			<!-- Row 2: Separator Selector -->
 			<div class="border-t border-[#afe3d0]/15 pt-5">
 				<span class="block text-[13px] font-medium text-[#afe3d0]">
-					Separator between repetitions
+					{t('textRepeater.ui.separatorLabel')}
 				</span>
 
 				<div class="mt-2.5 flex flex-wrap gap-2">
 					<button
 						type="button"
 						data-sep-mode="newline"
-						data-sep-label="New line"
+						data-sep-label={t('textRepeater.ui.sepNewline')}
 						class="tr-sep-btn cursor-pointer rounded-xl border border-[#afe3d0] bg-[#afe3d0] px-3.5 py-2 text-[13px] font-semibold text-[#0f2e26] shadow-sm transition-all"
 					>
-						New line
+						{t('textRepeater.ui.sepNewline')}
 					</button>
 					<button
 						type="button"
 						data-sep-mode="space"
-						data-sep-label="Space"
+						data-sep-label={t('textRepeater.ui.sepSpace')}
 						class="tr-sep-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-3.5 py-2 text-[13px] font-medium text-white/90 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 					>
-						Space
+						{t('textRepeater.ui.sepSpace')}
 					</button>
 					<button
 						type="button"
 						data-sep-mode="comma"
-						data-sep-label="Comma (,)"
+						data-sep-label={t('textRepeater.ui.sepComma')}
 						class="tr-sep-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-3.5 py-2 text-[13px] font-medium text-white/90 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 					>
-						Comma (,)
+						{t('textRepeater.ui.sepComma')}
 					</button>
 					<button
 						type="button"
 						data-sep-mode="dash"
-						data-sep-label="Dash (-)"
+						data-sep-label={t('textRepeater.ui.sepDash')}
 						class="tr-sep-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-3.5 py-2 text-[13px] font-medium text-white/90 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 					>
-						Dash (-)
+						{t('textRepeater.ui.sepDash')}
 					</button>
 					<button
 						type="button"
 						data-sep-mode="none"
-						data-sep-label="None"
+						data-sep-label={t('textRepeater.ui.sepNone')}
 						class="tr-sep-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-3.5 py-2 text-[13px] font-medium text-white/90 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 					>
-						None
+						{t('textRepeater.ui.sepNone')}
 					</button>
 					<button
 						type="button"
 						data-sep-mode="custom"
-						data-sep-label="Custom"
+						data-sep-label={t('textRepeater.ui.sepCustom')}
 						class="tr-sep-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-3.5 py-2 text-[13px] font-medium text-white/90 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 					>
-						Custom
+						{t('textRepeater.ui.sepCustom')}
 					</button>
 				</div>
 
 				<div id="tr-custom-sep-wrap" class="mt-3 hidden max-w-sm">
 					<label for="tr-custom-sep" class="block text-[12px] font-medium text-white/70">
-						Custom separator text
+						{t('textRepeater.ui.customSepLabel')}
 					</label>
 					<input
 						type="text"
 						id="tr-custom-sep"
 						value=" | "
-						placeholder="e.g.  |  or  —  or  / "
+						placeholder={t('textRepeater.ui.customSepPlaceholder')}
 						class="mt-1 w-full rounded-xl border border-[#afe3d0]/25 bg-white/[0.08] px-3.5 py-2 text-[14px] text-white placeholder:text-white/40 focus:border-[#afe3d0] focus:outline-none"
 					/>
 				</div>
@@ -237,30 +252,30 @@
 							id="tr-numbering"
 							class="h-4 w-4 cursor-pointer rounded border-white/20 accent-[#afe3d0]"
 						/>
-						<span>Add numbering (1. 2. 3.)</span>
+						<span>{t('textRepeater.ui.numberingLabel')}</span>
 					</label>
 
 					<!-- Compact Prefix & Suffix Inputs -->
 					<div class="flex flex-wrap items-center gap-3">
 						<div class="flex items-center gap-1.5">
 							<label for="tr-prefix" class="text-[12px] font-medium text-white/70">
-								Prefix:
+								{t('textRepeater.ui.prefixLabel')}
 							</label>
 							<input
 								type="text"
 								id="tr-prefix"
-								placeholder="item_"
+								placeholder={t('textRepeater.ui.prefixPlaceholder')}
 								class="w-24 rounded-lg border border-[#afe3d0]/25 bg-white/[0.08] px-2.5 py-1 text-[13px] text-white placeholder:text-white/40 focus:border-[#afe3d0] focus:outline-none sm:w-28"
 							/>
 						</div>
 						<div class="flex items-center gap-1.5">
 							<label for="tr-suffix" class="text-[12px] font-medium text-white/70">
-								Suffix:
+								{t('textRepeater.ui.suffixLabel')}
 							</label>
 							<input
 								type="text"
 								id="tr-suffix"
-								placeholder="@test.com"
+								placeholder={t('textRepeater.ui.suffixPlaceholder')}
 								class="w-28 rounded-lg border border-[#afe3d0]/25 bg-white/[0.08] px-2.5 py-1 text-[13px] text-white placeholder:text-white/40 focus:border-[#afe3d0] focus:outline-none sm:w-32"
 							/>
 						</div>
@@ -268,34 +283,34 @@
 
 					<!-- Output Case Pills -->
 					<div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-						<span class="mr-1 text-[12px] font-medium text-white/70">Case:</span>
+						<span class="mr-1 text-[12px] font-medium text-white/70">{t('textRepeater.ui.caseLabel')}</span>
 						<button
 							type="button"
 							data-case-mode="original"
 							class="tr-case-btn cursor-pointer rounded-lg border border-[#afe3d0] bg-[#afe3d0] px-2.5 py-1 text-[12px] font-semibold text-[#0f2e26] transition-all shadow-sm"
 						>
-							Original
+							{t('textRepeater.ui.caseOriginal')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="upper"
 							class="tr-case-btn cursor-pointer rounded-lg border border-[#afe3d0]/20 bg-white/[0.04] px-2.5 py-1 text-[12px] font-medium text-white/90 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							UPPERCASE
+							{t('textRepeater.ui.caseUpper')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="lower"
 							class="tr-case-btn cursor-pointer rounded-lg border border-[#afe3d0]/20 bg-white/[0.04] px-2.5 py-1 text-[12px] font-medium text-white/90 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							lowercase
+							{t('textRepeater.ui.caseLower')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="title"
 							class="tr-case-btn cursor-pointer rounded-lg border border-[#afe3d0]/20 bg-white/[0.04] px-2.5 py-1 text-[12px] font-medium text-white/90 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							Title Case
+							{t('textRepeater.ui.caseTitle')}
 						</button>
 					</div>
 				</div>
@@ -307,9 +322,9 @@
 			<div class="flex flex-wrap items-center justify-between gap-3">
 				<!-- Live Metrics -->
 				<div class="inline-flex flex-wrap items-center gap-1.5 rounded-xl border border-[#1d463b] bg-[#0f2e26] px-3.5 py-2 text-[13px] font-medium text-[#e2f5ee] tabular-nums">
-					<output id="tr-stat-repeats" aria-live="polite" class="font-semibold text-[#afe3d0]">10</output> repetitions &middot;
-					<output id="tr-stat-chars" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> characters &middot;
-					<output id="tr-stat-lines" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> lines
+					<output id="tr-stat-repeats" aria-live="polite" class="font-semibold text-[#afe3d0]">10</output> {t('textRepeater.ui.statRepetitions')} &middot;
+					<output id="tr-stat-chars" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> {t('textRepeater.ui.statCharacters')} &middot;
+					<output id="tr-stat-lines" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> {t('textRepeater.ui.statLines')}
 				</div>
 
 				<!-- Action Buttons -->
@@ -322,7 +337,7 @@
 						<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
 						</svg>
-						<span id="tr-copy-text">Copy Output</span>
+						<span id="tr-copy-text">{t('textRepeater.ui.btnCopy')}</span>
 					</button>
 
 					<button
@@ -333,7 +348,7 @@
 						<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 							<path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
 						</svg>
-						<span>Download .txt</span>
+						<span>{t('textRepeater.ui.btnDownload')}</span>
 					</button>
 
 					<a
@@ -341,13 +356,13 @@
 						href="https://api.whatsapp.com/send?text="
 						target="_blank"
 						rel="noopener noreferrer"
-						aria-label="Share repeated text on WhatsApp"
+						aria-label={t('textRepeater.ui.whatsappAria')}
 						class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-hairline bg-canvas-elevated px-3.5 py-2 text-[13px] font-medium text-body transition-colors hover:border-[#25D366] hover:text-[#25D366]"
 					>
 						<svg class="h-4 w-4 fill-current" viewBox="0 0 24 24">
 							<path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
 						</svg>
-						<span>WhatsApp</span>
+						<span>{t('textRepeater.ui.btnWhatsapp')}</span>
 					</a>
 				</div>
 			</div>
@@ -356,15 +371,45 @@
 				id="tr-output"
 				readonly
 				rows="10"
-				placeholder="Your repeated text will appear here automatically..."
+				placeholder={t('textRepeater.ui.outputPlaceholder')}
 				class="mt-4 h-52 w-full resize-y rounded-2xl border border-hairline bg-canvas-muted/40 p-4 font-sans text-[15px] leading-[24px] text-ink transition-colors focus:border-[#0f2e26] focus:outline-none sm:h-60 dark:border-hairline dark:bg-canvas dark:focus:border-[#afe3d0]"
 			></textarea>
 		</div>
 	</div>
 </section>
 
+<script type="application/json" id="tr-i18n" set:html={JSON.stringify(clientI18n).replace(/</g, '\\u003c')} />
+
 <script>
+	interface TrClientI18n {
+		locale: string;
+		copied: string;
+		btnCopy: string;
+		downloadFilename: string;
+	}
+
 	function initTextRepeater() {
+		const fallbackI18n: TrClientI18n = {
+			locale: 'en',
+			copied: 'Copied!',
+			btnCopy: 'Copy Output',
+			downloadFilename: 'repeated-text.txt',
+		};
+
+		let i18n: TrClientI18n = fallbackI18n;
+		const i18nEl = document.getElementById('tr-i18n');
+		if (i18nEl?.textContent) {
+			try {
+				const parsed = JSON.parse(i18nEl.textContent) as Partial<TrClientI18n>;
+				i18n = {
+					...fallbackI18n,
+					...parsed,
+				};
+			} catch {
+				// Use fallback English strings if JSON fails to parse
+			}
+		}
+
 		const inputEl = document.getElementById('tr-input') as HTMLTextAreaElement | null;
 		const countEl = document.getElementById('tr-count') as HTMLInputElement | null;
 		const countDecBtn = document.getElementById('tr-count-dec') as HTMLButtonElement | null;
@@ -467,9 +512,9 @@
 			const chars = result.length;
 			const lines = result.length > 0 ? result.split(/\r?\n/).length : 0;
 
-			if (statRepeats) statRepeats.textContent = rawCount.toLocaleString();
-			if (statChars) statChars.textContent = chars.toLocaleString();
-			if (statLines) statLines.textContent = lines.toLocaleString();
+			if (statRepeats) statRepeats.textContent = rawCount.toLocaleString(i18n.locale);
+			if (statChars) statChars.textContent = chars.toLocaleString(i18n.locale);
+			if (statLines) statLines.textContent = lines.toLocaleString(i18n.locale);
 
 			if (whatsappBtn) {
 				const preview = result.length > 2000 ? result.substring(0, 2000) : result;
@@ -610,16 +655,16 @@
 			if (!outputEl.value) return;
 			try {
 				await navigator.clipboard.writeText(outputEl.value);
-				if (copyTextSpan) copyTextSpan.textContent = 'Copied!';
+				if (copyTextSpan) copyTextSpan.textContent = i18n.copied;
 				setTimeout(() => {
-					if (copyTextSpan) copyTextSpan.textContent = 'Copy Output';
+					if (copyTextSpan) copyTextSpan.textContent = i18n.btnCopy;
 				}, 1600);
 			} catch {
 				outputEl.select();
 				document.execCommand('copy');
-				if (copyTextSpan) copyTextSpan.textContent = 'Copied!';
+				if (copyTextSpan) copyTextSpan.textContent = i18n.copied;
 				setTimeout(() => {
-					if (copyTextSpan) copyTextSpan.textContent = 'Copy Output';
+					if (copyTextSpan) copyTextSpan.textContent = i18n.btnCopy;
 				}, 1600);
 			}
 		});
@@ -631,7 +676,7 @@
 			const url = URL.createObjectURL(blob);
 			const link = document.createElement('a');
 			link.href = url;
-			link.download = 'repeated-text.txt';
+			link.download = i18n.downloadFilename;
 			document.body.appendChild(link);
 			link.click();
 			document.body.removeChild(link);

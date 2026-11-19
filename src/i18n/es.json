@@ -5627,7 +5627,316 @@
 		"metric": "8 formatos · Conversión instantánea",
 		"title": "Conversor de mayúsculas y minúsculas online: MAYÚSCULAS, minúsculas y camelCase | Wordora",
 		"metaDescription": "Conversor de mayúsculas y minúsculas gratuito para pasar el texto a tipo oración, minúsculas, MAYÚSCULAS, Título, camelCase, snake_case y kebab-case con un clic.",
-		"h1": "Conversor de mayúsculas y minúsculas online: MAYÚSCULAS, minúsculas y camelCase"
+		"h1": "Conversor de mayúsculas y minúsculas online: MAYÚSCULAS, minúsculas y camelCase",
+		"ui": {
+			"workspaceAria": "Espacio de trabajo del conversor de mayúsculas y minúsculas",
+			"textareaLabel": "Escribe o pega tu texto aquí",
+			"textareaPlaceholder": "Escribe o pega tu texto aquí...",
+			"wordsUnit": "palabras",
+			"charactersUnit": "caracteres",
+			"linesUnit": "líneas",
+			"btnPaste": "Pegar",
+			"btnUndo": "Deshacer",
+			"btnDownload": "Descargar .txt",
+			"btnClear": "Limpiar",
+			"activeLabel": "Activo:",
+			"originalText": "Texto original",
+			"btnCopy": "Copiar texto",
+			"groupWriting": "Estilos editoriales y de escritura",
+			"groupDeveloper": "Estilos de código y programación",
+			"modes": {
+				"sentence": "Tipo oración",
+				"lower": "minúsculas",
+				"upper": "MAYÚSCULAS",
+				"title": "Formato Título",
+				"capitalized": "Iniciales En Mayúscula",
+				"alternating": "tExTo aLtErNaDo",
+				"inverse": "tEXTO iNVERTIDO",
+				"camel": "camelCase",
+				"pascal": "PascalCase",
+				"snake": "snake_case",
+				"constant": "CONSTANT_CASE",
+				"kebab": "kebab-case",
+				"dot": "dot.case"
+			}
+		},
+		"client": {
+			"originalText": "Texto original",
+			"converted": "Convertido",
+			"pasted": "¡Pegado!",
+			"copied": "¡Copiado!",
+			"btnPaste": "Pegar",
+			"btnCopy": "Copiar texto",
+			"downloadFilename": "texto-convertido.txt"
+		},
+		"schema": {
+			"featureList": [
+				"Conversión en un clic a Tipo oración, minúsculas, MAYÚSCULAS, Formato Título (AP), Iniciales En Mayúscula, tExTo aLtErNaDo y tEXTO iNVERTIDO",
+				"Conversión a formatos de programación y código: camelCase, PascalCase, snake_case, CONSTANT_CASE, kebab-case y dot.case",
+				"Contadores en tiempo real de palabras, caracteres y líneas",
+				"Controles en un clic para copiar texto, pegar, deshacer cambios y descargar un archivo .txt"
+			]
+		},
+		"page": {
+			"heroSubtitle": "Cambia cualquier texto entre Tipo oración, minúsculas, MAYÚSCULAS, Formato Título (AP), camelCase, snake_case y kebab-case al instante desde tu navegador.",
+			"howToUse": {
+				"badge": "Guía rápida",
+				"heading": "Qué es un conversor de mayúsculas y minúsculas online y cómo usarlo",
+				"intro": "Un conversor de mayúsculas y minúsculas online transforma al instante la capitalización y el formato de tus textos, títulos, encabezados e identificadores de código. Ya sea que necesites corregir un párrafo escrito por accidente con BLOQ MAYÚS, dar formato a titulares de blog en estilo AP o pasar columnas de bases de datos a camelCase y snake_case, Wordora funciona por completo en tu navegador con vista previa en tiempo real y sin registrar ningún dato.",
+				"steps": [
+					{
+						"title": "Pega o escribe tu texto",
+						"bodyHtml": "Introduce cualquier párrafo, titular, columna de hoja de cálculo o lista de variables en el editor (o haz clic en <strong class=\"font-medium text-ink\">Pegar</strong>)."
+					},
+					{
+						"title": "Elige el estilo de texto o código",
+						"bodyHtml": "Haz clic en cualquier formato editorial (<strong class=\"font-medium text-ink\">Tipo oración</strong>, <strong class=\"font-medium text-ink\">minúsculas</strong>, <strong class=\"font-medium text-ink\">MAYÚSCULAS</strong>, <strong class=\"font-medium text-ink\">Formato Título</strong>) o de programación (<strong class=\"font-medium text-ink\">camelCase</strong>, <strong class=\"font-medium text-ink\">PascalCase</strong>, <strong class=\"font-medium text-ink\">snake_case</strong>, <strong class=\"font-medium text-ink\">kebab-case</strong>)."
+					},
+					{
+						"title": "Deshaz o cambia de formato cuando quieras",
+						"bodyHtml": "Comprueba el texto transformado al instante y pulsa <strong class=\"font-medium text-ink\">Deshacer</strong> para volver atrás o alternar entre estilos con un solo clic."
+					},
+					{
+						"title": "Copia o descarga en .txt",
+						"bodyHtml": "Pulsa <strong class=\"font-medium text-ink\">Copiar texto</strong> para llevarlo al portapapeles o <strong class=\"font-medium text-ink\">Descargar .txt</strong> para guardar un archivo limpio de texto plano."
+					}
+				]
+			},
+			"caseStyles": {
+				"badge": "Referencia completa",
+				"heading": "Los 13 estilos de texto y programación explicados",
+				"intro": "Cada convención de mayúsculas y minúsculas sigue reglas sintácticas y semánticas propias en edición, lingüística e ingeniería de software. Consulta todos los formatos compatibles en Wordora:",
+				"headers": [
+					"Nombre del estilo",
+					"Categoría",
+					"Cómo funciona",
+					"Ejemplo práctico"
+				],
+				"rows": [
+					{
+						"name": "Tipo oración",
+						"category": "Editorial",
+						"description": "Pone en mayúscula la primera letra de cada oración y deja el resto de las palabras en minúsculas.",
+						"example": "El zorro veloz salta sobre el perro tranquilo."
+					},
+					{
+						"name": "minúsculas",
+						"category": "Editorial",
+						"description": "Convierte todas las letras alfabéticas a minúsculas sin alterar signos de puntuación, espacios ni números.",
+						"example": "el zorro veloz salta sobre el perro tranquilo."
+					},
+					{
+						"name": "MAYÚSCULAS",
+						"category": "Editorial",
+						"description": "Transforma cada letra a mayúscula sostenida. Ideal para siglas destacadas, avisos importantes y encabezados legales.",
+						"example": "EL ZORRO VELOZ SALTA SOBRE EL PERRO TRANQUILO."
+					},
+					{
+						"name": "Formato Título (AP / APA)",
+						"category": "Editorial",
+						"description": "Pone en mayúscula las palabras principales y mantiene en minúsculas los artículos, conjunciones y preposiciones breves salvo que abran o cierren el título.",
+						"example": "The Quick Brown Fox Jumps over the Lazy Dog"
+					},
+					{
+						"name": "Iniciales En Mayúscula",
+						"category": "Editorial",
+						"description": "Capitaliza la primera letra de absolutamente todas las palabras sin excepción, siguiendo el formato tradicional de nombre propio (Proper Case).",
+						"example": "El Zorro Veloz Salta Sobre El Perro Tranquilo"
+					},
+					{
+						"name": "tExTo aLtErNaDo",
+						"category": "Especial",
+						"description": "Alterna cada letra entre minúscula y mayúscula de forma consecutiva, un estilo muy popular en memes y tono sarcástico en redes.",
+						"example": "eL zOrRo vElOz sAlTa sObRe eL pErRo tRaNqUiLo"
+					},
+					{
+						"name": "tEXTO iNVERTIDO",
+						"category": "Especial",
+						"description": "Invierte la capitalización de cada carácter: las letras mayúsculas pasan a minúsculas y las minúsculas pasan a mayúsculas.",
+						"example": "eL ZORRO VELOZ SALTA SOBRE EL PERRO TRANQUILO"
+					},
+					{
+						"name": "camelCase",
+						"category": "Programación",
+						"description": "Elimina espacios y signos de puntuación, deja la primera palabra en minúsculas y capitaliza la inicial de cada palabra siguiente.",
+						"example": "elZorroVelozSaltaSobreElPerroTranquilo"
+					},
+					{
+						"name": "PascalCase",
+						"category": "Programación",
+						"description": "Pone en mayúscula la inicial de cada palabra concatenada sin espacios. Es el estándar para nombres de clases y componentes.",
+						"example": "ElZorroVelozSaltaSobreElPerroTranquilo"
+					},
+					{
+						"name": "snake_case",
+						"category": "Programación",
+						"description": "Sustituye espacios y puntuación por guiones bajos en minúsculas. Es la convención habitual para variables en Python y tablas SQL.",
+						"example": "el_zorro_veloz_salta_sobre_el_perro_tranquilo"
+					},
+					{
+						"name": "CONSTANT_CASE",
+						"category": "Programación",
+						"description": "Letras en mayúsculas separadas por guiones bajos. Es el estándar para variables de entorno globales y constantes de configuración inmutables.",
+						"example": "EL_ZORRO_VELOZ_SALTA_SOBRE_EL_PERRO_TRANQUILO"
+					},
+					{
+						"name": "kebab-case",
+						"category": "Programación",
+						"description": "Reemplaza los espacios por guiones medios en minúsculas. Es el estándar para slugs de URL amigables para SEO, clases CSS y nombres de paquetes.",
+						"example": "el-zorro-veloz-salta-sobre-el-perro-tranquilo"
+					},
+					{
+						"name": "dot.case",
+						"category": "Programación",
+						"description": "Separa las palabras en minúsculas mediante puntos. Se utiliza con frecuencia en claves anidadas de objetos, espacios de nombres i18n y registros DNS.",
+						"example": "el.zorro.veloz.salta.sobre.el.perro.tranquilo"
+					}
+				]
+			},
+			"titleCaseRules": {
+				"badge": "Guías editoriales",
+				"heading": "Reglas de Formato Título: AP vs. APA vs. Chicago",
+				"intro": "La capitalización de títulos en inglés varía entre el periodismo, la investigación científica y la edición de libros. El motor de Formato Título de Wordora equilibra las normas periodísticas y académicas más utilizadas:",
+				"exampleLabel": "Ejemplo:",
+				"cards": [
+					{
+						"title": "Associated Press (AP)",
+						"tag": "Periodismo",
+						"bodyHtml": "Pone en mayúscula todas las palabras principales de 4 o más letras, además de la primera y la última palabra. Mantiene en minúsculas los artículos (<em class=\"italic\">a, an, the</em>), conjunciones coordinantes cortas (<em class=\"italic\">and, but, or, for, nor</em>) y preposiciones de 3 letras o menos (<em class=\"italic\">in, on, at, by, to, of</em>).",
+						"example": "Walk on the Wild Side"
+					},
+					{
+						"title": "APA 7.ª edición",
+						"tag": "Ámbito académico",
+						"bodyHtml": "Capitaliza todas las palabras principales: sustantivos, pronombres, verbos (incluidos <em class=\"italic\">Is, Are, Be</em>), adjetivos y adverbios, así como cualquier palabra de 4 o más letras (p. ej., <em class=\"italic\">From, With, Than</em>). Deja en minúsculas conjunciones y preposiciones de hasta 3 letras salvo al inicio de un título o subtítulo.",
+						"example": "The Art of Being Resilient"
+					},
+					{
+						"title": "Manual de Chicago (CMOS)",
+						"tag": "Edición editorial",
+						"bodyHtml": "Pone en mayúscula la primera y la última palabra del título principal y del subtítulo. Deja en minúsculas <strong class=\"font-medium text-ink\">todas las preposiciones</strong> sin importar su longitud (incluidas <em class=\"italic\">between, through, without, against</em>), junto con artículos y conjunciones coordinantes.",
+						"example": "Journey through the Wilderness"
+					}
+				]
+			},
+			"officeShortcuts": {
+				"badge": "Atajos de programas",
+				"heading": "Cómo cambiar de mayúsculas a minúsculas en Microsoft Word, Excel y Google Docs",
+				"intro": "Si das formato habitualmente a documentos, hojas de cálculo o presentaciones, utiliza estos atajos nativos o pega tus columnas en Wordora para convertirlas en bloque con un solo clic:",
+				"cards": [
+					{
+						"icon": "W",
+						"title": "Microsoft Word",
+						"itemsHtml": [
+							"Pulsa <kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">Shift + F3</kbd> (o <kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">Fn + Shift + F3</kbd> en Mac) para alternar entre minúsculas, MAYÚSCULAS y Poner En Mayúsculas Cada Palabra.",
+							"También puedes hacer clic en el botón <strong class=\"font-medium text-ink\">Cambiar mayúsculas y minúsculas (Aa)</strong> dentro del grupo Fuente en la pestaña Inicio."
+						]
+					},
+					{
+						"icon": "X",
+						"title": "Excel y Google Sheets",
+						"itemsHtml": [
+							"<code class=\"rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink\">=MAYUSC(A1)</code> (<code class=\"rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink\">=UPPER(A1)</code>) convierte el texto de la celda a mayúsculas.",
+							"<code class=\"rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink\">=MINUSC(A1)</code> (<code class=\"rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink\">=LOWER(A1)</code>) convierte el texto de la celda a minúsculas.",
+							"<code class=\"rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink\">=NOMPROPIO(A1)</code> (<code class=\"rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink\">=PROPER(A1)</code>) pone la inicial de cada palabra en mayúscula. También puedes pegar toda la columna en Wordora y evitar fórmulas."
+						]
+					},
+					{
+						"icon": "G",
+						"title": "Google Docs",
+						"itemsHtml": [
+							"Selecciona el texto que deseas modificar con el cursor.",
+							"Haz clic en <strong class=\"font-medium text-ink\">Formato</strong> en el menú superior.",
+							"Sitúa el cursor sobre <strong class=\"font-medium text-ink\">Texto</strong> &gt; <strong class=\"font-medium text-ink\">Uso de mayúsculas</strong> y elige minúsculas, MAYÚSCULAS o Tipo título."
+						]
+					}
+				]
+			},
+			"whereToUse": {
+				"badge": "Aplicaciones prácticas",
+				"heading": "Dónde usar cada estilo de texto y formato de código",
+				"intro": "Elegir el formato de capitalización adecuado mejora la legibilidad, garantiza el cumplimiento de guías de estilo y evita errores en proyectos de software:",
+				"cards": [
+					{
+						"title": "Ensayos, informes y correos",
+						"subtitle": "Tipo oración",
+						"bodyHtml": "Mantiene los párrafos naturales, fáciles de leer y acordes con las guías académicas o profesionales sin bloques accidentales en MAYÚSCULAS. Ideal para corregir apuntes, borradores y respuestas de soporte."
+					},
+					{
+						"title": "Titulares de blog, YouTube y artículos",
+						"subtitle": "Formato Título",
+						"bodyHtml": "Mejora la legibilidad y el impacto visual de los encabezados al mantener en minúsculas las palabras menores (<em class=\"italic\">a, an, the, in, of</em> en inglés). Perfecto para subtítulos, títulos de libros y asuntos de correo."
+					},
+					{
+						"title": "Desarrollo de software y APIs",
+						"subtitle": "camelCase, PascalCase, snake_case",
+						"bodyHtml": "Convierte frases de varias palabras en nombres válidos de variables, componentes de React/TypeScript, funciones de Python o claves <code class=\"font-mono text-[12px]\">CONSTANT_CASE</code> para archivos .env sin tener que reescribir nada."
+					},
+					{
+						"title": "URLs SEO y clases CSS",
+						"subtitle": "kebab-case y minúsculas",
+						"bodyHtml": "Transforma títulos largos en slugs limpios separados por guiones (<code class=\"font-mono text-[12px]\">mi-articulo-blog</code>) y genera etiquetas en minúsculas consistentes, semillas de bases de datos o clases CSS con metodología BEM."
+					}
+				]
+			}
+		},
+		"faq": {
+			"badge": "¿Tienes dudas?",
+			"heading": "Preguntas frecuentes",
+			"intro": "Respuestas a las dudas más comunes sobre conversiones de mayúsculas y minúsculas, atajos de teclado, fórmulas y privacidad.",
+			"items": [
+				{
+					"question": "¿Cómo corrijo un texto que escribí por accidente con Bloq Mayús activado?",
+					"answer": "Haz clic en Tipo oración o minúsculas para normalizar el texto al instante a una capitalización estándar. Si tenías Bloq Mayús activado mientras escribías y solo la primera letra de cada palabra quedó en minúscula, pulsa tEXTO iNVERTIDO para restaurar la capitalización correcta en un clic sin volver a teclear.",
+					"answerHtml": "Haz clic en <strong class=\"font-medium text-ink\">Tipo oración</strong> o <strong class=\"font-medium text-ink\">minúsculas</strong> para normalizar el texto al instante a una capitalización estándar. Si tenías Bloq Mayús activado mientras escribías y solo la primera letra de cada palabra quedó en minúscula, pulsa <strong class=\"font-medium text-ink\">tEXTO iNVERTIDO</strong> para restaurar la capitalización correcta en un clic sin volver a teclear."
+				},
+				{
+					"question": "¿Cuál es la diferencia entre Formato Título e Iniciales En Mayúscula (Proper Case)?",
+					"answer": "Iniciales En Mayúscula pone en mayúscula la primera letra de todas las palabras sin distinción. En cambio, el Formato Título estándar de AP y APA mantiene en minúsculas los artículos, conjunciones y preposiciones breves en inglés (como a, an, the, and, in y of) salvo que sean la primera o la última palabra del título.",
+					"answerHtml": "<strong class=\"font-medium text-ink\">Iniciales En Mayúscula</strong> pone en mayúscula la primera letra de todas las palabras sin distinción. En cambio, el <strong class=\"font-medium text-ink\">Formato Título</strong> estándar de AP y APA mantiene en minúsculas los artículos, conjunciones y preposiciones breves en inglés (como <em>a</em>, <em>an</em>, <em>the</em>, <em>and</em>, <em>in</em> y <em>of</em>) salvo que sean la primera o la última palabra del título."
+				},
+				{
+					"question": "¿Cómo funciona un conversor online a camelCase para programación?",
+					"answer": "Un conversor a camelCase elimina todos los espacios, guiones y signos de puntuación, pasa la primera palabra por completo a minúsculas y capitaliza la primera letra de cada palabra siguiente. Por ejemplo, escribir user profile card se convierte al instante en userProfileCard.",
+					"answerHtml": "Un conversor a <strong class=\"font-medium text-ink\">camelCase</strong> elimina todos los espacios, guiones y signos de puntuación, pasa la primera palabra por completo a minúsculas y capitaliza la primera letra de cada palabra siguiente. Por ejemplo, escribir <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">user profile card</code> se convierte al instante en <code class=\"rounded bg-[#afe3d0]/20 px-1.5 py-0.5 font-mono text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]\">userProfileCard</code>."
+				},
+				{
+					"question": "¿Cuándo conviene usar snake_case frente a kebab-case?",
+					"answer": "Usa snake_case con guiones bajos para variables en Python, nombres de columnas en bases de datos e identificadores SQL. Usa kebab-case con guiones medios para slugs de URL amigables para SEO y nombres de clases CSS donde no se recomiendan espacios ni guiones bajos.",
+					"answerHtml": "Usa <strong class=\"font-medium text-ink\">snake_case</strong> con guiones bajos para variables en Python, nombres de columnas en bases de datos e identificadores SQL. Usa <strong class=\"font-medium text-ink\">kebab-case</strong> con guiones medios para slugs de URL amigables para SEO (<code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">/case-converter/</code>) y nombres de clases CSS donde no se recomiendan espacios ni guiones bajos."
+				},
+				{
+					"question": "¿Cuál es el atajo para cambiar de mayúsculas a minúsculas en Microsoft Word?",
+					"answer": "Selecciona el texto en Microsoft Word y pulsa Shift + F3 en Windows o Fn + Shift + F3 en Mac para alternar entre minúsculas, Poner En Mayúsculas Cada Palabra y MAYÚSCULAS. También puedes hacer clic en el botón Cambiar mayúsculas y minúsculas de la pestaña Inicio.",
+					"answerHtml": "Selecciona el texto en Microsoft Word y pulsa <kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">Shift + F3</kbd> en Windows o <kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">Fn + Shift + F3</kbd> en Mac para alternar entre minúsculas, Poner En Mayúsculas Cada Palabra y MAYÚSCULAS. También puedes hacer clic en el botón <strong class=\"font-medium text-ink\">Cambiar mayúsculas y minúsculas</strong> de la pestaña Inicio."
+				},
+				{
+					"question": "¿Cómo paso letras minúsculas a mayúsculas en Excel o Google Sheets?",
+					"answer": "En hojas de cálculo puedes usar =MAYUSC(A1) (=UPPER(A1)) para mayúsculas, =MINUSC(A1) (=LOWER(A1)) para minúsculas y =NOMPROPIO(A1) (=PROPER(A1)) para capitalizar cada palabra. Como alternativa, pega toda tu columna en esta herramienta online gratuita para convertir todos los valores al instante sin fórmulas auxiliares.",
+					"answerHtml": "En hojas de cálculo puedes usar <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">=MAYUSC(A1)</code> (<code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">=UPPER(A1)</code>) para mayúsculas, <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">=MINUSC(A1)</code> (<code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">=LOWER(A1)</code>) para minúsculas y <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">=NOMPROPIO(A1)</code> (<code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">=PROPER(A1)</code>) para capitalizar cada palabra. Como alternativa, pega toda tu columna en esta herramienta online gratuita para convertir todos los valores al instante sin fórmulas auxiliares."
+				},
+				{
+					"question": "¿Cómo convierto texto a minúsculas sin perder la puntuación?",
+					"answer": "Al pulsar minúsculas se convierten todas las letras mayúsculas de la A a la Z en minúsculas de la a a la z, conservando intactos los números, los signos de puntuación y los saltos de línea.",
+					"answerHtml": "Al pulsar <strong class=\"font-medium text-ink\">minúsculas</strong> se convierten todas las letras mayúsculas de la A a la Z en minúsculas de la a a la z, conservando intactos los números, los signos de puntuación y los saltos de línea."
+				},
+				{
+					"question": "¿Qué hacen los modos tExTo aLtErNaDo y tEXTO iNVERTIDO?",
+					"answer": "tExTo aLtErNaDo intercala cada letra entre minúscula y mayúscula para crear texto de memes o en tono sarcástico. tEXTO iNVERTIDO cambia cada letra mayúscula por minúscula y cada minúscula por mayúscula.",
+					"answerHtml": "<strong class=\"font-medium text-ink\">tExTo aLtErNaDo</strong> intercala cada letra entre minúscula y mayúscula para crear texto de memes o en tono sarcástico. <strong class=\"font-medium text-ink\">tEXTO iNVERTIDO</strong> cambia cada letra mayúscula por minúscula y cada minúscula por mayúscula."
+				},
+				{
+					"question": "¿Puedo descargar el texto convertido o deshacer un cambio de formato?",
+					"answer": "Sí. Pulsa Deshacer en cualquier momento para restaurar la versión anterior de tu texto o haz clic en Descargar .txt para guardar el resultado convertido en tu dispositivo como un archivo de texto plano.",
+					"answerHtml": "Sí. Pulsa <strong class=\"font-medium text-ink\">Deshacer</strong> en cualquier momento para restaurar la versión anterior de tu texto o haz clic en <strong class=\"font-medium text-ink\">Descargar .txt</strong> para guardar el resultado convertido en tu dispositivo como un archivo de texto plano."
+				},
+				{
+					"question": "¿Mi texto es privado cuando uso este conversor de mayúsculas gratuito?",
+					"answer": "Sí, al 100 %. Todas las conversiones se ejecutan localmente en tu navegador mediante JavaScript en el cliente. Tu texto nunca se sube, registra ni guarda en servidores externos. Para otras utilidades relacionadas, prueba nuestro contador de palabras gratuito y nuestro repetidor de texto.",
+					"answerHtml": "Sí, al 100 %. Todas las conversiones se ejecutan localmente en tu navegador mediante JavaScript en el cliente. Tu texto nunca se sube, registra ni guarda en servidores externos. Para otras utilidades relacionadas, prueba nuestro <a href=\"/word-counter/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">contador de palabras</a> gratuito y nuestro <a href=\"/text-repeater/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">repetidor de texto</a>."
+				}
+			]
+		}
 	},
 	"textRepeater": {
 		"name": "Repetidor de texto",
@@ -5636,7 +5945,346 @@
 		"metric": "Hasta 10 000x · Separadores personalizados",
 		"title": "Repetidor de texto online: repite texto y emojis hasta 10 000 veces | Wordora",
 		"metaDescription": "Repetidor de texto gratuito para repetir palabras, emojis o cadenas hasta 10 000 veces con separadores, numeración, prefijo y sufijo, y copia con un clic o descarga en .txt.",
-		"h1": "Repetidor de texto online: repite texto y emojis al instante"
+		"h1": "Repetidor de texto online: repite texto y emojis al instante",
+		"ui": {
+			"workspaceAria": "Espacio de trabajo del Repetidor de texto",
+			"inputLabel": "Texto o frase para repetir",
+			"inputBadge": "Repetición instantánea en vivo",
+			"inputPlaceholder": "Escribe o pega texto, emojis o una frase para repetir...",
+			"defaultText": "Te amo ❤️",
+			"quickInsert": "Inserción rápida:",
+			"chipBirthday": "Feliz cumpleaños 🎂",
+			"chipLove": "Te amo ❤️",
+			"chipSorry": "Lo siento 🥺",
+			"btnPaste": "Pegar",
+			"btnClear": "Limpiar",
+			"countLabel": "Número de repeticiones (1 – 10 000)",
+			"countBadge": "Generador en tiempo real",
+			"decreaseAria": "Disminuir repeticiones",
+			"increaseAria": "Aumentar repeticiones",
+			"separatorLabel": "Separador entre repeticiones",
+			"sepNewline": "Salto de línea",
+			"sepSpace": "Espacio",
+			"sepComma": "Coma (,)",
+			"sepDash": "Guion (-)",
+			"sepNone": "Ninguno",
+			"sepCustom": "Personalizado",
+			"customSepLabel": "Texto del separador personalizado",
+			"customSepPlaceholder": "ej.  |  o  —  o  / ",
+			"numberingLabel": "Añadir numeración (1. 2. 3.)",
+			"prefixLabel": "Prefijo:",
+			"prefixPlaceholder": "item_",
+			"suffixLabel": "Sufijo:",
+			"suffixPlaceholder": "@prueba.com",
+			"caseLabel": "Formato:",
+			"caseOriginal": "Original",
+			"caseUpper": "MAYÚSCULAS",
+			"caseLower": "minúsculas",
+			"caseTitle": "Tipo Título",
+			"statRepetitions": "repeticiones",
+			"statCharacters": "caracteres",
+			"statLines": "líneas",
+			"btnCopy": "Copiar resultado",
+			"btnDownload": "Descargar .txt",
+			"whatsappAria": "Compartir texto repetido en WhatsApp",
+			"btnWhatsapp": "WhatsApp",
+			"outputPlaceholder": "Tu texto repetido aparecerá aquí automáticamente..."
+		},
+		"client": {
+			"copied": "¡Copiado!",
+			"btnCopy": "Copiar resultado",
+			"downloadFilename": "texto-repetido.txt"
+		},
+		"schema": {
+			"featureList": [
+				"Repite cualquier texto, emoji o cadena de prueba hasta 10 000 veces en tiempo real",
+				"Opciones de separador: Salto de línea, Espacio, Coma, Guion, Ninguno y separador Personalizado",
+				"Numeración secuencial de líneas (1. 2. 3.), prefijos y sufijos personalizados",
+				"Conversión instantánea de mayúsculas y minúsculas: Original, MAYÚSCULAS, minúsculas y Tipo Título",
+				"Métricas en vivo de repeticiones, caracteres y líneas",
+				"Copia del resultado en un clic, envío directo a WhatsApp y descarga en archivo .txt"
+			]
+		},
+		"page": {
+			"heroSubtitle": "Repite cualquier palabra, frase, emoji o cadena de prueba hasta 10 000 veces con separadores personalizados, numeración automática y prefijo o sufijo, de forma privada en tu navegador.",
+			"howToUse": {
+				"badge": "Guía rápida",
+				"heading": "Qué es un repetidor de texto online y cómo usarlo",
+				"intro": "Un repetidor de texto online te permite duplicar al instante cualquier palabra, oración, emoji o cadena de prueba hasta 10 000 veces con control total sobre saltos de línea, delimitadores personalizados, numeración secuencial y estilo de mayúsculas. Tanto si generas datos de prueba para software, preparas mensajes divertidos para WhatsApp y redes sociales, o creas listas de texto con formato, Wordora funciona 100 % en local dentro de tu navegador, sin latencia y con privacidad total.",
+				"steps": [
+					{
+						"title": "Escribe el texto o elige un emoji",
+						"bodyHtml": "Escribe o pega cualquier palabra, mensaje o fragmento de código, o toca un botón rápido de emoji (<strong class=\"font-medium text-ink\">❤️</strong>, <strong class=\"font-medium text-ink\">🔥</strong>, <strong class=\"font-medium text-ink\">Feliz cumpleaños 🎂</strong>)."
+					},
+					{
+						"title": "Define el número de repeticiones (1 – 10 000x)",
+						"bodyHtml": "Introduce cualquier cantidad exacta o elige un acceso rápido con un clic desde <strong class=\"font-medium text-ink\">5x</strong> hasta <strong class=\"font-medium text-ink\">10 000x</strong>."
+					},
+					{
+						"title": "Elige separadores, numeración y prefijo/sufijo",
+						"bodyHtml": "Da formato al resultado con saltos de línea, espacios, comas, delimitadores personalizados, numeración secuencial (<strong class=\"font-medium text-ink\">1. 2. 3.</strong>) o prefijos y sufijos para pruebas de QA."
+					},
+					{
+						"title": "Copia, comparte o descarga en .txt",
+						"bodyHtml": "Copia el texto repetido con un solo clic, envíalo directamente por WhatsApp o expórtalo como un archivo <strong class=\"font-medium text-ink\">.txt</strong>."
+					}
+				],
+				"whyTitle": "¿Por qué usar un repetidor de texto en el navegador?",
+				"whyParagraphsHtml": [
+					"Duplicar frases cortas a mano con atajos de teclado (<kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">Ctrl + C</kbd> y <kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">Ctrl + V</kbd>) sirve para cantidades pequeñas como 10 o 20 veces, pero se vuelve impracticable cuando necesitas 500, 1000 o 10 000 repeticiones. Repetir manualmente suele provocar bloqueos en el portapapeles, espacios dobles accidentales, errores de conteo de líneas y picos de memoria en el navegador. Wordora resuelve esto calculando la secuencia repetida directamente en la memoria de tu dispositivo mediante asignación de arreglos en JavaScript del lado del cliente. Como la ejecución ocurre en local sin viajes al servidor, incluso 10 000 repeticiones se generan en menos de 15 milisegundos sin consumir ancho de banda ni registrar tus datos.",
+					"Además, un repetidor online en el navegador produce texto plano puro sin formato oculto. Cuando copias texto enriquecido desde procesadores de texto o páginas web, junto con los caracteres se copian metadatos invisibles de estilo, como fuentes propietarias, colores de fondo y etiquetas HTML anidadas. Pegar ese código sobrante en aplicaciones de mensajería como WhatsApp, Discord o Instagram suele generar saltos de línea inesperados o fallos tipográficos. Wordora elimina cualquier formato enriquecido y garantiza que el resultado se pegue limpio en hojas de cálculo, editores SQL, chats móviles y archivos de pruebas sin residuos no deseados."
+				]
+			},
+			"separatorGuide": {
+				"badge": "Referencia de delimitadores",
+				"heading": "Guía de separadores y delimitadores de texto",
+				"intro": "Elige el delimitador y la estructura de prefijo y sufijo más adecuados según si estás formateando mensajes de chat, hojas de cálculo o datos de prueba estructurados.",
+				"headers": [
+					"Opción de separador",
+					"Sintaxis / Carácter",
+					"Ejemplo de salida (3x \"Hola\")",
+					"Mejor caso de uso"
+				],
+				"rows": [
+					{
+						"option": "Salto de línea (Uno por uno)",
+						"syntax": "\\n",
+						"syntaxType": "code",
+						"sampleType": "multiline",
+						"sampleLines": [
+							"Hola",
+							"Hola",
+							"Hola"
+						],
+						"useCase": "Muros de mensajes en WhatsApp, listas numeradas, entradas de QA línea por línea"
+					},
+					{
+						"option": "Espacio",
+						"syntax": "' '",
+						"syntaxType": "code",
+						"sampleType": "inline",
+						"sampleText": "Hola Hola Hola",
+						"useCase": "Relleno de párrafos, cadenas continuas de palabras, pruebas de ajuste de línea"
+					},
+					{
+						"option": "Coma",
+						"syntax": ", ",
+						"syntaxType": "code",
+						"sampleType": "inline",
+						"sampleText": "Hola, Hola, Hola",
+						"useCase": "Conjuntos de datos CSV, cláusulas SQL IN(), listas de etiquetas"
+					},
+					{
+						"option": "Guion",
+						"syntax": " - ",
+						"syntaxType": "code",
+						"sampleType": "inline",
+						"sampleText": "Hola - Hola - Hola",
+						"useCase": "Divisores visuales, secuencias en línea fáciles de leer"
+					},
+					{
+						"option": "Ninguno (Continuo)",
+						"syntax": "\"\"",
+						"syntaxType": "code",
+						"sampleType": "inline",
+						"sampleText": "HolaHolaHola",
+						"useCase": "Cadenas con longitud exacta de caracteres (p. ej., pruebas VARCHAR de 255 caracteres)"
+					},
+					{
+						"option": "Personalizado + Prefijo/Sufijo",
+						"syntax": "[Prefijo]Texto[Sufijo]",
+						"syntaxType": "text",
+						"sampleType": "inline",
+						"sampleText": "usuario_1@prueba.com, usuario_2@prueba.com",
+						"useCase": "Listas de correos ficticios, arreglos JSON, datos de prueba automatizados de QA"
+					}
+				],
+				"deepDiveTitle": "Cómo se combinan los delimitadores, prefijos y la numeración automática",
+				"deepDiveParagraphsHtml": [
+					"En la preparación real de datos, repetir texto sin procesar es solo la mitad del trabajo: el separador y la sintaxis envolvente determinan si el resultado puede usarse de inmediato. Al combinar un delimitador activo con la numeración secuencial (<code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">1. 2. 3.</code>) y prefijos o sufijos personalizados, puedes generar registros listos para importar en segundos. Por ejemplo, si usas la palabra base <strong class=\"font-medium text-ink\">alumno</strong>, añades el prefijo <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">usr_</code>, un número autoincremental, el sufijo <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">@dominio.com</code> y el separador de coma, obtendrás al instante <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">usr_1@dominio.com, usr_2@dominio.com, usr_3@dominio.com</code>.",
+					"Esta flexibilidad estructural ahorra muchísimo tiempo al construir cláusulas SQL <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">WHERE id IN (...)</code>, listas de correos ficticios para pruebas, elementos de arreglos JSON o columnas separadas por comas (CSV). En lugar de escribir macros improvisadas en hojas de cálculo o scripts rápidos en Python, puedes configurar las reglas de delimitación aquí arriba, comprobar la vista previa en vivo y copiar la cadena final formateada con un solo clic."
+				]
+			},
+			"characterLimits": {
+				"badge": "Límites de plataformas",
+				"heading": "Límites de caracteres por plataforma y referencias seguras",
+				"introHtml": "Conoce las restricciones de longitud de cada plataforma antes de copiar texto repetido para evitar mensajes recortados, lentitud en móviles o errores de desbordamiento en bases de datos. Combina tus repeticiones con nuestro <a href=\"/word-counter/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">contador de palabras</a> o nuestro <a href=\"/case-converter/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">conversor de mayúsculas</a> gratuitos para tener control total sobre tu texto.",
+				"headers": [
+					"Plataforma o campo de base de datos",
+					"Límite máximo de caracteres",
+					"Consejo para repetir sin problemas",
+					"Uso habitual"
+				],
+				"rows": [
+					{
+						"platform": "Mensaje de WhatsApp",
+						"limit": "65 536 caracteres",
+						"tip": "Mantén los bloques por debajo de 10 000–20 000 caracteres para una visualización fluida en móviles",
+						"commonUse": "Felicitaciones de cumpleaños, muros de emojis, registros digitales de 108 afirmaciones"
+					},
+					{
+						"platform": "SMS estándar (un segmento)",
+						"limit": "160 caracteres (70 con emojis)",
+						"tip": "Los textos repetidos más largos se dividen en varios SMS encadenados",
+						"commonUse": "Pruebas de alertas breves y comprobaciones de truncamiento de operadoras"
+					},
+					{
+						"platform": "Pie de foto / Comentario en Instagram",
+						"limit": "2200 caracteres (Pie) / 1000 (Comentario)",
+						"tip": "Usa el contador de caracteres en vivo de arriba para mantenerte por debajo de 2200 caracteres",
+						"commonUse": "Separadores de biografía, patrones de emojis, interacción en comentarios"
+					},
+					{
+						"platform": "Publicación estándar en X (Twitter)",
+						"limit": "280 caracteres",
+						"tip": "Comprueba el número exacto de caracteres antes de copiar",
+						"commonUse": "Microbanners y repeticiones rítmicas de texto"
+					},
+					{
+						"platform": "SQL VARCHAR / Campo de formulario",
+						"limit": "255 a 4000 caracteres",
+						"tip": "Repite un solo carácter (`a`) 255x o 256x para validar los límites exactos del campo",
+						"commonUse": "Pruebas de QA de esquemas de bases de datos y desbordamiento de interfaz"
+					}
+				],
+				"deepDiveTitle": "Cómo evitar mensajes recortados y lentitud en apps móviles",
+				"deepDiveParagraphsHtml": [
+					"Al pegar bloques masivos de texto repetido en aplicaciones sociales o de mensajería, el cálculo de caracteres es más complejo que contar letras visibles. Las letras ASCII estándar (<code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">A–Z</code>) ocupan un solo byte de 7 u 8 bits. En cambio, los emojis modernos (como <strong class=\"font-medium text-ink\">❤️</strong>, <strong class=\"font-medium text-ink\">🔥</strong> o <strong class=\"font-medium text-ink\">🎂</strong>) y los símbolos con tilde son caracteres multibyte codificados mediante pares sustitutos en UTF-16. En los sistemas SMS tradicionales, incluir un solo emoji cambia de inmediato la codificación del mensaje de GSM-7 a UCS-2, lo que reduce la capacidad de un segmento de 160 a solo 70 caracteres y hace que los textos largos se dividan en múltiples segmentos facturables.",
+					"De manera similar, aunque WhatsApp admite una carga teórica de hasta 65 536 caracteres por mensaje, enviar un muro ininterrumpido de más de 50 000 caracteres o cadenas largas de emojis complejos puede hacer que el teléfono del destinatario se congele, vaya a tirones al renderizar la pantalla o tenga dificultades para abrir la burbuja del chat. Para compartir en redes y chats, mantener las secuencias repetidas entre 1000 y 10 000 caracteres ofrece el máximo impacto visual garantizando una carga rápida en iOS y Android sin cortes ni bloqueos. También puedes revisar el conteo exacto de palabras y caracteres con nuestro <a href=\"/word-counter/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">contador de palabras</a> gratuito antes de enviar."
+				]
+			},
+			"repeatMethods": {
+				"badge": "Referencia técnica",
+				"heading": "Cómo repetir texto en Excel, Word, JavaScript y Python",
+				"intro": "Compara cómo se desempeña el repetidor instantáneo en navegador de Wordora frente a fórmulas de hojas de cálculo, atajos de procesadores de texto y funciones de repetición en lenguajes de programación para flujos técnicos y productividad diaria.",
+				"headers": [
+					"Método / Entorno",
+					"Fórmula o fragmento de código",
+					"Cuándo conviene usarlo"
+				],
+				"rows": [
+					{
+						"method": "Repetidor de texto online (Wordora)",
+						"snippet": "Herramienta en 1 clic en el navegador (hasta 10 000x)",
+						"isCode": false,
+						"whenToUse": "La opción más rápida y sin configuración para copiar texto, emojis, numeración y exportar a .txt"
+					},
+					{
+						"method": "Microsoft Excel y Google Sheets",
+						"snippet": "=REPT(\"Texto \", 10)",
+						"isCode": true,
+						"whenToUse": "Ideal para repetir valores dentro de columnas de hojas de cálculo o calificaciones con estrellas (en Excel en español también se usa =REPETIR)"
+					},
+					{
+						"method": "Microsoft Word",
+						"snippet": "Copiar (Ctrl+C) + Pegar (Ctrl+V) o Buscar y reemplazar",
+						"isCode": false,
+						"whenToUse": "Word no tiene una fórmula nativa para repetir; genera el texto aquí primero y luego pégalo en Word"
+					},
+					{
+						"method": "JavaScript",
+						"snippet": "\"palabra \".repeat(100)",
+						"isCode": true,
+						"whenToUse": "Muy útil dentro de scripts del navegador o pruebas unitarias en Node.js"
+					},
+					{
+						"method": "Python",
+						"snippet": "\"palabra \" * 100",
+						"isCode": true,
+						"whenToUse": "Ideal para scripts de servidor y flujos automatizados de pruebas de carga"
+					}
+				],
+				"deepDiveTitle": "Paso a paso: cómo repetir texto en Excel y Google Sheets sin errores",
+				"deepDiveParagraphsHtml": [
+					"Las hojas de cálculo ofrecen repetición nativa de cadenas mediante la fórmula <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">=REPT(texto, num_veces)</code> (o <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">=REPETIR(texto; num_veces)</code> en Excel en español). Por ejemplo, escribir <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">=REPT(\"★\", 5)</code> crea una valoración ligera de 5 estrellas directamente en la celda sin formato condicional complejo. Cuando repitas referencias de celdas con separadores, usa concatenación de texto como <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">=REPT(A2 &amp; \", \", 10)</code> para obtener una lista limpia separada por comas.",
+					"Sin embargo, las fórmulas de hojas de cálculo tienen límites técnicos estrictos. Microsoft Excel limita cualquier celda individual a un máximo exacto de 32 767 caracteres; intentar repetir párrafos más largos o cantidades mayores generará una cadena truncada o un error de cálculo <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">#¡VALOR!</code> (<code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">#VALUE!</code>). Además, arrastrar fórmulas de repetición por miles de filas puede ralentizar seriamente el rendimiento de la hoja. El repetidor en navegador de Wordora supera por completo los límites de celda y te permite generar hasta 10 000 repeticiones completas y exportar el resultado directamente como un archivo <strong class=\"font-medium text-ink\">.txt</strong> de texto plano sin restricciones."
+				]
+			},
+			"practicalUses": {
+				"badge": "Aplicaciones prácticas",
+				"heading": "Usos reales de un repetidor de texto online",
+				"intro": "Desde mensajes divertidos en redes hasta pruebas rigurosas de calidad de software, repetir texto con delimitadores personalizados ofrece soluciones versátiles para el día a día:",
+				"cards": [
+					{
+						"title": "Mensajería social y celebraciones",
+						"subtitle": "100x – 1000x",
+						"body": "Crea felicitaciones de cumpleaños llamativas, muros de emojis o mensajes repetidos para WhatsApp, Instagram y Telegram sin teclear la misma frase a mano."
+					},
+					{
+						"title": "Mantras digitales y registros de afirmaciones",
+						"subtitle": "108 repeticiones",
+						"body": "Genera un registro digital exacto de 108 repeticiones numeradas o línea por línea de mantras, oraciones o afirmaciones diarias para reflexión personal o estados."
+					},
+					{
+						"title": "Pruebas de límites QA y estrés en bases de datos",
+						"subtitle": "255x – 10 000x",
+						"body": "Repite un carácter o cadena 255, 1000 o 10 000 veces con el separador Ninguno para comprobar límites máximos en formularios, truncamientos SQL VARCHAR y ajuste de texto en la interfaz."
+					},
+					{
+						"title": "Maquetas UI, prototipos y listas numeradas de prueba",
+						"subtitle": "Numerado y delimitado",
+						"body": "Combina Salto de línea con Añadir numeración (1. 2. 3.) y Prefijo/Sufijo para rellenar menús desplegables, tablas de datos y archivos CSV de prueba en segundos."
+					}
+				]
+			}
+		},
+		"faq": {
+			"badge": "¿Tienes dudas?",
+			"heading": "Preguntas frecuentes",
+			"subtitle": "Respuestas claras y prácticas sobre límites de repetición, formato para WhatsApp, numeración, separadores y privacidad.",
+			"items": [
+				{
+					"question": "¿Qué es un repetidor de texto online y cómo funciona?",
+					"answer": "Un repetidor de texto online duplica cualquier palabra, oración, emoji o símbolo el número de veces que elijas al instante en tu navegador, permitiéndote personalizar separadores, numeración y mayúsculas antes de copiar o descargar.",
+					"answerHtml": "Un repetidor de texto online duplica cualquier palabra, oración, emoji o símbolo el número de veces que elijas al instante en tu navegador, permitiéndote personalizar separadores, numeración y mayúsculas antes de copiar o descargar."
+				},
+				{
+					"question": "¿Cómo puedo repetir un texto 10 000 veces de una sola vez?",
+					"answer": "Escribe o pega tu texto, haz clic en el botón rápido 10 000x —o escribe 10000 en la casilla de cantidad—, elige el separador y pulsa Copiar resultado o Descargar .txt para guardar el texto repetido al instante.",
+					"answerHtml": "Escribe o pega tu texto, haz clic en el botón rápido <strong class=\"font-medium text-ink\">10 000x</strong> —o escribe <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">10000</code> en la casilla de cantidad—, elige el separador y pulsa <strong class=\"font-medium text-ink\">Copiar resultado</strong> o <strong class=\"font-medium text-ink\">Descargar .txt</strong> para guardar el texto repetido al instante."
+				},
+				{
+					"question": "¿Cómo repito una palabra o mensaje 100 o 1000 veces para WhatsApp?",
+					"answer": "Introduce tu mensaje o emoji, selecciona 100x o 1000x con el separador Salto de línea y haz clic en Copiar resultado o en el botón directo de WhatsApp para enviarlo de inmediato.",
+					"answerHtml": "Introduce tu mensaje o emoji, selecciona <strong class=\"font-medium text-ink\">100x</strong> o <strong class=\"font-medium text-ink\">1000x</strong> con el separador <strong class=\"font-medium text-ink\">Salto de línea</strong> y haz clic en <strong class=\"font-medium text-ink\">Copiar resultado</strong> o en el botón directo de <strong class=\"font-medium text-ink\">WhatsApp</strong> para enviarlo de inmediato."
+				},
+				{
+					"question": "¿Puedo repetir el texto uno por uno en líneas separadas?",
+					"answer": "Sí. Selecciona el separador Salto de línea para que cada copia repetida aparezca de forma ordenada en su propia línea: ideal para listas, muros en chats y columnas de hojas de cálculo.",
+					"answerHtml": "Sí. Selecciona el separador <strong class=\"font-medium text-ink\">Salto de línea</strong> para que cada copia repetida aparezca de forma ordenada en su propia línea: ideal para listas, muros en chats y columnas de hojas de cálculo."
+				},
+				{
+					"question": "¿Cómo añado números (1, 2, 3...) al texto repetido?",
+					"answer": "Marca la casilla Añadir numeración (1. 2. 3.) para anteponer automáticamente su número de índice secuencial a cada línea o elemento repetido.",
+					"answerHtml": "Marca la casilla <strong class=\"font-medium text-ink\">Añadir numeración (1. 2. 3.)</strong> para anteponer automáticamente su número de índice secuencial a cada línea o elemento repetido."
+				},
+				{
+					"question": "¿Cómo hago que un texto se repita automáticamente en Microsoft Word o Excel?",
+					"answer": "Microsoft Word no tiene una fórmula integrada para repetir texto, así que lo más rápido es generarlo aquí y pegarlo en Word; por su parte, Excel y Google Sheets admiten =REPT(\"texto \", 10) (o =REPETIR en Excel en español) para repetir valores de celda.",
+					"answerHtml": "Microsoft Word no tiene una fórmula integrada para repetir texto, así que lo más rápido es generarlo aquí y pegarlo en Word; por su parte, Excel y Google Sheets admiten <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">=REPT(\"texto \", 10)</code> (o <code class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">=REPETIR</code> en Excel en español) para repetir valores de celda."
+				},
+				{
+					"question": "¿Puedo repetir emojis y símbolos especiales sin problemas de formato?",
+					"answer": "Sí. Todos los caracteres Unicode, emojis y signos de puntuación se conservan con precisión como texto plano limpio, listo para cualquier app de mensajería o editor.",
+					"answerHtml": "Sí. Todos los caracteres Unicode, emojis y signos de puntuación se conservan con precisión como texto plano limpio, listo para cualquier app de mensajería o editor."
+				},
+				{
+					"question": "¿Cómo utilizan los desarrolladores y testers de QA un repetidor de texto?",
+					"answer": "Los desarrolladores y testers de QA usan Prefijo, Sufijo, el separador Ninguno y conteos exactos como 255 o 10 000 para generar cadenas de prueba de valores límite, listas de correos ficticios y cargas de desbordamiento de interfaz.",
+					"answerHtml": "Los desarrolladores y testers de QA usan <strong class=\"font-medium text-ink\">Prefijo</strong>, <strong class=\"font-medium text-ink\">Sufijo</strong>, el separador <strong class=\"font-medium text-ink\">Ninguno</strong> y conteos exactos como <strong class=\"font-medium text-ink\">255</strong> o <strong class=\"font-medium text-ink\">10 000</strong> para generar cadenas de prueba de valores límite, listas de correos ficticios y cargas de desbordamiento de interfaz."
+				},
+				{
+					"question": "¿Funciona este repetidor de texto en teléfonos móviles sin instalar una app?",
+					"answer": "Sí. La herramienta funciona directamente en navegadores móviles y de escritorio sin necesidad de APK, extensiones ni registro.",
+					"answerHtml": "Sí. La herramienta funciona directamente en navegadores móviles y de escritorio sin necesidad de APK, extensiones ni registro."
+				},
+				{
+					"question": "¿Es privado mi texto al usar el Repetidor de texto de Wordora?",
+					"answer": "Sí, al 100 %. Toda la repetición de texto ocurre en local dentro de tu navegador mediante JavaScript del lado del cliente: nunca se envía nada a ningún servidor. Para herramientas relacionadas, explora nuestro contador de palabras y nuestro inversor de texto gratuitos.",
+					"answerHtml": "Sí, al 100 %. Toda la repetición de texto ocurre en local dentro de tu navegador mediante JavaScript del lado del cliente: nunca se envía nada a ningún servidor. Para herramientas relacionadas, explora nuestro <a href=\"/word-counter/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">contador de palabras</a> y nuestro <a href=\"/text-reverser/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">inversor de texto</a> gratuitos."
+				}
+			]
+		}
 	},
 	"textReverser": {
 		"name": "Inversor y volteador de texto",
@@ -5645,7 +6293,258 @@
 		"metric": "4 modos de inversión",
 		"title": "Inversor de texto online: invierte texto, palabras y voltea al revés | Wordora",
 		"metaDescription": "Inversor de texto gratuito para invertir caracteres, el orden de las palabras o de las líneas, comprobar palíndromos o generar texto al revés al instante.",
-		"h1": "Inversor de texto online: invierte texto, palabras y voltea al revés"
+		"h1": "Inversor de texto online: invierte texto, palabras y voltea al revés",
+		"ui": {
+			"workspaceAria": "Área de trabajo del inversor de texto",
+			"swapAria": "Intercambiar entrada y salida",
+			"originalTextLabel": "TEXTO ORIGINAL",
+			"btnPaste": "Pegar",
+			"btnSample": "Ejemplo",
+			"btnUpload": "Subir .txt",
+			"btnClear": "Limpiar",
+			"inputPlaceholder": "Escribe o pega texto, frases, listas o código para invertir...",
+			"initialText": "Anita lava la tina.",
+			"unitWords": "palabras",
+			"unitChars": "caracteres",
+			"unitLines": "líneas",
+			"liveOutputLabel": "SALIDA EN VIVO",
+			"outputPlaceholder": "El resultado invertido o volteado aparece aquí al instante...",
+			"btnSendToInput": "Enviar a entrada",
+			"btnDownload": "Descargar .txt",
+			"btnCopy": "Copiar resultado",
+			"transformationModeLabel": "MODO DE TRANSFORMACIÓN",
+			"modeReverseAllLabel": "Invertir todo",
+			"modeReverseAllDesc": "Invierte cada carácter de principio a fin",
+			"modeReverseAllPreview": "\"odnum aloH\"",
+			"modeWordOrderLabel": "Orden de palabras",
+			"modeWordOrderDesc": "Invierte la secuencia de palabras manteniendo cada palabra intacta",
+			"modeWordOrderPreview": "\"mundo Hola\"",
+			"modeEachWordLabel": "Cada palabra",
+			"modeEachWordDesc": "Invierte las letras dentro de cada palabra en su lugar",
+			"modeEachWordPreview": "\"aloH odnum\"",
+			"modeLineOrderLabel": "Orden de líneas",
+			"modeLineOrderDesc": "Invierte la secuencia de líneas de abajo hacia arriba",
+			"modeLineOrderPreview": "\"Línea 2 / Línea 1\"",
+			"modeUpsideDownLabel": "Boca abajo",
+			"modeUpsideDownDesc": "Gira los caracteres 180° usando glifos Unicode",
+			"modeUpsideDownPreview": "\"ɐloH\"",
+			"modeMirrorTextLabel": "Texto espejo",
+			"modeMirrorTextDesc": "Espejo Unicode horizontal y vertical real",
+			"modeMirrorTextPreview": "\"ɒloH\" en espejo",
+			"optPreserveCase": "Conservar el patrón de mayúsculas",
+			"optLineByLine": "Invertir línea por línea de forma independiente",
+			"privacyNote": "Funciona de forma privada en tu navegador"
+		},
+		"client": {
+			"palindromeYes": "Palíndromo: Sí",
+			"palindromeNo": "Palíndromo: No",
+			"withoutSpaces": "{count} sin espacios",
+			"copied": "¡Copiado!",
+			"downloadFilename": "texto-invertido.txt",
+			"samples": [
+				"Anita lava la tina.",
+				"Amo la paloma.",
+				"Paso 1: Investigar la intención de la audiencia\nPaso 2: Redactar un titular claro\nPaso 3: Pulir y publicar",
+				"Somos o no somos.",
+				"Leer y escribir con claridad vuelve sencillas las ideas complejas."
+			]
+		},
+		"schema": {
+			"featureList": [
+				"Invertir texto completo de principio a fin",
+				"Invertir el orden de las palabras conservando cada palabra intacta",
+				"Invertir cada palabra individualmente en su lugar",
+				"Invertir el orden de las líneas para registros y listas",
+				"Voltear texto boca abajo mediante glifos Unicode girados 180 grados",
+				"Espejar texto horizontal y verticalmente",
+				"Detector de palíndromos en tiempo real con indicador dinámico",
+				"Copiar resultado en un clic y descargar archivo .txt"
+			]
+		},
+		"page": {
+			"heroSubtitle": "Invierte caracteres, cambia el orden de las palabras, voltea secuencias de líneas, comprueba palíndromos o genera texto espejo y boca abajo al instante, de forma 100 % privada en tu navegador.",
+			"howTo": {
+				"badge": "Guía rápida",
+				"heading": "Cómo usar el inversor y volteador de texto online",
+				"intro": "Wordora transforma tus palabras, frases, listas y bloques de código en tiempo real directamente dentro de tu navegador. Como todas las operaciones se ejecutan de forma local mediante JavaScript, tus borradores confidenciales, contraseñas y registros permanecen totalmente privados sin enviarse a ningún servidor.",
+				"steps": [
+					{
+						"title": "Pega o escribe tu texto",
+						"bodyHtml": "Escribe directamente en el editor, haz clic en <strong class=\"font-medium text-ink\">Pegar</strong> desde tu portapapeles, prueba un <strong class=\"font-medium text-ink\">Ejemplo</strong> integrado o sube un archivo <code class=\"rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink\">.txt</code>."
+					},
+					{
+						"title": "Elige cualquiera de los 6 modos de inversión y volteo",
+						"bodyHtml": "Selecciona <strong class=\"font-medium text-ink\">Invertir todo</strong>, <strong class=\"font-medium text-ink\">Orden de palabras</strong>, <strong class=\"font-medium text-ink\">Cada palabra</strong>, <strong class=\"font-medium text-ink\">Orden de líneas</strong>, <strong class=\"font-medium text-ink\">Boca abajo</strong> o <strong class=\"font-medium text-ink\">Texto espejo</strong> en el panel de control."
+					},
+					{
+						"title": "Comprueba la salida en vivo y el estado de palíndromo",
+						"bodyHtml": "Revisa al instante el resultado transformado mientras el indicador inteligente de palíndromos verifica si tu texto se lee exactamente igual de izquierda a derecha que de derecha a izquierda."
+					},
+					{
+						"title": "Intercambia, copia o descarga en .txt",
+						"bodyHtml": "Haz clic en <strong class=\"font-medium text-ink\">Copiar resultado</strong> para llevarlo al portapapeles, usa <strong class=\"font-medium text-ink\">Enviar a entrada</strong> para volver a transformarlo o descárgalo como un archivo de texto limpio."
+					}
+				]
+			},
+			"modes": {
+				"badge": "Matriz de transformación",
+				"heading": "Los 6 modos de inversión y volteo de texto explicados",
+				"intro": "La inversión de texto abarca desde la creación de anagramas carácter por carácter y la inversión sintáctica de oraciones hasta la reordenación de registros estructurados y rotaciones artísticas con glifos Unicode. Compara cada modo a continuación:",
+				"headers": [
+					"Nombre del modo",
+					"Qué transforma",
+					"Ejemplo de entrada",
+					"Resultado transformado"
+				],
+				"rows": [
+					{
+						"name": "Invertir todo (Caracteres)",
+						"transforms": "Invierte cada carácter de principio a fin a lo largo de toda la cadena",
+						"input": "Hola Mundo",
+						"output": "odnuM aloH"
+					},
+					{
+						"name": "Invertir orden de palabras",
+						"transforms": "Invierte la secuencia de palabras manteniendo cada palabra legible",
+						"input": "Hola Mundo",
+						"output": "Mundo Hola"
+					},
+					{
+						"name": "Invertir cada palabra",
+						"transforms": "Invierte las letras dentro de cada palabra conservando el orden original",
+						"input": "Hola Mundo",
+						"output": "aloH odnuM"
+					},
+					{
+						"name": "Invertir orden de líneas",
+						"transforms": "Invierte listas o registros de varias líneas de abajo hacia arriba",
+						"input": "Línea 1 / Línea 2",
+						"output": "Línea 2 / Línea 1"
+					},
+					{
+						"name": "Voltear boca abajo",
+						"transforms": "Asigna caracteres ASCII a glifos Unicode rotados 180°",
+						"input": "Hola",
+						"output": "ɐloH"
+					},
+					{
+						"name": "Texto espejo (Al revés + Volteo)",
+						"transforms": "Combina la inversión de caracteres con el mapeo Unicode en espejo",
+						"input": "Hola",
+						"output": "ɒloH (en espejo)"
+					}
+				],
+				"unicodeCard": {
+					"title": "Por qué importan la inversión segura para Unicode y los grupos de grafemas",
+					"p1Html": "En los tutoriales básicos de programación, la inversión de cadenas suele mostrarse con una sola línea como <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">str.split('').reverse().join('')</code>. Aunque este enfoque simplista funciona con letras ASCII básicas, corrompe gravemente el texto moderno que incluye vocales acentuadas, signos diacríticos combinados o emojis multibyte. En la codificación UTF-16, caracteres como los emojis (<span class=\"font-sans\">&#x1F1FA;&#x1F1F8;</span> o glifos de familias) se almacenan como pares sustitutos; invertirlos byte a byte separa los sustitutos alto y bajo y convierte símbolos expresivos en cuadros ilegibles con signos de interrogación (<span class=\"font-mono\">&#xFFFD;</span>).",
+					"p2Html": "De manera similar, los caracteres acentuados escritos como una letra base seguida de una marca diacrítica combinada (como <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">e + &#x0301;</code>) terminan acoplando el acento al carácter anterior equivocado al invertirse de forma ingenua. Wordora utiliza iteración compatible con Unicode y segmentación moderna de grafemas para que cada emoji, tilde y ligadura se trate como una unidad indivisible percibida por el usuario (un grupo de grafemas), preservando la claridad semántica en todos los idiomas."
+				},
+				"rtlCard": {
+					"title": "Texto invertido frente a escrituras de derecha a izquierda (RTL) como árabe y hebreo",
+					"p1Html": "Un error frecuente entre diseñadores web principiantes es creer que invertir hacia atrás caracteres latinos o en español simula una escritura auténtica de derecha a izquierda (RTL) para idiomas como el árabe, el hebreo, el urdu o el persa. En realidad, invertir una cadena simplemente voltea el orden físico de los glifos latinos sin aplicar reglas reales de diseño bidireccional.",
+					"p2Html": "Los idiomas RTL auténticos requieren conformado de texto bidireccional, enlace contextual de letras (como las formas inicial, medial y final del árabe) y alineación adecuada de párrafos. Si tu objetivo es localizar un sitio web o una aplicación para audiencias en árabe o hebreo, nunca inviertas cadenas de texto manualmente. En su lugar, configura el renderizado tipográfico correcto usando el atributo estándar de HTML <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">dir=\"rtl\"</code> en tus elementos contenedores o la propiedad CSS <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">direction: rtl</code>."
+				}
+			},
+			"implementations": {
+				"badge": "Guía multiplataforma",
+				"heading": "Cómo invertir texto en Excel, Word, JavaScript y Python",
+				"intro": "Tanto si necesitas invertir una columna de base de datos en Microsoft Excel, dar formato a notas en Microsoft Word o implementar la validación de palíndromos en código, consulta estas fórmulas y métodos estándar:",
+				"headers": [
+					"Entorno / Herramienta",
+					"Fórmula o implementación en código",
+					"Mejor caso de uso"
+				],
+				"rows": [
+					{
+						"environment": "Inversor de texto online Wordora",
+						"implementation": "Herramienta en el navegador en 1 clic (6 modos + exportación .txt)",
+						"bestUseCase": "La forma más rápida y sin configuración para invertir párrafos, listas o texto boca abajo"
+					},
+					{
+						"environment": "Microsoft Excel (365 / 2021+)",
+						"implementation": "=TEXTJOIN(\"\", TRUE, MID(A1, SEQUENCE(LEN(A1), 1, LEN(A1), -1), 1))",
+						"bestUseCase": "Invertir identificadores de celdas, códigos SKU o referencias directamente en columnas de hojas de cálculo"
+					},
+					{
+						"environment": "Microsoft Word",
+						"implementation": "Sin fórmula nativa de inversión (usa Wordora primero y luego pega)",
+						"bestUseCase": "Word no incluye un botón integrado para invertir texto; inviértelo aquí y pégalo de vuelta limpiamente"
+					},
+					{
+						"environment": "JavaScript (compatible con Unicode)",
+						"implementation": "[...new Intl.Segmenter().segment(str)].reverse().map(s => s.segment).join('')",
+						"bestUseCase": "Validación en frontend, comprobación de palíndromos y manipulación de cadenas segura para grafemas"
+					},
+					{
+						"environment": "Python",
+						"implementation": "text[::-1] (o \"\\n\".join(text.splitlines()[::-1]) para líneas)",
+						"bestUseCase": "Flujos de datos, inversión de registros y ejercicios clásicos de entrevistas técnicas"
+					}
+				],
+				"practicalUses": {
+					"heading": "Usos prácticos: desde análisis de registros y palíndromos hasta pruebas de QA",
+					"p1Html": "En DevOps e ingeniería backend, invertir secuencias de líneas es una tarea diaria indispensable. Las salidas de depuración de servidores, los registros de acceso de Apache y las entradas de <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">git log</code> suelen añadirse cronológicamente de lo más antiguo a lo más reciente. Al pegar miles de líneas de registro en Wordora y activar <strong class=\"font-medium text-ink\">Orden de líneas</strong>, los desarrolladores pueden situar al instante los incidentes más recientes al principio del archivo sin alterar marcas de tiempo ni trazas de pila dentro de cada fila.",
+					"p2Html": "Más allá de la ingeniería de sistemas, la inversión de texto cumple un papel fundamental en pruebas de calidad (QA), lingüística y publicación creativa. Los equipos de aseguramiento de calidad introducen cadenas invertidas y en espejo en formularios para probar la intercalación de bases de datos, el truncamiento de texto y las condiciones límite. Por su parte, escritores y aficionados a los acertijos usan nuestro validador de palíndromos en tiempo real para crear juegos de palabras simétricos (<code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">\"reconocer\"</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink\">\"Anita lava la tina\"</code>), y los creadores de redes sociales generan títulos estilizados boca abajo para publicaciones virales de Instagram y biografías de Discord."
+				}
+			}
+		},
+		"faq": {
+			"badge": "¿Tienes dudas?",
+			"heading": "Preguntas frecuentes",
+			"intro": "Respuestas claras a las dudas más habituales sobre inversión de cadenas, cambio de orden de palabras, fórmulas de hojas de cálculo, comprobación de palíndromos y privacidad de los datos.",
+			"items": [
+				{
+					"question": "¿Cómo escribo o genero texto al revés online?",
+					"answer": "Para invertir texto online, escribe o pega tu contenido en el editor Texto original, elige cualquiera de los 6 modos de transformación del panel de control (como Invertir todo, Orden de palabras o Boca abajo) y observa cómo se actualiza la Salida en vivo al instante. Después puedes copiar el resultado al portapapeles con un clic o descargarlo como un archivo de texto plano .txt.",
+					"answerHtml": "Para invertir texto online, escribe o pega tu contenido en el editor <strong class=\"font-medium text-ink\">Texto original</strong>, elige cualquiera de los 6 modos de transformación del panel de control (como <strong class=\"font-medium text-ink\">Invertir todo</strong>, <strong class=\"font-medium text-ink\">Orden de palabras</strong> o <strong class=\"font-medium text-ink\">Boca abajo</strong>) y observa cómo se actualiza la <strong class=\"font-medium text-ink\">Salida en vivo</strong> al instante. Después puedes copiar el resultado al portapapeles con un clic o descargarlo como un archivo de texto plano <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">.txt</code>."
+				},
+				{
+					"question": "¿Cuál es la diferencia entre invertir letras e invertir el orden de las palabras?",
+					"answer": "Invertir todo voltea cada carácter individual de principio a fin, transformando \"Hola Mundo\" en \"odnuM aloH\". En cambio, Orden de palabras conserva la ortografía de cada palabra individual mientras invierte su secuencia, transformando \"Hola Mundo\" en \"Mundo Hola\".",
+					"answerHtml": "<strong class=\"font-medium text-ink\">Invertir todo</strong> voltea cada carácter individual de principio a fin, transformando <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">\"Hola Mundo\"</code> en <code class=\"rounded bg-[#afe3d0]/20 px-1.5 py-0.5 font-mono text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]\">\"odnuM aloH\"</code>. En cambio, <strong class=\"font-medium text-ink\">Orden de palabras</strong> conserva la ortografía de cada palabra individual mientras invierte su secuencia, transformando <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">\"Hola Mundo\"</code> en <code class=\"rounded bg-[#afe3d0]/20 px-1.5 py-0.5 font-mono text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]\">\"Mundo Hola\"</code>."
+				},
+				{
+					"question": "¿Cómo funciona el generador de texto boca abajo?",
+					"answer": "El modo Boca abajo traduce letras latinas estándar, números y signos de puntuación a glifos Unicode invertidos 180 grados, sustituyendo caracteres como \"a\" por \"ɐ\" y \"e\" por \"ǝ\". Como estos símbolos invertidos son caracteres Unicode nativos, puedes copiar y pegar el texto volteado en Discord, biografías de Instagram, X (Twitter) y aplicaciones de mensajería.",
+					"answerHtml": "El modo Boca abajo traduce letras latinas estándar, números y signos de puntuación a glifos Unicode invertidos 180 grados, sustituyendo caracteres como <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">\"a\"</code> por <code class=\"rounded bg-[#afe3d0]/20 px-1.5 py-0.5 font-mono text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]\">\"ɐ\"</code> y <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">\"e\"</code> por <code class=\"rounded bg-[#afe3d0]/20 px-1.5 py-0.5 font-mono text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]\">\"ǝ\"</code>. Como estos símbolos invertidos son caracteres Unicode nativos, puedes copiar y pegar el texto volteado en Discord, biografías de Instagram, X (Twitter) y aplicaciones de mensajería."
+				},
+				{
+					"question": "¿Cómo puedo comprobar si una palabra o frase es un palíndromo?",
+					"answer": "La herramienta incluye un detector automático de palíndromos en tiempo real situado en la cabecera de Salida en vivo. Mientras escribes, el motor ignora signos de puntuación, espacios y diferencias de mayúsculas; si los caracteres alfanuméricos se leen exactamente igual hacia adelante y hacia atrás (como \"Anita lava la tina\" o \"reconocer\"), la insignia se ilumina en verde menta mostrando Palíndromo: Sí.",
+					"answerHtml": "La herramienta incluye un detector automático de palíndromos en tiempo real situado en la cabecera de <strong class=\"font-medium text-ink\">Salida en vivo</strong>. Mientras escribes, el motor ignora signos de puntuación, espacios y diferencias de mayúsculas; si los caracteres alfanuméricos se leen exactamente igual hacia adelante y hacia atrás (como <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">\"Anita lava la tina\"</code> o <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">\"reconocer\"</code>), la insignia se ilumina en verde menta mostrando <strong class=\"font-medium text-[#0f2e26] dark:text-[#afe3d0]\">Palíndromo: Sí</strong>."
+				},
+				{
+					"question": "¿Cómo invierto una lista de varias líneas o un archivo de registro de abajo hacia arriba?",
+					"answer": "Selecciona el modo de transformación Orden de líneas en el panel de control. Este modo invierte la secuencia vertical de las líneas para que la última pase a estar arriba, algo ideal para reordenar registros cronológicos de servidor, exportaciones de chats, listas de tareas o pasos numerados sin modificar los caracteres de cada línea.",
+					"answerHtml": "Selecciona el modo de transformación <strong class=\"font-medium text-ink\">Orden de líneas</strong> en el panel de control. Este modo invierte la secuencia vertical de las líneas para que la última pase a estar arriba, algo ideal para reordenar registros cronológicos de servidor, exportaciones de chats, listas de tareas o pasos numerados sin modificar los caracteres de cada línea."
+				},
+				{
+					"question": "¿Cómo puedo invertir texto en Microsoft Excel?",
+					"answer": "Microsoft Excel no incluye una función nativa REVERSE(), pero quienes usan Microsoft 365 o Excel 2021 pueden invertir una celda con la fórmula dinámica =TEXTJOIN(\"\", TRUE, MID(A1, SEQUENCE(LEN(A1), 1, LEN(A1), -1), 1)). Como alternativa, puedes copiar toda tu columna en Wordora para invertir miles de valores en un clic sin usar fórmulas.",
+					"answerHtml": "Microsoft Excel no incluye una función nativa <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">REVERSE()</code>, pero quienes usan Microsoft 365 o Excel 2021 pueden invertir una celda con la fórmula dinámica <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">=TEXTJOIN(\"\", TRUE, MID(A1, SEQUENCE(LEN(A1), 1, LEN(A1), -1), 1))</code>. Como alternativa, puedes copiar toda tu columna en Wordora para invertir miles de valores en un clic sin usar fórmulas."
+				},
+				{
+					"question": "¿Puedo invertir el orden del texto directamente en Microsoft Word?",
+					"answer": "Microsoft Word no ofrece una función integrada ni un atajo de teclado para invertir letras, palabras o párrafos. La solución más rápida es copiar el texto desde Word, pegarlo en el Inversor de texto de Wordora, elegir el modo deseado y hacer clic en Copiar resultado para pegarlo de vuelta limpiamente en tu documento.",
+					"answerHtml": "Microsoft Word no ofrece una función integrada ni un atajo de teclado para invertir letras, palabras o párrafos. La solución más rápida es copiar el texto desde Word, pegarlo en el Inversor de texto de Wordora, elegir el modo deseado y hacer clic en <strong class=\"font-medium text-ink\">Copiar resultado</strong> para pegarlo de vuelta limpiamente en tu documento."
+				},
+				{
+					"question": "¿Se rompen los emojis o los caracteres con tilde al invertir el texto?",
+					"answer": "No. Los scripts sencillos suelen partir los pares sustitutos UTF-16 de varios bytes, convirtiendo emojis compuestos y vocales acentuadas en rombos con signos de interrogación. Wordora procesa el texto con manejo de puntos de código y grafemas compatible con Unicode, garantizando que los emojis y signos diacríticos permanezcan intactos al invertirse.",
+					"answerHtml": "No. Los scripts sencillos suelen partir los pares sustitutos UTF-16 de varios bytes, convirtiendo emojis compuestos y vocales acentuadas en rombos con signos de interrogación. Wordora procesa el texto con manejo de puntos de código y grafemas compatible con Unicode, garantizando que los emojis y signos diacríticos permanezcan intactos al invertirse."
+				},
+				{
+					"question": "¿Invertir texto en español o inglés crea texto válido de derecha a izquierda en árabe o hebreo?",
+					"answer": "No. Invertir el orden de los caracteres solo genera una cadena volteada de letras latinas y no produce tipografía bidireccional auténtica de derecha a izquierda (RTL). Para contenido web real en árabe, hebreo, persa o urdu, los desarrolladores deben emplear CSS direction: rtl o el atributo estándar HTML dir=\"rtl\" en lugar de invertir cadenas de texto.",
+					"answerHtml": "No. Invertir el orden de los caracteres solo genera una cadena volteada de letras latinas y no produce tipografía bidireccional auténtica de derecha a izquierda (RTL). Para contenido web real en árabe, hebreo, persa o urdu, los desarrolladores deben emplear CSS <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">direction: rtl</code> o el atributo estándar HTML <code class=\"rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink\">dir=\"rtl\"</code> en lugar de invertir cadenas de texto."
+				},
+				{
+					"question": "¿Mi texto está seguro y es privado cuando uso el Inversor de texto de Wordora?",
+					"answer": "Sí, al 100 %. Todas las transformaciones de texto y comprobaciones de palíndromos se ejecutan íntegramente en tu navegador mediante JavaScript local. Tu texto nunca se transmite por internet, ni se registra ni se almacena en servidores externos. Para tareas de formato relacionadas, descubre nuestras herramientas gratuitas de conversor de mayúsculas y repetidor de texto.",
+					"answerHtml": "Sí, al 100 %. Todas las transformaciones de texto y comprobaciones de palíndromos se ejecutan íntegramente en tu navegador mediante JavaScript local. Tu texto nunca se transmite por internet, ni se registra ni se almacena en servidores externos. Para tareas de formato relacionadas, descubre nuestras herramientas gratuitas de <a href=\"/case-converter/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">conversor de mayúsculas</a> y <a href=\"/text-repeater/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">repetidor de texto</a>."
+				}
+			]
+		}
 	},
 	"typingSpeedTest": {
 		"name": "Test de mecanografía (WPM)",
@@ -6359,27 +7258,150 @@
 		"shortName": "Acerca de",
 		"title": "Acerca de Wordora — Herramientas rápidas y privadas para leer, escribir y hablar",
 		"metaDescription": "Conoce Wordora: un conjunto de herramientas rápidas y sin distracciones que funcionan en tu navegador, pensadas para escritores, estudiantes, editores y oradores. Tu texto nunca sale de tu navegador.",
-		"h1": "Acerca de Wordora"
+		"h1": "Acerca de Wordora",
+		"page": {
+			"intro": "Wordora es una colección independiente de herramientas de lectura, escritura, oratoria y texto diseñada para quienes trabajan con palabras a diario: escritores, periodistas, estudiantes, docentes, creadores de pódcasts y oradores.",
+			"whyHeading": "Por qué creamos Wordora",
+			"whyP1": "La mayoría de los contadores de palabras y calculadoras de tiempo de lectura en línea resultan recargados, lentos o invasivos. Tanto si estás cronometrando un discurso principal de cinco minutos, comprobando cuántas páginas ocupa un ensayo de 3.000 palabras o midiendo tu velocidad de lectura silenciosa, no deberías esperar respuestas de un servidor ni preguntarte dónde se almacena tu borrador.",
+			"whyP2": "Creamos Wordora en torno a tres principios sencillos:",
+			"principles": [
+				{
+					"title": "Privacidad 100 % en el navegador",
+					"body": "Cada cálculo se realiza directamente dentro de tu navegador. El texto que pegas o escribes nunca se envía a una base de datos remota ni a servidores de terceros."
+				},
+				{
+					"title": "Valores predeterminados basados en investigación",
+					"body": "Nuestras calculadoras de lectura y oratoria utilizan referencias revisadas por pares (como 238 WPM para lectura silenciosa de no ficción y 183 WPM para lectura en voz alta), a la vez que te permiten personalizar cada ajuste."
+				},
+				{
+					"title": "Diseño editorial sereno",
+					"body": "Tipografía limpia, resultados numéricos claros y espacios de trabajo sin distracciones que funcionan a la perfección en ordenador, tableta y móvil."
+				}
+			],
+			"categoriesHeading": "Nuestras cuatro categorías de herramientas",
+			"categoriesIntro": "Wordora organiza sus herramientas en cuatro categorías claras para que puedas ir directamente a la utilidad que necesitas:",
+			"contactHeading": "Ponte en contacto",
+			"contactBodyHtml": "¿Tienes una sugerencia para mejorar una calculadora existente o una idea para una nueva herramienta de escritura? Visita nuestra <a href=\"/contact/\" class=\"font-medium text-vercel-blue underline-offset-2 hover:underline\">página de Contacto</a> o escríbenos directamente a <a href=\"mailto:support@wordora.site\" class=\"font-medium text-vercel-blue underline-offset-2 hover:underline\">support@wordora.site</a>."
+		}
 	},
 	"contact": {
 		"name": "Contacto",
 		"shortName": "Contacto",
 		"title": "Contacto — Ayuda, comentarios y sugerencias | Wordora",
 		"metaDescription": "Ponte en contacto con el equipo de Wordora. Envía tus comentarios, informa de un error o sugiere una nueva herramienta de lectura, escritura, oratoria o texto.",
-		"h1": "Contacto"
+		"h1": "Contacto",
+		"page": {
+			"intro": "¿Tienes alguna duda, has encontrado un error o quieres sugerir una nueva herramienta para Wordora? Escríbenos por correo electrónico o utiliza el formulario rápido de comentarios que tienes a continuación.",
+			"directEmailHeading": "Soporte directo por correo electrónico",
+			"directEmailBody": "Para consultas de soporte, prensa o comentarios sobre las herramientas, escríbenos directamente:",
+			"responseTimeNote": "Nuestro objetivo es responder a todos los mensajes en un plazo de 1 a 2 días laborables.",
+			"privacyNoteHeading": "Nota de privacidad",
+			"privacyNoteBodyHtml": "Recuerda que todas las calculadoras de Wordora se ejecutan de forma local en tu navegador. Consulta nuestra <a href=\"/privacy-policy/\" class=\"text-vercel-blue underline-offset-2 hover:underline\">Política de privacidad</a> o descubre más <a href=\"/about/\" class=\"text-vercel-blue underline-offset-2 hover:underline\">Acerca de Wordora</a>.",
+			"formHeading": "Enviar comentarios",
+			"formSubtitle": "Completa los campos siguientes para preparar un mensaje o enviarnos un comentario rápido.",
+			"nameLabel": "Tu nombre",
+			"namePlaceholder": "Sofía Martínez",
+			"emailLabel": "Correo electrónico",
+			"emailPlaceholder": "sofia@ejemplo.com",
+			"topicLabel": "Asunto",
+			"topics": [
+				{
+					"value": "Solicitud de función",
+					"label": "Solicitud de función o nueva herramienta"
+				},
+				{
+					"value": "Reporte de error",
+					"label": "Informar de un error"
+				},
+				{
+					"value": "Comentarios generales",
+					"label": "Comentarios generales"
+				},
+				{
+					"value": "Otra consulta",
+					"label": "Otra consulta"
+				}
+			],
+			"messageLabel": "Mensaje",
+			"messagePlaceholder": "Cuéntanos cómo podemos mejorar Wordora...",
+			"submitButton": "Enviar mensaje"
+		},
+		"client": {
+			"defaultTopic": "Comentarios",
+			"mailtoSubject": "[Wordora {topic}] de {name}",
+			"mailtoBody": "Nombre: {name}\nCorreo electrónico: {email}\nAsunto: {topic}\n\n{message}",
+			"statusOpening": "¡Gracias! Abriendo tu cliente de correo para enviar el mensaje a support@wordora.site...",
+			"statusRequired": "Por favor, completa tu nombre, correo electrónico y mensaje antes de enviar."
+		}
 	},
 	"privacy": {
 		"name": "Política de privacidad",
 		"shortName": "Política de privacidad",
 		"title": "Política de privacidad — Procesamiento local y uso de cookies | Wordora",
 		"metaDescription": "Lee la política de privacidad de Wordora. Descubre cómo todo el texto que pegas o escribes se procesa 100 % en tu navegador y nunca se guarda en nuestros servidores, así como nuestra información sobre cookies y publicidad.",
-		"h1": "Política de privacidad"
+		"h1": "Política de privacidad",
+		"page": {
+			"lastUpdated": "Última actualización: noviembre de 2026",
+			"sections": {
+				"localProcessing": {
+					"heading": "1. Procesamiento de texto 100 % local en el navegador",
+					"p1Html": "En Wordora (<a href=\"/\" class=\"text-vercel-blue underline-offset-2 hover:underline\">wordora.site</a>), tu privacidad es lo primero. Todas las herramientas de nuestro sitio web —incluidos nuestro Contador de tiempo de lectura, la Calculadora de tiempo de discurso, el Contador de palabras, el Conversor de palabras a páginas, el Conversor de mayúsculas y minúsculas, el Repetidor de texto y el Inversor de texto— se ejecutan íntegramente dentro de tu navegador web mediante JavaScript en el lado del cliente.",
+					"p2Html": "<strong>Nunca transmitimos, subimos, registramos ni almacenamos ningún texto, documento ni archivo que escribas, pegues o arrastres en nuestras herramientas.</strong> Tus borradores y manuscritos permanecen estrictamente en tu propio dispositivo y se eliminan en el momento en que cierras o recargas la pestaña del navegador."
+				},
+				"localStorage": {
+					"heading": "2. Almacenamiento local y preferencias del usuario",
+					"bodyHtml": "Utilizamos el <code>localStorage</code> integrado en tu navegador únicamente para recordar tus preferencias de visualización, como si prefieres el modo claro o el modo oscuro. Estos datos de preferencia permanecen en tu dispositivo y nunca se vinculan a ninguna identidad personal."
+				},
+				"cookiesAds": {
+					"heading": "3. Cookies y publicidad de terceros (Google AdSense)",
+					"intro": "Para mantener Wordora gratuito para todos los usuarios, podemos mostrar anuncios servidos por socios publicitarios de terceros, incluido Google AdSense:",
+					"itemsHtml": [
+						"Los proveedores externos, incluido Google, utilizan cookies para mostrar anuncios en función de las visitas previas del usuario a este sitio web o a otros sitios web en internet.",
+						"El uso de cookies publicitarias por parte de Google permite que tanto Google como sus socios muestren anuncios a los usuarios en función de su visita a Wordora o a otros sitios de internet.",
+						"Los usuarios pueden inhabilitar la publicidad personalizada visitando la <a href=\"https://www.google.com/settings/ads\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-vercel-blue underline-offset-2 hover:underline\">Configuración de anuncios de Google</a> o <a href=\"https://www.aboutads.info/choices/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-vercel-blue underline-offset-2 hover:underline\">www.aboutads.info</a>."
+					]
+				},
+				"logsAnalytics": {
+					"heading": "4. Registros estándar del servidor y analítica",
+					"body": "Al igual que la mayoría de los sitios web estáticos, nuestro proveedor de alojamiento puede recopilar automáticamente información técnica estándar y no identificable cuando tu navegador solicita una página (como el tipo de navegador, el sistema operativo, la página de referencia y la dirección IP anonimizada) con fines de seguridad, almacenamiento en caché y medición agregada del tráfico. Estos registros técnicos nunca incluyen el texto introducido en ninguna calculadora de Wordora."
+				},
+				"contact": {
+					"heading": "5. Contacto sobre privacidad",
+					"bodyHtml": "Si tienes alguna pregunta sobre esta Política de privacidad o sobre cómo Wordora trata los datos, ponte en contacto con nosotros a través de nuestra <a href=\"/contact/\" class=\"text-vercel-blue underline-offset-2 hover:underline\">página de Contacto</a> o escríbenos a <a href=\"mailto:support@wordora.site\" class=\"text-vercel-blue underline-offset-2 hover:underline\">support@wordora.site</a>."
+				}
+			}
+		}
 	},
 	"terms": {
 		"name": "Términos del servicio",
 		"shortName": "Términos del servicio",
 		"title": "Términos del servicio — Herramientas gratuitas y condiciones de uso | Wordora",
 		"metaDescription": "Lee los términos del servicio de Wordora. Conoce cómo ofrecemos nuestras herramientas gratuitas de lectura, escritura, oratoria y texto, y cuáles son tus derechos al usar wordora.site.",
-		"h1": "Términos del servicio"
+		"h1": "Términos del servicio",
+		"page": {
+			"lastUpdated": "Última actualización: noviembre de 2026",
+			"sections": {
+				"acceptance": {
+					"heading": "1. Aceptación de los términos",
+					"bodyHtml": "Al acceder y utilizar Wordora (<a href=\"/\" class=\"text-vercel-blue underline-offset-2 hover:underline\">wordora.site</a>), aceptas cumplir y quedar vinculado por estos Términos del servicio. Todas las herramientas de Wordora se ofrecen de forma gratuita para uso personal, académico y profesional."
+				},
+				"ownership": {
+					"heading": "2. Propiedad de tu contenido",
+					"body": "Conservas el 100 % de la propiedad y de los derechos de propiedad intelectual sobre cualquier texto, manuscrito, guion de discurso o código que escribas, pegues o proceses en las calculadoras y utilidades de Wordora. Dado que todas las herramientas se ejecutan de forma local en tu navegador mediante JavaScript en el cliente, Wordora nunca reclama, recopila ni almacena tu contenido."
+				},
+				"acceptableUse": {
+					"heading": "3. Uso aceptable",
+					"bodyHtml": "Te comprometes a utilizar Wordora de forma lícita y a abstenerte de intentar interrumpir, sobrecargar o interferir con la infraestructura de alojamiento estático que presta servicio al sitio. Puedes compartir libremente enlaces a cualquier página de herramientas (como nuestra <a href=\"/reading-time-calculator/\" class=\"text-vercel-blue underline-offset-2 hover:underline\">Calculadora de tiempo de lectura</a> o el <a href=\"/typing-speed-test/\" class=\"text-vercel-blue underline-offset-2 hover:underline\">Test de mecanografía</a>) y exportar los resultados generados en tu navegador."
+				},
+				"disclaimer": {
+					"heading": "4. Exención de garantías",
+					"body": "Todas las calculadoras, temporizadores y conversores de texto de Wordora se proporcionan «tal cual» y «según disponibilidad», sin garantías de ningún tipo. Aunque nuestras herramientas utilizan referencias de lectura, oratoria y mecanografía revisadas por pares (como 238 WPM para lectura silenciosa, 183 WPM para lectura en voz alta y las fórmulas estándar de 5 caracteres por palabra en WPM), las duraciones y el número real de páginas pueden variar según el ritmo personal, el formato y la tipografía."
+				},
+				"contact": {
+					"heading": "5. Contacto y consultas",
+					"bodyHtml": "Si tienes alguna pregunta sobre estos Términos del servicio, consulta nuestra <a href=\"/privacy-policy/\" class=\"text-vercel-blue underline-offset-2 hover:underline\">Política de privacidad</a>, visita nuestra <a href=\"/contact/\" class=\"text-vercel-blue underline-offset-2 hover:underline\">página de Contacto</a> o escríbenos a <a href=\"mailto:support@wordora.site\" class=\"text-vercel-blue underline-offset-2 hover:underline\">support@wordora.site</a>."
+				}
+			}
+		}
 	}
 }

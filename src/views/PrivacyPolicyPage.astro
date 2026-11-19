@@ -2,15 +2,22 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE_CONFIG, resolveCanonicalUrl } from "../config/site";
+import { resolveCanonicalUrl } from "../config/site";
 
-import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "../i18n/ui";
+import {
+	getLocaleFromUrl,
+	getLocalizedPath,
+	localizeHtmlLinks,
+	useTranslations,
+} from "../i18n/ui";
+
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 
 const pageTitle = t("privacy.title");
 const pageDescription = t("privacy.metaDescription");
 const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/privacy-policy/", locale));
+const cookiesItems = t.raw<string[]>("privacy.page.sections.cookiesAds.itemsHtml") ?? [];
 ---
 
 <Layout
@@ -23,70 +30,70 @@ const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/privacy-policy/", lo
 	<main class="flex-1">
 		<section class="mx-auto max-w-[900px] px-4 py-12 sm:px-6 sm:py-16">
 			<h1 class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1.4px] text-ink sm:text-[42px] sm:leading-[48px] sm:tracking-[-1.8px]">
-					{t("privacy.h1")}
-				</h1>
+				{t("privacy.h1")}
+			</h1>
 			<p class="mt-2 text-[14px] text-mute">
-				Last updated: November 2026
+				{t("privacy.page.lastUpdated")}
 			</p>
 
 			<div class="whisper-shadow mt-8 space-y-6 rounded-md border border-hairline bg-canvas-elevated p-6 text-[15px] leading-[24px] text-body sm:p-8">
 				<div>
 					<h2 class="text-[19px] leading-[26px] font-semibold text-ink">
-						1. 100% local in-browser text processing
+						{t("privacy.page.sections.localProcessing.heading")}
 					</h2>
-					<p class="mt-2">
-						At {SITE_CONFIG.name} (<a href={getLocalizedPath("/", locale)} class="text-vercel-blue underline-offset-2 hover:underline">wordora.site</a>), your privacy comes first. Every tool on our website—including our Reading Time Counter, Speech Time Calculator, Word Counter, Words to Pages Converter, Case Converter, Text Repeater, and Text Reverser—runs entirely inside your web browser using client-side JavaScript.
-					</p>
-					<p class="mt-2">
-						<strong>We never transmit, upload, log, or store any text, document, or file that you type, paste, or drop into our tools.</strong> Your drafts and manuscripts remain strictly on your own device and are cleared the moment you close or refresh your browser tab.
-					</p>
+					<p
+						class="mt-2"
+						set:html={localizeHtmlLinks(t("privacy.page.sections.localProcessing.p1Html"), locale)}
+					/>
+					<p
+						class="mt-2"
+						set:html={t("privacy.page.sections.localProcessing.p2Html")}
+					/>
 				</div>
 
 				<div class="border-t border-hairline pt-6">
 					<h2 class="text-[19px] leading-[26px] font-semibold text-ink">
-						2. Local storage &amp; user preferences
+						{t("privacy.page.sections.localStorage.heading")}
 					</h2>
-					<p class="mt-2">
-						We use your browser's built-in <code>localStorage</code> solely to remember your display preferences, such as whether you prefer Light Mode or Dark Mode. This preference data stays on your device and is never linked to any personal identity.
-					</p>
+					<p
+						class="mt-2"
+						set:html={t("privacy.page.sections.localStorage.bodyHtml")}
+					/>
 				</div>
 
 				<div class="border-t border-hairline pt-6">
 					<h2 class="text-[19px] leading-[26px] font-semibold text-ink">
-						3. Cookies &amp; third-party advertising (Google AdSense)
+						{t("privacy.page.sections.cookiesAds.heading")}
 					</h2>
 					<p class="mt-2">
-						To keep {SITE_CONFIG.name} free for all users, we may display advertisements served by third-party advertising partners, including Google AdSense:
+						{t("privacy.page.sections.cookiesAds.intro")}
 					</p>
 					<ul class="mt-2.5 list-disc space-y-2 pl-5">
-						<li>
-							Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites on the internet.
-						</li>
-						<li>
-							Google's use of advertising cookies enables it and its partners to serve ads to users based on their visit to {SITE_CONFIG.name} and/or other sites on the Internet.
-						</li>
-						<li>
-							Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" class="text-vercel-blue underline-offset-2 hover:underline">Google Ads Settings</a> or <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" class="text-vercel-blue underline-offset-2 hover:underline">www.aboutads.info</a>.
-						</li>
+						{
+							cookiesItems.map((itemHtml) => (
+								<li set:html={localizeHtmlLinks(itemHtml, locale)} />
+							))
+						}
 					</ul>
 				</div>
 
 				<div class="border-t border-hairline pt-6">
 					<h2 class="text-[19px] leading-[26px] font-semibold text-ink">
-						4. Standard server logs &amp; analytics
+						{t("privacy.page.sections.logsAnalytics.heading")}
 					</h2>
 					<p class="mt-2">
-						Like most static websites, our hosting provider may automatically collect standard, non-identifying technical information when your browser requests a page (such as browser type, operating system, referring page, and anonymized IP address) for security, caching, and aggregate traffic measurement. This technical log data never includes the text entered into any calculator on {SITE_CONFIG.name}.
+						{t("privacy.page.sections.logsAnalytics.body")}
 					</p>
 				</div>
 
 				<div class="border-t border-hairline pt-6">
 					<h2 class="text-[19px] leading-[26px] font-semibold text-ink">
-						5. Contact regarding privacy
+						{t("privacy.page.sections.contact.heading")}
 					</h2>
-					<p class="mt-2">
-						If you have any questions about this Privacy Policy or how {SITE_CONFIG.name} handles data, please reach out via our <a href={getLocalizedPath("/contact/", locale)} class="text-vercel-blue underline-offset-2 hover:underline">Contact page</a> or email us at <a href="mailto:support@wordora.site" class="text-vercel-blue underline-offset-2 hover:underline">support@wordora.site</a>.
-					</p>
+					<p
+						class="mt-2"
+						set:html={localizeHtmlLinks(t("privacy.page.sections.contact.bodyHtml"), locale)}
+					/>
 				</div>
 			</div>
 		</section>
@@ -94,4 +101,3 @@ const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/privacy-policy/", lo
 
 	<Footer />
 </Layout>
-

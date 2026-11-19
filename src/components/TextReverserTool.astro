@@ -1,9 +1,37 @@
 ---
+import { getLocaleFromUrl, useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const defaultSamples = [
+	"Madam, in Eden, I'm Adam.",
+	"A man, a plan, a canal: Panama!",
+	"Step 1: Research audience intent\nStep 2: Draft clear headline\nStep 3: Polish and publish",
+	"Never odd or even.",
+	"Reading and writing clearly makes complex ideas simple.",
+];
+
+const clientI18n = {
+	locale,
+	defaultModeDesc: t('textReverser.ui.modeReverseAllDesc'),
+	palindromeYes: t('textReverser.client.palindromeYes'),
+	palindromeNo: t('textReverser.client.palindromeNo'),
+	withoutSpaces: t('textReverser.client.withoutSpaces'),
+	copied: t('textReverser.client.copied'),
+	copyOutput: t('textReverser.ui.btnCopy'),
+	downloadFilename: t('textReverser.client.downloadFilename'),
+	samples: t.raw<string[]>('textReverser.client.samples') ?? defaultSamples,
+};
 ---
 
 <section
 	id="text-reverser-workspace"
-	aria-label="Text Reverser Workspace"
+	aria-label={t('textReverser.ui.workspaceAria')}
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
 	<!-- Unified Stacked Studio Card -->
@@ -14,8 +42,8 @@
 			<button
 				type="button"
 				id="rv-btn-swap"
-				title="Swap input and output"
-				aria-label="Swap input and output"
+				title={t('textReverser.ui.swapAria')}
+				aria-label={t('textReverser.ui.swapAria')}
 				class="group absolute top-1/2 left-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-hairline bg-canvas-elevated p-2.5 text-mute shadow-sm transition-all hover:border-[#0f2e26] hover:bg-[#0f2e26] hover:text-[#afe3d0] active:scale-95 lg:flex dark:hover:border-[#afe3d0] dark:hover:bg-[#afe3d0] dark:hover:text-[#0f2e26]"
 			>
 				<svg class="h-4 w-4 transition-transform duration-200 group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -28,7 +56,7 @@
 				<!-- Header Bar -->
 				<div class="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-hairline pb-3">
 					<label for="rv-input" class="text-[12px] font-semibold tracking-[0.04em] text-ink">
-						ORIGINAL TEXT
+						{t('textReverser.ui.originalTextLabel')}
 					</label>
 					<div class="flex flex-wrap items-center gap-2 text-[12px]">
 						<button
@@ -36,20 +64,20 @@
 							id="rv-btn-paste"
 							class="cursor-pointer rounded-lg border border-hairline bg-canvas-muted/60 px-2.5 py-1 font-medium text-body transition-colors hover:border-ink hover:text-ink"
 						>
-							Paste
+							{t('textReverser.ui.btnPaste')}
 						</button>
 						<button
 							type="button"
 							id="rv-btn-sample"
 							class="cursor-pointer rounded-lg border border-hairline bg-canvas-muted/60 px-2.5 py-1 font-medium text-body transition-colors hover:border-ink hover:text-ink"
 						>
-							Sample
+							{t('textReverser.ui.btnSample')}
 						</button>
 						<label
 							for="rv-file-upload"
 							class="cursor-pointer rounded-lg border border-hairline bg-canvas-muted/60 px-2.5 py-1 font-medium text-body transition-colors hover:border-ink hover:text-ink"
 						>
-							Upload .txt
+							{t('textReverser.ui.btnUpload')}
 							<input id="rv-file-upload" type="file" accept=".txt,text/plain" class="sr-only" />
 						</label>
 						<button
@@ -57,7 +85,7 @@
 							id="rv-btn-clear"
 							class="cursor-pointer rounded-lg border border-hairline bg-canvas-muted/60 px-2.5 py-1 font-medium text-mute transition-colors hover:border-vercel-error hover:text-vercel-error"
 						>
-							Clear
+							{t('textReverser.ui.btnClear')}
 						</button>
 					</div>
 				</div>
@@ -66,19 +94,19 @@
 				<div class="flex-1">
 					<textarea
 						id="rv-input"
-						placeholder="Type or paste text, sentences, lists, or code to reverse..."
+						placeholder={t('textReverser.ui.inputPlaceholder')}
 						class="h-48 w-full resize-y border-0 bg-transparent font-sans text-[16px] leading-[27px] text-ink placeholder:text-faint focus:outline-none sm:h-56"
-					>Madam, in Eden, I'm Adam.</textarea>
+					>{t('textReverser.ui.initialText')}</textarea>
 				</div>
 
 				<!-- Subtle Footer Bar -->
 				<div class="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-hairline pt-3 text-[13px]">
 					<div class="inline-flex items-center gap-1.5 rounded-xl border border-[#1d463b] bg-[#0f2e26] px-3 py-1 font-medium text-[#e2f5ee] tabular-nums">
-						<output id="rv-metric-words" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> words &middot;
-						<output id="rv-metric-chars" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> characters &middot;
-						<output id="rv-metric-lines" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> lines
+						<output id="rv-metric-words" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> {t('textReverser.ui.unitWords')} &middot;
+						<output id="rv-metric-chars" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> {t('textReverser.ui.unitChars')} &middot;
+						<output id="rv-metric-lines" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> {t('textReverser.ui.unitLines')}
 					</div>
-					<span id="rv-metric-chars-nospace" class="text-[12px] text-mute tabular-nums">0 without spaces</span>
+					<span id="rv-metric-chars-nospace" class="text-[12px] text-mute tabular-nums">{t('textReverser.client.withoutSpaces', { count: 0 })}</span>
 				</div>
 			</div>
 
@@ -88,7 +116,7 @@
 				<div class="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-hairline pb-3">
 					<div class="flex items-center gap-2.5">
 						<label for="rv-output" class="text-[12px] font-semibold tracking-[0.04em] text-ink">
-							LIVE OUTPUT
+							{t('textReverser.ui.liveOutputLabel')}
 						</label>
 					</div>
 					<!-- Dynamic Palindrome Pill Badge -->
@@ -98,7 +126,7 @@
 						class="inline-flex items-center gap-1.5 rounded-full border border-[#7ed4b6] bg-[#afe3d0] px-3 py-0.5 text-[12px] font-semibold text-[#0f2e26] transition-all"
 					>
 						<span id="rv-palindrome-dot" class="h-1.5 w-1.5 rounded-full bg-[#0f2e26]"></span>
-						<span id="rv-palindrome-text">Palindrome: Yes</span>
+						<span id="rv-palindrome-text">{t('textReverser.client.palindromeYes')}</span>
 					</output>
 				</div>
 
@@ -107,7 +135,7 @@
 					<textarea
 						id="rv-output"
 						readonly
-						placeholder="Reversed or flipped output appears here instantaneously..."
+						placeholder={t('textReverser.ui.outputPlaceholder')}
 						class="h-48 w-full resize-y border-0 bg-transparent font-sans text-[16px] leading-[27px] text-ink placeholder:text-faint focus:outline-none sm:h-56"
 					></textarea>
 				</div>
@@ -122,7 +150,7 @@
 						<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 							<path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" />
 						</svg>
-						Send to Input
+						{t('textReverser.ui.btnSendToInput')}
 					</button>
 
 					<div class="flex flex-wrap items-center gap-2">
@@ -131,14 +159,14 @@
 							id="rv-btn-download"
 							class="cursor-pointer rounded-xl border border-hairline bg-canvas-elevated px-3 py-1.5 font-medium text-body transition-colors hover:border-ink hover:text-ink"
 						>
-							Download .txt
+							{t('textReverser.ui.btnDownload')}
 						</button>
 						<button
 							type="button"
 							id="rv-btn-copy"
 							class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-[#afe3d0] px-4 py-1.5 font-semibold text-[#0f2e26] shadow-xs transition-all hover:bg-[#c2edd6] active:scale-[0.99]"
 						>
-							Copy Output
+							{t('textReverser.ui.btnCopy')}
 						</button>
 					</div>
 				</div>
@@ -152,7 +180,7 @@
 				<div class="flex items-center gap-2">
 					<span class="h-2 w-2 rounded-full bg-[#afe3d0]"></span>
 					<span class="text-[12px] font-semibold tracking-[0.04em] text-[#afe3d0]">
-						TRANSFORMATION MODE
+						{t('textReverser.ui.transformationModeLabel')}
 					</span>
 				</div>
 				<output
@@ -160,7 +188,7 @@
 					aria-live="polite"
 					class="text-[13px] font-medium text-white/80"
 				>
-					Reverses every character end-to-end
+					{t('textReverser.ui.modeReverseAllDesc')}
 				</output>
 			</div>
 
@@ -169,61 +197,61 @@
 				<button
 					type="button"
 					data-reverse-mode="reverse-all"
-					data-reverse-desc="Reverses every character end-to-end"
+					data-reverse-desc={t('textReverser.ui.modeReverseAllDesc')}
 					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0] bg-[#afe3d0] px-3.5 py-3 text-left text-[#0f2e26] font-semibold transition-all"
 				>
-					<span class="block text-[14px] leading-tight">Reverse All</span>
-					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-[#0f2e26]/75">"dlrow olleH"</span>
+					<span class="block text-[14px] leading-tight">{t('textReverser.ui.modeReverseAllLabel')}</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-[#0f2e26]/75">{t('textReverser.ui.modeReverseAllPreview')}</span>
 				</button>
 
 				<button
 					type="button"
 					data-reverse-mode="word-order"
-					data-reverse-desc="Reverses word sequence while keeping each word intact"
+					data-reverse-desc={t('textReverser.ui.modeWordOrderDesc')}
 					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]"
 				>
-					<span class="block text-[14px] leading-tight">Word Order</span>
-					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">"world Hello"</span>
+					<span class="block text-[14px] leading-tight">{t('textReverser.ui.modeWordOrderLabel')}</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">{t('textReverser.ui.modeWordOrderPreview')}</span>
 				</button>
 
 				<button
 					type="button"
 					data-reverse-mode="each-word"
-					data-reverse-desc="Flips letters inside every word in place"
+					data-reverse-desc={t('textReverser.ui.modeEachWordDesc')}
 					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]"
 				>
-					<span class="block text-[14px] leading-tight">Each Word</span>
-					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">"olleH dlrow"</span>
+					<span class="block text-[14px] leading-tight">{t('textReverser.ui.modeEachWordLabel')}</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">{t('textReverser.ui.modeEachWordPreview')}</span>
 				</button>
 
 				<button
 					type="button"
 					data-reverse-mode="line-order"
-					data-reverse-desc="Reverses line sequence from bottom to top"
+					data-reverse-desc={t('textReverser.ui.modeLineOrderDesc')}
 					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]"
 				>
-					<span class="block text-[14px] leading-tight">Line Order</span>
-					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">"Line 2 / Line 1"</span>
+					<span class="block text-[14px] leading-tight">{t('textReverser.ui.modeLineOrderLabel')}</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">{t('textReverser.ui.modeLineOrderPreview')}</span>
 				</button>
 
 				<button
 					type="button"
 					data-reverse-mode="upside-down"
-					data-reverse-desc="Rotates characters 180° using Unicode glyphs"
+					data-reverse-desc={t('textReverser.ui.modeUpsideDownDesc')}
 					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]"
 				>
-					<span class="block text-[14px] leading-tight">Upside Down</span>
-					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">"ollǝH"</span>
+					<span class="block text-[14px] leading-tight">{t('textReverser.ui.modeUpsideDownLabel')}</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">{t('textReverser.ui.modeUpsideDownPreview')}</span>
 				</button>
 
 				<button
 					type="button"
 					data-reverse-mode="mirror-text"
-					data-reverse-desc="True horizontal and vertical Unicode mirror"
+					data-reverse-desc={t('textReverser.ui.modeMirrorTextDesc')}
 					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]"
 				>
-					<span class="block text-[14px] leading-tight">Mirror Text</span>
-					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">"Hǝllo" flipped</span>
+					<span class="block text-[14px] leading-tight">{t('textReverser.ui.modeMirrorTextLabel')}</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">{t('textReverser.ui.modeMirrorTextPreview')}</span>
 				</button>
 			</div>
 
@@ -236,7 +264,7 @@
 							id="rv-opt-preserve-case"
 							class="h-4 w-4 cursor-pointer rounded border-[#afe3d0]/40 bg-white/10 text-[#afe3d0] accent-[#afe3d0] focus:ring-0"
 						/>
-						<span>Preserve capitalization pattern</span>
+						<span>{t('textReverser.ui.optPreserveCase')}</span>
 					</label>
 
 					<label class="inline-flex cursor-pointer items-center gap-2.5 text-white/90 select-none hover:text-white">
@@ -245,19 +273,33 @@
 							id="rv-opt-line-by-line"
 							class="h-4 w-4 cursor-pointer rounded border-[#afe3d0]/40 bg-white/10 text-[#afe3d0] accent-[#afe3d0] focus:ring-0"
 						/>
-						<span>Reverse line-by-line independently</span>
+						<span>{t('textReverser.ui.optLineByLine')}</span>
 					</label>
 				</div>
 
 				<span class="text-[12px] text-[#afe3d0]/75">
-					Runs privately in your browser
+					{t('textReverser.ui.privacyNote')}
 				</span>
 			</div>
 		</div>
 	</div>
 </section>
 
+<script type="application/json" id="trev-i18n" set:html={JSON.stringify(clientI18n).replace(/</g, '\\u003c')} />
+
 <script>
+	interface TrevClientI18n {
+		locale: string;
+		defaultModeDesc: string;
+		palindromeYes: string;
+		palindromeNo: string;
+		withoutSpaces: string;
+		copied: string;
+		copyOutput: string;
+		downloadFilename: string;
+		samples: string[];
+	}
+
 	function initTextReverser() {
 		const inputEl = document.getElementById('rv-input') as HTMLTextAreaElement | null;
 		const outputEl = document.getElementById('rv-output') as HTMLTextAreaElement | null;
@@ -286,16 +328,50 @@
 
 		if (!inputEl || !outputEl) return;
 
+		const fallbackI18n: TrevClientI18n = {
+			locale: 'en',
+			defaultModeDesc: 'Reverses every character end-to-end',
+			palindromeYes: 'Palindrome: Yes',
+			palindromeNo: 'Palindrome: No',
+			withoutSpaces: '{count} without spaces',
+			copied: 'Copied!',
+			copyOutput: 'Copy Output',
+			downloadFilename: 'reversed-text.txt',
+			samples: [
+				"Madam, in Eden, I'm Adam.",
+				"A man, a plan, a canal: Panama!",
+				"Step 1: Research audience intent\nStep 2: Draft clear headline\nStep 3: Polish and publish",
+				"Never odd or even.",
+				"Reading and writing clearly makes complex ideas simple.",
+			],
+		};
+
+		let i18n: TrevClientI18n = fallbackI18n;
+		const i18nEl = document.getElementById('trev-i18n');
+		if (i18nEl?.textContent) {
+			try {
+				const parsed = JSON.parse(i18nEl.textContent) as Partial<TrevClientI18n>;
+				i18n = {
+					...fallbackI18n,
+					...parsed,
+					samples:
+						Array.isArray(parsed.samples) && parsed.samples.length > 0
+							? parsed.samples
+							: fallbackI18n.samples,
+				};
+			} catch {
+				// Use fallback English strings if JSON fails to parse
+			}
+		}
+
+		function fmt(template: string, vars: Record<string, string | number>): string {
+			return template.replace(/\{(\w+)\}/g, (_, key: string) => String(vars[key] ?? `{${key}}`));
+		}
+
 		let currentMode = 'reverse-all';
 		let sampleIndex = 0;
 
-		const SAMPLES = [
-			"Madam, in Eden, I'm Adam.",
-			"A man, a plan, a canal: Panama!",
-			"Step 1: Research audience intent\nStep 2: Draft clear headline\nStep 3: Polish and publish",
-			"Never odd or even.",
-			"Reading and writing clearly makes complex ideas simple."
-		];
+		const SAMPLES = i18n.samples;
 
 		const UPSIDE_DOWN_MAP: Record<string, string> = {
 			a: 'ɐ', b: 'q', c: 'ɔ', d: 'p', e: 'ǝ', f: 'ɟ', g: 'ƃ', h: 'ɥ', i: 'ᴉ',
@@ -424,12 +500,12 @@
 				palindromeBadgeEl.className =
 					'inline-flex items-center gap-1.5 rounded-full border border-[#7ed4b6] bg-[#afe3d0] px-3 py-0.5 text-[12px] font-semibold text-[#0f2e26] transition-all';
 				palindromeDotEl.className = 'h-1.5 w-1.5 rounded-full bg-[#0f2e26]';
-				palindromeTextEl.textContent = 'Palindrome: Yes';
+				palindromeTextEl.textContent = i18n.palindromeYes;
 			} else {
 				palindromeBadgeEl.className =
 					'inline-flex items-center gap-1.5 rounded-full border border-hairline bg-canvas-muted px-3 py-0.5 text-[12px] font-medium text-mute transition-all';
 				palindromeDotEl.className = 'h-1.5 w-1.5 rounded-full bg-mute/60';
-				palindromeTextEl.textContent = 'Palindrome: No';
+				palindromeTextEl.textContent = i18n.palindromeNo;
 			}
 		}
 
@@ -470,10 +546,14 @@
 			const chars = raw.length;
 			const charsNoSpace = raw.replace(/\s/g, '').length;
 
-			if (wordsEl) wordsEl.textContent = words.toLocaleString();
-			if (charsEl) charsEl.textContent = chars.toLocaleString();
-			if (linesEl) linesEl.textContent = lines.toLocaleString();
-			if (charsNoSpaceEl) charsNoSpaceEl.textContent = `${charsNoSpace.toLocaleString()} without spaces`;
+			if (wordsEl) wordsEl.textContent = words.toLocaleString(i18n.locale);
+			if (charsEl) charsEl.textContent = chars.toLocaleString(i18n.locale);
+			if (linesEl) linesEl.textContent = lines.toLocaleString(i18n.locale);
+			if (charsNoSpaceEl) {
+				charsNoSpaceEl.textContent = fmt(i18n.withoutSpaces, {
+					count: charsNoSpace.toLocaleString(i18n.locale),
+				});
+			}
 
 			updatePalindromeBadge(raw);
 		}
@@ -481,7 +561,7 @@
 		modeBtns.forEach((btn) => {
 			btn.addEventListener('click', () => {
 				currentMode = btn.dataset.reverseMode || 'reverse-all';
-				const desc = btn.dataset.reverseDesc || 'Reverses every character end-to-end';
+				const desc = btn.dataset.reverseDesc || i18n.defaultModeDesc;
 				if (activeModeDescEl) activeModeDescEl.textContent = desc;
 
 				modeBtns.forEach((b) => {
@@ -558,10 +638,9 @@
 			if (!outputEl.value) return;
 			try {
 				await navigator.clipboard.writeText(outputEl.value);
-				const originalText = copyBtn.textContent;
-				copyBtn.textContent = 'Copied!';
+				copyBtn.textContent = i18n.copied;
 				setTimeout(() => {
-					copyBtn.textContent = originalText;
+					copyBtn.textContent = i18n.copyOutput;
 				}, 1600);
 			} catch {
 				outputEl.select();
@@ -575,7 +654,7 @@
 			const url = URL.createObjectURL(blob);
 			const link = document.createElement('a');
 			link.href = url;
-			link.download = 'reversed-text.txt';
+			link.download = i18n.downloadFilename;
 			document.body.appendChild(link);
 			link.click();
 			document.body.removeChild(link);

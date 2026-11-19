@@ -4,14 +4,26 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_CONFIG, getLiveTools, resolveCanonicalUrl } from "../config/site";
 
-import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "../i18n/ui";
+import {
+	getLocaleFromUrl,
+	getLocalizedPath,
+	localizeHtmlLinks,
+	useTranslations,
+} from "../i18n/ui";
+
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
+
+interface PrincipleItem {
+	title: string;
+	body: string;
+}
 
 const pageTitle = t("about.title");
 const pageDescription = t("about.metaDescription");
 const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/about/", locale));
 const liveTools = getLiveTools();
+const principles = t.raw<PrincipleItem[]>("about.page.principles") ?? [];
 ---
 
 <Layout
@@ -24,64 +36,56 @@ const liveTools = getLiveTools();
 	<main class="flex-1">
 		<section class="mx-auto max-w-[900px] px-4 py-12 sm:px-6 sm:py-16">
 			<h1 class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1.4px] text-ink sm:text-[42px] sm:leading-[48px] sm:tracking-[-1.8px]">
-					{t("about.h1")}
-				</h1>
+				{t("about.h1")}
+			</h1>
 
 			<p class="mt-4 text-[17px] leading-[27px] text-body">
-				{SITE_CONFIG.name} is an independent suite of reading, writing, speaking, and text utilities designed for people who work with words every day—writers, journalists, students, teachers, podcasters, and public speakers.
+				{t("about.page.intro")}
 			</p>
 
 			<div class="whisper-shadow mt-8 space-y-6 rounded-md border border-hairline bg-canvas-elevated p-6 sm:p-8">
 				<div>
 					<h2 class="text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink">
-						Why we built {SITE_CONFIG.name}
+						{t("about.page.whyHeading")}
 					</h2>
 					<p class="mt-2.5 text-[15px] leading-[24px] text-body">
-						Most online word counters and reading time calculators feel cluttered, slow, or invasive. Whether you are timing a five-minute keynote speech, checking how many manuscript pages a 3,000-word essay spans, or testing your silent reading speed, you shouldn't have to wait for server round-trips or wonder where your draft is being stored.
+						{t("about.page.whyP1")}
 					</p>
 					<p class="mt-2.5 text-[15px] leading-[24px] text-body">
-						We built {SITE_CONFIG.name} around three simple principles:
+						{t("about.page.whyP2")}
 					</p>
 				</div>
 
 				<div class="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-3">
-					<div class="rounded-sm border border-hairline bg-canvas-muted p-4">
-						<h3 class="text-[15px] font-semibold text-ink">100% browser-based privacy</h3>
-						<p class="mt-1.5 text-[13px] leading-[20px] text-body">
-							Every calculation happens directly inside your browser. The text you paste or type is never sent to a remote database or third-party server.
-						</p>
-					</div>
-
-					<div class="rounded-sm border border-hairline bg-canvas-muted p-4">
-						<h3 class="text-[15px] font-semibold text-ink">Research-backed defaults</h3>
-						<p class="mt-1.5 text-[13px] leading-[20px] text-body">
-							Our reading and speaking calculators use peer-reviewed benchmarks (such as 238 WPM for silent non-fiction reading and 183 WPM for read-aloud speech) while letting you customize every setting.
-						</p>
-					</div>
-
-					<div class="rounded-sm border border-hairline bg-canvas-muted p-4">
-						<h3 class="text-[15px] font-semibold text-ink">Calm editorial design</h3>
-						<p class="mt-1.5 text-[13px] leading-[20px] text-body">
-							Clean typography, clear numerical readouts, and distraction-free workspaces that work seamlessly on desktop, tablet, and mobile devices.
-						</p>
-					</div>
+					{
+						principles.map((item) => (
+							<div class="rounded-sm border border-hairline bg-canvas-muted p-4">
+								<h3 class="text-[15px] font-semibold text-ink">{item.title}</h3>
+								<p class="mt-1.5 text-[13px] leading-[20px] text-body">
+									{item.body}
+								</p>
+							</div>
+						))
+					}
 				</div>
 
 				<div class="border-t border-hairline pt-6">
 					<h2 class="text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink">
-						Our four utility categories
+						{t("about.page.categoriesHeading")}
 					</h2>
 					<p class="mt-2 text-[15px] leading-[24px] text-body">
-						{SITE_CONFIG.name} organizes its tools into four focused categories so you can jump straight to the utility you need:
+						{t("about.page.categoriesIntro")}
 					</p>
 
 					<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
 						{
 							SITE_CONFIG.categories.map((cat) => {
-								const toolsInCat = liveTools.filter((t) => t.category === cat);
+								const toolsInCat = liveTools.filter((tool) => tool.category === cat);
 								return (
 									<div class="rounded-sm border border-hairline bg-canvas-elevated p-4">
-										<h3 class="text-[15px] font-semibold text-ink">{cat}</h3>
+										<h3 class="text-[15px] font-semibold text-ink">
+											{t(`common.categories.${cat}`)}
+										</h3>
 										<ul class="mt-2 space-y-1.5 text-[14px]">
 											{toolsInCat.map((tool) => (
 												<li>
@@ -103,11 +107,12 @@ const liveTools = getLiveTools();
 
 				<div class="border-t border-hairline pt-6">
 					<h2 class="text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink">
-						Get in touch
+						{t("about.page.contactHeading")}
 					</h2>
-					<p class="mt-2 text-[15px] leading-[24px] text-body">
-						Have a suggestion for improving an existing calculator or an idea for a new writing utility? Visit our <a href={getLocalizedPath("/contact/", locale)} class="font-medium text-vercel-blue underline-offset-2 hover:underline">Contact page</a> or email us directly at <a href="mailto:support@wordora.site" class="font-medium text-vercel-blue underline-offset-2 hover:underline">support@wordora.site</a>.
-					</p>
+					<p
+						class="mt-2 text-[15px] leading-[24px] text-body"
+						set:html={localizeHtmlLinks(t("about.page.contactBodyHtml"), locale)}
+					/>
 				</div>
 			</div>
 		</section>
@@ -115,4 +120,3 @@ const liveTools = getLiveTools();
 
 	<Footer />
 </Layout>
-

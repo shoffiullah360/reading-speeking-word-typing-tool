@@ -1,9 +1,28 @@
 ---
+import { getLocaleFromUrl, useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const clientI18n = {
+	locale,
+	originalText: t('caseConverter.client.originalText'),
+	converted: t('caseConverter.client.converted'),
+	pasted: t('caseConverter.client.pasted'),
+	copied: t('caseConverter.client.copied'),
+	btnPaste: t('caseConverter.client.btnPaste'),
+	btnCopy: t('caseConverter.client.btnCopy'),
+	downloadFilename: t('caseConverter.client.downloadFilename'),
+};
 ---
 
 <section
 	id="case-converter-workspace"
-	aria-label="Case Converter Workspace"
+	aria-label={t('caseConverter.ui.workspaceAria')}
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
 	<!-- Unified Stacked Card Container -->
@@ -11,10 +30,10 @@
 		<!-- Top Section — Full-Width Distraction-Free Editor -->
 		<div class="flex flex-col justify-between bg-white p-6 sm:p-8 dark:bg-canvas-elevated">
 			<div class="flex flex-1 flex-col">
-				<label for="cc-textarea" class="sr-only">Type or paste your text here</label>
+				<label for="cc-textarea" class="sr-only">{t('caseConverter.ui.textareaLabel')}</label>
 				<textarea
 					id="cc-textarea"
-					placeholder="Type or paste your text here..."
+					placeholder={t('caseConverter.ui.textareaPlaceholder')}
 					class="h-48 w-full resize-y border-0 bg-transparent font-sans text-[16px] leading-[28px] text-ink placeholder:text-faint focus:outline-none sm:h-56"
 				></textarea>
 			</div>
@@ -22,9 +41,9 @@
 			<!-- Minimal Footer Bar -->
 			<div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-hairline pt-4 text-[13px]">
 				<div class="inline-flex items-center gap-1.5 rounded-xl border border-[#1d463b] bg-[#0f2e26] px-3.5 py-1.5 font-medium text-[#e2f5ee] tabular-nums">
-					<output id="cc-metric-words" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> words &middot;
-					<output id="cc-metric-chars" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> characters &middot;
-					<output id="cc-metric-lines" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> lines
+					<output id="cc-metric-words" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> {t('caseConverter.ui.wordsUnit')} &middot;
+					<output id="cc-metric-chars" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> {t('caseConverter.ui.charactersUnit')} &middot;
+					<output id="cc-metric-lines" aria-live="polite" class="font-semibold text-[#afe3d0]">0</output> {t('caseConverter.ui.linesUnit')}
 				</div>
 
 				<div class="flex flex-wrap items-center gap-3.5 sm:gap-4">
@@ -33,7 +52,7 @@
 						id="cc-btn-paste"
 						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink"
 					>
-						Paste
+						{t('caseConverter.ui.btnPaste')}
 					</button>
 					<button
 						type="button"
@@ -41,21 +60,21 @@
 						disabled
 						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
 					>
-						Undo
+						{t('caseConverter.ui.btnUndo')}
 					</button>
 					<button
 						type="button"
 						id="cc-btn-download"
 						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink"
 					>
-						Download .txt
+						{t('caseConverter.ui.btnDownload')}
 					</button>
 					<button
 						type="button"
 						id="cc-btn-clear"
 						class="cursor-pointer font-medium text-mute transition-colors hover:text-vercel-error"
 					>
-						Clear
+						{t('caseConverter.ui.btnClear')}
 					</button>
 				</div>
 			</div>
@@ -67,9 +86,9 @@
 			<div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#afe3d0]/15 pb-5">
 				<div class="inline-flex items-center gap-2 rounded-full border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-1.5 text-[13px]">
 					<span class="h-2 w-2 rounded-full bg-[#afe3d0]"></span>
-					<span class="text-white/70">Active:</span>
+					<span class="text-white/70">{t('caseConverter.ui.activeLabel')}</span>
 					<output id="cc-active-mode" aria-live="polite" class="font-semibold text-[#afe3d0]">
-						Original text
+						{t('caseConverter.ui.originalText')}
 					</output>
 				</div>
 
@@ -78,7 +97,7 @@
 					id="cc-btn-copy"
 					class="cursor-pointer rounded-2xl bg-[#afe3d0] px-5 py-2.5 text-[14px] font-semibold text-[#0f2e26] transition-all hover:bg-[#c2edd6] active:scale-[0.99]"
 				>
-					Copy text
+					{t('caseConverter.ui.btnCopy')}
 				</button>
 			</div>
 
@@ -87,64 +106,64 @@
 				<!-- Group 1: Writing & Editorial Cases -->
 				<div class="lg:col-span-7">
 					<span class="block text-[12px] font-medium text-[#afe3d0]/80">
-						Writing &amp; editorial cases
+						{t('caseConverter.ui.groupWriting')}
 					</span>
 					<div class="mt-3 flex flex-wrap gap-2.5">
 						<button
 							type="button"
 							data-case-mode="sentence"
-							data-case-label="Sentence case"
+							data-case-label={t('caseConverter.ui.modes.sentence')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							Sentence case
+							{t('caseConverter.ui.modes.sentence')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="lower"
-							data-case-label="lower case"
+							data-case-label={t('caseConverter.ui.modes.lower')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							lower case
+							{t('caseConverter.ui.modes.lower')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="upper"
-							data-case-label="UPPER CASE"
+							data-case-label={t('caseConverter.ui.modes.upper')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							UPPER CASE
+							{t('caseConverter.ui.modes.upper')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="title"
-							data-case-label="Title Case"
+							data-case-label={t('caseConverter.ui.modes.title')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							Title Case
+							{t('caseConverter.ui.modes.title')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="capitalized"
-							data-case-label="Capitalized Case"
+							data-case-label={t('caseConverter.ui.modes.capitalized')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							Capitalized Case
+							{t('caseConverter.ui.modes.capitalized')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="alternating"
-							data-case-label="aLtErNaTiNg cAsE"
+							data-case-label={t('caseConverter.ui.modes.alternating')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							aLtErNaTiNg cAsE
+							{t('caseConverter.ui.modes.alternating')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="inverse"
-							data-case-label="iNVERSE cAsE"
+							data-case-label={t('caseConverter.ui.modes.inverse')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							iNVERSE cAsE
+							{t('caseConverter.ui.modes.inverse')}
 						</button>
 					</div>
 				</div>
@@ -152,56 +171,56 @@
 				<!-- Group 2: Developer & Code Cases -->
 				<div class="border-t border-[#afe3d0]/15 pt-5 lg:col-span-5 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
 					<span class="block text-[12px] font-medium text-[#afe3d0]/80">
-						Developer &amp; code cases
+						{t('caseConverter.ui.groupDeveloper')}
 					</span>
 					<div class="mt-3 flex flex-wrap gap-2.5">
 						<button
 							type="button"
 							data-case-mode="camel"
-							data-case-label="camelCase"
+							data-case-label={t('caseConverter.ui.modes.camel')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							camelCase
+							{t('caseConverter.ui.modes.camel')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="pascal"
-							data-case-label="PascalCase"
+							data-case-label={t('caseConverter.ui.modes.pascal')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							PascalCase
+							{t('caseConverter.ui.modes.pascal')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="snake"
-							data-case-label="snake_case"
+							data-case-label={t('caseConverter.ui.modes.snake')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							snake_case
+							{t('caseConverter.ui.modes.snake')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="constant"
-							data-case-label="CONSTANT_CASE"
+							data-case-label={t('caseConverter.ui.modes.constant')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							CONSTANT_CASE
+							{t('caseConverter.ui.modes.constant')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="kebab"
-							data-case-label="kebab-case"
+							data-case-label={t('caseConverter.ui.modes.kebab')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							kebab-case
+							{t('caseConverter.ui.modes.kebab')}
 						</button>
 						<button
 							type="button"
 							data-case-mode="dot"
-							data-case-label="dot.case"
+							data-case-label={t('caseConverter.ui.modes.dot')}
 							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
 						>
-							dot.case
+							{t('caseConverter.ui.modes.dot')}
 						</button>
 					</div>
 				</div>
@@ -210,8 +229,46 @@
 	</div>
 </section>
 
+<script type="application/json" id="cc-i18n" set:html={JSON.stringify(clientI18n).replace(/</g, '\\u003c')} />
+
 <script>
+	interface CcClientI18n {
+		locale: string;
+		originalText: string;
+		converted: string;
+		pasted: string;
+		copied: string;
+		btnPaste: string;
+		btnCopy: string;
+		downloadFilename: string;
+	}
+
 	function initCaseConverter() {
+		const fallbackI18n: CcClientI18n = {
+			locale: 'en',
+			originalText: 'Original text',
+			converted: 'Converted',
+			pasted: 'Pasted!',
+			copied: 'Copied!',
+			btnPaste: 'Paste',
+			btnCopy: 'Copy text',
+			downloadFilename: 'converted-text.txt',
+		};
+
+		let i18n: CcClientI18n = fallbackI18n;
+		const i18nEl = document.getElementById('cc-i18n');
+		if (i18nEl?.textContent) {
+			try {
+				const parsed = JSON.parse(i18nEl.textContent) as Partial<CcClientI18n>;
+				i18n = {
+					...fallbackI18n,
+					...parsed,
+				};
+			} catch {
+				// Use fallback English strings if JSON fails to parse
+			}
+		}
+
 		const textarea = document.getElementById('cc-textarea') as HTMLTextAreaElement | null;
 		const activeModeEl = document.getElementById('cc-active-mode');
 		const wordsEl = document.getElementById('cc-metric-words');
@@ -242,7 +299,7 @@
 
 		function saveSnapshot() {
 			if (!textarea) return;
-			const currentLabel = activeModeEl?.textContent?.trim() || 'Original text';
+			const currentLabel = activeModeEl?.textContent?.trim() || i18n.originalText;
 			const last = historyStack[historyStack.length - 1];
 			if (!last || last.text !== textarea.value) {
 				historyStack.push({ text: textarea.value, label: currentLabel });
@@ -415,9 +472,9 @@
 			const chars = val.length;
 			const lines = val.length > 0 ? val.split(/\r?\n/).length : 0;
 
-			if (wordsEl) wordsEl.textContent = words.toLocaleString();
-			if (charsEl) charsEl.textContent = chars.toLocaleString();
-			if (linesEl) linesEl.textContent = lines.toLocaleString();
+			if (wordsEl) wordsEl.textContent = words.toLocaleString(i18n.locale);
+			if (charsEl) charsEl.textContent = chars.toLocaleString(i18n.locale);
+			if (linesEl) linesEl.textContent = lines.toLocaleString(i18n.locale);
 		}
 
 		function highlightActiveButton(activeBtn: HTMLButtonElement | null) {
@@ -432,7 +489,7 @@
 		modeBtns.forEach((btn) => {
 			btn.addEventListener('click', () => {
 				const mode = btn.dataset.caseMode;
-				const label = btn.dataset.caseLabel || 'Converted';
+				const label = btn.dataset.caseLabel || i18n.converted;
 				const current = textarea.value;
 				if (!current) {
 					textarea.focus();
@@ -501,13 +558,12 @@
 				if (text && textarea) {
 					if (textarea.value) saveSnapshot();
 					textarea.value = text;
-					if (activeModeEl) activeModeEl.textContent = 'Original text';
+					if (activeModeEl) activeModeEl.textContent = i18n.originalText;
 					highlightActiveButton(null);
 					updateStats();
-					const original = pasteBtn.textContent;
-					pasteBtn.textContent = 'Pasted!';
+					pasteBtn.textContent = i18n.pasted;
 					setTimeout(() => {
-						pasteBtn.textContent = original;
+						pasteBtn.textContent = i18n.btnPaste;
 					}, 1500);
 				}
 			} catch {
@@ -529,10 +585,9 @@
 			if (!textarea.value) return;
 			try {
 				await navigator.clipboard.writeText(textarea.value);
-				const originalText = copyBtn.textContent;
-				copyBtn.textContent = 'Copied!';
+				copyBtn.textContent = i18n.copied;
 				setTimeout(() => {
-					copyBtn.textContent = originalText;
+					copyBtn.textContent = i18n.btnCopy;
 				}, 1600);
 			} catch {
 				textarea.select();
@@ -546,7 +601,7 @@
 			const url = URL.createObjectURL(blob);
 			const link = document.createElement('a');
 			link.href = url;
-			link.download = 'converted-text.txt';
+			link.download = i18n.downloadFilename;
 			document.body.appendChild(link);
 			link.click();
 			document.body.removeChild(link);
@@ -556,7 +611,7 @@
 		clearBtn?.addEventListener('click', () => {
 			if (textarea.value) saveSnapshot();
 			textarea.value = '';
-			if (activeModeEl) activeModeEl.textContent = 'Original text';
+			if (activeModeEl) activeModeEl.textContent = i18n.originalText;
 			highlightActiveButton(null);
 			updateStats();
 			textarea.focus();
