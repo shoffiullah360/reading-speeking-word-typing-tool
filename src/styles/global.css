@@ -123,14 +123,21 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   body {
     background-color: var(--c-canvas);
     color: var(--c-ink);
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
+    /* `clip` keeps the sticky header working where supported; `hidden` is the fallback. */
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
   }
 }
 
@@ -794,4 +801,59 @@ html:not(.dark) input[type="checkbox"],
 .dark .border-primary,
 [data-theme="dark"] .border-primary {
   border-color: #FAFAFA !important;
+}
+
+/* ========================================================================== */
+/* MOBILE SAFETY (<= 767.98px)                                                */
+/* Global no-overflow guards + iOS form-field zoom prevention.                */
+/* Desktop typography and layout (sm: / md: / lg:) stay untouched.            */
+/* ========================================================================== */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+@media (max-width: 767.98px) {
+  /* iOS Safari auto-zooms any focused field rendered below 16px. */
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='submit']):not([type='button']):not([type='reset']),
+  select,
+  textarea {
+    font-size: 16px !important;
+    line-height: 1.4;
+  }
+
+  /* Flex/grid children must be allowed to shrink instead of pushing the page wide. */
+  main,
+  footer,
+  section,
+  article,
+  aside {
+    min-width: 0;
+  }
+
+  /* Segmented tab bars and preset pill rows wrap instead of overflowing. */
+  [role='tablist'] {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  [role='tablist'] > button {
+    min-width: 0;
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+  }
+
+  /* Long words, URLs and generated text wrap instead of causing sideways scroll. */
+  body {
+    overflow-wrap: break-word;
+  }
 }

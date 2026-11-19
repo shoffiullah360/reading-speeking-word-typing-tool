@@ -240,7 +240,7 @@ const clientI18n = {
 					<span id="tst-focus-hint">
 						{t('typingSpeedTest.ui.focusHintInitial')}
 					</span>
-					<span class="tabular-nums" set:html={t('typingSpeedTest.ui.tabHintHtml')} />
+					<span class="hidden tabular-nums sm:inline" set:html={t('typingSpeedTest.ui.tabHintHtml')} />
 				</div>
 
 				<!-- Character-by-Character Passage Viewport -->
@@ -717,6 +717,16 @@ const clientI18n = {
 
 		boxContainer?.addEventListener('click', () => {
 			hiddenInput?.focus();
+		});
+
+		// Mobile: smooth-scroll the passage into view once the virtual keyboard opens.
+		hiddenInput?.addEventListener('focus', () => {
+			if (!window.matchMedia('(max-width: 767.98px)').matches) return;
+			window.setTimeout(() => {
+				document
+					.getElementById('tst-box-container')
+					?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+			}, 280);
 		});
 
 		btnRestart?.addEventListener('click', () => {

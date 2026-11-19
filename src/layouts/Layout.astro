@@ -28,7 +28,7 @@ const ogLocale = { en: 'en_US', es: 'es_ES', pt: 'pt_BR' }[locale];
 <html lang={locale} class="scroll-smooth">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
@@ -79,7 +79,7 @@ const ogLocale = { en: 'en_US', es: 'es_ES', pt: 'pt_BR' }[locale];
 
 		<slot name="head" />
 	</head>
-	<body class="bg-canvas text-ink antialiased selection:bg-vercel-blue/15 selection:text-vercel-blue">
+	<body class="min-h-dvh overflow-x-hidden bg-canvas text-ink antialiased selection:bg-vercel-blue/15 selection:text-vercel-blue">
 		<slot />
 	</body>
 </html>

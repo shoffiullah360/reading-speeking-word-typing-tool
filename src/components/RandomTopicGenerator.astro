@@ -137,14 +137,14 @@ const clientI18n = {
 
 		<!-- Row 2: Compact Inline Dropdowns & View Toggle -->
 		<div class="mt-4 flex flex-wrap items-center justify-between gap-3.5">
-			<div class="flex flex-wrap items-center gap-3">
+			<div class="flex w-full min-w-0 flex-wrap items-center gap-3 sm:w-auto">
 				<!-- Category Select -->
-				<div class="flex items-center gap-2">
+				<div class="flex w-full min-w-0 items-center gap-2 sm:w-auto">
 					<label for="rtg-select-category" class="text-[12px] font-medium text-[#afe3d0]/80">{t('randomTopicGenerator.ui.labelCategory')}</label>
 					<select
 						id="rtg-select-category"
 						style="background-color: #163d33; color: #ffffff; border-color: rgba(175, 227, 208, 0.3);"
-						class="cursor-pointer rounded-lg border px-3 py-1.5 text-[13px] font-medium text-white transition-colors focus:border-[#afe3d0] focus:outline-none"
+						class="min-w-0 flex-1 cursor-pointer rounded-lg border px-3 py-1.5 text-[13px] font-medium text-white transition-colors focus:border-[#afe3d0] focus:outline-none sm:flex-none"
 					>
 						<option value="All Categories" class="bg-[#0f2e26] text-white">{t('randomTopicGenerator.ui.catAll')}</option>
 						<option value="Technology & AI" class="bg-[#0f2e26] text-white">{t('randomTopicGenerator.ui.catTechAi')}</option>
@@ -158,12 +158,12 @@ const clientI18n = {
 				</div>
 
 				<!-- Level Select -->
-				<div class="flex items-center gap-2">
+				<div class="flex w-full min-w-0 items-center gap-2 sm:w-auto">
 					<label for="rtg-select-level" class="text-[12px] font-medium text-[#afe3d0]/80">{t('randomTopicGenerator.ui.labelLevel')}</label>
 					<select
 						id="rtg-select-level"
 						style="background-color: #163d33; color: #ffffff; border-color: rgba(175, 227, 208, 0.3);"
-						class="cursor-pointer rounded-lg border px-3 py-1.5 text-[13px] font-medium text-white transition-colors focus:border-[#afe3d0] focus:outline-none"
+						class="min-w-0 flex-1 cursor-pointer rounded-lg border px-3 py-1.5 text-[13px] font-medium text-white transition-colors focus:border-[#afe3d0] focus:outline-none sm:flex-none"
 					>
 						<option value="Any Level" class="bg-[#0f2e26] text-white">{t('randomTopicGenerator.ui.levelAny')}</option>
 						<option value="Easy" class="bg-[#0f2e26] text-white">{t('randomTopicGenerator.ui.levelEasy')}</option>
@@ -173,12 +173,12 @@ const clientI18n = {
 				</div>
 
 				<!-- Perspective Lens Select -->
-				<div class="flex items-center gap-2">
+				<div class="flex w-full min-w-0 items-center gap-2 sm:w-auto">
 					<label for="rtg-select-lens" class="text-[12px] font-medium text-[#afe3d0]/80">{t('randomTopicGenerator.ui.labelLens')}</label>
 					<select
 						id="rtg-select-lens"
 						style="background-color: #163d33; color: #ffffff; border-color: rgba(175, 227, 208, 0.3);"
-						class="cursor-pointer rounded-lg border px-3 py-1.5 text-[13px] font-medium text-white transition-colors focus:border-[#afe3d0] focus:outline-none"
+						class="min-w-0 flex-1 cursor-pointer rounded-lg border px-3 py-1.5 text-[13px] font-medium text-white transition-colors focus:border-[#afe3d0] focus:outline-none sm:flex-none"
 					>
 						<option value="Straight" class="bg-[#0f2e26] text-white">{t('randomTopicGenerator.ui.lensStraight')}</option>
 						<option value="Devil's Advocate" class="bg-[#0f2e26] text-white">{t('randomTopicGenerator.ui.lensDevilsAdvocate')}</option>
@@ -490,7 +490,7 @@ const clientI18n = {
 
 				<div class="p-5 sm:p-6">
 					<!-- Digital Timer Readout Bar -->
-					<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/25 bg-[#0f2e26] px-4 py-3.5 text-white shadow-2xs">
+					<div class="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#afe3d0]/25 bg-[#0f2e26] px-3 py-3 text-white shadow-2xs sm:px-4 sm:py-3.5">
 						<div class="flex items-baseline gap-2.5">
 							<span
 								id="rtg-timer-display"
@@ -513,7 +513,7 @@ const clientI18n = {
 							<button
 								type="button"
 								id="rtg-timer-reset"
-								class="cursor-pointer rounded-lg border border-[#afe3d0]/30 bg-white/[0.08] px-3.5 py-1.5 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.15]"
+								class="cursor-pointer rounded-lg border border-[#afe3d0]/30 bg-white/[0.08] px-3 py-1.5 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.15]"
 							>
 								{t('randomTopicGenerator.ui.timerReset')}
 							</button>

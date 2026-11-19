@@ -112,6 +112,13 @@ Wordora's design language is a calm, distraction-free editorial utility aestheti
 - Write like a clear, helpful human editor—not a spec sheet or marketing pitch.
 - Prefer "Word & character count", "Reading level", "Runs privately in your browser", and "Common questions" over robotic phrasing like "Volume Metrics", "Lexical difficulty", "Zero-Latency Client-Side Engine", or "Reference Specification".
 
+### 4. Mobile-First Behavior (320px–430px)
+- **No horizontal scrolling anywhere.** `html`/`body` clip sideways overflow, flex and grid children shrink (`min-w-0`, `max-w-full`), and wide benchmark tables keep their own `overflow-x-auto` wrapper.
+- **Form fields never trigger iOS auto-zoom.** Every `input`, `select`, and `textarea` renders at least `16px` below `768px`; desktop type sizes are unchanged.
+- **Touch targets:** header controls, drawer rows, and primary actions are at least `44px` tall on phones.
+- **Segmented tab bars, filter pills, and preset chips wrap** instead of clipping, so labels stay fully readable at `320px`.
+- **Typing arena:** while the on-screen keyboard is open, non-essential chrome (mode/stat strips, desktop shortcut hints) collapses so the timer, progress bar, and active word lines stay visible above the keyboard.
+
 ## Color Tokens
 
 ### Light Mode (Default)

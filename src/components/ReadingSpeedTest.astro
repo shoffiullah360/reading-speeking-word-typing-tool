@@ -747,13 +747,13 @@ const clientI18n = {
 						<h3 class="text-[15px] font-semibold text-ink">
 							{t('readingSpeedTest.ui.ageComparisonHeading')}
 						</h3>
-						<div class="flex items-center gap-1.5">
-							<label for="rst-age-select" class="text-[12px] text-mute">
+						<div class="flex min-w-0 items-center gap-1.5">
+							<label for="rst-age-select" class="shrink-0 text-[12px] text-mute">
 								{t('readingSpeedTest.ui.ageLabel')}
 							</label>
 							<select
 								id="rst-age-select"
-								class="cursor-pointer rounded-xl border border-hairline bg-canvas px-3 py-1.5 text-[12px] font-medium text-ink outline-none transition-colors hover:border-ink focus:border-ink"
+								class="min-w-0 max-w-full cursor-pointer rounded-xl border border-hairline bg-canvas px-3 py-1.5 text-[12px] font-medium text-ink outline-none transition-colors hover:border-ink focus:border-ink"
 							>
 								<option value="under13">{t('readingSpeedTest.ui.ageOptUnder13')}</option>
 								<option value="13-17">{t('readingSpeedTest.ui.ageOpt13_17')}</option>

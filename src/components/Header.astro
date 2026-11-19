@@ -71,14 +71,14 @@ const categoriesWithTools: NavCategory[] = [
 ---
 
 <header class="sticky top-0 z-50 w-full border-b border-[#e2e8e5] bg-[#ffffff] backdrop-blur-md dark:border-hairline dark:bg-header-bg">
-	<div class="mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
+	<div class="mx-auto flex max-w-[1200px] items-center justify-between gap-3 px-3 py-2.5 sm:px-6 lg:gap-4 lg:py-3.5">
 		<!-- Left: Wordora Brand Logo -->
 		<a
 			href={getLocalizedPath('/', locale)}
-			class="group flex shrink-0 items-center gap-2.5 text-[#0f172a] focus:outline-none dark:text-ink"
+			class="group flex min-w-0 shrink-0 items-center gap-2 text-[#0f172a] focus:outline-none sm:gap-2.5 dark:text-ink"
 			aria-label={t('nav.home', { name: SITE_CONFIG.name })}
 		>
-			<span class="brand-badge flex h-7 w-7 items-center justify-center rounded-sm border border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] transition-transform duration-150 group-hover:scale-105 dark:border-transparent dark:bg-primary dark:text-on-primary">
+			<span class="brand-badge flex h-7 w-7 shrink-0 items-center justify-center rounded-sm border border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] transition-transform duration-150 group-hover:scale-105 dark:border-transparent dark:bg-primary dark:text-on-primary">
 				<svg
 					class="h-4 w-4"
 					viewBox="0 0 24 24"
@@ -97,10 +97,10 @@ const categoriesWithTools: NavCategory[] = [
 			</span>
 		</a>
 
-		<!-- Center: Category Dropdowns (Desktop) -->
+		<!-- Center: Category Dropdowns (Desktop / large tablet) -->
 		<nav
 			aria-label={t('nav.primaryNav')}
-			class="hidden items-center gap-1 whitespace-nowrap md:flex lg:gap-1.5"
+			class="hidden min-w-0 items-center gap-0.5 whitespace-nowrap lg:flex xl:gap-1.5"
 		>
 			{
 				categoriesWithTools.map(({ label, id, tools, isActiveCategory }) => (
@@ -113,7 +113,7 @@ const categoriesWithTools: NavCategory[] = [
 							aria-expanded="false"
 							aria-haspopup="true"
 							aria-controls={`nav-panel-${id}`}
-							class={`inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[14px] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] dark:hover:bg-hairline-soft dark:hover:text-ink dark:focus-visible:outline-vercel-blue ${
+							class={`inline-flex min-h-[38px] cursor-pointer items-center gap-1 rounded-full px-2.5 py-1.5 text-[13px] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] xl:px-3.5 xl:text-[14px] dark:hover:bg-hairline-soft dark:hover:text-ink dark:focus-visible:outline-vercel-blue ${
 								isActiveCategory
 									? 'bg-[#afe3d0] font-semibold text-[#0f2e26] dark:bg-hairline-soft dark:text-ink'
 									: 'font-normal text-[#0f172a] dark:text-body'
@@ -145,7 +145,7 @@ const categoriesWithTools: NavCategory[] = [
 							data-nav-panel={id}
 							role="menu"
 							aria-label={t('nav.categoryTools', { category: label })}
-							class="floating-shadow invisible absolute left-1/2 top-full z-50 mt-2 min-w-[220px] -translate-x-1/2 rounded-md border border-[#e2e8e5] bg-[#ffffff] p-1.5 opacity-0 transition-all duration-150 dark:border-hairline dark:bg-[#141416]"
+							class="floating-shadow invisible absolute left-1/2 top-full z-50 mt-2 max-w-[calc(100vw-2rem)] min-w-[200px] -translate-x-1/2 rounded-md border border-[#e2e8e5] bg-[#ffffff] p-1.5 opacity-0 transition-all duration-150 dark:border-hairline dark:bg-[#141416]"
 						>
 							<ul class="space-y-0.5">
 								{tools.map((tool) => (
@@ -172,12 +172,12 @@ const categoriesWithTools: NavCategory[] = [
 		</nav>
 
 		<!-- Right: Theme Toggle & Mobile Menu Button -->
-		<div class="flex shrink-0 items-center gap-2 whitespace-nowrap">
+		<div class="flex shrink-0 items-center gap-1.5 whitespace-nowrap sm:gap-2">
 			<LanguageSwitcher variant="desktop" />
 			<button
 				id="theme-toggle"
 				type="button"
-				class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border border-[#e2e8e5] bg-[#ffffff] text-[#0f172a] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
+				class="flex h-11 w-11 cursor-pointer items-center justify-center rounded-sm border border-[#e2e8e5] bg-[#ffffff] text-[#0f172a] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] lg:h-8 lg:w-8 dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
 				aria-label={t('nav.toggleTheme')}
 				title={t('nav.switchAppearance')}
 			>
@@ -226,7 +226,7 @@ const categoriesWithTools: NavCategory[] = [
 				aria-expanded="false"
 				aria-controls="mobile-nav-drawer"
 				aria-label={t('nav.toggleMenu')}
-				class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border border-[#e2e8e5] bg-[#ffffff] text-[#0f172a] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] md:hidden dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
+				class="flex h-11 w-11 cursor-pointer items-center justify-center rounded-sm border border-[#e2e8e5] bg-[#ffffff] text-[#0f172a] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] lg:hidden dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
 			>
 				<svg
 					id="mobile-icon-open"
@@ -265,7 +265,7 @@ const categoriesWithTools: NavCategory[] = [
 	<div
 		id="mobile-nav-drawer"
 		aria-label={t('nav.mobileNav')}
-		class="hidden border-t border-[#e2e8e5] bg-[#ffffff] px-4 py-3 md:hidden dark:border-hairline dark:bg-[#141416]"
+		class="hidden max-h-[calc(100dvh-3.75rem)] overflow-y-auto overscroll-contain border-t border-[#e2e8e5] bg-[#ffffff] px-3 pt-2 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-4 lg:hidden dark:border-hairline dark:bg-[#141416]"
 	>
 		<div class="mx-auto max-w-[1200px] divide-y divide-hairline">
 			{
@@ -279,7 +279,7 @@ const categoriesWithTools: NavCategory[] = [
 								data-mobile-accordion-trigger={id}
 								aria-expanded={defaultOpen ? 'true' : 'false'}
 								aria-controls={`mobile-panel-${id}`}
-								class={`flex w-full cursor-pointer items-center justify-between rounded-sm px-2 py-2 text-left text-[15px] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] dark:hover:bg-hairline-soft ${
+								class={`flex min-h-[44px] w-full cursor-pointer items-center justify-between rounded-sm px-2 py-2.5 text-left text-[15px] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] dark:hover:bg-hairline-soft ${
 									isActiveCategory
 										? 'font-semibold text-[#0f2e26] dark:text-ink'
 										: 'font-medium text-[#0f172a] dark:text-ink'
@@ -313,7 +313,7 @@ const categoriesWithTools: NavCategory[] = [
 										<a
 											href={tool.slug}
 											aria-current={currentPath === tool.slug ? 'page' : undefined}
-											class={`block rounded-sm px-3 py-2 text-[14px] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] dark:text-ink dark:hover:bg-[#1f1f23] ${
+											class={`block min-h-[44px] rounded-sm px-3 py-2.5 text-[14px] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] dark:text-ink dark:hover:bg-[#1f1f23] ${
 												currentPath === tool.slug
 													? 'bg-[#afe3d0] font-semibold text-[#0f2e26] dark:bg-[#1f1f23]'
 													: 'font-medium text-[#0f172a]'

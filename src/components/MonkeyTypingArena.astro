@@ -32,18 +32,18 @@ const arenaI18n = {
 
 <div
 	id="mta-root"
-	class="relative flex min-h-screen w-full flex-col justify-between font-mono text-[#d1fae5] select-none"
+	class="relative flex min-h-dvh w-full flex-col justify-between font-mono text-[#d1fae5] select-none"
 >
 	<!-- Tactical Mission Header & Command Bar -->
 	<div
 		id="mta-topbar"
-		class="mx-auto flex w-full max-w-[1320px] flex-wrap items-center justify-between gap-4 px-4 pt-6 pb-2 transition-opacity duration-300 sm:px-8"
+		class="mx-auto flex w-full max-w-[1320px] flex-wrap items-center justify-between gap-2 px-3 pt-3 pb-2 transition-all duration-200 sm:gap-4 sm:px-8 sm:pt-6"
 	>
 		<!-- Left: Abort + status -->
-		<div class="flex items-center gap-4">
+		<div class="flex items-center gap-2 sm:gap-4">
 			<a
 				href={exitPath}
-				class="rounded-md border border-[#00ff9d]/30 bg-[#0a1410]/90 px-3 py-2 text-[13px] font-semibold tracking-wide text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d]/10 hover:shadow-[0_0_12px_rgba(0,255,157,0.25)]"
+				class="inline-flex min-h-[40px] items-center rounded-md border border-[#00ff9d]/30 bg-[#0a1410]/90 px-3 py-2 text-[13px] font-semibold tracking-wide text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d]/10 hover:shadow-[0_0_12px_rgba(0,255,157,0.25)]"
 				aria-label={t('typingSpeedTest.arena.abortAria')}
 			>
 				{t('typingSpeedTest.arena.abortBtn')}
@@ -59,7 +59,7 @@ const arenaI18n = {
 			id="mta-control-pill"
 			role="toolbar"
 			aria-label={t('typingSpeedTest.arena.controlToolbarAria')}
-			class="flex flex-wrap items-center justify-center gap-1.5 rounded-xl border border-[#00ff9d]/25 bg-[#0a1410]/90 px-3 py-2 text-[13px] backdrop-blur-md"
+			class="flex w-full flex-wrap items-center justify-center gap-1.5 rounded-xl border border-[#00ff9d]/25 bg-[#0a1410]/90 px-2 py-2 text-[13px] backdrop-blur-md sm:w-auto sm:px-3"
 		>
 			<div id="mta-modifiers-group" class="flex items-center gap-1">
 				<button type="button" id="mta-mod-punctuation" aria-pressed="false" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">{t('typingSpeedTest.arena.modPunctuation')}</button>
@@ -100,7 +100,8 @@ const arenaI18n = {
 
 		<!-- Right: Live Telemetry Pill + Ghost Pacer + SFX Toggle -->
 		<div
-			class="flex flex-wrap items-center gap-2.5 rounded-xl border border-[#00ff9d]/25 bg-[#0a1410]/90 px-3.5 py-2 text-[12px] font-semibold tracking-wide text-[#00ff9d] tabular-nums backdrop-blur-md"
+			id="mta-telemetry"
+			class="flex flex-wrap items-center gap-2.5 rounded-xl border border-[#00ff9d]/25 bg-[#0a1410]/90 px-3 py-2 text-[12px] font-semibold tracking-wide text-[#00ff9d] tabular-nums backdrop-blur-md sm:px-3.5 md:ml-auto"
 			aria-label={t('typingSpeedTest.arena.telemetryAria')}
 		>
 			<span>{t('typingSpeedTest.arena.liveWpmLabel')} <span id="mta-live-wpm">00</span></span>
@@ -128,11 +129,11 @@ const arenaI18n = {
 	</div>
 
 	<!-- Center Console -->
-	<div class="mx-auto flex w-full max-w-[1100px] flex-1 flex-col justify-center px-4 py-6 sm:px-8">
+	<div id="mta-console" class="mx-auto flex w-full max-w-[1100px] flex-1 flex-col justify-center px-3 py-3 sm:px-8 sm:py-6">
 		<!-- Active Typing Arena View -->
 		<div id="mta-arena-view" class="w-full">
-			<div class="mb-3 flex min-h-[2.75rem] flex-wrap items-center justify-between gap-3">
-				<div class="flex flex-wrap items-center gap-3">
+			<div class="mb-2 flex min-h-[2.75rem] flex-wrap items-center justify-between gap-2 sm:mb-3 sm:gap-3">
+				<div class="flex flex-wrap items-center gap-2 sm:gap-3">
 					<output
 						id="mta-live-indicator"
 						aria-live="polite"
@@ -171,7 +172,7 @@ const arenaI18n = {
 			</div>
 
 			<!-- Payload Progress Bar -->
-			<div class="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-[#0f2a1f]" role="progressbar" aria-label={t('typingSpeedTest.arena.progressAria')} aria-valuemin="0" aria-valuemax="100">
+			<div class="mb-3 h-1.5 w-full overflow-hidden rounded-full bg-[#0f2a1f] sm:mb-5" role="progressbar" aria-label={t('typingSpeedTest.arena.progressAria')} aria-valuemin="0" aria-valuemax="100">
 				<div
 					id="mta-progress-fill"
 					class="h-full w-0 rounded-full bg-[#00ff9d] shadow-[0_0_10px_#00ff9d] transition-[width] duration-150 ease-out"
@@ -189,12 +190,12 @@ const arenaI18n = {
 					autocorrect="off"
 					spellcheck="false"
 					aria-label={t('typingSpeedTest.arena.inputAria')}
-					class="pointer-events-none fixed top-0 left-0 h-1 w-1 opacity-0"
+					class="pointer-events-none absolute inset-0 h-full w-full text-base opacity-0 focus:outline-none"
 				/>
 
 				<div
 					id="mta-viewport"
-					class="relative h-[7.2rem] w-full overflow-hidden font-mono text-2xl leading-[2.4rem] sm:h-[9rem] sm:text-3xl sm:leading-[3rem]"
+					class="relative h-[6.4rem] w-full overflow-hidden font-mono text-xl leading-[2rem] sm:h-[9rem] sm:text-3xl sm:leading-[3rem]"
 				>
 					<div
 						id="mta-words-track"
@@ -223,23 +224,23 @@ const arenaI18n = {
 			<!-- 1. Frameless High-Impact Top Grid (WPM / ACC Left + Smooth Bezier SVG Chart Right) -->
 			<div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-8">
 				<!-- Left Column: w-44 shrink-0 -->
-				<div class="flex w-full flex-row items-baseline justify-start gap-10 lg:w-44 lg:shrink-0 lg:flex-col lg:gap-6">
+				<div class="flex w-full flex-row items-baseline justify-start gap-6 sm:gap-10 lg:w-44 lg:shrink-0 lg:flex-col lg:gap-6">
 					<div class="group relative">
-						<div class="text-2xl leading-none font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.wpmLabel')}</div>
+						<div class="text-xl leading-none font-medium text-[#5f8f7a] sm:text-2xl">{t('typingSpeedTest.arena.results.wpmLabel')}</div>
 						<div
 							id="mta-res-wpm"
 							title={t('typingSpeedTest.arena.results.initialWpmTitle')}
-							class="mt-1 cursor-help text-6xl leading-none font-bold text-[#00ff9d] tabular-nums drop-shadow-[0_0_16px_rgba(0,255,157,0.45)] sm:text-7xl"
+							class="mt-1 cursor-help text-5xl leading-none font-bold text-[#00ff9d] tabular-nums drop-shadow-[0_0_16px_rgba(0,255,157,0.45)] sm:text-7xl"
 						>
 							0
 						</div>
 					</div>
 					<div class="group relative">
-						<div class="text-2xl leading-none font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.accLabel')}</div>
+						<div class="text-xl leading-none font-medium text-[#5f8f7a] sm:text-2xl">{t('typingSpeedTest.arena.results.accLabel')}</div>
 						<div
 							id="mta-res-acc"
 							title={t('typingSpeedTest.arena.results.initialAccTitle')}
-							class="mt-1 cursor-help text-5xl leading-none font-bold text-[#00ff9d] tabular-nums drop-shadow-[0_0_16px_rgba(0,255,157,0.45)] sm:text-6xl"
+							class="mt-1 cursor-help text-4xl leading-none font-bold text-[#00ff9d] tabular-nums drop-shadow-[0_0_16px_rgba(0,255,157,0.45)] sm:text-6xl"
 						>
 							100%
 						</div>
@@ -256,7 +257,7 @@ const arenaI18n = {
 					</div>
 					<div
 						id="mta-chart-container"
-						class="relative h-[220px] w-full overflow-hidden rounded-xl bg-[#070f0b]/60 p-2"
+						class="relative h-[180px] w-full overflow-hidden rounded-xl bg-[#070f0b]/60 p-2 sm:h-[220px]"
 					>
 						<svg id="mta-chart-svg" viewBox="0 0 700 200" preserveAspectRatio="none" class="h-full w-full overflow-visible" aria-label={t('typingSpeedTest.arena.results.chartAria')}></svg>
 						<!-- Floating Hover Tooltip -->
@@ -269,7 +270,7 @@ const arenaI18n = {
 			</div>
 
 			<!-- 2. Clean Horizontal 6-Column Telemetry Row Below the Graph -->
-			<div class="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-[1.1fr_1fr_0.8fr_1.45fr_1fr_1fr]">
+			<div class="mt-6 grid grid-cols-2 gap-x-4 gap-y-5 sm:mt-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-[1.1fr_1fr_0.8fr_1.45fr_1fr_1fr]">
 				<div class="min-w-0">
 					<div class="text-[13px] font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.testTypeLabel')}</div>
 					<div id="mta-stat-type" class="mt-1 text-[16px] leading-snug font-semibold text-[#00ff9d]">
@@ -316,13 +317,13 @@ const arenaI18n = {
 			</div>
 
 			<!-- 3. Centered Icon Action Bar -->
-			<div class="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-5">
+			<div class="mt-8 flex flex-wrap items-center justify-center gap-2 sm:mt-10 sm:gap-5">
 				<button
 					type="button"
 					id="mta-btn-next-test"
 					title={t('typingSpeedTest.arena.results.nextTestTitle')}
 					aria-label={t('typingSpeedTest.arena.results.nextTestAria')}
-					class="group inline-flex cursor-pointer items-center gap-2 rounded-lg border border-[#00ff9d]/30 bg-[#00ff9d]/10 px-4 py-2.5 text-[14px] font-bold text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d] hover:text-[#050a08] hover:shadow-[0_0_16px_rgba(0,255,157,0.45)]"
+					class="group inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-[#00ff9d]/30 bg-[#00ff9d]/10 px-4 py-2.5 text-[13px] font-bold text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d] hover:text-[#050a08] hover:shadow-[0_0_16px_rgba(0,255,157,0.45)] sm:text-[14px]"
 				>
 					<span class="text-base leading-none">&gt;</span>
 					<span>{t('typingSpeedTest.arena.results.nextTestBtn')}</span>
@@ -333,7 +334,7 @@ const arenaI18n = {
 					id="mta-btn-repeat-test"
 					title={t('typingSpeedTest.arena.results.repeatTitle')}
 					aria-label={t('typingSpeedTest.arena.results.repeatAria')}
-					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
+					class="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3 py-2.5 text-[13px] font-medium text-[#5f8f7a] sm:px-3.5 sm:text-[14px] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
 				>
 					<span class="text-base leading-none">↻</span>
 					<span>{t('typingSpeedTest.arena.results.repeatBtn')}</span>
@@ -345,7 +346,7 @@ const arenaI18n = {
 					disabled
 					title={t('typingSpeedTest.arena.results.practiceMissedTitle')}
 					aria-label={t('typingSpeedTest.arena.results.practiceMissedAria')}
-					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#ff3b5c]/40 hover:bg-[#ff3b5c]/10 hover:text-[#ff6b84] disabled:cursor-not-allowed disabled:opacity-35"
+					class="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3 py-2.5 text-[13px] font-medium text-[#5f8f7a] sm:px-3.5 sm:text-[14px] transition hover:border-[#ff3b5c]/40 hover:bg-[#ff3b5c]/10 hover:text-[#ff6b84] disabled:cursor-not-allowed disabled:opacity-35"
 				>
 					<span class="text-base leading-none">⚠</span>
 					<span id="mta-missed-btn-label">{t('typingSpeedTest.arena.results.practiceMissedBtn')}</span>
@@ -357,7 +358,7 @@ const arenaI18n = {
 					aria-expanded="false"
 					title={t('typingSpeedTest.arena.results.toggleHistoryTitle')}
 					aria-label={t('typingSpeedTest.arena.results.toggleHistoryAria')}
-					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
+					class="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3 py-2.5 text-[13px] font-medium text-[#5f8f7a] sm:px-3.5 sm:text-[14px] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
 				>
 					<span class="text-base leading-none">≡</span>
 					<span>{t('typingSpeedTest.arena.results.toggleHistoryBtn')}</span>
@@ -368,7 +369,7 @@ const arenaI18n = {
 					id="mta-btn-export-png"
 					title={t('typingSpeedTest.arena.results.exportPngTitle')}
 					aria-label={t('typingSpeedTest.arena.results.exportPngAria')}
-					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
+					class="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3 py-2.5 text-[13px] font-medium text-[#5f8f7a] sm:px-3.5 sm:text-[14px] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
 				>
 					<span class="text-base leading-none">🖼</span>
 					<span id="mta-export-png-label">{t('typingSpeedTest.arena.results.exportPngBtn')}</span>
@@ -378,7 +379,7 @@ const arenaI18n = {
 					href={exitPath}
 					title={t('typingSpeedTest.arena.results.exitTitle', { exitPath })}
 					aria-label={t('typingSpeedTest.arena.results.exitAria')}
-					class="inline-flex items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
+					class="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-transparent px-3 py-2.5 text-[13px] font-medium text-[#5f8f7a] sm:px-3.5 sm:text-[14px] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
 				>
 					<span class="text-base leading-none">←</span>
 					<span>{t('typingSpeedTest.arena.results.exitBtn')}</span>
@@ -388,9 +389,9 @@ const arenaI18n = {
 			<!-- Expandable Words History Drawer -->
 			<div
 				id="mta-words-history-drawer"
-				class="mt-6 hidden rounded-xl border border-[#00ff9d]/20 bg-[#070f0b]/90 p-5"
+				class="mt-6 hidden rounded-xl border border-[#00ff9d]/20 bg-[#070f0b]/90 p-4 sm:p-5"
 			>
-				<div class="mb-3 flex items-center justify-between gap-2 text-[12px] text-[#5f8f7a]">
+				<div class="mb-3 flex flex-col items-start justify-between gap-1 text-[12px] text-[#5f8f7a] sm:flex-row sm:items-center sm:gap-2">
 					<span class="font-semibold tracking-wide text-[#00ff9d]">{t('typingSpeedTest.arena.results.historyHeading')}</span>
 					<span>{t('typingSpeedTest.arena.results.historyLegend')}</span>
 				</div>
@@ -410,7 +411,7 @@ const arenaI18n = {
 		aria-labelledby="mta-custom-modal-title"
 		class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 p-4 backdrop-blur-xs"
 	>
-		<div class="w-full max-w-xl rounded-xl border border-[#00ff9d]/30 bg-[#08110d] p-6 shadow-[0_0_40px_rgba(0,255,157,0.12)]">
+		<div class="max-h-[85dvh] w-full max-w-xl overflow-y-auto rounded-xl border border-[#00ff9d]/30 bg-[#08110d] p-4 shadow-[0_0_40px_rgba(0,255,157,0.12)] sm:p-6">
 			<div class="flex items-center justify-between gap-3">
 				<h2 id="mta-custom-modal-title" class="text-[16px] font-bold tracking-wide text-[#00ff9d]">{t('typingSpeedTest.arena.customModal.title')}</h2>
 				<button
@@ -449,9 +450,12 @@ const arenaI18n = {
 	</div>
 
 	<!-- Bottom Terminal Keybind Legend & Caret Style Toggle -->
-	<div class="mx-auto flex w-full max-w-[1320px] flex-wrap items-center justify-center gap-x-3 gap-y-2 px-4 pt-2 pb-6 text-center font-mono text-[12px] tracking-wide text-[#5f8f7a]">
-		<span>{t('typingSpeedTest.arena.footer.legend', { exitPath })}</span>
-		<span>·</span>
+	<div
+		id="mta-footer-legend"
+		class="mx-auto flex w-full max-w-[1320px] flex-wrap items-center justify-center gap-x-3 gap-y-2 px-3 pt-1 pb-4 text-center font-mono text-[12px] tracking-wide text-[#5f8f7a] sm:px-4 sm:pt-2 sm:pb-6"
+	>
+		<span class="hidden md:inline">{t('typingSpeedTest.arena.footer.legend', { exitPath })}</span>
+		<span class="hidden md:inline">·</span>
 		<button
 			type="button"
 			id="mta-caret-style-toggle"
@@ -467,6 +471,42 @@ const arenaI18n = {
 		set:html={JSON.stringify(arenaI18n).replace(/</g, '\\u003c')}
 	/>
 </div>
+
+<style is:global>
+	/* Mobile focus mode: keep T-MINUS, progress bar and the active word lines */
+	/* visible right above the on-screen keyboard. Desktop is untouched.       */
+	@media (max-width: 767.98px) {
+		#mta-root.mta-compact {
+			justify-content: flex-start;
+		}
+
+		#mta-root.mta-compact #mta-console {
+			justify-content: flex-start;
+			padding-top: 0.5rem;
+		}
+
+		#mta-root.mta-compact #mta-topbar {
+			padding-top: 0.25rem;
+			padding-bottom: 0.25rem;
+		}
+
+		#mta-root.mta-compact #mta-control-pill,
+		#mta-root.mta-compact #mta-telemetry,
+		#mta-root.mta-compact #mta-status,
+		#mta-root.mta-compact #mta-footer-legend {
+			display: none;
+		}
+
+		#mta-root.mta-compact #mta-live-indicator {
+			font-size: 1.35rem;
+			line-height: 1.4;
+		}
+
+		#mta-hidden-input {
+			font-size: 16px;
+		}
+	}
+</style>
 
 <script>
 	function initMonkeyTypingArena() {
@@ -525,6 +565,8 @@ const arenaI18n = {
 
 		const canvasBox = document.getElementById('mta-canvas-box');
 		const hiddenInput = document.getElementById('mta-hidden-input') as HTMLInputElement | null;
+		const rootEl = document.getElementById('mta-root');
+		const mobileLayoutQuery = window.matchMedia('(max-width: 767.98px)');
 		const wordsTrack = document.getElementById('mta-words-track');
 		const wordsStream = document.getElementById('mta-words-stream');
 		const caretEl = document.getElementById('mta-caret');
@@ -789,6 +831,25 @@ const arenaI18n = {
 		function fadeTopbar(dim: boolean) {
 			if (!topbar) return;
 			topbar.classList.toggle('opacity-25', dim);
+		}
+
+		function isMobileLayout() {
+			return mobileLayoutQuery.matches;
+		}
+
+		// Mobile only: collapse the command deck & telemetry strip while typing so the
+		// timer, progress bar and active word lines stay above the on-screen keyboard.
+		function setCompactChrome(compact: boolean) {
+			if (!rootEl) return;
+			rootEl.classList.toggle('mta-compact', compact && isMobileLayout());
+		}
+
+		function keepArenaAboveKeyboard(delayMs = 0) {
+			if (!isMobileLayout() || !canvasBox) return;
+			window.setTimeout(() => {
+				if (document.activeElement !== hiddenInput) return;
+				canvasBox.scrollIntoView({ block: 'center', behavior: 'smooth' });
+			}, delayMs);
 		}
 
 		window.addEventListener('mousemove', () => {
@@ -1738,6 +1799,8 @@ const arenaI18n = {
 
 			arenaView?.classList.add('hidden');
 			resultsView?.classList.remove('hidden');
+			setCompactChrome(false);
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
 
 		function resetSession(preservePassage = false, focusInput = true) {
@@ -2049,6 +2112,20 @@ const arenaI18n = {
 			hiddenInput?.focus();
 		});
 
+		// Mobile virtual keyboard: compact the chrome on focus and keep the arena in view.
+		hiddenInput?.addEventListener('focus', () => {
+			setCompactChrome(true);
+			keepArenaAboveKeyboard(280);
+		});
+
+		hiddenInput?.addEventListener('blur', () => {
+			if (!isRunning) setCompactChrome(false);
+		});
+
+		window.visualViewport?.addEventListener('resize', () => {
+			if (document.activeElement === hiddenInput) keepArenaAboveKeyboard(120);
+		});
+
 		// Ghost Pacer Toggle Handler
 		paceToggleBtn?.addEventListener('click', () => {
 			paceOptionIndex = (paceOptionIndex + 1) % PACE_OPTIONS.length;
@@ -2222,7 +2299,8 @@ const arenaI18n = {
 		applyCaretVisualStyle();
 		updatePaceButtonLabel();
 		syncControlPillUI();
-		resetSession(false, true);
+		// Never auto-open the mobile keyboard on load; tapping the arena starts typing.
+		resetSession(false, !isMobileLayout());
 	}
 
 	initMonkeyTypingArena();
