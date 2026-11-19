@@ -1,0 +1,44 @@
+---
+/**
+ * Localized routes for every non-default locale: /es/, /es/<slug>/, /pt/, /pt/<slug>/.
+ *
+ * All locales share the same page views (src/views) — copy lives in src/i18n/*.json.
+ * To ship a new tool in es/pt: add it to src/config/site.ts, register its view in src/views/index.ts,
+ * and fill the JSON dictionaries (missing keys fall back to English automatically).
+ */
+import type { GetStaticPaths } from 'astro';
+import { TOOLS_REGISTRY, STATIC_PAGES } from '../../config/site';
+import { prefixedLocales } from '../../i18n/ui';
+import { views, type ViewKey } from '../../views';
+
+export const getStaticPaths = (() => {
+	// Home page + live tools + static pages, each limited to its verified locales.
+	const entries = [
+		{ dictKey: 'home', slug: '/', locales: [...prefixedLocales] as string[] },
+		...TOOLS_REGISTRY.filter((tool) => tool.status === 'live').map((tool) => ({
+			dictKey: tool.dictKey,
+			slug: tool.slug as string,
+			locales: tool.availableLocales as string[],
+		})),
+		...STATIC_PAGES.map((page) => ({
+			dictKey: page.dictKey,
+			slug: page.slug as string,
+			locales: page.availableLocales as string[],
+		})),
+	];
+
+	return prefixedLocales.flatMap((lang) =>
+		entries
+			.filter((entry) => entry.locales.includes(lang) && entry.dictKey in views)
+			.map((entry) => ({
+				params: { lang, slug: entry.slug === '/' ? undefined : entry.slug.replace(/^\/|\/$/g, '') },
+				props: { dictKey: entry.dictKey as ViewKey },
+			})),
+	);
+}) satisfies GetStaticPaths;
+
+const { dictKey } = Astro.props;
+const View = views[dictKey];
+---
+
+<View />

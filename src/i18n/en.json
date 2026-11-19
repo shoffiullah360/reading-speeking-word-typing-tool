@@ -1,0 +1,194 @@
+{
+	"meta": {
+		"siteTitle": "Wordora — Precision Reading, Writing, Speaking & Text Utilities",
+		"siteDescription": "Fast, privacy-first client-side utilities for writers, editors, speakers, and students. Estimate reading time, speech cadence, page conversions, and lexical complexity in real time.",
+		"tagline": "Precision Reading, Writing, Speaking & Text Utilities"
+	},
+	"common": {
+		"categories": {
+			"Reading": "Reading",
+			"Writing": "Writing",
+			"Speaking": "Speaking",
+			"Text": "Text",
+			"Typing Speed Test": "Typing Speed Test"
+		},
+		"soon": "Soon",
+		"comingSoon": "Coming soon",
+		"available": "Available",
+		"openTool": "Open tool"
+	},
+	"nav": {
+		"reading": "Reading",
+		"writing": "Writing",
+		"speaking": "Speaking",
+		"text": "Text",
+		"random": "Random",
+		"typingTest": "Typing Test",
+		"home": "{name} Home",
+		"primaryNav": "Primary category navigation",
+		"mobileNav": "Mobile category navigation",
+		"categoryTools": "{category} tools",
+		"toggleTheme": "Toggle light and dark mode",
+		"switchAppearance": "Switch appearance",
+		"toggleMenu": "Toggle navigation menu",
+		"language": "Language",
+		"switchTo": "Switch to {language}"
+	},
+	"footer": {
+		"description": "Simple, fast tools for writers, editors, speakers, and students to check reading time, time speeches, and transform text.",
+		"privacyNote": "Runs privately in your browser—your text never leaves your device.",
+		"companyLegal": "Company & Legal",
+		"rights": "All rights reserved."
+	},
+	"home": {
+		"title": "Wordora — Precision Reading, Writing, Speaking & Text Utilities",
+		"metaDescription": "Fast, privacy-first client-side utilities for writers, editors, speakers, and students. Estimate reading time, speech cadence, page conversions, and lexical complexity in real time.",
+		"h1": "Simple, Fast Tools for Reading, Writing & Speaking",
+		"subtitle": "Check how long an article takes to read, time your next speech, or count words and pages—right in your browser.",
+		"ctaOpen": "Open Reading Time Counter",
+		"ctaChart": "Reading time chart",
+		"allTools": "All tools",
+		"allToolsSub": "Free utilities that run privately in your browser.",
+		"filterLabel": "Filter tools by category",
+		"filterAll": "All"
+	},
+	"notFound": {
+		"title": "Page not found | Wordora",
+		"metaDescription": "The page you are looking for could not be found on Wordora.",
+		"badge": "404 error",
+		"h1": "Page not found",
+		"body": "Sorry, we couldn’t find the page you were looking for. It may have been moved or doesn’t exist yet.",
+		"backHome": "Back to home",
+		"readingCounter": "Reading Time Counter",
+		"availableTools": "Available tools"
+	},
+	"readingTimeCalculator": {
+		"name": "Reading Time Calculator & Counter",
+		"shortName": "Reading Time Calculator",
+		"description": "Estimate exact silent reading duration (238 WPM) and read-aloud speech timing (183 WPM) from pasted text, word counts, or page counts with lexical difficulty analysis.",
+		"metric": "238 WPM Silent · 183 WPM Aloud",
+		"badge": "Flagship",
+		"title": "Reading Time Calculator — Estimate Words & Pages to Minutes",
+		"metaDescription": "Use Wordora's free Reading Time Calculator to estimate exact reading duration from pasted text, word counts, or pages. Adjust WPM speed instantly—no signup.",
+		"h1": "Reading Time Calculator"
+	},
+	"readingSpeedTest": {
+		"name": "Reading Speed Test (WPM)",
+		"shortName": "Reading Speed Test",
+		"description": "Measure your personal silent Words Per Minute (WPM) reading rate across calibrated non-fiction passages with a quick comprehension check.",
+		"metric": "Live WPM Timer · 238 WPM Avg",
+		"title": "Reading Speed Test & Online WPM Reading Tester | Wordora",
+		"metaDescription": "Take a free 1-minute reading speed test and words per minute reading test. Use our online reading speed tester to test your reading speed (WPM) and compare by grade level.",
+		"h1": "Reading Speed Test"
+	},
+	"audiobookCalculator": {
+		"name": "Audiobook Speed & Listening Time Calculator",
+		"shortName": "Audiobook Speed Calculator",
+		"description": "Calculate exact audiobook listening duration across 0.75x to 3.0x playback speeds, time saved, and daily listening schedules by length or word count.",
+		"metric": "0.5x – 3.0x Playback Speed",
+		"title": "Audiobook Speed, Length & Percentage Calculator | Wordora",
+		"metaDescription": "Free audiobook calculator, audiobook length calculator, and audiobook percentage calculator. Check exact listening time left at 1.25x, 1.5x, 1.75x, or 2x playback speed.",
+		"h1": "Audiobook Calculator"
+	},
+	"wordsToPages": {
+		"name": "Words to Pages Converter",
+		"shortName": "Words to Pages",
+		"description": "Convert word counts into manuscript, academic, and book page totals across font families, point sizes, margin presets, and line spacings.",
+		"metric": "250 / 500 Words per Page",
+		"title": "Words to Pages Calculator & Book Page Count Converter | Wordora",
+		"metaDescription": "Free words to pages calculator and words per page calculator. Convert essay word count to pages, estimate book page count by word count, or check how many words is 7 pages.",
+		"h1": "Words to Pages Converter"
+	},
+	"wordCounter": {
+		"name": "Word & Character Counter",
+		"shortName": "Word Counter",
+		"description": "Analyze real-time word frequency, character limits, sentence length distribution, and paragraph structure 100% locally in your browser.",
+		"metric": "Words · Chars · Sentences",
+		"title": "Online Word Counter Checker & Essay Word Count Calculator | Wordora",
+		"metaDescription": "Free online word counter checker to count words, characters with and without spaces, sentences, paragraphs, pages, reading time, and keyword frequency for essays, scripts, and articles.",
+		"h1": "Online Word Counter & Character Checker"
+	},
+	"speechCalculator": {
+		"name": "Speech Time Calculator",
+		"shortName": "Speech Time Calculator",
+		"description": "Calculate keynote, podcast, and presentation speaking duration with custom pause intervals, teleprompter pacing, and WPM cadence targets.",
+		"metric": "100 – 220 WPM Cadence",
+		"badge": "Flagship",
+		"title": "Speech Time Calculator & Speech Length Converter (Words to Minutes) | Wordora",
+		"metaDescription": "Free online speech time calculator and speech length calculator. Convert speech words to minutes or check speech time by word count for a 3 minute speech, 5 minute speech, or full presentation.",
+		"h1": "Speech Time Calculator"
+	},
+	"randomTopicGenerator": {
+		"name": "Random Topic & Prompt Generator",
+		"shortName": "Random Topic Generator",
+		"description": "Generate thought-provoking writing prompts and speaking topics across Essay & Academic, Public Speaking & Debate, Creative Writing, and Blog & Content modes.",
+		"metric": "4 Modes · Instant Prompts",
+		"title": "Random Topic Generator – Prompts for Speaking, Writing, Essays & Debate | Wordora",
+		"metaDescription": "Generate 140+ curated random topics with talking points for 1-minute impromptu speeches, academic essays, debates, deep conversations, creative writing, and single-word prompts. Free, private, no signup.",
+		"h1": "Random Topic Generator"
+	},
+	"caseConverter": {
+		"name": "Case Converter",
+		"shortName": "Case Converter",
+		"description": "Convert any text into Sentence case, lower case, UPPER CASE, Title Case, Capitalized Case, camelCase, snake_case, or kebab-case in one click.",
+		"metric": "8 Case Modes · Instant Convert",
+		"title": "Text Case Converter Online – Convert UPPERCASE, lowercase & camelCase | Wordora",
+		"metaDescription": "Free online case converter tool to change text case between Sentence case, lower case, UPPER CASE, AP Title Case, camelCase, snake_case, and kebab-case in one click.",
+		"h1": "Text Case Converter Online – Convert UPPERCASE, lowercase & camelCase"
+	},
+	"textRepeater": {
+		"name": "Text Repeater",
+		"shortName": "Text Repeater",
+		"description": "Repeat any word, phrase, or block of text up to 10,000 times with custom separators, line breaks, and optional line numbering.",
+		"metric": "Up to 10,000x · Custom Separators",
+		"title": "Text Repeater Online – Repeat Text, Emojis & Strings up to 10,000x | Wordora",
+		"metaDescription": "Free online text repeater tool to repeat words, emojis, or test strings up to 10,000 times with custom separators, numbering, prefix/suffix, and 1-click copy or .txt download.",
+		"h1": "Text Repeater Online – Repeat Text & Emojis Instantly"
+	},
+	"textReverser": {
+		"name": "Text Reverser & Flipper",
+		"shortName": "Text Reverser",
+		"description": "Reverse entire text strings, reverse word order, mirror each word individually, or flip text upside down instantly in your browser.",
+		"metric": "4 Flip & Reverse Modes",
+		"title": "Text Reverser & Flipper Online – Reverse Text, Words & Upside Down | Wordora",
+		"metaDescription": "Free online text reverser and flipper tool to reverse characters, flip word order, invert line sequences, check palindromes, or generate upside-down mirror text instantly.",
+		"h1": "Text Reverser & Flipper Online – Reverse Text, Words & Upside Down"
+	},
+	"typingSpeedTest": {
+		"name": "Typing Speed Test (WPM)",
+		"shortName": "Typing Speed Test",
+		"description": "Test your typing speed in Words Per Minute (WPM), raw WPM, and keystroke accuracy across 15s, 30s, 60s, and 120s timed passages.",
+		"metric": "15s – 120s · Live WPM & Accuracy",
+		"title": "Typing Speed Test – Check Your WPM & Accuracy Online | Wordora",
+		"metaDescription": "Measure your real-time Words Per Minute (WPM), Raw WPM, consistency, and keystroke accuracy in a distraction-free Monkeytype-inspired typing arena. Includes WPM benchmarks and touch-typing guide.",
+		"h1": "Typing Speed Test – Check Your WPM & Accuracy Online"
+	},
+	"about": {
+		"name": "About Wordora",
+		"shortName": "About",
+		"title": "About Wordora — Fast, Private Browser Tools for Reading, Writing & Speaking",
+		"metaDescription": "Learn about Wordora: a collection of fast, distraction-free, client-side tools built for writers, students, editors, and speakers. Your text never leaves your browser.",
+		"h1": "About Wordora"
+	},
+	"contact": {
+		"name": "Contact Us",
+		"shortName": "Contact",
+		"title": "Contact Wordora — Support, Feedback & Feature Requests",
+		"metaDescription": "Get in touch with the Wordora team. Send feedback, report a bug, or request a new reading, writing, speaking, or text utility.",
+		"h1": "Contact Us"
+	},
+	"privacy": {
+		"name": "Privacy Policy",
+		"shortName": "Privacy Policy",
+		"title": "Privacy Policy — Local Browser Processing & Cookie Disclosure | Wordora",
+		"metaDescription": "Read Wordora's Privacy Policy. Learn how all text you paste or type is processed 100% locally in your browser and never stored on our servers, along with our cookie and advertising disclosures.",
+		"h1": "Privacy Policy"
+	},
+	"terms": {
+		"name": "Terms of Service",
+		"shortName": "Terms of Service",
+		"title": "Terms of Service — Free Browser Utilities & Usage Terms | Wordora",
+		"metaDescription": "Read Wordora's Terms of Service. Understand how our free client-side reading, writing, speaking, and text utilities are provided and your rights when using wordora.site.",
+		"h1": "Terms of Service"
+	}
+}

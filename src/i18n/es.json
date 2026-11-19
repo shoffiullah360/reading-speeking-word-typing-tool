@@ -1,0 +1,194 @@
+{
+	"meta": {
+		"siteTitle": "Wordora — Herramientas precisas de lectura, escritura, oratoria y texto",
+		"siteDescription": "Herramientas rápidas y privadas que funcionan en tu navegador para escritores, editores, oradores y estudiantes. Calcula el tiempo de lectura, el ritmo de un discurso y la conversión de palabras a páginas al instante.",
+		"tagline": "Herramientas precisas de lectura, escritura, oratoria y texto"
+	},
+	"common": {
+		"categories": {
+			"Reading": "Lectura",
+			"Writing": "Escritura",
+			"Speaking": "Oratoria",
+			"Text": "Texto",
+			"Typing Speed Test": "Test de mecanografía"
+		},
+		"soon": "Pronto",
+		"comingSoon": "Próximamente",
+		"available": "Disponible",
+		"openTool": "Abrir herramienta"
+	},
+	"nav": {
+		"reading": "Lectura",
+		"writing": "Escritura",
+		"speaking": "Oratoria",
+		"text": "Texto",
+		"random": "Aleatorio",
+		"typingTest": "Test de mecanografía",
+		"home": "Inicio de {name}",
+		"primaryNav": "Navegación principal por categorías",
+		"mobileNav": "Navegación móvil por categorías",
+		"categoryTools": "Herramientas de {category}",
+		"toggleTheme": "Cambiar entre modo claro y oscuro",
+		"switchAppearance": "Cambiar apariencia",
+		"toggleMenu": "Abrir o cerrar el menú de navegación",
+		"language": "Idioma",
+		"switchTo": "Cambiar a {language}"
+	},
+	"footer": {
+		"description": "Herramientas sencillas y rápidas para escritores, editores, oradores y estudiantes: calcula el tiempo de lectura, cronometra discursos y transforma textos.",
+		"privacyNote": "Funciona de forma privada en tu navegador: tu texto nunca sale de tu dispositivo.",
+		"companyLegal": "Empresa y legal",
+		"rights": "Todos los derechos reservados."
+	},
+	"home": {
+		"title": "Wordora — Herramientas precisas de lectura, escritura, oratoria y texto",
+		"metaDescription": "Herramientas rápidas y privadas que funcionan en tu navegador para escritores, editores, oradores y estudiantes. Calcula el tiempo de lectura, el ritmo de un discurso y la conversión de palabras a páginas al instante.",
+		"h1": "Herramientas simples y rápidas para leer, escribir y hablar",
+		"subtitle": "Descubre cuánto tarda en leerse un artículo, cronometra tu próximo discurso o cuenta palabras y páginas, todo desde tu navegador.",
+		"ctaOpen": "Abrir el contador de tiempo de lectura",
+		"ctaChart": "Tabla de tiempo de lectura",
+		"allTools": "Todas las herramientas",
+		"allToolsSub": "Utilidades gratuitas que funcionan de forma privada en tu navegador.",
+		"filterLabel": "Filtrar herramientas por categoría",
+		"filterAll": "Todas"
+	},
+	"notFound": {
+		"title": "Página no encontrada | Wordora",
+		"metaDescription": "No se pudo encontrar la página que buscas en Wordora.",
+		"badge": "Error 404",
+		"h1": "Página no encontrada",
+		"body": "Lo sentimos, no encontramos la página que buscabas. Es posible que se haya movido o que todavía no exista.",
+		"backHome": "Volver al inicio",
+		"readingCounter": "Contador de tiempo de lectura",
+		"availableTools": "Herramientas disponibles"
+	},
+	"readingTimeCalculator": {
+		"name": "Calculadora y contador de tiempo de lectura",
+		"shortName": "Calculadora de tiempo de lectura",
+		"description": "Calcula el tiempo exacto de lectura silenciosa (238 WPM) y de lectura en voz alta (183 WPM) a partir de texto pegado, número de palabras o de páginas, con análisis de dificultad léxica.",
+		"metric": "238 WPM en silencio · 183 WPM en voz alta",
+		"badge": "Estrella",
+		"title": "Calculadora de tiempo de lectura — de palabras y páginas a minutos",
+		"metaDescription": "Usa la calculadora gratuita de tiempo de lectura de Wordora para estimar cuánto se tarda en leer un texto, un número de palabras o de páginas. Ajusta las WPM al instante, sin registrarte.",
+		"h1": "Calculadora de tiempo de lectura"
+	},
+	"readingSpeedTest": {
+		"name": "Test de velocidad de lectura (WPM)",
+		"shortName": "Test de velocidad de lectura",
+		"description": "Mide tu velocidad personal de lectura silenciosa en palabras por minuto (WPM) con textos no ficción calibrados y una breve comprobación de comprensión.",
+		"metric": "Cronómetro de WPM en vivo · 238 WPM de media",
+		"title": "Test de velocidad de lectura online: mide tus palabras por minuto | Wordora",
+		"metaDescription": "Haz gratis un test de velocidad de lectura de 1 minuto y mide tus palabras por minuto (WPM). Compara tu resultado con el de tu nivel escolar.",
+		"h1": "Test de velocidad de lectura"
+	},
+	"audiobookCalculator": {
+		"name": "Calculadora de velocidad y tiempo de escucha de audiolibros",
+		"shortName": "Calculadora de audiolibros",
+		"description": "Calcula la duración exacta de un audiolibro con velocidades de 0,75x a 3,0x, el tiempo ahorrado y tu plan diario de escucha según la duración o el número de palabras.",
+		"metric": "Velocidad de 0,5x a 3,0x",
+		"title": "Calculadora de audiolibros: velocidad, duración y porcentaje | Wordora",
+		"metaDescription": "Calculadora gratuita de audiolibros para conocer su duración y el porcentaje escuchado. Comprueba cuánto tiempo te queda a 1,25x, 1,5x, 1,75x o 2x.",
+		"h1": "Calculadora de audiolibros"
+	},
+	"wordsToPages": {
+		"name": "Conversor de palabras a páginas",
+		"shortName": "Palabras a páginas",
+		"description": "Convierte el número de palabras en páginas de manuscrito, trabajo académico o libro según la fuente, el tamaño, los márgenes y el interlineado.",
+		"metric": "250 / 500 palabras por página",
+		"title": "Calculadora de palabras a páginas y conversor de páginas de libro | Wordora",
+		"metaDescription": "Calculadora gratuita de palabras a páginas. Convierte las palabras de un trabajo en páginas, estima las páginas de un libro o descubre cuántas palabras tiene un texto de 7 páginas.",
+		"h1": "Conversor de palabras a páginas"
+	},
+	"wordCounter": {
+		"name": "Contador de palabras y caracteres",
+		"shortName": "Contador de palabras",
+		"description": "Analiza en tiempo real la frecuencia de palabras, los límites de caracteres, la longitud de las frases y la estructura de los párrafos, 100 % en tu navegador.",
+		"metric": "Palabras · Caracteres · Frases",
+		"title": "Contador de palabras online y calculadora de palabras para trabajos | Wordora",
+		"metaDescription": "Contador de palabras gratuito: cuenta palabras, caracteres con y sin espacios, frases, párrafos, páginas, tiempo de lectura y frecuencia de palabras clave en ensayos, guiones y artículos.",
+		"h1": "Contador de palabras y caracteres online"
+	},
+	"speechCalculator": {
+		"name": "Calculadora de tiempo de discurso",
+		"shortName": "Calculadora de tiempo de discurso",
+		"description": "Calcula la duración de una conferencia, un pódcast o una presentación con pausas personalizadas, ritmo de teleprompter y objetivos de WPM.",
+		"metric": "Ritmo de 100 a 220 WPM",
+		"badge": "Estrella",
+		"title": "Calculadora de tiempo de discurso: de palabras a minutos | Wordora",
+		"metaDescription": "Calculadora gratuita de tiempo de discurso. Convierte palabras en minutos o averigua cuántas palabras necesitas para un discurso de 3 o 5 minutos, o para una presentación completa.",
+		"h1": "Calculadora de tiempo de discurso"
+	},
+	"randomTopicGenerator": {
+		"name": "Generador de temas e ideas aleatorias",
+		"shortName": "Generador de temas aleatorios",
+		"description": "Genera ideas para escribir y temas para hablar en modos de ensayo y académico, oratoria y debate, escritura creativa y blog y contenidos.",
+		"metric": "4 modos · Ideas al instante",
+		"title": "Generador de temas aleatorios para hablar, escribir, ensayos y debates | Wordora",
+		"metaDescription": "Genera más de 140 temas aleatorios con ideas clave para discursos improvisados de 1 minuto, ensayos, debates, conversaciones, escritura creativa y palabras sueltas. Gratis, privado y sin registro.",
+		"h1": "Generador de temas aleatorios"
+	},
+	"caseConverter": {
+		"name": "Conversor de mayúsculas y minúsculas",
+		"shortName": "Conversor de mayúsculas",
+		"description": "Convierte cualquier texto a tipo oración, minúsculas, MAYÚSCULAS, Título, camelCase, snake_case o kebab-case con un solo clic.",
+		"metric": "8 formatos · Conversión instantánea",
+		"title": "Conversor de mayúsculas y minúsculas online: MAYÚSCULAS, minúsculas y camelCase | Wordora",
+		"metaDescription": "Conversor de mayúsculas y minúsculas gratuito para pasar el texto a tipo oración, minúsculas, MAYÚSCULAS, Título, camelCase, snake_case y kebab-case con un clic.",
+		"h1": "Conversor de mayúsculas y minúsculas online: MAYÚSCULAS, minúsculas y camelCase"
+	},
+	"textRepeater": {
+		"name": "Repetidor de texto",
+		"shortName": "Repetidor de texto",
+		"description": "Repite cualquier palabra, frase o bloque de texto hasta 10 000 veces con separadores personalizados, saltos de línea y numeración opcional.",
+		"metric": "Hasta 10 000x · Separadores personalizados",
+		"title": "Repetidor de texto online: repite texto y emojis hasta 10 000 veces | Wordora",
+		"metaDescription": "Repetidor de texto gratuito para repetir palabras, emojis o cadenas hasta 10 000 veces con separadores, numeración, prefijo y sufijo, y copia con un clic o descarga en .txt.",
+		"h1": "Repetidor de texto online: repite texto y emojis al instante"
+	},
+	"textReverser": {
+		"name": "Inversor y volteador de texto",
+		"shortName": "Inversor de texto",
+		"description": "Invierte un texto completo, el orden de las palabras, cada palabra por separado o voltea el texto al revés al instante, en tu navegador.",
+		"metric": "4 modos de inversión",
+		"title": "Inversor de texto online: invierte texto, palabras y voltea al revés | Wordora",
+		"metaDescription": "Inversor de texto gratuito para invertir caracteres, el orden de las palabras o de las líneas, comprobar palíndromos o generar texto al revés al instante.",
+		"h1": "Inversor de texto online: invierte texto, palabras y voltea al revés"
+	},
+	"typingSpeedTest": {
+		"name": "Test de mecanografía (WPM)",
+		"shortName": "Test de mecanografía",
+		"description": "Mide tu velocidad de escritura en palabras por minuto (WPM), WPM brutas y precisión con textos de 15, 30, 60 y 120 segundos.",
+		"metric": "15 s – 120 s · WPM y precisión en vivo",
+		"title": "Test de mecanografía online: mide tus WPM y tu precisión | Wordora",
+		"metaDescription": "Mide en tiempo real tus palabras por minuto (WPM), WPM brutas, regularidad y precisión en una arena de escritura sin distracciones. Incluye referencias de WPM y una guía de mecanografía.",
+		"h1": "Test de mecanografía: mide tus WPM y tu precisión online"
+	},
+	"about": {
+		"name": "Acerca de Wordora",
+		"shortName": "Acerca de",
+		"title": "Acerca de Wordora — Herramientas rápidas y privadas para leer, escribir y hablar",
+		"metaDescription": "Conoce Wordora: un conjunto de herramientas rápidas y sin distracciones que funcionan en tu navegador, pensadas para escritores, estudiantes, editores y oradores. Tu texto nunca sale de tu navegador.",
+		"h1": "Acerca de Wordora"
+	},
+	"contact": {
+		"name": "Contacto",
+		"shortName": "Contacto",
+		"title": "Contacto — Ayuda, comentarios y sugerencias | Wordora",
+		"metaDescription": "Ponte en contacto con el equipo de Wordora. Envía tus comentarios, informa de un error o sugiere una nueva herramienta de lectura, escritura, oratoria o texto.",
+		"h1": "Contacto"
+	},
+	"privacy": {
+		"name": "Política de privacidad",
+		"shortName": "Política de privacidad",
+		"title": "Política de privacidad — Procesamiento local y uso de cookies | Wordora",
+		"metaDescription": "Lee la política de privacidad de Wordora. Descubre cómo todo el texto que pegas o escribes se procesa 100 % en tu navegador y nunca se guarda en nuestros servidores, así como nuestra información sobre cookies y publicidad.",
+		"h1": "Política de privacidad"
+	},
+	"terms": {
+		"name": "Términos del servicio",
+		"shortName": "Términos del servicio",
+		"title": "Términos del servicio — Herramientas gratuitas y condiciones de uso | Wordora",
+		"metaDescription": "Lee los términos del servicio de Wordora. Conoce cómo ofrecemos nuestras herramientas gratuitas de lectura, escritura, oratoria y texto, y cuáles son tus derechos al usar wordora.site.",
+		"h1": "Términos del servicio"
+	}
+}

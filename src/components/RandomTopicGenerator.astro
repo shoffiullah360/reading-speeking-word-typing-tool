@@ -1,4 +1,5 @@
 ---
+import { localePath } from '../i18n/ui';
 import { getToolById } from '../config/site';
 
 const wordsToPagesTool = getToolById('words-to-pages');
@@ -570,7 +571,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 			{
 				wordsToPagesTool?.status === 'live' ? (
 					<a
-						href={wordsToPagesTool.slug}
+						href={localePath(wordsToPagesTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{wordsToPagesTool.shortName}
@@ -588,7 +589,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 			{
 				typingSpeedTool?.status === 'live' ? (
 					<a
-						href={typingSpeedTool.slug}
+						href={localePath(typingSpeedTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{typingSpeedTool.shortName}
@@ -606,7 +607,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 			{
 				speechTimeTool?.status === 'live' ? (
 					<a
-						href={speechTimeTool.slug}
+						href={localePath(speechTimeTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{speechTimeTool.shortName}

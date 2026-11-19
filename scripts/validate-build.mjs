@@ -112,11 +112,22 @@ function runValidation() {
 	const liveTools = tools.filter((t) => t.status === 'live');
 	const draftTools = tools.filter((t) => t.status === 'draft');
 
-	const expectedLiveRoutes = new Set([
-		'/',
-		...liveTools.map((t) => t.slug),
-		...staticPages.map((p) => p.slug),
-	]);
+	const LOCALES = ['en', 'es', 'pt'];
+	const localize = (slug, locale) => (locale === 'en' ? slug : slug === '/' ? `/${locale}/` : `/${locale}${slug}`);
+	const baseSlugOf = (route) => {
+		for (const l of LOCALES.filter((x) => x !== 'en')) {
+			if (route === `/${l}/`) return '/';
+			if (route.startsWith(`/${l}/`)) return route.slice(l.length + 1);
+		}
+		return route;
+	};
+	const expectedLiveRoutes = new Set();
+	for (const slug of ['/', ...liveTools.map((t) => t.slug), ...staticPages.map((p) => p.slug)]) {
+		for (const locale of LOCALES) expectedLiveRoutes.add(localize(slug, locale));
+	}
+	for (const route of expectedLiveRoutes) {
+		if (route.startsWith('/en/')) errors.push(`Forbidden /en/ prefixed route expected: ${route}`);
+	}
 	const utilityErrorRoutes = new Set(['/404.html']);
 	const noindexPlayRoutes = new Set(['/typing-speed-test/play/']);
 	const draftSlugs = new Set(draftTools.map((t) => t.slug));
@@ -226,18 +237,27 @@ function runValidation() {
 				hreflangMap.set(lang, href);
 			}
 
-			if (hreflangMap.get('en') !== expectedCanonical) {
+			const baseSlug = baseSlugOf(route);
+			for (const locale of LOCALES) {
+				const expectedHref = new URL(localize(baseSlug, locale), origin).toString();
+				if (hreflangMap.get(locale) !== expectedHref) {
+					errors.push(
+						`Route "${route}" missing or invalid hreflang="${locale}" (expected "${expectedHref}", found "${hreflangMap.get(locale)}").`
+					);
+				}
+			}
+			const expectedDefault = new URL(baseSlug, origin).toString();
+			if (hreflangMap.get('x-default') !== expectedDefault) {
 				errors.push(
-					`Route "${route}" missing or invalid hreflang="en" (expected "${expectedCanonical}", found "${hreflangMap.get('en')}").`
+					`Route "${route}" missing or invalid hreflang="x-default" (expected "${expectedDefault}", found "${hreflangMap.get('x-default')}").`
 				);
 			}
-			if (hreflangMap.get('x-default') !== expectedCanonical) {
-				errors.push(
-					`Route "${route}" missing or invalid hreflang="x-default" (expected "${expectedCanonical}", found "${hreflangMap.get('x-default')}").`
-				);
+			const expectedLang = baseSlug === route ? 'en' : route.split('/')[1];
+			if (!new RegExp(`<html[^>]*\\blang="${expectedLang}"`).test(html)) {
+				errors.push(`Route "${route}" must declare <html lang="${expectedLang}">.`);
 			}
 			for (const [lang, href] of hreflangMap.entries()) {
-				if (lang !== 'en' && lang !== 'x-default') {
+				if (!LOCALES.includes(lang) && lang !== 'x-default') {
 					errors.push(`Route "${route}" emitted unverified hreflang="${lang}" (${href}).`);
 				}
 			}
@@ -323,7 +343,7 @@ function runValidation() {
 	}
 
 	checks.push(
-		`Self-referencing canonicals & reciprocal hreflang (en + x-default) verified on all ${routeHtmlMap.size} page(s).`
+		`Self-referencing canonicals & reciprocal hreflang (en, es, pt + x-default) + html[lang] verified on all ${routeHtmlMap.size} page(s).`
 	);
 	checks.push(
 		`Internal link & hash integrity verified (${totalInternalLinksChecked} internal <a> links checked, 0 broken, 0 draft links).`

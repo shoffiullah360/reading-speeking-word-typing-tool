@@ -1,4 +1,5 @@
 ---
+import { localePath } from '../i18n/ui';
 import { getToolById } from '../config/site';
 
 const wordsToPagesTool = getToolById('words-to-pages');
@@ -290,7 +291,7 @@ const readingSpeedTool = getToolById('reading-speed-test');
 			{
 				randomTopicTool?.status === 'live' ? (
 					<a
-						href={randomTopicTool.slug}
+						href={localePath(randomTopicTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{randomTopicTool.shortName}
@@ -308,7 +309,7 @@ const readingSpeedTool = getToolById('reading-speed-test');
 			{
 				wordsToPagesTool?.status === 'live' ? (
 					<a
-						href={wordsToPagesTool.slug}
+						href={localePath(wordsToPagesTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{wordsToPagesTool.shortName}
@@ -326,7 +327,7 @@ const readingSpeedTool = getToolById('reading-speed-test');
 			{
 				readingSpeedTool?.status === 'live' ? (
 					<a
-						href={readingSpeedTool.slug}
+						href={localePath(readingSpeedTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{readingSpeedTool.shortName}

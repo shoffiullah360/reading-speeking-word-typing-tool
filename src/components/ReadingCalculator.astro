@@ -1,4 +1,5 @@
 ---
+import { localePath } from '../i18n/ui';
 import { getToolById } from '../config/site';
 
 const speechTool = getToolById('speech-time-calculator');
@@ -630,7 +631,7 @@ const speedTestTool = getToolById('reading-speed-test');
 			{
 				speechTool?.status === 'live' ? (
 					<a
-						href={speechTool.slug}
+						href={localePath(speechTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{speechTool.shortName}
@@ -651,7 +652,7 @@ const speedTestTool = getToolById('reading-speed-test');
 			{
 				speedTestTool?.status === 'live' ? (
 					<a
-						href={speedTestTool.slug}
+						href={localePath(speedTestTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{speedTestTool.shortName}

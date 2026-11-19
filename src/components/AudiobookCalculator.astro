@@ -1,4 +1,5 @@
 ---
+import { localePath } from '../i18n/ui';
 import { getToolById } from '../config/site';
 
 const readingCounterTool = getToolById('reading-time-calculator');
@@ -875,7 +876,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			{
 				speedTestTool?.status === 'live' ? (
 					<a
-						href={speedTestTool.slug}
+						href={localePath(speedTestTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{speedTestTool.shortName}
@@ -893,7 +894,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			{
 				readingCounterTool?.status === 'live' ? (
 					<a
-						href={readingCounterTool.slug}
+						href={localePath(readingCounterTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{readingCounterTool.shortName}
@@ -911,7 +912,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			{
 				wordsToPagesTool?.status === 'live' ? (
 					<a
-						href={wordsToPagesTool.slug}
+						href={localePath(wordsToPagesTool.slug, Astro.url)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
 						{wordsToPagesTool.shortName}

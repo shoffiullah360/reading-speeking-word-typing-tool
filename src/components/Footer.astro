@@ -1,5 +1,10 @@
 ---
 import { SITE_CONFIG, TOOLS_REGISTRY, STATIC_PAGES } from '../config/site';
+import { getLocaleFromUrl, getLocalizedPath, useTranslations } from '../i18n/ui';
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+const homeHref = getLocalizedPath('/', locale);
 
 const currentYear = new Date().getFullYear();
 
@@ -14,7 +19,7 @@ const categorizedTools = SITE_CONFIG.categories.map((category) => ({
 		<div class="grid grid-cols-1 gap-10 lg:grid-cols-12">
 			<!-- Brand Column -->
 			<div class="lg:col-span-3">
-				<a href="/" class="inline-flex items-center gap-2 text-ink">
+				<a href={homeHref} class="inline-flex items-center gap-2 text-ink">
 					<span class="brand-badge flex h-6 w-6 items-center justify-center rounded-sm border border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] dark:border-transparent dark:bg-primary dark:text-on-primary">
 						<svg
 							class="h-3.5 w-3.5"
@@ -33,10 +38,10 @@ const categorizedTools = SITE_CONFIG.categories.map((category) => ({
 					</span>
 				</a>
 				<p class="mt-3 max-w-xs text-[14px] leading-[22px] text-body">
-					Simple, fast tools for writers, editors, speakers, and students to check reading time, time speeches, and transform text.
+					{t('footer.description')}
 				</p>
 				<p class="mt-3 text-[13px] text-mute">
-					Runs privately in your browser—your text never leaves your device.
+					{t('footer.privacyNote')}
 				</p>
 			</div>
 
@@ -46,26 +51,26 @@ const categorizedTools = SITE_CONFIG.categories.map((category) => ({
 					categorizedTools.map(({ category, tools }) => (
 						<div>
 							<h3 class="text-[13px] font-semibold text-ink">
-								{category}
+								{t(`common.categories.${category}`)}
 							</h3>
 							<ul class="mt-3 space-y-2.5 text-[14px]">
 								{tools.map((tool) => (
 									<li>
 										{tool.status === 'live' ? (
 											<a
-												href={tool.slug}
+												href={getLocalizedPath(tool.slug, locale)}
 												class="text-body transition-colors hover:text-ink"
 											>
-												{tool.shortName}
+												{t(`${tool.dictKey}.shortName`)}
 											</a>
 										) : (
 											<span
 												aria-disabled="true"
 												class="inline-flex cursor-default items-center gap-2 text-mute select-none"
 											>
-												<span>{tool.shortName}</span>
+												<span>{t(`${tool.dictKey}.shortName`)}</span>
 												<span class="rounded-full border border-hairline bg-canvas-elevated px-2 py-0.5 text-[11px] font-medium text-mute">
-													Soon
+													{t('common.soon')}
 												</span>
 											</span>
 										)}
@@ -78,17 +83,17 @@ const categorizedTools = SITE_CONFIG.categories.map((category) => ({
 
 				<div>
 					<h3 class="text-[13px] font-semibold text-ink">
-						Company &amp; Legal
+						{t('footer.companyLegal')}
 					</h3>
 					<ul class="mt-3 space-y-2.5 text-[14px]">
 						{
 							STATIC_PAGES.map((page) => (
 								<li>
 									<a
-										href={page.slug}
+										href={getLocalizedPath(page.slug, locale)}
 										class="text-body transition-colors hover:text-ink"
 									>
-										{page.shortName}
+										{t(`${page.dictKey}.shortName`)}
 									</a>
 								</li>
 							))
@@ -99,12 +104,12 @@ const categorizedTools = SITE_CONFIG.categories.map((category) => ({
 		</div>
 
 		<div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-footer-border pt-6 text-[13px] text-mute sm:flex-row">
-			<p>© {currentYear} {SITE_CONFIG.name} ({SITE_CONFIG.origin.replace('https://', '')}). All rights reserved.</p>
+			<p>© {currentYear} {SITE_CONFIG.name} ({SITE_CONFIG.origin.replace('https://', '')}). {t('footer.rights')}</p>
 			<div class="flex flex-wrap items-center gap-4">
-				<a href="/about/" class="transition-colors hover:text-ink">About</a>
-				<a href="/privacy-policy/" class="transition-colors hover:text-ink">Privacy Policy</a>
-				<a href="/terms-of-service/" class="transition-colors hover:text-ink">Terms of Service</a>
-				<a href="/contact/" class="transition-colors hover:text-ink">Contact</a>
+				<a href={getLocalizedPath('/about/', locale)} class="transition-colors hover:text-ink">{t('about.shortName')}</a>
+				<a href={getLocalizedPath('/privacy-policy/', locale)} class="transition-colors hover:text-ink">{t('privacy.shortName')}</a>
+				<a href={getLocalizedPath('/terms-of-service/', locale)} class="transition-colors hover:text-ink">{t('terms.shortName')}</a>
+				<a href={getLocalizedPath('/contact/', locale)} class="transition-colors hover:text-ink">{t('contact.shortName')}</a>
 			</div>
 		</div>
 	</div>

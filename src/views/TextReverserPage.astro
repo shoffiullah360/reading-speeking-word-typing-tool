@@ -1,0 +1,591 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import TextReverserTool from "../components/TextReverserTool.astro";
+import Footer from "../components/Footer.astro";
+import { resolveCanonicalUrl } from "../config/site";
+
+import { getLocaleFromUrl, getLocalizedPath, localizeHtmlLinks, useTranslations } from "../i18n/ui";
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const pageTitle = t("textReverser.title");
+const pageDescription = t("textReverser.metaDescription");
+const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/text-reverser/", locale));
+
+const faqs = [
+	{
+		question: "How do I write or generate text in reverse online?",
+		answer:
+			"To reverse text online, type or paste your content into the Original Text editor, choose any of the 6 transformation modes from the control deck (such as Reverse All, Word Order, or Upside Down), and watch the Live Output update instantaneously. You can then copy the result to your clipboard with one click or download it as a plain-text .txt file.",
+		answerHtml:
+			'To reverse text online, type or paste your content into the <strong class="font-medium text-ink">Original Text</strong> editor, choose any of the 6 transformation modes from the control deck (such as <strong class="font-medium text-ink">Reverse All</strong>, <strong class="font-medium text-ink">Word Order</strong>, or <strong class="font-medium text-ink">Upside Down</strong>), and watch the <strong class="font-medium text-ink">Live Output</strong> update instantaneously. You can then copy the result to your clipboard with one click or download it as a plain-text <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">.txt</code> file.',
+	},
+	{
+		question:
+			"What is the difference between reversing letters and reversing word order?",
+		answer:
+			'Reverse All flips every individual character end-to-end, transforming "Hello World" into "dlroW olleH". In contrast, Reverse Word Order preserves the spelling of each individual word while inverting the sequence of words, transforming "Hello World" into "World Hello".',
+		answerHtml:
+			'<strong class="font-medium text-ink">Reverse All</strong> flips every individual character end-to-end, transforming <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">"Hello World"</code> into <code class="rounded bg-[#afe3d0]/20 px-1.5 py-0.5 font-mono text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]">"dlroW olleH"</code>. In contrast, <strong class="font-medium text-ink">Reverse Word Order</strong> preserves the spelling of each individual word while inverting the sequence of words, transforming <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">"Hello World"</code> into <code class="rounded bg-[#afe3d0]/20 px-1.5 py-0.5 font-mono text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]">"World Hello"</code>.',
+	},
+	{
+		question: "How does the upside-down text flipper work?",
+		answer:
+			'The upside-down text flipper translates standard Latin characters, numbers, and punctuation into 180-degree inverted Unicode glyphs, substituting characters like "a" with "ɐ" and "e" with "ǝ". Because these inverted symbols are native Unicode characters, you can copy and paste the flipped text into Discord, Instagram bios, X (Twitter), and messaging apps.',
+		answerHtml:
+			'The upside-down text flipper translates standard Latin characters, numbers, and punctuation into 180-degree inverted Unicode glyphs, substituting characters like <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">"a"</code> with <code class="rounded bg-[#afe3d0]/20 px-1.5 py-0.5 font-mono text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]">"ɐ"</code> and <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">"e"</code> with <code class="rounded bg-[#afe3d0]/20 px-1.5 py-0.5 font-mono text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]">"ǝ"</code>. Because these inverted symbols are native Unicode characters, you can copy and paste the flipped text into Discord, Instagram bios, X (Twitter), and messaging apps.',
+	},
+	{
+		question: "How can I check if a word or sentence is a palindrome?",
+		answer:
+			'The tool includes an automatic real-time palindrome detector located in the Live Output header. As you type, the engine strips punctuation, whitespace, and case differences; if the alphanumeric characters read identically forwards and backwards (such as "Madam, in Eden, I\'m Adam" or "racecar"), the badge illuminates in Mint green indicating Palindrome: Yes.',
+		answerHtml:
+			'The tool includes an automatic real-time palindrome detector located in the <strong class="font-medium text-ink">Live Output</strong> header. As you type, the engine strips punctuation, whitespace, and case differences; if the alphanumeric characters read identically forwards and backwards (such as <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">"Madam, in Eden, I\'m Adam"</code> or <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">"racecar"</code>), the badge illuminates in Mint green indicating <strong class="font-medium text-[#0f2e26] dark:text-[#afe3d0]">Palindrome: Yes</strong>.',
+	},
+	{
+		question:
+			"How do I reverse a multi-line list or log file from bottom to top?",
+		answer:
+			"Select the Line Order transformation mode in the control deck. This mode inverts the vertical sequence of lines so that the bottom line moves to the top, which is ideal for reordering chronological server logs, chat exports, to-do lists, or reversing numbered steps without changing the characters inside each line.",
+		answerHtml:
+			'Select the <strong class="font-medium text-ink">Line Order</strong> transformation mode in the control deck. This mode inverts the vertical sequence of lines so that the bottom line moves to the top, which is ideal for reordering chronological server logs, chat exports, to-do lists, or reversing numbered steps without changing the characters inside each line.',
+	},
+	{
+		question: "How do I reverse text in Microsoft Excel?",
+		answer:
+			'Microsoft Excel lacks a native REVERSE() formula, but Microsoft 365 and Excel 2021 users can reverse a cell using the dynamic formula =TEXTJOIN("", TRUE, MID(A1, SEQUENCE(LEN(A1), 1, LEN(A1), -1), 1)). Alternatively, you can copy your entire column into Wordora to reverse thousands of values in one click with zero formulas.',
+		answerHtml:
+			'Microsoft Excel lacks a native <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">REVERSE()</code> formula, but Microsoft 365 and Excel 2021 users can reverse a cell using the dynamic formula <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">=TEXTJOIN("", TRUE, MID(A1, SEQUENCE(LEN(A1), 1, LEN(A1), -1), 1))</code>. Alternatively, you can copy your entire column into Wordora to reverse thousands of values in one click with zero formulas.',
+	},
+	{
+		question: "Can I reverse text order directly in Microsoft Word?",
+		answer:
+			"Microsoft Word does not provide a built-in feature or keyboard shortcut to reverse letters, words, or paragraphs. The fastest solution is to copy your text from Word, paste it into Wordora's Text Reverser, select your preferred reverse mode, and click Copy Output to paste it back cleanly into your document.",
+		answerHtml:
+			'Microsoft Word does not provide a built-in feature or keyboard shortcut to reverse letters, words, or paragraphs. The fastest solution is to copy your text from Word, paste it into Wordora\'s Text Reverser, select your preferred reverse mode, and click <strong class="font-medium text-ink">Copy Output</strong> to paste it back cleanly into your document.',
+	},
+	{
+		question: "Will emojis and accented characters break when reversed?",
+		answer:
+			"No. Naive reversal scripts often split multi-byte UTF-16 surrogate pairs, turning compound emojis and accented vowels into garbled diamond question marks. Wordora processes text using Unicode-aware code-point and grapheme handling, ensuring compound emojis and diacritics remain intact when reversed.",
+		answerHtml:
+			'No. Naive reversal scripts often split multi-byte UTF-16 surrogate pairs, turning compound emojis and accented vowels into garbled diamond question marks. Wordora processes text using Unicode-aware code-point and grapheme handling, ensuring compound emojis and diacritics remain intact when reversed.',
+	},
+	{
+		question:
+			"Does reversing English text create valid Arabic or Hebrew right-to-left text?",
+		answer:
+			'No. Reversing character order creates an inverted string of Latin letters, which does not produce genuine right-to-left (RTL) bidirectional typography. For authentic Arabic, Hebrew, Persian, or Urdu web content, developers should use CSS direction: rtl or the standard HTML attribute dir="rtl" rather than reversing text strings.',
+		answerHtml:
+			'No. Reversing character order creates an inverted string of Latin letters, which does not produce genuine right-to-left (RTL) bidirectional typography. For authentic Arabic, Hebrew, Persian, or Urdu web content, developers should use CSS <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">direction: rtl</code> or the standard HTML attribute <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">dir="rtl"</code> rather than reversing text strings.',
+	},
+	{
+		question:
+			"Is my text safe and private when using Wordora's Text Reverser?",
+		answer:
+			"Yes, 100%. All text transformations and palindrome checks execute entirely within your client browser using local JavaScript. Your text is never transmitted over the internet, logged, or stored on external servers. For related formatting tasks, explore our free case converter and text repeater tools.",
+		answerHtml:
+			'Yes, 100%. All text transformations and palindrome checks execute entirely within your client browser using local JavaScript. Your text is never transmitted over the internet, logged, or stored on external servers. For related formatting tasks, explore our free <a href="/case-converter/" class="font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">case converter</a> and <a href="/text-repeater/" class="font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">text repeater</a> tools.',
+	},
+];
+
+const structuredData = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "WebApplication",
+			name: t("textReverser.name"),
+			url: canonicalUrl,
+			inLanguage: locale,
+			applicationCategory: "UtilitiesApplication",
+			operatingSystem: "All",
+			offers: {
+				"@type": "Offer",
+				price: "0",
+				priceCurrency: "USD",
+			},
+			description: pageDescription,
+			featureList: [
+				"Reverse Entire Text end-to-end",
+				"Reverse Word Order while preserving individual words",
+				"Reverse Each Word in place",
+				"Reverse Line Order for logs and lists",
+				"Flip text upside down using 180-degree Unicode glyphs",
+				"Mirror text horizontally and vertically",
+				"Real-time palindrome detector with live badge",
+				"One-click Copy Output and Download .txt",
+			],
+		},
+		{
+			"@type": "FAQPage",
+			mainEntity: faqs.map((faq) => ({
+				"@type": "Question",
+				name: faq.question,
+				acceptedAnswer: {
+					"@type": "Answer",
+					text: faq.answer,
+				},
+			})),
+		},
+	],
+};
+
+const reverseModes = [
+	{
+		name: "Reverse All (Characters)",
+		transforms: "Flips every character end-to-end across the string",
+		input: "Hello World",
+		output: "dlroW olleH",
+	},
+	{
+		name: "Reverse Word Order",
+		transforms: "Reverses word sequence while keeping each word readable",
+		input: "Hello World",
+		output: "World Hello",
+	},
+	{
+		name: "Reverse Each Word",
+		transforms: "Reverses letters inside every word in original order",
+		input: "Hello World",
+		output: "olleH dlroW",
+	},
+	{
+		name: "Reverse Line Order",
+		transforms: "Inverts multi-line lists or logs from bottom to top",
+		input: "Line 1 / Line 2",
+		output: "Line 2 / Line 1",
+	},
+	{
+		name: "Flip Upside Down",
+		transforms: "Maps ASCII characters to 180°-rotated Unicode glyphs",
+		input: "Hello",
+		output: "ollǝH",
+	},
+	{
+		name: "Mirror Text (Backward + Flip)",
+		transforms: "Combines character reversal with upside-down Unicode mapping",
+		input: "Hello",
+		output: "Hǝllo (mirrored)",
+	},
+];
+
+const implementationGuides = [
+	{
+		environment: "Wordora Online Text Reverser",
+		implementation: "1-click browser tool (6 modes + .txt export)",
+		bestUseCase:
+			"Fastest zero-setup way to reverse paragraphs, lists, or upside-down text",
+	},
+	{
+		environment: "Microsoft Excel (365 / 2021+)",
+		implementation:
+			'=TEXTJOIN("", TRUE, MID(A1, SEQUENCE(LEN(A1), 1, LEN(A1), -1), 1))',
+		bestUseCase:
+			"Reversing cell IDs, SKUs, or codes directly inside spreadsheet columns",
+	},
+	{
+		environment: "Microsoft Word",
+		implementation:
+			"No native reverse formula (Use Wordora first, then paste)",
+		bestUseCase:
+			"Word lacks a built-in text-reverse button; reverse here and paste back cleanly",
+	},
+	{
+		environment: "JavaScript (Unicode-Safe)",
+		implementation:
+			"[...new Intl.Segmenter().segment(str)].reverse().map(s => s.segment).join('')",
+		bestUseCase:
+			"Frontend validation, palindrome checks, and grapheme-safe string manipulation",
+	},
+	{
+		environment: "Python",
+		implementation: 'text[::-1] (or "\\n".join(text.splitlines()[::-1]) for lines)',
+		bestUseCase:
+			"Data pipelines, log reversal, and classic coding interview exercises",
+	},
+];
+---
+
+<Layout
+	title={pageTitle}
+	description={pageDescription}
+	canonicalUrl={canonicalUrl}
+>
+	<Fragment slot="head">
+		<script
+			type="application/ld+json"
+			set:html={JSON.stringify(structuredData)}
+		/>
+	</Fragment>
+
+	<Header />
+
+	<main class="flex-1">
+		<!-- Clean Editorial Tool Header -->
+		<section class="px-4 pt-12 pb-4 sm:px-6 sm:pt-16 sm:pb-6">
+			<div class="mx-auto max-w-[1200px]">
+				<h1
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1.4px] text-ink sm:text-[42px] sm:leading-[48px] sm:tracking-[-1.8px]"
+				>
+					{t("textReverser.h1")}
+				</h1>
+
+				<p
+					class="mt-3 max-w-2xl text-[16px] leading-[25px] font-normal text-body"
+				>
+					Reverse characters, flip word order, invert line sequences, check palindromes, or generate upside-down mirror text instantly—100% privately in your browser.
+				</p>
+			</div>
+		</section>
+
+		<!-- Interactive Text Reverser Workspace -->
+		<TextReverserTool />
+
+		<!-- Section 1 — How to Use the Online Text Reverser & Flipper (4-Step Grid) -->
+		<section
+			id="how-to-use"
+			aria-labelledby="how-to-use-heading"
+			class="mx-auto max-w-[1200px] px-4 pt-8 pb-12 sm:px-6 sm:pt-10"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Quick Guide
+					</span>
+					<h2
+						id="how-to-use-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						How to Use the Online Text Reverser &amp; Flipper
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Wordora transforms your words, sentences, lists, and code blocks in real time directly inside your browser. Because all operations execute locally using JavaScript, your sensitive drafts, passwords, and logs remain completely private with zero server transmission.
+					</p>
+				</div>
+
+				<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+					<!-- Step 1 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									1
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Paste or Type Your Text
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Type directly into the editor, click <strong class="font-medium text-ink">Paste</strong> from your clipboard, try a built-in <strong class="font-medium text-ink">Sample</strong>, or upload a <code class="rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink">.txt</code> file.
+							</p>
+						</div>
+					</div>
+
+					<!-- Step 2 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									2
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Pick Any of 6 Reverse &amp; Flip Modes
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Select <strong class="font-medium text-ink">Reverse All</strong>, <strong class="font-medium text-ink">Word Order</strong>, <strong class="font-medium text-ink">Each Word</strong>, <strong class="font-medium text-ink">Line Order</strong>, <strong class="font-medium text-ink">Upside Down</strong>, or <strong class="font-medium text-ink">Mirror Text</strong> in the control deck.
+							</p>
+						</div>
+					</div>
+
+					<!-- Step 3 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									3
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Check Live Output &amp; Palindrome Status
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Inspect the live transformed output instantly while the smart palindrome badge verifies whether your text reads identically forward and backward.
+							</p>
+						</div>
+					</div>
+
+					<!-- Step 4 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									4
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Swap, Copy, or Download .txt
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Click <strong class="font-medium text-ink">Copy Output</strong> to transfer to your clipboard, use <strong class="font-medium text-ink">Send to Input</strong> to reverse again, or download as a clean text file.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 2 — All 6 Text Reversal & Flipping Modes Explained (Table + Deep Dive) -->
+		<section
+			id="modes-explained"
+			aria-labelledby="modes-heading"
+			class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Transformation Matrix
+					</span>
+					<h2
+						id="modes-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						All 6 Text Reversal &amp; Flipping Modes Explained
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Text reversal spans character-level anagram generation, syntactic sentence inversion, structured log reordering, and artistic Unicode glyph rotations. Compare each mode below:
+					</p>
+				</div>
+
+				<!-- Comparison Table -->
+				<div class="mt-8 overflow-hidden rounded-2xl border border-hairline bg-canvas-elevated">
+					<div class="overflow-x-auto">
+						<table class="w-full text-left border-collapse text-[14px]">
+							<thead>
+								<tr class="border-b border-hairline bg-[#0f2e26]/5 text-[13px] font-semibold text-ink dark:bg-[#afe3d0]/5">
+									<th class="p-4 sm:px-6 sm:py-4">Mode Name</th>
+									<th class="p-4 sm:px-6 sm:py-4">What It Transforms</th>
+									<th class="p-4 sm:px-6 sm:py-4">Input Example</th>
+									<th class="p-4 sm:px-6 sm:py-4">Transformed Output</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-hairline">
+								{
+									reverseModes.map((item) => (
+										<tr class="transition-colors hover:bg-canvas/50">
+											<td class="p-4 sm:px-6 sm:py-4 font-semibold text-ink whitespace-nowrap">
+												{item.name}
+											</td>
+											<td class="p-4 sm:px-6 sm:py-4 text-body leading-relaxed max-w-sm">
+												{item.transforms}
+											</td>
+											<td class="p-4 sm:px-6 sm:py-4 font-mono text-[13px] text-ink whitespace-nowrap">
+												<span class="rounded bg-canvas px-2 py-1 border border-hairline">
+													{item.input}
+												</span>
+											</td>
+											<td class="p-4 sm:px-6 sm:py-4 font-mono text-[13px] text-[#0f2e26] font-semibold whitespace-nowrap dark:text-[#afe3d0]">
+												<span class="rounded bg-[#afe3d0]/20 px-2 py-1 border border-[#afe3d0]/30 dark:border-[#afe3d0]/20">
+													{item.output}
+												</span>
+											</td>
+										</tr>
+									))
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- Deep-Dive Editorial Block: Unicode-Safe Reversal & RTL Scripts -->
+				<div class="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
+					<!-- Sub-block 1: Unicode & Grapheme Clusters -->
+					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:p-7">
+						<div class="flex items-center gap-3">
+							<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0f2e26] text-[15px] font-bold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
+								U
+							</div>
+							<h3 class="font-sans text-[18px] font-semibold text-ink">
+								Why Unicode-Safe Reversal &amp; Grapheme Clusters Matter
+							</h3>
+						</div>
+						<div class="mt-4 space-y-3.5 text-[14px] leading-relaxed text-body">
+							<p>
+								In basic coding tutorials, string reversal is often demonstrated with a simple one-liner such as <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">str.split('').reverse().join('')</code>. While this naive approach works for basic ASCII letters, it catastrophically corrupts modern text containing accented vowels, combining diacritics, or multi-byte emojis. In UTF-16 encoding, characters like emojis (<span class="font-sans">&#x1F1FA;&#x1F1F8;</span> or family glyphs) are stored as surrogate pairs; reversing them byte-by-byte separates the high and low surrogates, turning lively symbols into unreadable question mark boxes (<span class="font-mono">&#xFFFD;</span>).
+							</p>
+							<p>
+								Similarly, accented characters written as a base letter followed by a combining accent mark (like <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">e + &#x0301;</code>) end up attaching the accent to the wrong preceding character when reversed naively. Wordora utilizes Unicode-aware iteration and modern grapheme segmentation so that every emoji, accent, and ligature is treated as a unified user-perceived character (a grapheme cluster), preserving semantic clarity across all languages.
+							</p>
+						</div>
+					</div>
+
+					<!-- Sub-block 2: Reversed Text vs RTL Scripts -->
+					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:p-7">
+						<div class="flex items-center gap-3">
+							<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0f2e26] text-[15px] font-bold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
+								R
+							</div>
+							<h3 class="font-sans text-[18px] font-semibold text-ink">
+								Reversed Text vs. Right-to-Left (RTL) Scripts like Arabic &amp; Hebrew
+							</h3>
+						</div>
+						<div class="mt-4 space-y-3.5 text-[14px] leading-relaxed text-body">
+							<p>
+								A common misconception among beginner web designers is that reversing English or Latin characters backward simulates authentic Right-to-Left (RTL) writing for languages such as Arabic, Hebrew, Urdu, or Persian. In reality, reversing a string simply mirrors the physical order of Latin glyphs without establishing true bidirectional layout rules.
+							</p>
+							<p>
+								Authentic RTL languages require bidirectional text shaping, contextual letter joining (such as initial, medial, and final Arabic forms), and proper paragraph alignment. If your goal is to localize a website or application for Arabic or Hebrew audiences, never manually reverse text strings. Instead, configure proper typographic rendering using the HTML standard <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">dir="rtl"</code> attribute on your container elements or CSS <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">direction: rtl</code>.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 3 — How to Reverse Text in Excel, Word, JavaScript & Python (Table + Guide) -->
+		<section
+			id="software-implementations"
+			aria-labelledby="software-implementations-heading"
+			class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Cross-Platform Guide
+					</span>
+					<h2
+						id="software-implementations-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						How to Reverse Text in Excel, Word, JavaScript &amp; Python
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Whether you need to invert a database column in Microsoft Excel, format notes in Microsoft Word, or implement palindrome validation in code, reference these standard formulas and methods:
+					</p>
+				</div>
+
+				<!-- Reference Table -->
+				<div class="mt-8 overflow-hidden rounded-2xl border border-hairline bg-canvas-elevated">
+					<div class="overflow-x-auto">
+						<table class="w-full text-left border-collapse text-[14px]">
+							<thead>
+								<tr class="border-b border-hairline bg-[#0f2e26]/5 text-[13px] font-semibold text-ink dark:bg-[#afe3d0]/5">
+									<th class="p-4 sm:px-6 sm:py-4">Environment / Tool</th>
+									<th class="p-4 sm:px-6 sm:py-4">Formula or Code Implementation</th>
+									<th class="p-4 sm:px-6 sm:py-4">Best Use Case</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-hairline">
+								{
+									implementationGuides.map((item) => (
+										<tr class="transition-colors hover:bg-canvas/50">
+											<td class="p-4 sm:px-6 sm:py-4 font-semibold text-ink whitespace-nowrap">
+												{item.environment}
+											</td>
+											<td class="p-4 sm:px-6 sm:py-4 font-mono text-[13px] text-ink leading-relaxed">
+												<span class="rounded bg-canvas px-2 py-1 border border-hairline inline-block">
+													{item.implementation}
+												</span>
+											</td>
+											<td class="p-4 sm:px-6 sm:py-4 text-body leading-relaxed max-w-sm">
+												{item.bestUseCase}
+											</td>
+										</tr>
+									))
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- Practical Uses Editorial Walkthrough -->
+				<div class="mt-10 rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:p-8">
+					<h3 class="font-sans text-[20px] font-semibold text-ink">
+						Practical Uses: From Log Analysis &amp; Palindromes to QA Testing
+					</h3>
+					<div class="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 text-[14.5px] leading-relaxed text-body">
+						<p>
+							In DevOps and backend engineering, reversing line sequences is an indispensable daily task. Server debug outputs, Apache access logs, and <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">git log</code> entries are traditionally appended chronologically from oldest to newest. By pasting thousands of log lines into Wordora and toggling <strong class="font-medium text-ink">Line Order</strong>, developers can instantly place the newest incident events at the top of the file without altering timestamps or stack traces inside each row.
+						</p>
+						<p>
+							Beyond systems engineering, text reversal plays a critical role in QA software testing, linguistics, and creative publishing. Quality assurance teams feed adversarial reversed and mirrored strings into form fields to test database collation, text truncation, and boundary conditions. Meanwhile, writers and puzzle enthusiasts use our real-time palindrome validator to construct symmetric word puzzles (<code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">"racecar"</code>, <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">"Madam, in Eden, I'm Adam"</code>), and social media creators generate stylized upside-down headings for viral Instagram captions and Discord bios.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 4 — Frequently Asked Questions (10 PAA Accordion) -->
+		<section
+			id="faq"
+			aria-labelledby="faq-heading"
+			class="mx-auto max-w-[1200px] px-4 pt-12 pb-16 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Got Questions?
+					</span>
+					<h2
+						id="faq-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						Frequently Asked Questions
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Clear answers to common questions about string reversal, word order flipping, spreadsheet formulas, palindrome checks, and data privacy.
+					</p>
+				</div>
+
+				<div class="mt-8 divide-y divide-hairline rounded-2xl border border-hairline bg-canvas-elevated">
+					{
+						faqs.map((faq, idx) => (
+							<details class="group p-5 sm:p-6" open={idx === 0}>
+								<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink focus:outline-none">
+									<span>{faq.question}</span>
+									<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-hairline text-mute transition-transform duration-200 group-open:rotate-45 group-open:border-[#0f2e26] group-open:bg-[#0f2e26] group-open:text-[#afe3d0] dark:group-open:border-[#afe3d0] dark:group-open:bg-[#afe3d0] dark:group-open:text-[#0f2e26]">
+										<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+											<line x1="12" y1="5" x2="12" y2="19" />
+											<line x1="5" y1="12" x2="19" y2="12" />
+										</svg>
+									</span>
+								</summary>
+								<p class="mt-3 pr-6 text-[14.5px] leading-relaxed text-body" set:html={localizeHtmlLinks(faq.answerHtml, locale)} />
+							</details>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		{/* Editorial Content & FAQ Slot — User Managed */}
+		<div id="editorial-content-slot" class="mx-auto max-w-[1200px] px-4 sm:px-6"></div>
+	</main>
+
+	<Footer />
+</Layout>

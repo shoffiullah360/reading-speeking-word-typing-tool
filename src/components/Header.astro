@@ -1,11 +1,16 @@
 ---
 import { SITE_CONFIG, getLiveTools, normalizeTrailingSlashPath } from '../config/site';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { getLocaleFromUrl, getLocalizedPath, useTranslations } from '../i18n/ui';
 
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 const currentPath = normalizeTrailingSlashPath(Astro.url.pathname);
 const liveTools = getLiveTools();
 
 interface NavCategory {
 	category: string;
+	label: string;
 	id: string;
 	tools: Array<{
 		slug: string;
@@ -51,19 +56,27 @@ const categoriesWithTools: NavCategory[] = [
 		tools: liveTools.filter((tool) => tool.slug === '/typing-speed-test/'),
 		isActiveCategory: false,
 	},
-].map((cat) => ({
-	...cat,
-	isActiveCategory: cat.tools.some((tool) => tool.slug === currentPath),
-}));
+].map((cat) => {
+	const tools = cat.tools.map((tool) => ({
+		slug: getLocalizedPath(tool.slug, locale),
+		shortName: t(`${tool.dictKey}.shortName`),
+	}));
+	return {
+		...cat,
+		label: t(`nav.${cat.id === 'typing-test' ? 'typingTest' : cat.id}`),
+		tools,
+		isActiveCategory: tools.some((tool) => tool.slug === currentPath),
+	};
+});
 ---
 
 <header class="sticky top-0 z-50 w-full border-b border-[#e2e8e5] bg-[#ffffff] backdrop-blur-md dark:border-hairline dark:bg-header-bg">
 	<div class="mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
 		<!-- Left: Wordora Brand Logo -->
 		<a
-			href="/"
+			href={getLocalizedPath('/', locale)}
 			class="group flex shrink-0 items-center gap-2.5 text-[#0f172a] focus:outline-none dark:text-ink"
-			aria-label={`${SITE_CONFIG.name} Home`}
+			aria-label={t('nav.home', { name: SITE_CONFIG.name })}
 		>
 			<span class="brand-badge flex h-7 w-7 items-center justify-center rounded-sm border border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] transition-transform duration-150 group-hover:scale-105 dark:border-transparent dark:bg-primary dark:text-on-primary">
 				<svg
@@ -88,11 +101,11 @@ const categoriesWithTools: NavCategory[] = [
 
 		<!-- Center: Category Dropdowns (Desktop) -->
 		<nav
-			aria-label="Primary category navigation"
+			aria-label={t('nav.primaryNav')}
 			class="hidden items-center gap-1 whitespace-nowrap md:flex lg:gap-1.5"
 		>
 			{
-				categoriesWithTools.map(({ category, id, tools, isActiveCategory }) => (
+				categoriesWithTools.map(({ label, id, tools, isActiveCategory }) => (
 					<div class="relative" data-nav-dropdown={id}>
 						<button
 							type="button"
@@ -108,7 +121,7 @@ const categoriesWithTools: NavCategory[] = [
 									: 'font-normal text-[#0f172a] dark:text-body'
 							}`}
 						>
-							<span>{category}</span>
+							<span>{label}</span>
 							<svg
 								data-nav-chevron={id}
 								class={`h-3.5 w-3.5 transition-transform duration-150 ${
@@ -133,7 +146,7 @@ const categoriesWithTools: NavCategory[] = [
 							id={`nav-panel-${id}`}
 							data-nav-panel={id}
 							role="menu"
-							aria-label={`${category} tools`}
+							aria-label={t('nav.categoryTools', { category: label })}
 							class="floating-shadow invisible absolute left-1/2 top-full z-50 mt-2 min-w-[220px] -translate-x-1/2 rounded-md border border-[#e2e8e5] bg-[#ffffff] p-1.5 opacity-0 transition-all duration-150 dark:border-hairline dark:bg-[#141416]"
 						>
 							<ul class="space-y-0.5">
@@ -162,12 +175,13 @@ const categoriesWithTools: NavCategory[] = [
 
 		<!-- Right: Theme Toggle & Mobile Menu Button -->
 		<div class="flex shrink-0 items-center gap-2 whitespace-nowrap">
+			<LanguageSwitcher variant="desktop" />
 			<button
 				id="theme-toggle"
 				type="button"
 				class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border border-[#e2e8e5] bg-[#ffffff] text-[#0f172a] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
-				aria-label="Toggle light and dark mode"
-				title="Switch appearance"
+				aria-label={t('nav.toggleTheme')}
+				title={t('nav.switchAppearance')}
 			>
 				<!-- Sun Icon (shown in dark mode) -->
 				<svg
@@ -213,7 +227,7 @@ const categoriesWithTools: NavCategory[] = [
 				type="button"
 				aria-expanded="false"
 				aria-controls="mobile-nav-drawer"
-				aria-label="Toggle navigation menu"
+				aria-label={t('nav.toggleMenu')}
 				class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border border-[#e2e8e5] bg-[#ffffff] text-[#0f172a] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] md:hidden dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
 			>
 				<svg
@@ -252,12 +266,12 @@ const categoriesWithTools: NavCategory[] = [
 	<!-- Mobile Navigation Drawer / Accordion -->
 	<div
 		id="mobile-nav-drawer"
-		aria-label="Mobile category navigation"
+		aria-label={t('nav.mobileNav')}
 		class="hidden border-t border-[#e2e8e5] bg-[#ffffff] px-4 py-3 md:hidden dark:border-hairline dark:bg-[#141416]"
 	>
 		<div class="mx-auto max-w-[1200px] divide-y divide-hairline">
 			{
-				categoriesWithTools.map(({ category, id, tools, isActiveCategory }, index) => {
+				categoriesWithTools.map(({ label, id, tools, isActiveCategory }, index) => {
 					const hasActiveCategory = categoriesWithTools.some((c) => c.isActiveCategory);
 					const defaultOpen = isActiveCategory || (!hasActiveCategory && index === 0);
 					return (
@@ -273,7 +287,7 @@ const categoriesWithTools: NavCategory[] = [
 										: 'font-medium text-[#0f172a] dark:text-ink'
 								}`}
 							>
-								<span>{category}</span>
+								<span>{label}</span>
 								<svg
 									data-mobile-accordion-chevron={id}
 									class={`h-4 w-4 text-mute transition-transform duration-150 ${
@@ -316,6 +330,7 @@ const categoriesWithTools: NavCategory[] = [
 					);
 				})
 			}
+			<LanguageSwitcher variant="mobile" />
 		</div>
 	</div>
 </header>

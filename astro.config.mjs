@@ -13,7 +13,7 @@ export default defineConfig({
 	},
 	i18n: {
 		defaultLocale: 'en',
-		locales: ['en', 'es', 'de', 'fr'],
+		locales: ['en', 'es', 'pt'],
 		routing: {
 			prefixDefaultLocale: false,
 		},
@@ -21,6 +21,7 @@ export default defineConfig({
 	devToolbar: { enabled: false },
 	integrations: [
 		sitemap({
+			i18n: { defaultLocale: 'en', locales: { en: 'en', es: 'es', pt: 'pt' } },
 			filter: (page) => isPublicLiveUrl(page) && !page.includes('/typing-speed-test/play/'),
 		}),
 	],

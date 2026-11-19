@@ -1,0 +1,760 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import CaseConverterTool from "../components/CaseConverterTool.astro";
+import Footer from "../components/Footer.astro";
+import { resolveCanonicalUrl } from "../config/site";
+
+import { getLocaleFromUrl, getLocalizedPath, localizeHtmlLinks, useTranslations } from "../i18n/ui";
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const pageTitle = t("caseConverter.title");
+const pageDescription = t("caseConverter.metaDescription");
+const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/case-converter/", locale));
+
+const faqs = [
+	{
+		question: "How do I fix text I accidentally typed with Caps Lock on?",
+		answer:
+			"Click Sentence case or lower case to immediately normalize the text into standard capitalization. If you had Caps Lock on while typing and only the first letter of each word turned out lowercase, click iNVERSE cAsE to flip the capitalization back to normal in one click without retyping.",
+		answerHtml:
+			'Click <strong class="font-medium text-ink">Sentence case</strong> or <strong class="font-medium text-ink">lower case</strong> to immediately normalize the text into standard capitalization. If you had Caps Lock on while typing and only the first letter of each word turned out lowercase, click <strong class="font-medium text-ink">iNVERSE cAsE</strong> to flip the capitalization back to normal in one click without retyping.',
+	},
+	{
+		question:
+			"What is the difference between Title Case and Capitalized Case (Proper Case)?",
+		answer:
+			"Capitalized Case capitalizes the first letter of every single word indiscriminately. In contrast, standard AP and APA Title Case keeps short articles, conjunctions, and prepositions like a, an, the, and, in, and of lowercase unless they are the first or last word of the title.",
+		answerHtml:
+			'<strong class="font-medium text-ink">Capitalized Case</strong> capitalizes the first letter of every single word indiscriminately. In contrast, standard AP and APA <strong class="font-medium text-ink">Title Case</strong> keeps short articles, conjunctions, and prepositions like <em>a</em>, <em>an</em>, <em>the</em>, <em>and</em>, <em>in</em>, and <em>of</em> lowercase unless they are the first or last word of the title.',
+	},
+	{
+		question:
+			"How does an online camel case converter work for programming?",
+		answer:
+			"A camelCase converter removes all spaces, hyphens, and punctuation, turns the first word into all lowercase letters, and capitalizes the first letter of each subsequent word. For example, typing user profile card converts instantly to userProfileCard.",
+		answerHtml:
+			'A <strong class="font-medium text-ink">camelCase</strong> converter removes all spaces, hyphens, and punctuation, turns the first word into all lowercase letters, and capitalizes the first letter of each subsequent word. For example, typing <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">user profile card</code> converts instantly to <code class="rounded bg-[#afe3d0]/20 px-1.5 py-0.5 font-mono text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]">userProfileCard</code>.',
+	},
+	{
+		question: "When should I use snake_case vs. kebab-case?",
+		answer:
+			"Use snake_case with underscores for Python variables, database column names, and SQL identifiers. Use kebab-case with hyphens for SEO-friendly URL slugs and CSS class names where spaces and underscores are discouraged.",
+		answerHtml:
+			'Use <strong class="font-medium text-ink">snake_case</strong> with underscores for Python variables, database column names, and SQL identifiers. Use <strong class="font-medium text-ink">kebab-case</strong> with hyphens for SEO-friendly URL slugs (<code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">/case-converter/</code>) and CSS class names where spaces and underscores are discouraged.',
+	},
+	{
+		question: "What is the shortcut to change text case in Microsoft Word?",
+		answer:
+			"Highlight the text in Microsoft Word and press Shift + F3 on Windows or Fn + Shift + F3 on Mac to cycle through lowercase, Capitalize Each Word, and UPPERCASE. You can also click the Change Case button on the Home tab ribbon.",
+		answerHtml:
+			'Highlight the text in Microsoft Word and press <kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">Shift + F3</kbd> on Windows or <kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">Fn + Shift + F3</kbd> on Mac to cycle through lowercase, Capitalize Each Word, and UPPERCASE. You can also click the <strong class="font-medium text-ink">Change Case</strong> button on the Home tab ribbon.',
+	},
+	{
+		question:
+			"How do I convert small letters to capital letters in Excel or Google Sheets?",
+		answer:
+			"In spreadsheets, use =UPPER(A1) for uppercase, =LOWER(A1) for lowercase, and =PROPER(A1) for capitalized case. Alternatively, paste your entire column into this free online tool to convert all values instantly without helper formulas.",
+		answerHtml:
+			'In spreadsheets, use <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">=UPPER(A1)</code> for uppercase, <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">=LOWER(A1)</code> for lowercase, and <code class="rounded bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">=PROPER(A1)</code> for capitalized case. Alternatively, paste your entire column into this free online tool to convert all values instantly without helper formulas.',
+	},
+	{
+		question:
+			"How do I convert text to lowercase letters without losing punctuation?",
+		answer:
+			"Clicking lower case converts all uppercase letters from A–Z to lowercase a–z while keeping numbers, punctuation marks, and line breaks completely intact.",
+		answerHtml:
+			'Clicking <strong class="font-medium text-ink">lower case</strong> converts all uppercase letters from A–Z to lowercase a–z while keeping numbers, punctuation marks, and line breaks completely intact.',
+	},
+	{
+		question: "What does aLtErNaTiNg cAsE or iNVERSE cAsE do?",
+		answer:
+			"aLtErNaTiNg cAsE switches letters back and forth between lowercase and uppercase for meme or sarcastic text. iNVERSE cAsE flips every uppercase letter to lowercase and every lowercase letter to uppercase.",
+		answerHtml:
+			'<strong class="font-medium text-ink">aLtErNaTiNg cAsE</strong> switches letters back and forth between lowercase and uppercase for meme or sarcastic text. <strong class="font-medium text-ink">iNVERSE cAsE</strong> flips every uppercase letter to lowercase and every lowercase letter to uppercase.',
+	},
+	{
+		question:
+			"Can I download the converted text or undo a case change?",
+		answer:
+			"Yes. Click Undo at any time to restore your previous text version or click Download .txt to save the converted result as a clean plain-text file on your device.",
+		answerHtml:
+			'Yes. Click <strong class="font-medium text-ink">Undo</strong> at any time to restore your previous text version or click <strong class="font-medium text-ink">Download .txt</strong> to save the converted result as a clean plain-text file on your device.',
+	},
+	{
+		question:
+			"Is my text private when I use this free online case converter?",
+		answer:
+			"Yes, 100%. All case conversions run locally inside your web browser using client-side JavaScript. Your text is never uploaded, logged, or saved to any external server. For related utilities, explore our free word counter and text repeater.",
+		answerHtml:
+			'Yes, 100%. All case conversions run locally inside your web browser using client-side JavaScript. Your text is never uploaded, logged, or saved to any external server. For related utilities, explore our free <a href="/word-counter/" class="font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">word counter</a> and <a href="/text-repeater/" class="font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">text repeater</a>.',
+	},
+];
+
+const structuredData = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "WebApplication",
+			name: t("caseConverter.name"),
+			url: canonicalUrl,
+			inLanguage: locale,
+			applicationCategory: "UtilitiesApplication",
+			operatingSystem: "All",
+			offers: {
+				"@type": "Offer",
+				price: "0",
+				priceCurrency: "USD",
+			},
+			description: pageDescription,
+			featureList: [
+				"One-click conversion to Sentence case, lower case, UPPER CASE, AP Title Case, Capitalized Case, aLtErNaTiNg cAsE, and iNVERSE cAsE",
+				"Developer and code format conversion: camelCase, PascalCase, snake_case, CONSTANT_CASE, kebab-case, and dot.case",
+				"Real-time word, character, and line count metrics",
+				"One-click Copy text, Paste, Undo history, and Download .txt file controls",
+			],
+		},
+		{
+			"@type": "FAQPage",
+			mainEntity: faqs.map((faq) => ({
+				"@type": "Question",
+				name: faq.question,
+				acceptedAnswer: {
+					"@type": "Answer",
+					text: faq.answer,
+				},
+			})),
+		},
+	],
+};
+
+const caseStyles = [
+	{
+		name: "Sentence case",
+		category: "Editorial",
+		description: "Capitalizes the first character of each sentence and proper nouns, leaving all subsequent words in lowercase.",
+		example: "The quick brown fox jumps over the lazy dog.",
+	},
+	{
+		name: "lower case",
+		category: "Editorial",
+		description: "Converts every single alphabetical letter into lowercase without altering punctuation, spaces, or numbers.",
+		example: "the quick brown fox jumps over the lazy dog.",
+	},
+	{
+		name: "UPPER CASE",
+		category: "Editorial",
+		description: "Converts every letter into uppercase (all caps). Perfect for prominent acronyms, warnings, and legal headers.",
+		example: "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.",
+	},
+	{
+		name: "Title Case (AP / APA)",
+		category: "Editorial",
+		description: "Capitalizes principal words while keeping short articles, conjunctions, and prepositions lowercase unless first or last.",
+		example: "The Quick Brown Fox Jumps over the Lazy Dog",
+	},
+	{
+		name: "Capitalized Case",
+		category: "Editorial",
+		description: "Capitalizes the first letter of every single word indiscriminately, matching traditional Start Case / Proper Case.",
+		example: "The Quick Brown Fox Jumps Over The Lazy Dog",
+	},
+	{
+		name: "aLtErNaTiNg cAsE",
+		category: "Special",
+		description: "Alternates letters between lowercase and uppercase in an offset pattern, widely used for internet satire and memes.",
+		example: "tHe qUiCk bRoWn fOx jUmPs oVeR ThE LaZy dOg",
+	},
+	{
+		name: "iNVERSE cAsE",
+		category: "Special",
+		description: "Inverts every character's casing: uppercase letters become lowercase and lowercase letters become uppercase.",
+		example: "tHE QUICK BROWN FOX JUMPS OVER THE LAZY DOG",
+	},
+	{
+		name: "camelCase",
+		category: "Developer",
+		description: "Removes whitespace and punctuation, keeps the first word lowercase, and capitalizes each subsequent word.",
+		example: "theQuickBrownFoxJumpsOverTheLazyDog",
+	},
+	{
+		name: "PascalCase",
+		category: "Developer",
+		description: "Capitalizes the initial letter of every concatenated word with zero whitespace. Standard for class names and components.",
+		example: "TheQuickBrownFoxJumpsOverTheLazyDog",
+	},
+	{
+		name: "snake_case",
+		category: "Developer",
+		description: "Replaces spaces and punctuation with underscores in lowercase. Standard for Python variables and SQL database tables.",
+		example: "the_quick_brown_fox_jumps_over_the_lazy_dog",
+	},
+	{
+		name: "CONSTANT_CASE",
+		category: "Developer",
+		description: "Uppercase letters separated by underscores. Standard for global environment variables and immutable configuration constants.",
+		example: "THE_QUICK_BROWN_FOX_JUMPS_OVER_THE_LAZY_DOG",
+	},
+	{
+		name: "kebab-case",
+		category: "Developer",
+		description: "Replaces spaces with hyphens in lowercase. Standard for SEO-friendly URL slugs, CSS class selectors, and package names.",
+		example: "the-quick-brown-fox-jumps-over-the-lazy-dog",
+	},
+	{
+		name: "dot.case",
+		category: "Developer",
+		description: "Separates lowercase words with periods. Frequently used for nested object keys, i18n translation namespaces, and DNS records.",
+		example: "the.quick.brown.fox.jumps.over.the.lazy.dog",
+	},
+];
+---
+
+<Layout
+	title={pageTitle}
+	description={pageDescription}
+	canonicalUrl={canonicalUrl}
+>
+	<Fragment slot="head">
+		<script
+			type="application/ld+json"
+			set:html={JSON.stringify(structuredData)}
+		/>
+	</Fragment>
+
+	<Header />
+
+	<main class="flex-1">
+		<!-- Clean Editorial Tool Header -->
+		<section class="px-4 pt-12 pb-4 sm:px-6 sm:pt-16 sm:pb-6">
+			<div class="mx-auto max-w-[1200px]">
+				<h1
+					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1.4px] text-ink sm:text-[42px] sm:leading-[48px] sm:tracking-[-1.8px]"
+				>
+					{t("caseConverter.h1")}
+				</h1>
+
+				<p
+					class="mt-3 max-w-2xl text-[16px] leading-[25px] font-normal text-body"
+				>
+					Switch any text between Sentence case, lower case, UPPER CASE, AP Title Case, camelCase, snake_case, and kebab-case instantly in your browser.
+				</p>
+			</div>
+		</section>
+
+		<!-- Interactive Case Converter Workspace -->
+		<CaseConverterTool />
+
+		<!-- Section 1 — What Is an Online Case Converter & How to Use It (4-Step Grid) -->
+		<section
+			id="how-to-use"
+			aria-labelledby="how-to-use-heading"
+			class="mx-auto max-w-[1200px] px-4 pt-8 pb-12 sm:px-6 sm:pt-10"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Quick Guide
+					</span>
+					<h2
+						id="how-to-use-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						What Is an Online Case Converter &amp; How to Use It
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						An online case converter instantly transforms the capitalization and casing format of your text, titles, headings, and code identifiers. Whether you need to fix an accidental CAPS LOCK paragraph, format blog headings in AP Title Case, or convert database columns to camelCase and snake_case, Wordora runs completely in your browser with real-time preview and zero data logging.
+					</p>
+				</div>
+
+				<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+					<!-- Step 1 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									1
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Paste or Type Your Text
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Enter any paragraph, headline, spreadsheet column, or variable list into the editor (or click <strong class="font-medium text-ink">Paste</strong>).
+							</p>
+						</div>
+					</div>
+
+					<!-- Step 2 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									2
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Pick Your Target Text or Code Case
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Click any writing style (<strong class="font-medium text-ink">Sentence case</strong>, <strong class="font-medium text-ink">lower case</strong>, <strong class="font-medium text-ink">UPPER CASE</strong>, <strong class="font-medium text-ink">Title Case</strong>) or developer format (<strong class="font-medium text-ink">camelCase</strong>, <strong class="font-medium text-ink">PascalCase</strong>, <strong class="font-medium text-ink">snake_case</strong>, <strong class="font-medium text-ink">kebab-case</strong>).
+							</p>
+						</div>
+					</div>
+
+					<!-- Step 3 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									3
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Undo or Switch Formats Anytime
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Preview the transformed text immediately and click <strong class="font-medium text-ink">Undo</strong> to revert or switch between styles in one click.
+							</p>
+						</div>
+					</div>
+
+					<!-- Step 4 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									4
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Copy or Download .txt
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Click <strong class="font-medium text-ink">Copy text</strong> to copy to your clipboard or <strong class="font-medium text-ink">Download .txt</strong> to save a clean plain-text file.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 2A — All 13 Text & Programming Case Styles Explained -->
+		<section
+			id="case-styles-explained"
+			aria-labelledby="case-styles-heading"
+			class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Complete Reference
+					</span>
+					<h2
+						id="case-styles-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						All 13 Text &amp; Programming Case Styles Explained
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Capitalization formats carry distinct syntactic and semantic rules across publishing, linguistics, and software engineering. Review each style supported by Wordora below:
+					</p>
+				</div>
+
+				<div class="mt-8 overflow-hidden rounded-2xl border border-hairline bg-canvas-elevated">
+					<div class="overflow-x-auto">
+						<table class="w-full text-left border-collapse text-[14px]">
+							<thead>
+								<tr class="border-b border-hairline bg-[#0f2e26]/5 text-[13px] font-semibold text-ink dark:bg-[#afe3d0]/5">
+									<th class="p-4 sm:px-6 sm:py-4">Style Name</th>
+									<th class="p-4 sm:px-6 sm:py-4">Category</th>
+									<th class="p-4 sm:px-6 sm:py-4">How It Works</th>
+									<th class="p-4 sm:px-6 sm:py-4">Live Example</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-hairline">
+								{
+									caseStyles.map((item) => (
+										<tr class="transition-colors hover:bg-canvas/50">
+											<td class="p-4 sm:px-6 sm:py-4 font-semibold text-ink whitespace-nowrap">
+												{item.name}
+											</td>
+											<td class="p-4 sm:px-6 sm:py-4 whitespace-nowrap">
+												<span class="inline-flex rounded-md border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-mute">
+													{item.category}
+												</span>
+											</td>
+											<td class="p-4 sm:px-6 sm:py-4 text-body leading-relaxed max-w-md">
+												{item.description}
+											</td>
+											<td class="p-4 sm:px-6 sm:py-4 font-mono text-[13px] text-ink whitespace-nowrap">
+												<span class="rounded bg-canvas px-2 py-1 border border-hairline">
+													{item.example}
+												</span>
+											</td>
+										</tr>
+									))
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 2B — AP vs. APA vs. Chicago Title Case Rules -->
+		<section
+			id="title-case-rules"
+			aria-labelledby="title-case-rules-heading"
+			class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Editorial Guidelines
+					</span>
+					<h2
+						id="title-case-rules-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						AP vs. APA vs. Chicago Title Case Rules
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Title capitalization varies between journalism, scientific research, and book publishing. Wordora's Title Case engine balances standard journalistic and academic rules:
+					</p>
+				</div>
+
+				<div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+					<!-- AP Style -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6">
+						<div>
+							<div class="mb-3 flex items-center justify-between">
+								<h3 class="font-sans text-[18px] font-semibold text-ink">Associated Press (AP)</h3>
+								<span class="rounded-full bg-[#0f2e26]/10 px-2.5 py-0.5 text-[12px] font-medium text-[#0f2e26] dark:bg-[#afe3d0]/15 dark:text-[#afe3d0]">Journalism</span>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Capitalize all principal words with 4 or more letters. Always capitalize the first and last word. Keep articles (<em class="italic">a, an, the</em>), short coordinating conjunctions (<em class="italic">and, but, or, for, nor</em>), and prepositions of 3 or fewer letters (<em class="italic">in, on, at, by, to, of</em>) in lowercase.
+							</p>
+						</div>
+						<div class="mt-5 rounded-xl border border-hairline bg-canvas p-3 text-[13px] text-mute">
+							<strong class="font-semibold text-ink">Example:</strong> Walk on the Wild Side
+						</div>
+					</div>
+
+					<!-- APA Style -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6">
+						<div>
+							<div class="mb-3 flex items-center justify-between">
+								<h3 class="font-sans text-[18px] font-semibold text-ink">APA 7th Edition</h3>
+								<span class="rounded-full bg-[#0f2e26]/10 px-2.5 py-0.5 text-[12px] font-medium text-[#0f2e26] dark:bg-[#afe3d0]/15 dark:text-[#afe3d0]">Academia</span>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Capitalize all major words: nouns, pronouns, verbs (including <em class="italic">Is, Are, Be</em>), adjectives, and adverbs. Capitalize any word with 4 or more letters (e.g., <em class="italic">From, With, Than</em>). Lowercase conjunctions and prepositions of 3 letters or fewer unless starting a title or subtitle.
+							</p>
+						</div>
+						<div class="mt-5 rounded-xl border border-hairline bg-canvas p-3 text-[13px] text-mute">
+							<strong class="font-semibold text-ink">Example:</strong> The Art of Being Resilient
+						</div>
+					</div>
+
+					<!-- Chicago Style -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6">
+						<div>
+							<div class="mb-3 flex items-center justify-between">
+								<h3 class="font-sans text-[18px] font-semibold text-ink">Chicago Manual (CMOS)</h3>
+								<span class="rounded-full bg-[#0f2e26]/10 px-2.5 py-0.5 text-[12px] font-medium text-[#0f2e26] dark:bg-[#afe3d0]/15 dark:text-[#afe3d0]">Publishing</span>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Capitalize the first and last words of the main title and subtitle. Lowercase <strong class="font-medium text-ink">all prepositions</strong> regardless of length (including <em class="italic">between, through, without, against</em>), along with articles and coordinating conjunctions.
+							</p>
+						</div>
+						<div class="mt-5 rounded-xl border border-hairline bg-canvas p-3 text-[13px] text-mute">
+							<strong class="font-semibold text-ink">Example:</strong> Journey through the Wilderness
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 2C — How to Change Text Case in Microsoft Word, Excel & Google Docs -->
+		<section
+			id="office-shortcuts"
+			aria-labelledby="office-shortcuts-heading"
+			class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Software Shortcuts
+					</span>
+					<h2
+						id="office-shortcuts-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						How to Change Text Case in Microsoft Word, Excel &amp; Google Docs
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						If you frequently format documents, spreadsheets, or slides, use these native shortcuts or paste your columns into Wordora for one-click bulk conversion:
+					</p>
+				</div>
+
+				<div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+					<!-- MS Word -->
+					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
+						<div class="flex items-center gap-3">
+							<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0f2e26] text-[15px] font-bold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
+								W
+							</div>
+							<h3 class="font-sans text-[18px] font-semibold text-ink">Microsoft Word</h3>
+						</div>
+						<ul class="mt-4 space-y-2.5 text-[14px] leading-relaxed text-body">
+							<li class="flex items-start gap-2">
+								<span class="text-[#0f2e26] dark:text-[#afe3d0]">&bull;</span>
+								<span>Press <kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">Shift + F3</kbd> (or <kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">Fn + Shift + F3</kbd> on Mac) to toggle between lowercase, UPPERCASE, and Capitalize Each Word.</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-[#0f2e26] dark:text-[#afe3d0]">&bull;</span>
+								<span>Alternatively, click the <strong class="font-medium text-ink">Change Case (Aa)</strong> icon located in the Font ribbon on the Home tab.</span>
+							</li>
+						</ul>
+					</div>
+
+					<!-- Excel & Sheets -->
+					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
+						<div class="flex items-center gap-3">
+							<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0f2e26] text-[15px] font-bold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
+								X
+							</div>
+							<h3 class="font-sans text-[18px] font-semibold text-ink">Excel &amp; Google Sheets</h3>
+						</div>
+						<ul class="mt-4 space-y-2.5 text-[14px] leading-relaxed text-body">
+							<li class="flex items-start gap-2">
+								<span class="text-[#0f2e26] dark:text-[#afe3d0]">&bull;</span>
+								<span><code class="rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink">=UPPER(A1)</code> converts cell text to all uppercase.</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-[#0f2e26] dark:text-[#afe3d0]">&bull;</span>
+								<span><code class="rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink">=LOWER(A1)</code> converts cell text to all lowercase.</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-[#0f2e26] dark:text-[#afe3d0]">&bull;</span>
+								<span><code class="rounded bg-canvas px-1 py-0.5 font-mono text-[12px] text-ink">=PROPER(A1)</code> capitalizes each word. Or paste a whole column into Wordora to avoid formulas.</span>
+							</li>
+						</ul>
+					</div>
+
+					<!-- Google Docs -->
+					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
+						<div class="flex items-center gap-3">
+							<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#0f2e26] text-[15px] font-bold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
+								G
+							</div>
+							<h3 class="font-sans text-[18px] font-semibold text-ink">Google Docs</h3>
+						</div>
+						<ul class="mt-4 space-y-2.5 text-[14px] leading-relaxed text-body">
+							<li class="flex items-start gap-2">
+								<span class="text-[#0f2e26] dark:text-[#afe3d0]">&bull;</span>
+								<span>Select the target text with your cursor.</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-[#0f2e26] dark:text-[#afe3d0]">&bull;</span>
+								<span>Click <strong class="font-medium text-ink">Format</strong> in the top navigation menu.</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-[#0f2e26] dark:text-[#afe3d0]">&bull;</span>
+								<span>Hover over <strong class="font-medium text-ink">Text</strong> &gt; <strong class="font-medium text-ink">Capitalization</strong> and choose lowercase, UPPERCASE, or Title Case.</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 3 — Where to Use Different Text & Code Case Styles (4-Card Practical Grid) -->
+		<section
+			id="where-to-use"
+			aria-labelledby="where-to-use-heading"
+			class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Practical Applications
+					</span>
+					<h2
+						id="where-to-use-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						Where to Use Different Text &amp; Code Case Styles
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Selecting the correct case format ensures readability, compliance with style guides, and bug-free programming architectures:
+					</p>
+				</div>
+
+				<div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+					<!-- Card 1 -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30">
+						<div>
+							<div class="mb-3 inline-flex rounded-lg bg-[#0f2e26]/10 p-2.5 text-[#0f2e26] dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
+								<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+									<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+								</svg>
+							</div>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								Essays, Reports &amp; Emails
+							</h3>
+							<p class="mt-1 text-[12px] font-medium text-[#0f2e26] dark:text-[#afe3d0]">
+								Sentence case
+							</p>
+							<p class="mt-3 text-[14px] leading-relaxed text-body">
+								Keeps body paragraphs natural, readable, and compliant with academic or business style guides without accidental ALL CAPS. Ideal for fixing notes, draft memos, and customer support replies.
+							</p>
+						</div>
+					</div>
+
+					<!-- Card 2 -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30">
+						<div>
+							<div class="mb-3 inline-flex rounded-lg bg-[#0f2e26]/10 p-2.5 text-[#0f2e26] dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
+								<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+								</svg>
+							</div>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								Blog Headlines, YouTube &amp; Essays
+							</h3>
+							<p class="mt-1 text-[12px] font-medium text-[#0f2e26] dark:text-[#afe3d0]">
+								Title Case
+							</p>
+							<p class="mt-3 text-[14px] leading-relaxed text-body">
+								Boosts readability and click-through clarity on headings while keeping minor words (<em class="italic">a, an, the, in, of</em>) properly lowercase. Perfect for subheadings, book titles, and email subject lines.
+							</p>
+						</div>
+					</div>
+
+					<!-- Card 3 -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30">
+						<div>
+							<div class="mb-3 inline-flex rounded-lg bg-[#0f2e26]/10 p-2.5 text-[#0f2e26] dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
+								<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<polyline points="16 18 22 12 16 6" />
+									<polyline points="8 6 2 12 8 18" />
+								</svg>
+							</div>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								Software Development &amp; APIs
+							</h3>
+							<p class="mt-1 text-[12px] font-medium text-[#0f2e26] dark:text-[#afe3d0]">
+								camelCase, PascalCase, snake_case
+							</p>
+							<p class="mt-3 text-[14px] leading-relaxed text-body">
+								Converts multi-word phrases into valid variable names, React/TypeScript components, Python functions, or .env <code class="font-mono text-[12px]">CONSTANT_CASE</code> keys without manual retyping.
+							</p>
+						</div>
+					</div>
+
+					<!-- Card 4 -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30">
+						<div>
+							<div class="mb-3 inline-flex rounded-lg bg-[#0f2e26]/10 p-2.5 text-[#0f2e26] dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
+								<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<circle cx="12" cy="12" r="10" />
+									<line x1="2" y1="12" x2="22" y2="12" />
+									<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+								</svg>
+							</div>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								SEO URLs &amp; CSS Classes
+							</h3>
+							<p class="mt-1 text-[12px] font-medium text-[#0f2e26] dark:text-[#afe3d0]">
+								kebab-case &amp; lower case
+							</p>
+							<p class="mt-3 text-[14px] leading-relaxed text-body">
+								Turns messy titles into clean, hyphenated URL slugs (<code class="font-mono text-[12px]">my-blog-post</code>) and consistent lowercase tags, database seeds, or BEM CSS utility classes.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 4 — Frequently Asked Questions (10 PAA Accordion) -->
+		<section
+			id="faq"
+			aria-labelledby="faq-heading"
+			class="mx-auto max-w-[1200px] px-4 pt-12 pb-16 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Got Questions?
+					</span>
+					<h2
+						id="faq-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						Frequently Asked Questions
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Answers to common questions about case conversions, keyboard shortcuts, formatting formulas, and privacy.
+					</p>
+				</div>
+
+				<div class="mt-8 divide-y divide-hairline rounded-2xl border border-hairline bg-canvas-elevated">
+					{
+						faqs.map((faq, idx) => (
+							<details class="group p-5 sm:p-6" open={idx === 0}>
+								<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink focus:outline-none">
+									<span>{faq.question}</span>
+									<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-hairline text-mute transition-transform duration-200 group-open:rotate-45 group-open:border-[#0f2e26] group-open:bg-[#0f2e26] group-open:text-[#afe3d0] dark:group-open:border-[#afe3d0] dark:group-open:bg-[#afe3d0] dark:group-open:text-[#0f2e26]">
+										<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+											<line x1="12" y1="5" x2="12" y2="19" />
+											<line x1="5" y1="12" x2="19" y2="12" />
+										</svg>
+									</span>
+								</summary>
+								<p class="mt-3 pr-6 text-[14.5px] leading-relaxed text-body" set:html={localizeHtmlLinks(faq.answerHtml, locale)} />
+							</details>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		{/* Editorial Content & FAQ Slot — User Managed */}
+		<div id="editorial-content-slot" class="mx-auto max-w-[1200px] px-4 sm:px-6"></div>
+	</main>
+
+	<Footer />
+</Layout>

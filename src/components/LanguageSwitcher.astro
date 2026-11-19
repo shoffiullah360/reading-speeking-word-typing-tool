@@ -1,0 +1,68 @@
+---
+import {
+	getAvailableLocalesForSlug,
+	stripLocalePrefix,
+} from '../config/site';
+import {
+	languages,
+	languageNames,
+	locales,
+	getLocaleFromUrl,
+	getLocalizedPath,
+	useTranslations,
+	type Locale,
+} from '../i18n/ui';
+
+interface Props {
+	/** `desktop` sits in the header bar; `mobile` is a full-width row inside the drawer. */
+	variant?: 'desktop' | 'mobile';
+}
+
+const { variant = 'desktop' } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+// Equivalent page in each locale; fall back to that locale's home for unknown routes (e.g. 404).
+const baseSlug = stripLocalePrefix(Astro.url.pathname);
+const available = getAvailableLocalesForSlug(baseSlug);
+const items = locales.map((code: Locale) => ({
+	code,
+	label: languages[code],
+	name: languageNames[code],
+	href: getLocalizedPath(available.includes(code) ? baseSlug : '/', code),
+	active: code === locale,
+}));
+
+const wrapper =
+	variant === 'mobile'
+		? 'mt-3 flex w-full items-center justify-between gap-3 border-t border-[#e2e8e5] px-2 pt-3 dark:border-hairline md:hidden'
+		: 'hidden md:inline-flex';
+---
+
+<div class={wrapper} data-language-switcher={variant}>
+	{variant === 'mobile' && <span class="text-[14px] font-medium text-[#0f172a] dark:text-ink">{t('nav.language')}</span>}
+	<nav
+		aria-label={t('nav.language')}
+		class="inline-flex items-center gap-0.5 rounded-full border border-[#e2e8e5] bg-[#ffffff] p-0.5 dark:border-hairline dark:bg-canvas-elevated"
+	>
+		{
+			items.map((item) => (
+				<a
+					href={item.href}
+					hreflang={item.code}
+					lang={item.code}
+					title={t('nav.switchTo', { language: item.name })}
+					aria-label={t('nav.switchTo', { language: item.name })}
+					aria-current={item.active ? 'true' : undefined}
+					class={`inline-flex h-7 min-w-9 items-center justify-center rounded-full px-2.5 text-[12px] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] dark:focus-visible:outline-vercel-blue ${
+						item.active
+							? 'bg-[#0f2e26] text-[#afe3d0] dark:bg-hairline-soft dark:text-ink'
+							: 'text-[#0f172a] hover:bg-[#e6f7f1] hover:text-[#0f2e26] dark:text-body dark:hover:bg-hairline-soft dark:hover:text-ink'
+					}`}
+				>
+					{item.label}
+				</a>
+			))
+		}
+	</nav>
+</div>

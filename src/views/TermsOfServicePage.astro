@@ -1,0 +1,82 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_CONFIG, resolveCanonicalUrl } from "../config/site";
+
+import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "../i18n/ui";
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const pageTitle = t("terms.title");
+const pageDescription = t("terms.metaDescription");
+const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/terms-of-service/", locale));
+---
+
+<Layout
+	title={pageTitle}
+	description={pageDescription}
+	canonicalUrl={canonicalUrl}
+>
+	<Header />
+
+	<main class="flex-1">
+		<section class="mx-auto max-w-[900px] px-4 py-12 sm:px-6 sm:py-16">
+			<h1 class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1.4px] text-ink sm:text-[42px] sm:leading-[48px] sm:tracking-[-1.8px]">
+					{t("terms.h1")}
+				</h1>
+			<p class="mt-2 text-[14px] text-mute">
+				Last updated: November 2026
+			</p>
+
+			<div class="whisper-shadow mt-8 space-y-6 rounded-md border border-hairline bg-canvas-elevated p-6 text-[15px] leading-[24px] text-body sm:p-8">
+				<div>
+					<h2 class="text-[19px] leading-[26px] font-semibold text-ink">
+						1. Acceptance of terms
+					</h2>
+					<p class="mt-2">
+						By accessing and using {SITE_CONFIG.name} (<a href={getLocalizedPath("/", locale)} class="text-vercel-blue underline-offset-2 hover:underline">wordora.site</a>), you agree to comply with and be bound by these Terms of Service. All utilities on {SITE_CONFIG.name} are provided free of charge for personal, academic, and professional use.
+					</p>
+				</div>
+
+				<div class="border-t border-hairline pt-6">
+					<h2 class="text-[19px] leading-[26px] font-semibold text-ink">
+						2. Ownership of your content
+					</h2>
+					<p class="mt-2">
+						You retain 100% ownership and intellectual property rights over any text, manuscript, speech script, or code that you type, paste, or process inside {SITE_CONFIG.name} calculators and utilities. Because all tools run locally in your browser via client-side JavaScript, {SITE_CONFIG.name} never claims, collects, or stores your content.
+					</p>
+				</div>
+
+				<div class="border-t border-hairline pt-6">
+					<h2 class="text-[19px] leading-[26px] font-semibold text-ink">
+						3. Acceptable use
+					</h2>
+					<p class="mt-2">
+						You agree to use {SITE_CONFIG.name} lawfully and refrain from attempting to disrupt, overload, or interfere with the static hosting infrastructure serving the site. You may freely share links to any tool page (such as our <a href={getLocalizedPath("/reading-time-calculator/", locale)} class="text-vercel-blue underline-offset-2 hover:underline">Reading Time Calculator</a> or <a href={getLocalizedPath("/typing-speed-test/", locale)} class="text-vercel-blue underline-offset-2 hover:underline">Typing Speed Test</a>) and export results generated in your browser.
+					</p>
+				</div>
+
+				<div class="border-t border-hairline pt-6">
+					<h2 class="text-[19px] leading-[26px] font-semibold text-ink">
+						4. Disclaimer of warranties
+					</h2>
+					<p class="mt-2">
+						All calculators, timers, and text converters on {SITE_CONFIG.name} are provided on an "as is" and "as available" basis without warranties of any kind. While our tools use peer-reviewed reading, speaking, and typing benchmarks (such as 238 WPM for silent reading, 183 WPM for read-aloud speech, and standard 5-character WPM keystroke formulas), actual durations and page counts may vary based on individual delivery, formatting, and typography.
+					</p>
+				</div>
+
+				<div class="border-t border-hairline pt-6">
+					<h2 class="text-[19px] leading-[26px] font-semibold text-ink">
+						5. Contact &amp; questions
+					</h2>
+					<p class="mt-2">
+						If you have any questions about these Terms of Service, please review our <a href={getLocalizedPath("/privacy-policy/", locale)} class="text-vercel-blue underline-offset-2 hover:underline">Privacy Policy</a>, visit our <a href={getLocalizedPath("/contact/", locale)} class="text-vercel-blue underline-offset-2 hover:underline">Contact page</a>, or email us at <a href="mailto:support@wordora.site" class="text-vercel-blue underline-offset-2 hover:underline">support@wordora.site</a>.
+					</p>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<Footer />
+</Layout>

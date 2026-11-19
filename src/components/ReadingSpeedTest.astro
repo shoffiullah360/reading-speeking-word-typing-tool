@@ -1,4 +1,5 @@
 ---
+import { localePath } from '../i18n/ui';
 import { getToolById } from '../config/site';
 
 const readingCounterTool = getToolById('reading-time-calculator');
@@ -836,7 +837,7 @@ const speechTool = getToolById('speech-time-calculator');
 				{
 					readingCounterTool?.status === 'live' ? (
 						<a
-							href={readingCounterTool.slug}
+							href={localePath(readingCounterTool.slug, Astro.url)}
 							class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 						>
 							{readingCounterTool.shortName}
@@ -854,7 +855,7 @@ const speechTool = getToolById('speech-time-calculator');
 				{
 					audiobookTool?.status === 'live' ? (
 						<a
-							href={audiobookTool.slug}
+							href={localePath(audiobookTool.slug, Astro.url)}
 							class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 						>
 							{audiobookTool.shortName}
@@ -872,7 +873,7 @@ const speechTool = getToolById('speech-time-calculator');
 				{
 					speechTool?.status === 'live' ? (
 						<a
-							href={speechTool.slug}
+							href={localePath(speechTool.slug, Astro.url)}
 							class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 						>
 							{speechTool.shortName}
