@@ -57,15 +57,15 @@ const categoriesWithTools: NavCategory[] = [
 }));
 ---
 
-<header class="sticky top-0 z-50 w-full border-b border-[#E5E7EB] bg-[#FFFFFF] backdrop-blur-md dark:border-hairline dark:bg-header-bg">
+<header class="sticky top-0 z-50 w-full border-b border-[#e2e8e5] bg-[#ffffff] backdrop-blur-md dark:border-hairline dark:bg-header-bg">
 	<div class="mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
 		<!-- Left: Wordora Brand Logo -->
 		<a
 			href="/"
-			class="group flex shrink-0 items-center gap-2.5 text-[#111827] focus:outline-none dark:text-ink"
+			class="group flex shrink-0 items-center gap-2.5 text-[#0f172a] focus:outline-none dark:text-ink"
 			aria-label={`${SITE_CONFIG.name} Home`}
 		>
-			<span class="brand-badge flex h-7 w-7 items-center justify-center rounded-sm border border-[#7ED4B6] bg-[#AFE3D0] text-[#111827] transition-transform duration-150 group-hover:scale-105 dark:border-transparent dark:bg-primary dark:text-on-primary">
+			<span class="brand-badge flex h-7 w-7 items-center justify-center rounded-sm border border-[#0f2e26] bg-[#0f2e26] text-[#afe3d0] transition-transform duration-150 group-hover:scale-105 dark:border-transparent dark:bg-primary dark:text-on-primary">
 				<svg
 					class="h-4 w-4"
 					viewBox="0 0 24 24"
@@ -81,7 +81,7 @@ const categoriesWithTools: NavCategory[] = [
 					<path d="M9 2h6" />
 				</svg>
 			</span>
-			<span class="text-[16px] font-semibold tracking-[-0.3px] text-[#111827] dark:text-ink">
+			<span class="text-[16px] font-semibold tracking-[-0.3px] text-[#0f172a] dark:text-ink">
 				{SITE_CONFIG.name}
 			</span>
 		</a>
@@ -102,10 +102,10 @@ const categoriesWithTools: NavCategory[] = [
 							aria-expanded="false"
 							aria-haspopup="true"
 							aria-controls={`nav-panel-${id}`}
-							class={`inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[14px] transition-colors hover:bg-[#E6F7F1] hover:text-[#0F766E] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0D9488] dark:hover:bg-hairline-soft dark:hover:text-ink dark:focus-visible:outline-vercel-blue ${
+							class={`inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[14px] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] dark:hover:bg-hairline-soft dark:hover:text-ink dark:focus-visible:outline-vercel-blue ${
 								isActiveCategory
-									? 'bg-[#E6F7F1] font-medium text-[#0F766E] dark:bg-hairline-soft dark:text-ink'
-									: 'font-normal text-[#111827] dark:text-body'
+									? 'bg-[#afe3d0] font-semibold text-[#0f2e26] dark:bg-hairline-soft dark:text-ink'
+									: 'font-normal text-[#0f172a] dark:text-body'
 							}`}
 						>
 							<span>{category}</span>
@@ -113,8 +113,8 @@ const categoriesWithTools: NavCategory[] = [
 								data-nav-chevron={id}
 								class={`h-3.5 w-3.5 transition-transform duration-150 ${
 									isActiveCategory
-										? 'text-[#0F766E] dark:text-mute'
-										: 'text-[#4B5563] dark:text-mute'
+										? 'text-[#0f2e26] dark:text-mute'
+										: 'text-[#334155] dark:text-mute'
 								}`}
 								viewBox="0 0 24 24"
 								fill="none"
@@ -134,7 +134,7 @@ const categoriesWithTools: NavCategory[] = [
 							data-nav-panel={id}
 							role="menu"
 							aria-label={`${category} tools`}
-							class="floating-shadow invisible absolute left-1/2 top-full z-50 mt-2 min-w-[220px] -translate-x-1/2 rounded-md border border-[#E5E7EB] bg-[#FFFFFF] p-1.5 opacity-0 transition-all duration-150 dark:border-hairline dark:bg-[#141416]"
+							class="floating-shadow invisible absolute left-1/2 top-full z-50 mt-2 min-w-[220px] -translate-x-1/2 rounded-md border border-[#e2e8e5] bg-[#ffffff] p-1.5 opacity-0 transition-all duration-150 dark:border-hairline dark:bg-[#141416]"
 						>
 							<ul class="space-y-0.5">
 								{tools.map((tool) => (
@@ -143,10 +143,10 @@ const categoriesWithTools: NavCategory[] = [
 											href={tool.slug}
 											role="menuitem"
 											aria-current={currentPath === tool.slug ? 'page' : undefined}
-											class={`block whitespace-nowrap rounded-sm px-3 py-2 text-[14px] transition-colors hover:bg-[#E6F7F1] hover:text-[#0F766E] dark:text-ink dark:hover:bg-[#1f1f23] ${
+											class={`block whitespace-nowrap rounded-sm px-3 py-2 text-[14px] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] dark:text-ink dark:hover:bg-[#1f1f23] ${
 												currentPath === tool.slug
-													? 'bg-[#E6F7F1] font-semibold text-[#0F766E] dark:bg-[#1f1f23]'
-													: 'font-medium text-[#111827]'
+													? 'bg-[#afe3d0] font-semibold text-[#0f2e26] dark:bg-[#1f1f23]'
+													: 'font-medium text-[#0f172a]'
 											}`}
 										>
 											{tool.shortName}
@@ -165,7 +165,7 @@ const categoriesWithTools: NavCategory[] = [
 			<button
 				id="theme-toggle"
 				type="button"
-				class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border border-[#E5E7EB] bg-[#FFFFFF] text-[#111827] transition-colors hover:bg-[#E6F7F1] hover:text-[#0F766E] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0D9488] dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
+				class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border border-[#e2e8e5] bg-[#ffffff] text-[#0f172a] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
 				aria-label="Toggle light and dark mode"
 				title="Switch appearance"
 			>
@@ -214,7 +214,7 @@ const categoriesWithTools: NavCategory[] = [
 				aria-expanded="false"
 				aria-controls="mobile-nav-drawer"
 				aria-label="Toggle navigation menu"
-				class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border border-[#E5E7EB] bg-[#FFFFFF] text-[#111827] transition-colors hover:bg-[#E6F7F1] hover:text-[#0F766E] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0D9488] md:hidden dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
+				class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-sm border border-[#e2e8e5] bg-[#ffffff] text-[#0f172a] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] md:hidden dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
 			>
 				<svg
 					id="mobile-icon-open"
@@ -253,7 +253,7 @@ const categoriesWithTools: NavCategory[] = [
 	<div
 		id="mobile-nav-drawer"
 		aria-label="Mobile category navigation"
-		class="hidden border-t border-[#E5E7EB] bg-[#FFFFFF] px-4 py-3 md:hidden dark:border-hairline dark:bg-[#141416]"
+		class="hidden border-t border-[#e2e8e5] bg-[#ffffff] px-4 py-3 md:hidden dark:border-hairline dark:bg-[#141416]"
 	>
 		<div class="mx-auto max-w-[1200px] divide-y divide-hairline">
 			{
@@ -267,10 +267,10 @@ const categoriesWithTools: NavCategory[] = [
 								data-mobile-accordion-trigger={id}
 								aria-expanded={defaultOpen ? 'true' : 'false'}
 								aria-controls={`mobile-panel-${id}`}
-								class={`flex w-full cursor-pointer items-center justify-between rounded-sm px-2 py-2 text-left text-[15px] transition-colors hover:bg-[#E6F7F1] hover:text-[#0F766E] dark:hover:bg-hairline-soft ${
+								class={`flex w-full cursor-pointer items-center justify-between rounded-sm px-2 py-2 text-left text-[15px] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] dark:hover:bg-hairline-soft ${
 									isActiveCategory
-										? 'font-semibold text-[#0F766E] dark:text-ink'
-										: 'font-medium text-[#111827] dark:text-ink'
+										? 'font-semibold text-[#0f2e26] dark:text-ink'
+										: 'font-medium text-[#0f172a] dark:text-ink'
 								}`}
 							>
 								<span>{category}</span>
@@ -301,10 +301,10 @@ const categoriesWithTools: NavCategory[] = [
 										<a
 											href={tool.slug}
 											aria-current={currentPath === tool.slug ? 'page' : undefined}
-											class={`block rounded-sm px-3 py-2 text-[14px] transition-colors hover:bg-[#E6F7F1] hover:text-[#0F766E] dark:text-ink dark:hover:bg-[#1f1f23] ${
+											class={`block rounded-sm px-3 py-2 text-[14px] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] dark:text-ink dark:hover:bg-[#1f1f23] ${
 												currentPath === tool.slug
-													? 'bg-[#E6F7F1] font-semibold text-[#0F766E] dark:bg-[#1f1f23]'
-													: 'font-medium text-[#111827]'
+													? 'bg-[#afe3d0] font-semibold text-[#0f2e26] dark:bg-[#1f1f23]'
+													: 'font-medium text-[#0f172a]'
 											}`}
 										>
 											{tool.shortName}

@@ -502,17 +502,17 @@ const speedTestTool = getToolById('reading-speed-test');
 			</div>
 		</div>
 
-		<!-- Live Summary Bar (Clean, Non-Boxed-In-Box Layout) -->
-		<div class="kpi-summary-bar-responsive order-2 grid grid-cols-2 gap-3 sm:gap-4 lg:whisper-shadow lg:order-3 lg:col-span-12 lg:mb-3 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-[#7ED4B6] lg:rounded-md lg:border lg:border-[#7ED4B6] lg:bg-[#AFE3D0] dark:lg:divide-hairline dark:lg:border-hairline dark:lg:bg-canvas-elevated">
+		<!-- Live Summary Bar (Deep Forest Emerald #0f2e26 + Mint #afe3d0 Result Panel) -->
+		<div class="kpi-summary-bar-responsive order-2 grid grid-cols-2 gap-3 sm:gap-4 lg:whisper-shadow lg:order-3 lg:col-span-12 lg:mb-3 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-[#1d463b] lg:rounded-md lg:border lg:border-[#1d463b] lg:bg-[#0f2e26] dark:lg:divide-hairline dark:lg:border-hairline dark:lg:bg-canvas-elevated">
 			<!-- Stat 1: Silent reading time -->
-			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
+			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
 				<div class="flex items-center justify-between gap-2">
-					<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
+					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
 						Silent reading time
 					</span>
 					<span
 						id="badge-silent-wpm"
-						class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute"
+						class="text-[12px] text-[#afe3d0]/80 tabular-nums dark:text-mute"
 					>
 						238 WPM
 					</span>
@@ -521,25 +521,25 @@ const speedTestTool = getToolById('reading-speed-test');
 					<output
 						id="metric-silent-time"
 						aria-live="polite"
-						class="block font-sans text-xl leading-[28px] font-semibold tracking-[-1px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[32px] lg:text-[28px] dark:text-ink"
+						class="block font-sans text-xl leading-[28px] font-semibold tracking-[-1px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[32px] lg:text-[28px] dark:text-ink"
 					>
 						0 min 0 sec
 					</output>
 				</div>
-				<p id="metric-silent-sub" class="text-[12px] text-[#1F2937] dark:text-mute">
+				<p id="metric-silent-sub" class="text-[12px] text-[#e2f5ee]/80 dark:text-mute">
 					Average adult reading pace
 				</p>
 			</article>
 
 			<!-- Stat 2: Read aloud time -->
-			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
+			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
 				<div class="flex items-center justify-between gap-2">
-					<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
+					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
 						Read aloud time
 					</span>
 					<span
 						id="badge-speaking-wpm"
-						class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute"
+						class="text-[12px] text-[#afe3d0]/80 tabular-nums dark:text-mute"
 					>
 						183 WPM
 					</span>
@@ -548,25 +548,25 @@ const speedTestTool = getToolById('reading-speed-test');
 					<output
 						id="metric-speaking-time"
 						aria-live="polite"
-						class="block font-sans text-xl leading-[28px] font-semibold tracking-[-1px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[32px] lg:text-[28px] dark:text-ink"
+						class="block font-sans text-xl leading-[28px] font-semibold tracking-[-1px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[32px] lg:text-[28px] dark:text-ink"
 					>
 						0 min 0 sec
 					</output>
 				</div>
-				<p id="metric-speaking-sub" class="text-[12px] text-[#1F2937] dark:text-mute">
+				<p id="metric-speaking-sub" class="text-[12px] text-[#e2f5ee]/80 dark:text-mute">
 					Natural speaking pace
 				</p>
 			</article>
 
 			<!-- Stat 3: Word & character count -->
-			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
+			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
 				<div class="flex items-center justify-between gap-2">
-					<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
+					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
 						Word &amp; character count
 					</span>
 					<span
 						id="badge-active-mode"
-						class="text-[12px] text-[#1F2937] dark:text-mute"
+						class="text-[12px] text-[#afe3d0]/80 dark:text-mute"
 					>
 						Text input
 					</span>
@@ -575,32 +575,32 @@ const speedTestTool = getToolById('reading-speed-test');
 					<output
 						id="metric-word-count"
 						aria-live="polite"
-						class="font-sans text-xl leading-[28px] font-semibold tracking-[-1px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[32px] lg:text-[28px] dark:text-ink"
+						class="font-sans text-xl leading-[28px] font-semibold tracking-[-1px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[32px] lg:text-[28px] dark:text-ink"
 					>
 						0
 					</output>
-					<span class="text-[14px] text-[#1F2937] dark:text-body">words</span>
+					<span class="text-[14px] text-[#e2f5ee] dark:text-body">words</span>
 				</div>
 				<div>
-					<div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-[#1F2937] sm:gap-4 dark:text-mute">
-						<span><strong id="metric-char-count" class="font-medium text-[#111827] tabular-nums dark:text-ink">0</strong> characters</span>
-						<span><strong id="metric-sentence-count" class="font-medium text-[#111827] tabular-nums dark:text-ink">0</strong> sentences</span>
+					<div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-[#e2f5ee]/85 sm:gap-4 dark:text-mute">
+						<span><strong id="metric-char-count" class="font-semibold text-white tabular-nums dark:text-ink">0</strong> characters</span>
+						<span><strong id="metric-sentence-count" class="font-semibold text-white tabular-nums dark:text-ink">0</strong> sentences</span>
 					</div>
-					<p id="metric-count-estimated-note" class="mt-0.5 hidden text-[11px] text-[#1F2937] dark:text-mute">
+					<p id="metric-count-estimated-note" class="mt-0.5 hidden text-[11px] text-[#e2f5ee]/75 dark:text-mute">
 						Estimated from word count
 					</p>
 				</div>
 			</article>
 
 			<!-- Stat 4: Reading level -->
-			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
+			<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3.5 sm:p-5 lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none dark:border-hairline dark:bg-canvas-elevated dark:lg:bg-transparent">
 				<div class="flex items-center justify-between gap-2">
-					<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">
+					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
 						Reading level
 					</span>
 					<span
 						id="difficulty-dot"
-						class="inline-block h-2 w-2 rounded-full bg-mute"
+						class="inline-block h-2 w-2 rounded-full bg-[#afe3d0]"
 						aria-hidden="true"
 					></span>
 				</div>
@@ -608,12 +608,12 @@ const speedTestTool = getToolById('reading-speed-test');
 					<output
 						id="metric-difficulty-badge"
 						aria-live="polite"
-						class="text-xl leading-[28px] font-semibold tracking-[-0.5px] text-[#111827] sm:text-2xl sm:leading-[32px] lg:text-[28px] dark:text-ink"
+						class="text-xl leading-[28px] font-semibold tracking-[-0.5px] text-[#afe3d0] sm:text-2xl sm:leading-[32px] lg:text-[28px] dark:text-ink"
 					>
 						—
 					</output>
 				</div>
-				<p id="metric-difficulty-detail" class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
+				<p id="metric-difficulty-detail" class="text-[12px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
 					Paste text to check reading level
 				</p>
 			</article>
@@ -673,7 +673,7 @@ const speedTestTool = getToolById('reading-speed-test');
 			<button
 				type="button"
 				id="btn-copy-result"
-				class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1 text-[13px] font-medium text-ink transition-colors hover:border-ink hover:bg-hairline-soft"
+				class="cursor-pointer rounded-sm border border-[#5ec4a3] bg-[#afe3d0] px-3.5 py-1.5 text-[13px] font-semibold text-[#0f2e26] transition-all hover:bg-[#c5eedf] dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:border-ink dark:hover:bg-hairline-soft"
 			>
 				Copy result
 			</button>

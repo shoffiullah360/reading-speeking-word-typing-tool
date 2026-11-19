@@ -290,7 +290,7 @@ const speechTool = getToolById('speech-time-calculator');
 				<button
 					type="button"
 					id="rst-btn-start-test"
-					class="cursor-pointer inline-flex h-11 items-center justify-center gap-2 rounded-pill bg-primary px-7 text-[14px] font-medium text-on-primary transition-opacity hover:opacity-90"
+					class="cursor-pointer inline-flex h-11 items-center justify-center gap-2 rounded-pill bg-primary px-7 text-[14px] font-semibold text-on-primary transition-opacity hover:opacity-90"
 				>
 					<span>Start Reading Test</span>
 				</button>
@@ -385,7 +385,7 @@ const speechTool = getToolById('speech-time-calculator');
 						<button
 							type="button"
 							id="rst-btn-finish-reading"
-							class="w-full cursor-pointer inline-flex h-11 items-center justify-center gap-2 rounded-pill bg-vercel-blue px-7 text-[14px] font-medium text-[#F3F6FA] transition-colors hover:bg-vercel-blue-deep sm:w-auto"
+							class="w-full cursor-pointer inline-flex h-11 items-center justify-center gap-2 rounded-pill bg-[#afe3d0] px-7 text-[14px] font-semibold text-[#0f2e26] transition-colors hover:bg-[#c5eedf] sm:w-auto dark:bg-vercel-blue dark:text-[#F3F6FA] dark:hover:bg-vercel-blue-deep"
 						>
 							<span>Finish Reading</span>
 						</button>
@@ -505,7 +505,7 @@ const speechTool = getToolById('speech-time-calculator');
 						<button
 							type="button"
 							id="rst-rsvp-finish-btn"
-							class="cursor-pointer inline-flex h-10 items-center gap-2 rounded-pill bg-vercel-blue px-6 text-[14px] font-medium text-[#F3F6FA] transition-colors hover:bg-vercel-blue-deep"
+							class="cursor-pointer inline-flex h-10 items-center gap-2 rounded-pill bg-[#afe3d0] px-6 text-[14px] font-semibold text-[#0f2e26] transition-colors hover:bg-[#c5eedf] dark:bg-vercel-blue dark:text-[#F3F6FA] dark:hover:bg-vercel-blue-deep"
 						>
 							<span>Finish Session</span>
 						</button>
@@ -574,67 +574,67 @@ const speechTool = getToolById('speech-time-calculator');
 				class="grid grid-cols-2 gap-3 sm:grid-cols-4"
 			>
 				<!-- KPI 1: Raw Speed (WPM) -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-4 sm:p-5 dark:border-hairline dark:bg-canvas-elevated">
-					<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Raw Speed</span>
+				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-4 sm:p-5 dark:border-hairline dark:bg-canvas-elevated">
+					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">Raw Speed</span>
 					<div class="my-2 flex items-baseline gap-1.5">
 						<output
 							id="rst-res-raw-wpm"
-							class="font-sans text-[28px] leading-[34px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
+							class="font-sans text-[28px] leading-[34px] font-semibold tracking-[-0.8px] text-[#afe3d0] tabular-nums dark:text-ink"
 						>
 							250
 						</output>
-						<span class="text-[13px] text-[#1F2937] dark:text-body">WPM</span>
+						<span class="text-[13px] text-[#e2f5ee] dark:text-body">WPM</span>
 					</div>
-					<p id="rst-res-raw-sub" class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
+					<p id="rst-res-raw-sub" class="text-[12px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
 						155 words in 37.2s
 					</p>
 				</article>
 
 				<!-- KPI 2: Comprehension (%) -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-4 sm:p-5 dark:border-hairline dark:bg-canvas-elevated">
-					<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Comprehension</span>
+				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-4 sm:p-5 dark:border-hairline dark:bg-canvas-elevated">
+					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">Comprehension</span>
 					<div class="my-2 flex items-baseline gap-1.5">
 						<output
 							id="rst-res-comp-pct"
-							class="font-sans text-[28px] leading-[34px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
+							class="font-sans text-[28px] leading-[34px] font-semibold tracking-[-0.8px] text-[#afe3d0] tabular-nums dark:text-ink"
 						>
 							100%
 						</output>
 					</div>
-					<p id="rst-res-comp-sub" class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
+					<p id="rst-res-comp-sub" class="text-[12px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
 						3 of 3 correct
 					</p>
 				</article>
 
 				<!-- KPI 3: Effective WPM -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-4 sm:p-5 dark:border-hairline dark:bg-canvas-elevated">
-					<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Effective WPM</span>
+				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-4 sm:p-5 dark:border-hairline dark:bg-canvas-elevated">
+					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">Effective WPM</span>
 					<div class="my-2 flex items-baseline gap-1.5">
 						<output
 							id="rst-res-effective-wpm"
-							class="font-sans text-[28px] leading-[34px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
+							class="font-sans text-[28px] leading-[34px] font-semibold tracking-[-0.8px] text-[#afe3d0] tabular-nums dark:text-ink"
 						>
 							250
 						</output>
-						<span class="text-[13px] text-[#1F2937] dark:text-body">WPM</span>
+						<span class="text-[13px] text-[#e2f5ee] dark:text-body">WPM</span>
 					</div>
-					<p id="rst-res-effective-sub" class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
+					<p id="rst-res-effective-sub" class="text-[12px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
 						Raw WPM × accuracy
 					</p>
 				</article>
 
 				<!-- KPI 4: Reader Profile & Percentile -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-4 sm:p-5 dark:border-hairline dark:bg-canvas-elevated">
-					<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Reader Profile</span>
+				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-4 sm:p-5 dark:border-hairline dark:bg-canvas-elevated">
+					<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">Reader Profile</span>
 					<div class="my-2">
 						<output
 							id="rst-res-profile"
-							class="block font-sans text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-[#111827] sm:text-[22px] dark:text-ink"
+							class="block font-sans text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-[#afe3d0] sm:text-[22px] dark:text-ink"
 						>
 							Average Reader
 						</output>
 					</div>
-					<p id="rst-res-percentile" class="text-[12px] text-[#1F2937] tabular-nums dark:text-mute">
+					<p id="rst-res-percentile" class="text-[12px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
 						Faster than 58% of adult readers
 					</p>
 				</article>
@@ -766,14 +766,14 @@ const speechTool = getToolById('speech-time-calculator');
 					<button
 						type="button"
 						id="rst-btn-copy-result"
-						class="cursor-pointer inline-flex h-10 items-center justify-center rounded-pill border border-hairline bg-canvas px-5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+						class="cursor-pointer inline-flex h-10 items-center justify-center rounded-pill border border-[#5ec4a3] bg-[#afe3d0] px-5 text-[13px] font-semibold text-[#0f2e26] transition-colors hover:bg-[#c5eedf] dark:border-hairline dark:bg-canvas dark:font-medium dark:text-ink dark:hover:bg-hairline-soft"
 					>
 						Copy Result
 					</button>
 					<button
 						type="button"
 						id="rst-btn-take-another"
-						class="cursor-pointer inline-flex h-10 items-center justify-center rounded-pill bg-primary px-6 text-[13px] font-medium text-on-primary transition-opacity hover:opacity-90"
+						class="cursor-pointer inline-flex h-10 items-center justify-center rounded-pill bg-primary px-6 text-[13px] font-semibold text-on-primary transition-opacity hover:opacity-90"
 					>
 						Take Another Test
 					</button>
@@ -1892,7 +1892,7 @@ const speechTool = getToolById('speech-time-calculator');
 					const isChosen = selectedAnswer === oIdx;
 
 					btn.className = isChosen
-						? 'w-full cursor-pointer rounded-sm border border-primary bg-primary px-3.5 py-2.5 text-left text-[13px] font-medium text-on-primary transition-colors flex items-center justify-between gap-2'
+						? 'w-full cursor-pointer rounded-sm border border-[#0f2e26] bg-[#0f2e26] px-3.5 py-2.5 text-left text-[13px] font-semibold text-white transition-colors flex items-center justify-between gap-2 dark:border-primary dark:bg-primary dark:text-on-primary'
 						: 'w-full cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[13px] text-body transition-colors hover:border-ink hover:text-ink flex items-center justify-between gap-2';
 
 					const span = document.createElement('span');

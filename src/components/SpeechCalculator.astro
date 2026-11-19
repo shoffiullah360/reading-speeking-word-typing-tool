@@ -25,7 +25,7 @@
 							aria-selected="true"
 							aria-controls="mode-panel-script"
 							data-mode="script"
-							class="speech-mode-btn cursor-pointer rounded-full bg-[#0f2e26] px-4 py-1.5 text-[13px] font-medium text-[#afe3d0] transition-all dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+							class="speech-mode-btn cursor-pointer rounded-full bg-[#afe3d0] px-4 py-1.5 text-[13px] font-semibold text-[#0f2e26] transition-all"
 						>
 							Paste script
 						</button>
@@ -494,7 +494,7 @@
 				const isMatch = btn.dataset.mode === newMode;
 				btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
 				btn.className = isMatch
-					? 'speech-mode-btn cursor-pointer rounded-full bg-[#0f2e26] px-4 py-1.5 text-[13px] font-medium text-[#afe3d0] transition-all dark:bg-[#afe3d0] dark:text-[#0f2e26]'
+					? 'speech-mode-btn cursor-pointer rounded-full bg-[#afe3d0] px-4 py-1.5 text-[13px] font-semibold text-[#0f2e26] transition-all'
 					: 'speech-mode-btn cursor-pointer rounded-full bg-transparent px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink';
 			});
 

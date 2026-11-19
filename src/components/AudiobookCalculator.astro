@@ -64,7 +64,7 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<button
 							type="button"
 							id="ab-btn-copy-result"
-							class="cursor-pointer rounded-sm px-2.5 py-1 text-[13px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-ink"
+							class="cursor-pointer rounded-sm border border-[#5ec4a3] bg-[#afe3d0] px-2.5 py-1 text-[13px] font-semibold text-[#0f2e26] transition-colors hover:bg-[#c5eedf] dark:border-transparent dark:bg-transparent dark:font-medium dark:text-mute dark:hover:bg-hairline-soft dark:hover:text-ink"
 						>
 							Copy result
 						</button>
@@ -565,17 +565,17 @@ const wordsToPagesTool = getToolById('words-to-pages');
 			</div>
 			</div>
 
-			<!-- 2x2 Mint KPI Output Grid (Directly Beneath the Left Input Card) -->
+			<!-- 2x2 Deep Forest Emerald KPI Output Grid (Directly Beneath the Left Input Card) -->
 			<div class="grid flex-1 grid-cols-2 gap-3">
 				<!-- Stat 1: Adjusted listening time -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
+				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
 					<div class="flex items-center justify-between gap-2">
-						<span class="text-[12px] font-medium text-[#1F2937] dark:text-body">
+						<span class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
 							Adjusted listening time
 						</span>
 						<span
 							id="ab-badge-speed"
-							class="shrink-0 rounded-full border border-[#7ED4B6] bg-white/65 px-2 py-0.5 text-[11px] font-medium text-[#111827] tabular-nums dark:border-transparent dark:bg-hairline-soft dark:text-ink"
+							class="shrink-0 rounded-full border border-[#1d463b] bg-[#153d33] px-2 py-0.5 text-[11px] font-medium text-[#afe3d0] tabular-nums dark:border-transparent dark:bg-hairline-soft dark:text-ink"
 						>
 							At 1.0x speed
 						</span>
@@ -584,25 +584,25 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<output
 							id="ab-metric-adjusted-time"
 							aria-live="polite"
-							class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
+							class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
 						>
 							0 hr 0 min
 						</output>
 					</div>
-					<p id="ab-metric-adjusted-sub" class="truncate text-[11px] text-[#1F2937] tabular-nums dark:text-mute">
+					<p id="ab-metric-adjusted-sub" class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
 						0 total minutes of listening
 					</p>
 				</article>
 
 				<!-- Stat 2: Time saved (or added) -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
+				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
 					<div class="flex items-center justify-between gap-2">
-						<span id="ab-label-saved" class="text-[12px] font-medium text-[#1F2937] dark:text-body">
+						<span id="ab-label-saved" class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
 							Time saved
 						</span>
 						<span
 							id="ab-badge-saved-pct"
-							class="shrink-0 text-[11px] text-[#1F2937] tabular-nums dark:text-mute"
+							class="shrink-0 text-[11px] text-[#afe3d0]/80 tabular-nums dark:text-mute"
 						>
 							Original pace
 						</span>
@@ -611,23 +611,23 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<output
 							id="ab-metric-time-saved"
 							aria-live="polite"
-							class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
+							class="font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
 						>
 							0 min
 						</output>
 					</div>
-					<p id="ab-metric-saved-sub" class="truncate text-[11px] text-[#1F2937] tabular-nums dark:text-mute">
+					<p id="ab-metric-saved-sub" class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
 						Compared to 0 hr 0 min at 1.0x
 					</p>
 				</article>
 
 				<!-- Stat 3: Original 1.0x length -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
+				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
 					<div class="flex items-center justify-between gap-2">
-						<span class="text-[12px] font-medium text-[#1F2937] dark:text-body">
+						<span class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
 							Original 1.0x length
 						</span>
-						<span id="ab-badge-mode" class="shrink-0 text-[11px] text-[#1F2937] dark:text-mute">
+						<span id="ab-badge-mode" class="shrink-0 text-[11px] text-[#afe3d0]/80 dark:text-mute">
 							By length
 						</span>
 					</div>
@@ -635,23 +635,23 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<output
 							id="ab-metric-base-time"
 							aria-live="polite"
-							class="block font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
+							class="block font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
 						>
 							0 hr 0 min
 						</output>
 					</div>
-					<p id="ab-metric-words-est" class="truncate text-[11px] text-[#1F2937] tabular-nums dark:text-mute">
+					<p id="ab-metric-words-est" class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
 						0 words · 0 pages
 					</p>
 				</article>
 
 				<!-- Stat 4: Daily listening schedule preview -->
-				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#7ED4B6] bg-[#AFE3D0] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
+				<article class="kpi-card whisper-shadow flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-3 sm:p-3.5 dark:border-hairline dark:bg-canvas-elevated">
 					<div class="flex items-center justify-between gap-2">
-						<span class="text-[12px] font-medium text-[#1F2937] dark:text-body">
+						<span class="text-[12px] font-medium text-[#e2f5ee] dark:text-body">
 							Daily finish estimate
 						</span>
-						<span id="ab-metric-daily-label" class="shrink-0 text-[11px] text-[#1F2937] tabular-nums dark:text-mute">
+						<span id="ab-metric-daily-label" class="shrink-0 text-[11px] text-[#afe3d0]/80 tabular-nums dark:text-mute">
 							At 0 min/day
 						</span>
 					</div>
@@ -659,12 +659,12 @@ const wordsToPagesTool = getToolById('words-to-pages');
 						<output
 							id="ab-metric-days-45"
 							aria-live="polite"
-							class="block font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#111827] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
+							class="block font-sans text-xl leading-[26px] font-semibold tracking-[-0.6px] text-[#afe3d0] tabular-nums sm:text-2xl sm:leading-[30px] dark:text-ink"
 						>
 							0 days
 						</output>
 					</div>
-					<p id="ab-metric-days-sub" class="truncate text-[11px] text-[#1F2937] tabular-nums dark:text-mute">
+					<p id="ab-metric-days-sub" class="truncate text-[11px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
 						—
 					</p>
 				</article>
