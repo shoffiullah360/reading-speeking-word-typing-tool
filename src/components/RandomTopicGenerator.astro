@@ -11,138 +11,135 @@ const speechTimeTool = getToolById('speech-time-calculator');
 	aria-label="Random Topic Generator Workspace"
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
-	<!-- 1. Clean Top Control Strip (Single Unified Filter Card) -->
-	<div class="whisper-shadow mb-6 rounded-md border border-hairline bg-canvas-elevated p-4 sm:p-5">
+	<!-- 1. Top Command Deck (#0f2e26 Deep Forest Emerald Control Header) -->
+	<div class="mb-6 rounded-2xl border border-[#afe3d0]/25 bg-[#0f2e26] p-4 text-white shadow-lg sm:p-6">
 		<!-- Row 1: Purpose Mode Pills -->
-		<div class="flex flex-wrap items-center gap-1.5 border-b border-hairline pb-3.5" role="tablist" aria-label="Topic purpose modes">
+		<div class="flex flex-wrap items-center gap-2 border-b border-[#afe3d0]/15 pb-4" role="tablist" aria-label="Topic purpose modes">
 			<button
 				type="button"
-				role="tab"
 				data-rtg-mode="All"
 				aria-selected="true"
-				class="rtg-mode-pill cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-3.5 py-1.5 text-[13px] font-semibold text-[#111827] transition-colors"
+				class="rtg-mode-pill cursor-pointer rounded-xl border border-[#afe3d0] bg-[#afe3d0] px-4 py-2 text-[13px] font-semibold text-[#0f2e26] shadow-2xs transition-all"
 			>
 				All
 			</button>
 			<button
 				type="button"
-				role="tab"
 				data-rtg-mode="Essay & Academic"
 				aria-selected="false"
-				class="rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+				class="rtg-mode-pill cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-white/85 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.12] hover:text-white"
 			>
 				Essay &amp; Academic
 			</button>
 			<button
 				type="button"
-				role="tab"
 				data-rtg-mode="Speech & Debate"
 				aria-selected="false"
-				class="rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+				class="rtg-mode-pill cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-white/85 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.12] hover:text-white"
 			>
 				Speech &amp; Debate
 			</button>
 			<button
 				type="button"
-				role="tab"
 				data-rtg-mode="Conversation & Icebreakers"
 				aria-selected="false"
-				class="rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+				class="rtg-mode-pill cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-white/85 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.12] hover:text-white"
 			>
 				Conversation &amp; Icebreakers
 			</button>
 			<button
 				type="button"
-				role="tab"
 				data-rtg-mode="Creative Writing"
 				aria-selected="false"
-				class="rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+				class="rtg-mode-pill cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-white/85 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.12] hover:text-white"
 			>
 				Creative Writing
 			</button>
 			<button
 				type="button"
-				role="tab"
 				data-rtg-mode="Single-Word"
 				aria-selected="false"
-				class="rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+				class="rtg-mode-pill cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-white/85 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.12] hover:text-white"
 			>
 				Single-Word
 			</button>
 		</div>
 
 		<!-- Row 2: Compact Inline Dropdowns & View Toggle -->
-		<div class="mt-3.5 flex flex-wrap items-center justify-between gap-3">
-			<div class="flex flex-wrap items-center gap-2.5">
+		<div class="mt-4 flex flex-wrap items-center justify-between gap-3.5">
+			<div class="flex flex-wrap items-center gap-3">
 				<!-- Category Select -->
-				<div class="flex items-center gap-1.5">
-					<label for="rtg-select-category" class="text-[12px] font-medium text-mute">Category</label>
+				<div class="flex items-center gap-2">
+					<label for="rtg-select-category" class="text-[12px] font-medium text-[#afe3d0]/80">Category</label>
 					<select
 						id="rtg-select-category"
-						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-[13px] font-medium text-ink focus:border-[#0D9488] focus:outline-none"
+						style="background-color: #163d33; color: #ffffff; border-color: rgba(175, 227, 208, 0.3);"
+						class="cursor-pointer rounded-lg border px-3 py-1.5 text-[13px] font-medium text-white transition-colors focus:border-[#afe3d0] focus:outline-none"
 					>
-						<option value="All Categories">All Categories</option>
-						<option value="Technology & AI">Technology &amp; AI</option>
-						<option value="Science & Health">Science &amp; Health</option>
-						<option value="Psychology & Philosophy">Psychology &amp; Philosophy</option>
-						<option value="Business & Career">Business &amp; Career</option>
-						<option value="Education & Society">Education &amp; Society</option>
-						<option value="Culture & History">Culture &amp; History</option>
-						<option value="Fun & Random">Fun &amp; Random</option>
+						<option value="All Categories" class="bg-[#0f2e26] text-white">All Categories</option>
+						<option value="Technology & AI" class="bg-[#0f2e26] text-white">Technology &amp; AI</option>
+						<option value="Science & Health" class="bg-[#0f2e26] text-white">Science &amp; Health</option>
+						<option value="Psychology & Philosophy" class="bg-[#0f2e26] text-white">Psychology &amp; Philosophy</option>
+						<option value="Business & Career" class="bg-[#0f2e26] text-white">Business &amp; Career</option>
+						<option value="Education & Society" class="bg-[#0f2e26] text-white">Education &amp; Society</option>
+						<option value="Culture & History" class="bg-[#0f2e26] text-white">Culture &amp; History</option>
+						<option value="Fun & Random" class="bg-[#0f2e26] text-white">Fun &amp; Random</option>
 					</select>
 				</div>
 
 				<!-- Level Select -->
-				<div class="flex items-center gap-1.5">
-					<label for="rtg-select-level" class="text-[12px] font-medium text-mute">Level</label>
+				<div class="flex items-center gap-2">
+					<label for="rtg-select-level" class="text-[12px] font-medium text-[#afe3d0]/80">Level</label>
 					<select
 						id="rtg-select-level"
-						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-[13px] font-medium text-ink focus:border-[#0D9488] focus:outline-none"
+						style="background-color: #163d33; color: #ffffff; border-color: rgba(175, 227, 208, 0.3);"
+						class="cursor-pointer rounded-lg border px-3 py-1.5 text-[13px] font-medium text-white transition-colors focus:border-[#afe3d0] focus:outline-none"
 					>
-						<option value="Any Level">Any Level</option>
-						<option value="Easy">Easy</option>
-						<option value="Medium">Medium</option>
-						<option value="Hard">Hard</option>
+						<option value="Any Level" class="bg-[#0f2e26] text-white">Any Level</option>
+						<option value="Easy" class="bg-[#0f2e26] text-white">Easy</option>
+						<option value="Medium" class="bg-[#0f2e26] text-white">Medium</option>
+						<option value="Hard" class="bg-[#0f2e26] text-white">Hard</option>
 					</select>
 				</div>
 
 				<!-- Perspective Lens Select -->
-				<div class="flex items-center gap-1.5">
-					<label for="rtg-select-lens" class="text-[12px] font-medium text-mute">Lens</label>
+				<div class="flex items-center gap-2">
+					<label for="rtg-select-lens" class="text-[12px] font-medium text-[#afe3d0]/80">Lens</label>
 					<select
 						id="rtg-select-lens"
-						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1.5 text-[13px] font-medium text-ink focus:border-[#0D9488] focus:outline-none"
+						style="background-color: #163d33; color: #ffffff; border-color: rgba(175, 227, 208, 0.3);"
+						class="cursor-pointer rounded-lg border px-3 py-1.5 text-[13px] font-medium text-white transition-colors focus:border-[#afe3d0] focus:outline-none"
 					>
-						<option value="Straight">Straight</option>
-						<option value="Devil's Advocate">Devil's Advocate</option>
-						<option value="ELI5 (Simple)">ELI5 (Simple)</option>
-						<option value="Pitch It">Pitch It</option>
-						<option value="Storytime">Storytime</option>
+						<option value="Straight" class="bg-[#0f2e26] text-white">Straight</option>
+						<option value="Devil's Advocate" class="bg-[#0f2e26] text-white">Devil's Advocate</option>
+						<option value="ELI5 (Simple)" class="bg-[#0f2e26] text-white">ELI5 (Simple)</option>
+						<option value="Pitch It" class="bg-[#0f2e26] text-white">Pitch It</option>
+						<option value="Storytime" class="bg-[#0f2e26] text-white">Storytime</option>
 					</select>
 				</div>
 			</div>
 
 			<!-- Right Controls: View Mode Toggle + No Repeats + Pool Count -->
 			<div class="flex flex-wrap items-center gap-3">
-				<label class="inline-flex cursor-pointer items-center gap-1.5 text-[12px] font-medium text-body select-none">
+				<label class="inline-flex cursor-pointer items-center gap-2 text-[12px] font-medium text-white/90 select-none">
 					<input
 						type="checkbox"
 						id="rtg-no-repeats"
 						checked
-						class="h-3.5 w-3.5 cursor-pointer rounded border-hairline accent-[#0D9488]"
+						class="h-3.5 w-3.5 cursor-pointer rounded border-[#afe3d0]/40 accent-[#afe3d0]"
 					/>
 					<span>No Repeats</span>
-					<span id="rtg-pool-count" class="rounded-full border border-hairline bg-canvas px-2 py-0.5 text-[11px] font-medium text-mute tabular-nums">
+					<span id="rtg-pool-count" class="rounded-full border border-[#afe3d0]/30 bg-white/[0.08] px-2.5 py-0.5 text-[11px] font-medium text-[#afe3d0] tabular-nums">
 						140 matching topics
 					</span>
 				</label>
 
-				<div class="inline-flex rounded-sm border border-hairline bg-canvas p-0.5" role="group" aria-label="View mode">
+				<div class="inline-flex rounded-xl border border-[#afe3d0]/25 bg-black/20 p-1" role="group" aria-label="View mode">
 					<button
 						type="button"
 						id="rtg-view-single"
 						aria-pressed="true"
-						class="cursor-pointer rounded-[4px] bg-[#AFE3D0] px-2.5 py-1 text-[12px] font-semibold text-[#111827] transition-colors"
+						class="cursor-pointer rounded-lg bg-[#afe3d0] px-3 py-1 text-[12px] font-semibold text-[#0f2e26] transition-all"
 					>
 						Single Focus
 					</button>
@@ -150,7 +147,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 						type="button"
 						id="rtg-view-batch"
 						aria-pressed="false"
-						class="cursor-pointer rounded-[4px] px-2.5 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink"
+						class="cursor-pointer rounded-lg px-3 py-1 text-[12px] font-medium text-white/75 transition-all hover:text-white"
 					>
 						Batch (5 Topics)
 					</button>
@@ -159,34 +156,34 @@ const speechTimeTool = getToolById('speech-time-calculator');
 		</div>
 	</div>
 
-	<!-- 2. Center-Stage Topic Spotlight Card -->
-	<div class="whisper-shadow rounded-md border border-hairline bg-canvas-elevated">
+	<!-- 2. Elevated Topic Stage Card -->
+	<div class="whisper-shadow overflow-hidden rounded-2xl border border-[#0f2e26]/15 bg-canvas-elevated dark:border-[#afe3d0]/20">
 		<!-- SINGLE FOCUS MODE -->
 		<div id="rtg-single-panel">
 			<!-- Top Meta Strip -->
-			<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-5 py-3.5 sm:px-7">
+			<div class="flex flex-wrap items-center justify-between gap-2.5 border-b border-[#0f2e26]/10 bg-[#0f2e26]/[0.02] px-6 py-4 sm:px-8 dark:border-[#afe3d0]/15 dark:bg-[#afe3d0]/[0.02]">
 				<div class="flex flex-wrap items-center gap-2">
 					<span
 						id="rtg-badge-mode"
-						class="rounded-full border border-[#5EC4A3] bg-[#AFE3D0] px-3 py-0.5 text-[12px] font-semibold text-[#111827]"
+						class="rounded-full border border-[#5EC4A3] bg-[#afe3d0] px-3.5 py-1 text-[12px] font-semibold text-[#0f2e26]"
 					>
 						Essay &amp; Academic
 					</span>
 					<span
 						id="rtg-badge-category"
-						class="rounded-full border border-hairline bg-canvas px-2.5 py-0.5 text-[12px] font-medium text-body"
+						class="rounded-full border border-[#0f2e26]/15 bg-canvas px-3 py-1 text-[12px] font-medium text-ink dark:border-[#afe3d0]/20"
 					>
 						Education &amp; Society
 					</span>
 					<span
 						id="rtg-badge-level"
-						class="rounded-full border border-hairline bg-canvas px-2.5 py-0.5 text-[12px] font-medium text-mute"
+						class="rounded-full border border-[#0f2e26]/15 bg-canvas px-3 py-1 text-[12px] font-medium text-mute dark:border-[#afe3d0]/20"
 					>
 						Medium
 					</span>
 					<span
 						id="rtg-badge-lens"
-						class="hidden rounded-full border border-[#5EC4A3] bg-[#E6F7F1] px-2.5 py-0.5 text-[12px] font-medium text-[#0F766E] dark:border-hairline dark:bg-canvas dark:text-ink"
+						class="hidden rounded-full border border-[#5EC4A3] bg-[#E6F7F1] px-3 py-1 text-[12px] font-semibold text-[#0f2e26] dark:border-[#afe3d0]/30 dark:bg-[#0f2e26] dark:text-[#afe3d0]"
 					>
 						Lens: Straight
 					</span>
@@ -197,14 +194,14 @@ const speechTimeTool = getToolById('speech-time-calculator');
 						type="button"
 						id="rtg-btn-prep-toggle"
 						aria-expanded="false"
-						class="cursor-pointer rounded-full border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-body transition-colors hover:border-[#5EC4A3] hover:text-ink"
+						class="cursor-pointer rounded-full border border-[#0f2e26]/15 bg-canvas px-3 py-1 text-[12px] font-medium text-body transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] dark:border-[#afe3d0]/20 dark:hover:border-[#afe3d0]/40 dark:hover:text-[#afe3d0]"
 					>
 						PREP Framework
 					</button>
 					<button
 						type="button"
 						id="rtg-btn-todays-topic"
-						class="cursor-pointer rounded-full border border-hairline bg-canvas px-3 py-1 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+						class="cursor-pointer rounded-full border border-[#0f2e26]/20 bg-[#0f2e26]/[0.05] px-3.5 py-1 text-[12px] font-semibold text-[#0f2e26] transition-all hover:bg-[#afe3d0] dark:border-[#afe3d0]/25 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0] dark:hover:bg-[#afe3d0] dark:hover:text-[#0f2e26]"
 					>
 						Today's Topic
 					</button>
@@ -212,40 +209,40 @@ const speechTimeTool = getToolById('speech-time-calculator');
 			</div>
 
 			<!-- Spotlight Body -->
-			<div class="px-5 py-7 sm:px-7 sm:py-9">
+			<div class="px-6 py-8 sm:px-8 sm:py-10">
 				<!-- Optional Perspective Lens Framing Cue -->
-				<p id="rtg-lens-instruction" class="mb-2.5 hidden text-[13px] font-medium text-[#0F766E] dark:text-[#AFE3D0]"></p>
+				<p id="rtg-lens-instruction" class="mb-3 hidden text-[13px] font-semibold text-[#0F766E] dark:text-[#afe3d0]"></p>
 
 				<!-- Large Crisp Topic Prompt Headline -->
 				<blockquote
 					id="rtg-topic-title"
 					aria-live="polite"
-					class="font-sans text-2xl leading-[1.3] font-bold tracking-[-0.5px] text-ink sm:text-3xl sm:leading-[1.28]"
+					class="font-sans text-2xl leading-snug font-bold tracking-tight text-ink sm:text-3xl"
 				>
 					Should universities evaluate students primarily through long-form research projects rather than timed examinations?
 				</blockquote>
 
-				<!-- Angles & Talking Points Box -->
-				<div class="mt-6 rounded-sm border border-hairline bg-canvas p-4 sm:p-5">
+				<!-- Angles & Talking Points Callout Panel -->
+				<div class="mt-7 rounded-r-xl border border-[#0f2e26]/10 border-l-4 border-l-[#0f2e26] bg-[#0f2e26]/[0.03] p-5 sm:p-6 dark:border-[#afe3d0]/15 dark:border-l-[#afe3d0] dark:bg-[#afe3d0]/[0.05]">
 					<div class="flex items-center justify-between gap-2">
-						<p id="rtg-points-heading" class="text-[13px] font-semibold text-ink">
+						<p id="rtg-points-heading" class="text-[13px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]">
 							Angles &amp; talking points
 						</p>
-						<span id="rtg-seen-counter" class="text-[12px] text-mute tabular-nums">
+						<span id="rtg-seen-counter" class="rounded-full bg-[#0f2e26]/[0.06] px-2.5 py-0.5 text-[12px] font-medium text-mute tabular-nums dark:bg-white/[0.06]">
 							1 of 140 seen
 						</span>
 					</div>
-					<ul id="rtg-topic-points" class="mt-2.5 space-y-2 text-[14px] leading-[22px] text-body">
-						<li class="flex items-start gap-2">
-							<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]"></span>
+					<ul id="rtg-topic-points" class="mt-3 space-y-2.5 text-[14px] leading-[22px] text-body">
+						<li class="flex items-start gap-2.5">
+							<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"></span>
 							<span>Compare how timed exams measure short-term recall under pressure versus how extended research tests synthesis and revision.</span>
 						</li>
-						<li class="flex items-start gap-2">
-							<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]"></span>
+						<li class="flex items-start gap-2.5">
+							<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"></span>
 							<span>Address academic integrity challenges in an era of generative AI and how oral defenses could verify original work.</span>
 						</li>
-						<li class="flex items-start gap-2">
-							<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]"></span>
+						<li class="flex items-start gap-2.5">
+							<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"></span>
 							<span>Consider whether high-stakes professions like medicine and aviation still require rapid, unassisted recall under time constraints.</span>
 						</li>
 					</ul>
@@ -254,41 +251,41 @@ const speechTimeTool = getToolById('speech-time-calculator');
 				<!-- Collapsible PREP Structure Strip -->
 				<div
 					id="rtg-prep-strip"
-					class="mt-4 hidden rounded-sm border border-[#7ED4B6] bg-[#E6F7F1]/60 p-4 dark:border-hairline dark:bg-canvas"
+					class="mt-5 hidden rounded-xl border border-[#7ED4B6] bg-[#E6F7F1]/70 p-5 dark:border-[#afe3d0]/25 dark:bg-[#0f2e26]/40"
 				>
-					<div class="mb-2 flex items-center justify-between">
-						<span class="text-[12px] font-semibold text-ink">
+					<div class="mb-3 flex items-center justify-between">
+						<span class="text-[12px] font-semibold text-[#0f2e26] dark:text-[#afe3d0]">
 							PREP Speaking &amp; Essay Structure (Point · Reason · Example · Point)
 						</span>
-						<span class="text-[11px] text-mute">60–90 sec framework</span>
+						<span class="text-[11px] font-medium text-mute">60–90 sec framework</span>
 					</div>
-					<div class="grid grid-cols-1 gap-2.5 text-[13px] sm:grid-cols-4">
-						<div class="rounded-sm border border-hairline bg-canvas-elevated p-2.5">
+					<div class="grid grid-cols-1 gap-3 text-[13px] sm:grid-cols-4">
+						<div class="rounded-lg border border-[#0f2e26]/10 bg-canvas-elevated p-3 dark:border-[#afe3d0]/15">
 							<strong class="block text-ink">1. Point</strong>
-							<span class="text-[12px] text-body">State your core thesis or direct answer in one clear sentence.</span>
+							<span class="mt-0.5 block text-[12px] text-body">State your core thesis or direct answer in one clear sentence.</span>
 						</div>
-						<div class="rounded-sm border border-hairline bg-canvas-elevated p-2.5">
+						<div class="rounded-lg border border-[#0f2e26]/10 bg-canvas-elevated p-3 dark:border-[#afe3d0]/15">
 							<strong class="block text-ink">2. Reason</strong>
-							<span class="text-[12px] text-body">Explain the primary cause, mechanism, or principle behind your claim.</span>
+							<span class="mt-0.5 block text-[12px] text-body">Explain the primary cause, mechanism, or principle behind your claim.</span>
 						</div>
-						<div class="rounded-sm border border-hairline bg-canvas-elevated p-2.5">
+						<div class="rounded-lg border border-[#0f2e26]/10 bg-canvas-elevated p-3 dark:border-[#afe3d0]/15">
 							<strong class="block text-ink">3. Example</strong>
-							<span class="text-[12px] text-body">Anchor your argument with a concrete story, case study, or statistic.</span>
+							<span class="mt-0.5 block text-[12px] text-body">Anchor your argument with a concrete story, case study, or statistic.</span>
 						</div>
-						<div class="rounded-sm border border-hairline bg-canvas-elevated p-2.5">
+						<div class="rounded-lg border border-[#0f2e26]/10 bg-canvas-elevated p-3 dark:border-[#afe3d0]/15">
 							<strong class="block text-ink">4. Point</strong>
-							<span class="text-[12px] text-body">Restate your conclusion so the audience leaves with a memorable takeaway.</span>
+							<span class="mt-0.5 block text-[12px] text-body">Restate your conclusion so the audience leaves with a memorable takeaway.</span>
 						</div>
 					</div>
 				</div>
 
 				<!-- Primary Action Bar -->
-				<div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+				<div class="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-[#0f2e26]/10 pt-5 dark:border-[#afe3d0]/15">
 					<div class="flex flex-wrap items-center gap-2.5">
 						<button
 							type="button"
 							id="rtg-btn-generate"
-							class="inline-flex cursor-pointer items-center gap-2 rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-4 py-2.5 text-[14px] font-semibold text-[#111827] transition-opacity hover:opacity-90"
+							class="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#0f2e26] px-6 py-3 text-[14px] font-semibold text-[#afe3d0] shadow-sm transition hover:opacity-95 dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 						>
 							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 								<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
@@ -304,7 +301,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 						<button
 							type="button"
 							id="rtg-btn-copy-single"
-							class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-[#0f2e26]/15 bg-canvas px-4 py-3 text-[13px] font-medium text-ink transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] dark:border-[#afe3d0]/20 dark:hover:border-[#afe3d0]/40 dark:hover:bg-[#0f2e26]/40 dark:hover:text-[#afe3d0]"
 						>
 							<svg class="h-4 w-4 text-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 								<rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
@@ -316,7 +313,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 						<button
 							type="button"
 							id="rtg-btn-save-single"
-							class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-[#0f2e26]/15 bg-canvas px-4 py-3 text-[13px] font-medium text-ink transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] dark:border-[#afe3d0]/20 dark:hover:border-[#afe3d0]/40 dark:hover:bg-[#0f2e26]/40 dark:hover:text-[#afe3d0]"
 						>
 							<svg class="h-4 w-4 text-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 								<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
@@ -327,7 +324,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 						<button
 							type="button"
 							id="rtg-btn-copy-link"
-							class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-[#0f2e26]/15 bg-canvas px-4 py-3 text-[13px] font-medium text-ink transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] dark:border-[#afe3d0]/20 dark:hover:border-[#afe3d0]/40 dark:hover:bg-[#0f2e26]/40 dark:hover:text-[#afe3d0]"
 						>
 							<svg class="h-4 w-4 text-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 								<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
@@ -338,7 +335,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 					</div>
 
 					<span id="rtg-status-toast" class="text-[12px] text-mute">
-						Press <kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-ink">Space</kbd> for next topic
+						Press <kbd class="rounded-md border border-[#0f2e26]/20 bg-canvas px-2 py-0.5 text-[11px] font-semibold text-ink dark:border-[#afe3d0]/25">Space</kbd> for next topic
 					</span>
 				</div>
 			</div>
@@ -346,9 +343,9 @@ const speechTimeTool = getToolById('speech-time-calculator');
 
 		<!-- BATCH (5 TOPICS) MODE -->
 		<div id="rtg-batch-panel" class="hidden">
-			<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline px-5 py-3.5 sm:px-7">
-				<div class="flex items-center gap-2">
-					<span class="rounded-full border border-[#5EC4A3] bg-[#AFE3D0] px-3 py-0.5 text-[12px] font-semibold text-[#111827]">
+			<div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#0f2e26]/10 bg-[#0f2e26]/[0.02] px-6 py-4 sm:px-8 dark:border-[#afe3d0]/15 dark:bg-[#afe3d0]/[0.02]">
+				<div class="flex flex-wrap items-center gap-2.5">
+					<span class="rounded-full border border-[#5EC4A3] bg-[#afe3d0] px-3.5 py-1 text-[12px] font-semibold text-[#0f2e26]">
 						Batch View (5 Topics)
 					</span>
 					<span class="text-[12px] text-mute">
@@ -357,29 +354,29 @@ const speechTimeTool = getToolById('speech-time-calculator');
 				</div>
 			</div>
 
-			<div class="p-5 sm:p-7">
+			<div class="p-6 sm:p-8">
 				<ul id="rtg-batch-list" class="space-y-3" aria-label="Batch generated topics"></ul>
 
-				<div class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-hairline pt-4">
+				<div class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#0f2e26]/10 pt-5 dark:border-[#afe3d0]/15">
 					<div class="flex flex-wrap items-center gap-2.5">
 						<button
 							type="button"
 							id="rtg-btn-generate-batch"
-							class="inline-flex cursor-pointer items-center gap-2 rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-4 py-2.5 text-[14px] font-semibold text-[#111827] transition-opacity hover:opacity-90"
+							class="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[#0f2e26] px-5 py-2.5 text-[14px] font-semibold text-[#afe3d0] shadow-sm transition hover:opacity-95 dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 						>
 							Generate 5 New
 						</button>
 						<button
 							type="button"
 							id="rtg-btn-copy-batch"
-							class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-[#0f2e26]/15 bg-canvas px-4 py-2.5 text-[13px] font-medium text-ink transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] dark:border-[#afe3d0]/20 dark:hover:border-[#afe3d0]/40"
 						>
 							Copy All 5
 						</button>
 						<button
 							type="button"
 							id="rtg-btn-download-batch"
-							class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-[#0f2e26]/15 bg-canvas px-4 py-2.5 text-[13px] font-medium text-ink transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] dark:border-[#afe3d0]/20 dark:hover:border-[#afe3d0]/40"
 						>
 							Download .txt
 						</button>
@@ -392,98 +389,100 @@ const speechTimeTool = getToolById('speech-time-calculator');
 		</div>
 	</div>
 
-	<!-- 3. Balanced 2-Column Bottom Utility Dock -->
+	<!-- 3. Modern 2-Column Companion Workspace (Practice Timer & Quick Notes + Shortlisted Topics) -->
 	<div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
 		<!-- Left Card: Practice Timer & Quick Notes -->
-		<div class="whisper-shadow flex flex-col justify-between rounded-md border border-hairline bg-canvas-elevated p-5">
+		<div class="whisper-shadow flex flex-col justify-between overflow-hidden rounded-2xl border border-[#0f2e26]/15 bg-canvas-elevated dark:border-[#afe3d0]/20">
 			<div>
-				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline pb-3.5">
+				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#0f2e26]/10 bg-[#0f2e26]/[0.02] px-5 py-4 sm:px-6 dark:border-[#afe3d0]/15 dark:bg-[#afe3d0]/[0.02]">
 					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
 						Practice Timer &amp; Quick Notes
 					</h2>
-					<div class="flex items-center gap-1" role="group" aria-label="Timer presets">
+					<div class="flex items-center gap-1.5" role="group" aria-label="Timer presets">
 						<button
 							type="button"
 							data-rtg-timer="30"
-							class="rtg-timer-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink"
+							class="rtg-timer-preset cursor-pointer rounded-lg border border-[#0f2e26]/15 bg-canvas px-2.5 py-1 text-[12px] font-medium text-mute transition-all hover:border-[#5EC4A3] hover:text-ink dark:border-[#afe3d0]/20"
 						>
 							30s Prep
 						</button>
 						<button
 							type="button"
 							data-rtg-timer="60"
-							class="rtg-timer-preset cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-2 py-1 text-[12px] font-semibold text-[#111827] transition-colors"
+							class="rtg-timer-preset cursor-pointer rounded-lg border border-[#5EC4A3] bg-[#afe3d0] px-2.5 py-1 text-[12px] font-semibold text-[#0f2e26] transition-all"
 						>
 							1 min
 						</button>
 						<button
 							type="button"
 							data-rtg-timer="120"
-							class="rtg-timer-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink"
+							class="rtg-timer-preset cursor-pointer rounded-lg border border-[#0f2e26]/15 bg-canvas px-2.5 py-1 text-[12px] font-medium text-mute transition-all hover:border-[#5EC4A3] hover:text-ink dark:border-[#afe3d0]/20"
 						>
 							2 min
 						</button>
 						<button
 							type="button"
 							data-rtg-timer="300"
-							class="rtg-timer-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink"
+							class="rtg-timer-preset cursor-pointer rounded-lg border border-[#0f2e26]/15 bg-canvas px-2.5 py-1 text-[12px] font-medium text-mute transition-all hover:border-[#5EC4A3] hover:text-ink dark:border-[#afe3d0]/20"
 						>
 							5 min
 						</button>
 					</div>
 				</div>
 
-				<!-- Timer Bar -->
-				<div class="mt-4 flex items-center justify-between rounded-sm border border-hairline bg-canvas px-4 py-3">
-					<div class="flex items-baseline gap-2.5">
-						<span
-							id="rtg-timer-display"
-							class="text-2xl font-bold tracking-tight text-ink tabular-nums sm:text-3xl"
-						>
-							01:00
-						</span>
-						<span id="rtg-timer-state" class="text-[12px] font-medium text-mute">
-							Ready
-						</span>
+				<div class="p-5 sm:p-6">
+					<!-- Digital Timer Readout Bar -->
+					<div class="flex items-center justify-between rounded-xl border border-[#afe3d0]/25 bg-[#0f2e26] px-4 py-3.5 text-white shadow-2xs">
+						<div class="flex items-baseline gap-2.5">
+							<span
+								id="rtg-timer-display"
+								class="text-2xl font-bold tracking-tight text-[#afe3d0] tabular-nums sm:text-3xl"
+							>
+								01:00
+							</span>
+							<span id="rtg-timer-state" class="text-[12px] font-medium text-white/75">
+								Ready
+							</span>
+						</div>
+						<div class="flex items-center gap-2">
+							<button
+								type="button"
+								id="rtg-timer-start"
+								class="cursor-pointer rounded-lg bg-[#afe3d0] px-4 py-1.5 text-[13px] font-semibold text-[#0f2e26] transition-opacity hover:opacity-90"
+							>
+								Start
+							</button>
+							<button
+								type="button"
+								id="rtg-timer-reset"
+								class="cursor-pointer rounded-lg border border-[#afe3d0]/30 bg-white/[0.08] px-3.5 py-1.5 text-[13px] font-medium text-white transition-colors hover:bg-white/[0.15]"
+							>
+								Reset
+							</button>
+						</div>
 					</div>
-					<div class="flex items-center gap-2">
-						<button
-							type="button"
-							id="rtg-timer-start"
-							class="cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-3.5 py-1.5 text-[13px] font-semibold text-[#111827] transition-opacity hover:opacity-90"
-						>
-							Start
-						</button>
-						<button
-							type="button"
-							id="rtg-timer-reset"
-							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
-						>
-							Reset
-						</button>
-					</div>
-				</div>
 
-				<!-- Minimal Quick Notes Scratchpad -->
-				<div class="mt-4">
-					<div class="mb-1.5 flex items-center justify-between">
-						<label for="rtg-notes-input" class="text-[12px] font-medium text-body">
-							Quick outline &amp; opening hook scratchpad
-						</label>
-						<span id="rtg-notes-wordcount" class="text-[12px] text-mute tabular-nums">
-							0 words
-						</span>
+					<!-- Refined Outline Scratchpad -->
+					<div class="mt-4">
+						<div class="mb-1.5 flex items-center justify-between">
+							<label for="rtg-notes-input" class="text-[12px] font-medium text-body">
+								Quick outline &amp; opening hook scratchpad
+							</label>
+							<span id="rtg-notes-wordcount" class="text-[12px] text-mute tabular-nums">
+								0 words
+							</span>
+						</div>
+						<textarea
+							id="rtg-notes-input"
+							rows="4"
+							placeholder="Jot down your opening hook or thesis..."
+							class="w-full resize-y rounded-xl border border-[#0f2e26]/15 bg-canvas p-3.5 text-[13px] leading-[20px] text-ink placeholder:text-mute focus:border-[#0D9488] focus:outline-none dark:border-[#afe3d0]/20"
+						></textarea>
 					</div>
-					<textarea
-						id="rtg-notes-input"
-						rows="4"
-						placeholder="Jot down your opening hook or thesis..."
-						class="w-full resize-y rounded-sm border border-hairline bg-canvas p-3 text-[13px] leading-[20px] text-ink placeholder:text-mute focus:border-[#0D9488] focus:outline-none"
-					></textarea>
 				</div>
 			</div>
 
-			<div class="mt-3 flex items-center justify-between border-t border-hairline pt-3 text-[12px] text-mute">
+			<div class="flex items-center justify-between border-t border-[#0f2e26]/10 px-5 py-3.5 text-[12px] text-mute sm:px-6 dark:border-[#afe3d0]/15">
 				<span>Notes auto-save locally in your browser</span>
 				<button
 					type="button"
@@ -496,53 +495,55 @@ const speechTimeTool = getToolById('speech-time-calculator');
 		</div>
 
 		<!-- Right Card: Shortlisted Topics (Persisted in localStorage) -->
-		<div class="whisper-shadow flex flex-col justify-between rounded-md border border-hairline bg-canvas-elevated p-5">
+		<div class="whisper-shadow flex flex-col justify-between overflow-hidden rounded-2xl border border-[#0f2e26]/15 bg-canvas-elevated dark:border-[#afe3d0]/20">
 			<div>
-				<div class="flex items-center justify-between gap-2 border-b border-hairline pb-3.5">
+				<div class="flex items-center justify-between gap-2 border-b border-[#0f2e26]/10 bg-[#0f2e26]/[0.02] px-5 py-4 sm:px-6 dark:border-[#afe3d0]/15 dark:bg-[#afe3d0]/[0.02]">
 					<h2 class="text-[16px] font-semibold tracking-[-0.3px] text-ink">
 						Shortlisted Topics
 					</h2>
 					<div class="flex items-center gap-2">
 						<span
 							id="rtg-shortlist-count"
-							class="rounded-full border border-hairline bg-canvas px-2.5 py-0.5 text-[12px] font-medium text-ink tabular-nums"
+							class="rounded-full border border-[#5EC4A3] bg-[#afe3d0] px-2.5 py-0.5 text-[12px] font-semibold text-[#0f2e26] tabular-nums"
 						>
 							0 saved
 						</span>
 						<button
 							type="button"
 							id="rtg-btn-clear-shortlist"
-							class="hidden cursor-pointer rounded-sm px-2 py-0.5 text-[12px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-vercel-error"
+							class="hidden cursor-pointer rounded-lg px-2 py-0.5 text-[12px] font-medium text-mute transition-colors hover:bg-hairline-soft hover:text-vercel-error"
 						>
 							Clear
 						</button>
 					</div>
 				</div>
 
-				<!-- Empty State -->
-				<div
-					id="rtg-shortlist-empty"
-					class="mt-4 rounded-sm border border-hairline bg-canvas px-4 py-9 text-center text-[13px] text-mute"
-				>
-					Click <strong class="font-medium text-ink">Save to Shortlist</strong> on any topic to bookmark your favorites for comparison or export.
-				</div>
+				<div class="p-5 sm:p-6">
+					<!-- Empty State -->
+					<div
+						id="rtg-shortlist-empty"
+						class="rounded-xl border border-dashed border-[#0f2e26]/20 bg-canvas px-4 py-10 text-center text-[13px] text-mute dark:border-[#afe3d0]/20"
+					>
+						Click <strong class="font-semibold text-ink">Save to Shortlist</strong> on any topic to bookmark your favorites for comparison or export.
+					</div>
 
-				<!-- Scrollable Shortlist -->
-				<ul
-					id="rtg-shortlist-items"
-					aria-label="Shortlisted topics"
-					class="mt-4 hidden max-h-[230px] space-y-2 overflow-y-auto pr-1"
-				></ul>
+					<!-- Scrollable Shortlist -->
+					<ul
+						id="rtg-shortlist-items"
+						aria-label="Shortlisted topics"
+						class="hidden max-h-[240px] space-y-2.5 overflow-y-auto pr-1"
+					></ul>
+				</div>
 			</div>
 
-			<div class="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-hairline pt-3 text-[12px] text-mute">
+			<div class="flex flex-wrap items-center justify-between gap-2 border-t border-[#0f2e26]/10 px-5 py-3.5 text-[12px] text-mute sm:px-6 dark:border-[#afe3d0]/15">
 				<span>Saved across visits</span>
 				<div class="flex items-center gap-2">
 					<button
 						type="button"
 						id="rtg-btn-copy-all-saved"
 						disabled
-						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft disabled:cursor-not-allowed disabled:opacity-50"
+						class="cursor-pointer rounded-lg border border-[#0f2e26]/15 bg-canvas px-3 py-1.5 text-[12px] font-medium text-ink transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] disabled:cursor-not-allowed disabled:opacity-50 dark:border-[#afe3d0]/20"
 					>
 						Copy All Saved
 					</button>
@@ -550,7 +551,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 						type="button"
 						id="rtg-btn-download-saved"
 						disabled
-						class="cursor-pointer rounded-sm border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft disabled:cursor-not-allowed disabled:opacity-50"
+						class="cursor-pointer rounded-lg border border-[#0f2e26]/15 bg-canvas px-3 py-1.5 text-[12px] font-medium text-ink transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] disabled:cursor-not-allowed disabled:opacity-50 dark:border-[#afe3d0]/20"
 					>
 						Download .txt
 					</button>
@@ -2519,11 +2520,11 @@ const speechTimeTool = getToolById('speech-time-calculator');
 			if (saved) {
 				saveSingleLabel.textContent = 'Saved in Shortlist ✓';
 				btnSaveSingle.className =
-					'inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-[#5EC4A3] bg-[#E6F7F1] px-3.5 py-2.5 text-[13px] font-semibold text-[#0F766E] transition-colors dark:border-hairline dark:bg-canvas dark:text-ink';
+					'inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-[#5EC4A3] bg-[#afe3d0] px-4 py-3 text-[13px] font-semibold text-[#0f2e26] transition-all';
 			} else {
 				saveSingleLabel.textContent = 'Save to Shortlist';
 				btnSaveSingle.className =
-					'inline-flex cursor-pointer items-center gap-1.5 rounded-sm border border-hairline bg-canvas px-3.5 py-2.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft';
+					'inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-[#0f2e26]/15 bg-canvas px-4 py-3 text-[13px] font-medium text-ink transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] dark:border-[#afe3d0]/20 dark:hover:border-[#afe3d0]/40 dark:hover:bg-[#0f2e26]/40 dark:hover:text-[#afe3d0]';
 			}
 		}
 
@@ -2560,9 +2561,9 @@ const speechTimeTool = getToolById('speech-time-calculator');
 				topicPointsList.innerHTML = '';
 				currentTopic.points.forEach((pt) => {
 					const li = document.createElement('li');
-					li.className = 'flex items-start gap-2';
+					li.className = 'flex items-start gap-2.5';
 					const dot = document.createElement('span');
-					dot.className = 'mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0D9488]';
+					dot.className = 'mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]';
 					const text = document.createElement('span');
 					text.textContent = pt;
 					li.appendChild(dot);
@@ -2582,7 +2583,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 			currentBatch.forEach((item, idx) => {
 				const li = document.createElement('li');
 				li.className =
-					'flex flex-col justify-between gap-3 rounded-sm border border-hairline bg-canvas p-4 transition-colors hover:border-[#7ED4B6] sm:flex-row sm:items-center';
+					'flex flex-col justify-between gap-3 rounded-xl border border-[#0f2e26]/15 bg-canvas p-4 transition-all hover:border-[#5EC4A3] sm:flex-row sm:items-center dark:border-[#afe3d0]/20';
 
 				const leftDiv = document.createElement('div');
 				leftDiv.className = 'flex-1 cursor-pointer';
@@ -2602,17 +2603,17 @@ const speechTimeTool = getToolById('speech-time-calculator');
 
 				const modePill = document.createElement('span');
 				modePill.className =
-					'rounded-full border border-[#5EC4A3] bg-[#AFE3D0] px-2 py-0.5 text-[11px] font-semibold text-[#111827]';
+					'rounded-full border border-[#5EC4A3] bg-[#afe3d0] px-2.5 py-0.5 text-[11px] font-semibold text-[#0f2e26]';
 				modePill.textContent = item.mode;
 
 				const catPill = document.createElement('span');
 				catPill.className =
-					'rounded-full border border-hairline bg-canvas-elevated px-2 py-0.5 text-[11px] font-medium text-body';
+					'rounded-full border border-[#0f2e26]/15 bg-canvas-elevated px-2.5 py-0.5 text-[11px] font-medium text-body dark:border-[#afe3d0]/20';
 				catPill.textContent = item.category;
 
 				const lvlPill = document.createElement('span');
 				lvlPill.className =
-					'rounded-full border border-hairline bg-canvas-elevated px-2 py-0.5 text-[11px] font-medium text-mute';
+					'rounded-full border border-[#0f2e26]/15 bg-canvas-elevated px-2.5 py-0.5 text-[11px] font-medium text-mute dark:border-[#afe3d0]/20';
 				lvlPill.textContent = item.level;
 
 				metaRow.appendChild(numSpan);
@@ -2633,7 +2634,7 @@ const speechTimeTool = getToolById('speech-time-calculator');
 				const copyBtn = document.createElement('button');
 				copyBtn.type = 'button';
 				copyBtn.className =
-					'cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1.5 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft';
+					'cursor-pointer rounded-lg border border-[#0f2e26]/15 bg-canvas-elevated px-3 py-1.5 text-[12px] font-medium text-ink transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] dark:border-[#afe3d0]/20';
 				copyBtn.textContent = 'Copy';
 				copyBtn.addEventListener('click', async () => {
 					try {
@@ -2651,8 +2652,8 @@ const speechTimeTool = getToolById('speech-time-calculator');
 					const saved = isTopicSaved(item.id);
 					saveBtn.textContent = saved ? 'Saved ✓' : 'Save';
 					saveBtn.className = saved
-						? 'cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#E6F7F1] px-2.5 py-1.5 text-[12px] font-semibold text-[#0F766E] dark:border-hairline dark:bg-canvas dark:text-ink'
-						: 'cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-2.5 py-1.5 text-[12px] font-medium text-ink transition-colors hover:bg-hairline-soft';
+						? 'cursor-pointer rounded-lg border border-[#5EC4A3] bg-[#afe3d0] px-3 py-1.5 text-[12px] font-semibold text-[#0f2e26]'
+						: 'cursor-pointer rounded-lg border border-[#0f2e26]/15 bg-canvas-elevated px-3 py-1.5 text-[12px] font-medium text-ink transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] dark:border-[#afe3d0]/20';
 				};
 				updateRowSaveBtn();
 
@@ -2753,13 +2754,13 @@ const speechTimeTool = getToolById('speech-time-calculator');
 				shortlistItemsList.innerHTML = '';
 				savedTopics.forEach((item, index) => {
 					const li = document.createElement('li');
-					li.className = 'rounded-sm border border-hairline bg-canvas p-3 text-[13px]';
+					li.className = 'rounded-xl border border-[#0f2e26]/15 bg-canvas p-3.5 text-[13px] transition-colors hover:border-[#5EC4A3] dark:border-[#afe3d0]/20';
 
 					const topRow = document.createElement('div');
-					topRow.className = 'mb-1 flex items-center justify-between gap-2';
+					topRow.className = 'mb-1.5 flex items-center justify-between gap-2';
 
 					const badgeSpan = document.createElement('span');
-					badgeSpan.className = 'text-[11px] font-medium text-mute';
+					badgeSpan.className = 'rounded-full bg-[#0f2e26]/[0.06] px-2.5 py-0.5 text-[11px] font-medium text-ink dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]';
 					badgeSpan.textContent = `${item.mode} · ${item.category}`;
 
 					const btnGroup = document.createElement('div');
@@ -2827,11 +2828,11 @@ const speechTimeTool = getToolById('speech-time-calculator');
 				btnViewBatch?.setAttribute('aria-pressed', 'false');
 				if (btnViewSingle) {
 					btnViewSingle.className =
-						'cursor-pointer rounded-[4px] bg-[#AFE3D0] px-2.5 py-1 text-[12px] font-semibold text-[#111827] transition-colors';
+						'cursor-pointer rounded-lg bg-[#afe3d0] px-3 py-1 text-[12px] font-semibold text-[#0f2e26] transition-all';
 				}
 				if (btnViewBatch) {
 					btnViewBatch.className =
-						'cursor-pointer rounded-[4px] px-2.5 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink';
+						'cursor-pointer rounded-lg px-3 py-1 text-[12px] font-medium text-white/75 transition-all hover:text-white';
 				}
 			} else {
 				singlePanel?.classList.add('hidden');
@@ -2840,11 +2841,11 @@ const speechTimeTool = getToolById('speech-time-calculator');
 				btnViewBatch?.setAttribute('aria-pressed', 'true');
 				if (btnViewBatch) {
 					btnViewBatch.className =
-						'cursor-pointer rounded-[4px] bg-[#AFE3D0] px-2.5 py-1 text-[12px] font-semibold text-[#111827] transition-colors';
+						'cursor-pointer rounded-lg bg-[#afe3d0] px-3 py-1 text-[12px] font-semibold text-[#0f2e26] transition-all';
 				}
 				if (btnViewSingle) {
 					btnViewSingle.className =
-						'cursor-pointer rounded-[4px] px-2.5 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink';
+						'cursor-pointer rounded-lg px-3 py-1 text-[12px] font-medium text-white/75 transition-all hover:text-white';
 				}
 				if (currentBatch.length === 0) {
 					currentBatch = pickBatchTopics(5);
@@ -2863,8 +2864,8 @@ const speechTimeTool = getToolById('speech-time-calculator');
 					const active = p === pill;
 					p.setAttribute('aria-selected', active ? 'true' : 'false');
 					p.className = active
-						? 'rtg-mode-pill cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-3.5 py-1.5 text-[13px] font-semibold text-[#111827] transition-colors'
-						: 'rtg-mode-pill cursor-pointer rounded-sm border border-hairline bg-canvas px-3.5 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft';
+						? 'rtg-mode-pill cursor-pointer rounded-xl border border-[#afe3d0] bg-[#afe3d0] px-4 py-2 text-[13px] font-semibold text-[#0f2e26] shadow-2xs transition-all'
+						: 'rtg-mode-pill cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-white/85 transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.12] hover:text-white';
 				});
 
 				if (viewMode === 'single') {
@@ -2920,12 +2921,12 @@ const speechTimeTool = getToolById('speech-time-calculator');
 				prepStrip.classList.remove('hidden');
 				btnPrepToggle.setAttribute('aria-expanded', 'true');
 				btnPrepToggle.className =
-					'cursor-pointer rounded-full border border-[#5EC4A3] bg-[#AFE3D0] px-2.5 py-1 text-[12px] font-semibold text-[#111827] transition-colors';
+					'cursor-pointer rounded-full border border-[#5EC4A3] bg-[#afe3d0] px-3 py-1 text-[12px] font-semibold text-[#0f2e26] transition-all';
 			} else {
 				prepStrip.classList.add('hidden');
 				btnPrepToggle.setAttribute('aria-expanded', 'false');
 				btnPrepToggle.className =
-					'cursor-pointer rounded-full border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-body transition-colors hover:border-[#5EC4A3] hover:text-ink';
+					'cursor-pointer rounded-full border border-[#0f2e26]/15 bg-canvas px-3 py-1 text-[12px] font-medium text-body transition-all hover:border-[#5EC4A3] hover:bg-[#E6F7F1] hover:text-[#0f2e26] dark:border-[#afe3d0]/20 dark:hover:border-[#afe3d0]/40 dark:hover:text-[#afe3d0]';
 			}
 		});
 
@@ -3111,8 +3112,8 @@ const speechTimeTool = getToolById('speech-time-calculator');
 				timerPresets.forEach((b) => {
 					const active = b === btn;
 					b.className = active
-						? 'rtg-timer-preset cursor-pointer rounded-sm border border-[#5EC4A3] bg-[#AFE3D0] px-2 py-1 text-[12px] font-semibold text-[#111827] transition-colors'
-						: 'rtg-timer-preset cursor-pointer rounded-sm border border-hairline bg-canvas px-2 py-1 text-[12px] font-medium text-mute transition-colors hover:text-ink';
+						? 'rtg-timer-preset cursor-pointer rounded-lg border border-[#5EC4A3] bg-[#afe3d0] px-2.5 py-1 text-[12px] font-semibold text-[#0f2e26] transition-all'
+						: 'rtg-timer-preset cursor-pointer rounded-lg border border-[#0f2e26]/15 bg-canvas px-2.5 py-1 text-[12px] font-medium text-mute transition-all hover:border-[#5EC4A3] hover:text-ink dark:border-[#afe3d0]/20';
 				});
 			});
 		});

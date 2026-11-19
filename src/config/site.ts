@@ -1,4 +1,4 @@
-export type ToolCategory = 'Reading' | 'Writing' | 'Speaking' | 'Text';
+export type ToolCategory = 'Reading' | 'Writing' | 'Speaking' | 'Text' | 'Typing Speed Test';
 export type ToolStatus = 'live' | 'draft';
 export type LocaleCode = 'en';
 
@@ -29,7 +29,8 @@ export const SITE_CONFIG = {
 	origin: 'https://wordora.site',
 	defaultLocale: 'en' as LocaleCode,
 	supportedLocales: ['en'] as LocaleCode[],
-	categories: ['Reading', 'Writing', 'Speaking', 'Text'] as ToolCategory[],
+	categories: ['Reading', 'Writing', 'Speaking', 'Text', 'Typing Speed Test'] as ToolCategory[],
+	dropdownCategories: ['Reading', 'Writing', 'Speaking', 'Text'] as ToolCategory[],
 } as const;
 
 export const TOOLS_REGISTRY: ToolDefinition[] = [
@@ -37,26 +38,13 @@ export const TOOLS_REGISTRY: ToolDefinition[] = [
 		id: 'reading-time-calculator',
 		slug: '/reading-time-calculator/',
 		name: 'Reading Time Calculator & Counter',
-		shortName: 'Reading Time Counter',
+		shortName: 'Reading Time Calculator',
 		description:
 			'Estimate exact silent reading duration (238 WPM) and read-aloud speech timing (183 WPM) from pasted text, word counts, or page counts with lexical difficulty analysis.',
 		category: 'Reading',
 		status: 'live',
 		availableLocales: ['en'],
 		metricPreview: '238 WPM Silent · 183 WPM Aloud',
-		badge: 'Flagship',
-	},
-	{
-		id: 'speech-time-calculator',
-		slug: '/speech-time-calculator/',
-		name: 'Speech Time Calculator',
-		shortName: 'Speech Time Calculator',
-		description:
-			'Calculate keynote, podcast, and presentation speaking duration with custom pause intervals, teleprompter pacing, and WPM cadence targets.',
-		category: 'Speaking',
-		status: 'live',
-		availableLocales: ['en'],
-		metricPreview: '100 – 220 WPM Cadence',
 		badge: 'Flagship',
 	},
 	{
@@ -72,10 +60,10 @@ export const TOOLS_REGISTRY: ToolDefinition[] = [
 		metricPreview: 'Live WPM Timer · 238 WPM Avg',
 	},
 	{
-		id: 'audiobook-calculator',
-		slug: '/audiobook-calculator/',
+		id: 'audiobook-speed-calculator',
+		slug: '/audiobook-speed-calculator/',
 		name: 'Audiobook Speed & Listening Time Calculator',
-		shortName: 'Audiobook Calculator',
+		shortName: 'Audiobook Speed Calculator',
 		description:
 			'Calculate exact audiobook listening duration across 0.75x to 3.0x playback speeds, time saved, and daily listening schedules by length or word count.',
 		category: 'Reading',
@@ -96,16 +84,29 @@ export const TOOLS_REGISTRY: ToolDefinition[] = [
 		metricPreview: '250 / 500 Words per Page',
 	},
 	{
-		id: 'typing-speed-test',
-		slug: '/typing-speed-test/',
-		name: 'Typing Speed Test (WPM)',
-		shortName: 'Typing Speed Test',
+		id: 'word-counter',
+		slug: '/word-counter/',
+		name: 'Word & Character Counter',
+		shortName: 'Word Counter',
 		description:
-			'Test your typing speed in Words Per Minute (WPM), raw WPM, and keystroke accuracy across 15s, 30s, 60s, and 120s timed passages.',
+			'Analyze real-time word frequency, character limits, sentence length distribution, and paragraph structure 100% locally in your browser.',
 		category: 'Writing',
 		status: 'live',
 		availableLocales: ['en'],
-		metricPreview: '15s – 120s · Live WPM & Accuracy',
+		metricPreview: 'Words · Chars · Sentences',
+	},
+	{
+		id: 'speech-time-calculator',
+		slug: '/speech-time-calculator/',
+		name: 'Speech Time Calculator',
+		shortName: 'Speech Time Calculator',
+		description:
+			'Calculate keynote, podcast, and presentation speaking duration with custom pause intervals, teleprompter pacing, and WPM cadence targets.',
+		category: 'Speaking',
+		status: 'live',
+		availableLocales: ['en'],
+		metricPreview: '100 – 220 WPM Cadence',
+		badge: 'Flagship',
 	},
 	{
 		id: 'random-topic-generator',
@@ -114,22 +115,10 @@ export const TOOLS_REGISTRY: ToolDefinition[] = [
 		shortName: 'Random Topic Generator',
 		description:
 			'Generate thought-provoking writing prompts and speaking topics across Essay & Academic, Public Speaking & Debate, Creative Writing, and Blog & Content modes.',
-		category: 'Writing',
+		category: 'Speaking',
 		status: 'live',
 		availableLocales: ['en'],
 		metricPreview: '4 Modes · Instant Prompts',
-	},
-	{
-		id: 'word-counter',
-		slug: '/word-counter/',
-		name: 'Word & Character Counter',
-		shortName: 'Word Counter',
-		description:
-			'Analyze real-time word frequency, character limits, sentence length distribution, and paragraph structure 100% locally in your browser.',
-		category: 'Text',
-		status: 'live',
-		availableLocales: ['en'],
-		metricPreview: 'Words · Chars · Sentences',
 	},
 	{
 		id: 'case-converter',
@@ -167,6 +156,18 @@ export const TOOLS_REGISTRY: ToolDefinition[] = [
 		availableLocales: ['en'],
 		metricPreview: '4 Flip & Reverse Modes',
 	},
+	{
+		id: 'typing-speed-test',
+		slug: '/typing-speed-test/',
+		name: 'Typing Speed Test (WPM)',
+		shortName: 'Typing Speed Test',
+		description:
+			'Test your typing speed in Words Per Minute (WPM), raw WPM, and keystroke accuracy across 15s, 30s, 60s, and 120s timed passages.',
+		category: 'Typing Speed Test',
+		status: 'live',
+		availableLocales: ['en'],
+		metricPreview: '15s – 120s · Live WPM & Accuracy',
+	},
 ];
 
 export const STATIC_PAGES: StaticPageDefinition[] = [
@@ -182,6 +183,13 @@ export const STATIC_PAGES: StaticPageDefinition[] = [
 		slug: '/privacy-policy/',
 		name: 'Privacy Policy',
 		shortName: 'Privacy Policy',
+		availableLocales: ['en'],
+	},
+	{
+		id: 'terms-of-service',
+		slug: '/terms-of-service/',
+		name: 'Terms of Service',
+		shortName: 'Terms of Service',
 		availableLocales: ['en'],
 	},
 	{

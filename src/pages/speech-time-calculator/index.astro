@@ -6,32 +6,136 @@ import Footer from "../../components/Footer.astro";
 import { resolveCanonicalUrl } from "../../config/site";
 
 const pageTitle =
-	"Speech Time Calculator — Script Duration, Target Words & Live Rehearsal Timer | Wordora";
+	"Speech Time Calculator & Speech Length Converter (Words to Minutes) | Wordora";
 const pageDescription =
-	"Free online Speech Time Calculator. Convert scripts to exact speaking duration (100–220 WPM, default 130 WPM keynote pace), calculate target word counts for any time slot, and rehearse with a live countdown timer.";
+	"Free online speech time calculator and speech length calculator. Convert speech words to minutes or check speech time by word count for a 3 minute speech, 5 minute speech, or full presentation.";
 const canonicalUrl = resolveCanonicalUrl("/speech-time-calculator/");
 
-const softwareAppSchema = {
-	"@context": "https://schema.org",
-	"@type": "SoftwareApplication",
-	name: "Speech Time Calculator",
-	url: canonicalUrl,
-	applicationCategory: "UtilitiesApplication",
-	operatingSystem: "Web, Any",
-	offers: {
-		"@type": "Offer",
-		price: "0",
-		priceCurrency: "USD",
+const faqs = [
+	{
+		question: "How do I calculate speech time from words (speech words to minutes)?",
+		answer:
+			"To convert speech words to minutes, divide your total word count by your speaking pace in words per minute (WPM). For example, using this speech time calculator and speech length calculator, a 650-word script read at a standard keynote pace of 130 WPM takes exactly 5 minutes (650 ÷ 130 = 5). For Chinese and Japanese text, speaking time is calculated by dividing total characters by characters per minute (~200 CPM).",
 	},
-	description: pageDescription,
-	featureList: [
-		"Script to Speech Time calculator with word, sentence, and presentation slide estimates",
-		"Target Time to Words reverse calculator for 1-minute pitches to 45-minute keynotes",
-		"Live Rehearsal Countdown Timer synced with calculated speech duration and 00:00 alert",
-		"Speaking Pace Control slider (100 to 220 WPM, default 130 WPM) with Ceremonial, Keynote, TED, and Podcast presets",
-		"Drag-and-drop .txt and .md script upload with 100% client-side privacy",
+	{
+		question: "How many words is a 1-minute speech?",
+		answer:
+			"A 1-minute speech is typically 130 words at a conversational pace. If you speak deliberately during a formal ceremony or toast, aim for 110 speech time words; for fast-paced commercial voiceovers or elevator pitches, budget up to 160 words.",
+	},
+	{
+		question: "How many words for a 3 minute speech or a 5 minute speech?",
+		answer:
+			"If you are checking how many words for a 3 minute speech or how many words for a 5 minute speech at an average speaking pace of 130 WPM, a 3-minute speech requires 390 words, a 4-minute speech needs 520 words, and a 5-minute speech requires 650 words. To stay comfortably within your time limit during a live talk, reduce these targets by ~15% to 330 words (3 minutes), 440 words (4 minutes), and 550 words (5 minutes) respectively.",
+	},
+	{
+		question: "How do I check speech time by word count for 1,000 words?",
+		answer:
+			"When checking speech time by word count, reading 1,000 words aloud takes approximately 7 minutes and 42 seconds at an average speaking rate of 130 WPM. At a slower ceremonial pace of 110 WPM, it takes 9 minutes and 5 seconds, while at a brisk 160 WPM pace, it takes 6 minutes and 15 seconds.",
+	},
+	{
+		question: "How many words is a 10-minute, 12-minute, or 20-minute speech?",
+		answer:
+			"At 130 WPM, a 10-minute speech is 1,300 words (safe stage budget: 1,105 words), a 12-minute speech is 1,560 words (safe stage budget: 1,325 words), and a 20-minute presentation is 2,600 words (safe stage budget: 2,210 words).",
+	},
+	{
+		question: "How many pages is a 5-minute or 45-minute talk?",
+		answer:
+			"Using standard formatting (12-point font, double-spaced, ~250 words per page), a 5-minute speech of 650 words is approximately 2.6 double-spaced pages. A 45-minute keynote of 5,850 words equals approximately 23.4 double-spaced pages (or roughly 11.7 single-spaced pages).",
+	},
+	{
+		question: "What is the average speaking rate in words per minute (WPM)?",
+		answer:
+			"The average conversational and public speaking rate is 130 to 150 words per minute. Professional conference speakers and TED presenters typically speak at 130–140 WPM to ensure clarity, while radio hosts and podcasters frequently reach 150–160 WPM.",
+	},
+	{
+		question: "Does this speaking time calculator work for Spanish, French, Chinese, and Japanese?",
+		answer:
+			"Yes. It automatically handles space-separated European languages like English, Spanish, and French, while silently detecting Chinese and Japanese characters ([\u4e00-\u9fff\u3040-\u30ff]) to count characters and apply realistic CJK speaking cadences (~200 characters per minute).",
+	},
+	{
+		question: "Should I include pauses, slides, and Q&A in my speech timing?",
+		answer:
+			"Yes, live speeches almost always take 10% to 15% longer than private rehearsals due to audience reactions, slide transitions, and deliberate pauses for emphasis. Following the 85% safe stage budget ensures you never get cut off by event organizers or run over your allotted time.",
+	},
+	{
+		question: "Is this speech time calculator free and does it save my script?",
+		answer:
+			"Wordora's Speech Time Calculator is 100% free with no login or usage limits. Your text is processed entirely in your web browser and is never uploaded to any server, stored in a database, or shared.",
+	},
+];
+
+const structuredData = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "WebApplication",
+			name: "Speech Time Calculator",
+			url: canonicalUrl,
+			applicationCategory: "UtilitiesApplication",
+			operatingSystem: "All",
+			offers: {
+				"@type": "Offer",
+				price: "0",
+				priceCurrency: "USD",
+			},
+			description: pageDescription,
+			featureList: [
+				"Script to Speech Time converter with instant character and word counting",
+				"Words to Minutes calculator for Slow (110 WPM), Average (130 WPM), Fast (160 WPM), or Custom pace",
+				"Speaking time limit checker with target time alerts",
+				"Words that fit benchmark for 1, 3, 5, and 10-minute speeches",
+				"Support for English, Spanish, French, Chinese, and Japanese scripts",
+			],
+		},
+		{
+			"@type": "FAQPage",
+			mainEntity: faqs.map((faq) => ({
+				"@type": "Question",
+				name: faq.question,
+				acceptedAnswer: {
+					"@type": "Answer",
+					text: faq.answer,
+				},
+			})),
+		},
 	],
 };
+
+const minutesToWordsData = [
+	{ length: "30 Seconds", slow: "55 words", avg: "65 words", fast: "80 words", safe: "55 words" },
+	{ length: "1 Minute", slow: "110 words", avg: "130 words", fast: "160 words", safe: "110 words" },
+	{ length: "2 Minutes", slow: "220 words", avg: "260 words", fast: "320 words", safe: "220 words" },
+	{ length: "3 Minutes", slow: "330 words", avg: "390 words", fast: "480 words", safe: "330 words" },
+	{ length: "4 Minutes", slow: "440 words", avg: "520 words", fast: "640 words", safe: "440 words" },
+	{ length: "5 Minutes", slow: "550 words", avg: "650 words", fast: "800 words", safe: "550 words" },
+	{ length: "7 Minutes", slow: "770 words", avg: "910 words", fast: "1,120 words", safe: "775 words" },
+	{ length: "8 Minutes", slow: "880 words", avg: "1,040 words", fast: "1,280 words", safe: "885 words" },
+	{ length: "10 Minutes", slow: "1,100 words", avg: "1,300 words", fast: "1,600 words", safe: "1,105 words" },
+	{ length: "12 Minutes", slow: "1,320 words", avg: "1,560 words", fast: "1,920 words", safe: "1,325 words" },
+	{ length: "15 Minutes", slow: "1,650 words", avg: "1,950 words", fast: "2,400 words", safe: "1,660 words" },
+	{ length: "20 Minutes", slow: "2,200 words", avg: "2,600 words", fast: "3,200 words", safe: "2,210 words" },
+	{ length: "30 Minutes", slow: "3,300 words", avg: "3,900 words", fast: "4,800 words", safe: "3,315 words" },
+	{ length: "40 Minutes", slow: "4,400 words", avg: "5,200 words", fast: "6,400 words", safe: "4,420 words" },
+	{ length: "45 Minutes", slow: "4,950 words", avg: "5,850 words", fast: "7,200 words", safe: "4,970 words" },
+	{ length: "60 Minutes", slow: "6,600 words", avg: "7,800 words", fast: "9,600 words", safe: "6,630 words" },
+];
+
+const wordsToMinutesData = [
+	{ words: "100 words", slow: "0 min 55 sec", avg: "0 min 46 sec", fast: "0 min 38 sec", silent: "0 min 25 sec" },
+	{ words: "250 words", slow: "2 min 16 sec", avg: "1 min 55 sec", fast: "1 min 34 sec", silent: "1 min 03 sec" },
+	{ words: "300 words", slow: "2 min 44 sec", avg: "2 min 18 sec", fast: "1 min 53 sec", silent: "1 min 16 sec" },
+	{ words: "400 words", slow: "3 min 38 sec", avg: "3 min 05 sec", fast: "2 min 30 sec", silent: "1 min 41 sec" },
+	{ words: "500 words", slow: "4 min 33 sec", avg: "3 min 51 sec", fast: "3 min 08 sec", silent: "2 min 06 sec" },
+	{ words: "600 words", slow: "5 min 27 sec", avg: "4 min 37 sec", fast: "3 min 45 sec", silent: "2 min 31 sec" },
+	{ words: "750 words", slow: "6 min 49 sec", avg: "5 min 46 sec", fast: "4 min 41 sec", silent: "3 min 09 sec" },
+	{ words: "800 words", slow: "7 min 16 sec", avg: "6 min 09 sec", fast: "5 min 00 sec", silent: "3 min 22 sec" },
+	{ words: "900 words", slow: "8 min 11 sec", avg: "6 min 55 sec", fast: "5 min 38 sec", silent: "3 min 47 sec" },
+	{ words: "1,000 words", slow: "9 min 05 sec", avg: "7 min 42 sec", fast: "6 min 15 sec", silent: "4 min 12 sec" },
+	{ words: "1,500 words", slow: "13 min 38 sec", avg: "11 min 32 sec", fast: "9 min 23 sec", silent: "6 min 18 sec" },
+	{ words: "2,000 words", slow: "18 min 11 sec", avg: "15 min 23 sec", fast: "12 min 30 sec", silent: "8 min 24 sec" },
+	{ words: "3,000 words", slow: "27 min 16 sec", avg: "23 min 05 sec", fast: "18 min 45 sec", silent: "12 min 36 sec" },
+	{ words: "5,000 words", slow: "45 min 27 sec", avg: "38 min 28 sec", fast: "31 min 15 sec", silent: "21 min 01 sec" },
+];
 ---
 
 <Layout
@@ -42,7 +146,7 @@ const softwareAppSchema = {
 	<Fragment slot="head">
 		<script
 			type="application/ld+json"
-			set:html={JSON.stringify(softwareAppSchema)}
+			set:html={JSON.stringify(structuredData)}
 		/>
 	</Fragment>
 
@@ -61,13 +165,365 @@ const softwareAppSchema = {
 				<p
 					class="mt-3 max-w-2xl text-[16px] leading-[25px] font-normal text-body"
 				>
-					Paste your script to see how long it takes to speak, find how many words you need for a set time slot, or practice with the rehearsal timer.
+					Paste your script or enter a word count to see exact speaking time at your pace—or check how many words fit your time slot.
 				</p>
 			</div>
 		</section>
 
 		<!-- Flagship Interactive Speech Time Calculator Workspace -->
 		<SpeechCalculator />
+
+		<!-- Section 1: How to Convert Words to Minutes -->
+		<section class="mx-auto max-w-[1140px] px-4 pb-16 sm:px-6">
+			<div class="mb-8">
+				<h2
+					class="font-sans text-[24px] font-semibold tracking-[-0.8px] text-ink sm:text-[28px] sm:tracking-[-1px]"
+				>
+					How to Convert Speech Words to Minutes
+				</h2>
+				<p class="mt-2 text-[15px] leading-relaxed text-body">
+					Follow three simple steps in this speech time calculator and speech length calculator to find your exact speaking duration or check how many speech time words fit your presentation slot.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+				<!-- Step 1 -->
+				<div
+					class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+				>
+					<div>
+						<div class="mb-4 flex items-center gap-3">
+							<span
+								class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+							>
+								1
+							</span>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								Paste Your Script or Enter Word Count
+							</h3>
+						</div>
+						<p class="text-[14px] leading-relaxed text-body">
+							Use <strong class="font-semibold text-ink">Paste script</strong> for an instant word count from text (supporting English, Spanish, French, Chinese, and Japanese), or switch to <strong class="font-semibold text-ink">Enter word count</strong> to calculate directly from a number.
+						</p>
+					</div>
+				</div>
+
+				<!-- Step 2 -->
+				<div
+					class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+				>
+					<div>
+						<div class="mb-4 flex items-center gap-3">
+							<span
+								class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+							>
+								2
+							</span>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								Select Your Speaking Pace (WPM)
+							</h3>
+						</div>
+						<p class="text-[14px] leading-relaxed text-body">
+							Choose <strong class="font-semibold text-ink">Slow (110 WPM)</strong>, <strong class="font-semibold text-ink">Average (130 WPM)</strong>, <strong class="font-semibold text-ink">Fast (160 WPM)</strong>, or enter a <strong class="font-semibold text-ink">Custom</strong> WPM measured from a timed rehearsal.
+						</p>
+					</div>
+				</div>
+
+				<!-- Step 3 -->
+				<div
+					class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+				>
+					<div>
+						<div class="mb-4 flex items-center gap-3">
+							<span
+								class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+							>
+								3
+							</span>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								Verify Against Your Time Limit
+							</h3>
+						</div>
+						<p class="text-[14px] leading-relaxed text-body">
+							Enter an optional <strong class="font-semibold text-ink">Target limit</strong> in minutes to check whether your draft fits your slot or runs over, then copy your summary in one click.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 2A: Minutes to Words Benchmark -->
+		<section class="mx-auto max-w-[1140px] px-4 pb-14 sm:px-6">
+			<div class="mb-6">
+				<h2
+					class="font-sans text-[22px] font-semibold tracking-[-0.6px] text-ink sm:text-[26px]"
+				>
+					Speech Length Calculator Chart: How Many Words for a 3 Minute Speech, 5 Minute Speech, or 60-Minute Talk?
+				</h2>
+				<p class="mt-2 text-[15px] leading-relaxed text-body">
+					Use this speech length calculator reference chart to plan your word budget for any presentation, wedding toast, podcast, or lecture—whether you are checking how many words for a 3 minute speech (390 words at 130 WPM), how many words for a 5 minute speech (650 words at 130 WPM), or an 85% safe stage target to leave room for pauses and Q&amp;A.
+				</p>
+			</div>
+
+			<div class="whisper-shadow overflow-x-auto rounded-2xl border border-hairline bg-canvas-elevated">
+				<table class="w-full border-collapse text-left">
+					<thead>
+						<tr class="border-b border-hairline bg-canvas-muted text-[13px] font-semibold text-ink">
+							<th scope="col" class="py-3.5 pl-5 pr-4">Speech Length</th>
+							<th scope="col" class="px-4 py-3.5">Slow (110 WPM)</th>
+							<th scope="col" class="px-4 py-3.5">Average (130 WPM)</th>
+							<th scope="col" class="px-4 py-3.5">Fast (160 WPM)</th>
+							<th scope="col" class="py-3.5 pl-4 pr-5 font-semibold text-[#0f2e26] dark:text-[#afe3d0]">
+								Safe Stage Budget (~85% at 130 WPM)
+							</th>
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-hairline text-[14px]">
+						{minutesToWordsData.map((row) => (
+							<tr class="transition-colors hover:bg-canvas/50">
+								<td class="whitespace-nowrap py-3 pl-5 pr-4 font-semibold text-ink tabular-nums">
+									{row.length}
+								</td>
+								<td class="whitespace-nowrap px-4 py-3 text-body tabular-nums">
+									{row.slow}
+								</td>
+								<td class="whitespace-nowrap px-4 py-3 font-medium text-ink tabular-nums">
+									{row.avg}
+								</td>
+								<td class="whitespace-nowrap px-4 py-3 text-body tabular-nums">
+									{row.fast}
+								</td>
+								<td class="whitespace-nowrap py-3 pl-4 pr-5 font-semibold text-[#0f2e26] tabular-nums dark:text-[#afe3d0]">
+									{row.safe}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<!-- Section 2B: Words to Minutes Benchmark -->
+		<section class="mx-auto max-w-[1140px] px-4 pb-16 sm:px-6">
+			<div class="mb-6">
+				<h2
+					class="font-sans text-[22px] font-semibold tracking-[-0.6px] text-ink sm:text-[26px]"
+				>
+					Speech Time by Word Count: Speech Words to Minutes for 100 to 5,000 Words
+				</h2>
+				<p class="mt-2 text-[15px] leading-relaxed text-body">
+					Check speech time by word count to see how long it takes to read a script aloud versus reading it silently at an average adult pace (~238 WPM).
+				</p>
+			</div>
+
+			<div class="whisper-shadow overflow-x-auto rounded-2xl border border-hairline bg-canvas-elevated">
+				<table class="w-full border-collapse text-left">
+					<thead>
+						<tr class="border-b border-hairline bg-canvas-muted text-[13px] font-semibold text-ink">
+							<th scope="col" class="py-3.5 pl-5 pr-4">Word Count</th>
+							<th scope="col" class="px-4 py-3.5">Slow (110 WPM)</th>
+							<th scope="col" class="px-4 py-3.5">Average (130 WPM)</th>
+							<th scope="col" class="px-4 py-3.5">Fast (160 WPM)</th>
+							<th scope="col" class="py-3.5 pl-4 pr-5">Silent Reading (~238 WPM)</th>
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-hairline text-[14px]">
+						{wordsToMinutesData.map((row) => (
+							<tr class="transition-colors hover:bg-canvas/50">
+								<td class="whitespace-nowrap py-3 pl-5 pr-4 font-semibold text-ink tabular-nums">
+									{row.words}
+								</td>
+								<td class="whitespace-nowrap px-4 py-3 text-body tabular-nums">
+									{row.slow}
+								</td>
+								<td class="whitespace-nowrap px-4 py-3 font-medium text-ink tabular-nums">
+									{row.avg}
+								</td>
+								<td class="whitespace-nowrap px-4 py-3 text-body tabular-nums">
+									{row.fast}
+								</td>
+								<td class="whitespace-nowrap py-3 pl-4 pr-5 text-mute tabular-nums">
+									{row.silent}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Contextual Link Strip -->
+			<div class="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-hairline bg-canvas-elevated p-4 sm:px-6">
+				<span class="text-[13px] font-medium text-mute">
+					Related writing &amp; speaking utilities:
+				</span>
+				<div class="flex flex-wrap items-center gap-3 text-[13px]">
+					<a
+						href="/reading-time-calculator/"
+						class="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-canvas px-3.5 py-1.5 font-medium text-ink transition-colors hover:border-[#0f2e26] hover:text-[#0f2e26] dark:hover:border-[#afe3d0] dark:hover:text-[#afe3d0]"
+					>
+						Reading Time Calculator &rarr;
+					</a>
+					<a
+						href="/random-topic-generator/"
+						class="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-canvas px-3.5 py-1.5 font-medium text-ink transition-colors hover:border-[#0f2e26] hover:text-[#0f2e26] dark:hover:border-[#afe3d0] dark:hover:text-[#afe3d0]"
+					>
+						Random Topic Generator &rarr;
+					</a>
+					<a
+						href="/word-counter/"
+						class="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-canvas px-3.5 py-1.5 font-medium text-ink transition-colors hover:border-[#0f2e26] hover:text-[#0f2e26] dark:hover:border-[#afe3d0] dark:hover:text-[#afe3d0]"
+					>
+						Word Counter &rarr;
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 3: How Speech Time Is Calculated & Speaking Rates by Language -->
+		<section class="mx-auto max-w-[1140px] px-4 pb-16 sm:px-6">
+			<div class="mb-8">
+				<h2
+					class="font-sans text-[22px] font-semibold tracking-[-0.6px] text-ink sm:text-[26px]"
+				>
+					How Speech Time Is Calculated &amp; Speaking Rates by Language
+				</h2>
+				<p class="mt-2 text-[15px] leading-relaxed text-body">
+					Understand the math behind script durations, stage pacing buffers, and multi-language speed variations.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+				<!-- Left Card: The Words-to-Minutes Math Formula -->
+				<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:p-7 space-y-5">
+					<div>
+						<div class="flex items-center gap-3 border-b border-hairline pb-4">
+							<span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#0f2e26] text-[14px] font-semibold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
+								&fnof;
+							</span>
+							<h3 class="font-sans text-[18px] font-semibold text-ink">
+								The Words-to-Minutes Math Formula
+							</h3>
+						</div>
+
+						<p class="mt-4 text-[14.5px] leading-relaxed text-body">
+							Converting a written draft into exact stage minutes relies on two reciprocal formulas based on words per minute (WPM):
+						</p>
+
+						<div class="mt-4 space-y-3">
+							<div class="rounded-xl border border-hairline bg-canvas p-3.5">
+								<span class="block text-[12px] font-medium text-mute">Speech Duration:</span>
+								<p class="mt-0.5 font-sans text-[14.5px] font-semibold text-ink tabular-nums">
+									Speaking Time (Minutes) = Total Words &divide; WPM
+								</p>
+								<p class="mt-1 text-[13px] text-body tabular-nums">
+									Example: 1,000 words &divide; 130 WPM = 7.69 min (<strong class="font-semibold text-ink">7 min 42 sec</strong>).
+								</p>
+							</div>
+
+							<div class="rounded-xl border border-hairline bg-canvas p-3.5">
+								<span class="block text-[12px] font-medium text-mute">Word Budget:</span>
+								<p class="mt-0.5 font-sans text-[14.5px] font-semibold text-ink tabular-nums">
+									Target Word Budget = Minutes &times; WPM
+								</p>
+								<p class="mt-1 text-[13px] text-body tabular-nums">
+									Example: 5 minutes &times; 130 WPM = <strong class="font-semibold text-ink">650 words</strong>.
+								</p>
+							</div>
+						</div>
+
+						<div class="mt-5 rounded-xl border border-[#0f2e26]/15 bg-[#0f2e26]/5 p-4 dark:border-[#afe3d0]/15 dark:bg-[#afe3d0]/5">
+							<div class="flex items-center gap-2">
+								<span class="inline-block h-2 w-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"></span>
+								<h4 class="font-sans text-[14px] font-semibold text-ink">The 85% Stage Buffer Rule</h4>
+							</div>
+							<p class="mt-1.5 text-[13.5px] leading-relaxed text-body">
+								Rehearsing in private is always faster than presenting live. Seasoned keynote speakers budget an 85% safe target (~550 words for a 5-minute slot) to leave 10–15% headroom for breathing pauses, slide transitions, audience applause, and unscripted Q&amp;A.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Right Card: Speaking Pace Guide & Multi-Language Support -->
+				<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:p-7 space-y-5">
+					<div>
+						<div class="flex items-center gap-3 border-b border-hairline pb-4">
+							<span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-[#0f2e26] text-[14px] font-semibold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
+								&bull;&bull;&bull;
+							</span>
+							<h3 class="font-sans text-[18px] font-semibold text-ink">
+								Speaking Pace Guide &amp; Multi-Language Support
+							</h3>
+						</div>
+
+						<p class="mt-4 text-[14.5px] leading-relaxed text-body">
+							Different presentation settings demand deliberate tempo adjustments:
+						</p>
+
+						<ul class="mt-3 space-y-2.5 text-[14px] leading-relaxed text-body">
+							<li class="flex items-start gap-2.5">
+								<span class="rounded-md border border-hairline bg-canvas px-2 py-0.5 text-[12px] font-semibold text-ink tabular-nums">110 WPM</span>
+								<span><strong class="font-semibold text-ink">Slow &amp; Ceremonial:</strong> Ideal for formal keynotes, wedding toasts, eulogies, and complex technical seminars where every word must resonate.</span>
+							</li>
+							<li class="flex items-start gap-2.5">
+								<span class="rounded-md border border-hairline bg-canvas px-2 py-0.5 text-[12px] font-semibold text-ink tabular-nums">130 WPM</span>
+								<span><strong class="font-semibold text-ink">Average &amp; Conversational:</strong> Standard keynote tempo, corporate presentations, college lectures, and TED-style talks.</span>
+							</li>
+							<li class="flex items-start gap-2.5">
+								<span class="rounded-md border border-hairline bg-canvas px-2 py-0.5 text-[12px] font-semibold text-ink tabular-nums">160 WPM</span>
+								<span><strong class="font-semibold text-ink">Fast &amp; Dynamic:</strong> Suited for energetic podcasts, YouTube voiceovers, fast-paced elevator pitches, and radio broadcasts.</span>
+							</li>
+						</ul>
+
+						<div class="mt-5 rounded-xl border border-hairline bg-canvas p-4">
+							<h4 class="font-sans text-[14px] font-semibold text-ink">Multi-Language Script Detection</h4>
+							<p class="mt-1.5 text-[13.5px] leading-relaxed text-body">
+								This calculator seamlessly supports <strong class="font-semibold text-ink">English, Spanish, French, Chinese, and Japanese</strong>. Space-separated Western languages (English, Spanish ~140–155 WPM, French ~140–155 WPM) calculate by word count, while Chinese and Japanese scripts automatically switch to character-per-minute pacing (~200 characters/min at average speed) for realistic duration estimates.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 4: Frequently Asked Questions -->
+		<section
+			id="faq"
+			aria-labelledby="faq-heading"
+			class="mx-auto max-w-[1140px] px-4 pb-16 sm:px-6"
+		>
+			<div class="mb-8">
+				<h2
+					id="faq-heading"
+					class="font-sans text-[22px] font-semibold tracking-[-0.6px] text-ink sm:text-[26px]"
+				>
+					Frequently Asked Questions
+				</h2>
+				<p class="mt-2 text-[15px] leading-relaxed text-body">
+					Common questions about speech timing, words per minute, script page counts, and stage rehearsals.
+				</p>
+			</div>
+
+			<div class="divide-y divide-hairline rounded-2xl border border-hairline bg-canvas-elevated">
+				{
+					faqs.map((faq, idx) => (
+						<details class="group p-5 sm:p-6" open={idx === 0}>
+							<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink focus:outline-none">
+								<span>{faq.question}</span>
+								<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-hairline text-mute transition-transform duration-200 group-open:rotate-45 group-open:border-[#0f2e26] group-open:bg-[#0f2e26] group-open:text-[#afe3d0] dark:group-open:border-[#afe3d0] dark:group-open:bg-[#afe3d0] dark:group-open:text-[#0f2e26]">
+									<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+										<line x1="12" y1="5" x2="12" y2="19" />
+										<line x1="5" y1="12" x2="19" y2="12" />
+									</svg>
+								</span>
+							</summary>
+							<p class="mt-3 pr-6 text-[14.5px] leading-relaxed text-body">
+								{faq.answer}
+							</p>
+						</details>
+					))
+				}
+			</div>
+		</section>
 
 		{/* Editorial Content & FAQ Slot — User Managed */}
 		<div id="editorial-content-slot" class="mx-auto max-w-[1200px] px-4 sm:px-6"></div>

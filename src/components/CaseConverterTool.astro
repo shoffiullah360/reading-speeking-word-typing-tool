@@ -1,9 +1,4 @@
 ---
-import { getToolById } from '../config/site';
-
-const wordCounterTool = getToolById('word-counter');
-const textRepeaterTool = getToolById('text-repeater');
-const textReverserTool = getToolById('text-reverser');
 ---
 
 <section
@@ -11,248 +6,205 @@ const textReverserTool = getToolById('text-reverser');
 	aria-label="Case Converter Workspace"
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
-	<!-- Live Summary Bar -->
-	<div class="kpi-summary-bar whisper-shadow mb-6 grid grid-cols-2 divide-y divide-[#7ED4B6] rounded-md border border-[#7ED4B6] bg-[#AFE3D0] sm:grid-cols-4 sm:divide-x sm:divide-y-0 dark:divide-hairline dark:border-hairline dark:bg-canvas-elevated">
-		<article class="kpi-card flex flex-col justify-between p-4 sm:p-5">
-			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Active format</span>
-			<output
-				id="cc-active-mode"
-				aria-live="polite"
-				class="mt-1.5 font-sans text-[22px] leading-[28px] font-semibold tracking-[-0.5px] text-[#111827] dark:text-ink"
-			>
-				Original text
-			</output>
-			<span class="mt-1 text-[12px] text-[#1F2937] dark:text-mute">Click any case button below</span>
-		</article>
-
-		<article class="kpi-card flex flex-col justify-between border-l border-[#7ED4B6] p-4 sm:border-l-0 sm:p-5 dark:border-hairline">
-			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Word count</span>
-			<div class="mt-1.5 flex items-baseline gap-1.5">
-				<output
-					id="cc-metric-words"
-					aria-live="polite"
-					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
-				>
-					0
-				</output>
-				<span class="text-[13px] text-[#1F2937] dark:text-mute">words</span>
+	<!-- Unified Stacked Card Container -->
+	<div class="whisper-shadow overflow-hidden rounded-3xl border border-hairline bg-canvas-elevated">
+		<!-- Top Section — Full-Width Distraction-Free Editor -->
+		<div class="flex flex-col justify-between bg-white p-6 sm:p-8 dark:bg-canvas-elevated">
+			<div class="flex flex-1 flex-col">
+				<label for="cc-textarea" class="sr-only">Type or paste your text here</label>
+				<textarea
+					id="cc-textarea"
+					placeholder="Type or paste your text here..."
+					class="h-48 w-full resize-y border-0 bg-transparent font-sans text-[16px] leading-[28px] text-ink placeholder:text-faint focus:outline-none sm:h-56"
+				></textarea>
 			</div>
-			<span id="cc-metric-sentences" class="mt-1 text-[12px] text-[#1F2937] tabular-nums dark:text-mute">0 sentences</span>
-		</article>
 
-		<article class="kpi-card flex flex-col justify-between p-4 sm:p-5">
-			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Character count</span>
-			<div class="mt-1.5 flex items-baseline gap-1.5">
-				<output
-					id="cc-metric-chars"
-					aria-live="polite"
-					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
-				>
-					0
-				</output>
-				<span class="text-[13px] text-[#1F2937] dark:text-mute">characters</span>
-			</div>
-			<span id="cc-metric-chars-nospace" class="mt-1 text-[12px] text-[#1F2937] tabular-nums dark:text-mute">0 without spaces</span>
-		</article>
-
-		<article class="kpi-card flex flex-col justify-between border-l border-[#7ED4B6] p-4 sm:border-l-0 sm:p-5 dark:border-hairline">
-			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Line count</span>
-			<div class="mt-1.5 flex items-baseline gap-1.5">
-				<output
-					id="cc-metric-lines"
-					aria-live="polite"
-					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
-				>
-					0
-				</output>
-				<span class="text-[13px] text-[#1F2937] dark:text-mute">lines</span>
-			</div>
-			<span class="mt-1 text-[12px] text-[#1F2937] dark:text-mute">Runs privately in your browser</span>
-		</article>
-	</div>
-
-	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
-		<!-- Left Column: Editor + Case Conversion Buttons -->
-		<div class="lg:col-span-8">
-			<div class="whisper-shadow overflow-hidden rounded-md border border-hairline bg-canvas-elevated">
-				<!-- Top Action Bar -->
-				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline bg-canvas-muted px-4 py-3 sm:px-5">
-					<label for="cc-textarea" class="text-[14px] font-semibold text-ink">
-						Paste or type your text
-					</label>
-					<div class="flex flex-wrap items-center gap-2">
-						<button
-							type="button"
-							id="cc-btn-sample"
-							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
-						>
-							Sample text
-						</button>
-						<button
-							type="button"
-							id="cc-btn-copy"
-							class="cursor-pointer rounded-sm bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-opacity hover:opacity-90"
-						>
-							Copy Text
-						</button>
-						<button
-							type="button"
-							id="cc-btn-download"
-							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
-						>
-							Download .txt
-						</button>
-						<button
-							type="button"
-							id="cc-btn-clear"
-							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
-						>
-							Clear
-						</button>
-					</div>
+			<!-- Minimal Footer Bar -->
+			<div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-hairline pt-4 text-[13px]">
+				<div class="flex items-center gap-1.5 font-medium text-mute tabular-nums">
+					<output id="cc-metric-words" aria-live="polite">0</output> words &middot;
+					<output id="cc-metric-chars" aria-live="polite">0</output> characters &middot;
+					<output id="cc-metric-lines" aria-live="polite">0</output> lines
 				</div>
 
-				<!-- Textarea -->
-				<div class="p-4 sm:p-5">
-					<textarea
-						id="cc-textarea"
-						rows="10"
-						placeholder="Type or paste your text here, then select a case format below..."
-						class="w-full resize-y rounded-sm border border-hairline bg-canvas-elevated p-4 font-sans text-[16px] leading-[26px] text-ink placeholder:text-faint focus:border-vercel-blue focus:outline-none"
-					></textarea>
-
-					<!-- 8 Case Conversion Buttons Grid -->
-					<div class="mt-4">
-						<span class="block text-[13px] font-medium text-mute">
-							Convert text case in one click
-						</span>
-						<div class="mt-2.5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-							<button
-								type="button"
-								data-case-mode="sentence"
-								data-case-label="Sentence case"
-								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
-							>
-								Sentence case
-							</button>
-							<button
-								type="button"
-								data-case-mode="lower"
-								data-case-label="lower case"
-								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
-							>
-								lower case
-							</button>
-							<button
-								type="button"
-								data-case-mode="upper"
-								data-case-label="UPPER CASE"
-								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
-							>
-								UPPER CASE
-							</button>
-							<button
-								type="button"
-								data-case-mode="title"
-								data-case-label="Title Case"
-								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
-							>
-								Title Case
-							</button>
-							<button
-								type="button"
-								data-case-mode="capitalized"
-								data-case-label="Capitalized Case"
-								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
-							>
-								Capitalized Case
-							</button>
-							<button
-								type="button"
-								data-case-mode="camel"
-								data-case-label="camelCase"
-								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
-							>
-								camelCase
-							</button>
-							<button
-								type="button"
-								data-case-mode="snake"
-								data-case-label="snake_case"
-								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
-							>
-								snake_case
-							</button>
-							<button
-								type="button"
-								data-case-mode="kebab"
-								data-case-label="kebab-case"
-								class="cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft"
-							>
-								kebab-case
-							</button>
-						</div>
-					</div>
+				<div class="flex flex-wrap items-center gap-3.5 sm:gap-4">
+					<button
+						type="button"
+						id="cc-btn-paste"
+						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink"
+					>
+						Paste
+					</button>
+					<button
+						type="button"
+						id="cc-btn-undo"
+						disabled
+						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink disabled:cursor-not-allowed disabled:opacity-40"
+					>
+						Undo
+					</button>
+					<button
+						type="button"
+						id="cc-btn-download"
+						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink"
+					>
+						Download .txt
+					</button>
+					<button
+						type="button"
+						id="cc-btn-clear"
+						class="cursor-pointer font-medium text-mute transition-colors hover:text-vercel-error"
+					>
+						Clear
+					</button>
 				</div>
 			</div>
 		</div>
 
-		<!-- Right Column: Case Format Guide & Related Text Tools -->
-		<div class="space-y-6 lg:col-span-4">
-			<div class="whisper-shadow rounded-md border border-hairline bg-canvas-elevated p-5">
-				<h2 class="text-[16px] font-semibold text-ink">
-					Case styles at a glance
-				</h2>
-				<dl class="mt-3.5 space-y-3 text-[13px] leading-[20px]">
-					<div class="border-b border-hairline pb-2.5">
-						<dt class="font-medium text-ink">Sentence case</dt>
-						<dd class="mt-0.5 text-body">Capitalizes the first letter of each sentence and lowers the rest.</dd>
-					</div>
-					<div class="border-b border-hairline pb-2.5">
-						<dt class="font-medium text-ink">Title Case (AP / APA)</dt>
-						<dd class="mt-0.5 text-body">Capitalizes major words while keeping short prepositions, articles, and conjunctions lowercase unless first or last.</dd>
-					</div>
-					<div class="border-b border-hairline pb-2.5">
-						<dt class="font-medium text-ink">Capitalized Case</dt>
-						<dd class="mt-0.5 text-body">Capitalizes the first letter of every single word regardless of length.</dd>
-					</div>
-					<div>
-						<dt class="font-medium text-ink">camelCase, snake_case &amp; kebab-case</dt>
-						<dd class="mt-0.5 text-body">Clean identifier formats for URLs, CSS classes, file names, and variables.</dd>
-					</div>
-				</dl>
+		<!-- Bottom Section — Deep Forest Emerald Control Deck -->
+		<div class="border-t border-[#afe3d0]/15 bg-[#0f2e26] p-6 text-[#f0fdf7] sm:p-8">
+			<!-- Active Format & Primary Action Header -->
+			<div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#afe3d0]/15 pb-5">
+				<div class="inline-flex items-center gap-2 rounded-full border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-1.5 text-[13px]">
+					<span class="h-2 w-2 rounded-full bg-[#afe3d0]"></span>
+					<span class="text-white/70">Active:</span>
+					<output id="cc-active-mode" aria-live="polite" class="font-semibold text-[#afe3d0]">
+						Original text
+					</output>
+				</div>
+
+				<button
+					type="button"
+					id="cc-btn-copy"
+					class="cursor-pointer rounded-2xl bg-[#afe3d0] px-5 py-2.5 text-[14px] font-semibold text-[#0f2e26] transition-all hover:bg-[#c2edd6] active:scale-[0.99]"
+				>
+					Copy text
+				</button>
 			</div>
 
-			<div class="whisper-shadow rounded-md border border-hairline bg-canvas-elevated p-5">
-				<h2 class="text-[15px] font-semibold text-ink">
-					Related text tools
-				</h2>
-				<ul class="mt-3 divide-y divide-hairline text-[14px]">
-					{wordCounterTool && wordCounterTool.status === 'live' && (
-						<li class="py-2 first:pt-0">
-							<a href={wordCounterTool.slug} class="flex items-center justify-between text-body transition-colors hover:text-ink">
-								<span>{wordCounterTool.shortName}</span>
-								<span aria-hidden="true" class="text-mute">→</span>
-							</a>
-						</li>
-					)}
-					{textRepeaterTool && textRepeaterTool.status === 'live' && (
-						<li class="py-2">
-							<a href={textRepeaterTool.slug} class="flex items-center justify-between text-body transition-colors hover:text-ink">
-								<span>{textRepeaterTool.shortName}</span>
-								<span aria-hidden="true" class="text-mute">→</span>
-							</a>
-						</li>
-					)}
-					{textReverserTool && textReverserTool.status === 'live' && (
-						<li class="py-2 last:pb-0">
-							<a href={textReverserTool.slug} class="flex items-center justify-between text-body transition-colors hover:text-ink">
-								<span>{textReverserTool.shortName}</span>
-								<span aria-hidden="true" class="text-mute">→</span>
-							</a>
-						</li>
-					)}
-				</ul>
+			<!-- Two Clean Case Button Groups -->
+			<div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
+				<!-- Group 1: Writing & Editorial Cases -->
+				<div class="lg:col-span-7">
+					<span class="block text-[12px] font-medium text-[#afe3d0]/80">
+						Writing &amp; editorial cases
+					</span>
+					<div class="mt-3 flex flex-wrap gap-2.5">
+						<button
+							type="button"
+							data-case-mode="sentence"
+							data-case-label="Sentence case"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							Sentence case
+						</button>
+						<button
+							type="button"
+							data-case-mode="lower"
+							data-case-label="lower case"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							lower case
+						</button>
+						<button
+							type="button"
+							data-case-mode="upper"
+							data-case-label="UPPER CASE"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							UPPER CASE
+						</button>
+						<button
+							type="button"
+							data-case-mode="title"
+							data-case-label="Title Case"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							Title Case
+						</button>
+						<button
+							type="button"
+							data-case-mode="capitalized"
+							data-case-label="Capitalized Case"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							Capitalized Case
+						</button>
+						<button
+							type="button"
+							data-case-mode="alternating"
+							data-case-label="aLtErNaTiNg cAsE"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							aLtErNaTiNg cAsE
+						</button>
+						<button
+							type="button"
+							data-case-mode="inverse"
+							data-case-label="iNVERSE cAsE"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							iNVERSE cAsE
+						</button>
+					</div>
+				</div>
+
+				<!-- Group 2: Developer & Code Cases -->
+				<div class="border-t border-[#afe3d0]/15 pt-5 lg:col-span-5 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
+					<span class="block text-[12px] font-medium text-[#afe3d0]/80">
+						Developer &amp; code cases
+					</span>
+					<div class="mt-3 flex flex-wrap gap-2.5">
+						<button
+							type="button"
+							data-case-mode="camel"
+							data-case-label="camelCase"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							camelCase
+						</button>
+						<button
+							type="button"
+							data-case-mode="pascal"
+							data-case-label="PascalCase"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							PascalCase
+						</button>
+						<button
+							type="button"
+							data-case-mode="snake"
+							data-case-label="snake_case"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							snake_case
+						</button>
+						<button
+							type="button"
+							data-case-mode="constant"
+							data-case-label="CONSTANT_CASE"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							CONSTANT_CASE
+						</button>
+						<button
+							type="button"
+							data-case-mode="kebab"
+							data-case-label="kebab-case"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							kebab-case
+						</button>
+						<button
+							type="button"
+							data-case-mode="dot"
+							data-case-label="dot.case"
+							class="cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]"
+						>
+							dot.case
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -263,12 +215,11 @@ const textReverserTool = getToolById('text-reverser');
 		const textarea = document.getElementById('cc-textarea') as HTMLTextAreaElement | null;
 		const activeModeEl = document.getElementById('cc-active-mode');
 		const wordsEl = document.getElementById('cc-metric-words');
-		const sentencesEl = document.getElementById('cc-metric-sentences');
 		const charsEl = document.getElementById('cc-metric-chars');
-		const charsNoSpaceEl = document.getElementById('cc-metric-chars-nospace');
 		const linesEl = document.getElementById('cc-metric-lines');
 
-		const sampleBtn = document.getElementById('cc-btn-sample');
+		const pasteBtn = document.getElementById('cc-btn-paste');
+		const undoBtn = document.getElementById('cc-btn-undo') as HTMLButtonElement | null;
 		const copyBtn = document.getElementById('cc-btn-copy');
 		const downloadBtn = document.getElementById('cc-btn-download');
 		const clearBtn = document.getElementById('cc-btn-clear');
@@ -276,11 +227,29 @@ const textReverserTool = getToolById('text-reverser');
 
 		if (!textarea) return;
 
+		const historyStack: Array<{ text: string; label: string }> = [];
+
 		const MINOR_WORDS = new Set([
 			'a', 'an', 'and', 'as', 'at', 'but', 'by', 'for', 'from', 'in', 'into',
 			'nor', 'of', 'on', 'onto', 'or', 'over', 'per', 'so', 'than', 'that',
 			'the', 'to', 'up', 'upon', 'via', 'with', 'yet'
 		]);
+
+		function updateUndoButton() {
+			if (!undoBtn) return;
+			undoBtn.disabled = historyStack.length === 0;
+		}
+
+		function saveSnapshot() {
+			if (!textarea) return;
+			const currentLabel = activeModeEl?.textContent?.trim() || 'Original text';
+			const last = historyStack[historyStack.length - 1];
+			if (!last || last.text !== textarea.value) {
+				historyStack.push({ text: textarea.value, label: currentLabel });
+				if (historyStack.length > 25) historyStack.shift();
+				updateUndoButton();
+			}
+		}
 
 		function toSentenceCase(text: string): string {
 			return text
@@ -328,10 +297,35 @@ const textReverserTool = getToolById('text-reverser');
 				.join('');
 		}
 
+		function toAlternatingCase(text: string): string {
+			let index = 0;
+			return Array.from(text)
+				.map((ch) => {
+					if (/[a-zA-Z]/.test(ch)) {
+						const res = index % 2 === 0 ? ch.toLowerCase() : ch.toUpperCase();
+						index++;
+						return res;
+					}
+					return ch;
+				})
+				.join('');
+		}
+
+		function toInverseCase(text: string): string {
+			return Array.from(text)
+				.map((ch) => {
+					if (ch >= 'a' && ch <= 'z') return ch.toUpperCase();
+					if (ch >= 'A' && ch <= 'Z') return ch.toLowerCase();
+					return ch;
+				})
+				.join('');
+		}
+
 		function extractWordsForIdentifier(line: string): string[] {
 			const normalized = line
 				.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
-				.replace(/[_\-]+/g, ' ')
+				.replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+				.replace(/[_\-.]+/g, ' ')
 				.replace(/[^\p{L}\p{N}\s]+/gu, ' ')
 				.trim();
 			return normalized ? normalized.split(/\s+/) : [];
@@ -353,12 +347,39 @@ const textReverserTool = getToolById('text-reverser');
 				.join('\n');
 		}
 
+		function toPascalCase(text: string): string {
+			return text
+				.split(/\r?\n/)
+				.map((line) => {
+					const words = extractWordsForIdentifier(line);
+					if (words.length === 0) return '';
+					return words
+						.map((w) => {
+							const lower = w.toLowerCase();
+							return lower.charAt(0).toUpperCase() + lower.slice(1);
+						})
+						.join('');
+				})
+				.join('\n');
+		}
+
 		function toSnakeCase(text: string): string {
 			return text
 				.split(/\r?\n/)
 				.map((line) =>
 					extractWordsForIdentifier(line)
 						.map((w) => w.toLowerCase())
+						.join('_')
+				)
+				.join('\n');
+		}
+
+		function toConstantCase(text: string): string {
+			return text
+				.split(/\r?\n/)
+				.map((line) =>
+					extractWordsForIdentifier(line)
+						.map((w) => w.toUpperCase())
 						.join('_')
 				)
 				.join('\n');
@@ -375,22 +396,27 @@ const textReverserTool = getToolById('text-reverser');
 				.join('\n');
 		}
 
+		function toDotCase(text: string): string {
+			return text
+				.split(/\r?\n/)
+				.map((line) =>
+					extractWordsForIdentifier(line)
+						.map((w) => w.toLowerCase())
+						.join('.')
+				)
+				.join('\n');
+		}
+
 		function updateStats() {
 			if (!textarea) return;
 			const val = textarea.value;
 			const trimmed = val.trim();
 			const words = trimmed ? trimmed.split(/\s+/).length : 0;
 			const chars = val.length;
-			const charsNoSpace = val.replace(/\s/g, '').length;
-			const sentences = trimmed
-				? (trimmed.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || []).filter((s) => s.trim().length > 0).length
-				: 0;
 			const lines = val.length > 0 ? val.split(/\r?\n/).length : 0;
 
 			if (wordsEl) wordsEl.textContent = words.toLocaleString();
-			if (sentencesEl) sentencesEl.textContent = `${sentences.toLocaleString()} ${sentences === 1 ? 'sentence' : 'sentences'}`;
 			if (charsEl) charsEl.textContent = chars.toLocaleString();
-			if (charsNoSpaceEl) charsNoSpaceEl.textContent = `${charsNoSpace.toLocaleString()} without spaces`;
 			if (linesEl) linesEl.textContent = lines.toLocaleString();
 		}
 
@@ -398,8 +424,8 @@ const textReverserTool = getToolById('text-reverser');
 			modeBtns.forEach((btn) => {
 				const isCurrent = btn === activeBtn;
 				btn.className = isCurrent
-					? 'cc-mode-btn cursor-pointer rounded-sm border border-ink bg-primary px-3.5 py-2.5 text-left text-[14px] font-medium text-on-primary transition-all'
-					: 'cc-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2.5 text-left text-[14px] font-medium text-ink transition-all hover:border-ink hover:bg-hairline-soft';
+					? 'cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0] bg-[#afe3d0] px-4 py-2.5 text-[14px] font-semibold text-[#0f2e26] transition-all'
+					: 'cc-mode-btn cursor-pointer rounded-xl border border-[#afe3d0]/20 bg-white/[0.04] px-4 py-2.5 text-[14px] font-medium text-white transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.08]';
 			});
 		}
 
@@ -408,7 +434,12 @@ const textReverserTool = getToolById('text-reverser');
 				const mode = btn.dataset.caseMode;
 				const label = btn.dataset.caseLabel || 'Converted';
 				const current = textarea.value;
-				if (!current) return;
+				if (!current) {
+					textarea.focus();
+					return;
+				}
+
+				saveSnapshot();
 
 				let converted = current;
 				switch (mode) {
@@ -427,14 +458,29 @@ const textReverserTool = getToolById('text-reverser');
 					case 'capitalized':
 						converted = toCapitalizedCase(current);
 						break;
+					case 'alternating':
+						converted = toAlternatingCase(current);
+						break;
+					case 'inverse':
+						converted = toInverseCase(current);
+						break;
 					case 'camel':
 						converted = toCamelCase(current);
+						break;
+					case 'pascal':
+						converted = toPascalCase(current);
 						break;
 					case 'snake':
 						converted = toSnakeCase(current);
 						break;
+					case 'constant':
+						converted = toConstantCase(current);
+						break;
 					case 'kebab':
 						converted = toKebabCase(current);
+						break;
+					case 'dot':
+						converted = toDotCase(current);
 						break;
 				}
 
@@ -449,11 +495,33 @@ const textReverserTool = getToolById('text-reverser');
 			updateStats();
 		});
 
-		sampleBtn?.addEventListener('click', () => {
-			textarea.value =
-				'the quick brown fox jumps over the lazy dog. writing clear, well-structured headlines for articles and essays is easier when you can switch between sentence case, title case, and identifier formats in one click.';
-			if (activeModeEl) activeModeEl.textContent = 'Sample loaded';
+		pasteBtn?.addEventListener('click', async () => {
+			try {
+				const text = await navigator.clipboard.readText();
+				if (text && textarea) {
+					if (textarea.value) saveSnapshot();
+					textarea.value = text;
+					if (activeModeEl) activeModeEl.textContent = 'Original text';
+					highlightActiveButton(null);
+					updateStats();
+					const original = pasteBtn.textContent;
+					pasteBtn.textContent = 'Pasted!';
+					setTimeout(() => {
+						pasteBtn.textContent = original;
+					}, 1500);
+				}
+			} catch {
+				textarea?.focus();
+			}
+		});
+
+		undoBtn?.addEventListener('click', () => {
+			const prev = historyStack.pop();
+			if (!prev || !textarea) return;
+			textarea.value = prev.text;
+			if (activeModeEl) activeModeEl.textContent = prev.label;
 			highlightActiveButton(null);
+			updateUndoButton();
 			updateStats();
 		});
 
@@ -486,6 +554,7 @@ const textReverserTool = getToolById('text-reverser');
 		});
 
 		clearBtn?.addEventListener('click', () => {
+			if (textarea.value) saveSnapshot();
 			textarea.value = '';
 			if (activeModeEl) activeModeEl.textContent = 'Original text';
 			highlightActiveButton(null);
@@ -494,8 +563,9 @@ const textReverserTool = getToolById('text-reverser');
 		});
 
 		updateStats();
+		updateUndoButton();
 	}
 
 	initCaseConverter();
+	document.addEventListener('astro:page-load', initCaseConverter);
 </script>
-

@@ -89,7 +89,7 @@ function runValidation() {
 	}
 
 	const { origin, tools, staticPages } = loadSiteRegistry();
-	const allowedCategories = new Set(['Reading', 'Writing', 'Speaking', 'Text']);
+	const allowedCategories = new Set(['Reading', 'Writing', 'Speaking', 'Text', 'Typing Speed Test']);
 
 	// 1. Validate Registry Integrity
 	for (const tool of tools) {
@@ -118,6 +118,7 @@ function runValidation() {
 		...staticPages.map((p) => p.slug),
 	]);
 	const utilityErrorRoutes = new Set(['/404.html']);
+	const noindexPlayRoutes = new Set(['/typing-speed-test/play/']);
 	const draftSlugs = new Set(draftTools.map((t) => t.slug));
 
 	// 2. Discover all HTML files in dist/
@@ -148,7 +149,7 @@ function runValidation() {
 
 	// Verify no unexpected HTML routes exist
 	for (const actualRoute of actualRoutes.keys()) {
-		if (!expectedLiveRoutes.has(actualRoute) && !utilityErrorRoutes.has(actualRoute)) {
+		if (!expectedLiveRoutes.has(actualRoute) && !utilityErrorRoutes.has(actualRoute) && !noindexPlayRoutes.has(actualRoute)) {
 			errors.push(`Unexpected HTML route found in dist/: "${actualRoute}"`);
 		}
 	}
@@ -172,12 +173,26 @@ function runValidation() {
 
 	for (const [route, html] of routeHtmlMap.entries()) {
 		const isUtilityErrorPage = utilityErrorRoutes.has(route);
-		const expectedCanonical = new URL(isUtilityErrorPage ? '/' : route, origin).toString();
+		const isNoindexPlayPage = noindexPlayRoutes.has(route);
+		const expectedCanonical = new URL(
+			isUtilityErrorPage ? '/' : isNoindexPlayPage ? '/typing-speed-test/' : route,
+			origin
+		).toString();
 
 		if (isUtilityErrorPage) {
 			const hasNoIndex = /<meta\b[^>]*\bname=["']robots["'][^>]*\bcontent=["'][^"']*noindex/i.test(html);
 			if (!hasNoIndex) {
 				errors.push(`Utility error page "${route}" must include <meta name="robots" content="noindex, nofollow" />.`);
+			}
+		} else if (isNoindexPlayPage) {
+			const hasNoIndex = /<meta\b[^>]*\bname=["']robots["'][^>]*\bcontent=["'][^"']*noindex/i.test(html);
+			if (!hasNoIndex) {
+				errors.push(`Play route "${route}" must include <meta name="robots" content="noindex, follow" />.`);
+			}
+			const canonicalMatches = [...html.matchAll(/<link\b[^>]*\brel=["']canonical["'][^>]*>/gi)];
+			const canonicalHref = canonicalMatches[0]?.[0].match(/\bhref=["']([^"']+)["']/i)?.[1] ?? '';
+			if (canonicalHref !== expectedCanonical) {
+				errors.push(`Play route "${route}" canonical mismatch: expected "${expectedCanonical}", found "${canonicalHref}".`);
 			}
 		} else {
 			// Canonical check

@@ -6,9 +6,9 @@ import Footer from "../../components/Footer.astro";
 import { resolveCanonicalUrl } from "../../config/site";
 
 const pageTitle =
-	"Words to Pages Converter — Words to Pages & Pages to Words Calculator";
+	"Words to Pages Calculator & Book Page Count Converter | Wordora";
 const pageDescription =
-	"Convert words to pages or pages to words instantly. Calculate exact page counts across single, 1.5, and double spacing, Times New Roman, Arial, Calibri, A4/Letter paper, and book trim sizes.";
+	"Free words to pages calculator and words per page calculator. Convert essay word count to pages, estimate book page count by word count, or check how many words is 7 pages.";
 const canonicalUrl = resolveCanonicalUrl("/words-to-pages/");
 
 const softwareAppSchema = {
@@ -48,6 +48,11 @@ const faqList = [
 		question: "Is 1,500 words 4 or 6 pages?",
 		answer:
 			"1,500 words is 6.0 pages double-spaced (at 250 words per page) and 3.0 pages single-spaced (at 500 words per page). At 1.5 line spacing, 1,500 words fills 4.5 pages.",
+	},
+	{
+		question: "How many words is 7 pages?",
+		answer:
+			"Under standard academic formatting (12-point Times New Roman, 1-inch margins), 7 pages is 1,750 words double-spaced (at 250 words per page) or 3,500 words single-spaced (at 500 words per page). At 1.5 line spacing, 7 pages equals roughly 2,310 words, and in a standard 5.5\" × 8.5\" trade paperback book (~275 words per page), 7 pages is about 1,925 words.",
 	},
 	{
 		question: "Is 5,000 words 20 pages?",
@@ -152,11 +157,11 @@ const faqPageSchema = {
 		<!-- Section 1: Quick Reference Charts & Formula Cards -->
 		<section class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-10 pb-16 sm:px-6 md:mt-12 md:pt-12">
 			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-				Words to Pages &amp; Pages to Words Quick Reference Charts
+				Words to Pages Calculator &amp; Page Count Calculator Quick Reference Charts
 			</h2>
 
 			<p class="text-[16px] leading-relaxed text-body">
-				Under standard academic formatting—12-point Times New Roman font, 1-inch margins, and US Letter paper—<strong class="font-semibold text-ink">1 double-spaced page holds roughly 250 words</strong>, while <strong class="font-semibold text-ink">1 single-spaced page holds roughly 500 words</strong>. For printed books, a standard <strong class="font-semibold text-ink">5.5" × 8.5" trade paperback averages 275 words per page</strong>, making word-to-page estimates predictable once you match your document layout.
+				Using this <strong class="font-semibold text-ink">words to pages calculator</strong> and <strong class="font-semibold text-ink">words to pages converter</strong> under standard academic formatting—12-point Times New Roman font, 1-inch margins, and US Letter paper—<strong class="font-semibold text-ink">1 double-spaced page holds roughly 250 words</strong>, while <strong class="font-semibold text-ink">1 single-spaced page holds roughly 500 words</strong>. For printed books, a standard <strong class="font-semibold text-ink">5.5" × 8.5" trade paperback averages 275 words per page</strong>, making our <strong class="font-semibold text-ink">page count calculator</strong> estimates predictable once you match your document layout.
 			</p>
 
 			<!-- 2-Column Side-by-Side Tables -->
@@ -221,6 +226,13 @@ const faqPageSchema = {
 									<td class="px-4 py-3 tabular-nums">4.5 pages</td>
 									<td class="px-4 py-3 tabular-nums">6.0 pages</td>
 									<td class="px-4 py-3 tabular-nums">5.5 pages</td>
+								</tr>
+								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">1,750 words</td>
+									<td class="px-4 py-3 tabular-nums">3.5 pages</td>
+									<td class="px-4 py-3 tabular-nums">5.3 pages</td>
+									<td class="px-4 py-3 tabular-nums">7.0 pages</td>
+									<td class="px-4 py-3 tabular-nums">6.4 pages</td>
 								</tr>
 								<tr>
 									<td class="px-4 py-3 font-medium text-ink tabular-nums">2,000 words</td>
@@ -340,6 +352,12 @@ const faqPageSchema = {
 									<td class="px-4 py-3 tabular-nums">2,500 words</td>
 								</tr>
 								<tr>
+									<td class="px-4 py-3 font-medium text-ink tabular-nums">7 pages</td>
+									<td class="px-4 py-3 tabular-nums">1,750 words</td>
+									<td class="px-4 py-3 tabular-nums">1,925 words</td>
+									<td class="px-4 py-3 tabular-nums">3,500 words</td>
+								</tr>
+								<tr>
 									<td class="px-4 py-3 font-medium text-ink tabular-nums">10 pages</td>
 									<td class="px-4 py-3 tabular-nums">2,500 words</td>
 									<td class="px-4 py-3 tabular-nums">2,750 words</td>
@@ -419,11 +437,11 @@ const faqPageSchema = {
 		<!-- Section 2: Words Per Page by Font Family, Font Size & Paper Size -->
 		<section class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-12 pb-16 sm:px-6 md:pt-16">
 			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-				Words Per Page by Font Family, Font Size &amp; Paper Size
+				Words Per Page Calculator Matrix by Font Family, Font Size &amp; Paper Size
 			</h2>
 
 			<p class="text-[16px] leading-relaxed text-body">
-				The "250 words per double-spaced page" rule is only a baseline for 12-point Times New Roman on US Letter paper with 1-inch margins. Changing your typeface, font size, margins, or paper dimensions can shift your final page count by <strong class="font-semibold text-ink">10% to 25%</strong> without changing a single word of your draft.
+				The "250 words per double-spaced page" rule is only a baseline for 12-point Times New Roman on US Letter paper with 1-inch margins. Using this <strong class="font-semibold text-ink">words per page calculator</strong> guide shows how changing your typeface, font size, margins, or paper dimensions can shift your final page count by <strong class="font-semibold text-ink">10% to 25%</strong> without changing a single word of your draft.
 			</p>
 
 			<!-- Font & Size Matrix Card -->
@@ -515,11 +533,11 @@ const faqPageSchema = {
 		<!-- Section 3: Academic Style Guides & Book / Novel Page Benchmarks -->
 		<section class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-12 pb-16 sm:px-6 md:pt-16">
 			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-				Academic Style Guides &amp; Book / Novel Page Benchmarks
+				Academic Style Guides &amp; Book Page Calculator Word Count Benchmarks
 			</h2>
 
 			<p class="text-[16px] leading-relaxed text-body">
-				Whether you are formatting a university research paper or estimating the physical spine width of a self-published novel, your target industry sets strict layout rules that directly control words per page.
+				Whether you are formatting a university research paper or using a <strong class="font-semibold text-ink">book page calculator word count</strong> benchmark to estimate the physical spine width of a self-published novel, your target industry sets strict layout rules that directly control words per page.
 			</p>
 
 			<!-- Academic Formatting Card -->
@@ -667,6 +685,12 @@ const faqPageSchema = {
 						<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
 						<div>
 							<strong class="font-semibold text-ink">How many pages is 1,500 words?</strong> <strong class="font-semibold text-ink">1,500 words</strong> equals <strong class="font-semibold text-ink">3.0 pages single-spaced</strong> or <strong class="font-semibold text-ink">6.0 pages double-spaced</strong>—a standard length for college argumentative essays and in-depth feature articles.
+						</div>
+					</li>
+					<li class="flex items-start gap-2.5">
+						<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vercel-blue"></span>
+						<div>
+							<strong class="font-semibold text-ink">How many words is 7 pages?</strong> <strong class="font-semibold text-ink">7 pages</strong> equals <strong class="font-semibold text-ink">1,750 words double-spaced</strong> (at 250 words per page) or <strong class="font-semibold text-ink">3,500 words single-spaced</strong> (at 500 words per page), and roughly <strong class="font-semibold text-ink">1,925 words</strong> in a standard trade paperback.
 						</div>
 					</li>
 					<li class="flex items-start gap-2.5">
@@ -868,6 +892,16 @@ const faqPageSchema = {
 					</summary>
 					<p class="mt-3 text-[15px] leading-relaxed text-body">
 						<strong class="font-semibold text-ink">1,500 words is 6.0 pages double-spaced</strong> (at 250 words per page) and <strong class="font-semibold text-ink">3.0 pages single-spaced</strong> (at 500 words per page). At 1.5 line spacing, 1,500 words fills <strong class="font-semibold text-ink">4.5 pages</strong>.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>How many words is 7 pages?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						Under standard academic formatting (12-point Times New Roman, 1-inch margins), <strong class="font-semibold text-ink">7 pages is 1,750 words double-spaced</strong> (at 250 words per page) or <strong class="font-semibold text-ink">3,500 words single-spaced</strong> (at 500 words per page). At 1.5 line spacing, 7 pages equals roughly <strong class="font-semibold text-ink">2,310 words</strong>, and in a standard 5.5" × 8.5" trade paperback book (~275 words per page), 7 pages is about <strong class="font-semibold text-ink">1,925 words</strong>.
 					</p>
 				</details>
 

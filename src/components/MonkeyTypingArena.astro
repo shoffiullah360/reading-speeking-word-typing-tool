@@ -1,0 +1,2181 @@
+---
+---
+
+<div
+	id="mta-root"
+	class="relative flex min-h-screen w-full flex-col justify-between font-mono text-[#d1fae5] select-none"
+>
+	<!-- Tactical Mission Header & Command Bar -->
+	<div
+		id="mta-topbar"
+		class="mx-auto flex w-full max-w-[1320px] flex-wrap items-center justify-between gap-4 px-4 pt-6 pb-2 transition-opacity duration-300 sm:px-8"
+	>
+		<!-- Left: Abort + status -->
+		<div class="flex items-center gap-4">
+			<a
+				href="/typing-speed-test/"
+				class="rounded-md border border-[#00ff9d]/30 bg-[#0a1410]/90 px-3 py-2 text-[13px] font-semibold tracking-wide text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d]/10 hover:shadow-[0_0_12px_rgba(0,255,157,0.25)]"
+				aria-label="Abort mission and exit to Typing Speed Test"
+			>
+				[ ← ABORT MISSION ]
+			</a>
+			<span id="mta-status" class="inline-flex items-center gap-2 text-[12px] font-medium tracking-wide text-[#6ee7b7]">
+				<span id="mta-status-dot" class="inline-block h-2 w-2 animate-pulse rounded-full bg-[#00ff9d] shadow-[0_0_8px_#00ff9d]"></span>
+				<span id="mta-status-text">TERMINAL READY</span>
+			</span>
+		</div>
+
+		<!-- Center: Command Deck -->
+		<div
+			id="mta-control-pill"
+			role="toolbar"
+			aria-label="Mission protocol and modifiers"
+			class="flex flex-wrap items-center justify-center gap-1.5 rounded-xl border border-[#00ff9d]/25 bg-[#0a1410]/90 px-3 py-2 text-[13px] backdrop-blur-md"
+		>
+			<div id="mta-modifiers-group" class="flex items-center gap-1">
+				<button type="button" id="mta-mod-punctuation" aria-pressed="false" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">@ punctuation</button>
+				<button type="button" id="mta-mod-numbers" aria-pressed="false" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]"># numbers</button>
+				<span class="mx-1 h-4 w-[1px] bg-[#00ff9d]/25" aria-hidden="true"></span>
+			</div>
+
+			<div class="flex flex-wrap items-center gap-1" role="group" aria-label="Test mode">
+				<button type="button" data-mta-mode="time" aria-pressed="true" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">time</button>
+				<button type="button" data-mta-mode="words" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">words</button>
+				<button type="button" data-mta-mode="quote" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">quote</button>
+				<button type="button" data-mta-mode="zen" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">zen</button>
+				<button type="button" data-mta-mode="custom" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">custom</button>
+			</div>
+
+			<div id="mta-suboptions-wrapper" class="flex items-center gap-1">
+				<span class="mx-1 h-4 w-[1px] bg-[#00ff9d]/25" aria-hidden="true"></span>
+
+				<div id="mta-sub-time" class="flex items-center gap-1">
+					<button type="button" data-mta-time="15" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] tabular-nums transition-all hover:text-[#00ff9d]">15</button>
+					<button type="button" data-mta-time="30" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] tabular-nums transition-all hover:text-[#00ff9d]">30</button>
+					<button type="button" data-mta-time="60" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] tabular-nums transition-all hover:text-[#00ff9d]">60</button>
+					<button type="button" data-mta-time="120" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] tabular-nums transition-all hover:text-[#00ff9d]">120</button>
+				</div>
+
+				<div id="mta-sub-words" class="hidden items-center gap-1">
+					<button type="button" data-mta-words="10" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] tabular-nums transition-all hover:text-[#00ff9d]">10</button>
+					<button type="button" data-mta-words="25" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] tabular-nums transition-all hover:text-[#00ff9d]">25</button>
+					<button type="button" data-mta-words="50" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] tabular-nums transition-all hover:text-[#00ff9d]">50</button>
+					<button type="button" data-mta-words="100" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] tabular-nums transition-all hover:text-[#00ff9d]">100</button>
+				</div>
+
+				<div id="mta-sub-custom" class="hidden items-center gap-1">
+					<button type="button" id="mta-btn-open-custom" class="cursor-pointer rounded-md bg-[#00ff9d] px-3 py-1 font-bold text-[#050a08] shadow-[0_0_12px_rgba(0,255,157,0.45)] transition hover:brightness-110">edit payload</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Right: Live Telemetry Pill + Ghost Pacer + SFX Toggle -->
+		<div
+			class="flex flex-wrap items-center gap-2.5 rounded-xl border border-[#00ff9d]/25 bg-[#0a1410]/90 px-3.5 py-2 text-[12px] font-semibold tracking-wide text-[#00ff9d] tabular-nums backdrop-blur-md"
+			aria-label="Live telemetry and tactical controls"
+		>
+			<span>LIVE WPM: <span id="mta-live-wpm">00</span></span>
+			<span class="h-3.5 w-[1px] bg-[#00ff9d]/25" aria-hidden="true"></span>
+			<span>INTEGRITY: <span id="mta-live-integrity">100%</span></span>
+			<span class="h-3.5 w-[1px] bg-[#00ff9d]/25" aria-hidden="true"></span>
+			<button
+				type="button"
+				id="mta-pace-toggle"
+				title="Cycle Ghost Pacer Caret (OFF / 40 / 60 / 80 WPM / LAST RUN)"
+				class="cursor-pointer rounded px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#6ee7b7] transition hover:bg-[#00ff9d]/15 hover:text-[#00ff9d]"
+			>
+				[ PACE: OFF ]
+			</button>
+			<button
+				type="button"
+				id="mta-sfx-toggle"
+				aria-pressed="false"
+				title="Toggle synthesized mechanical terminal keystroke audio"
+				class="cursor-pointer rounded px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#6ee7b7] transition hover:bg-[#00ff9d]/15 hover:text-[#00ff9d]"
+			>
+				[ SFX: OFF ]
+			</button>
+		</div>
+	</div>
+
+	<!-- Center Console -->
+	<div class="mx-auto flex w-full max-w-[1100px] flex-1 flex-col justify-center px-4 py-6 sm:px-8">
+		<!-- Active Typing Arena View -->
+		<div id="mta-arena-view" class="w-full">
+			<div class="mb-3 flex min-h-[2.75rem] flex-wrap items-center justify-between gap-3">
+				<div class="flex flex-wrap items-center gap-3">
+					<output
+						id="mta-live-indicator"
+						aria-live="polite"
+						class="font-mono text-2xl font-bold tracking-wide text-[#00ff9d] tabular-nums drop-shadow-[0_0_10px_rgba(0,255,157,0.55)] sm:text-3xl"
+					>
+						T-MINUS 60s
+					</output>
+					<span
+						id="mta-repeated-badge"
+						class="hidden rounded border border-[#ffb020]/50 bg-[#ffb020]/10 px-2.5 py-0.5 text-[12px] font-bold tracking-wide text-[#ffb020] shadow-[0_0_10px_rgba(255,176,32,0.2)]"
+					>
+						[ REPEATED PAYLOAD ]
+					</span>
+					<span id="mta-quote-source" class="hidden text-[13px] font-medium text-[#6ee7b7]"></span>
+				</div>
+
+				<div class="flex items-center gap-2.5">
+					<button
+						type="button"
+						id="mta-zen-finish-btn"
+						class="hidden cursor-pointer items-center gap-1.5 rounded-md bg-[#00ff9d] px-4 py-1.5 text-[13px] font-bold text-[#050a08] shadow-[0_0_12px_rgba(0,255,157,0.45)] transition hover:brightness-110"
+					>
+						<span>[ EXECUTE LOG ]</span>
+						<span class="text-[11px] opacity-75">(Shift+Enter)</span>
+					</button>
+
+					<button
+						type="button"
+						id="mta-quick-restart-btn"
+						title="Restart sequence (Tab)"
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-[#00ff9d]/30 bg-[#0a1410]/90 px-3.5 py-1.5 text-[13px] font-medium text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d]/10"
+					>
+						[ RESTART ]
+					</button>
+				</div>
+			</div>
+
+			<!-- Payload Progress Bar -->
+			<div class="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-[#0f2a1f]" role="progressbar" aria-label="Payload progress" aria-valuemin="0" aria-valuemax="100">
+				<div
+					id="mta-progress-fill"
+					class="h-full w-0 rounded-full bg-[#00ff9d] shadow-[0_0_10px_#00ff9d] transition-[width] duration-150 ease-out"
+				></div>
+			</div>
+
+			<!-- Click-Anywhere Typing Viewport Box -->
+			<div id="mta-canvas-box" class="relative w-full cursor-text rounded-xl py-2 focus-within:outline-none">
+				<label for="mta-hidden-input" class="sr-only">Type the payload shown</label>
+				<input
+					id="mta-hidden-input"
+					type="text"
+					autocapitalize="off"
+					autocomplete="off"
+					autocorrect="off"
+					spellcheck="false"
+					aria-label="Typing speed test input"
+					class="pointer-events-none fixed top-0 left-0 h-1 w-1 opacity-0"
+				/>
+
+				<div
+					id="mta-viewport"
+					class="relative h-[7.2rem] w-full overflow-hidden font-mono text-2xl leading-[2.4rem] sm:h-[9rem] sm:text-3xl sm:leading-[3rem]"
+				>
+					<div
+						id="mta-words-track"
+						class="relative w-full transition-transform duration-150 ease-out"
+						style="transform: translateY(0px);"
+					>
+						<!-- Ghost Pacer Caret -->
+						<div
+							id="mta-ghost-caret"
+							aria-hidden="true"
+							class="pointer-events-none absolute top-1 left-0 z-10 hidden h-[1.9rem] w-[3px] rounded-full bg-[#38bdf8]/75 shadow-[0_0_10px_#38bdf8] transition-all duration-100 sm:h-[2.35rem]"
+						></div>
+						<!-- Active User Caret -->
+						<div
+							id="mta-caret"
+							class="pointer-events-none absolute top-1 left-0 z-10 h-[1.9rem] w-[3px] rounded-full bg-[#00ff9d] shadow-[0_0_10px_#00ff9d] transition-all duration-75 sm:h-[2.35rem]"
+						></div>
+						<div id="mta-words-stream" class="flex flex-wrap content-start items-baseline select-none"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Post-Test Mission Report (Frameless Monkeytype Telemetry Layout) -->
+		<div id="mta-results-view" class="hidden w-full py-2">
+			<!-- 1. Frameless High-Impact Top Grid (WPM / ACC Left + Smooth Bezier SVG Chart Right) -->
+			<div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-8">
+				<!-- Left Column: w-44 shrink-0 -->
+				<div class="flex w-full flex-row items-baseline justify-start gap-10 lg:w-44 lg:shrink-0 lg:flex-col lg:gap-6">
+					<div class="group relative">
+						<div class="text-2xl leading-none font-medium text-[#5f8f7a]">wpm</div>
+						<div
+							id="mta-res-wpm"
+							title="0.00 wpm"
+							class="mt-1 cursor-help text-6xl leading-none font-bold text-[#00ff9d] tabular-nums drop-shadow-[0_0_16px_rgba(0,255,157,0.45)] sm:text-7xl"
+						>
+							0
+						</div>
+					</div>
+					<div class="group relative">
+						<div class="text-2xl leading-none font-medium text-[#5f8f7a]">acc</div>
+						<div
+							id="mta-res-acc"
+							title="100.00% accuracy"
+							class="mt-1 cursor-help text-5xl leading-none font-bold text-[#00ff9d] tabular-nums drop-shadow-[0_0_16px_rgba(0,255,157,0.45)] sm:text-6xl"
+						>
+							100%
+						</div>
+					</div>
+				</div>
+
+				<!-- Right Column: Smooth Bezier SVG Telemetry Chart -->
+				<div class="flex min-w-0 flex-1 flex-col gap-2">
+					<div class="flex flex-wrap items-center justify-end gap-4 text-[11px] text-[#5f8f7a]">
+						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-2 w-2 rounded-full bg-[#00ff9d]"></span>wpm</span>
+						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-0 w-3 border-t-2 border-dashed border-[#4b7a66]"></span>raw</span>
+						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-0.5 w-3 bg-[#38bdf8]"></span>burst</span>
+						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-2 w-2 rounded-full bg-[#ff3b5c]"></span>errors</span>
+					</div>
+					<div
+						id="mta-chart-container"
+						class="relative h-[220px] w-full overflow-hidden rounded-xl bg-[#070f0b]/60 p-2"
+					>
+						<svg id="mta-chart-svg" viewBox="0 0 700 200" preserveAspectRatio="none" class="h-full w-full overflow-visible" aria-label="Per-second WPM, raw WPM, burst WPM, and errors chart"></svg>
+						<!-- Floating Hover Tooltip -->
+						<div
+							id="mta-chart-tooltip"
+							class="pointer-events-none absolute top-3 left-3 z-20 hidden rounded-lg border border-[#00ff9d] bg-[#050a08]/95 px-3 py-2 text-[11px] leading-relaxed text-[#d1fae5] shadow-[0_0_16px_rgba(0,255,157,0.25)] tabular-nums"
+						></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 2. Clean Horizontal 6-Column Telemetry Row Below the Graph -->
+			<div class="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-[1.1fr_1fr_0.8fr_1.45fr_1fr_1fr]">
+				<div class="min-w-0">
+					<div class="text-[13px] font-medium text-[#5f8f7a]">test type</div>
+					<div id="mta-stat-type" class="mt-1 text-[16px] leading-snug font-semibold text-[#00ff9d]">
+						time 60s<br />english
+					</div>
+				</div>
+				<div class="min-w-0">
+					<div class="text-[13px] font-medium text-[#5f8f7a]">other</div>
+					<div id="mta-stat-other" class="mt-1 text-[16px] leading-snug font-semibold text-[#00ff9d]">
+						clean run
+					</div>
+				</div>
+				<div class="min-w-0">
+					<div class="text-[13px] font-medium text-[#5f8f7a]">raw</div>
+					<div id="mta-stat-raw" title="0.00 raw wpm" class="mt-1 cursor-help text-3xl leading-none font-bold text-[#00ff9d] tabular-nums">
+						0
+					</div>
+				</div>
+				<div class="min-w-0">
+					<div class="text-[13px] font-medium text-[#5f8f7a]">characters</div>
+					<div
+						id="mta-stat-chars"
+						title="correct / incorrect / extra / missed"
+						class="mt-1 cursor-help text-2xl leading-none font-bold tracking-tight whitespace-nowrap text-[#00ff9d] tabular-nums sm:text-[1.65rem]"
+					>
+						0/0/0/0
+					</div>
+				</div>
+				<div class="min-w-0">
+					<div class="text-[13px] font-medium text-[#5f8f7a]">consistency</div>
+					<div id="mta-stat-consistency" title="100% consistency" class="mt-1 cursor-help text-3xl leading-none font-bold text-[#00ff9d] tabular-nums">
+						100%
+					</div>
+				</div>
+				<div class="min-w-0">
+					<div class="text-[13px] font-medium text-[#5f8f7a]">time</div>
+					<div id="mta-stat-time" class="mt-1 text-3xl leading-none font-bold text-[#00ff9d] tabular-nums">
+						60s
+					</div>
+					<div id="mta-stat-time-sub" class="mt-1.5 text-[11px] leading-tight text-[#5f8f7a] tabular-nums">
+						0% afk · 00:01:00 session
+					</div>
+				</div>
+			</div>
+
+			<!-- 3. Centered Icon Action Bar -->
+			<div class="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-5">
+				<button
+					type="button"
+					id="mta-btn-next-test"
+					title="Next Test (Tab + Enter)"
+					aria-label="Next Test"
+					class="group inline-flex cursor-pointer items-center gap-2 rounded-lg border border-[#00ff9d]/30 bg-[#00ff9d]/10 px-4 py-2.5 text-[14px] font-bold text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d] hover:text-[#050a08] hover:shadow-[0_0_16px_rgba(0,255,157,0.45)]"
+				>
+					<span class="text-base leading-none">&gt;</span>
+					<span>Next Test</span>
+				</button>
+
+				<button
+					type="button"
+					id="mta-btn-repeat-test"
+					title="Repeat Test"
+					aria-label="Repeat Test"
+					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
+				>
+					<span class="text-base leading-none">↻</span>
+					<span>Repeat</span>
+				</button>
+
+				<button
+					type="button"
+					id="mta-btn-practice-missed"
+					disabled
+					title="Practice Missed Words"
+					aria-label="Practice Missed Words"
+					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#ff3b5c]/40 hover:bg-[#ff3b5c]/10 hover:text-[#ff6b84] disabled:cursor-not-allowed disabled:opacity-35"
+				>
+					<span class="text-base leading-none">⚠</span>
+					<span id="mta-missed-btn-label">Practice Missed (0)</span>
+				</button>
+
+				<button
+					type="button"
+					id="mta-btn-toggle-history"
+					aria-expanded="false"
+					title="Toggle Words History"
+					aria-label="Toggle Words History"
+					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
+				>
+					<span class="text-base leading-none">≡</span>
+					<span>Words History</span>
+				</button>
+
+				<button
+					type="button"
+					id="mta-btn-export-png"
+					title="Export Result Card PNG"
+					aria-label="Export Result Card PNG"
+					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
+				>
+					<span class="text-base leading-none">🖼</span>
+					<span id="mta-export-png-label">Export PNG</span>
+				</button>
+
+				<a
+					href="/typing-speed-test/"
+					title="Exit to Guide (/typing-speed-test/)"
+					aria-label="Exit to Guide"
+					class="inline-flex items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
+				>
+					<span class="text-base leading-none">←</span>
+					<span>Exit</span>
+				</a>
+			</div>
+
+			<!-- Expandable Words History Drawer -->
+			<div
+				id="mta-words-history-drawer"
+				class="mt-6 hidden rounded-xl border border-[#00ff9d]/20 bg-[#070f0b]/90 p-5"
+			>
+				<div class="mb-3 flex items-center justify-between gap-2 text-[12px] text-[#5f8f7a]">
+					<span class="font-semibold tracking-wide text-[#00ff9d]">WORDS HISTORY // TYPED STREAM</span>
+					<span>Mistyped characters highlighted in crimson</span>
+				</div>
+				<div
+					id="mta-words-history-list"
+					class="flex flex-wrap items-baseline gap-x-3 gap-y-2 font-mono text-base leading-relaxed"
+				></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Custom Payload Modal -->
+	<div
+		id="mta-custom-modal"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="mta-custom-modal-title"
+		class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 p-4 backdrop-blur-xs"
+	>
+		<div class="w-full max-w-xl rounded-xl border border-[#00ff9d]/30 bg-[#08110d] p-6 shadow-[0_0_40px_rgba(0,255,157,0.12)]">
+			<div class="flex items-center justify-between gap-3">
+				<h2 id="mta-custom-modal-title" class="text-[16px] font-bold tracking-wide text-[#00ff9d]">&gt; CUSTOM PAYLOAD</h2>
+				<button
+					type="button"
+					id="mta-custom-close"
+					aria-label="Close custom payload dialog"
+					class="cursor-pointer rounded-md px-2 py-1 text-[13px] font-semibold text-[#6ee7b7] transition hover:bg-[#00ff9d]/10 hover:text-[#00ff9d]"
+				>
+					[ X ]
+				</button>
+			</div>
+			<p class="mt-1.5 text-[13px] text-[#7fb69f]">Paste any text or code below, then start practicing immediately.</p>
+			<textarea
+				id="mta-custom-textarea"
+				rows="6"
+				placeholder="Paste or type your payload here..."
+				class="mt-4 w-full rounded-lg border-[1px] border-[#00ff9d]/30 bg-[#050a08] p-3.5 font-mono text-[14px] leading-relaxed text-[#d1fae5] placeholder:text-[#345949] focus:border-[#00ff9d] focus:outline-none"
+			></textarea>
+			<div class="mt-5 flex items-center justify-end gap-2.5">
+				<button
+					type="button"
+					id="mta-custom-cancel"
+					class="cursor-pointer rounded-md border border-[#00ff9d]/30 px-4 py-2 text-[13px] font-semibold text-[#6ee7b7] transition hover:bg-[#00ff9d]/10"
+				>
+					[ CANCEL ]
+				</button>
+				<button
+					type="button"
+					id="mta-custom-apply"
+					class="cursor-pointer rounded-md bg-[#00ff9d] px-5 py-2 text-[13px] font-bold text-[#050a08] shadow-[0_0_12px_rgba(0,255,157,0.45)] transition hover:brightness-110"
+				>
+					[ EXECUTE ]
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bottom Terminal Keybind Legend & Caret Style Toggle -->
+	<div class="mx-auto flex w-full max-w-[1320px] flex-wrap items-center justify-center gap-x-3 gap-y-2 px-4 pt-2 pb-6 text-center font-mono text-[12px] tracking-wide text-[#5f8f7a]">
+		<span>[TAB] RESTART SEQUENCE &nbsp;·&nbsp; [SHIFT+ENTER] EXECUTE ZEN LOG &nbsp;·&nbsp; [CTRL+BKSP] CLEAR WORD &nbsp;·&nbsp; [ESC] ABORT TO /typing-speed-test/</span>
+		<span>·</span>
+		<button
+			type="button"
+			id="mta-caret-style-toggle"
+			class="cursor-pointer rounded border border-[#00ff9d]/25 bg-[#0a1410]/80 px-2 py-0.5 text-[11px] font-bold text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d]/15"
+		>
+			[ CARET: LINE ]
+		</button>
+	</div>
+</div>
+
+<script>
+	function initMonkeyTypingArena() {
+		const COMMON_WORDS = [
+			'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'it',
+			'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this',
+			'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or',
+			'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so',
+			'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when',
+			'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people',
+			'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than',
+			'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back',
+			'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 'even',
+			'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us', 'system',
+			'program', 'question', 'number', 'night', 'point', 'home', 'water', 'room', 'mother', 'area',
+			'money', 'story', 'fact', 'month', 'lot', 'right', 'study', 'book', 'eye', 'job',
+			'word', 'business', 'issue', 'side', 'kind', 'head', 'house', 'service', 'friend', 'father',
+			'power', 'hour', 'game', 'line', 'end', 'member', 'law', 'car', 'city', 'community',
+			'name', 'team', 'minute', 'idea', 'body', 'information', 'nothing', 'lead', 'social', 'understand',
+			'watch', 'together', 'follow', 'around', 'stop', 'face', 'create', 'public', 'speak', 'read',
+			'level', 'allow', 'office', 'health', 'person', 'history', 'result', 'open', 'change', 'morning',
+			'research', 'early', 'food', 'moment', 'force', 'offer', 'enough', 'education', 'across', 'remember',
+			'policy', 'everything', 'love', 'process', 'music', 'consider', 'human', 'market', 'build', 'nation',
+			'plan', 'interest', 'experience', 'reach', 'effect', 'class', 'control', 'light', 'voice', 'mind',
+			'network', 'signal', 'packet', 'cipher', 'access', 'secure', 'server', 'binary', 'kernel', 'matrix'
+		];
+
+		const QUOTES: Array<{ text: string; author: string }> = [
+			{ text: "Simplicity is about subtracting the obvious and adding the meaningful. Every word on the page should earn its place through clarity and rhythm.", author: "John Maeda" },
+			{ text: "The art of writing is the art of discovering what you believe. When you sit down at the keyboard with patience, scattered thoughts begin to take shape.", author: "Gustave Flaubert" },
+			{ text: "Focus is a matter of deciding what things you are not going to do. Deep work flourishes in quiet spaces where distractions fade into the background.", author: "John Carmack" },
+			{ text: "A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away.", author: "Antoine de Saint-Exupery" },
+			{ text: "Words are a lens to focus one's mind. Clear prose does not happen by accident; it emerges from steady habits and deliberate revision.", author: "Ayn Rand" },
+			{ text: "Speed follows accuracy. When you train your fingers to strike each key without tension or hesitation, fluency becomes effortless and natural.", author: "Typing Craft" },
+			{ text: "The scariest moment is always just before you start. After that, things can only get better once the first sentence is on the screen.", author: "Stephen King" },
+			{ text: "Either write something worth reading or do something worth writing. Small daily steps build momentum that occasional bursts of effort never match.", author: "Benjamin Franklin" },
+			{ text: "Details make perfection, and perfection is not a detail. Clean typography and balanced spacing invite the reader to linger and understand.", author: "Leonardo da Vinci" },
+			{ text: "What is written without effort is in general read without pleasure. Thoughtful structure turns complex ideas into a welcoming conversation.", author: "Samuel Johnson" },
+			{ text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit practiced quietly every single morning.", author: "Will Durant" },
+			{ text: "First, solve the problem. Then, write the code. Clean architecture begins in the mind long before your fingers touch the keyboard.", author: "John Johnson" },
+			{ text: "Reading furnishes the mind only with materials of knowledge; it is thinking that makes what we read ours.", author: "John Locke" },
+			{ text: "Never use a long word where a short one will do. Direct language respects the reader's time and sharpens your own argument.", author: "George Orwell" },
+			{ text: "In the middle of difficulty lies opportunity. A calm posture and steady cadence will carry you through the longest manuscript.", author: "Albert Einstein" },
+			{ text: "Programming isn't about what you know; it's about what you can figure out through curiosity, patience, and careful testing.", author: "Chris Pine" }
+		];
+
+		type TestMode = 'time' | 'words' | 'quote' | 'zen' | 'custom';
+		type PaceOption = 'OFF' | '40' | '60' | '80' | 'LAST';
+
+		const topbar = document.getElementById('mta-topbar');
+		const modPunctuationBtn = document.getElementById('mta-mod-punctuation');
+		const modNumbersBtn = document.getElementById('mta-mod-numbers');
+		const modifiersGroup = document.getElementById('mta-modifiers-group');
+		const modeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mta-mode]'));
+		const timeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mta-time]'));
+		const wordsButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mta-words]'));
+		const suboptionsWrapper = document.getElementById('mta-suboptions-wrapper');
+		const subTimeGroup = document.getElementById('mta-sub-time');
+		const subWordsGroup = document.getElementById('mta-sub-words');
+		const subCustomGroup = document.getElementById('mta-sub-custom');
+		const btnOpenCustom = document.getElementById('mta-btn-open-custom');
+
+		const statusDot = document.getElementById('mta-status-dot');
+		const statusText = document.getElementById('mta-status-text');
+		const liveWpmEl = document.getElementById('mta-live-wpm');
+		const liveIntegrityEl = document.getElementById('mta-live-integrity');
+		const paceToggleBtn = document.getElementById('mta-pace-toggle');
+		const sfxToggleBtn = document.getElementById('mta-sfx-toggle');
+		const caretStyleToggleBtn = document.getElementById('mta-caret-style-toggle');
+		const progressFill = document.getElementById('mta-progress-fill');
+
+		const arenaView = document.getElementById('mta-arena-view');
+		const resultsView = document.getElementById('mta-results-view');
+		const liveIndicator = document.getElementById('mta-live-indicator');
+		const repeatedBadge = document.getElementById('mta-repeated-badge');
+		const quoteSource = document.getElementById('mta-quote-source');
+		const zenFinishBtn = document.getElementById('mta-zen-finish-btn');
+		const quickRestartBtn = document.getElementById('mta-quick-restart-btn');
+
+		const canvasBox = document.getElementById('mta-canvas-box');
+		const hiddenInput = document.getElementById('mta-hidden-input') as HTMLInputElement | null;
+		const wordsTrack = document.getElementById('mta-words-track');
+		const wordsStream = document.getElementById('mta-words-stream');
+		const caretEl = document.getElementById('mta-caret');
+		const ghostCaretEl = document.getElementById('mta-ghost-caret');
+
+		const resWpm = document.getElementById('mta-res-wpm');
+		const resAcc = document.getElementById('mta-res-acc');
+		const chartContainer = document.getElementById('mta-chart-container');
+		const chartSvg = document.getElementById('mta-chart-svg');
+		const chartTooltip = document.getElementById('mta-chart-tooltip');
+		const statType = document.getElementById('mta-stat-type');
+		const statOther = document.getElementById('mta-stat-other');
+		const statRaw = document.getElementById('mta-stat-raw');
+		const statChars = document.getElementById('mta-stat-chars');
+		const statConsistency = document.getElementById('mta-stat-consistency');
+		const statTime = document.getElementById('mta-stat-time');
+		const statTimeSub = document.getElementById('mta-stat-time-sub');
+
+		const btnPracticeMissed = document.getElementById('mta-btn-practice-missed') as HTMLButtonElement | null;
+		const missedBtnLabel = document.getElementById('mta-missed-btn-label');
+		const btnRepeatTest = document.getElementById('mta-btn-repeat-test');
+		const btnNextTest = document.getElementById('mta-btn-next-test');
+		const btnToggleHistory = document.getElementById('mta-btn-toggle-history');
+		const wordsHistoryDrawer = document.getElementById('mta-words-history-drawer');
+		const wordsHistoryList = document.getElementById('mta-words-history-list');
+		const btnExportPng = document.getElementById('mta-btn-export-png');
+		const exportPngLabel = document.getElementById('mta-export-png-label');
+
+		const customModal = document.getElementById('mta-custom-modal');
+		const customTextarea = document.getElementById('mta-custom-textarea') as HTMLTextAreaElement | null;
+		const customCloseBtn = document.getElementById('mta-custom-close');
+		const customCancelBtn = document.getElementById('mta-custom-cancel');
+		const customApplyBtn = document.getElementById('mta-custom-apply');
+
+		// Terminal class tokens
+		const CLS_UNTYPED = 'text-[#345949]';
+		const CLS_CORRECT = 'text-[#00ff9d] drop-shadow-[0_0_6px_rgba(0,255,157,0.35)]';
+		const CLS_WRONG = 'text-[#ff3b5c] bg-[#ff3b5c]/15 rounded-xs';
+		const CLS_MISSED = 'text-[#ff3b5c] bg-[#ff3b5c]/20 rounded-xs';
+		const CLS_EXTRA = 'text-[#ff3b5c] bg-[#ff3b5c]/25 underline';
+
+		let currentMode: TestMode = 'time';
+		let timeLimit = 60;
+		let wordLimit = 25;
+		let usePunctuation = false;
+		let useNumbers = false;
+		let customText = 'Clear writing begins with steady rhythm and attention to detail. Type your own custom payload here to practice.';
+		let currentQuoteAuthor = '';
+		let lastQuoteIndex = -1;
+
+		let targetWords: string[] = [];
+		let typedWords: string[] = [];
+		let activeWordIndex = 0;
+
+		let isRunning = false;
+		let isFinished = false;
+		let startTimeMs: number | null = null;
+		let endTimeMs: number | null = null;
+		let timerId: number | null = null;
+
+		let totalKeystrokes = 0;
+		let totalErrorKeystrokes = 0;
+		let correctKeystrokes = 0;
+		let secondBucketKeys = 0;
+		let secondBucketErrors = 0;
+		let lastRecordedSecond = 0;
+
+		// AFK / Idle gap tracking (> 5 seconds without keystrokes)
+		let lastKeystrokeTimeMs: number | null = null;
+		let totalAfkMs = 0;
+
+		// Ghost Pacer State
+		const PACE_OPTIONS: PaceOption[] = ['OFF', '40', '60', '80', 'LAST'];
+		let paceOptionIndex = 0;
+		let lastRunWpm = 60;
+
+		// Audio SFX & Caret Style State
+		let sfxEnabled = false;
+		let audioCtx: AudioContext | null = null;
+		let caretStyle: 'LINE' | 'BLOCK' = 'LINE';
+
+		// Session total elapsed time & last result snapshot for PNG export
+		let isRepeatedPayload = false;
+		let cumulativeSessionSeconds = 0;
+		let lastResultSnapshot = {
+			wpm: 0,
+			raw: 0,
+			acc: 100,
+			consistency: 100,
+			modeLabel: 'time 60s',
+			charsLabel: '0/0/0/0',
+			durationLabel: '60s'
+		};
+
+		interface SecondSample {
+			sec: number;
+			wpm: number;
+			raw: number;
+			burst: number;
+			errors: number;
+		}
+		let historySamples: SecondSample[] = [];
+		let missedWordsSet = new Set<string>();
+		let isMissedDrillActive = false;
+
+		// Synthesized Web Audio API Mechanical Keystroke SFX
+		function playTacticalSfx(isError: boolean) {
+			if (!sfxEnabled) return;
+			try {
+				if (!audioCtx) {
+					const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+					if (!AudioContextClass) return;
+					audioCtx = new AudioContextClass();
+				}
+				if (audioCtx.state === 'suspended') {
+					audioCtx.resume();
+				}
+				const now = audioCtx.currentTime;
+				const osc = audioCtx.createOscillator();
+				const gain = audioCtx.createGain();
+
+				if (isError) {
+					// Subtle low thud on error
+					osc.type = 'sawtooth';
+					osc.frequency.setValueAtTime(145, now);
+					osc.frequency.exponentialRampToValueAtTime(55, now + 0.055);
+					gain.gain.setValueAtTime(0.08, now);
+					gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+					osc.connect(gain);
+					gain.connect(audioCtx.destination);
+					osc.start(now);
+					osc.stop(now + 0.062);
+				} else {
+					// Crisp mechanical terminal tick on valid keystroke
+					osc.type = 'triangle';
+					osc.frequency.setValueAtTime(920, now);
+					osc.frequency.exponentialRampToValueAtTime(240, now + 0.025);
+					gain.gain.setValueAtTime(0.065, now);
+					gain.gain.exponentialRampToValueAtTime(0.001, now + 0.028);
+					osc.connect(gain);
+					gain.connect(audioCtx.destination);
+					osc.start(now);
+					osc.stop(now + 0.03);
+				}
+			} catch (e) {}
+		}
+
+		function applyCaretVisualStyle() {
+			if (!caretEl) return;
+			if (caretStyle === 'BLOCK') {
+				caretEl.className = 'pointer-events-none absolute top-1 left-0 z-10 h-[1.9rem] w-[0.6em] rounded-xs bg-[#00ff9d]/40 border border-[#00ff9d] shadow-[0_0_10px_#00ff9d] transition-all duration-75 sm:h-[2.35rem]';
+			} else {
+				caretEl.className = 'pointer-events-none absolute top-1 left-0 z-10 h-[1.9rem] w-[3px] rounded-full bg-[#00ff9d] shadow-[0_0_10px_#00ff9d] transition-all duration-75 sm:h-[2.35rem]';
+			}
+			if (caretStyleToggleBtn) {
+				caretStyleToggleBtn.textContent = `[ CARET: ${caretStyle} ]`;
+			}
+		}
+
+		function getActivePaceWpm(): number {
+			const mode = PACE_OPTIONS[paceOptionIndex];
+			if (mode === 'OFF') return 0;
+			if (mode === 'LAST') return lastRunWpm > 0 ? lastRunWpm : 60;
+			return Number(mode);
+		}
+
+		function updatePaceButtonLabel() {
+			if (!paceToggleBtn) return;
+			const mode = PACE_OPTIONS[paceOptionIndex];
+			if (mode === 'OFF') {
+				paceToggleBtn.textContent = '[ PACE: OFF ]';
+				paceToggleBtn.className = 'cursor-pointer rounded px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#6ee7b7] transition hover:bg-[#00ff9d]/15 hover:text-[#00ff9d]';
+			} else if (mode === 'LAST') {
+				paceToggleBtn.textContent = `[ PACE: LAST (${lastRunWpm} WPM) ]`;
+				paceToggleBtn.className = 'cursor-pointer rounded bg-[#38bdf8]/15 px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#38bdf8] transition hover:bg-[#38bdf8]/25';
+			} else {
+				paceToggleBtn.textContent = `[ PACE: ${mode} WPM ]`;
+				paceToggleBtn.className = 'cursor-pointer rounded bg-[#38bdf8]/15 px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#38bdf8] transition hover:bg-[#38bdf8]/25';
+			}
+		}
+
+		function updateGhostCaretPosition() {
+			if (!ghostCaretEl || !wordsStream || !wordsTrack) return;
+			const paceWpm = getActivePaceWpm();
+			if (paceWpm <= 0 || currentMode === 'zen' || !isRunning || startTimeMs === null || isFinished) {
+				ghostCaretEl.classList.add('hidden');
+				return;
+			}
+
+			const elapsedMin = Math.max(0, (performance.now() - startTimeMs) / 60000);
+			const targetCharsFloat = elapsedMin * paceWpm * 5;
+			let remainingChars = Math.floor(targetCharsFloat);
+
+			let ghostWordIdx = 0;
+			let ghostCharIdx = 0;
+
+			for (let i = 0; i < targetWords.length; i++) {
+				const wLen = targetWords[i].length;
+				if (remainingChars <= wLen) {
+					ghostWordIdx = i;
+					ghostCharIdx = remainingChars;
+					break;
+				}
+				remainingChars -= (wLen + 1); // +1 for space
+				ghostWordIdx = i + 1;
+				ghostCharIdx = 0;
+			}
+
+			if (ghostWordIdx >= targetWords.length) {
+				ghostWordIdx = targetWords.length - 1;
+				ghostCharIdx = (targetWords[ghostWordIdx] || '').length;
+			}
+
+			const wordEl = wordsStream.querySelector<HTMLElement>(`[data-word-idx="${ghostWordIdx}"]`);
+			if (!wordEl) {
+				ghostCaretEl.classList.add('hidden');
+				return;
+			}
+
+			ghostCaretEl.classList.remove('hidden');
+			const charSpans = Array.from(wordEl.querySelectorAll('span:not(#active-caret-anchor)')) as HTMLElement[];
+			const trackRect = wordsTrack.getBoundingClientRect();
+
+			let gx = wordEl.offsetLeft;
+			let gy = wordEl.offsetTop;
+
+			if (charSpans.length > 0) {
+				if (ghostCharIdx <= 0) {
+					const firstRect = charSpans[0].getBoundingClientRect();
+					gx = firstRect.left - trackRect.left;
+					gy = firstRect.top - trackRect.top;
+				} else if (ghostCharIdx < charSpans.length) {
+					const cRect = charSpans[ghostCharIdx].getBoundingClientRect();
+					gx = cRect.left - trackRect.left;
+					gy = cRect.top - trackRect.top;
+				} else {
+					const lastRect = charSpans[charSpans.length - 1].getBoundingClientRect();
+					gx = lastRect.right - trackRect.left;
+					gy = lastRect.top - trackRect.top;
+				}
+			}
+
+			ghostCaretEl.style.transform = `translate(${gx}px, ${gy}px)`;
+		}
+
+		function setStatus(state: 'ready' | 'running' | 'done') {
+			if (!statusText || !statusDot) return;
+			if (state === 'ready') {
+				statusText.textContent = 'TERMINAL READY';
+				statusDot.className = 'inline-block h-2 w-2 animate-pulse rounded-full bg-[#00ff9d] shadow-[0_0_8px_#00ff9d]';
+			} else if (state === 'running') {
+				statusText.textContent = 'BREACHING...';
+				statusDot.className = 'inline-block h-2 w-2 animate-pulse rounded-full bg-[#ffb020] shadow-[0_0_8px_#ffb020]';
+			} else {
+				statusText.textContent = 'ACCESS GRANTED';
+				statusDot.className = 'inline-block h-2 w-2 rounded-full bg-[#00ff9d] shadow-[0_0_8px_#00ff9d]';
+			}
+		}
+
+		function fadeTopbar(dim: boolean) {
+			if (!topbar) return;
+			topbar.classList.toggle('opacity-25', dim);
+		}
+
+		window.addEventListener('mousemove', () => {
+			fadeTopbar(false);
+		});
+
+		function generateWordsList(count: number): string[] {
+			const list: string[] = [];
+			let capitalizeNext = usePunctuation;
+
+			for (let i = 0; i < count; i++) {
+				if (useNumbers && i > 0 && Math.random() < 0.14) {
+					list.push(String(Math.floor(10 + Math.random() * 990)));
+					capitalizeNext = false;
+					continue;
+				}
+
+				let w = COMMON_WORDS[Math.floor(Math.random() * COMMON_WORDS.length)];
+				if (capitalizeNext) {
+					w = w.charAt(0).toUpperCase() + w.slice(1);
+					capitalizeNext = false;
+				}
+
+				if (usePunctuation && i < count - 1) {
+					const r = Math.random();
+					if (r < 0.1) {
+						w += '.';
+						capitalizeNext = true;
+					} else if (r < 0.18) {
+						w += ',';
+					} else if (r < 0.21) {
+						w += '?';
+						capitalizeNext = true;
+					} else if (r < 0.24) {
+						w += ';';
+					}
+				} else if (usePunctuation && i === count - 1) {
+					w += '.';
+				}
+
+				list.push(w);
+			}
+			return list;
+		}
+
+		function buildWordsForCurrentMode() {
+			isMissedDrillActive = false;
+			currentQuoteAuthor = '';
+
+			if (currentMode === 'time') {
+				targetWords = generateWordsList(130);
+			} else if (currentMode === 'words') {
+				targetWords = generateWordsList(wordLimit);
+			} else if (currentMode === 'quote') {
+				let idx = Math.floor(Math.random() * QUOTES.length);
+				if (QUOTES.length > 1 && idx === lastQuoteIndex) {
+					idx = (idx + 1) % QUOTES.length;
+				}
+				lastQuoteIndex = idx;
+				const q = QUOTES[idx];
+				currentQuoteAuthor = q.author;
+				targetWords = q.text.trim().split(/\s+/);
+			} else if (currentMode === 'custom') {
+				const cleaned = customText.trim();
+				targetWords = cleaned.length > 0 ? cleaned.split(/\s+/) : ['Type', 'your', 'custom', 'text', 'here.'];
+			} else {
+				targetWords = [];
+			}
+		}
+
+		function renderWordsDOM() {
+			if (!wordsStream) return;
+			wordsStream.innerHTML = '';
+
+			if (currentMode === 'zen') {
+				renderZenWordsDOM();
+				return;
+			}
+
+			for (let wIdx = 0; wIdx < targetWords.length; wIdx++) {
+				wordsStream.appendChild(createWordElement(wIdx, targetWords[wIdx], typedWords[wIdx] || ''));
+			}
+		}
+
+		function createWordElement(wIdx: number, targetWord: string, typedWord: string): HTMLElement {
+			const wordDiv = document.createElement('div');
+			const isCompletedWord = wIdx < activeWordIndex || (isFinished && typedWord.length > 0);
+			const hasWordError = isCompletedWord && typedWord !== targetWord;
+			wordDiv.className = `mta-word mr-[0.65em] inline-flex items-baseline${hasWordError ? ' border-b-2 border-[#ff3b5c]/80' : ''}`;
+			wordDiv.setAttribute('data-word-idx', String(wIdx));
+
+			for (let cIdx = 0; cIdx < targetWord.length; cIdx++) {
+				const span = document.createElement('span');
+				span.textContent = targetWord[cIdx];
+				if (cIdx < typedWord.length) {
+					span.className = typedWord[cIdx] === targetWord[cIdx] ? CLS_CORRECT : CLS_WRONG;
+				} else if (isCompletedWord) {
+					span.className = CLS_MISSED;
+				} else {
+					span.className = CLS_UNTYPED;
+				}
+				wordDiv.appendChild(span);
+			}
+
+			if (typedWord.length > targetWord.length) {
+				for (let eIdx = targetWord.length; eIdx < typedWord.length; eIdx++) {
+					const extraSpan = document.createElement('span');
+					extraSpan.textContent = typedWord[eIdx];
+					extraSpan.className = CLS_EXTRA;
+					wordDiv.appendChild(extraSpan);
+				}
+			}
+
+			return wordDiv;
+		}
+
+		function updateSingleWordDOM(wIdx: number) {
+			if (!wordsStream || currentMode === 'zen') return;
+			const existing = wordsStream.querySelector<HTMLElement>(`[data-word-idx="${wIdx}"]`);
+			if (!existing) return;
+			existing.replaceWith(createWordElement(wIdx, targetWords[wIdx], typedWords[wIdx] || ''));
+		}
+
+		function renderZenWordsDOM() {
+			if (!wordsStream) return;
+			wordsStream.innerHTML = '';
+
+			if (typedWords.length === 0 || (typedWords.length === 1 && typedWords[0] === '')) {
+				const placeholder = document.createElement('div');
+				placeholder.className = CLS_UNTYPED;
+				placeholder.textContent = 'Start typing freely... press Shift + Enter when done.';
+				wordsStream.appendChild(placeholder);
+			}
+
+			for (let i = 0; i < typedWords.length; i++) {
+				const w = typedWords[i];
+				if (w.length === 0 && i === 0 && typedWords.length === 1) continue;
+				const wordDiv = document.createElement('div');
+				wordDiv.className = 'mta-word mr-[0.65em] inline-flex items-baseline';
+				wordDiv.setAttribute('data-word-idx', String(i));
+				for (let c = 0; c < w.length; c++) {
+					const span = document.createElement('span');
+					span.textContent = w[c];
+					span.className = CLS_CORRECT;
+					wordDiv.appendChild(span);
+				}
+				wordsStream.appendChild(wordDiv);
+			}
+		}
+
+		// Places a zero-width anchor at the exact insertion point of the active word,
+		// then measures its real DOM rect so the caret is pixel-accurate.
+		function placeCaretAnchor(wordEl: HTMLElement, charPos: number) {
+			document.getElementById('active-caret-anchor')?.remove();
+			const anchor = document.createElement('span');
+			anchor.id = 'active-caret-anchor';
+			anchor.setAttribute('aria-hidden', 'true');
+			anchor.textContent = '\u200b';
+			anchor.style.width = '0px';
+			anchor.style.overflow = 'hidden';
+			const kids = Array.from(wordEl.children) as HTMLElement[];
+			if (charPos >= 0 && charPos < kids.length) {
+				wordEl.insertBefore(anchor, kids[charPos]);
+			} else {
+				wordEl.appendChild(anchor);
+			}
+			return anchor;
+		}
+
+		function updateCaretAndScroll() {
+			if (!wordsStream || !caretEl || !wordsTrack) return;
+
+			const activeWordEl = wordsStream.querySelector<HTMLElement>('[data-word-idx="' + activeWordIndex + '"]');
+			if (!activeWordEl) {
+				caretEl.style.transform = 'translate(0px, 0px)';
+				wordsTrack.style.transform = 'translateY(0px)';
+				return;
+			}
+
+			const typedLen = (typedWords[activeWordIndex] || '').length;
+			const anchor = placeCaretAnchor(activeWordEl, typedLen);
+
+			const trackRect = wordsTrack.getBoundingClientRect();
+			const anchorRect = anchor.getBoundingClientRect();
+			const x = anchorRect.left - trackRect.left;
+			const y = anchorRect.top - trackRect.top;
+
+			caretEl.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+			scrollTrackToLine(y);
+		}
+
+		function scrollTrackToLine(caretY: number) {
+			if (!wordsTrack || !wordsStream) return;
+			const firstWord = wordsStream.querySelector<HTMLElement>('.mta-word');
+			const lineHeight = firstWord && firstWord.offsetHeight > 0 ? firstWord.offsetHeight : 48;
+			const currentLineIndex = Math.round(caretY / lineHeight);
+			const scrollLines = Math.max(0, currentLineIndex - 1);
+			wordsTrack.style.transform = `translateY(-${scrollLines * lineHeight}px)`;
+		}
+
+		function updateProgressBar() {
+			if (!progressFill) return;
+			let pct = 0;
+			if (isFinished) {
+				pct = 100;
+			} else if (currentMode === 'time') {
+				pct = startTimeMs !== null && isRunning ? Math.min(100, ((performance.now() - startTimeMs) / 1000 / timeLimit) * 100) : 0;
+			} else if (currentMode === 'zen') {
+				const count = typedWords.filter((w) => w.length > 0).length;
+				pct = Math.min(100, count * 2);
+			} else {
+				pct = targetWords.length > 0 ? Math.min(100, (activeWordIndex / targetWords.length) * 100) : 0;
+			}
+			progressFill.style.width = `${pct}%`;
+		}
+
+		function updateTelemetry() {
+			if (liveWpmEl) {
+				let wpm = 0;
+				if (startTimeMs !== null && isRunning) {
+					const elapsedMin = Math.max(0.05, (performance.now() - startTimeMs) / 60000);
+					wpm = Math.round(correctKeystrokes / 5 / elapsedMin);
+				}
+				liveWpmEl.textContent = String(Math.max(0, wpm)).padStart(2, '0');
+			}
+			if (liveIntegrityEl) {
+				const charStats = computeCharacterStats();
+				const totalEvaluated = totalKeystrokes + charStats.missed;
+				const totalErrors = totalErrorKeystrokes + charStats.missed;
+				const integrity = totalEvaluated > 0
+					? Math.round(((totalEvaluated - totalErrors) / totalEvaluated) * 100)
+					: 100;
+				liveIntegrityEl.textContent = `${Math.max(0, integrity)}%`;
+			}
+		}
+
+		function updateLiveIndicator() {
+			if (liveIndicator) {
+				if (currentMode === 'time') {
+					let rem = timeLimit;
+					if (isRunning && startTimeMs !== null) {
+						rem = Math.max(0, timeLimit - Math.floor((performance.now() - startTimeMs) / 1000));
+					}
+					liveIndicator.textContent = `T-MINUS ${rem}s`;
+				} else if (currentMode === 'zen') {
+					const count = typedWords.filter((w) => w.length > 0).length;
+					liveIndicator.textContent = `ZEN LOG · ${count} ${count === 1 ? 'word' : 'words'} · Shift+Enter to execute`;
+				} else {
+					liveIndicator.textContent = `PACKETS ${Math.min(activeWordIndex, targetWords.length)}/${targetWords.length}`;
+				}
+			}
+
+			if (repeatedBadge) {
+				repeatedBadge.classList.toggle('hidden', !isRepeatedPayload);
+			}
+
+			if (quoteSource) {
+				if (currentMode === 'quote' && currentQuoteAuthor) {
+					quoteSource.textContent = `// ${currentQuoteAuthor}`;
+					quoteSource.classList.remove('hidden');
+				} else if (isMissedDrillActive) {
+					quoteSource.textContent = '// FAILED NODES DRILL';
+					quoteSource.classList.remove('hidden');
+				} else {
+					quoteSource.classList.add('hidden');
+				}
+			}
+
+			if (zenFinishBtn) {
+				zenFinishBtn.classList.toggle('hidden', currentMode !== 'zen');
+				zenFinishBtn.classList.toggle('inline-flex', currentMode === 'zen');
+			}
+
+			updateProgressBar();
+			updateTelemetry();
+		}
+
+		function computeCharacterStats() {
+			if (currentMode === 'zen') {
+				return { correct: typedWords.join(' ').length, incorrect: 0, extra: 0, missed: 0 };
+			}
+
+			let correct = 0;
+			let incorrect = 0;
+			let extra = 0;
+			let missed = 0;
+
+			const maxWordIndex = Math.min(typedWords.length, targetWords.length);
+			for (let wIdx = 0; wIdx < maxWordIndex; wIdx++) {
+				const target = targetWords[wIdx];
+				const typed = typedWords[wIdx] ?? '';
+				const isCompletedWord = wIdx < activeWordIndex || isFinished;
+
+				for (let c = 0; c < target.length; c++) {
+					if (c < typed.length) {
+						if (typed[c] === target[c]) correct++;
+						else incorrect++;
+					} else if (isCompletedWord && typed.length > 0) {
+						missed++;
+					}
+				}
+
+				if (typed.length > target.length) {
+					extra += typed.length - target.length;
+				}
+
+				if (wIdx < activeWordIndex) {
+					correct++;
+				}
+			}
+
+			return { correct, incorrect, extra, missed };
+		}
+
+		function recordSecondSample(sec: number) {
+			if (!startTimeMs || sec <= 0) return;
+			const elapsedMin = sec / 60;
+			const burstWpm = Math.max(0, Math.round((secondBucketKeys / 5) * 60));
+			historySamples.push({
+				sec,
+				wpm: Math.max(0, Math.round(correctKeystrokes / 5 / elapsedMin)),
+				raw: Math.max(0, Math.round(totalKeystrokes / 5 / elapsedMin)),
+				burst: burstWpm,
+				errors: secondBucketErrors
+			});
+			secondBucketKeys = 0;
+			secondBucketErrors = 0;
+		}
+
+		function trackKeystrokeAfkGap() {
+			const now = performance.now();
+			if (lastKeystrokeTimeMs !== null) {
+				const gap = now - lastKeystrokeTimeMs;
+				if (gap > 5000) {
+					totalAfkMs += gap;
+				}
+			}
+			lastKeystrokeTimeMs = now;
+		}
+
+		function startTestIfNeeded() {
+			if (isRunning || isFinished) return;
+			isRunning = true;
+			startTimeMs = performance.now();
+			lastKeystrokeTimeMs = startTimeMs;
+			totalAfkMs = 0;
+			lastRecordedSecond = 0;
+			fadeTopbar(true);
+			setStatus('running');
+
+			timerId = window.setInterval(() => {
+				if (!startTimeMs || !isRunning) return;
+				const elapsedSecFloat = (performance.now() - startTimeMs) / 1000;
+				const wholeSec = Math.floor(elapsedSecFloat);
+
+				while (lastRecordedSecond < wholeSec) {
+					lastRecordedSecond++;
+					recordSecondSample(lastRecordedSecond);
+				}
+
+				if (currentMode === 'time' && activeWordIndex > targetWords.length - 40) {
+					const extraWords = generateWordsList(60);
+					const startIdx = targetWords.length;
+					targetWords.push(...extraWords);
+					if (wordsStream) {
+						for (let i = startIdx; i < targetWords.length; i++) {
+							typedWords[i] = '';
+							wordsStream.appendChild(createWordElement(i, targetWords[i], ''));
+						}
+					}
+				}
+
+				updateLiveIndicator();
+				updateGhostCaretPosition();
+
+				if (currentMode === 'time' && elapsedSecFloat >= timeLimit) {
+					finishTest();
+				}
+			}, 100);
+		}
+
+		function stopTimer() {
+			if (timerId !== null) {
+				window.clearInterval(timerId);
+				timerId = null;
+			}
+		}
+
+		function calculateConsistency(samples: SecondSample[]): number {
+			if (samples.length <= 1) return 100;
+			const wpms = samples.map((s) => s.wpm);
+			const mean = wpms.reduce((acc, v) => acc + v, 0) / wpms.length;
+			if (mean <= 0) return 100;
+			const variance = wpms.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0) / wpms.length;
+			const cv = Math.sqrt(variance) / mean;
+			return Math.max(0, Math.min(100, Math.round(100 * (1 - cv * 0.85))));
+		}
+
+		function buildSmoothBezierPath(points: Array<{ x: number; y: number }>): string {
+			if (points.length === 0) return '';
+			if (points.length === 1) return `M ${points[0].x} ${points[0].y}`;
+			let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+			for (let i = 0; i < points.length - 1; i++) {
+				const p0 = points[Math.max(0, i - 1)];
+				const p1 = points[i];
+				const p2 = points[i + 1];
+				const p3 = points[Math.min(points.length - 1, i + 2)];
+				const tension = 0.2;
+				const cp1x = p1.x + (p2.x - p0.x) * tension;
+				const cp1y = p1.y + (p2.y - p0.y) * tension;
+				const cp2x = p2.x - (p3.x - p1.x) * tension;
+				const cp2y = p2.y - (p3.y - p1.y) * tension;
+				d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+			}
+			return d;
+		}
+
+		function formatSessionHms(totalSec: number): string {
+			const hrs = Math.floor(totalSec / 3600);
+			const mins = Math.floor((totalSec % 3600) / 60);
+			const secs = Math.floor(totalSec % 60);
+			return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} session`;
+		}
+
+		function renderWordsHistoryDrawer() {
+			if (!wordsHistoryList) return;
+			wordsHistoryList.innerHTML = '';
+
+			if (currentMode === 'zen') {
+				for (const w of typedWords) {
+					if (!w) continue;
+					const span = document.createElement('span');
+					span.className = 'text-[#00ff9d]';
+					span.textContent = w;
+					wordsHistoryList.appendChild(span);
+				}
+				return;
+			}
+
+			const count = Math.min(targetWords.length, Math.max(activeWordIndex, 1));
+			for (let wIdx = 0; wIdx < count; wIdx++) {
+				const target = targetWords[wIdx] || '';
+				const typed = typedWords[wIdx] || '';
+				if (wIdx === activeWordIndex && typed.length === 0) continue;
+
+				const wordWrap = document.createElement('span');
+				const hasErr = typed !== target;
+				wordWrap.className = `inline-flex items-baseline${hasErr ? ' border-b border-[#ff3b5c]/80' : ''}`;
+				wordWrap.title = hasErr ? `target: "${target}" | typed: "${typed}"` : target;
+
+				for (let c = 0; c < target.length; c++) {
+					const ch = document.createElement('span');
+					ch.textContent = target[c];
+					if (c < typed.length) {
+						ch.className = typed[c] === target[c] ? 'text-[#d1fae5]' : 'text-[#ff3b5c] bg-[#ff3b5c]/15 rounded-xs';
+					} else {
+						ch.className = 'text-[#ff3b5c]/85';
+					}
+					wordWrap.appendChild(ch);
+				}
+
+				if (typed.length > target.length) {
+					for (let e = target.length; e < typed.length; e++) {
+						const ex = document.createElement('span');
+						ex.textContent = typed[e];
+						ex.className = 'text-[#ff3b5c] bg-[#ff3b5c]/25 underline';
+						wordWrap.appendChild(ex);
+					}
+				}
+
+				wordsHistoryList.appendChild(wordWrap);
+			}
+		}
+
+		function exportResultCardPng() {
+			const canvas = document.createElement('canvas');
+			canvas.width = 1200;
+			canvas.height = 630;
+			const ctx = canvas.getContext('2d');
+			if (!ctx) return;
+
+			// Obsidian Cyber-Terminal background
+			ctx.fillStyle = '#050a08';
+			ctx.fillRect(0, 0, 1200, 630);
+
+			// Radial emerald glow
+			const grad = ctx.createRadialGradient(600, 260, 30, 600, 260, 560);
+			grad.addColorStop(0, 'rgba(0, 255, 157, 0.12)');
+			grad.addColorStop(1, 'rgba(5, 10, 8, 0)');
+			ctx.fillStyle = grad;
+			ctx.fillRect(0, 0, 1200, 630);
+
+			// Frame border
+			ctx.strokeStyle = 'rgba(0, 255, 157, 0.35)';
+			ctx.lineWidth = 2;
+			ctx.strokeRect(28, 28, 1144, 574);
+
+			// Header Brand
+			ctx.fillStyle = '#00ff9d';
+			ctx.font = 'bold 22px monospace';
+			ctx.fillText('WORDORA // CYBER-TERMINAL TYPING TELEMETRY', 64, 82);
+
+			ctx.fillStyle = '#5f8f7a';
+			ctx.font = '16px monospace';
+			ctx.fillText('wordora.site/typing-speed-test/', 830, 82);
+
+			// Left Big WPM & ACC
+			ctx.fillStyle = '#5f8f7a';
+			ctx.font = '24px monospace';
+			ctx.fillText('wpm', 64, 165);
+
+			ctx.fillStyle = '#00ff9d';
+			ctx.font = 'bold 112px monospace';
+			ctx.fillText(String(lastResultSnapshot.wpm), 60, 268);
+
+			ctx.fillStyle = '#5f8f7a';
+			ctx.font = '24px monospace';
+			ctx.fillText('acc', 64, 330);
+
+			ctx.fillStyle = '#00ff9d';
+			ctx.font = 'bold 84px monospace';
+			ctx.fillText(`${lastResultSnapshot.acc}%`, 60, 412);
+
+			// Mini WPM Curve Chart on Right
+			const chartX = 360;
+			const chartY = 140;
+			const chartW = 770;
+			const chartH = 270;
+
+			ctx.fillStyle = 'rgba(10, 20, 16, 0.75)';
+			ctx.fillRect(chartX, chartY, chartW, chartH);
+			ctx.strokeStyle = 'rgba(0, 255, 157, 0.2)';
+			ctx.lineWidth = 1;
+			ctx.strokeRect(chartX, chartY, chartW, chartH);
+
+			const samples = historySamples.length > 0 ? historySamples : [{ sec: 1, wpm: 0, raw: 0, burst: 0, errors: 0 }];
+			const maxWpm = Math.max(60, ...samples.map((s) => Math.max(s.wpm, s.raw)));
+			const yMax = Math.ceil(maxWpm / 20) * 20;
+
+			const getCX = (i: number) => samples.length === 1 ? chartX + chartW / 2 : chartX + 28 + (i / (samples.length - 1)) * (chartW - 56);
+			const getCY = (v: number) => chartY + chartH - 28 - Math.min(1, Math.max(0, v / yMax)) * (chartH - 56);
+
+			if (samples.length > 1) {
+				// Raw dashed line
+				ctx.save();
+				ctx.beginPath();
+				ctx.setLineDash([6, 5]);
+				ctx.strokeStyle = '#4b7a66';
+				ctx.lineWidth = 2;
+				samples.forEach((s, idx) => {
+					const x = getCX(idx);
+					const y = getCY(s.raw);
+					if (idx === 0) ctx.moveTo(x, y);
+					else ctx.lineTo(x, y);
+				});
+				ctx.stroke();
+				ctx.restore();
+
+				// Smooth WPM line
+				ctx.save();
+				ctx.beginPath();
+				ctx.strokeStyle = '#00ff9d';
+				ctx.lineWidth = 4;
+				samples.forEach((s, idx) => {
+					const x = getCX(idx);
+					const y = getCY(s.wpm);
+					if (idx === 0) ctx.moveTo(x, y);
+					else ctx.lineTo(x, y);
+				});
+				ctx.stroke();
+				ctx.restore();
+			}
+
+			// Bottom Stat Row
+			const statsY = 500;
+			const cols = [
+				{ label: 'test type', val: lastResultSnapshot.modeLabel },
+				{ label: 'raw', val: String(lastResultSnapshot.raw) },
+				{ label: 'characters', val: lastResultSnapshot.charsLabel },
+				{ label: 'consistency', val: `${lastResultSnapshot.consistency}%` },
+				{ label: 'time', val: lastResultSnapshot.durationLabel }
+			];
+
+			cols.forEach((c, idx) => {
+				const cx = 64 + idx * 220;
+				ctx.fillStyle = '#5f8f7a';
+				ctx.font = '18px monospace';
+				ctx.fillText(c.label, cx, statsY);
+				ctx.fillStyle = '#00ff9d';
+				ctx.font = 'bold 32px monospace';
+				ctx.fillText(c.val, cx, statsY + 42);
+			});
+
+			const triggerDownload = () => {
+				const link = document.createElement('a');
+				link.download = 'wordora-typing-result.png';
+				link.href = canvas.toDataURL('image/png');
+				link.click();
+			};
+
+			canvas.toBlob(async (blob) => {
+				if (!blob) return;
+				try {
+					if (navigator.clipboard && 'write' in navigator.clipboard && typeof ClipboardItem !== 'undefined') {
+						await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+						if (exportPngLabel) {
+							exportPngLabel.textContent = 'Copied & Saved PNG!';
+							window.setTimeout(() => {
+								exportPngLabel.textContent = 'Export PNG';
+							}, 2200);
+						}
+					}
+				} catch (e) {}
+				triggerDownload();
+			}, 'image/png');
+		}
+
+		function renderSvgChart() {
+			if (!chartSvg) return;
+			const samples = historySamples.length > 0 ? historySamples : [{ sec: 1, wpm: 0, raw: 0, burst: 0, errors: 0 }];
+
+			const width = 700;
+			const height = 200;
+			const padLeft = 48;
+			const padRight = 44;
+			const padTop = 18;
+			const padBottom = 28;
+			const plotW = width - padLeft - padRight;
+			const plotH = height - padTop - padBottom;
+
+			const maxVal = Math.max(60, ...samples.map((s) => Math.max(s.wpm, s.raw, s.burst)));
+			const yMax = Math.ceil(maxVal / 20) * 20;
+			const maxErr = Math.max(2, ...samples.map((s) => s.errors));
+
+			const gridColor = '#12261d';
+			const labelColor = '#5f8f7a';
+			const neon = '#00ff9d';
+			const neonFill = 'rgba(0, 255, 157, 0.09)';
+			const rawStroke = '#4b7a66';
+			const burstStroke = '#38bdf8';
+
+			const getX = (index: number) => (samples.length === 1 ? padLeft + plotW / 2 : padLeft + (index / (samples.length - 1)) * plotW);
+			const getY = (val: number) => padTop + plotH - Math.min(1, Math.max(0, val / yMax)) * plotH;
+			const getErrY = (err: number) => padTop + plotH - Math.min(1, Math.max(0, err / maxErr)) * plotH;
+
+			let svgHtml = '';
+
+			// Dual Y-Axis Titles (Words per Minute on left, Errors on right)
+			svgHtml += `<text x="12" y="${padTop + plotH / 2}" text-anchor="middle" fill="${labelColor}" font-size="10" font-family="monospace" transform="rotate(-90 12 ${padTop + plotH / 2})">Words per Minute</text>`;
+			svgHtml += `<text x="${width - 10}" y="${padTop + plotH / 2}" text-anchor="middle" fill="#ff3b5c" font-size="10" font-family="monospace" opacity="0.75" transform="rotate(90 ${width - 10} ${padTop + plotH / 2})">Errors</text>`;
+
+			// Horizontal Grid Lines & Left/Right Axis Ticks
+			const ySteps = [0, Math.round(yMax / 2), yMax];
+			const errSteps = [0, Math.round(maxErr / 2), maxErr];
+			for (let idx = 0; idx < ySteps.length; idx++) {
+				const step = ySteps[idx];
+				const y = getY(step);
+				svgHtml += `<line x1="${padLeft}" y1="${y}" x2="${width - padRight}" y2="${y}" stroke="${gridColor}" stroke-width="1" />`;
+				svgHtml += `<text x="${padLeft - 8}" y="${y + 4}" text-anchor="end" fill="${labelColor}" font-size="11" font-family="monospace">${step}</text>`;
+				svgHtml += `<text x="${width - padRight + 8}" y="${y + 4}" text-anchor="start" fill="#ff3b5c" opacity="0.7" font-size="11" font-family="monospace">${errSteps[idx]}</text>`;
+			}
+
+			// X-Axis Time Labels
+			const labelIndexes = samples.length <= 8
+				? samples.map((_, i) => i)
+				: [0, Math.floor((samples.length - 1) / 3), Math.floor(((samples.length - 1) * 2) / 3), samples.length - 1];
+			for (const idx of labelIndexes) {
+				svgHtml += `<text x="${getX(idx)}" y="${height - 6}" text-anchor="middle" fill="${labelColor}" font-size="11" font-family="monospace">${samples[idx].sec}</text>`;
+			}
+
+			const wpmCoords = samples.map((s, i) => ({ x: getX(i), y: getY(s.wpm) }));
+			const rawCoords = samples.map((s, i) => ({ x: getX(i), y: getY(s.raw) }));
+			const burstCoords = samples.map((s, i) => ({ x: getX(i), y: getY(s.burst) }));
+
+			if (samples.length > 1) {
+				const wpmPath = buildSmoothBezierPath(wpmCoords);
+				const rawPath = buildSmoothBezierPath(rawCoords);
+				const burstPath = buildSmoothBezierPath(burstCoords);
+				const areaPath = `${wpmPath} L ${wpmCoords[wpmCoords.length - 1].x.toFixed(1)} ${padTop + plotH} L ${wpmCoords[0].x.toFixed(1)} ${padTop + plotH} Z`;
+
+				svgHtml += `<path d="${areaPath}" fill="${neonFill}" />`;
+				svgHtml += `<path d="${rawPath}" fill="none" stroke="${rawStroke}" stroke-width="2" stroke-dasharray="5,4" />`;
+				svgHtml += `<path d="${burstPath}" fill="none" stroke="${burstStroke}" stroke-width="1.5" stroke-opacity="0.7" />`;
+				svgHtml += `<path d="${wpmPath}" fill="none" stroke="${neon}" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 5px rgba(0,255,157,0.55));" />`;
+			}
+
+			for (let i = 0; i < samples.length; i++) {
+				const s = samples[i];
+				const x = getX(i);
+				const yWpm = getY(s.wpm);
+				svgHtml += `<circle cx="${x}" cy="${yWpm}" r="2.75" fill="${neon}" />`;
+				if (s.errors > 0) {
+					const yErr = getErrY(s.errors);
+					svgHtml += `<circle cx="${x}" cy="${yErr}" r="4.2" fill="#ff3b5c" stroke="#050a08" stroke-width="1.5"><title>${s.errors} error(s) at ${i + 1}s</title></circle>`;
+				}
+			}
+
+			// Interactive Crosshair Line & Active Highlight Dots (WPM + Error)
+			svgHtml += `<line id="mta-svg-crosshair" x1="0" y1="${padTop}" x2="0" y2="${padTop + plotH}" stroke="#00ff9d" stroke-width="1" stroke-dasharray="3,3" opacity="0" />`;
+			svgHtml += `<circle id="mta-svg-active-dot" cx="0" cy="0" r="5" fill="#00ff9d" stroke="#050a08" stroke-width="2" opacity="0" />`;
+			svgHtml += `<circle id="mta-svg-active-err-dot" cx="0" cy="0" r="5.5" fill="#ff3b5c" stroke="#00ff9d" stroke-width="1.5" opacity="0" />`;
+
+			chartSvg.innerHTML = svgHtml;
+
+			// Attach Hover Crosshair & Tooltip Listeners
+			const crosshair = document.getElementById('mta-svg-crosshair');
+			const activeDot = document.getElementById('mta-svg-active-dot');
+			const activeErrDot = document.getElementById('mta-svg-active-err-dot');
+
+			const handleChartMove = (clientX: number) => {
+				if (!chartContainer || !chartSvg || !chartTooltip) return;
+				const svgRect = chartSvg.getBoundingClientRect();
+				const containerRect = chartContainer.getBoundingClientRect();
+				const relSvgX = Math.max(0, Math.min(svgRect.width, clientX - svgRect.left));
+				const svgX = svgRect.width > 0 ? (relSvgX / svgRect.width) * width : 0;
+
+				let idx = 0;
+				if (samples.length > 1) {
+					const ratio = (svgX - padLeft) / plotW;
+					idx = Math.max(0, Math.min(samples.length - 1, Math.round(ratio * (samples.length - 1))));
+				}
+
+				const sec = idx + 1;
+				const sample = samples[sec - 1];
+				const cx = getX(sec - 1);
+				const cy = getY(sample.wpm);
+
+				if (crosshair) {
+					crosshair.setAttribute('x1', String(cx));
+					crosshair.setAttribute('x2', String(cx));
+					crosshair.setAttribute('opacity', '0.75');
+				}
+				if (activeDot) {
+					activeDot.setAttribute('cx', String(cx));
+					activeDot.setAttribute('cy', String(cy));
+					activeDot.setAttribute('opacity', '1');
+				}
+				if (activeErrDot) {
+					if (sample.errors > 0) {
+						activeErrDot.setAttribute('cx', String(cx));
+						activeErrDot.setAttribute('cy', String(getErrY(sample.errors)));
+						activeErrDot.setAttribute('opacity', '1');
+					} else {
+						activeErrDot.setAttribute('opacity', '0');
+					}
+				}
+
+				chartTooltip.innerHTML = `
+					<div class="font-bold text-[#00ff9d] border-b border-[#00ff9d]/25 pb-1 mb-1">T+${sec}s TELEMETRY</div>
+					<div>WPM: <strong class="text-[#00ff9d]">${sample.wpm}</strong> &nbsp;·&nbsp; RAW: <strong>${sample.raw}</strong></div>
+					<div>BURST: <strong class="text-[#38bdf8]">${sample.burst}</strong> &nbsp;·&nbsp; ERR: <strong class="text-[#ff3b5c]">${sample.errors}</strong></div>
+				`;
+				chartTooltip.classList.remove('hidden');
+
+				const tooltipW = 175;
+				const pixelX = (svgRect.left - containerRect.left) + (cx / width) * svgRect.width;
+				const leftPos = pixelX + tooltipW + 20 > containerRect.width
+					? Math.max(8, pixelX - tooltipW - 12)
+					: Math.max(8, pixelX + 12);
+				chartTooltip.style.left = `${leftPos}px`;
+			};
+
+			if (chartContainer) {
+				chartContainer.onmousemove = (e) => handleChartMove(e.clientX);
+				chartContainer.onmouseleave = () => {
+					crosshair?.setAttribute('opacity', '0');
+					activeDot?.setAttribute('opacity', '0');
+					activeErrDot?.setAttribute('opacity', '0');
+					chartTooltip?.classList.add('hidden');
+				};
+			}
+		}
+
+		function finishTest() {
+			if (isFinished) return;
+			stopTimer();
+			isRunning = false;
+			isFinished = true;
+			endTimeMs = performance.now();
+			fadeTopbar(false);
+			setStatus('done');
+			ghostCaretEl?.classList.add('hidden');
+
+			// Check final idle gap before finish
+			if (lastKeystrokeTimeMs !== null && endTimeMs - lastKeystrokeTimeMs > 5000) {
+				totalAfkMs += (endTimeMs - lastKeystrokeTimeMs);
+			}
+
+			const elapsedSec = startTimeMs
+				? Math.max(1, (endTimeMs - startTimeMs) / 1000)
+				: (currentMode === 'time' ? timeLimit : 1);
+
+			const finalWholeSec = Math.max(1, Math.round(elapsedSec));
+			while (lastRecordedSecond < finalWholeSec) {
+				lastRecordedSecond++;
+				recordSecondSample(lastRecordedSecond);
+			}
+
+			const totalDurationSec = currentMode === 'time' ? timeLimit : elapsedSec;
+			const elapsedMin = totalDurationSec / 60;
+			const charStats = computeCharacterStats();
+
+			// Collect failed words for drill
+			if (currentMode !== 'zen') {
+				const upto = Math.min(typedWords.length, targetWords.length);
+				for (let i = 0; i < upto; i++) {
+					const typed = typedWords[i] || '';
+					if (typed.length > 0 && typed !== targetWords[i] && (i < activeWordIndex || isFinished)) {
+						missedWordsSet.add(targetWords[i]);
+					}
+				}
+			}
+
+			const netWpmExact = elapsedMin > 0 ? Math.max(0, charStats.correct / 5 / elapsedMin) : 0;
+			const rawWpmExact = elapsedMin > 0 ? Math.max(0, totalKeystrokes / 5 / elapsedMin) : 0;
+			const netWpm = Math.round(netWpmExact);
+			const rawWpm = Math.round(rawWpmExact);
+			const totalEvaluated = totalKeystrokes + charStats.missed;
+			const totalErrors = totalErrorKeystrokes + charStats.missed;
+			const accExact = totalEvaluated > 0
+				? Math.max(0, Math.min(100, ((totalEvaluated - totalErrors) / totalEvaluated) * 100))
+				: 100;
+			const accuracy = Math.round(accExact);
+			const consistency = calculateConsistency(historySamples);
+
+			if (netWpm > 0) {
+				lastRunWpm = netWpm;
+				updatePaceButtonLabel();
+			}
+
+			// Calculate AFK percentage & session cumulative time
+			const totalDurationMs = Math.max(1000, totalDurationSec * 1000);
+			const afkPct = Math.min(100, Math.max(0, Math.round((totalAfkMs / totalDurationMs) * 100)));
+			cumulativeSessionSeconds += Math.max(1, Math.round(totalDurationSec));
+
+			if (resWpm) {
+				resWpm.textContent = String(netWpm);
+				resWpm.title = `${netWpmExact.toFixed(2)} wpm (${charStats.correct} correct chars)`;
+			}
+			if (resAcc) {
+				resAcc.textContent = `${accuracy}%`;
+				resAcc.title = `${accExact.toFixed(2)}% (${totalEvaluated - totalErrors}/${totalEvaluated} keystrokes)`;
+			}
+
+			let typeLabel = '';
+			if (isMissedDrillActive) typeLabel = 'missed drill';
+			else if (currentMode === 'time') typeLabel = `time ${timeLimit}s`;
+			else if (currentMode === 'words') typeLabel = `words ${wordLimit}`;
+			else typeLabel = currentMode;
+
+			const mods: string[] = ['english'];
+			if ((currentMode === 'time' || currentMode === 'words') && !isMissedDrillActive) {
+				if (usePunctuation) mods.push('punctuation');
+				if (useNumbers) mods.push('numbers');
+			}
+
+			if (statType) {
+				statType.innerHTML = `${typeLabel}<br /><span class="text-[13px] font-normal text-[#6ee7b7]">${mods.join(' · ')}</span>`;
+			}
+
+			if (statOther) {
+				const otherTags: string[] = [];
+				if (isRepeatedPayload) otherTags.push('repeated');
+				if (afkPct > 0) otherTags.push('afk detected');
+				if (otherTags.length === 0) {
+					otherTags.push(totalErrors === 0 ? 'clean run' : 'standard');
+				}
+				statOther.textContent = otherTags.join(' · ');
+			}
+
+			if (statRaw) {
+				statRaw.textContent = String(rawWpm);
+				statRaw.title = `${rawWpmExact.toFixed(2)} raw wpm`;
+			}
+			if (statChars) {
+				statChars.textContent = `${charStats.correct}/${charStats.incorrect}/${charStats.extra}/${charStats.missed}`;
+				statChars.title = `correct: ${charStats.correct} / incorrect: ${charStats.incorrect} / extra: ${charStats.extra} / missed: ${charStats.missed}`;
+			}
+			if (statConsistency) {
+				statConsistency.textContent = `${consistency}%`;
+				statConsistency.title = `${consistency}% keystroke pacing consistency`;
+			}
+			const displaySec = currentMode === 'time' ? timeLimit : Math.max(1, Math.round(elapsedSec));
+			if (statTime) {
+				statTime.textContent = `${displaySec}s`;
+			}
+			if (statTimeSub) {
+				statTimeSub.textContent = `${afkPct}% afk · ${formatSessionHms(cumulativeSessionSeconds)}`;
+			}
+
+			lastResultSnapshot = {
+				wpm: netWpm,
+				raw: rawWpm,
+				acc: accuracy,
+				consistency,
+				modeLabel: typeLabel,
+				charsLabel: `${charStats.correct}/${charStats.incorrect}/${charStats.extra}/${charStats.missed}`,
+				durationLabel: `${displaySec}s`
+			};
+
+			const missedCount = missedWordsSet.size;
+			if (btnPracticeMissed && missedBtnLabel) {
+				btnPracticeMissed.disabled = missedCount === 0;
+				missedBtnLabel.textContent = `Practice Missed (${missedCount})`;
+			}
+
+			renderWordsHistoryDrawer();
+			wordsHistoryDrawer?.classList.add('hidden');
+			btnToggleHistory?.setAttribute('aria-expanded', 'false');
+
+			renderSvgChart();
+			updateProgressBar();
+
+			arenaView?.classList.add('hidden');
+			resultsView?.classList.remove('hidden');
+		}
+
+		function resetSession(preservePassage = false, focusInput = true) {
+			stopTimer();
+			isRunning = false;
+			isFinished = false;
+			startTimeMs = null;
+			endTimeMs = null;
+			lastKeystrokeTimeMs = null;
+			totalAfkMs = 0;
+			activeWordIndex = 0;
+			totalKeystrokes = 0;
+			totalErrorKeystrokes = 0;
+			correctKeystrokes = 0;
+			secondBucketKeys = 0;
+			secondBucketErrors = 0;
+			lastRecordedSecond = 0;
+			historySamples = [];
+			missedWordsSet.clear();
+
+			isRepeatedPayload = preservePassage;
+
+			if (!preservePassage) {
+				buildWordsForCurrentMode();
+			}
+
+			typedWords = currentMode === 'zen' ? [''] : targetWords.map(() => '');
+
+			if (hiddenInput) hiddenInput.value = '';
+			if (wordsTrack) wordsTrack.style.transform = 'translateY(0px)';
+			ghostCaretEl?.classList.add('hidden');
+
+			resultsView?.classList.add('hidden');
+			arenaView?.classList.remove('hidden');
+			fadeTopbar(false);
+			setStatus('ready');
+
+			renderWordsDOM();
+			updateLiveIndicator();
+
+			requestAnimationFrame(() => {
+				updateCaretAndScroll();
+				if (focusInput) hiddenInput?.focus();
+			});
+		}
+
+		function syncControlPillUI() {
+			const activeShadow = 'bg-[#00ff9d] text-[#050a08] font-bold shadow-[0_0_12px_rgba(0,255,157,0.45)]';
+			const inactive = 'font-medium text-[#7fb69f] hover:text-[#00ff9d]';
+			const base = 'cursor-pointer rounded-md transition-all';
+
+			for (const btn of modeButtons) {
+				const isSelected = (btn.getAttribute('data-mta-mode') as TestMode) === currentMode;
+				btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+				btn.className = `${base} px-3 py-1 ${isSelected ? activeShadow : inactive}`;
+			}
+
+			const showModifiers = currentMode === 'time' || currentMode === 'words';
+			if (modifiersGroup) {
+				modifiersGroup.classList.toggle('hidden', !showModifiers);
+				modifiersGroup.classList.toggle('flex', showModifiers);
+			}
+			if (modPunctuationBtn) {
+				modPunctuationBtn.setAttribute('aria-pressed', usePunctuation ? 'true' : 'false');
+				modPunctuationBtn.className = `${base} px-2.5 py-1 ${usePunctuation ? activeShadow : inactive}`;
+			}
+			if (modNumbersBtn) {
+				modNumbersBtn.setAttribute('aria-pressed', useNumbers ? 'true' : 'false');
+				modNumbersBtn.className = `${base} px-2.5 py-1 ${useNumbers ? activeShadow : inactive}`;
+			}
+
+			const showSubWrapper = currentMode === 'time' || currentMode === 'words' || currentMode === 'custom';
+			if (suboptionsWrapper) {
+				suboptionsWrapper.classList.toggle('hidden', !showSubWrapper);
+				suboptionsWrapper.classList.toggle('flex', showSubWrapper);
+			}
+			subTimeGroup?.classList.toggle('hidden', currentMode !== 'time');
+			subTimeGroup?.classList.toggle('flex', currentMode === 'time');
+			subWordsGroup?.classList.toggle('hidden', currentMode !== 'words');
+			subWordsGroup?.classList.toggle('flex', currentMode === 'words');
+			subCustomGroup?.classList.toggle('hidden', currentMode !== 'custom');
+			subCustomGroup?.classList.toggle('flex', currentMode === 'custom');
+
+			for (const btn of timeButtons) {
+				const sel = Number(btn.getAttribute('data-mta-time')) === timeLimit;
+				btn.className = `${base} px-2.5 py-1 tabular-nums ${sel ? activeShadow : inactive}`;
+			}
+			for (const btn of wordsButtons) {
+				const sel = Number(btn.getAttribute('data-mta-words')) === wordLimit;
+				btn.className = `${base} px-2.5 py-1 tabular-nums ${sel ? activeShadow : inactive}`;
+			}
+		}
+
+		function handleCharacterInput(char: string) {
+			if (isFinished) return;
+			startTestIfNeeded();
+			trackKeystrokeAfkGap();
+
+			if (currentMode === 'zen') {
+				if (char === ' ') {
+					if ((typedWords[activeWordIndex] || '').length > 0) {
+						totalKeystrokes++;
+						secondBucketKeys++;
+						correctKeystrokes++;
+						playTacticalSfx(false);
+						activeWordIndex++;
+						typedWords[activeWordIndex] = '';
+						renderZenWordsDOM();
+						updateLiveIndicator();
+						updateCaretAndScroll();
+					}
+					return;
+				}
+				typedWords[activeWordIndex] = (typedWords[activeWordIndex] || '') + char;
+				totalKeystrokes++;
+				secondBucketKeys++;
+				correctKeystrokes++;
+				playTacticalSfx(false);
+				renderZenWordsDOM();
+				updateLiveIndicator();
+				updateCaretAndScroll();
+				return;
+			}
+
+			const currentTarget = targetWords[activeWordIndex] || '';
+			const currentTyped = typedWords[activeWordIndex] || '';
+
+			if (char === ' ') {
+				if (currentTyped.length === 0) return;
+
+				const prevWordIndex = activeWordIndex;
+				totalKeystrokes++;
+				secondBucketKeys++;
+				if (currentTyped !== currentTarget) {
+					totalErrorKeystrokes++;
+					secondBucketErrors++;
+					missedWordsSet.add(currentTarget);
+					playTacticalSfx(true);
+				} else {
+					correctKeystrokes++;
+					playTacticalSfx(false);
+				}
+
+				if (activeWordIndex >= targetWords.length - 1) {
+					activeWordIndex++;
+					updateSingleWordDOM(prevWordIndex);
+					updateLiveIndicator();
+					finishTest();
+					return;
+				}
+
+				activeWordIndex++;
+				updateSingleWordDOM(prevWordIndex);
+				updateLiveIndicator();
+				updateCaretAndScroll();
+				return;
+			}
+
+			if (currentTyped.length >= currentTarget.length + 15) return;
+
+			const nextTyped = currentTyped + char;
+			typedWords[activeWordIndex] = nextTyped;
+			totalKeystrokes++;
+			secondBucketKeys++;
+
+			const charPos = nextTyped.length - 1;
+			if (charPos < currentTarget.length && char === currentTarget[charPos]) {
+				correctKeystrokes++;
+				playTacticalSfx(false);
+			} else {
+				totalErrorKeystrokes++;
+				secondBucketErrors++;
+				missedWordsSet.add(currentTarget);
+				playTacticalSfx(true);
+			}
+
+			updateSingleWordDOM(activeWordIndex);
+			updateCaretAndScroll();
+			updateTelemetry();
+
+			if (currentMode !== 'time' && activeWordIndex === targetWords.length - 1 && nextTyped === currentTarget) {
+				activeWordIndex++;
+				updateLiveIndicator();
+				finishTest();
+			}
+		}
+
+		function handleBackspace(wholeWord = false) {
+			if (isFinished) return;
+			trackKeystrokeAfkGap();
+			playTacticalSfx(false);
+
+			if (currentMode === 'zen') {
+				const cur = typedWords[activeWordIndex] || '';
+				if (cur.length > 0) {
+					typedWords[activeWordIndex] = wholeWord ? '' : cur.slice(0, -1);
+				} else if (activeWordIndex > 0) {
+					typedWords.pop();
+					activeWordIndex--;
+					if (wholeWord) typedWords[activeWordIndex] = '';
+				}
+				renderZenWordsDOM();
+				updateLiveIndicator();
+				updateCaretAndScroll();
+				return;
+			}
+
+			const cur = typedWords[activeWordIndex] || '';
+			if (cur.length > 0) {
+				typedWords[activeWordIndex] = wholeWord ? '' : cur.slice(0, -1);
+				updateSingleWordDOM(activeWordIndex);
+				updateCaretAndScroll();
+				updateTelemetry();
+			} else if (activeWordIndex > 0) {
+				const prevIdx = activeWordIndex - 1;
+				if (typedWords[prevIdx] !== targetWords[prevIdx]) {
+					activeWordIndex = prevIdx;
+					if (wholeWord) {
+						typedWords[activeWordIndex] = '';
+					}
+					updateSingleWordDOM(activeWordIndex);
+					updateLiveIndicator();
+					updateCaretAndScroll();
+				}
+			}
+		}
+
+		function isModalOpen() {
+			return !!customModal && !customModal.classList.contains('hidden');
+		}
+
+		hiddenInput?.addEventListener('keydown', (e) => {
+			if (isModalOpen()) return;
+
+			if (e.key === 'Tab') {
+				e.preventDefault();
+				resetSession(false, true);
+				return;
+			}
+			if (e.key === 'Escape') {
+				e.preventDefault();
+				window.location.href = '/typing-speed-test/';
+				return;
+			}
+			if (e.key === 'Enter' && e.shiftKey) {
+				e.preventDefault();
+				if (currentMode === 'zen' && !isFinished) finishTest();
+				return;
+			}
+			if (e.key === 'Backspace') {
+				e.preventDefault();
+				handleBackspace(e.ctrlKey || e.altKey || e.metaKey);
+			}
+		});
+
+		hiddenInput?.addEventListener('input', () => {
+			if (!hiddenInput) return;
+			const val = hiddenInput.value;
+			hiddenInput.value = '';
+			for (let i = 0; i < val.length; i++) {
+				handleCharacterInput(val[i]);
+			}
+		});
+
+		window.addEventListener('keydown', (e) => {
+			if (isModalOpen()) {
+				if (e.key === 'Escape') closeCustomModal();
+				return;
+			}
+
+			if (e.key === 'Tab') {
+				e.preventDefault();
+				resetSession(false, true);
+				return;
+			}
+			if (e.key === 'Escape') {
+				e.preventDefault();
+				window.location.href = '/typing-speed-test/';
+				return;
+			}
+			if (e.key === 'Enter') {
+				if (e.shiftKey) {
+					if (currentMode === 'zen' && !isFinished) {
+						e.preventDefault();
+						finishTest();
+					}
+					return;
+				}
+				if (isFinished) {
+					e.preventDefault();
+					resetSession(false, true);
+				}
+				return;
+			}
+
+			if (
+				!isFinished &&
+				document.activeElement !== hiddenInput &&
+				e.key.length === 1 &&
+				!e.ctrlKey &&
+				!e.metaKey &&
+				!e.altKey
+			) {
+				hiddenInput?.focus();
+			}
+		});
+
+		canvasBox?.addEventListener('click', () => {
+			hiddenInput?.focus();
+		});
+
+		// Ghost Pacer Toggle Handler
+		paceToggleBtn?.addEventListener('click', () => {
+			paceOptionIndex = (paceOptionIndex + 1) % PACE_OPTIONS.length;
+			updatePaceButtonLabel();
+			updateGhostCaretPosition();
+			hiddenInput?.focus();
+		});
+
+		// Synthesized Keystroke Audio Toggle Handler
+		sfxToggleBtn?.addEventListener('click', () => {
+			sfxEnabled = !sfxEnabled;
+			sfxToggleBtn.setAttribute('aria-pressed', sfxEnabled ? 'true' : 'false');
+			sfxToggleBtn.textContent = sfxEnabled ? '[ SFX: ON ]' : '[ SFX: OFF ]';
+			sfxToggleBtn.className = sfxEnabled
+				? 'cursor-pointer rounded bg-[#00ff9d]/20 px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#00ff9d] transition hover:bg-[#00ff9d]/30'
+				: 'cursor-pointer rounded px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#6ee7b7] transition hover:bg-[#00ff9d]/15 hover:text-[#00ff9d]';
+			if (sfxEnabled) playTacticalSfx(false);
+			hiddenInput?.focus();
+		});
+
+		// Caret Style Toggle Handler (LINE vs BLOCK)
+		caretStyleToggleBtn?.addEventListener('click', () => {
+			caretStyle = caretStyle === 'LINE' ? 'BLOCK' : 'LINE';
+			applyCaretVisualStyle();
+			updateCaretAndScroll();
+			hiddenInput?.focus();
+		});
+
+		for (const btn of modeButtons) {
+			btn.addEventListener('click', () => {
+				const selected = btn.getAttribute('data-mta-mode') as TestMode;
+				if (!selected) return;
+				currentMode = selected;
+				syncControlPillUI();
+				resetSession(false, true);
+				if (currentMode === 'custom') openCustomModal();
+			});
+		}
+
+		for (const btn of timeButtons) {
+			btn.addEventListener('click', () => {
+				timeLimit = Number(btn.getAttribute('data-mta-time') || '60');
+				currentMode = 'time';
+				syncControlPillUI();
+				resetSession(false, true);
+			});
+		}
+
+		for (const btn of wordsButtons) {
+			btn.addEventListener('click', () => {
+				wordLimit = Number(btn.getAttribute('data-mta-words') || '25');
+				currentMode = 'words';
+				syncControlPillUI();
+				resetSession(false, true);
+			});
+		}
+
+		modPunctuationBtn?.addEventListener('click', () => {
+			usePunctuation = !usePunctuation;
+			syncControlPillUI();
+			resetSession(false, true);
+		});
+
+		modNumbersBtn?.addEventListener('click', () => {
+			useNumbers = !useNumbers;
+			syncControlPillUI();
+			resetSession(false, true);
+		});
+
+		function openCustomModal() {
+			if (!customModal || !customTextarea) return;
+			customTextarea.value = customText;
+			customModal.classList.remove('hidden');
+			customModal.classList.add('flex');
+			customTextarea.focus();
+		}
+
+		function closeCustomModal() {
+			if (!customModal) return;
+			customModal.classList.add('hidden');
+			customModal.classList.remove('flex');
+			hiddenInput?.focus();
+		}
+
+		btnOpenCustom?.addEventListener('click', openCustomModal);
+		customCloseBtn?.addEventListener('click', closeCustomModal);
+		customCancelBtn?.addEventListener('click', closeCustomModal);
+		customApplyBtn?.addEventListener('click', () => {
+			const val = customTextarea?.value.trim() || '';
+			if (val.length > 0) customText = val;
+			currentMode = 'custom';
+			syncControlPillUI();
+			closeCustomModal();
+			resetSession(false, true);
+		});
+
+		quickRestartBtn?.addEventListener('click', () => resetSession(false, true));
+
+		zenFinishBtn?.addEventListener('click', () => {
+			if (currentMode === 'zen' && !isFinished) finishTest();
+		});
+
+		btnNextTest?.addEventListener('click', () => resetSession(false, true));
+		btnRepeatTest?.addEventListener('click', () => resetSession(true, true));
+
+		btnToggleHistory?.addEventListener('click', () => {
+			if (!wordsHistoryDrawer) return;
+			const isHidden = wordsHistoryDrawer.classList.contains('hidden');
+			wordsHistoryDrawer.classList.toggle('hidden', !isHidden);
+			btnToggleHistory.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+		});
+
+		btnExportPng?.addEventListener('click', () => {
+			exportResultCardPng();
+		});
+
+		btnPracticeMissed?.addEventListener('click', () => {
+			if (missedWordsSet.size === 0) return;
+			const missedList = Array.from(missedWordsSet);
+			const drillWords: string[] = [];
+			const drillLen = Math.max(15, missedList.length * 3);
+			for (let i = 0; i < drillLen; i++) {
+				drillWords.push(missedList[i % missedList.length]);
+			}
+			for (let i = drillWords.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				const tmp = drillWords[i];
+				drillWords[i] = drillWords[j];
+				drillWords[j] = tmp;
+			}
+			targetWords = drillWords;
+			currentMode = 'custom';
+			syncControlPillUI();
+			resetSession(true, true);
+			isMissedDrillActive = true;
+			isRepeatedPayload = true;
+			updateLiveIndicator();
+		});
+
+		function parseQueryParamsOnLoad() {
+			try {
+				const params = new URLSearchParams(window.location.search);
+				const modeParam = (params.get('mode') || '').toLowerCase();
+				const valueParam = params.get('value') || '';
+
+				if (modeParam === 'time' || modeParam === 'words' || modeParam === 'quote' || modeParam === 'zen' || modeParam === 'custom') {
+					currentMode = modeParam;
+				}
+
+				if (currentMode === 'time' && valueParam) {
+					const parsed = Number(valueParam);
+					if ([15, 30, 60, 120].includes(parsed)) timeLimit = parsed;
+				} else if (currentMode === 'words' && valueParam) {
+					const parsed = Number(valueParam);
+					if ([10, 25, 50, 100].includes(parsed)) wordLimit = parsed;
+				}
+
+				if (params.get('punctuation') === 'true' || params.get('punctuation') === '1') usePunctuation = true;
+				if (params.get('numbers') === 'true' || params.get('numbers') === '1') useNumbers = true;
+			} catch (e) {}
+		}
+
+		window.addEventListener('resize', () => {
+			if (!isFinished) {
+				updateCaretAndScroll();
+				updateGhostCaretPosition();
+			}
+		});
+
+		parseQueryParamsOnLoad();
+		applyCaretVisualStyle();
+		updatePaceButtonLabel();
+		syncControlPillUI();
+		resetSession(false, true);
+	}
+
+	initMonkeyTypingArena();
+</script>

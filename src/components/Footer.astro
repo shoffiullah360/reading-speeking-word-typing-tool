@@ -40,8 +40,8 @@ const categorizedTools = SITE_CONFIG.categories.map((category) => ({
 				</p>
 			</div>
 
-			<!-- 4 Category Columns + Company & Legal Column -->
-			<div class="grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-5 lg:col-span-9">
+			<!-- 5 Category Columns + Company & Legal Column -->
+			<div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6 lg:col-span-9">
 				{
 					categorizedTools.map(({ category, tools }) => (
 						<div>
@@ -103,6 +103,7 @@ const categorizedTools = SITE_CONFIG.categories.map((category) => ({
 			<div class="flex flex-wrap items-center gap-4">
 				<a href="/about/" class="transition-colors hover:text-ink">About</a>
 				<a href="/privacy-policy/" class="transition-colors hover:text-ink">Privacy Policy</a>
+				<a href="/terms-of-service/" class="transition-colors hover:text-ink">Terms of Service</a>
 				<a href="/contact/" class="transition-colors hover:text-ink">Contact</a>
 			</div>
 		</div>

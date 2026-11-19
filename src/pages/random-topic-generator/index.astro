@@ -6,30 +6,99 @@ import Footer from "../../components/Footer.astro";
 import { resolveCanonicalUrl } from "../../config/site";
 
 const pageTitle =
-	"Random Topic Generator — Essay, Speech, Creative Writing & Blog Prompts | Wordora";
+	"Random Topic Generator – Prompts for Speaking, Writing, Essays & Debate | Wordora";
 const pageDescription =
-	"Generate curated, thought-provoking writing prompts and speaking topics across Essay & Academic, Public Speaking & Debate, Creative Writing, and Blog & Content modes.";
+	"Generate 140+ curated random topics with talking points for 1-minute impromptu speeches, academic essays, debates, deep conversations, creative writing, and single-word prompts. Free, private, no signup.";
 const canonicalUrl = resolveCanonicalUrl("/random-topic-generator/");
 
-const softwareAppSchema = {
-	"@context": "https://schema.org",
-	"@type": "SoftwareApplication",
-	name: "Random Topic & Prompt Generator",
-	url: canonicalUrl,
-	applicationCategory: "UtilitiesApplication",
-	operatingSystem: "Web, Any",
-	offers: {
-		"@type": "Offer",
-		price: "0",
-		priceCurrency: "USD",
+const faqs = [
+	{
+		question: "What is a random topic generator and how does it work?",
+		answer:
+			"A random topic generator is a free browser-based prompt tool that draws from 140+ curated topics across academic essays, impromptu speeches, classroom debates, casual conversations, creative writing, and single-word sparks. Each generated topic automatically includes three structured talking points and a chosen perspective lens to help you outline your thoughts without starting from a blank page.",
 	},
-	description: pageDescription,
-	featureList: [
-		"Four curated topic modes: Essay & Academic, Public Speaking & Debate, Creative Writing, and Blog & Content",
-		"Thought-provoking prompts paired with suggested angles to explore",
-		"Instant Generate New Topic and one-click Copy Topic controls",
-		"Session-saved Shortlisted Topics list to compare and export favorite prompts",
-		"100% private client-side execution in your browser",
+	{
+		question: "How do I practice 1-minute impromptu speaking with this tool?",
+		answer:
+			"To practice 1-minute impromptu speeches, select Speech & Debate mode and start the built-in countdown timer with 30s Prep or 1 min. Press Generate New Topic (or tap the Spacebar), jot down an opening hook in the notes pad, and deliver your speech using the PREP framework (Point, Reason, Example, Point).",
+	},
+	{
+		question: "Can I generate single-word topics for speeches, drawing, or songwriting?",
+		answer:
+			"Yes. Switch the top mode pill to Single-Word to generate evocative one-word prompts paired with three distinct creative association angles. This mode is ideal for JAM (Just A Minute) speaking rounds, Pictionary or sketchbook challenges, and spontaneous songwriting sessions.",
+	},
+	{
+		question: "How many random topics can I generate at once?",
+		answer:
+			"You can use Single Focus mode to concentrate on one deep prompt at a time, or toggle Batch (5 Topics) to generate five ideas side by side. Enable the No Repeats toggle to ensure you only see unseen topics throughout your active session.",
+	},
+	{
+		question: "Are there easy topics for kids, students, and ESL learners?",
+		answer:
+			"Yes. Set the Level filter to Easy and select ELI5 (Explain Like I'm 5) under Lens to receive accessible, relatable prompts. These work well for elementary and middle school classrooms, ESL/EFL speaking fluency drills, and family conversation starters.",
+	},
+	{
+		question: "How are the debate and essay topics balanced?",
+		answer:
+			"Essay & Academic and Speech & Debate prompts are framed as open-ended questions or nuanced motions accompanied by three balanced talking points representing differing perspectives. Selecting the Devil's Advocate lens immediately highlights counterarguments to sharpen your rebuttal and critical thinking skills.",
+	},
+	{
+		question: "What are 10 good topics for an impromptu speech or conversation?",
+		answer:
+			"Popular prompts include: Why every new job should start with a week of listening; The underrated value of boredom; Whether smartphones improve or weaken memory; One skill schools should teach before graduation; and The best advice you ignored at first. You can spin over 140 curated variations across six categories using the tool above.",
+	},
+	{
+		question: "Can I save and export my favorite generated topics?",
+		answer:
+			"Yes. Click Save to Shortlist on any prompt to store it locally in your browser's localStorage. You can review your shortlisted topics anytime, copy them all to your clipboard with one click, or export the entire list as a clean .txt file.",
+	},
+	{
+		question: "Is this random topic generator completely free without login?",
+		answer:
+			"Yes, it is 100% free with no account creation, login, email submission, or daily generation limits. Every feature—including timer practice, lenses, batch generation, and exports—is fully unlocked.",
+	},
+	{
+		question: "Are my notes and shortlisted topics stored privately?",
+		answer:
+			"Yes, completely privately. All topic selection, rehearsal timers, scratchpad notes, and saved shortlists run strictly on the client side inside your web browser. No prompt selections, notes, or usage data are ever uploaded to or stored on external servers.",
+	},
+];
+
+const jsonLdSchema = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "WebApplication",
+			name: "Random Topic Generator",
+			url: canonicalUrl,
+			applicationCategory: "EducationalApplication",
+			operatingSystem: "Any",
+			offers: {
+				"@type": "Offer",
+				price: "0",
+				priceCurrency: "USD",
+			},
+			description: pageDescription,
+			featureList: [
+				"140+ curated random topics with structured talking points across six purpose modes",
+				"Perspective lenses (Straight, Devil's Advocate, ELI5, Pitch It, Storytime)",
+				"Single focus spotlight and Batch (5 Topics) simultaneous generation",
+				"Built-in impromptu practice countdown timer (30s, 1 min, 2 min, 5 min) with live speech hook notes",
+				"Session-saved shortlist with instant clipboard copy and .txt export",
+				"100% private client-side execution with zero signup required",
+			],
+		},
+		{
+			"@type": "FAQPage",
+			mainEntity: faqs.map((faq) => ({
+				"@type": "Question",
+				name: faq.question,
+				acceptedAnswer: {
+					"@type": "Answer",
+					text: faq.answer,
+				},
+			})),
+		},
 	],
 };
 ---
@@ -42,7 +111,7 @@ const softwareAppSchema = {
 	<Fragment slot="head">
 		<script
 			type="application/ld+json"
-			set:html={JSON.stringify(softwareAppSchema)}
+			set:html={JSON.stringify(jsonLdSchema)}
 		/>
 	</Fragment>
 
@@ -69,9 +138,655 @@ const softwareAppSchema = {
 		<!-- Interactive Random Topic Generator Workspace -->
 		<RandomTopicGenerator />
 
+		<!-- Section 1: How to Use the Random Topic Generator (Clean 4-Step Grid) -->
+		<section
+			aria-labelledby="how-to-use-heading"
+			class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-10 pb-12 sm:px-6 md:mt-12 md:pt-12"
+		>
+			<h2
+				id="how-to-use-heading"
+				class="text-2xl font-bold tracking-tight text-ink sm:text-3xl"
+			>
+				How to Use the Random Topic Generator
+			</h2>
+
+			<p class="max-w-3xl text-[16px] leading-relaxed text-body">
+				Every random prompt pairs with three structured talking points, a perspective lens, and an optional countdown timer so you never start from a blank mind. Follow these four quick steps to filter, practice, and export topics for speeches, papers, or creative projects:
+			</p>
+
+			<ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+				<li class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated p-5">
+					<div class="mb-3 flex items-center gap-2.5">
+						<span
+							class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[13px] font-semibold text-[#111827] tabular-nums dark:border-hairline dark:bg-canvas dark:text-ink"
+						>
+							1
+						</span>
+						<h3 class="text-[16px] font-semibold text-ink">
+							Pick a Purpose Mode
+						</h3>
+					</div>
+					<p class="text-[14px] leading-relaxed text-body">
+						Switch between <strong class="font-semibold text-ink">All</strong>, <strong class="font-semibold text-ink">Essay &amp; Academic</strong>, <strong class="font-semibold text-ink">Speech &amp; Debate</strong>, <strong class="font-semibold text-ink">Conversation &amp; Icebreakers</strong>, <strong class="font-semibold text-ink">Creative Writing</strong>, or <strong class="font-semibold text-ink">Single-Word</strong> prompts.
+					</p>
+				</li>
+
+				<li class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated p-5">
+					<div class="mb-3 flex items-center gap-2.5">
+						<span
+							class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[13px] font-semibold text-[#111827] tabular-nums dark:border-hairline dark:bg-canvas dark:text-ink"
+						>
+							2
+						</span>
+						<h3 class="text-[16px] font-semibold text-ink">
+							Refine by Subject, Level &amp; Lens
+						</h3>
+					</div>
+					<p class="text-[14px] leading-relaxed text-body">
+						Narrow down across 7 subjects, choose <strong class="font-semibold text-ink">Easy</strong>, <strong class="font-semibold text-ink">Medium</strong>, or <strong class="font-semibold text-ink">Hard</strong> difficulty, and apply a perspective lens (<strong class="font-semibold text-ink">Straight</strong>, <strong class="font-semibold text-ink">Devil's Advocate</strong>, <strong class="font-semibold text-ink">ELI5</strong>, <strong class="font-semibold text-ink">Pitch It</strong>, or <strong class="font-semibold text-ink">Storytime</strong>).
+					</p>
+				</li>
+
+				<li class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated p-5">
+					<div class="mb-3 flex items-center gap-2.5">
+						<span
+							class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[13px] font-semibold text-[#111827] tabular-nums dark:border-hairline dark:bg-canvas dark:text-ink"
+						>
+							3
+						</span>
+						<h3 class="text-[16px] font-semibold text-ink">
+							Generate Single or Batch Prompts
+						</h3>
+					</div>
+					<p class="text-[14px] leading-relaxed text-body">
+						Press <strong class="font-semibold text-ink">Generate New Topic</strong> (or <kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-ink">Spacebar</kbd>) for a spotlight prompt with 3 talking points, or toggle <strong class="font-semibold text-ink">Batch (5 Topics)</strong> to scan five ideas at once.
+					</p>
+				</li>
+
+				<li class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated p-5">
+					<div class="mb-3 flex items-center gap-2.5">
+						<span
+							class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[13px] font-semibold text-[#111827] tabular-nums dark:border-hairline dark:bg-canvas dark:text-ink"
+						>
+							4
+						</span>
+						<h3 class="text-[16px] font-semibold text-ink">
+							Practice &amp; Export Your Shortlist
+						</h3>
+					</div>
+					<p class="text-[14px] leading-relaxed text-body">
+						Run the built-in <strong class="font-semibold text-ink">30s</strong>, <strong class="font-semibold text-ink">1 min</strong>, <strong class="font-semibold text-ink">2 min</strong>, or <strong class="font-semibold text-ink">5 min</strong> timer for off-the-cuff speaking practice, jot down an opening hook, and save favorites to copy or download as <strong class="font-semibold text-ink">.txt</strong>.
+					</p>
+				</li>
+			</ol>
+		</section>
+
+		<!-- Section 2: 6 Practical Ways to Use a Random Topic Generator (Clean 2x3 Card Grid) -->
+		<section
+			aria-labelledby="practical-ways-heading"
+			class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-10 pb-16 sm:px-6 md:mt-12 md:pt-12"
+		>
+			<h2
+				id="practical-ways-heading"
+				class="text-2xl font-bold tracking-tight text-ink sm:text-3xl"
+			>
+				6 Practical Ways to Use a Random Topic Generator
+			</h2>
+
+			<p class="max-w-3xl text-[16px] leading-relaxed text-body">
+				Whether preparing for a competition, breaking writer's block, or enlivening a group conversation, these prompt formats adapt to key speaking and writing scenarios:
+			</p>
+
+			<div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+				<!-- Card 1: 1-Minute Impromptu & Off-the-Cuff Speaking -->
+				<div class="flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-3">
+					<div>
+						<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+							Speaking
+						</span>
+						<h3 class="mt-3 text-lg font-semibold tracking-tight text-ink">
+							1-Minute Impromptu &amp; Off-the-Cuff Speaking
+						</h3>
+						<p class="mt-2 text-[14.5px] leading-relaxed text-body">
+							Practice Toastmasters Table Topics, JAM (Just A Minute) rounds, and job interview warm-ups using the built-in 1-minute countdown timer. The three structured talking points help you frame a smooth opening, argument, and close on the spot.
+						</p>
+					</div>
+				</div>
+
+				<!-- Card 2: Academic Essays & Research Papers -->
+				<div class="flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-3">
+					<div>
+						<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+							Essays
+						</span>
+						<h3 class="mt-3 text-lg font-semibold tracking-tight text-ink">
+							Academic Essays &amp; Research Papers
+						</h3>
+						<p class="mt-2 text-[14.5px] leading-relaxed text-body">
+							Break writer's block with balanced, thesis-ready prompts across technology, psychology, education, and public policy. Each topic offers ready sub-themes to structure your outline and support your main thesis with evidence.
+						</p>
+					</div>
+				</div>
+
+				<!-- Card 3: Classroom Debates & Group Discussions -->
+				<div class="flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-3">
+					<div>
+						<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+							Debates
+						</span>
+						<h3 class="mt-3 text-lg font-semibold tracking-tight text-ink">
+							Classroom Debates &amp; Group Discussions
+						</h3>
+						<p class="mt-2 text-[14.5px] leading-relaxed text-body">
+							Give students and debate clubs fair, multi-sided motions with ready-made pro/con angles. Applying the Devil's Advocate lens pushes speakers to defend counterarguments and test their assumptions under pressure.
+						</p>
+					</div>
+				</div>
+
+				<!-- Card 4: Deep & Funny Conversation Starters -->
+				<div class="flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-3">
+					<div>
+						<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+							Conversation
+						</span>
+						<h3 class="mt-3 text-lg font-semibold tracking-tight text-ink">
+							Deep &amp; Funny Conversation Starters
+						</h3>
+						<p class="mt-2 text-[14.5px] leading-relaxed text-body">
+							Skip repetitive small talk at dinners, road trips, or team icebreakers with light, deep, or humorous questions. Pick easy icebreakers for fast laughs or medium and hard prompts for meaningful discussions.
+						</p>
+					</div>
+				</div>
+
+				<!-- Card 5: Creative Writing, Songs & Drawing Prompts -->
+				<div class="flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-3">
+					<div>
+						<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+							Creative
+						</span>
+						<h3 class="mt-3 text-lg font-semibold tracking-tight text-ink">
+							Creative Writing, Songs &amp; Drawing Prompts
+						</h3>
+						<p class="mt-2 text-[14.5px] leading-relaxed text-body">
+							Spark short stories, journal entries, songwriting themes, or sketch ideas using Creative Writing and Single-Word modes. The Storytime lens helps you turn an unexpected premise into a vivid narrative arc.
+						</p>
+					</div>
+				</div>
+
+				<!-- Card 6: Presentations & Pitch Practice -->
+				<div class="flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-3">
+					<div>
+						<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+							Presentations
+						</span>
+						<h3 class="mt-3 text-lg font-semibold tracking-tight text-ink">
+							Presentations &amp; Pitch Practice
+						</h3>
+						<p class="mt-2 text-[14.5px] leading-relaxed text-body">
+							Use the Pitch It or ELI5 lens to rehearse explaining complex ideas clearly under realistic time limits. Perfect for founders, teachers, and professionals practicing concise, jargon-free explanations.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 3: Curated Ready-to-Use Topic Lists (Clean 2x2 Card Grid) -->
+		<section
+			aria-labelledby="curated-lists-heading"
+			class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-10 pb-16 sm:px-6 md:mt-12 md:pt-12"
+		>
+			<h2
+				id="curated-lists-heading"
+				class="text-2xl font-bold tracking-tight text-ink sm:text-3xl"
+			>
+				Curated Random Topic Lists by Category
+			</h2>
+
+			<p class="max-w-3xl text-[16px] leading-relaxed text-body">
+				Copy any sample prompt below directly for your next speech, essay, or discussion, or spin the generator above for 140+ interactive topics complete with talking points, difficulty levels, and timer presets.
+			</p>
+
+			<div class="grid gap-6 md:grid-cols-2">
+				<!-- List 1: 10 Topics for a 1-Minute Impromptu Speech -->
+				<div class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-4">
+					<div class="flex items-center justify-between gap-2 border-b border-hairline pb-3">
+						<h3 class="text-lg font-semibold tracking-tight text-ink">
+							10 Good Topics for a 1-Minute Impromptu Speech
+						</h3>
+						<span class="inline-flex shrink-0 items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+							Speech
+						</span>
+					</div>
+
+					<ol class="space-y-2.5 pl-5 list-decimal text-[14px] leading-relaxed text-body marker:font-medium marker:text-mute">
+						<li>Why every new job should start with a week of listening</li>
+						<li>The underrated value of boredom in an over-scheduled day</li>
+						<li>One practical life skill schools should teach before graduation</li>
+						<li>Why handwritten notes still beat digital messaging apps</li>
+						<li>What a favorite childhood game teaches about adult teamwork</li>
+						<li>The subtle difference between being busy and being productive</li>
+						<li>Why making a small decision quickly is better than overthinking</li>
+						<li>A lesson you learned from a memorable travel delay or mistake</li>
+						<li>Why everyone should work a customer service job at least once</li>
+						<li>The best piece of advice you initially ignored and later embraced</li>
+					</ol>
+				</div>
+
+				<!-- List 2: 10 Balanced Essay & Debate Prompts -->
+				<div class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-4">
+					<div class="flex items-center justify-between gap-2 border-b border-hairline pb-3">
+						<h3 class="text-lg font-semibold tracking-tight text-ink">
+							10 Balanced Essay &amp; Debate Prompts
+						</h3>
+						<span class="inline-flex shrink-0 items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+							Debate
+						</span>
+					</div>
+
+					<ol class="space-y-2.5 pl-5 list-decimal text-[14px] leading-relaxed text-body marker:font-medium marker:text-mute">
+						<li>Should universities replace timed exams with project portfolios?</li>
+						<li>Does permanent remote work strengthen or weaken company culture?</li>
+						<li>Should social media recommendation algorithms be regulated like public utilities?</li>
+						<li>Is commercial space exploration a necessity or a distraction from Earth's crises?</li>
+						<li>Should governments mandate financial literacy courses as a high school graduation requirement?</li>
+						<li>Does artificial intelligence in creative fields diminish or elevate human artistry?</li>
+						<li>Should public transit in metropolitan cities be entirely free and tax-funded?</li>
+						<li>Are grades an effective motivator for learning, or do they incentivize shortcuts?</li>
+						<li>Should employers be legally restricted from contacting workers outside regular business hours?</li>
+						<li>Does universal basic income encourage entrepreneurship or reduce workplace participation?</li>
+					</ol>
+				</div>
+
+				<!-- List 3: 10 Deep & Funny Conversation Questions -->
+				<div class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-4">
+					<div class="flex items-center justify-between gap-2 border-b border-hairline pb-3">
+						<h3 class="text-lg font-semibold tracking-tight text-ink">
+							10 Deep &amp; Funny Conversation Questions
+						</h3>
+						<span class="inline-flex shrink-0 items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+							Social
+						</span>
+					</div>
+
+					<ol class="space-y-2.5 pl-5 list-decimal text-[14px] leading-relaxed text-body marker:font-medium marker:text-mute">
+						<li>What belief did you hold strongly five years ago that you have completely changed your mind on?</li>
+						<li>If animals could talk, which species would be the rudest, and why?</li>
+						<li>What everyday convenience from today would feel like genuine magic to someone from 1920?</li>
+						<li>If you had to teach an impromptu masterclass right now on any topic, what would it be?</li>
+						<li>What is the most useless piece of trivia that permanently lives in your head rent-free?</li>
+						<li>What is a minor annoyance that you believe should be completely illegal?</li>
+						<li>If your current life were an autobiography, what would the title of this current chapter be?</li>
+						<li>What is something you genuinely enjoy that everyone else seems to find tedious?</li>
+						<li>If you were forced to eat only one cuisine for the rest of your life, which would you pick?</li>
+						<li>What is an unpopular food or cultural opinion you will defend until the end?</li>
+					</ol>
+				</div>
+
+				<!-- List 4: 20 Single-Word Prompts -->
+				<div class="flex flex-col rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-4">
+					<div class="flex items-center justify-between gap-2 border-b border-hairline pb-3">
+						<h3 class="text-lg font-semibold tracking-tight text-ink">
+							20 Single-Word Prompts for Speaking, Drawing &amp; Songwriting
+						</h3>
+						<span class="inline-flex shrink-0 items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+							Single Word
+						</span>
+					</div>
+
+					<p class="text-[13.5px] leading-relaxed text-body">
+						Single-word prompts unlock fast creative flow. Use these evocative seeds for warm-up freewriting, speed drawing, or rapid table topic rounds:
+					</p>
+
+					<div class="flex flex-wrap gap-2 pt-1">
+						{
+							[
+								"Lantern",
+								"Compass",
+								"Echo",
+								"Clockwork",
+								"Horizon",
+								"Static",
+								"Velvet",
+								"Anchor",
+								"Mirage",
+								"Orbit",
+								"Ember",
+								"Driftwood",
+								"Labyrinth",
+								"Prism",
+								"Solstice",
+								"Blueprint",
+								"Tide",
+								"Reverie",
+								"Gravity",
+								"Mosaic",
+							].map((word) => (
+								<span class="inline-flex items-center rounded-full border border-hairline bg-canvas px-3 py-1 text-[13px] font-medium text-ink transition-colors hover:border-[#7ED4B6] dark:hover:border-ink">
+									{word}
+								</span>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 4: How to Structure an Impromptu Speech or Essay (2-Column Framework Cards) -->
+		<section
+			aria-labelledby="frameworks-heading"
+			class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-10 pb-12 sm:px-6 md:mt-12 md:pt-12"
+		>
+			<h2
+				id="frameworks-heading"
+				class="text-2xl font-bold tracking-tight text-ink sm:text-3xl"
+			>
+				How to Structure an Impromptu Speech or Essay
+			</h2>
+
+			<p class="max-w-3xl text-[16px] leading-relaxed text-body">
+				Pairing a random prompt with a proven mental framework eliminates hesitation and keeps your thoughts organized during timed speeches and essays:
+			</p>
+
+			<div class="grid gap-6 md:grid-cols-2">
+				<!-- Card 1: The PREP Framework -->
+				<div class="flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-4">
+					<div>
+						<div class="flex items-center justify-between gap-2 border-b border-hairline pb-3">
+							<h3 class="text-lg font-semibold tracking-tight text-ink">
+								The PREP Framework (Best for 1-Minute Speeches &amp; Interviews)
+							</h3>
+							<span class="inline-flex shrink-0 items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+								Impromptu
+							</span>
+						</div>
+
+						<ul class="mt-4 space-y-3 text-[14px] leading-relaxed text-body">
+							<li class="flex items-start gap-2.5">
+								<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[11px] font-bold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">P</span>
+								<span><strong class="font-semibold text-ink">Point:</strong> State your clear main position in the first 10 seconds.</span>
+							</li>
+							<li class="flex items-start gap-2.5">
+								<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[11px] font-bold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">R</span>
+								<span><strong class="font-semibold text-ink">Reason:</strong> Explain the primary logic or cause behind your stance.</span>
+							</li>
+							<li class="flex items-start gap-2.5">
+								<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[11px] font-bold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">E</span>
+								<span><strong class="font-semibold text-ink">Example:</strong> Anchor your point with a concrete real-world story, statistic, or observation.</span>
+							</li>
+							<li class="flex items-start gap-2.5">
+								<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[11px] font-bold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">P</span>
+								<span><strong class="font-semibold text-ink">Point (Restated):</strong> Wrap up with a memorable closing line that echoes your opening thesis.</span>
+							</li>
+						</ul>
+					</div>
+
+					<p class="mt-4 rounded-md border border-hairline bg-canvas p-3 text-[13.5px] leading-relaxed text-body">
+						<strong class="font-semibold text-ink">Speaking pace tip:</strong> A comfortable 1-minute speech runs at roughly 120–150 words per minute—use our <a href="/speech-time-calculator/" class="font-medium text-[#0D9488] underline underline-offset-2 transition-colors hover:text-ink dark:text-[#AFE3D0]">Speech Time Calculator</a> to practice pacing your delivery.
+					</p>
+				</div>
+
+				<!-- Card 2: The PEEL Framework -->
+				<div class="flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6 space-y-4">
+					<div>
+						<div class="flex items-center justify-between gap-2 border-b border-hairline pb-3">
+							<h3 class="text-lg font-semibold tracking-tight text-ink">
+								The PEEL Framework (Best for Academic Essays &amp; Debate Arguments)
+							</h3>
+							<span class="inline-flex shrink-0 items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2.5 py-0.5 text-[12px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+								Essays
+							</span>
+						</div>
+
+						<ul class="mt-4 space-y-3 text-[14px] leading-relaxed text-body">
+							<li class="flex items-start gap-2.5">
+								<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[11px] font-bold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">P</span>
+								<span><strong class="font-semibold text-ink">Point:</strong> Open the paragraph with a focused topic sentence.</span>
+							</li>
+							<li class="flex items-start gap-2.5">
+								<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[11px] font-bold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">E</span>
+								<span><strong class="font-semibold text-ink">Evidence:</strong> Support the claim with data, research findings, or historical precedent.</span>
+							</li>
+							<li class="flex items-start gap-2.5">
+								<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[11px] font-bold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">E</span>
+								<span><strong class="font-semibold text-ink">Explanation:</strong> Analyze why that evidence proves your argument and address counter-perspectives.</span>
+							</li>
+							<li class="flex items-start gap-2.5">
+								<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] text-[11px] font-bold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">L</span>
+								<span><strong class="font-semibold text-ink">Link:</strong> Connect the insight back to your overall essay thesis or transition smoothly to the next point.</span>
+							</li>
+						</ul>
+					</div>
+
+					<p class="mt-4 rounded-md border border-hairline bg-canvas p-3 text-[13.5px] leading-relaxed text-body">
+						<strong class="font-semibold text-ink">Formatting tip:</strong> A standard body paragraph spans 150–250 words; verify your target length with the <a href="/word-counter/" class="font-medium text-[#0D9488] underline underline-offset-2 transition-colors hover:text-ink dark:text-[#AFE3D0]">Word Counter</a> and check equivalent page counts with the <a href="/words-to-pages/" class="font-medium text-[#0D9488] underline underline-offset-2 transition-colors hover:text-ink dark:text-[#AFE3D0]">Words to Pages Converter</a>.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 5: Who Uses Wordora's Random Topic Generator? + Related Tools -->
+		<section
+			aria-labelledby="audience-heading"
+			class="mx-auto max-w-[1200px] space-y-10 border-t border-hairline px-4 pt-10 pb-16 sm:px-6 md:mt-12 md:pt-12"
+		>
+			<div class="space-y-6">
+				<h2
+					id="audience-heading"
+					class="text-2xl font-bold tracking-tight text-ink sm:text-3xl"
+				>
+					Who Uses Wordora's Random Topic Generator?
+				</h2>
+
+				<p class="max-w-3xl text-[16px] leading-relaxed text-body">
+					From academic classrooms to professional public speaking stages, communicators rely on structured prompt generation to build confidence and articulate ideas clearly:
+				</p>
+
+				<!-- Compact 3x2 Audience Grid -->
+				<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+					<div class="rounded-xl border border-hairline bg-canvas-elevated p-5">
+						<h3 class="text-[16px] font-semibold text-ink">
+							Students &amp; Academic Writers
+						</h3>
+						<p class="mt-2 text-[14px] leading-relaxed text-body">
+							Brainstorm thesis arguments, outline essay body paragraphs, and prepare for timed in-class essay exams without stalling.
+						</p>
+					</div>
+
+					<div class="rounded-xl border border-hairline bg-canvas-elevated p-5">
+						<h3 class="text-[16px] font-semibold text-ink">
+							Public Speakers &amp; Toastmasters
+						</h3>
+						<p class="mt-2 text-[14px] leading-relaxed text-body">
+							Practice Table Topics, JAM rounds, and conference Q&amp;A responses using the built-in 1-minute timer and talking points.
+						</p>
+					</div>
+
+					<div class="rounded-xl border border-hairline bg-canvas-elevated p-5">
+						<h3 class="text-[16px] font-semibold text-ink">
+							Debate Teams &amp; Classroom Teachers
+						</h3>
+						<p class="mt-2 text-[14px] leading-relaxed text-body">
+							Assign balanced motions with ready-made pro/con angles and challenge students to argue from opposing perspectives.
+						</p>
+					</div>
+
+					<div class="rounded-xl border border-hairline bg-canvas-elevated p-5">
+						<h3 class="text-[16px] font-semibold text-ink">
+							Writers, Bloggers &amp; Songwriters
+						</h3>
+						<p class="mt-2 text-[14px] leading-relaxed text-body">
+							Overcome the blank page with spontaneous narrative sparks, daily journaling prompts, and evocative single-word themes.
+						</p>
+					</div>
+
+					<div class="rounded-xl border border-hairline bg-canvas-elevated p-5">
+						<h3 class="text-[16px] font-semibold text-ink">
+							ESL / EFL Language Learners
+						</h3>
+						<p class="mt-2 text-[14px] leading-relaxed text-body">
+							Build spontaneous speaking confidence, expand topical vocabulary, and practice articulating opinions in English fluently.
+						</p>
+					</div>
+
+					<div class="rounded-xl border border-hairline bg-canvas-elevated p-5">
+						<h3 class="text-[16px] font-semibold text-ink">
+							Podcast Hosts &amp; Team Facilitators
+						</h3>
+						<p class="mt-2 text-[14px] leading-relaxed text-body">
+							Break the ice during remote meetings, formulate insightful guest interview questions, and lead engaging workshop exercises.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Related Wordora Tools Strip (4 Clean Internal Link Cards) -->
+			<div class="space-y-6 border-t border-hairline pt-10">
+				<div>
+					<h3 class="text-xl font-bold tracking-tight text-ink sm:text-2xl">
+						Related Writing &amp; Speaking Tools
+					</h3>
+					<p class="mt-1 text-[15px] text-body">
+						Explore companion utilities to measure speech durations, format essays, and count words accurately.
+					</p>
+				</div>
+
+				<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+					<a
+						href="/speech-time-calculator/"
+						class="group flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink"
+					>
+						<div>
+							<div class="flex items-center justify-between gap-2">
+								<span class="text-[12px] font-medium text-mute">Speaking</span>
+								<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2 py-0.5 text-[11px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+									Utility
+								</span>
+							</div>
+							<h4 class="mt-3 text-[16px] font-semibold tracking-tight text-ink group-hover:text-[#0D9488] dark:group-hover:text-[#AFE3D0] transition-colors">
+								Speech Time Calculator
+							</h4>
+							<p class="mt-2 text-[13.5px] leading-relaxed text-body">
+								Convert your drafted speech word count into exact speaking duration.
+							</p>
+						</div>
+						<span class="mt-4 inline-flex items-center gap-1 text-[13px] font-medium text-[#0D9488] group-hover:underline dark:text-[#AFE3D0]">
+							Calculate speech time &rarr;
+						</span>
+					</a>
+
+					<a
+						href="/words-to-pages/"
+						class="group flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink"
+					>
+						<div>
+							<div class="flex items-center justify-between gap-2">
+								<span class="text-[12px] font-medium text-mute">Writing</span>
+								<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2 py-0.5 text-[11px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+									Utility
+								</span>
+							</div>
+							<h4 class="mt-3 text-[16px] font-semibold tracking-tight text-ink group-hover:text-[#0D9488] dark:group-hover:text-[#AFE3D0] transition-colors">
+								Words to Pages Converter
+							</h4>
+							<p class="mt-2 text-[13.5px] leading-relaxed text-body">
+								Estimate how many double-spaced or single-spaced pages your essay prompt will fill.
+							</p>
+						</div>
+						<span class="mt-4 inline-flex items-center gap-1 text-[13px] font-medium text-[#0D9488] group-hover:underline dark:text-[#AFE3D0]">
+							Convert words to pages &rarr;
+						</span>
+					</a>
+
+					<a
+						href="/word-counter/"
+						class="group flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink"
+					>
+						<div>
+							<div class="flex items-center justify-between gap-2">
+								<span class="text-[12px] font-medium text-mute">Writing</span>
+								<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2 py-0.5 text-[11px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+									Utility
+								</span>
+							</div>
+							<h4 class="mt-3 text-[16px] font-semibold tracking-tight text-ink group-hover:text-[#0D9488] dark:group-hover:text-[#AFE3D0] transition-colors">
+								Word Counter
+							</h4>
+							<p class="mt-2 text-[13.5px] leading-relaxed text-body">
+								Check live word, character, sentence, and paragraph counts as you write.
+							</p>
+						</div>
+						<span class="mt-4 inline-flex items-center gap-1 text-[13px] font-medium text-[#0D9488] group-hover:underline dark:text-[#AFE3D0]">
+							Count words &rarr;
+						</span>
+					</a>
+
+					<a
+						href="/reading-time-calculator/"
+						class="group flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink"
+					>
+						<div>
+							<div class="flex items-center justify-between gap-2">
+								<span class="text-[12px] font-medium text-mute">Reading</span>
+								<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2 py-0.5 text-[11px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
+									Utility
+								</span>
+							</div>
+							<h4 class="mt-3 text-[16px] font-semibold tracking-tight text-ink group-hover:text-[#0D9488] dark:group-hover:text-[#AFE3D0] transition-colors">
+								Reading Time Calculator
+							</h4>
+							<p class="mt-2 text-[13.5px] leading-relaxed text-body">
+								Measure estimated reading minutes for essays, articles, and scripts.
+							</p>
+						</div>
+						<span class="mt-4 inline-flex items-center gap-1 text-[13px] font-medium text-[#0D9488] group-hover:underline dark:text-[#AFE3D0]">
+							Calculate reading time &rarr;
+						</span>
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 6: Frequently Asked Questions (10 High-Intent PAA Questions) -->
+		<section
+			id="faq"
+			aria-labelledby="faq-heading"
+			class="mx-auto max-w-[1200px] space-y-6 border-t border-hairline px-4 pt-10 pb-16 sm:px-6 md:mt-12 md:pt-12"
+		>
+			<h2
+				id="faq-heading"
+				class="text-2xl font-bold tracking-tight text-ink sm:text-3xl"
+			>
+				Frequently Asked Questions
+			</h2>
+
+			<p class="max-w-3xl text-[16px] leading-relaxed text-body">
+				Find quick answers to common questions about generating prompts, practicing impromptu speeches, and customizing topic lenses:
+			</p>
+
+			<div class="divide-y divide-hairline rounded-xl border border-hairline bg-canvas-elevated">
+				{
+					faqs.map((faq, idx) => (
+						<details class="group p-5 sm:p-6" open={idx === 0}>
+							<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink focus:outline-none">
+								<span>{faq.question}</span>
+								<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-hairline text-mute transition-transform duration-200 group-open:rotate-45 group-open:border-[#7ED4B6] group-open:bg-[#AFE3D0] group-open:text-[#111827] dark:group-open:border-hairline dark:group-open:bg-canvas dark:group-open:text-ink">
+									<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+										<line x1="12" y1="5" x2="12" y2="19" />
+										<line x1="5" y1="12" x2="19" y2="12" />
+									</svg>
+								</span>
+							</summary>
+							<p class="mt-3 pr-6 text-[14.5px] leading-relaxed text-body">
+								{faq.answer}
+							</p>
+						</details>
+					))
+				}
+			</div>
+		</section>
+
 		{/* Editorial Content & FAQ Slot — User Managed */}
 	</main>
 
 	<Footer />
 </Layout>
-

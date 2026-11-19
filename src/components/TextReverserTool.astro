@@ -1,9 +1,4 @@
 ---
-import { getToolById } from '../config/site';
-
-const wordCounterTool = getToolById('word-counter');
-const caseConverterTool = getToolById('case-converter');
-const textRepeaterTool = getToolById('text-repeater');
 ---
 
 <section
@@ -11,213 +6,253 @@ const textRepeaterTool = getToolById('text-repeater');
 	aria-label="Text Reverser Workspace"
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
-	<!-- Live Summary Bar -->
-	<div class="kpi-summary-bar whisper-shadow mb-6 grid grid-cols-2 divide-y divide-[#7ED4B6] rounded-md border border-[#7ED4B6] bg-[#AFE3D0] sm:grid-cols-4 sm:divide-x sm:divide-y-0 dark:divide-hairline dark:border-hairline dark:bg-canvas-elevated">
-		<article class="kpi-card flex flex-col justify-between p-4 sm:p-5">
-			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Reverse mode</span>
-			<output
-				id="rv-active-mode"
-				aria-live="polite"
-				class="mt-1.5 font-sans text-[19px] leading-[25px] font-semibold tracking-[-0.4px] text-[#111827] dark:text-ink"
-			>
-				Reverse Entire Text
-			</output>
-			<span class="mt-1 text-[12px] text-[#1F2937] dark:text-mute">Updates automatically as you type</span>
-		</article>
-
-		<article class="kpi-card flex flex-col justify-between border-l border-[#7ED4B6] p-4 sm:border-l-0 sm:p-5 dark:border-hairline">
-			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Word count</span>
-			<div class="mt-1.5 flex items-baseline gap-1.5">
-				<output
-					id="rv-metric-words"
-					aria-live="polite"
-					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
-				>
-					0
-				</output>
-				<span class="text-[13px] text-[#1F2937] dark:text-mute">words</span>
-			</div>
-			<span id="rv-metric-lines" class="mt-1 text-[12px] text-[#1F2937] tabular-nums dark:text-mute">0 lines</span>
-		</article>
-
-		<article class="kpi-card flex flex-col justify-between p-4 sm:p-5">
-			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Character count</span>
-			<div class="mt-1.5 flex items-baseline gap-1.5">
-				<output
-					id="rv-metric-chars"
-					aria-live="polite"
-					class="font-sans text-[26px] leading-[32px] font-semibold tracking-[-0.8px] text-[#111827] tabular-nums dark:text-ink"
-				>
-					0
-				</output>
-				<span class="text-[13px] text-[#1F2937] dark:text-mute">characters</span>
-			</div>
-			<span id="rv-metric-chars-nospace" class="mt-1 text-[12px] text-[#1F2937] tabular-nums dark:text-mute">0 without spaces</span>
-		</article>
-
-		<article class="kpi-card flex flex-col justify-between border-l border-[#7ED4B6] p-4 sm:border-l-0 sm:p-5 dark:border-hairline">
-			<span class="text-[13px] font-medium text-[#1F2937] dark:text-body">Palindrome check</span>
-			<output
-				id="rv-metric-palindrome"
-				aria-live="polite"
-				class="mt-1.5 font-sans text-[20px] leading-[26px] font-semibold tracking-[-0.4px] text-[#111827] dark:text-ink"
-			>
-				—
-			</output>
-			<span class="mt-1 text-[12px] text-[#1F2937] dark:text-mute">Ignores spaces &amp; punctuation</span>
-		</article>
-	</div>
-
-	<!-- Mode Selector Bar -->
-	<div class="whisper-shadow mb-6 rounded-md border border-hairline bg-canvas-elevated p-4 sm:p-5">
-		<span class="block text-[13px] font-medium text-body">
-			Choose how to reverse or flip your text
-		</span>
-		<div class="mt-2.5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
+	<!-- Unified Stacked Studio Card -->
+	<div class="whisper-shadow overflow-hidden rounded-3xl border border-hairline bg-canvas-elevated">
+		<!-- Top Dual-Editor Stage -->
+		<div class="relative grid grid-cols-1 divide-y divide-hairline bg-white lg:grid-cols-2 lg:divide-x lg:divide-y-0 dark:bg-canvas-elevated">
+			<!-- Central Swap Button -->
 			<button
 				type="button"
-				data-reverse-mode="entire"
-				data-reverse-label="Reverse Entire Text"
-				class="rv-mode-btn cursor-pointer rounded-sm border border-ink bg-primary px-4 py-3 text-left transition-all"
+				id="rv-btn-swap"
+				title="Swap input and output"
+				aria-label="Swap input and output"
+				class="group absolute top-1/2 left-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-hairline bg-canvas-elevated p-2.5 text-mute shadow-sm transition-all hover:border-[#0f2e26] hover:bg-[#0f2e26] hover:text-[#afe3d0] active:scale-95 lg:flex dark:hover:border-[#afe3d0] dark:hover:bg-[#afe3d0] dark:hover:text-[#0f2e26]"
 			>
-				<span class="block text-[14px] font-semibold text-on-primary">Reverse Entire Text</span>
-				<span class="mt-0.5 block text-[12px] text-on-primary/80">Mirrors every character end-to-start</span>
+				<svg class="h-4 w-4 transition-transform duration-200 group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+				</svg>
 			</button>
 
-			<button
-				type="button"
-				data-reverse-mode="words"
-				data-reverse-label="Reverse Word Order"
-				class="rv-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-4 py-3 text-left transition-all hover:border-ink"
-			>
-				<span class="block text-[14px] font-semibold text-ink">Reverse Word Order</span>
-				<span class="mt-0.5 block text-[12px] text-mute">Keeps words intact, reverses their sequence</span>
-			</button>
-
-			<button
-				type="button"
-				data-reverse-mode="each-word"
-				data-reverse-label="Reverse Each Word Individually"
-				class="rv-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-4 py-3 text-left transition-all hover:border-ink"
-			>
-				<span class="block text-[14px] font-semibold text-ink">Reverse Each Word Individually</span>
-				<span class="mt-0.5 block text-[12px] text-mute">Flips letters inside each word in place</span>
-			</button>
-
-			<button
-				type="button"
-				data-reverse-mode="upside-down"
-				data-reverse-label="Flip Text Upside Down"
-				class="rv-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-4 py-3 text-left transition-all hover:border-ink"
-			>
-				<span class="block text-[14px] font-semibold text-ink">Flip Text Upside Down</span>
-				<span class="mt-0.5 block text-[12px] text-mute">Rotates characters 180° using Unicode</span>
-			</button>
-		</div>
-	</div>
-
-	<!-- Dual-Pane Input & Live Output Preview -->
-	<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
-		<!-- Input Pane -->
-		<div class="lg:col-span-6">
-			<div class="whisper-shadow flex h-full flex-col overflow-hidden rounded-md border border-hairline bg-canvas-elevated">
-				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline bg-canvas-muted px-4 py-3 sm:px-5">
-					<label for="rv-input" class="text-[14px] font-semibold text-ink">
-						Original text
+			<!-- Left Column: Original Text -->
+			<div class="flex flex-col justify-between p-5 sm:p-7">
+				<!-- Header Bar -->
+				<div class="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-hairline pb-3">
+					<label for="rv-input" class="text-[12px] font-semibold tracking-[0.04em] text-ink">
+						ORIGINAL TEXT
 					</label>
-					<div class="flex flex-wrap items-center gap-2">
+					<div class="flex flex-wrap items-center gap-2 text-[12px]">
 						<button
 							type="button"
-							id="rv-btn-sample"
-							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							id="rv-btn-paste"
+							class="cursor-pointer rounded-lg border border-hairline bg-canvas-muted/60 px-2.5 py-1 font-medium text-body transition-colors hover:border-ink hover:text-ink"
 						>
-							Sample text
+							Paste
 						</button>
 						<button
 							type="button"
+							id="rv-btn-sample"
+							class="cursor-pointer rounded-lg border border-hairline bg-canvas-muted/60 px-2.5 py-1 font-medium text-body transition-colors hover:border-ink hover:text-ink"
+						>
+							Sample
+						</button>
+						<label
+							for="rv-file-upload"
+							class="cursor-pointer rounded-lg border border-hairline bg-canvas-muted/60 px-2.5 py-1 font-medium text-body transition-colors hover:border-ink hover:text-ink"
+						>
+							Upload .txt
+							<input id="rv-file-upload" type="file" accept=".txt,text/plain" class="sr-only" />
+						</label>
+						<button
+							type="button"
 							id="rv-btn-clear"
-							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							class="cursor-pointer rounded-lg border border-hairline bg-canvas-muted/60 px-2.5 py-1 font-medium text-mute transition-colors hover:border-vercel-error hover:text-vercel-error"
 						>
 							Clear
 						</button>
 					</div>
 				</div>
 
-				<div class="flex-1 p-4 sm:p-5">
+				<!-- Clean Borderless Textarea -->
+				<div class="flex-1">
 					<textarea
 						id="rv-input"
-						rows="10"
-						placeholder="Type or paste your text here to reverse or flip it..."
-						class="h-full min-h-[260px] w-full resize-y rounded-sm border border-hairline bg-canvas-elevated p-4 font-sans text-[16px] leading-[26px] text-ink placeholder:text-faint focus:border-vercel-blue focus:outline-none"
-					>Reading and writing clearly makes complex ideas simple.</textarea>
+						placeholder="Type or paste text, sentences, lists, or code to reverse..."
+						class="h-48 w-full resize-y border-0 bg-transparent font-sans text-[16px] leading-[27px] text-ink placeholder:text-faint focus:outline-none sm:h-56"
+					>Madam, in Eden, I'm Adam.</textarea>
+				</div>
+
+				<!-- Subtle Footer Bar -->
+				<div class="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-hairline pt-3 text-[13px]">
+					<div class="flex items-center gap-1.5 font-medium text-mute tabular-nums">
+						<output id="rv-metric-words" aria-live="polite">0</output> words &middot;
+						<output id="rv-metric-chars" aria-live="polite">0</output> characters &middot;
+						<output id="rv-metric-lines" aria-live="polite">0</output> lines
+					</div>
+					<span id="rv-metric-chars-nospace" class="text-[12px] text-mute tabular-nums">0 without spaces</span>
 				</div>
 			</div>
-		</div>
 
-		<!-- Output Preview Pane -->
-		<div class="lg:col-span-6">
-			<div class="whisper-shadow flex h-full flex-col overflow-hidden rounded-md border border-hairline bg-canvas-elevated">
-				<div class="flex flex-wrap items-center justify-between gap-2 border-b border-hairline bg-canvas-muted px-4 py-3 sm:px-5">
-					<label for="rv-output" class="text-[14px] font-semibold text-ink">
-						Live output preview
-					</label>
+			<!-- Right Column: Reversed Output -->
+			<div class="flex flex-col justify-between bg-canvas-muted/25 p-5 sm:p-7 dark:bg-black/20">
+				<!-- Header Bar -->
+				<div class="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-hairline pb-3">
+					<div class="flex items-center gap-2.5">
+						<label for="rv-output" class="text-[12px] font-semibold tracking-[0.04em] text-ink">
+							LIVE OUTPUT
+						</label>
+					</div>
+					<!-- Dynamic Palindrome Pill Badge -->
+					<output
+						id="rv-palindrome-badge"
+						aria-live="polite"
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#7ed4b6] bg-[#afe3d0] px-3 py-0.5 text-[12px] font-semibold text-[#0f2e26] transition-all"
+					>
+						<span id="rv-palindrome-dot" class="h-1.5 w-1.5 rounded-full bg-[#0f2e26]"></span>
+						<span id="rv-palindrome-text">Palindrome: Yes</span>
+					</output>
+				</div>
+
+				<!-- Read-Only Borderless Output Textarea -->
+				<div class="flex-1">
+					<textarea
+						id="rv-output"
+						readonly
+						placeholder="Reversed or flipped output appears here instantaneously..."
+						class="h-48 w-full resize-y border-0 bg-transparent font-sans text-[16px] leading-[27px] text-ink placeholder:text-faint focus:outline-none sm:h-56"
+					></textarea>
+				</div>
+
+				<!-- Footer Bar -->
+				<div class="mt-3 flex flex-wrap items-center justify-between gap-2.5 border-t border-hairline pt-3 text-[13px]">
+					<button
+						type="button"
+						id="rv-btn-use-as-input"
+						class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-hairline bg-canvas-elevated px-3 py-1.5 font-medium text-body transition-colors hover:border-ink hover:text-ink"
+					>
+						<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+						Send to Input
+					</button>
+
 					<div class="flex flex-wrap items-center gap-2">
 						<button
 							type="button"
-							id="rv-btn-use-as-input"
-							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
-						>
-							Send to input
-						</button>
-						<button
-							type="button"
 							id="rv-btn-download"
-							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3 py-1.5 text-[13px] font-medium text-body transition-colors hover:border-ink hover:text-ink"
+							class="cursor-pointer rounded-xl border border-hairline bg-canvas-elevated px-3 py-1.5 font-medium text-body transition-colors hover:border-ink hover:text-ink"
 						>
 							Download .txt
 						</button>
 						<button
 							type="button"
 							id="rv-btn-copy"
-							class="cursor-pointer rounded-sm bg-primary px-3.5 py-1.5 text-[13px] font-medium text-on-primary transition-opacity hover:opacity-90"
+							class="inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-[#afe3d0] px-4 py-1.5 font-semibold text-[#0f2e26] shadow-xs transition-all hover:bg-[#c2edd6] active:scale-[0.99]"
 						>
-							Copy
+							Copy Output
 						</button>
 					</div>
 				</div>
-
-				<div class="flex-1 p-4 sm:p-5">
-					<textarea
-						id="rv-output"
-						readonly
-						rows="10"
-						placeholder="Reversed or flipped text will appear here..."
-						class="h-full min-h-[260px] w-full resize-y rounded-sm border border-hairline bg-canvas-muted p-4 font-sans text-[16px] leading-[26px] text-ink focus:border-vercel-blue focus:outline-none"
-					></textarea>
-				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- Related Text Tools Bar -->
-	<div class="whisper-shadow mt-6 flex flex-wrap items-center justify-between gap-4 rounded-md border border-hairline bg-canvas-elevated px-5 py-4">
-		<span class="text-[14px] font-semibold text-ink">More text utilities</span>
-		<div class="flex flex-wrap items-center gap-4 text-[14px]">
-			{caseConverterTool && caseConverterTool.status === 'live' && (
-				<a href={caseConverterTool.slug} class="text-body transition-colors hover:text-ink">
-					{caseConverterTool.shortName} →
-				</a>
-			)}
-			{textRepeaterTool && textRepeaterTool.status === 'live' && (
-				<a href={textRepeaterTool.slug} class="text-body transition-colors hover:text-ink">
-					{textRepeaterTool.shortName} →
-				</a>
-			)}
-			{wordCounterTool && wordCounterTool.status === 'live' && (
-				<a href={wordCounterTool.slug} class="text-body transition-colors hover:text-ink">
-					{wordCounterTool.shortName} →
-				</a>
-			)}
+		<!-- Bottom Deep Forest Emerald Control Deck -->
+		<div class="border-t border-[#afe3d0]/15 bg-[#0f2e26] p-5 text-white sm:p-6">
+			<!-- Header: Section Label + Active Mode Description Subtitle -->
+			<div class="flex flex-wrap items-center justify-between gap-2 pb-4">
+				<div class="flex items-center gap-2">
+					<span class="h-2 w-2 rounded-full bg-[#afe3d0]"></span>
+					<span class="text-[12px] font-semibold tracking-[0.04em] text-[#afe3d0]">
+						TRANSFORMATION MODE
+					</span>
+				</div>
+				<output
+					id="rv-active-mode-desc"
+					aria-live="polite"
+					class="text-[13px] font-medium text-white/80"
+				>
+					Reverses every character end-to-end
+				</output>
+			</div>
+
+			<!-- 6 Sleek Interactive Mode Pills -->
+			<div class="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
+				<button
+					type="button"
+					data-reverse-mode="reverse-all"
+					data-reverse-desc="Reverses every character end-to-end"
+					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0] bg-[#afe3d0] px-3.5 py-3 text-left text-[#0f2e26] font-semibold transition-all"
+				>
+					<span class="block text-[14px] leading-tight">Reverse All</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-[#0f2e26]/75">"dlrow olleH"</span>
+				</button>
+
+				<button
+					type="button"
+					data-reverse-mode="word-order"
+					data-reverse-desc="Reverses word sequence while keeping each word intact"
+					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]"
+				>
+					<span class="block text-[14px] leading-tight">Word Order</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">"world Hello"</span>
+				</button>
+
+				<button
+					type="button"
+					data-reverse-mode="each-word"
+					data-reverse-desc="Flips letters inside every word in place"
+					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]"
+				>
+					<span class="block text-[14px] leading-tight">Each Word</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">"olleH dlrow"</span>
+				</button>
+
+				<button
+					type="button"
+					data-reverse-mode="line-order"
+					data-reverse-desc="Reverses line sequence from bottom to top"
+					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]"
+				>
+					<span class="block text-[14px] leading-tight">Line Order</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">"Line 2 / Line 1"</span>
+				</button>
+
+				<button
+					type="button"
+					data-reverse-mode="upside-down"
+					data-reverse-desc="Rotates characters 180° using Unicode glyphs"
+					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]"
+				>
+					<span class="block text-[14px] leading-tight">Upside Down</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">"ollǝH"</span>
+				</button>
+
+				<button
+					type="button"
+					data-reverse-mode="mirror-text"
+					data-reverse-desc="True horizontal and vertical Unicode mirror"
+					class="rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]"
+				>
+					<span class="block text-[14px] leading-tight">Mirror Text</span>
+					<span class="rv-mode-preview mt-1 block text-[11px] font-normal text-white/60">"Hǝllo" flipped</span>
+				</button>
+			</div>
+
+			<!-- Compact Options Strip -->
+			<div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#afe3d0]/15 pt-4 text-[13px]">
+				<div class="flex flex-wrap items-center gap-5">
+					<label class="inline-flex cursor-pointer items-center gap-2.5 text-white/90 select-none hover:text-white">
+						<input
+							type="checkbox"
+							id="rv-opt-preserve-case"
+							class="h-4 w-4 cursor-pointer rounded border-[#afe3d0]/40 bg-white/10 text-[#afe3d0] accent-[#afe3d0] focus:ring-0"
+						/>
+						<span>Preserve capitalization pattern</span>
+					</label>
+
+					<label class="inline-flex cursor-pointer items-center gap-2.5 text-white/90 select-none hover:text-white">
+						<input
+							type="checkbox"
+							id="rv-opt-line-by-line"
+							class="h-4 w-4 cursor-pointer rounded border-[#afe3d0]/40 bg-white/10 text-[#afe3d0] accent-[#afe3d0] focus:ring-0"
+						/>
+						<span>Reverse line-by-line independently</span>
+					</label>
+				</div>
+
+				<span class="text-[12px] text-[#afe3d0]/75">
+					Runs privately in your browser
+				</span>
+			</div>
 		</div>
 	</div>
 </section>
@@ -226,23 +261,41 @@ const textRepeaterTool = getToolById('text-repeater');
 	function initTextReverser() {
 		const inputEl = document.getElementById('rv-input') as HTMLTextAreaElement | null;
 		const outputEl = document.getElementById('rv-output') as HTMLTextAreaElement | null;
-		const activeModeEl = document.getElementById('rv-active-mode');
+		const activeModeDescEl = document.getElementById('rv-active-mode-desc');
 		const wordsEl = document.getElementById('rv-metric-words');
 		const linesEl = document.getElementById('rv-metric-lines');
 		const charsEl = document.getElementById('rv-metric-chars');
 		const charsNoSpaceEl = document.getElementById('rv-metric-chars-nospace');
-		const palindromeEl = document.getElementById('rv-metric-palindrome');
+
+		const palindromeBadgeEl = document.getElementById('rv-palindrome-badge');
+		const palindromeDotEl = document.getElementById('rv-palindrome-dot');
+		const palindromeTextEl = document.getElementById('rv-palindrome-text');
 
 		const modeBtns = document.querySelectorAll<HTMLButtonElement>('.rv-mode-btn');
+		const pasteBtn = document.getElementById('rv-btn-paste');
 		const sampleBtn = document.getElementById('rv-btn-sample');
+		const fileUploadInput = document.getElementById('rv-file-upload') as HTMLInputElement | null;
 		const clearBtn = document.getElementById('rv-btn-clear');
 		const copyBtn = document.getElementById('rv-btn-copy');
 		const downloadBtn = document.getElementById('rv-btn-download');
 		const useAsInputBtn = document.getElementById('rv-btn-use-as-input');
+		const swapBtn = document.getElementById('rv-btn-swap');
+
+		const optPreserveCase = document.getElementById('rv-opt-preserve-case') as HTMLInputElement | null;
+		const optLineByLine = document.getElementById('rv-opt-line-by-line') as HTMLInputElement | null;
 
 		if (!inputEl || !outputEl) return;
 
-		let currentMode = 'entire';
+		let currentMode = 'reverse-all';
+		let sampleIndex = 0;
+
+		const SAMPLES = [
+			"Madam, in Eden, I'm Adam.",
+			"A man, a plan, a canal: Panama!",
+			"Step 1: Research audience intent\nStep 2: Draft clear headline\nStep 3: Polish and publish",
+			"Never odd or even.",
+			"Reading and writing clearly makes complex ideas simple."
+		];
 
 		const UPSIDE_DOWN_MAP: Record<string, string> = {
 			a: 'ɐ', b: 'q', c: 'ɔ', d: 'p', e: 'ǝ', f: 'ɟ', g: 'ƃ', h: 'ɥ', i: 'ᴉ',
@@ -258,65 +311,159 @@ const textRepeaterTool = getToolById('text-repeater');
 			'<': '>', '>': '<', '&': '⅋', '_': '‾'
 		};
 
+		const MIRROR_MAP: Record<string, string> = {
+			a: 'ɒ', b: 'd', c: 'ɔ', d: 'b', e: 'ɘ', f: 'Ꮈ', g: 'ǫ', h: 'ʜ', i: 'i',
+			j: 'ꞁ', k: 'ʞ', l: 'l', m: 'm', n: 'n', o: 'o', p: 'q', q: 'p', r: 'ɿ',
+			s: 'ꙅ', t: 'ƚ', u: 'u', v: 'v', w: 'w', x: 'x', y: 'y', z: 'z',
+			A: 'A', B: 'ᙠ', C: 'Ɔ', D: 'ᗡ', E: 'Ǝ', F: 'ꟻ', G: 'Ә', H: 'H', I: 'I',
+			J: 'Ⴑ', K: '⋊', L: '⅃', M: 'M', N: 'И', O: 'O', P: 'Ꝺ', Q: 'Ọ', R: 'Я',
+			S: 'Ꙅ', T: 'T', U: 'U', V: 'V', W: 'W', X: 'X', Y: 'Y', Z: 'S',
+			'(': ')', ')': '(', '[': ']', ']': '[', '{': '}', '}': '{',
+			'<': '>', '>': '<', '?': '⸮'
+		};
+
 		function toChars(str: string): string[] {
 			return Array.from(str);
 		}
 
-		function reverseEntireText(text: string): string {
-			return toChars(text).reverse().join('');
-		}
-
-		function reverseWordOrder(text: string): string {
-			return text
-				.split(/(\r?\n)/)
-				.map((line) => {
-					if (/^\r?\n$/.test(line)) return line;
-					const words = line.trim().split(/\s+/);
-					return words.reverse().join(' ');
+		function applyCasePattern(source: string, target: string): string {
+			const srcChars = toChars(source);
+			const tgtChars = toChars(target);
+			return tgtChars
+				.map((ch, idx) => {
+					const ref = srcChars[idx];
+					if (!ref) return ch;
+					const isUpper = ref >= 'A' && ref <= 'Z';
+					const isLower = ref >= 'a' && ref <= 'z';
+					if (isUpper) return ch.toUpperCase();
+					if (isLower) return ch.toLowerCase();
+					return ch;
 				})
 				.join('');
 		}
 
-		function reverseEachWordIndividually(text: string): string {
-			return text.replace(/\S+/g, (word) => toChars(word).reverse().join(''));
+		function reverseStringSegment(segment: string, preserveCase: boolean): string {
+			const reversed = toChars(segment).reverse().join('');
+			return preserveCase ? applyCasePattern(segment, reversed) : reversed;
 		}
 
-		function flipTextUpsideDown(text: string): string {
-			return text
+		function reverseAllText(text: string, lineByLine: boolean, preserveCase: boolean): string {
+			if (lineByLine) {
+				return text
+					.split(/(\r?\n)/)
+					.map((part) => (/^\r?\n$/.test(part) ? part : reverseStringSegment(part, preserveCase)))
+					.join('');
+			}
+			return reverseStringSegment(text, preserveCase);
+		}
+
+		function reverseWordOrder(text: string, lineByLine: boolean, preserveCase: boolean): string {
+			const processSegment = (seg: string) => {
+				if (!seg.trim()) return seg;
+				const words = seg.trim().split(/\s+/);
+				const joined = words.reverse().join(' ');
+				return preserveCase ? applyCasePattern(seg.trim(), joined) : joined;
+			};
+
+			if (lineByLine) {
+				return text
+					.split(/(\r?\n)/)
+					.map((line) => (/^\r?\n$/.test(line) ? line : processSegment(line)))
+					.join('');
+			}
+
+			const allLinesReversed = text
 				.split(/(\r?\n)/)
-				.map((line) => {
-					if (/^\r?\n$/.test(line)) return line;
-					return toChars(line)
+				.reverse()
+				.map((line) => (/^\r?\n$/.test(line) ? line : processSegment(line)))
+				.join('');
+			return allLinesReversed;
+		}
+
+		function reverseEachWordIndividually(text: string, preserveCase: boolean): string {
+			return text.replace(/\S+/g, (word) => reverseStringSegment(word, preserveCase));
+		}
+
+		function reverseLineOrder(text: string): string {
+			return text.split(/\r?\n/).reverse().join('\n');
+		}
+
+		function flipTextUpsideDown(text: string, lineByLine: boolean): string {
+			const lines = text.split(/\r?\n/);
+			const orderedLines = lineByLine ? lines : [...lines].reverse();
+			return orderedLines
+				.map((line) =>
+					toChars(line)
 						.reverse()
 						.map((ch) => UPSIDE_DOWN_MAP[ch] ?? ch)
-						.join('');
-				})
-				.join('');
+						.join('')
+				)
+				.join('\n');
+		}
+
+		function mirrorTextTransform(text: string, lineByLine: boolean): string {
+			const lines = text.split(/\r?\n/);
+			const orderedLines = lineByLine ? lines : [...lines].reverse();
+			return orderedLines
+				.map((line) =>
+					toChars(line)
+						.reverse()
+						.map((ch) => MIRROR_MAP[ch] ?? UPSIDE_DOWN_MAP[ch] ?? ch)
+						.join('')
+				)
+				.join('\n');
+		}
+
+		function updatePalindromeBadge(raw: string) {
+			if (!palindromeBadgeEl || !palindromeDotEl || !palindromeTextEl) return;
+			const cleanAlpha = raw.toLowerCase().replace(/[^a-z0-9]/g, '');
+			const isPalindrome =
+				cleanAlpha.length >= 2 && cleanAlpha === toChars(cleanAlpha).reverse().join('');
+
+			if (isPalindrome) {
+				palindromeBadgeEl.className =
+					'inline-flex items-center gap-1.5 rounded-full border border-[#7ed4b6] bg-[#afe3d0] px-3 py-0.5 text-[12px] font-semibold text-[#0f2e26] transition-all';
+				palindromeDotEl.className = 'h-1.5 w-1.5 rounded-full bg-[#0f2e26]';
+				palindromeTextEl.textContent = 'Palindrome: Yes';
+			} else {
+				palindromeBadgeEl.className =
+					'inline-flex items-center gap-1.5 rounded-full border border-hairline bg-canvas-muted px-3 py-0.5 text-[12px] font-medium text-mute transition-all';
+				palindromeDotEl.className = 'h-1.5 w-1.5 rounded-full bg-mute/60';
+				palindromeTextEl.textContent = 'Palindrome: No';
+			}
 		}
 
 		function transformText() {
 			if (!inputEl || !outputEl) return;
 			const raw = inputEl.value;
+			const preserveCase = Boolean(optPreserveCase?.checked);
+			const lineByLine = Boolean(optLineByLine?.checked);
 			let result = '';
 
 			switch (currentMode) {
-				case 'entire':
-					result = reverseEntireText(raw);
+				case 'reverse-all':
+					result = reverseAllText(raw, lineByLine, preserveCase);
 					break;
-				case 'words':
-					result = reverseWordOrder(raw);
+				case 'word-order':
+					result = reverseWordOrder(raw, lineByLine, preserveCase);
 					break;
 				case 'each-word':
-					result = reverseEachWordIndividually(raw);
+					result = reverseEachWordIndividually(raw, preserveCase);
+					break;
+				case 'line-order':
+					result = reverseLineOrder(raw);
 					break;
 				case 'upside-down':
-					result = flipTextUpsideDown(raw);
+					result = flipTextUpsideDown(raw, lineByLine);
+					break;
+				case 'mirror-text':
+					result = mirrorTextTransform(raw, lineByLine);
 					break;
 			}
 
 			outputEl.value = result;
 
-			// Stats
+			// Live Stats
 			const trimmed = raw.trim();
 			const words = trimmed ? trimmed.split(/\s+/).length : 0;
 			const lines = raw.length > 0 ? raw.split(/\r?\n/).length : 0;
@@ -324,42 +471,30 @@ const textRepeaterTool = getToolById('text-repeater');
 			const charsNoSpace = raw.replace(/\s/g, '').length;
 
 			if (wordsEl) wordsEl.textContent = words.toLocaleString();
-			if (linesEl) linesEl.textContent = `${lines.toLocaleString()} ${lines === 1 ? 'line' : 'lines'}`;
 			if (charsEl) charsEl.textContent = chars.toLocaleString();
+			if (linesEl) linesEl.textContent = lines.toLocaleString();
 			if (charsNoSpaceEl) charsNoSpaceEl.textContent = `${charsNoSpace.toLocaleString()} without spaces`;
 
-			// Palindrome check
-			const cleanAlpha = raw.toLowerCase().replace(/[^a-z0-9]/g, '');
-			if (palindromeEl) {
-				if (cleanAlpha.length < 2) {
-					palindromeEl.textContent = '—';
-				} else {
-					const isPalindrome = cleanAlpha === toChars(cleanAlpha).reverse().join('');
-					palindromeEl.textContent = isPalindrome ? 'Yes (Palindrome)' : 'No';
-				}
-			}
+			updatePalindromeBadge(raw);
 		}
 
 		modeBtns.forEach((btn) => {
 			btn.addEventListener('click', () => {
-				currentMode = btn.dataset.reverseMode || 'entire';
-				const label = btn.dataset.reverseLabel || 'Reverse Entire Text';
-				if (activeModeEl) activeModeEl.textContent = label;
+				currentMode = btn.dataset.reverseMode || 'reverse-all';
+				const desc = btn.dataset.reverseDesc || 'Reverses every character end-to-end';
+				if (activeModeDescEl) activeModeDescEl.textContent = desc;
 
 				modeBtns.forEach((b) => {
 					const isActive = b === btn;
-					const titleSpan = b.querySelector('span:first-child');
-					const descSpan = b.querySelector('span:last-child');
+					const previewSpan = b.querySelector('.rv-mode-preview');
 					if (isActive) {
 						b.className =
-							'rv-mode-btn cursor-pointer rounded-sm border border-ink bg-primary px-4 py-3 text-left transition-all';
-						if (titleSpan) titleSpan.className = 'block text-[14px] font-semibold text-on-primary';
-						if (descSpan) descSpan.className = 'mt-0.5 block text-[12px] text-on-primary/80';
+							'rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0] bg-[#afe3d0] px-3.5 py-3 text-left text-[#0f2e26] font-semibold transition-all';
+						if (previewSpan) previewSpan.className = 'rv-mode-preview mt-1 block text-[11px] font-normal text-[#0f2e26]/75';
 					} else {
 						b.className =
-							'rv-mode-btn cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-4 py-3 text-left transition-all hover:border-ink';
-						if (titleSpan) titleSpan.className = 'block text-[14px] font-semibold text-ink';
-						if (descSpan) descSpan.className = 'mt-0.5 block text-[12px] text-mute';
+							'rv-mode-btn cursor-pointer rounded-2xl border border-[#afe3d0]/20 bg-white/[0.05] px-3.5 py-3 text-left text-white font-medium transition-all hover:border-[#afe3d0]/50 hover:bg-white/[0.09]';
+						if (previewSpan) previewSpan.className = 'rv-mode-preview mt-1 block text-[11px] font-normal text-white/60';
 					}
 				});
 
@@ -368,10 +503,40 @@ const textRepeaterTool = getToolById('text-repeater');
 		});
 
 		inputEl.addEventListener('input', transformText);
+		optPreserveCase?.addEventListener('change', transformText);
+		optLineByLine?.addEventListener('change', transformText);
+
+		pasteBtn?.addEventListener('click', async () => {
+			try {
+				const text = await navigator.clipboard.readText();
+				if (text) {
+					inputEl.value = text;
+					transformText();
+				}
+			} catch {
+				inputEl.focus();
+			}
+		});
 
 		sampleBtn?.addEventListener('click', () => {
-			inputEl.value = 'Never odd or even. Reading and writing clearly makes complex ideas simple.';
+			sampleIndex = (sampleIndex + 1) % SAMPLES.length;
+			inputEl.value = SAMPLES[sampleIndex];
 			transformText();
+		});
+
+		fileUploadInput?.addEventListener('change', (e) => {
+			const target = e.target as HTMLInputElement;
+			const file = target.files?.[0];
+			if (!file) return;
+			const reader = new FileReader();
+			reader.onload = () => {
+				if (typeof reader.result === 'string') {
+					inputEl.value = reader.result;
+					transformText();
+				}
+			};
+			reader.readAsText(file);
+			target.value = '';
 		});
 
 		clearBtn?.addEventListener('click', () => {
@@ -380,11 +545,14 @@ const textRepeaterTool = getToolById('text-repeater');
 			inputEl.focus();
 		});
 
-		useAsInputBtn?.addEventListener('click', () => {
-			if (!outputEl.value) return;
+		function sendOutputToInput() {
+			if (!outputEl || !inputEl || !outputEl.value) return;
 			inputEl.value = outputEl.value;
 			transformText();
-		});
+		}
+
+		useAsInputBtn?.addEventListener('click', sendOutputToInput);
+		swapBtn?.addEventListener('click', sendOutputToInput);
 
 		copyBtn?.addEventListener('click', async () => {
 			if (!outputEl.value) return;
@@ -418,5 +586,5 @@ const textRepeaterTool = getToolById('text-repeater');
 	}
 
 	initTextReverser();
+	document.addEventListener('astro:page-load', initTextReverser);
 </script>
-

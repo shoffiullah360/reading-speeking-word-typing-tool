@@ -2,7 +2,7 @@
 import { getToolById } from '../config/site';
 
 const readingCounterTool = getToolById('reading-time-calculator');
-const audiobookTool = getToolById('audiobook-calculator');
+const audiobookTool = getToolById('audiobook-speed-calculator') || getToolById('audiobook-calculator');
 const speechTool = getToolById('speech-time-calculator');
 ---
 

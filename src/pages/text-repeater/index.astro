@@ -6,31 +6,238 @@ import Footer from "../../components/Footer.astro";
 import { resolveCanonicalUrl } from "../../config/site";
 
 const pageTitle =
-	"Text Repeater — Repeat Words, Phrases & Lines Up to 10,000 Times | Wordora";
+	"Text Repeater Online – Repeat Text, Emojis & Strings up to 10,000x | Wordora";
 const pageDescription =
-	"Free online Text Repeater. Repeat any word, sentence, or phrase up to 10,000 times with new lines, spaces, commas, custom separators, and optional line numbering in your browser.";
+	"Free online text repeater tool to repeat words, emojis, or test strings up to 10,000 times with custom separators, numbering, prefix/suffix, and 1-click copy or .txt download.";
 const canonicalUrl = resolveCanonicalUrl("/text-repeater/");
 
-const softwareAppSchema = {
-	"@context": "https://schema.org",
-	"@type": "SoftwareApplication",
-	name: "Text Repeater",
-	url: canonicalUrl,
-	applicationCategory: "UtilitiesApplication",
-	operatingSystem: "Web, Any",
-	offers: {
-		"@type": "Offer",
-		price: "0",
-		priceCurrency: "USD",
+const faqs = [
+	{
+		question: "What is an online text repeater and how does it work?",
+		answer:
+			"An online text repeater duplicates any word, sentence, emoji, or symbol a chosen number of times instantly in your browser, letting you customize separators, numbering, and case before copying or downloading.",
+		answerHtml:
+			"An online text repeater duplicates any word, sentence, emoji, or symbol a chosen number of times instantly in your browser, letting you customize separators, numbering, and case before copying or downloading.",
 	},
-	description: pageDescription,
-	featureList: [
-		"Repeat any text or phrase up to 10,000 times in real time",
-		"Separator options: New line, Space, Comma, and Custom separator",
-		"Optional sequential line numbering (1. 2. 3.)",
-		"Live output character count, word count, and one-click Copy Output",
+	{
+		question: "How can I repeat text 10,000 times at once?",
+		answer:
+			"Type or paste your text, click the 10,000x preset button—or enter 10000 into the count box—choose your separator, and click Copy Output or Download .txt to save the repeated text instantly.",
+		answerHtml:
+			'Type or paste your text, click the <strong class="font-medium text-ink">10,000x</strong> preset button—or enter <code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">10000</code> into the count box—choose your separator, and click <strong class="font-medium text-ink">Copy Output</strong> or <strong class="font-medium text-ink">Download .txt</strong> to save the repeated text instantly.',
+	},
+	{
+		question: "How do I repeat a word or message 100 or 1,000 times for WhatsApp?",
+		answer:
+			"Enter your message or emoji, select 100x or 1,000x with New line separator, and click either Copy Output or the direct WhatsApp share button to send it immediately.",
+		answerHtml:
+			'Enter your message or emoji, select <strong class="font-medium text-ink">100x</strong> or <strong class="font-medium text-ink">1,000x</strong> with the <strong class="font-medium text-ink">New line</strong> separator, and click either <strong class="font-medium text-ink">Copy Output</strong> or the direct <strong class="font-medium text-ink">WhatsApp</strong> share button to send it immediately.',
+	},
+	{
+		question: "Can I repeat text one by one on separate lines?",
+		answer:
+			"Yes. Select the New line separator so every repeated copy appears cleanly on its own line—ideal for lists, chat walls, and spreadsheet columns.",
+		answerHtml:
+			'Yes. Select the <strong class="font-medium text-ink">New line</strong> separator so every repeated copy appears cleanly on its own line—ideal for lists, chat walls, and spreadsheet columns.',
+	},
+	{
+		question: "How do I add numbers (1, 2, 3...) to repeated text?",
+		answer:
+			"Check the Add numbering (1. 2. 3.) option to automatically prefix each repeated line or item with its sequential index number.",
+		answerHtml:
+			'Check the <strong class="font-medium text-ink">Add numbering (1. 2. 3.)</strong> option to automatically prefix each repeated line or item with its sequential index number.',
+	},
+	{
+		question: "How do I make text repeat automatically in Microsoft Word or Excel?",
+		answer:
+			'Microsoft Word has no built-in repeat formula, so generating text here and pasting into Word is fastest, while Excel and Google Sheets support =REPT("text ", 10) for repeating cell values.',
+		answerHtml:
+			'Microsoft Word has no built-in repeat formula, so generating text here and pasting into Word is fastest, while Excel and Google Sheets support <code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[13px] text-ink">=REPT("text ", 10)</code> for repeating cell values.',
+	},
+	{
+		question: "Can I repeat emojis and special symbols without formatting issues?",
+		answer:
+			"Yes. Full Unicode characters, emojis, and punctuation are preserved accurately as clean plain text ready for any messaging app or editor.",
+		answerHtml:
+			"Yes. Full Unicode characters, emojis, and punctuation are preserved accurately as clean plain text ready for any messaging app or editor.",
+	},
+	{
+		question: "How do developers and QA testers use a text repeater?",
+		answer:
+			"Developers and QA testers use Prefix, Suffix, None separator, and exact counts like 255 or 10,000 to generate boundary-value test strings, mock email lists, and UI overflow payloads.",
+		answerHtml:
+			'Developers and QA testers use <strong class="font-medium text-ink">Prefix</strong>, <strong class="font-medium text-ink">Suffix</strong>, the <strong class="font-medium text-ink">None</strong> separator, and exact counts like <strong class="font-medium text-ink">255</strong> or <strong class="font-medium text-ink">10,000</strong> to generate boundary-value test strings, mock email lists, and UI overflow payloads.',
+	},
+	{
+		question: "Does this text repeater work on mobile phones without installing an app?",
+		answer:
+			"Yes. The tool runs directly in mobile and desktop browsers with no APK, extension, or sign-up required.",
+		answerHtml:
+			"Yes. The tool runs directly in mobile and desktop browsers with no APK, extension, or sign-up required.",
+	},
+	{
+		question: "Is my text private when I use Wordora's Text Repeater?",
+		answer:
+			"Yes, 100%. All text repetition happens locally in your browser via client-side JavaScript—nothing is ever sent to a server. For related utilities, explore our free word counter and text reverser.",
+		answerHtml:
+			'Yes, 100%. All text repetition happens locally in your browser via client-side JavaScript—nothing is ever sent to a server. For related utilities, explore our free <a href="/word-counter/" class="font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">word counter</a> and <a href="/text-reverser/" class="font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">text reverser</a>.',
+	},
+];
+
+const structuredData = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "WebApplication",
+			name: "Text Repeater Online",
+			url: "https://wordora.site/text-repeater/",
+			applicationCategory: "UtilitiesApplication",
+			operatingSystem: "All",
+			offers: {
+				"@type": "Offer",
+				price: "0",
+				priceCurrency: "USD",
+			},
+			description: pageDescription,
+			featureList: [
+				"Repeat any text, emoji, or test string up to 10,000 times in real time",
+				"Separator options: New line, Space, Comma, Dash, None, and Custom separator",
+				"Sequential line numbering (1. 2. 3.), custom prefixes, and suffixes",
+				"Instant output case conversion: Original, UPPERCASE, lowercase, and Title Case",
+				"Live repetition, character, and line count metrics",
+				"One-click Copy Output, WhatsApp sharing, and .txt file download",
+			],
+		},
+		{
+			"@type": "FAQPage",
+			mainEntity: faqs.map((faq) => ({
+				"@type": "Question",
+				name: faq.question,
+				acceptedAnswer: {
+					"@type": "Answer",
+					text: faq.answer,
+				},
+			})),
+		},
 	],
 };
+
+const separatorGuides = [
+	{
+		option: "New line (One by one)",
+		syntax: "\\n",
+		syntaxType: "code",
+		sampleType: "multiline",
+		sampleLines: ["Hi", "Hi", "Hi"],
+		useCase: "WhatsApp message walls, numbered lists, line-by-line QA inputs",
+	},
+	{
+		option: "Space",
+		syntax: "' '",
+		syntaxType: "code",
+		sampleType: "inline",
+		sampleText: "Hi Hi Hi",
+		useCase: "Paragraph filler, continuous word chains, word-wrap stress tests",
+	},
+	{
+		option: "Comma",
+		syntax: ", ",
+		syntaxType: "code",
+		sampleType: "inline",
+		sampleText: "Hi, Hi, Hi",
+		useCase: "CSV datasets, SQL IN() clauses, tag lists",
+	},
+	{
+		option: "Dash / Hyphen",
+		syntax: " - ",
+		syntaxType: "code",
+		sampleType: "inline",
+		sampleText: "Hi - Hi - Hi",
+		useCase: "Visual dividers, readable inline sequences",
+	},
+	{
+		option: "None (Continuous)",
+		syntax: '""',
+		syntaxType: "code",
+		sampleType: "inline",
+		sampleText: "HiHiHi",
+		useCase: "Exact character-length boundary strings (e.g., 255-char VARCHAR tests)",
+	},
+	{
+		option: "Custom + Prefix/Suffix",
+		syntax: "[Prefix]Text[Suffix]",
+		syntaxType: "text",
+		sampleType: "inline",
+		sampleText: "user_1@test.com, user_2@test.com",
+		useCase: "Mock email lists, JSON arrays, automated QA fixtures",
+	},
+];
+
+const platformLimits = [
+	{
+		platform: "WhatsApp Message",
+		limit: "65,536 characters",
+		tip: "Keep bursts under 10,000–20,000 chars for smooth mobile rendering",
+		commonUse: "Birthday wishes, emoji walls, 108-count digital affirmation logs",
+	},
+	{
+		platform: "Standard SMS (Single Segment)",
+		limit: "160 chars (70 with emojis)",
+		tip: "Longer repeated text splits into multi-part SMS messages",
+		commonUse: "Short alert tests and carrier truncation checks",
+	},
+	{
+		platform: "Instagram Caption / Comment",
+		limit: "2,200 chars (Caption) / 1,000 (Comment)",
+		tip: "Use the live character counter above to stay under 2,200 chars",
+		commonUse: "Bio dividers, emoji patterns, comment engagement",
+	},
+	{
+		platform: "X (Twitter) Standard Post",
+		limit: "280 characters",
+		tip: "Check exact character count before copying",
+		commonUse: "Micro-banners and rhythmic text loops",
+	},
+	{
+		platform: "SQL VARCHAR / Form Input",
+		limit: "255 to 4,000 characters",
+		tip: "Repeat a single character (`a`) 255x or 256x to verify boundary validation",
+		commonUse: "Database schema and UI overflow QA testing",
+	},
+];
+
+const repetitionMethods = [
+	{
+		method: "Online Text Repeater (Wordora)",
+		snippet: "1-click browser tool (up to 10,000x)",
+		isCode: false,
+		whenToUse: "Fastest zero-setup option for copy-paste text, emojis, numbering, and .txt exports",
+	},
+	{
+		method: "Microsoft Excel & Google Sheets",
+		snippet: '=REPT("Text ", 10)',
+		isCode: true,
+		whenToUse: "Best when repeating cell values inside spreadsheet columns or star ratings",
+	},
+	{
+		method: "Microsoft Word",
+		snippet: "Copy (Ctrl+C) + Paste (Ctrl+V) or Find & Replace",
+		isCode: false,
+		whenToUse: "Word has no native repeat formula; use this tool first, then paste into Word",
+	},
+	{
+		method: "JavaScript",
+		snippet: '"word ".repeat(100)',
+		isCode: true,
+		whenToUse: "Useful inside browser scripts or Node.js unit tests",
+	},
+	{
+		method: "Python",
+		snippet: '"word " * 100',
+		isCode: true,
+		whenToUse: "Ideal for backend scripts and automated load-testing pipelines",
+	},
+];
 ---
 
 <Layout
@@ -41,7 +248,7 @@ const softwareAppSchema = {
 	<Fragment slot="head">
 		<script
 			type="application/ld+json"
-			set:html={JSON.stringify(softwareAppSchema)}
+			set:html={JSON.stringify(structuredData)}
 		/>
 	</Fragment>
 
@@ -54,13 +261,13 @@ const softwareAppSchema = {
 				<h1
 					class="font-sans text-[32px] leading-[38px] font-semibold tracking-[-1.4px] text-ink sm:text-[42px] sm:leading-[48px] sm:tracking-[-1.8px]"
 				>
-					Text Repeater
+					Text Repeater Online – Repeat Text &amp; Emojis Instantly
 				</h1>
 
 				<p
 					class="mt-3 max-w-2xl text-[16px] leading-[25px] font-normal text-body"
 				>
-					Repeat any word, phrase, or block of text up to 10,000 times with custom separators and optional numbering—privately in your browser.
+					Repeat any word, phrase, emoji, or test string up to 10,000 times with custom separators, auto-numbering, and prefix/suffix formatting—privately in your browser.
 				</p>
 			</div>
 		</section>
@@ -68,10 +275,549 @@ const softwareAppSchema = {
 		<!-- Interactive Text Repeater Workspace -->
 		<TextRepeaterTool />
 
+		<!-- Section 1 — What Is an Online Text Repeater & How to Use It (4-Step Grid) -->
+		<section
+			id="how-to-use"
+			aria-labelledby="how-to-use-heading"
+			class="mx-auto max-w-[1200px] px-4 pt-8 pb-12 sm:px-6 sm:pt-10"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Quick Guide
+					</span>
+					<h2
+						id="how-to-use-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						What Is an Online Text Repeater &amp; How to Use It
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						An online text repeater lets you instantly duplicate any word, sentence, emoji, or testing string up to 10,000 times with granular control over line breaks, custom delimiters, sequential numbering, and case styling. Whether you are generating mock data for software testing, crafting playful messages for WhatsApp and social feeds, or creating formatted text lists, Wordora runs 100% locally in your browser with zero latency and complete privacy.
+					</p>
+				</div>
+
+				<div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+					<!-- Step 1 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									1
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Enter Text or Pick an Emoji
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Type or paste any word, message, or code snippet, or tap a quick emoji chip (<strong class="font-medium text-ink">❤️</strong>, <strong class="font-medium text-ink">🔥</strong>, <strong class="font-medium text-ink">Happy Birthday 🎂</strong>).
+							</p>
+						</div>
+					</div>
+
+					<!-- Step 2 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									2
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Set Repetition Count (1 – 10,000x)
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Enter any exact count or choose a 1-click preset from <strong class="font-medium text-ink">5x</strong> up to <strong class="font-medium text-ink">10,000x</strong>.
+							</p>
+						</div>
+					</div>
+
+					<!-- Step 3 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									3
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Choose Separators, Numbering &amp; Prefix/Suffix
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Format your output with new lines, spaces, commas, custom delimiters, sequential numbering (<strong class="font-medium text-ink">1. 2. 3.</strong>), or QA prefixes/suffixes.
+							</p>
+						</div>
+					</div>
+
+					<!-- Step 4 -->
+					<div
+						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+					>
+						<div>
+							<div class="mb-4 flex items-center gap-3">
+								<span
+									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+								>
+									4
+								</span>
+								<h3 class="font-sans text-[15px] font-semibold text-ink">
+									Copy, Share, or Download .txt
+								</h3>
+							</div>
+							<p class="text-[14px] leading-relaxed text-body">
+								Copy the repeated text in one click, send directly via WhatsApp, or export as a <strong class="font-medium text-ink">.txt</strong> file.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Editorial Overview Block: Why Use a Browser-Based Text Repeater? -->
+				<div class="mt-10 rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:p-8">
+					<h3 class="font-sans text-[20px] font-semibold tracking-[-0.5px] text-ink sm:text-[22px]">
+						Why Use a Browser-Based Text Repeater?
+					</h3>
+					<div class="mt-4 space-y-4 text-[15px] leading-relaxed text-body">
+						<p>
+							Duplicating short phrases by hand using keyboard shortcuts (<kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">Ctrl + C</kbd> and <kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">Ctrl + V</kbd>) works for small quantities like 10x or 20x, but rapidly breaks down when you need 500, 1,000, or 10,000 repetitions. Manual looping frequently causes clipboard buffer freezes, accidental double spaces, miscounted lines, and browser memory spikes. Wordora resolves this by computing the repeated sequence directly in your device's memory using client-side JavaScript array allocation. Because execution happens locally on your machine without server roundtrips, even 10,000 repetitions generate in under 15 milliseconds without consuming network bandwidth or logging your data.
+						</p>
+						<p>
+							Crucially, an online browser repeater produces pure, unformatted plain text. When you copy rich text from word processors or websites, invisible styling metadata—such as proprietary font faces, background highlight spans, and nested HTML tags—is copied alongside the characters. Pasting that bloated markup into messaging clients like WhatsApp, Discord, or Instagram often introduces unexpected line wraps or font glitches. Wordora strips all rich formatting, ensuring that your output pastes cleanly into spreadsheets, SQL query editors, mobile chat bubbles, and code fixtures without unwanted artifacts.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 2A — Text Separator & Delimiter Formatting Guide -->
+		<section
+			id="separator-guide"
+			aria-labelledby="separator-guide-heading"
+			class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Delimiter Reference
+					</span>
+					<h2
+						id="separator-guide-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						Text Separator &amp; Delimiter Formatting Guide
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Choose the right delimiter and prefix/suffix structure depending on whether you are formatting chat messages, spreadsheets, or structured test data.
+					</p>
+				</div>
+
+				<div class="mt-8 overflow-hidden rounded-2xl border border-hairline bg-canvas-elevated">
+					<div class="overflow-x-auto">
+						<table class="w-full border-collapse text-left text-[14px]">
+							<thead>
+								<tr class="border-b border-hairline bg-[#0f2e26]/5 text-[13px] font-semibold text-ink dark:bg-[#afe3d0]/5">
+									<th class="p-4 sm:px-6 sm:py-4">Separator Option</th>
+									<th class="p-4 sm:px-6 sm:py-4">Syntax / Character</th>
+									<th class="p-4 sm:px-6 sm:py-4">Sample Output (3x "Hi")</th>
+									<th class="p-4 sm:px-6 sm:py-4">Best Use Case</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-hairline">
+								{
+									separatorGuides.map((item) => (
+										<tr class="transition-colors hover:bg-canvas/50">
+											<td class="p-4 font-semibold text-ink whitespace-nowrap sm:px-6 sm:py-4">
+												{item.option}
+											</td>
+											<td class="p-4 whitespace-nowrap sm:px-6 sm:py-4">
+												{item.syntaxType === 'code' ? (
+													<code class="rounded border border-hairline bg-canvas px-2 py-0.5 font-mono text-[13px] text-ink">
+														{item.syntax}
+													</code>
+												) : (
+													<span class="inline-flex rounded-md border border-hairline bg-canvas px-2 py-0.5 text-[12px] font-medium text-mute">
+														{item.syntax}
+													</span>
+												)}
+											</td>
+											<td class="p-4 sm:px-6 sm:py-4">
+												{item.sampleType === 'multiline' && item.sampleLines ? (
+													<div class="inline-block rounded border border-hairline bg-canvas px-2.5 py-1.5 font-mono text-[12px] leading-tight text-ink">
+														{item.sampleLines.map((line) => (
+															<div>{line}</div>
+														))}
+													</div>
+												) : (
+													<span class="rounded border border-hairline bg-canvas px-2 py-1 font-mono text-[13px] text-ink">
+														{item.sampleText}
+													</span>
+												)}
+											</td>
+											<td class="max-w-md p-4 leading-relaxed text-body sm:px-6 sm:py-4">
+												{item.useCase}
+											</td>
+										</tr>
+									))
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- Deep Dive: How Delimiters, Prefixes & Auto-Numbering Work Together -->
+				<div class="mt-8 rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:p-8">
+					<h3 class="font-sans text-[18px] font-semibold tracking-[-0.4px] text-ink sm:text-[20px]">
+						How Delimiters, Prefixes &amp; Auto-Numbering Work Together
+					</h3>
+					<div class="mt-4 space-y-4 text-[14.5px] leading-relaxed text-body">
+						<p>
+							In real-world data preparation, repeating raw text is only half the battle—the separator and packaging syntax determine whether the output is immediately usable. By combining an active delimiter with sequential numbering (<code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">1. 2. 3.</code>) and custom prefix/suffix anchors, you can generate ready-to-import database records in seconds. For example, setting the base word to <strong class="font-medium text-ink">student</strong>, adding a prefix of <code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">usr_</code>, an auto-incrementing number, a suffix of <code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">@domain.com</code>, and a comma separator instantly yields <code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">usr_1@domain.com, usr_2@domain.com, usr_3@domain.com</code>.
+						</p>
+						<p>
+							This structural flexibility saves immense time when constructing SQL <code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">WHERE id IN (...)</code> filter clauses, mock email testing rosters, JSON array elements, or comma-separated value (CSV) columns. Rather than writing ad-hoc spreadsheet macros or Python one-liners, you can configure the exact delimiter rules above, verify the live preview, and copy the final formatted string in one clean click.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 2B — Platform Character Limits & Safe Repetition Benchmarks -->
+		<section
+			id="character-limits"
+			aria-labelledby="character-limits-heading"
+			class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Platform Benchmarks
+					</span>
+					<h2
+						id="character-limits-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						Platform Character Limits &amp; Safe Repetition Benchmarks
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Understand platform length constraints before copying repeated text to prevent truncated messages, mobile rendering lag, or database overflow errors. Pair your repeats with our free <a href="/word-counter/" class="font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">word counter</a> or <a href="/case-converter/" class="font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">case converter</a> for full text control.
+					</p>
+				</div>
+
+				<div class="mt-8 overflow-hidden rounded-2xl border border-hairline bg-canvas-elevated">
+					<div class="overflow-x-auto">
+						<table class="w-full border-collapse text-left text-[14px]">
+							<thead>
+								<tr class="border-b border-hairline bg-[#0f2e26]/5 text-[13px] font-semibold text-ink dark:bg-[#afe3d0]/5">
+									<th class="p-4 sm:px-6 sm:py-4">Platform or Database Field</th>
+									<th class="p-4 sm:px-6 sm:py-4">Maximum Character Limit</th>
+									<th class="p-4 sm:px-6 sm:py-4">Safe Repetition Tip</th>
+									<th class="p-4 sm:px-6 sm:py-4">Common Use</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-hairline">
+								{
+									platformLimits.map((item) => (
+										<tr class="transition-colors hover:bg-canvas/50">
+											<td class="p-4 font-semibold text-ink whitespace-nowrap sm:px-6 sm:py-4">
+												{item.platform}
+											</td>
+											<td class="p-4 font-medium text-ink tabular-nums whitespace-nowrap sm:px-6 sm:py-4">
+												<span class="inline-flex rounded-md border border-hairline bg-canvas px-2.5 py-1 text-[13px]">
+													{item.limit}
+												</span>
+											</td>
+											<td class="max-w-xs p-4 leading-relaxed text-body sm:px-6 sm:py-4">
+												{item.tip}
+											</td>
+											<td class="max-w-xs p-4 leading-relaxed text-mute sm:px-6 sm:py-4">
+												{item.commonUse}
+											</td>
+										</tr>
+									))
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- Deep Dive: Preventing Message Truncation & Mobile App Lag -->
+				<div class="mt-8 rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:p-8">
+					<h3 class="font-sans text-[18px] font-semibold tracking-[-0.4px] text-ink sm:text-[20px]">
+						Preventing Message Truncation &amp; Mobile App Lag
+					</h3>
+					<div class="mt-4 space-y-4 text-[14.5px] leading-relaxed text-body">
+						<p>
+							When pasting massive repeated blocks into social or messaging applications, character count arithmetic is more nuanced than counting visible letters. Standard ASCII letters (<code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">A–Z</code>) occupy a single 7-bit or 8-bit byte. However, modern emojis (such as <strong class="font-medium text-ink">❤️</strong>, <strong class="font-medium text-ink">🔥</strong>, or <strong class="font-medium text-ink">🎂</strong>) and accented symbols are multi-byte characters encoded across surrogate pairs in UTF-16. In standard telecom SMS systems, introducing even one emoji immediately downgrades the message encoding from GSM-7 to UCS-2, shrinking single-segment capacity from 160 characters down to just 70 characters and causing long text to fragment across multiple billable segments.
+						</p>
+						<p>
+							Similarly, while WhatsApp supports a theoretical message payload of 65,536 characters, sending an unbroken wall of 50,000+ characters or complex emoji chains can cause recipient mobile devices to freeze, stutter during DOM rendering, or fail to open chat bubbles smoothly. For social sharing, keeping repeated text sequences between 1,000 and 10,000 characters provides maximum visual impact while ensuring rapid rendering across iOS and Android clients without truncation or app crashes. You can also monitor your exact word and character footprint with our free <a href="/word-counter/" class="font-medium text-ink underline decoration-[#0f2e26]/30 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">word counter</a> before sending.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 2C — How to Repeat Text in Excel, Word, JavaScript & Python -->
+		<section
+			id="repeat-methods"
+			aria-labelledby="repeat-methods-heading"
+			class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Technical Reference
+					</span>
+					<h2
+						id="repeat-methods-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						How to Repeat Text in Excel, Word, JavaScript &amp; Python
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Compare how Wordora's instant browser repeater stacks up against spreadsheet formulas, word processing shortcuts, and programming language repeat functions for developer workflows and everyday productivity.
+					</p>
+				</div>
+
+				<div class="mt-8 overflow-hidden rounded-2xl border border-hairline bg-canvas-elevated">
+					<div class="overflow-x-auto">
+						<table class="w-full border-collapse text-left text-[14px]">
+							<thead>
+								<tr class="border-b border-hairline bg-[#0f2e26]/5 text-[13px] font-semibold text-ink dark:bg-[#afe3d0]/5">
+									<th class="p-4 sm:px-6 sm:py-4">Method / Environment</th>
+									<th class="p-4 sm:px-6 sm:py-4">Formula or Code Snippet</th>
+									<th class="p-4 sm:px-6 sm:py-4">When to Use It</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-hairline">
+								{
+									repetitionMethods.map((item) => (
+										<tr class="transition-colors hover:bg-canvas/50">
+											<td class="p-4 font-semibold text-ink whitespace-nowrap sm:px-6 sm:py-4">
+												{item.method}
+											</td>
+											<td class="p-4 sm:px-6 sm:py-4">
+												{item.isCode ? (
+													<code class="rounded border border-hairline bg-canvas px-2.5 py-1 font-mono text-[13px] text-ink">
+														{item.snippet}
+													</code>
+												) : (
+													<span class="rounded border border-hairline bg-canvas px-2.5 py-1 text-[13px] font-medium text-body">
+														{item.snippet}
+													</span>
+												)}
+											</td>
+											<td class="max-w-md p-4 leading-relaxed text-body sm:px-6 sm:py-4">
+												{item.whenToUse}
+											</td>
+										</tr>
+									))
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- Deep Dive: Step-by-Step: Repeating Text in Excel & Google Sheets Without Errors -->
+				<div class="mt-8 rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:p-8">
+					<h3 class="font-sans text-[18px] font-semibold tracking-[-0.4px] text-ink sm:text-[20px]">
+						Step-by-Step: Repeating Text in Excel &amp; Google Sheets Without Errors
+					</h3>
+					<div class="mt-4 space-y-4 text-[14.5px] leading-relaxed text-body">
+						<p>
+							Spreadsheet software offers native string repetition via the <code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">=REPT(text, number_times)</code> formula. For example, writing <code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">=REPT("★", 5)</code> creates a lightweight 5-star customer review rating right in your cell without complex conditional formatting. When repeating cell references with separators, use string concatenation like <code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">=REPT(A2 &amp; ", ", 10)</code> to produce a clean, comma-delimited list.
+						</p>
+						<p>
+							However, spreadsheet formulas hit hard architectural boundaries. Microsoft Excel strictly limits any single worksheet cell to a maximum of 32,767 characters; attempting to repeat longer paragraphs or larger counts will produce a truncated string or a <code class="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[12px] text-ink">#VALUE!</code> formula calculation error. Furthermore, dragging formula-based repeats across thousands of rows can severely degrade spreadsheet calculation performance. Wordora's browser repeater bypasses spreadsheet cell limits entirely, allowing you to generate up to 10,000 full repetitions and export the output directly as an unconstrained plain-text <strong class="font-medium text-ink">.txt</strong> file.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 3 — Real-World Ways to Use an Online Text Repeater (4-Card Practical Grid) -->
+		<section
+			id="practical-uses"
+			aria-labelledby="practical-uses-heading"
+			class="mx-auto max-w-[1200px] px-4 py-12 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Practical Applications
+					</span>
+					<h2
+						id="practical-uses-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						Real-World Ways to Use an Online Text Repeater
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						From playful social messaging to rigorous software quality assurance, repetition with custom delimiters unlocks versatile everyday utility:
+					</p>
+				</div>
+
+				<div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+					<!-- Card 1: Social Messaging & Celebrations -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30">
+						<div>
+							<div class="mb-3 inline-flex rounded-lg bg-[#0f2e26]/10 p-2.5 text-[#0f2e26] dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
+								<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+								</svg>
+							</div>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								Social Messaging &amp; Celebrations
+							</h3>
+							<p class="mt-1 text-[12px] font-medium text-[#0f2e26] dark:text-[#afe3d0]">
+								100x – 1,000x
+							</p>
+							<p class="mt-3 text-[14px] leading-relaxed text-body">
+								Build clean birthday wishes, emoji walls, or playful message loops for WhatsApp, Instagram, and Telegram without typing the same phrase by hand.
+							</p>
+						</div>
+					</div>
+
+					<!-- Card 2: Digital Mantras & Affirmation Logs -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30">
+						<div>
+							<div class="mb-3 inline-flex rounded-lg bg-[#0f2e26]/10 p-2.5 text-[#0f2e26] dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
+								<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+								</svg>
+							</div>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								Digital Mantras &amp; Affirmation Logs
+							</h3>
+							<p class="mt-1 text-[12px] font-medium text-[#0f2e26] dark:text-[#afe3d0]">
+								108 Repetitions
+							</p>
+							<p class="mt-3 text-[14px] leading-relaxed text-body">
+								Generate an exact 108-count numbered or line-by-line digital log of mantras, prayers, or daily affirmations for personal reflection or status updates.
+							</p>
+						</div>
+					</div>
+
+					<!-- Card 3: QA Boundary & Database Stress Testing -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30">
+						<div>
+							<div class="mb-3 inline-flex rounded-lg bg-[#0f2e26]/10 p-2.5 text-[#0f2e26] dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
+								<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+									<rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+									<line x1="6" y1="6" x2="6.01" y2="6" />
+									<line x1="6" y1="18" x2="6.01" y2="18" />
+								</svg>
+							</div>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								QA Boundary &amp; Database Stress Testing
+							</h3>
+							<p class="mt-1 text-[12px] font-medium text-[#0f2e26] dark:text-[#afe3d0]">
+								255x – 10,000x
+							</p>
+							<p class="mt-3 text-[14px] leading-relaxed text-body">
+								Repeat a single character or string 255, 1,000, or 10,000 times with None separator to verify form max-length limits, SQL VARCHAR truncation, and UI text-wrapping behavior.
+							</p>
+						</div>
+					</div>
+
+					<!-- Card 4: UI Wireframes, Mockups & Numbered Test Lists -->
+					<div class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30">
+						<div>
+							<div class="mb-3 inline-flex rounded-lg bg-[#0f2e26]/10 p-2.5 text-[#0f2e26] dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
+								<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<line x1="8" y1="6" x2="21" y2="6" />
+									<line x1="8" y1="12" x2="21" y2="12" />
+									<line x1="8" y1="18" x2="21" y2="18" />
+									<line x1="3" y1="6" x2="3.01" y2="6" />
+									<line x1="3" y1="12" x2="3.01" y2="12" />
+									<line x1="3" y1="18" x2="3.01" y2="18" />
+								</svg>
+							</div>
+							<h3 class="font-sans text-[16px] font-semibold text-ink">
+								UI Wireframes, Mockups &amp; Numbered Test Lists
+							</h3>
+							<p class="mt-1 text-[12px] font-medium text-[#0f2e26] dark:text-[#afe3d0]">
+								Numbered &amp; Delimited
+							</p>
+							<p class="mt-3 text-[14px] leading-relaxed text-body">
+								Combine New line with Add numbering (1. 2. 3.) and Prefix/Suffix to populate dropdown menus, data tables, and CSV fixtures in seconds.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Section 4 — Frequently Asked Questions (10 PAA Accordion) -->
+		<section
+			id="faq"
+			aria-labelledby="faq-heading"
+			class="mx-auto max-w-[1200px] px-4 pt-12 pb-16 sm:px-6"
+		>
+			<div class="border-t border-hairline pt-10 sm:pt-12">
+				<div class="max-w-3xl">
+					<span
+						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
+					>
+						Got Questions?
+					</span>
+					<h2
+						id="faq-heading"
+						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
+					>
+						Frequently Asked Questions
+					</h2>
+					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
+						Clear, practical answers about repetition limits, WhatsApp formatting, number indexing, delimiter options, and privacy.
+					</p>
+				</div>
+
+				<div class="mt-8 divide-y divide-hairline rounded-2xl border border-hairline bg-canvas-elevated">
+					{
+						faqs.map((faq, idx) => (
+							<details class="group p-5 sm:p-6" open={idx === 0}>
+								<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink focus:outline-none">
+									<span>{faq.question}</span>
+									<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-hairline text-mute transition-transform duration-200 group-open:rotate-45 group-open:border-[#0f2e26] group-open:bg-[#0f2e26] group-open:text-[#afe3d0] dark:group-open:border-[#afe3d0] dark:group-open:bg-[#afe3d0] dark:group-open:text-[#0f2e26]">
+										<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+											<line x1="12" y1="5" x2="12" y2="19" />
+											<line x1="5" y1="12" x2="19" y2="12" />
+										</svg>
+									</span>
+								</summary>
+								<p class="mt-3 pr-6 text-[14.5px] leading-relaxed text-body" set:html={faq.answerHtml} />
+							</details>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
 		{/* Editorial Content & FAQ Slot — User Managed */}
 		<div id="editorial-content-slot" class="mx-auto max-w-[1200px] px-4 sm:px-6"></div>
 	</main>
 
 	<Footer />
 </Layout>
-

@@ -6,10 +6,10 @@ import Footer from "../../components/Footer.astro";
 import { resolveCanonicalUrl } from "../../config/site";
 
 const pageTitle =
-	"Audiobook Calculator — Speed, Listening Time & Percentage Calculator | Wordora";
+	"Audiobook Speed, Length & Percentage Calculator | Wordora";
 const pageDescription =
-	"Free online audiobook calculator to check listening time at 1.25x, 1.5x, or 2x speed, calculate audiobook percentage read, estimate print pages, and plan your daily finish date.";
-const canonicalUrl = resolveCanonicalUrl("/audiobook-calculator/");
+	"Free audiobook calculator, audiobook length calculator, and audiobook percentage calculator. Check exact listening time left at 1.25x, 1.5x, 1.75x, or 2x playback speed.";
+const canonicalUrl = resolveCanonicalUrl("/audiobook-speed-calculator/");
 
 const webAppSchema = {
 	"@context": "https://schema.org",
@@ -56,9 +56,9 @@ const faqList = [
 			"Two hours (120 minutes) at 2.5x speed takes 48 minutes (saving 1 hour 12 minutes). A 7-hour (420-minute) audiobook at 1.6x speed takes 4 hours, 22 minutes, and 30 seconds.",
 	},
 	{
-		question: "How do I calculate audiobook percentage read or remaining?",
+		question: "How do I use an audiobook percentage calculator and audiobook length calculator together?",
 		answer:
-			"Divide the elapsed listening time by the total audiobook length and multiply by 100 ((Elapsed ÷ Total) × 100). Or open the Remaining Progress tab in this audiobook percentage calculator and enter either your percentage completed or elapsed time to convert both ways automatically.",
+			"To calculate your completion percentage, divide your elapsed listening time by the total audiobook length and multiply by 100 ((Elapsed ÷ Total) × 100), then divide the remaining time by your playback speed to find your adjusted length left. Or open the Remaining Progress tab in this audiobook percentage calculator and audiobook length calculator to enter either your percentage completed or elapsed time and convert both ways automatically.",
 	},
 	{
 		question: "Does Audible show percentage completed, and how can I find it?",
@@ -143,11 +143,11 @@ const faqPageSchema = {
 		<!-- Section 1: Editorial Guide -->
 		<section class="mx-auto mt-10 max-w-[880px] space-y-6 border-t border-hairline px-4 pt-10 pb-16 sm:px-6 md:mt-12 md:pt-12">
 			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-				How to Use This Audiobook Calculator
+				How to Use This Audiobook Calculator, Audiobook Length Calculator &amp; Percentage Calculator
 			</h2>
 
 			<p class="text-[16px] leading-relaxed text-body">
-				Whether you are starting a 30-hour fantasy epic or squeezing a non-fiction bestseller into your morning commute, this <strong class="font-semibold text-ink">audiobook calculator</strong> shows your exact listening time at any playback rate. Instead of doing mental base-60 math, you can use it as an <strong class="font-semibold text-ink">audiobook speed calculator</strong> and <strong class="font-semibold text-ink">audiobook time calculator</strong> to compare narration speeds from <strong class="font-semibold text-ink">0.5x to 3.0x</strong>, estimate equivalent print pages, and map out your exact finish date.
+				Whether you are starting a 30-hour fantasy epic or squeezing a non-fiction bestseller into your morning commute, this <strong class="font-semibold text-ink">audiobook calculator</strong> shows your exact listening time at any playback rate. Instead of doing mental base-60 math, you can use it as an <strong class="font-semibold text-ink">audiobook length calculator</strong> and <strong class="font-semibold text-ink">audiobook speed calculator</strong> to compare narration speeds from <strong class="font-semibold text-ink">0.5x to 3.0x</strong>, estimate equivalent print pages, and map out your exact finish date.
 			</p>
 
 			<p class="text-[16px] leading-relaxed text-body">
@@ -356,11 +356,11 @@ const faqPageSchema = {
 		<!-- Section 3: Audiobook Length to Word Count & Print Pages Converter -->
 		<section class="mx-auto max-w-[880px] space-y-6 border-t border-hairline px-4 pt-12 pb-16 sm:px-6 md:pt-16">
 			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-				Audiobook Length to Word Count &amp; Print Pages Converter
+				Audiobook Length Calculator: Word Count &amp; Print Pages Converter
 			</h2>
 
 			<p class="text-[16px] leading-relaxed text-body">
-				In the publishing industry, Amazon's ACX and Audible use a universal studio narration benchmark of <strong class="font-semibold text-ink">155 words per minute (9,300 words per finished hour)</strong>. Authors, voice actors, and publishers rely on an <strong class="font-semibold text-ink">audiobook length calculator word count</strong> workflow to budget studio recording time from a manuscript, while listeners use it in reverse to see how big a book actually is.
+				In the publishing industry, Amazon's ACX and Audible use a universal studio narration benchmark of <strong class="font-semibold text-ink">155 words per minute (9,300 words per finished hour)</strong>. Authors, voice actors, and publishers rely on an <strong class="font-semibold text-ink">audiobook length calculator</strong> to budget studio recording time from a manuscript word count, while listeners use it in reverse to see how big a book actually is.
 			</p>
 
 			<p class="text-[16px] leading-relaxed text-body">
@@ -467,7 +467,7 @@ const faqPageSchema = {
 				<!-- Card 2: Audible, Kindle & Libby Percentage Read -->
 				<div class="rounded-xl border border-hairline bg-canvas-elevated p-5 space-y-3">
 					<h3 class="text-lg font-semibold tracking-tight text-ink">
-						2. How to Find &amp; Convert Percentage Read on Audible, Kindle &amp; Libby
+						2. Audiobook Percentage Calculator for Audible, Kindle &amp; Libby
 					</h3>
 
 					<p class="text-[14.5px] leading-relaxed text-body">
@@ -599,11 +599,11 @@ const faqPageSchema = {
 
 				<details class="group p-5 sm:p-6">
 					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
-						<span>How do I calculate audiobook percentage read or remaining?</span>
+						<span>How do I use an audiobook percentage calculator and audiobook length calculator together?</span>
 						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
 					</summary>
 					<p class="mt-3 text-[15px] leading-relaxed text-body">
-						Divide the elapsed listening time by the total audiobook length and multiply by 100 (<code class="rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums">(Elapsed &divide; Total) &times; 100</code>). Or open the <strong class="font-semibold text-ink">Remaining Progress</strong> tab in this audiobook percentage calculator and enter either your percentage completed or elapsed time to convert both ways automatically.
+						To calculate your completion percentage, divide your elapsed listening time by the total audiobook length and multiply by 100 (<code class="rounded bg-canvas px-1.5 py-0.5 text-[13.5px] text-ink tabular-nums">(Elapsed &divide; Total) &times; 100</code>), then divide the remaining time by your playback speed to find your adjusted length left. Or open the <strong class="font-semibold text-ink">Remaining Progress</strong> tab in this <strong class="font-semibold text-ink">audiobook percentage calculator</strong> and <strong class="font-semibold text-ink">audiobook length calculator</strong> to enter either your percentage completed or elapsed time and convert both ways automatically.
 					</p>
 				</details>
 

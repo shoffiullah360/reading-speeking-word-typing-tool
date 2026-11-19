@@ -8,10 +8,20 @@ import { SITE_CONFIG, isPublicLiveUrl } from './src/config/site.ts';
 export default defineConfig({
 	site: SITE_CONFIG.origin,
 	trailingSlash: 'always',
+	build: {
+		format: 'directory',
+	},
+	i18n: {
+		defaultLocale: 'en',
+		locales: ['en', 'es', 'de', 'fr'],
+		routing: {
+			prefixDefaultLocale: false,
+		},
+	},
 	devToolbar: { enabled: false },
 	integrations: [
 		sitemap({
-			filter: (page) => isPublicLiveUrl(page),
+			filter: (page) => isPublicLiveUrl(page) && !page.includes('/typing-speed-test/play/'),
 		}),
 	],
 	vite: {

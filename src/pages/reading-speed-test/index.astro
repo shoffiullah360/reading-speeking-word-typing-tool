@@ -6,9 +6,9 @@ import Footer from "../../components/Footer.astro";
 import { resolveCanonicalUrl } from "../../config/site";
 
 const pageTitle =
-	"Reading Speed Test (WPM) — Check Your Silent Reading Speed & Comprehension | Wordora";
+	"Reading Speed Test & Online WPM Reading Tester | Wordora";
 const pageDescription =
-	"Measure your personal silent reading speed in Words Per Minute (WPM) across short, medium, and long non-fiction passages with a 3-question comprehension check and 238 WPM benchmark comparison.";
+	"Take a free 1-minute reading speed test and words per minute reading test. Use our online reading speed tester to test your reading speed (WPM) and compare by grade level.";
 const canonicalUrl = resolveCanonicalUrl("/reading-speed-test/");
 
 const webAppSchema = {
@@ -44,6 +44,11 @@ const faqList = [
 		question: "What is a good reading speed score for an adult?",
 		answer:
 			"For most adults reading standard non-fiction, a good reading speed is between 238 and 300 WPM with at least 75% to 80% comprehension. Scores above 320 WPM with strong recall put you ahead of roughly 80% of adult readers, while scores above 400 WPM are considered fast.",
+	},
+	{
+		question: "How many words per minute should a 6th grader read?",
+		answer:
+			"A typical 6th grader (ages 11–12) reads roughly 150 to 205 words per minute (WPM) during silent reading with at least 75% comprehension, and about 130 to 160 WPM when reading aloud for oral fluency benchmarks.",
 	},
 	{
 		question: "Is 200 WPM a slow reading speed?",
@@ -162,11 +167,11 @@ const faqPageSchema = {
 
 		<section class="mx-auto mt-10 max-w-[880px] space-y-6 border-t border-hairline px-4 pt-10 sm:px-6 md:mt-12 md:pt-12">
 			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-				How to Use the Reading Speed Test (Step-by-Step)
+				How to Use This Reading Speed Tester &amp; Words Per Minute Reading Test
 			</h2>
 
 			<p class="text-[16px] leading-relaxed text-body">
-				Follow these four quick steps to get an accurate baseline of both your raw reading speed and your real-world comprehension score:
+				Follow these four quick steps in our online <strong class="font-semibold text-ink">reading speed tester</strong> to <strong class="font-semibold text-ink">test your reading speed</strong> and get an accurate baseline of both your raw pace and your real-world comprehension score:
 			</p>
 
 			<ol class="grid gap-4 sm:grid-cols-2">
@@ -214,11 +219,11 @@ const faqPageSchema = {
 
 		<section class="mx-auto mt-12 max-w-[880px] space-y-6 border-t border-hairline px-4 pt-12 pb-16 sm:px-6 md:mt-16 md:pt-16">
 			<h2 class="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-				How to Measure Your True Reading Speed (Raw WPM vs. Effective WPM)
+				How to Test Reading Speed: Reading WPM Test (Raw WPM vs. Effective WPM)
 			</h2>
 
 			<p class="text-[16px] leading-relaxed text-body">
-				Most people who guess how fast they read end up off by a wide margin. Without a stopwatch and a known word count, it is almost impossible to tell whether you are moving steadily through a page or quietly losing minutes to re-reading the same lines. A calibrated reading speed test removes the guesswork by timing a clean, uninterrupted passage and converting your elapsed seconds into <strong class="font-semibold text-ink">Words Per Minute (WPM)</strong> using a simple ratio:
+				Most people who guess how fast they read end up off by a wide margin. Without a stopwatch and a known word count, it is almost impossible to tell whether you are moving steadily through a page or quietly losing minutes to re-reading the same lines. Taking a calibrated <strong class="font-semibold text-ink">reading wpm test</strong> and <strong class="font-semibold text-ink">words per minute reading test</strong> removes the guesswork by timing a clean, uninterrupted passage and converting your elapsed seconds into <strong class="font-semibold text-ink">Words Per Minute (WPM)</strong> using a simple ratio:
 			</p>
 
 			<div class="rounded-xl border border-hairline bg-canvas-elevated px-5 py-4 text-center">
@@ -802,7 +807,7 @@ const faqPageSchema = {
 					If you are preparing a talk, podcast script, or wedding toast, use our <a href="/speech-time-calculator/" class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue">Speech Time Calculator</a> to convert your word count into exact speaking minutes.
 				</li>
 				<li>
-					If you prefer listening to books or comparing narration speeds (1.0x vs. 1.5x), try our <a href="/audiobook-calculator/" class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue">Audiobook Calculator</a> to see how quickly you can finish your next title.
+					If you prefer listening to books or comparing narration speeds (1.0x vs. 1.5x), try our <a href="/audiobook-speed-calculator/" class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue">Audiobook Speed Calculator</a> to see how quickly you can finish your next title.
 				</li>
 			</ul>
 
@@ -838,6 +843,16 @@ const faqPageSchema = {
 					</summary>
 					<p class="mt-3 text-[15px] leading-relaxed text-body">
 						For most adults reading standard non-fiction, a good reading speed is between 238 and 300 WPM with at least 75% to 80% comprehension. Scores above 320 WPM with strong recall put you ahead of roughly 80% of adult readers, while scores above 400 WPM are considered fast.
+					</p>
+				</details>
+
+				<details class="group p-5 sm:p-6">
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-[16px] font-semibold text-ink">
+						<span>How many words per minute should a 6th grader read?</span>
+						<span class="text-muted transition-transform duration-200 group-open:rotate-45">+</span>
+					</summary>
+					<p class="mt-3 text-[15px] leading-relaxed text-body">
+						A typical 6th grader (ages 11–12) reads roughly <strong class="font-semibold text-ink">150 to 205 words per minute (WPM)</strong> during silent reading with at least 75% comprehension, and about <strong class="font-semibold text-ink">130 to 160 WPM</strong> when reading aloud for oral fluency benchmarks.
 					</p>
 				</details>
 

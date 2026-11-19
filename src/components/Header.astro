@@ -4,16 +4,57 @@ import { SITE_CONFIG, getLiveTools, normalizeTrailingSlashPath } from '../config
 const currentPath = normalizeTrailingSlashPath(Astro.url.pathname);
 const liveTools = getLiveTools();
 
-const categoriesWithTools = SITE_CONFIG.categories.map((category) => {
-	const tools = liveTools.filter((tool) => tool.category === category);
-	const isActiveCategory = tools.some((tool) => tool.slug === currentPath);
-	return {
-		category,
-		id: category.toLowerCase(),
-		tools,
-		isActiveCategory,
-	};
-});
+interface NavCategory {
+	category: string;
+	id: string;
+	tools: Array<{
+		slug: string;
+		shortName: string;
+	}>;
+	isActiveCategory: boolean;
+}
+
+const categoriesWithTools: NavCategory[] = [
+	{
+		category: 'Reading',
+		id: 'reading',
+		tools: liveTools.filter((tool) => tool.category === 'Reading'),
+		isActiveCategory: false,
+	},
+	{
+		category: 'Writing',
+		id: 'writing',
+		tools: liveTools.filter((tool) => tool.category === 'Writing'),
+		isActiveCategory: false,
+	},
+	{
+		category: 'Speaking',
+		id: 'speaking',
+		tools: liveTools.filter((tool) => tool.category === 'Speaking' && tool.slug !== '/random-topic-generator/'),
+		isActiveCategory: false,
+	},
+	{
+		category: 'Text',
+		id: 'text',
+		tools: liveTools.filter((tool) => tool.category === 'Text'),
+		isActiveCategory: false,
+	},
+	{
+		category: 'Random',
+		id: 'random',
+		tools: liveTools.filter((tool) => tool.slug === '/random-topic-generator/'),
+		isActiveCategory: false,
+	},
+	{
+		category: 'Typing Test',
+		id: 'typing-test',
+		tools: liveTools.filter((tool) => tool.slug === '/typing-speed-test/'),
+		isActiveCategory: false,
+	},
+].map((cat) => ({
+	...cat,
+	isActiveCategory: cat.tools.some((tool) => tool.slug === currentPath),
+}));
 ---
 
 <header class="sticky top-0 z-50 w-full border-b border-[#E5E7EB] bg-[#FFFFFF] backdrop-blur-md dark:border-hairline dark:bg-header-bg">
@@ -45,7 +86,7 @@ const categoriesWithTools = SITE_CONFIG.categories.map((category) => {
 			</span>
 		</a>
 
-		<!-- Center: 4 Canonical Category Dropdowns (Desktop) -->
+		<!-- Center: Category Dropdowns (Desktop) -->
 		<nav
 			aria-label="Primary category navigation"
 			class="hidden items-center gap-1 whitespace-nowrap md:flex lg:gap-1.5"
@@ -208,7 +249,7 @@ const categoriesWithTools = SITE_CONFIG.categories.map((category) => {
 		</div>
 	</div>
 
-	<!-- Mobile Navigation Drawer / Accordion (Grouped by Reading, Writing, Speaking, Text) -->
+	<!-- Mobile Navigation Drawer / Accordion -->
 	<div
 		id="mobile-nav-drawer"
 		aria-label="Mobile category navigation"
@@ -217,7 +258,8 @@ const categoriesWithTools = SITE_CONFIG.categories.map((category) => {
 		<div class="mx-auto max-w-[1200px] divide-y divide-hairline">
 			{
 				categoriesWithTools.map(({ category, id, tools, isActiveCategory }, index) => {
-					const defaultOpen = isActiveCategory || index === 0;
+					const hasActiveCategory = categoriesWithTools.some((c) => c.isActiveCategory);
+					const defaultOpen = isActiveCategory || (!hasActiveCategory && index === 0);
 					return (
 						<div class="py-2" data-mobile-accordion={id}>
 							<button
@@ -225,7 +267,11 @@ const categoriesWithTools = SITE_CONFIG.categories.map((category) => {
 								data-mobile-accordion-trigger={id}
 								aria-expanded={defaultOpen ? 'true' : 'false'}
 								aria-controls={`mobile-panel-${id}`}
-								class="flex w-full cursor-pointer items-center justify-between rounded-sm px-2 py-2 text-left text-[15px] font-medium text-[#111827] transition-colors hover:bg-[#E6F7F1] hover:text-[#0F766E] dark:text-ink dark:hover:bg-hairline-soft"
+								class={`flex w-full cursor-pointer items-center justify-between rounded-sm px-2 py-2 text-left text-[15px] transition-colors hover:bg-[#E6F7F1] hover:text-[#0F766E] dark:hover:bg-hairline-soft ${
+									isActiveCategory
+										? 'font-semibold text-[#0F766E] dark:text-ink'
+										: 'font-medium text-[#111827] dark:text-ink'
+								}`}
 							>
 								<span>{category}</span>
 								<svg
