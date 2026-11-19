@@ -1,15 +1,45 @@
 ---
-import { localePath } from '../i18n/ui';
+import { getLocaleFromUrl, getLocalizedPath, useTranslations, type Locale } from '../i18n/ui';
 import { getToolById } from '../config/site';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 
 const readingTool = getToolById('reading-time-calculator');
 const wordsToPagesTool = getToolById('words-to-pages');
 const speechTool = getToolById('speech-time-calculator');
+
+const wordsToPagesName = wordsToPagesTool ? t(`${wordsToPagesTool.dictKey}.shortName`) : t('wordsToPages.shortName');
+const readingToolName = readingTool ? t(`${readingTool.dictKey}.shortName`) : t('readingTimeCalculator.shortName');
+const speechToolName = speechTool ? t(`${speechTool.dictKey}.shortName`) : t('speechCalculator.shortName');
+
+const clientI18n = {
+	locale,
+	zeroSec: t('wordCounter.client.zeroSec'),
+	unitMin: t('wordCounter.client.unitMin'),
+	unitSec: t('wordCounter.client.unitSec'),
+	gradeLabel: t('wordCounter.client.gradeLabel'),
+	levelCollege: t('wordCounter.client.levelCollege'),
+	levelGraduate: t('wordCounter.client.levelGraduate'),
+	pasted: t('wordCounter.client.pasted'),
+	cleaned: t('wordCounter.client.cleaned'),
+	copied: t('wordCounter.client.copied'),
+	btnPaste: t('wordCounter.client.btnPaste'),
+	btnCleanSpaces: t('wordCounter.client.btnCleanSpaces'),
+	btnCopyText: t('wordCounter.client.btnCopyText'),
+	btnCopyKeywords: t('wordCounter.client.btnCopyKeywords'),
+	btnCopySummary: t('wordCounter.client.btnCopySummary'),
+	summaryTemplate: t('wordCounter.client.summaryTemplate'),
+};
 ---
 
 <section
 	id="word-counter-workspace"
-	aria-label="Word and Character Counter Workspace"
+	aria-label={t('wordCounter.ui.workspaceAria')}
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
 	<!-- Unified Stacked Card Container -->
@@ -18,10 +48,10 @@ const speechTool = getToolById('speech-time-calculator');
 		<div class="flex flex-col justify-between p-6 sm:p-8">
 			<!-- Borderless Textarea with balanced height -->
 			<div class="flex flex-1 flex-col">
-				<label for="wc-textarea" class="sr-only">Type or paste your text here</label>
+				<label for="wc-textarea" class="sr-only">{t('wordCounter.ui.textareaLabel')}</label>
 				<textarea
 					id="wc-textarea"
-					placeholder="Type or paste your text here..."
+					placeholder={t('wordCounter.ui.textareaPlaceholder')}
 					class="h-48 sm:h-56 w-full resize-y border-0 bg-transparent font-sans text-[16px] leading-[28px] text-ink placeholder:text-faint focus:outline-none"
 				></textarea>
 			</div>
@@ -29,7 +59,7 @@ const speechTool = getToolById('speech-time-calculator');
 			<!-- Minimal Footer Bar with Subtle Actions -->
 			<div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-hairline pt-4 text-[13px]">
 				<div class="flex items-center gap-1.5 font-medium text-mute tabular-nums">
-					<span id="wc-footer-words">0</span> words &middot; <span id="wc-footer-chars">0</span> characters
+					<span id="wc-footer-words">0</span> {t('wordCounter.ui.wordsUnit')} &middot; <span id="wc-footer-chars">0</span> {t('wordCounter.ui.charactersUnit')}
 				</div>
 
 				<div class="flex flex-wrap items-center gap-3.5 sm:gap-4">
@@ -38,13 +68,13 @@ const speechTool = getToolById('speech-time-calculator');
 						id="wc-btn-paste"
 						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink"
 					>
-						Paste
+						{t('wordCounter.ui.btnPaste')}
 					</button>
 					<label
 						for="wc-file-input"
 						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink"
 					>
-						Upload .txt
+						{t('wordCounter.ui.btnUpload')}
 						<input
 							id="wc-file-input"
 							type="file"
@@ -57,21 +87,21 @@ const speechTool = getToolById('speech-time-calculator');
 						id="wc-btn-clean-spaces"
 						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink"
 					>
-						Clean spaces
+						{t('wordCounter.ui.btnCleanSpaces')}
 					</button>
 					<button
 						type="button"
 						id="wc-btn-copy-text"
 						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink"
 					>
-						Copy text
+						{t('wordCounter.ui.btnCopyText')}
 					</button>
 					<button
 						type="button"
 						id="wc-btn-clear"
 						class="cursor-pointer font-medium text-mute transition-colors hover:text-vercel-error"
 					>
-						Clear
+						{t('wordCounter.ui.btnClear')}
 					</button>
 				</div>
 			</div>
@@ -85,7 +115,7 @@ const speechTool = getToolById('speech-time-calculator');
 					<div class="space-y-5">
 						<!-- Words Hero -->
 						<div>
-							<span class="text-[12px] font-medium text-[#afe3d0]/80">Words</span>
+							<span class="text-[12px] font-medium text-[#afe3d0]/80">{t('wordCounter.ui.heroWords')}</span>
 							<output
 								id="wc-hero-words"
 								aria-live="polite"
@@ -97,7 +127,7 @@ const speechTool = getToolById('speech-time-calculator');
 
 						<!-- Characters Hero -->
 						<div class="border-t border-[#afe3d0]/15 pt-4">
-							<span class="text-[12px] font-medium text-white/80">Characters</span>
+							<span class="text-[12px] font-medium text-white/80">{t('wordCounter.ui.heroCharacters')}</span>
 							<output
 								id="wc-hero-chars"
 								aria-live="polite"
@@ -106,7 +136,7 @@ const speechTool = getToolById('speech-time-calculator');
 								0
 							</output>
 							<p class="mt-1 text-[12px] text-white/60 tabular-nums">
-								<span id="wc-hero-chars-nospace">0</span> without spaces<span id="wc-cjk-wrapper" class="hidden"> &middot; <span id="wc-cjk-count" class="text-[#afe3d0] font-medium">0</span> CJK chars</span>
+								<span id="wc-hero-chars-nospace">0</span> {t('wordCounter.ui.withoutSpaces')}<span id="wc-cjk-wrapper" class="hidden"> &middot; <span id="wc-cjk-count" class="text-[#afe3d0] font-medium">0</span> {t('wordCounter.ui.cjkChars')}</span>
 							</p>
 						</div>
 					</div>
@@ -118,7 +148,7 @@ const speechTool = getToolById('speech-time-calculator');
 							id="wc-btn-copy-summary"
 							class="flex w-full cursor-pointer items-center justify-center rounded-2xl bg-[#afe3d0] px-4 py-3 text-[14px] font-semibold text-[#0f2e26] transition-all hover:bg-[#c2edd6] active:scale-[0.99]"
 						>
-							Copy summary
+							{t('wordCounter.ui.btnCopySummary')}
 						</button>
 					</div>
 				</div>
@@ -129,7 +159,7 @@ const speechTool = getToolById('speech-time-calculator');
 					<div class="flex items-center justify-between border-b border-[#afe3d0]/15 pb-3">
 						<div
 							role="tablist"
-							aria-label="Panel view"
+							aria-label={t('wordCounter.ui.panelViewAria')}
 							class="inline-flex rounded-full border border-[#afe3d0]/20 bg-white/[0.04] p-1"
 						>
 							<button
@@ -140,7 +170,7 @@ const speechTool = getToolById('speech-time-calculator');
 								aria-controls="wc-view-stats"
 								class="cursor-pointer rounded-full bg-[#afe3d0] px-3.5 py-1 text-[12px] font-semibold text-[#0f2e26] transition-all"
 							>
-								Stats
+								{t('wordCounter.ui.tabStats')}
 							</button>
 							<button
 								type="button"
@@ -150,7 +180,7 @@ const speechTool = getToolById('speech-time-calculator');
 								aria-controls="wc-view-keywords"
 								class="cursor-pointer rounded-full bg-transparent px-3.5 py-1 text-[12px] font-medium text-white/70 transition-all hover:text-white"
 							>
-								Top Keywords
+								{t('wordCounter.ui.tabKeywords')}
 							</button>
 						</div>
 					</div>
@@ -159,7 +189,7 @@ const speechTool = getToolById('speech-time-calculator');
 					<div id="wc-view-stats" class="grid grid-cols-2 gap-2.5">
 						<!-- Sentences -->
 						<div class="rounded-2xl border border-[#afe3d0]/15 bg-white/[0.04] p-3">
-							<span class="text-[12px] font-medium text-white/70">Sentences</span>
+							<span class="text-[12px] font-medium text-white/70">{t('wordCounter.ui.statSentences')}</span>
 							<output
 								id="wc-stat-sentences"
 								class="mt-1 block font-sans text-[20px] leading-[26px] font-semibold text-white tabular-nums"
@@ -170,7 +200,7 @@ const speechTool = getToolById('speech-time-calculator');
 
 						<!-- Paragraphs -->
 						<div class="rounded-2xl border border-[#afe3d0]/15 bg-white/[0.04] p-3">
-							<span class="text-[12px] font-medium text-white/70">Paragraphs</span>
+							<span class="text-[12px] font-medium text-white/70">{t('wordCounter.ui.statParagraphs')}</span>
 							<output
 								id="wc-stat-paragraphs"
 								class="mt-1 block font-sans text-[20px] leading-[26px] font-semibold text-white tabular-nums"
@@ -182,36 +212,36 @@ const speechTool = getToolById('speech-time-calculator');
 						<!-- Reading Time (238 WPM) -->
 						<div class="rounded-2xl border border-[#afe3d0]/15 bg-white/[0.04] p-3">
 							<div class="flex items-center justify-between">
-								<span class="text-[12px] font-medium text-white/70">Reading time</span>
+								<span class="text-[12px] font-medium text-white/70">{t('wordCounter.ui.statReadingTime')}</span>
 								<span class="text-[10px] text-[#afe3d0]/60">238 WPM</span>
 							</div>
 							<output
 								id="wc-stat-reading-time"
 								class="mt-1 block font-sans text-[17px] leading-[24px] font-semibold text-white tabular-nums"
 							>
-								0 sec
+								{t('wordCounter.client.zeroSec')}
 							</output>
 						</div>
 
 						<!-- Speaking Time (130 WPM) -->
 						<div class="rounded-2xl border border-[#afe3d0]/15 bg-white/[0.04] p-3">
 							<div class="flex items-center justify-between">
-								<span class="text-[12px] font-medium text-white/70">Speaking time</span>
+								<span class="text-[12px] font-medium text-white/70">{t('wordCounter.ui.statSpeakingTime')}</span>
 								<span class="text-[10px] text-[#afe3d0]/60">130 WPM</span>
 							</div>
 							<output
 								id="wc-stat-speaking-time"
 								class="mt-1 block font-sans text-[17px] leading-[24px] font-semibold text-white tabular-nums"
 							>
-								0 sec
+								{t('wordCounter.client.zeroSec')}
 							</output>
 						</div>
 
 						<!-- Pages (250 words/page) -->
 						<div class="rounded-2xl border border-[#afe3d0]/15 bg-white/[0.04] p-3">
 							<div class="flex items-center justify-between">
-								<span class="text-[12px] font-medium text-white/70">Pages</span>
-								<span class="text-[10px] text-[#afe3d0]/60">250 w/p</span>
+								<span class="text-[12px] font-medium text-white/70">{t('wordCounter.ui.statPages')}</span>
+								<span class="text-[10px] text-[#afe3d0]/60">{t('wordCounter.ui.wpp250Short')}</span>
 							</div>
 							<output
 								id="wc-stat-pages"
@@ -224,7 +254,7 @@ const speechTool = getToolById('speech-time-calculator');
 						<!-- Readability (Flesch-Kincaid) -->
 						<div class="rounded-2xl border border-[#afe3d0]/15 bg-white/[0.04] p-3">
 							<div class="flex items-center justify-between">
-								<span class="text-[12px] font-medium text-white/70">Readability</span>
+								<span class="text-[12px] font-medium text-white/70">{t('wordCounter.ui.statReadability')}</span>
 								<span class="text-[10px] text-[#afe3d0]/60">Flesch-Kincaid</span>
 							</div>
 							<output
@@ -240,14 +270,14 @@ const speechTool = getToolById('speech-time-calculator');
 					<div id="wc-view-keywords" class="hidden flex-col gap-3">
 						<div class="flex items-center justify-between">
 							<div>
-								<span class="text-[12px] font-medium text-white">Top 8 Keywords</span>
+								<span class="text-[12px] font-medium text-white">{t('wordCounter.ui.topKeywordsTitle')}</span>
 							</div>
 							<button
 								type="button"
 								id="wc-btn-copy-keywords"
 								class="cursor-pointer text-[12px] font-medium text-[#afe3d0] transition-colors hover:text-white"
 							>
-								Copy keywords
+								{t('wordCounter.ui.btnCopyKeywords')}
 							</button>
 						</div>
 
@@ -256,7 +286,7 @@ const speechTool = getToolById('speech-time-calculator');
 							id="wc-keywords-empty"
 							class="rounded-2xl border border-[#afe3d0]/15 bg-white/[0.04] p-6 text-center text-[12px] text-white/60"
 						>
-							Type or paste text to see keyword density.
+							{t('wordCounter.ui.keywordsEmpty')}
 						</div>
 
 						<!-- Keywords List (2 columns on sm+) -->
@@ -271,14 +301,14 @@ const speechTool = getToolById('speech-time-calculator');
 				<div class="lg:col-span-4">
 					<div class="space-y-3 rounded-2xl border border-[#afe3d0]/15 bg-white/[0.04] p-4">
 						<div class="flex items-center justify-between">
-							<span class="text-[12px] font-medium text-white/80">Platform limits</span>
-							<span class="text-[11px] text-white/50">Characters</span>
+							<span class="text-[12px] font-medium text-white/80">{t('wordCounter.ui.platformLimitsTitle')}</span>
+							<span class="text-[11px] text-white/50">{t('wordCounter.ui.platformLimitsUnit')}</span>
 						</div>
 
 						<!-- Google Title (60 chars) -->
 						<div>
 							<div class="flex items-center justify-between text-[12px]">
-								<span class="text-white/70">Google Title</span>
+								<span class="text-white/70">{t('wordCounter.ui.limitGoogleTitle')}</span>
 								<span id="wc-limit-label-title" class="font-medium text-white tabular-nums transition-colors">
 									<span id="wc-limit-num-title">0</span> / 60
 								</span>
@@ -295,7 +325,7 @@ const speechTool = getToolById('speech-time-calculator');
 						<!-- Meta Description (160 chars) -->
 						<div>
 							<div class="flex items-center justify-between text-[12px]">
-								<span class="text-white/70">Meta Description</span>
+								<span class="text-white/70">{t('wordCounter.ui.limitMetaDesc')}</span>
 								<span id="wc-limit-label-meta" class="font-medium text-white tabular-nums transition-colors">
 									<span id="wc-limit-num-meta">0</span> / 160
 								</span>
@@ -312,7 +342,7 @@ const speechTool = getToolById('speech-time-calculator');
 						<!-- X / Social Post (280 chars) -->
 						<div>
 							<div class="flex items-center justify-between text-[12px]">
-								<span class="text-white/70">X / Social Post</span>
+								<span class="text-white/70">{t('wordCounter.ui.limitSocialPost')}</span>
 								<span id="wc-limit-label-social" class="font-medium text-white tabular-nums transition-colors">
 									<span id="wc-limit-num-social">0</span> / 280
 								</span>
@@ -330,7 +360,7 @@ const speechTool = getToolById('speech-time-calculator');
 						<div class="border-t border-[#afe3d0]/10 pt-3">
 							<div class="flex items-center justify-between text-[12px]">
 								<div class="flex items-center gap-1.5">
-									<label for="wc-goal-input" class="text-white/70">Word goal</label>
+									<label for="wc-goal-input" class="text-white/70">{t('wordCounter.ui.wordGoalLabel')}</label>
 									<input
 										id="wc-goal-input"
 										type="number"
@@ -339,7 +369,7 @@ const speechTool = getToolById('speech-time-calculator');
 										placeholder="—"
 										class="w-16 rounded-md border border-[#afe3d0]/25 bg-white/[0.06] px-2 py-0.5 text-center text-[12px] font-medium text-[#afe3d0] tabular-nums placeholder:text-white/30 focus:border-[#afe3d0] focus:outline-none"
 									/>
-									<span class="text-white/50">words</span>
+									<span class="text-white/50">{t('wordCounter.ui.wordsUnit')}</span>
 								</div>
 								<span id="wc-goal-progress" class="font-medium text-white/70 tabular-nums">
 									—
@@ -361,71 +391,130 @@ const speechTool = getToolById('speech-time-calculator');
 
 	<!-- Related Tools Note (Protected Against Draft Links) -->
 	<aside
-		aria-label="Related text and reading tools"
+		aria-label={t('wordCounter.ui.relatedToolsAria')}
 		class="mt-5 flex flex-col items-start justify-between gap-3 pt-2 text-[14px] text-body sm:flex-row sm:items-center"
 	>
 		<p class="leading-[22px]">
-			Need page count formatting or custom WPM sliders? Try our{' '}
+			{t('wordCounter.ui.relatedBeforeFirst')}
 			{
 				wordsToPagesTool?.status === 'live' ? (
 					<a
-						href={localePath(wordsToPagesTool.slug, Astro.url)}
+						href={getLocalizedPath(wordsToPagesTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{wordsToPagesTool.shortName}
+						{wordsToPagesName}
 					</a>
 				) : (
 					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-						<span>{wordsToPagesTool?.shortName ?? 'Words to Pages'}</span>
+						<span>{wordsToPagesName}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
 			}
-			,{' '}
+			{t('wordCounter.ui.relatedComma')}
 			{
 				readingTool?.status === 'live' ? (
 					<a
-						href={localePath(readingTool.slug, Astro.url)}
+						href={getLocalizedPath(readingTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{readingTool.shortName}
+						{readingToolName}
 					</a>
 				) : (
 					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-						<span>{readingTool?.shortName ?? 'Reading Time Counter'}</span>
+						<span>{readingToolName}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
 			}
-			, or{' '}
+			{t('wordCounter.ui.relatedBeforeLast')}
 			{
 				speechTool?.status === 'live' ? (
 					<a
-						href={localePath(speechTool.slug, Astro.url)}
+						href={getLocalizedPath(speechTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{speechTool.shortName}
+						{speechToolName}
 					</a>
 				) : (
 					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-						<span>{speechTool?.shortName ?? 'Speech Time Calculator'}</span>
+						<span>{speechToolName}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
 			}
-			.
+			{t('wordCounter.ui.relatedAfterLast')}
 		</p>
 	</aside>
 </section>
 
+<script type="application/json" id="wc-i18n" set:html={JSON.stringify(clientI18n).replace(/</g, '\\u003c')} />
+
 <script>
+	interface WcClientI18n {
+		locale: string;
+		zeroSec: string;
+		unitMin: string;
+		unitSec: string;
+		gradeLabel: string;
+		levelCollege: string;
+		levelGraduate: string;
+		pasted: string;
+		cleaned: string;
+		copied: string;
+		btnPaste: string;
+		btnCleanSpaces: string;
+		btnCopyText: string;
+		btnCopyKeywords: string;
+		btnCopySummary: string;
+		summaryTemplate: string;
+	}
+
 	function initWordCounterTool() {
+		const fallbackI18n: WcClientI18n = {
+			locale: 'en',
+			zeroSec: '0 sec',
+			unitMin: 'min',
+			unitSec: 'sec',
+			gradeLabel: 'Grade {grade}',
+			levelCollege: 'College',
+			levelGraduate: 'Graduate',
+			pasted: 'Pasted!',
+			cleaned: 'Cleaned!',
+			copied: 'Copied!',
+			btnPaste: 'Paste',
+			btnCleanSpaces: 'Clean spaces',
+			btnCopyText: 'Copy text',
+			btnCopyKeywords: 'Copy keywords',
+			btnCopySummary: 'Copy summary',
+			summaryTemplate:
+				'Words: {words} | Characters: {chars} (No spaces: {charsNoSpace}) | Sentences: {sentences} | Paragraphs: {paragraphs} | Reading Time: {readingTime} | Speaking Time: {speakingTime}',
+		};
+
+		let i18n: WcClientI18n = fallbackI18n;
+		const i18nEl = document.getElementById('wc-i18n');
+		if (i18nEl?.textContent) {
+			try {
+				const parsed = JSON.parse(i18nEl.textContent) as Partial<WcClientI18n>;
+				i18n = {
+					...fallbackI18n,
+					...parsed,
+				};
+			} catch {
+				// Use fallback English strings if JSON fails to parse
+			}
+		}
+
+		function fmt(template: string, vars: Record<string, string | number>): string {
+			return template.replace(/\{(\w+)\}/g, (_, key: string) => String(vars[key] ?? `{${key}}`));
+		}
+
 		const STOP_WORDS = new Set([
 			'a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of',
 			'with', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'this', 'that',
@@ -496,14 +585,16 @@ const speechTool = getToolById('speech-time-calculator');
 		let topKeywordsList: Array<{ word: string; count: number; density: string }> = [];
 
 		function formatDuration(words: number, wpm: number): string {
-			if (words <= 0 || wpm <= 0) return '0 sec';
+			if (words <= 0 || wpm <= 0) return i18n.zeroSec;
 			const totalSeconds = Math.round((words / wpm) * 60);
 			if (totalSeconds < 60) {
-				return `${totalSeconds} sec`;
+				return `${totalSeconds} ${i18n.unitSec}`;
 			}
 			const minutes = Math.floor(totalSeconds / 60);
 			const seconds = totalSeconds % 60;
-			return seconds > 0 ? `${minutes} min ${seconds} sec` : `${minutes} min`;
+			return seconds > 0
+				? `${minutes.toLocaleString(i18n.locale)} ${i18n.unitMin} ${seconds} ${i18n.unitSec}`
+				: `${minutes.toLocaleString(i18n.locale)} ${i18n.unitMin}`;
 		}
 
 		function countSyllablesInWord(word: string): number {
@@ -521,10 +612,10 @@ const speechTool = getToolById('speech-time-calculator');
 			if (words < 5 || sentences < 1) return '—';
 			const grade = 0.39 * (words / sentences) + 11.8 * (syllables / words) - 15.59;
 			const rounded = Math.round(grade);
-			if (rounded <= 0) return 'Grade 1';
-			if (rounded <= 12) return `Grade ${rounded}`;
-			if (rounded <= 16) return 'College';
-			return 'Graduate';
+			if (rounded <= 0) return fmt(i18n.gradeLabel, { grade: 1 });
+			if (rounded <= 12) return fmt(i18n.gradeLabel, { grade: rounded });
+			if (rounded <= 16) return i18n.levelCollege;
+			return i18n.levelGraduate;
 		}
 
 		function updateLimitRow(
@@ -534,7 +625,7 @@ const speechTool = getToolById('speech-time-calculator');
 			labelEl: HTMLElement | null,
 			barEl: HTMLElement | null
 		) {
-			if (numEl) numEl.textContent = chars.toLocaleString();
+			if (numEl) numEl.textContent = chars.toLocaleString(i18n.locale);
 			const pct = limit > 0 ? Math.min(100, Math.round((chars / limit) * 100)) : 0;
 			if (barEl) {
 				barEl.style.width = `${pct}%`;
@@ -569,7 +660,7 @@ const speechTool = getToolById('speech-time-calculator');
 			}
 
 			const pct = Math.round((wordCount / goalVal) * 100);
-			goalProgress.textContent = `${wordCount.toLocaleString()} / ${goalVal.toLocaleString()} · ${pct}%`;
+			goalProgress.textContent = `${wordCount.toLocaleString(i18n.locale)} / ${goalVal.toLocaleString(i18n.locale)} · ${pct}%`;
 			goalBar.style.width = `${Math.min(100, pct)}%`;
 			if (wordCount >= goalVal) {
 				goalProgress.classList.add('text-[#afe3d0]');
@@ -630,11 +721,11 @@ const speechTool = getToolById('speech-time-calculator');
 			const readabilityStr = calculateReadability(wordCount, sentenceCount, totalSyllables);
 
 			// Format strings
-			const wordsFormatted = wordCount.toLocaleString();
-			const charsFormatted = charsWithSpaces.toLocaleString();
-			const charsNoSpaceFormatted = charsWithoutSpaces.toLocaleString();
-			const sentencesFormatted = sentenceCount.toLocaleString();
-			const paragraphsFormatted = paragraphCount.toLocaleString();
+			const wordsFormatted = wordCount.toLocaleString(i18n.locale);
+			const charsFormatted = charsWithSpaces.toLocaleString(i18n.locale);
+			const charsNoSpaceFormatted = charsWithoutSpaces.toLocaleString(i18n.locale);
+			const sentencesFormatted = sentenceCount.toLocaleString(i18n.locale);
+			const paragraphsFormatted = paragraphCount.toLocaleString(i18n.locale);
 
 			// Left Footer
 			if (footerWords) footerWords.textContent = wordsFormatted;
@@ -648,7 +739,7 @@ const speechTool = getToolById('speech-time-calculator');
 			// CJK Sub-badge under Characters
 			if (cjkCount > 0) {
 				cjkWrapper?.classList.remove('hidden');
-				if (cjkCountEl) cjkCountEl.textContent = cjkCount.toLocaleString();
+				if (cjkCountEl) cjkCountEl.textContent = cjkCount.toLocaleString(i18n.locale);
 			} else {
 				cjkWrapper?.classList.add('hidden');
 			}
@@ -712,7 +803,15 @@ const speechTool = getToolById('speech-time-calculator');
 			}
 
 			// Summary string for clipboard
-			currentSummary = `Words: ${wordsFormatted} | Characters: ${charsFormatted} (No spaces: ${charsNoSpaceFormatted}) | Sentences: ${sentencesFormatted} | Paragraphs: ${paragraphsFormatted} | Reading Time: ${readingTimeStr} | Speaking Time: ${speakingTimeStr}`;
+			currentSummary = fmt(i18n.summaryTemplate, {
+				words: wordsFormatted,
+				chars: charsFormatted,
+				charsNoSpace: charsNoSpaceFormatted,
+				sentences: sentencesFormatted,
+				paragraphs: paragraphsFormatted,
+				readingTime: readingTimeStr,
+				speakingTime: speakingTimeStr,
+			});
 		}
 
 		// Event Listeners
@@ -765,10 +864,9 @@ const speechTool = getToolById('speech-time-calculator');
 				if (text && textarea) {
 					textarea.value = text;
 					updateMetrics();
-					const original = btnPaste.textContent;
-					btnPaste.textContent = 'Pasted!';
+					btnPaste.textContent = i18n.pasted;
 					setTimeout(() => {
-						btnPaste.textContent = original;
+						btnPaste.textContent = i18n.btnPaste;
 					}, 1500);
 				}
 			} catch {
@@ -788,10 +886,9 @@ const speechTool = getToolById('speech-time-calculator');
 			textarea.value = cleaned;
 			updateMetrics();
 
-			const original = btnCleanSpaces.textContent;
-			btnCleanSpaces.textContent = 'Cleaned!';
+			btnCleanSpaces.textContent = i18n.cleaned;
 			setTimeout(() => {
-				btnCleanSpaces.textContent = original;
+				btnCleanSpaces.textContent = i18n.btnCleanSpaces;
 			}, 1500);
 		});
 
@@ -821,10 +918,9 @@ const speechTool = getToolById('speech-time-calculator');
 				textarea?.select();
 				document.execCommand('copy');
 			}
-			const original = btnCopyText.textContent;
-			btnCopyText.textContent = 'Copied!';
+			btnCopyText.textContent = i18n.copied;
 			setTimeout(() => {
-				btnCopyText.textContent = original;
+				btnCopyText.textContent = i18n.btnCopyText;
 			}, 1500);
 		});
 
@@ -853,10 +949,9 @@ const speechTool = getToolById('speech-time-calculator');
 				document.execCommand('copy');
 				document.body.removeChild(temp);
 			}
-			const original = btnCopyKeywords.textContent;
-			btnCopyKeywords.textContent = 'Copied!';
+			btnCopyKeywords.textContent = i18n.copied;
 			setTimeout(() => {
-				btnCopyKeywords.textContent = original;
+				btnCopyKeywords.textContent = i18n.btnCopyKeywords;
 			}, 1500);
 		});
 
@@ -873,10 +968,9 @@ const speechTool = getToolById('speech-time-calculator');
 				document.execCommand('copy');
 				document.body.removeChild(temp);
 			}
-			const original = btnCopySummary.textContent;
-			btnCopySummary.textContent = 'Copied!';
+			btnCopySummary.textContent = i18n.copied;
 			setTimeout(() => {
-				btnCopySummary.textContent = original;
+				btnCopySummary.textContent = i18n.btnCopySummary;
 			}, 1500);
 		});
 

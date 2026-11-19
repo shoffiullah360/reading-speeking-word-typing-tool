@@ -1,9 +1,43 @@
 ---
+import { getLocaleFromUrl, useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const clientI18n = {
+	locale,
+	zeroDuration: t('speechCalculator.client.zeroDuration'),
+	unitMin: t('speechCalculator.client.unitMin'),
+	unitSec: t('speechCalculator.client.unitSec'),
+	durationFormat: t('speechCalculator.client.durationFormat'),
+	wordSingular: t('speechCalculator.client.wordSingular'),
+	wordPlural: t('speechCalculator.client.wordPlural'),
+	charSingular: t('speechCalculator.client.charSingular'),
+	charPlural: t('speechCalculator.client.charPlural'),
+	atWpm: t('speechCalculator.client.atWpm'),
+	atCpm: t('speechCalculator.client.atCpm'),
+	mixedAtWpm: t('speechCalculator.client.mixedAtWpm'),
+	mixedCopyAtWpm: t('speechCalculator.client.mixedCopyAtWpm'),
+	onTarget: t('speechCalculator.client.onTarget'),
+	overBySec: t('speechCalculator.client.overBySec'),
+	copySummary: t('speechCalculator.client.copySummary'),
+	copyResult: t('speechCalculator.client.copyResult'),
+	copied: t('speechCalculator.client.copied'),
+};
+
+const wordChips = [250, 500, 1000, 1500].map((value) => ({
+	label: value.toLocaleString(locale),
+	value,
+}));
 ---
 
 <section
 	id="speech-calculator"
-	aria-label="Speech Time Calculator"
+	aria-label={t('speechCalculator.ui.workspaceAria')}
 	class="mx-auto max-w-[1140px] px-4 pt-4 pb-14 sm:px-6"
 >
 	<!-- Unified Split-Studio Card -->
@@ -15,7 +49,7 @@
 				<div class="mb-6 flex items-center justify-between gap-4">
 					<div
 						role="tablist"
-						aria-label="Input mode"
+						aria-label={t('speechCalculator.ui.inputModeAria')}
 						class="inline-flex rounded-full border border-hairline bg-canvas p-1"
 					>
 						<button
@@ -27,7 +61,7 @@
 							data-mode="script"
 							class="speech-mode-btn cursor-pointer rounded-full bg-[#afe3d0] px-4 py-1.5 text-[13px] font-semibold text-[#0f2e26] transition-all"
 						>
-							Paste script
+							{t('speechCalculator.ui.tabScript')}
 						</button>
 						<button
 							type="button"
@@ -38,7 +72,7 @@
 							data-mode="words"
 							class="speech-mode-btn cursor-pointer rounded-full bg-transparent px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:text-ink"
 						>
-							Enter word count
+							{t('speechCalculator.ui.tabWords')}
 						</button>
 					</div>
 				</div>
@@ -51,12 +85,12 @@
 					class="flex flex-col"
 				>
 					<label for="speech-script-input" class="sr-only">
-						Paste your speech, script, or presentation notes
+						{t('speechCalculator.ui.scriptLabel')}
 					</label>
 					<textarea
 						id="speech-script-input"
 						rows="9"
-						placeholder="Paste your speech, script, or presentation notes..."
+						placeholder={t('speechCalculator.ui.scriptPlaceholder')}
 						class="min-h-[220px] w-full resize-y border-0 bg-transparent font-sans text-[16px] leading-[27px] text-ink placeholder:text-faint focus:outline-none"
 					></textarea>
 				</div>
@@ -72,7 +106,7 @@
 						for="speech-wordcount-input"
 						class="mb-2 block text-[13px] font-medium text-mute"
 					>
-						Total words in your speech
+						{t('speechCalculator.ui.wordCountLabel')}
 					</label>
 					<input
 						id="speech-wordcount-input"
@@ -80,20 +114,15 @@
 						min="0"
 						max="100000"
 						step="1"
-						placeholder="e.g. 750"
+						placeholder={t('speechCalculator.ui.wordCountPlaceholder')}
 						class="w-full border-b border-hairline bg-transparent pb-3 font-sans text-[40px] leading-[48px] font-semibold tracking-[-1px] text-ink tabular-nums placeholder:text-faint focus:border-[#0f2e26] focus:outline-none dark:focus:border-[#afe3d0]"
 					/>
 
 					<!-- 4 Subtle Quick-Fill Chips -->
 					<div class="mt-5 flex flex-wrap items-center gap-2">
-						<span class="mr-1 text-[12px] text-mute">Quick fill:</span>
+						<span class="mr-1 text-[12px] text-mute">{t('speechCalculator.ui.quickFill')}</span>
 						{
-							[
-								{ label: '250', value: 250 },
-								{ label: '500', value: 500 },
-								{ label: '1,000', value: 1000 },
-								{ label: '1,500', value: 1500 },
-							].map((chip) => (
+							wordChips.map((chip) => (
 								<button
 									type="button"
 									data-word-chip={chip.value}
@@ -112,23 +141,23 @@
 				<!-- Minimal Footer Bar -->
 				<div class="flex items-center justify-between border-t border-hairline py-3.5 text-[13px]">
 					<span id="live-word-counter" class="font-medium text-mute tabular-nums">
-						0 words
+						{t('speechCalculator.ui.initialWordCount')}
 					</span>
 					<button
 						type="button"
 						id="btn-clear-input"
 						class="cursor-pointer font-medium text-mute transition-colors hover:text-ink"
 					>
-						Clear
+						{t('speechCalculator.ui.btnClear')}
 					</button>
 				</div>
 
 				<!-- Speaking Pace Selector -->
 				<div class="border-t border-hairline pt-5">
 					<div class="mb-3 flex items-center justify-between gap-2">
-						<span class="text-[13px] font-medium text-ink">Speaking pace</span>
+						<span class="text-[13px] font-medium text-ink">{t('speechCalculator.ui.speakingPaceLabel')}</span>
 						<div id="custom-wpm-wrapper" class="hidden items-center gap-1.5">
-							<label for="custom-wpm-input" class="text-[12px] text-mute">WPM:</label>
+							<label for="custom-wpm-input" class="text-[12px] text-mute">{t('speechCalculator.ui.customWpmLabel')}</label>
 							<input
 								id="custom-wpm-input"
 								type="number"
@@ -143,7 +172,7 @@
 
 					<div
 						role="radiogroup"
-						aria-label="Speaking pace"
+						aria-label={t('speechCalculator.ui.speakingPaceAria')}
 						class="grid grid-cols-2 gap-2 sm:grid-cols-4"
 					>
 						<button
@@ -152,7 +181,7 @@
 							data-wpm="110"
 							class="pace-pill-btn cursor-pointer rounded-xl border border-hairline bg-canvas px-3 py-2.5 text-center text-[13px] font-medium text-body tabular-nums transition-all hover:border-ink hover:text-ink"
 						>
-							Slow (110 WPM)
+							{t('speechCalculator.ui.paceSlow')}
 						</button>
 						<button
 							type="button"
@@ -160,7 +189,7 @@
 							data-wpm="130"
 							class="pace-pill-btn cursor-pointer rounded-xl border border-[#0f2e26] bg-[#0f2e26] px-3 py-2.5 text-center text-[13px] font-medium text-[#afe3d0] tabular-nums transition-all dark:border-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]"
 						>
-							Average (130 WPM)
+							{t('speechCalculator.ui.paceAverage')}
 						</button>
 						<button
 							type="button"
@@ -168,14 +197,14 @@
 							data-wpm="160"
 							class="pace-pill-btn cursor-pointer rounded-xl border border-hairline bg-canvas px-3 py-2.5 text-center text-[13px] font-medium text-body tabular-nums transition-all hover:border-ink hover:text-ink"
 						>
-							Fast (160 WPM)
+							{t('speechCalculator.ui.paceFast')}
 						</button>
 						<button
 							type="button"
 							data-pace-mode="custom"
 							class="pace-pill-btn cursor-pointer rounded-xl border border-hairline bg-canvas px-3 py-2.5 text-center text-[13px] font-medium text-body transition-all hover:border-ink hover:text-ink"
 						>
-							Custom
+							{t('speechCalculator.ui.paceCustom')}
 						</button>
 					</div>
 				</div>
@@ -188,17 +217,17 @@
 				<!-- Primary Readout -->
 				<div>
 					<span class="block text-[11px] font-semibold tracking-[0.12em] text-[#afe3d0]/75 uppercase">
-						SPEAKING TIME
+						{t('speechCalculator.ui.speakingTimeHeading')}
 					</span>
 					<output
 						id="result-speaking-time"
 						aria-live="polite"
 						class="mt-2 block font-sans text-[44px] leading-[50px] font-semibold tracking-[-1.5px] text-[#afe3d0] tabular-nums sm:text-[50px] sm:leading-[56px]"
 					>
-						0 min 0 sec
+						{t('speechCalculator.client.zeroDuration')}
 					</output>
 					<p id="result-subline" class="mt-2 text-[14px] text-[#d1fae5]/80 tabular-nums">
-						0 words at 130 WPM
+						{t('speechCalculator.ui.initialSubline')}
 					</p>
 				</div>
 
@@ -206,7 +235,7 @@
 				<div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/70 px-4 py-3">
 					<div class="flex items-center gap-2.5">
 						<label for="target-limit-input" class="text-[13px] font-medium text-[#d1fae5]/90">
-							Target limit
+							{t('speechCalculator.ui.targetLimitLabel')}
 						</label>
 						<div class="inline-flex items-center rounded-lg border border-[#afe3d0]/25 bg-[#0f2e26] px-2.5 py-1">
 							<input
@@ -218,7 +247,7 @@
 								placeholder="—"
 								class="w-12 bg-transparent text-right text-[13px] font-semibold text-white tabular-nums placeholder:text-[#afe3d0]/40 focus:outline-none"
 							/>
-							<span class="ml-1 text-[12px] text-[#afe3d0]/70">min</span>
+							<span class="ml-1 text-[12px] text-[#afe3d0]/70">{t('speechCalculator.client.unitMin')}</span>
 						</div>
 					</div>
 
@@ -226,7 +255,7 @@
 						id="target-status-pill"
 						class="hidden rounded-full px-3 py-1 text-[12px] font-semibold tabular-nums"
 					>
-						On target
+						{t('speechCalculator.client.onTarget')}
 					</span>
 				</div>
 
@@ -234,7 +263,7 @@
 				<div>
 					<div class="mb-3 flex items-center justify-between">
 						<span class="text-[12px] font-medium text-[#afe3d0]/80">
-							Words that fit at current pace
+							{t('speechCalculator.ui.wordsThatFitHeading')}
 						</span>
 						<span id="fit-pace-label" class="text-[12px] text-[#afe3d0]/65 tabular-nums">
 							130 WPM
@@ -243,27 +272,27 @@
 
 					<div class="grid grid-cols-2 gap-2.5">
 						<div class="rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/55 px-4 py-3">
-							<span class="block text-[12px] text-[#afe3d0]/70">1 min</span>
+							<span class="block text-[12px] text-[#afe3d0]/70">{t('speechCalculator.ui.fitMinLabel', { minutes: 1 })}</span>
 							<strong id="fit-1m" class="mt-0.5 block text-[18px] font-semibold text-white tabular-nums">
-								130 words
+								{t('speechCalculator.ui.fitWordsInitial', { count: (130).toLocaleString(locale) })}
 							</strong>
 						</div>
 						<div class="rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/55 px-4 py-3">
-							<span class="block text-[12px] text-[#afe3d0]/70">3 min</span>
+							<span class="block text-[12px] text-[#afe3d0]/70">{t('speechCalculator.ui.fitMinLabel', { minutes: 3 })}</span>
 							<strong id="fit-3m" class="mt-0.5 block text-[18px] font-semibold text-white tabular-nums">
-								390 words
+								{t('speechCalculator.ui.fitWordsInitial', { count: (390).toLocaleString(locale) })}
 							</strong>
 						</div>
 						<div class="rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/55 px-4 py-3">
-							<span class="block text-[12px] text-[#afe3d0]/70">5 min</span>
+							<span class="block text-[12px] text-[#afe3d0]/70">{t('speechCalculator.ui.fitMinLabel', { minutes: 5 })}</span>
 							<strong id="fit-5m" class="mt-0.5 block text-[18px] font-semibold text-white tabular-nums">
-								650 words
+								{t('speechCalculator.ui.fitWordsInitial', { count: (650).toLocaleString(locale) })}
 							</strong>
 						</div>
 						<div class="rounded-2xl border border-[#afe3d0]/15 bg-[#153d33]/55 px-4 py-3">
-							<span class="block text-[12px] text-[#afe3d0]/70">10 min</span>
+							<span class="block text-[12px] text-[#afe3d0]/70">{t('speechCalculator.ui.fitMinLabel', { minutes: 10 })}</span>
 							<strong id="fit-10m" class="mt-0.5 block text-[18px] font-semibold text-white tabular-nums">
-								1,300 words
+								{t('speechCalculator.ui.fitWordsInitial', { count: (1300).toLocaleString(locale) })}
 							</strong>
 						</div>
 					</div>
@@ -277,15 +306,86 @@
 					id="btn-copy-result"
 					class="w-full cursor-pointer rounded-2xl border border-[#afe3d0]/40 bg-[#afe3d0] px-5 py-3.5 text-center text-[14px] font-semibold text-[#0f2e26] transition-all hover:bg-[#c5eedf] active:scale-[0.99]"
 				>
-					Copy result
+					{t('speechCalculator.client.copyResult')}
 				</button>
 			</div>
 		</div>
 	</div>
 </section>
 
+<script
+	type="application/json"
+	id="sc-i18n"
+	set:html={JSON.stringify(clientI18n).replace(/</g, '\\u003c')}
+/>
+
 <script>
+	interface SpeechClientI18n {
+		locale: string;
+		zeroDuration: string;
+		unitMin: string;
+		unitSec: string;
+		durationFormat: string;
+		wordSingular: string;
+		wordPlural: string;
+		charSingular: string;
+		charPlural: string;
+		atWpm: string;
+		atCpm: string;
+		mixedAtWpm: string;
+		mixedCopyAtWpm: string;
+		onTarget: string;
+		overBySec: string;
+		copySummary: string;
+		copyResult: string;
+		copied: string;
+	}
+
 	function initSpeechCalculator() {
+		const fallbackI18n: SpeechClientI18n = {
+			locale: 'en',
+			zeroDuration: '0 min 0 sec',
+			unitMin: 'min',
+			unitSec: 'sec',
+			durationFormat: '{mins} min {secs} sec',
+			wordSingular: 'word',
+			wordPlural: 'words',
+			charSingular: 'character',
+			charPlural: 'characters',
+			atWpm: '{desc} at {wpm} WPM',
+			atCpm: '{desc} at {cpm} CPM',
+			mixedAtWpm: '{words} & {chars} at {wpm} WPM',
+			mixedCopyAtWpm: '{words}, {chars} at {wpm} WPM',
+			onTarget: 'On target',
+			overBySec: 'Over by {secs} sec',
+			copySummary: 'Speaking Time: {time} ({detail})',
+			copyResult: 'Copy result',
+			copied: 'Copied!',
+		};
+
+		let i18n: SpeechClientI18n = fallbackI18n;
+		const i18nEl = document.getElementById('sc-i18n');
+		if (i18nEl?.textContent) {
+			try {
+				const parsed = JSON.parse(i18nEl.textContent) as Partial<SpeechClientI18n>;
+				i18n = { ...fallbackI18n, ...parsed };
+			} catch {
+				// Use fallback English strings if JSON fails to parse
+			}
+		}
+
+		function fmt(template: string, vars: Record<string, string | number>): string {
+			return template.replace(/\{(\w+)\}/g, (_, key: string) => String(vars[key] ?? `{${key}}`));
+		}
+
+		function formatWordCount(count: number): string {
+			return `${count.toLocaleString(i18n.locale)} ${count === 1 ? i18n.wordSingular : i18n.wordPlural}`;
+		}
+
+		function formatCharCount(count: number): string {
+			return `${count.toLocaleString(i18n.locale)} ${count === 1 ? i18n.charSingular : i18n.charPlural}`;
+		}
+
 		let inputMode: 'script' | 'words' = 'script';
 		let activeWpm = 130;
 		let isCustomPace = false;
@@ -337,11 +437,13 @@
 		function analyzeScript(text: string, wpm: number): ScriptAnalysis {
 			const trimmed = text.trim();
 			if (!trimmed) {
+				const zeroDesc = formatWordCount(0);
+				const zeroAtWpm = fmt(i18n.atWpm, { desc: zeroDesc, wpm });
 				return {
 					totalSeconds: 0,
-					footerText: '0 words',
-					sublineText: `0 words at ${wpm} WPM`,
-					copyText: `0 words at ${wpm} WPM`,
+					footerText: zeroDesc,
+					sublineText: zeroAtWpm,
+					copyText: zeroAtWpm,
 				};
 			}
 
@@ -349,12 +451,13 @@
 			if (!CJK_REGEX.test(trimmed)) {
 				const words = countWords(trimmed);
 				const totalSeconds = words > 0 ? Math.round((words / wpm) * 60) : 0;
-				const wordDesc = `${words.toLocaleString()} ${words === 1 ? 'word' : 'words'}`;
+				const wordDesc = formatWordCount(words);
+				const atWpmText = fmt(i18n.atWpm, { desc: wordDesc, wpm });
 				return {
 					totalSeconds,
 					footerText: wordDesc,
-					sublineText: `${wordDesc} at ${wpm} WPM`,
-					copyText: `${wordDesc} at ${wpm} WPM`,
+					sublineText: atWpmText,
+					copyText: atWpmText,
 				};
 			}
 
@@ -373,23 +476,24 @@
 			const totalSeconds = Math.round(cjkSeconds + nonCjkSeconds);
 
 			const displayCpm = Math.round(cjkCpm);
-			const charDesc = `${cjkChars.toLocaleString()} ${cjkChars === 1 ? 'character' : 'characters'}`;
+			const charDesc = formatCharCount(cjkChars);
 
 			if (nonCjkWords === 0) {
+				const atCpmText = fmt(i18n.atCpm, { desc: charDesc, cpm: displayCpm });
 				return {
 					totalSeconds,
 					footerText: charDesc,
-					sublineText: `${charDesc} at ${displayCpm} CPM`,
-					copyText: `${charDesc} at ${displayCpm} CPM`,
+					sublineText: atCpmText,
+					copyText: atCpmText,
 				};
 			}
 
-			const wordDesc = `${nonCjkWords.toLocaleString()} ${nonCjkWords === 1 ? 'word' : 'words'}`;
+			const wordDesc = formatWordCount(nonCjkWords);
 			return {
 				totalSeconds,
 				footerText: `${wordDesc}, ${charDesc}`,
-				sublineText: `${wordDesc} & ${charDesc} at ${wpm} WPM`,
-				copyText: `${wordDesc}, ${charDesc} at ${wpm} WPM`,
+				sublineText: fmt(i18n.mixedAtWpm, { words: wordDesc, chars: charDesc, wpm }),
+				copyText: fmt(i18n.mixedCopyAtWpm, { words: wordDesc, chars: charDesc, wpm }),
 			};
 		}
 
@@ -400,15 +504,16 @@
 			return {
 				mins,
 				secs,
-				text: `${mins.toLocaleString()} min ${secs} sec`,
+				text: fmt(i18n.durationFormat, { mins: mins.toLocaleString(i18n.locale), secs }),
 			};
 		}
 
 		function updateUI() {
 			const wpm = Math.max(1, activeWpm);
 			let totalSeconds = 0;
-			let footerText = '0 words';
-			let sublineText = `0 words at ${wpm} WPM`;
+			const zeroDesc = formatWordCount(0);
+			let footerText = zeroDesc;
+			let sublineText = fmt(i18n.atWpm, { desc: zeroDesc, wpm });
 
 			if (inputMode === 'script') {
 				const analysis = analyzeScript(scriptInput?.value ?? '', wpm);
@@ -419,8 +524,9 @@
 				const raw = parseInt(wordCountInput?.value ?? '', 10);
 				const words = Number.isNaN(raw) || raw < 0 ? 0 : raw;
 				totalSeconds = words > 0 ? Math.round((words / wpm) * 60) : 0;
-				footerText = `${words.toLocaleString()} ${words === 1 ? 'word' : 'words'}`;
-				sublineText = `${words.toLocaleString()} ${words === 1 ? 'word' : 'words'} at ${wpm} WPM`;
+				const wordDesc = formatWordCount(words);
+				footerText = wordDesc;
+				sublineText = fmt(i18n.atWpm, { desc: wordDesc, wpm });
 			}
 
 			const formattedTime = formatMinSec(totalSeconds);
@@ -448,11 +554,13 @@
 					targetStatusPill.classList.remove('hidden');
 
 					if (diffSeconds <= 0) {
-						targetStatusPill.textContent = 'On target';
+						targetStatusPill.textContent = i18n.onTarget;
 						targetStatusPill.className =
 							'rounded-full bg-[#afe3d0]/20 px-3 py-1 text-[12px] font-semibold text-[#afe3d0] tabular-nums';
 					} else {
-						targetStatusPill.textContent = `Over by ${diffSeconds.toLocaleString()} sec`;
+						targetStatusPill.textContent = fmt(i18n.overBySec, {
+							secs: diffSeconds.toLocaleString(i18n.locale),
+						});
 						targetStatusPill.className =
 							'rounded-full bg-amber-400/20 px-3 py-1 text-[12px] font-semibold text-amber-200 tabular-nums';
 					}
@@ -463,10 +571,10 @@
 
 			// 2x2 Words That Fit Grid
 			if (fitPaceLabel) fitPaceLabel.textContent = `${wpm} WPM`;
-			if (fit1m) fit1m.textContent = `${Math.round(wpm * 1).toLocaleString()} words`;
-			if (fit3m) fit3m.textContent = `${Math.round(wpm * 3).toLocaleString()} words`;
-			if (fit5m) fit5m.textContent = `${Math.round(wpm * 5).toLocaleString()} words`;
-			if (fit10m) fit10m.textContent = `${Math.round(wpm * 10).toLocaleString()} words`;
+			if (fit1m) fit1m.textContent = formatWordCount(Math.round(wpm * 1));
+			if (fit3m) fit3m.textContent = formatWordCount(Math.round(wpm * 3));
+			if (fit5m) fit5m.textContent = formatWordCount(Math.round(wpm * 5));
+			if (fit10m) fit10m.textContent = formatWordCount(Math.round(wpm * 10));
 		}
 
 		function syncPacePills() {
@@ -585,19 +693,20 @@
 				const raw = parseInt(wordCountInput?.value ?? '', 10);
 				const words = Number.isNaN(raw) || raw < 0 ? 0 : raw;
 				totalSeconds = words > 0 ? Math.round((words / wpm) * 60) : 0;
-				summaryDetail = `${words.toLocaleString()} ${words === 1 ? 'word' : 'words'} at ${wpm} WPM`;
+				const wordDesc = formatWordCount(words);
+				summaryDetail = fmt(i18n.atWpm, { desc: wordDesc, wpm });
 			}
 
 			const formattedTime = formatMinSec(totalSeconds);
-			const summaryText = `Speaking Time: ${formattedTime.text} (${summaryDetail})`;
+			const summaryText = fmt(i18n.copySummary, { time: formattedTime.text, detail: summaryDetail });
 
 			try {
 				await navigator.clipboard.writeText(summaryText);
 				if (btnCopyResult) {
-					btnCopyResult.textContent = 'Copied!';
+					btnCopyResult.textContent = i18n.copied;
 					if (copyTimeout) window.clearTimeout(copyTimeout);
 					copyTimeout = window.setTimeout(() => {
-						if (btnCopyResult) btnCopyResult.textContent = 'Copy result';
+						if (btnCopyResult) btnCopyResult.textContent = i18n.copyResult;
 					}, 1800);
 				}
 			} catch {

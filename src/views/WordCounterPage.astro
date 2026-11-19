@@ -9,87 +9,59 @@ import { getLocaleFromUrl, getLocalizedPath, localizeHtmlLinks, useTranslations 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 
+interface FaqItem {
+	question: string;
+	answer: string;
+	answerHtml: string;
+}
+
+interface TitleBodyCard {
+	title: string;
+	bodyHtml: string;
+}
+
+interface EssayStandardRow {
+	type: string;
+	words: string;
+	pages: string;
+	readingTime: string;
+}
+
+interface CharacterLimitRow {
+	platform: string;
+	maxLimit: string;
+	sweetSpot: string;
+	method: string;
+}
+
+interface ComparisonRow {
+	feature: string;
+	wordora: string;
+	docs: string;
+	word: string;
+}
+
 const pageTitle = t("wordCounter.title");
 const pageDescription = t("wordCounter.metaDescription");
 const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/word-counter/", locale));
 
-const faqs = [
-	{
-		question: "How many pages is 1,000 words in an essay?",
-		answer:
-			"A 1,000-word essay is approximately 4 pages double-spaced or 2 pages single-spaced when using standard 12pt font (such as Times New Roman or Arial) with 1-inch margins. Exact length depends on formatting, paragraph breaks, and heading hierarchy. You can use our Words to Pages Converter to customize font size, line spacing, and margins.",
-		answerHtml:
-			'A 1,000-word essay is approximately 4 pages double-spaced or 2 pages single-spaced when using standard 12pt font (such as Times New Roman or Arial) with 1-inch margins. Exact length depends on formatting, paragraph breaks, and heading hierarchy. You can use our <a href="/words-to-pages/" class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 hover:text-vercel-blue-deep hover:decoration-vercel-blue">Words to Pages Converter</a> to customize font size, line spacing, and margins.',
-	},
-	{
-		question:
-			"What is the difference between characters with spaces and characters without spaces?",
-		answer:
-			"Characters with spaces counts every keystroke—including letters, numbers, punctuation, and whitespace gaps. Characters without spaces excludes all spaces, tabs, and line breaks, measuring only the visible letters and symbols. Platforms like Google SEO titles and X count total characters with spaces, while translation agencies and certain academic publications bill by characters without spaces.",
-		answerHtml:
-			"Characters with spaces counts every keystroke—including letters, numbers, punctuation, and whitespace gaps. Characters without spaces excludes all spaces, tabs, and line breaks, measuring only the visible letters and symbols. Platforms like Google SEO titles and X count total characters with spaces, while translation agencies and certain academic publications bill by characters without spaces.",
-	},
-	{
-		question: "How do I reduce word count in an essay without losing key points?",
-		answer:
-			'To reduce word count effectively, cut filler phrases (replace "due to the fact that" with "because"), convert passive constructions to active voice, and prune weak adverbs like "very", "really", and "basically". Keeping introductions under 12% of total length and combining redundant transition sentences will easily trim 15% to 25% of your draft without sacrificing depth.',
-		answerHtml:
-			'To reduce word count effectively, cut filler phrases (replace <strong class="font-medium text-ink">"due to the fact that"</strong> with <strong class="font-medium text-ink">"because"</strong>), convert passive constructions to active voice, and prune weak adverbs like <strong class="font-medium text-ink">"very"</strong>, <strong class="font-medium text-ink">"really"</strong>, and <strong class="font-medium text-ink">"basically"</strong>. Keeping introductions under 12% of total length and combining redundant transition sentences will easily trim 15% to 25% of your draft without sacrificing depth.',
-	},
-	{
-		question:
-			"What is an ideal keyword frequency or density in articles and essays?",
-		answer:
-			"An ideal keyword density for SEO articles and essays is between 1% and 2% of total word count. This means a primary keyword or phrase appears roughly 10 to 20 times within a 1,000-word article. Higher frequencies risk sounding repetitive and triggering search engine over-optimization penalties.",
-		answerHtml:
-			'An ideal keyword density for SEO articles and essays is between <strong class="font-medium text-ink">1% and 2%</strong> of total word count. This means a primary keyword or phrase appears roughly 10 to 20 times within a 1,000-word article. Higher frequencies risk sounding repetitive and triggering search engine over-optimization penalties.',
-	},
-	{
-		question: "Does this word counter work for Chinese and Japanese characters?",
-		answer:
-			"Yes. Wordora features smart CJK character detection that accurately counts Chinese (Hanzi) and Japanese (Kanji, Hiragana, Katakana) characters alongside space-separated Western text. When CJK characters are detected, a dedicated sub-badge displays your exact CJK count under the Characters metric.",
-		answerHtml:
-			'Yes. Wordora features smart CJK character detection that accurately counts Chinese (Hanzi) and Japanese (Kanji, Hiragana, Katakana) characters alongside space-separated Western text. When CJK characters are detected, a dedicated sub-badge displays your exact CJK count under the Characters metric.',
-	},
-	{
-		question: "Are hyphenated words and numbers counted as one word?",
-		answer:
-			'Yes. Standard hyphenated terms (such as "well-being" or "state-of-the-art") are counted as a single word, conforming to major academic and journalistic style guides (APA, MLA, and Chicago). Standalone numbers, dates (such as "2026"), and percentages ("99.9%") are also counted as single individual words.',
-		answerHtml:
-			'Yes. Standard hyphenated terms (such as <strong class="font-medium text-ink">"well-being"</strong> or <strong class="font-medium text-ink">"state-of-the-art"</strong>) are counted as a single word, conforming to major academic and journalistic style guides (APA, MLA, and Chicago). Standalone numbers, dates (such as "2026"), and percentages ("99.9%") are also counted as single individual words.',
-	},
-	{
-		question:
-			"How many words is a 5-minute speech or 2-minute reading passage?",
-		answer:
-			"At an average presentation pace of 130 words per minute, a 5-minute speech requires approximately 650 words (or 550 words with an 85% stage buffer for natural pauses). A 2-minute silent reading passage equals roughly 476 words at the standard reading rate of 238 WPM. Calculate exact timings with our Speech Time Calculator and Reading Time Calculator.",
-		answerHtml:
-			'At an average presentation pace of 130 words per minute, a 5-minute speech requires approximately 650 words (or 550 words with an 85% stage buffer for natural pauses). A 2-minute silent reading passage equals roughly 476 words at the standard reading rate of 238 WPM. Calculate exact timings with our <a href="/speech-time-calculator/" class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 hover:text-vercel-blue-deep hover:decoration-vercel-blue">Speech Time Calculator</a> and <a href="/reading-time-calculator/" class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 hover:text-vercel-blue-deep hover:decoration-vercel-blue">Reading Time Calculator</a>.',
-	},
-	{
-		question: "What is a good Flesch-Kincaid readability grade level?",
-		answer:
-			"For general web content, blog posts, and consumer articles, a Flesch-Kincaid score between Grade 6 and Grade 8 is recommended for maximum clarity and accessibility. High school essays typically score around Grade 9 to 11, while college research papers and academic dissertations register at Grade 12 or above.",
-		answerHtml:
-			'For general web content, blog posts, and consumer articles, a Flesch-Kincaid score between <strong class="font-medium text-ink">Grade 6 and Grade 8</strong> is recommended for maximum clarity and accessibility. High school essays typically score around Grade 9 to 11, while college research papers and academic dissertations register at Grade 12 or above.',
-	},
-	{
-		question:
-			"Does Google Docs or Microsoft Word count words differently than an online word counter?",
-		answer:
-			"Most word counters use similar tokenization rules, but differences arise with hyphenated terms, compound words, and CJK text. Google Docs counts hyphenated terms as single words but requires opening a dialog (Ctrl+Shift+C) to view characters without spaces. Wordora displays all metrics instantly in real time without lag, account logins, or menu clicks.",
-		answerHtml:
-			"Most word counters use similar tokenization rules, but differences arise with hyphenated terms, compound words, and CJK text. Google Docs counts hyphenated terms as single words but requires opening a dialog (Ctrl+Shift+C) to view characters without spaces. Wordora displays all metrics instantly in real time without lag, account logins, or menu clicks.",
-	},
-	{
-		question:
-			"Is my text saved or uploaded when I use this free online word counter?",
-		answer:
-			"No. Wordora executes all text analysis and calculations 100% locally in your web browser using client-side JavaScript. Your pasted text, drafts, and notes never leave your device, are never transmitted to external servers, and are never stored or logged anywhere.",
-		answerHtml:
-			"No. Wordora executes all text analysis and calculations 100% locally in your web browser using client-side JavaScript. Your pasted text, drafts, and notes never leave your device, are never transmitted to external servers, and are never stored or logged anywhere.",
-	},
-];
+const faqs = t.raw<FaqItem[]>("wordCounter.faq.items") ?? [];
+const featureList = t.raw<string[]>("wordCounter.schema.featureList") ?? [];
+
+const guideSteps = t.raw<TitleBodyCard[]>("wordCounter.page.guide.steps") ?? [];
+const guideMetrics = t.raw<TitleBodyCard[]>("wordCounter.page.guide.metrics") ?? [];
+
+const essayStandardsHeaders = t.raw<string[]>("wordCounter.page.essayStandards.headers") ?? [];
+const essayStandardsData = t.raw<EssayStandardRow[]>("wordCounter.page.essayStandards.rows") ?? [];
+
+const characterLimitsHeaders = t.raw<string[]>("wordCounter.page.characterLimits.headers") ?? [];
+const characterLimitsData = t.raw<CharacterLimitRow[]>("wordCounter.page.characterLimits.rows") ?? [];
+
+const comparisonHeaders = t.raw<string[]>("wordCounter.page.comparison.headers") ?? [];
+const comparisonData = t.raw<ComparisonRow[]>("wordCounter.page.comparison.rows") ?? [];
+
+const reduceCards = t.raw<TitleBodyCard[]>("wordCounter.page.reduceGuide.cards") ?? [];
+const edgeCasesHtml = t.raw<string[]>("wordCounter.page.readabilityRules.edgeCasesHtml") ?? [];
 
 const structuredData = {
 	"@context": "https://schema.org",
@@ -107,18 +79,11 @@ const structuredData = {
 				priceCurrency: "USD",
 			},
 			description: pageDescription,
-			featureList: [
-				"Real-time word, character (with and without spaces), sentence, and paragraph counts",
-				"Smart CJK character detection for Chinese and Japanese text",
-				"One-click Clean spaces utility to normalize whitespace and formatting",
-				"Academic page count estimate (250 words/page) and Flesch-Kincaid grade level",
-				"Silent reading time (238 WPM) and speaking time (130 WPM) calculations",
-				"Platform character limit monitors (Google Title, Meta Description, X Post) and custom Word Goal tracker",
-				"Top 8 keyword frequency and density breakdown with one-click export",
-			],
+			featureList,
 		},
 		{
 			"@type": "FAQPage",
+			inLanguage: locale,
 			mainEntity: faqs.map((faq) => ({
 				"@type": "Question",
 				name: faq.question,
@@ -130,147 +95,6 @@ const structuredData = {
 		},
 	],
 };
-
-const essayStandardsData = [
-	{
-		type: "IELTS Writing Task 1 / TOEFL Integrated",
-		words: "150 – 225 words",
-		pages: "0.6 – 0.9 pages",
-		readingTime: "~45 – 55 sec",
-	},
-	{
-		type: "IELTS Writing Task 2 / TOEFL Independent",
-		words: "250 – 350 words",
-		pages: "1.0 – 1.4 pages",
-		readingTime: "~1 – 1.5 min",
-	},
-	{
-		type: "High School / 5-Paragraph Essay",
-		words: "500 – 800 words",
-		pages: "2.0 – 3.2 pages",
-		readingTime: "~2 – 3.5 min",
-	},
-	{
-		type: "College Admission Essay (Common App)",
-		words: "500 – 650 words",
-		pages: "2.0 – 2.6 pages",
-		readingTime: "~2 – 2.7 min",
-	},
-	{
-		type: "Undergraduate Research Essay",
-		words: "1,000 – 2,500 words",
-		pages: "4.0 – 10.0 pages",
-		readingTime: "~4 – 10.5 min",
-	},
-	{
-		type: "Standard SEO Blog Post",
-		words: "1,200 – 2,000 words",
-		pages: "4.8 – 8.0 pages",
-		readingTime: "~5 – 8.5 min",
-	},
-	{
-		type: "In-Depth Pillar Guide / Whitepaper",
-		words: "2,500 – 5,000 words",
-		pages: "10.0 – 20.0 pages",
-		readingTime: "~10.5 – 21 min",
-	},
-	{
-		type: "Master's Thesis / Dissertation Chapter",
-		words: "10,000 – 20,000 words",
-		pages: "40 – 80 pages",
-		readingTime: "~42 – 84 min",
-	},
-	{
-		type: "Full-Length Novel",
-		words: "70,000 – 100,000 words",
-		pages: "280 – 400 pages",
-		readingTime: "~5 – 7 hours",
-	},
-];
-
-const characterLimitsData = [
-	{
-		platform: "Google SEO Title Tag",
-		maxLimit: "~60 characters (~580px)",
-		sweetSpot: "50 – 60 characters",
-		method: "Includes spaces",
-	},
-	{
-		platform: "Google Meta Description",
-		maxLimit: "~160 characters",
-		sweetSpot: "145 – 158 characters",
-		method: "Includes spaces",
-	},
-	{
-		platform: "X (Twitter) Standard Post",
-		maxLimit: "280 characters",
-		sweetSpot: "100 – 240 characters",
-		method: "Includes spaces",
-	},
-	{
-		platform: "Instagram Caption",
-		maxLimit: "2,200 characters",
-		sweetSpot: '125 – 150 chars (before "More")',
-		method: "Includes spaces",
-	},
-	{
-		platform: "LinkedIn Post",
-		maxLimit: "3,000 characters",
-		sweetSpot: "150 – 300 characters",
-		method: "Includes spaces",
-	},
-	{
-		platform: "YouTube Video Title",
-		maxLimit: "100 characters",
-		sweetSpot: "55 – 70 characters",
-		method: "Includes spaces",
-	},
-	{
-		platform: "Standard SMS Message",
-		maxLimit: "160 characters (GSM-7)",
-		sweetSpot: "Under 160 characters",
-		method: "Includes spaces",
-	},
-];
-
-const comparisonData = [
-	{
-		feature: "Instant Paste-and-Count (No Login)",
-		wordora: "Yes (1-Click)",
-		docs: "Requires Google Account",
-		word: "Requires Desktop/365 App",
-	},
-	{
-		feature: "Live Characters With & Without Spaces",
-		wordora: "Always Visible",
-		docs: "Requires Ctrl+Shift+C Popup",
-		word: "Requires Status Bar Click",
-	},
-	{
-		feature: "Keyword Frequency & Density %",
-		wordora: "Built-in Live Tab",
-		docs: "No",
-		word: "No",
-	},
-	{
-		feature: "SEO Title / Meta / X Limit Bars",
-		wordora: "Built-in Live Bars",
-		docs: "No",
-		word: "No",
-	},
-	{
-		feature: "Flesch-Kincaid Readability Grade",
-		wordora: "Instant Live Grade",
-		docs: "No",
-		word: "Hidden in Proofing Settings",
-	},
-	{
-		feature: "100% Browser Privacy (Zero Cloud Upload)",
-		wordora: "Yes (Local Only)",
-		docs: "Cloud Synced",
-		word: "Cloud/Local",
-	},
-];
 ---
 
 <Layout
@@ -300,20 +124,20 @@ const comparisonData = [
 				<p
 					class="mt-3 max-w-2xl text-[16px] leading-[25px] font-normal text-body"
 				>
-					Count words, characters (with and without spaces), sentences, paragraphs, and page estimates in real time—built for essays, articles, scripts, and SEO snippets.
+					{t("wordCounter.page.heroSubtitle")}
 				</p>
 			</div>
 		</section>
 
 		<!-- Interactive Word & Character Counter Workspace -->
-		<WordCounterTool />
+		<WordCounterTool locale={locale} />
 
 		{/* Editorial Content Slot */}
 		<div id="editorial-content-slot" class="mx-auto max-w-[1200px] px-4 pt-10 pb-16 sm:px-6 space-y-16">
 			<!-- Section 1: What Is a Word Counter & How to Use It -->
 			<section
 				id="guide-and-features"
-				aria-label="What Is a Word Counter & How to Use It"
+				aria-label={t("wordCounter.page.guide.aria")}
 				class="space-y-12"
 			>
 				<!-- Section 1 Header -->
@@ -321,15 +145,15 @@ const comparisonData = [
 					<span
 						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
 					>
-						Guide &amp; Documentation
+						{t("wordCounter.page.guide.badge")}
 					</span>
 					<h2
 						class="mt-3 font-sans text-[26px] font-semibold tracking-[-0.8px] text-ink sm:text-[32px] sm:tracking-[-1px]"
 					>
-						What Is a Word Counter &amp; How to Use It
+						{t("wordCounter.page.guide.h2")}
 					</h2>
 					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
-						A word counter is a precision text analysis tool that tracks length, lexical density, and structural metrics in real time. Whether you are balancing an academic essay with rigid length constraints, writing an article with search engine snippet caps, or rehearsing a speech, Wordora runs 100% locally in your browser with zero server latency and total privacy.
+						{t("wordCounter.page.guide.intro")}
 					</p>
 				</div>
 
@@ -338,93 +162,31 @@ const comparisonData = [
 					<h3
 						class="font-sans text-[20px] font-semibold tracking-[-0.5px] text-ink sm:text-[22px]"
 					>
-						How to Use the Online Word Counter Checker
+						{t("wordCounter.page.guide.howToUseH3")}
 					</h3>
 
 					<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-						<!-- Step 1 -->
-						<div
-							class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-						>
-							<div>
-								<div class="mb-4 flex items-center gap-3">
-									<span
-										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
-									>
-										1
-									</span>
-									<h4 class="font-sans text-[15px] font-semibold text-ink">
-										Paste or Type Your Text
-									</h4>
+						{
+							guideSteps.map((step, idx) => (
+								<div
+									class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+								>
+									<div>
+										<div class="mb-4 flex items-center gap-3">
+											<span
+												class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+											>
+												{idx + 1}
+											</span>
+											<h4 class="font-sans text-[15px] font-semibold text-ink">
+												{step.title}
+											</h4>
+										</div>
+										<p class="text-[14px] leading-relaxed text-body" set:html={localizeHtmlLinks(step.bodyHtml, locale)} />
+									</div>
 								</div>
-								<p class="text-[14px] leading-relaxed text-body">
-									Type directly into the editor, click <strong class="font-medium text-ink">Paste</strong> from your clipboard, or upload a <strong class="font-medium text-ink">.txt</strong> / <strong class="font-medium text-ink">.md</strong> file for instant local analysis.
-								</p>
-							</div>
-						</div>
-
-						<!-- Step 2 -->
-						<div
-							class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-						>
-							<div>
-								<div class="mb-4 flex items-center gap-3">
-									<span
-										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
-									>
-										2
-									</span>
-									<h4 class="font-sans text-[15px] font-semibold text-ink">
-										Check Live Word &amp; Character Counts
-									</h4>
-								</div>
-								<p class="text-[14px] leading-relaxed text-body">
-									View real-time <strong class="font-medium text-ink">Words</strong>, <strong class="font-medium text-ink">Characters</strong> (with and without spaces), <strong class="font-medium text-ink">Sentences</strong>, <strong class="font-medium text-ink">Paragraphs</strong>, <strong class="font-medium text-ink">Pages</strong>, and <strong class="font-medium text-ink">Readability</strong>.
-								</p>
-							</div>
-						</div>
-
-						<!-- Step 3 -->
-						<div
-							class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-						>
-							<div>
-								<div class="mb-4 flex items-center gap-3">
-									<span
-										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
-									>
-										3
-									</span>
-									<h4 class="font-sans text-[15px] font-semibold text-ink">
-										Track Word Goals &amp; Platform Limits
-									</h4>
-								</div>
-								<p class="text-[14px] leading-relaxed text-body">
-									Set a custom <strong class="font-medium text-ink">Word goal</strong> for essays or monitor character limits for <strong class="font-medium text-ink">Google Title (60)</strong>, <strong class="font-medium text-ink">Meta Description (160)</strong>, and <strong class="font-medium text-ink">X / Social Post (280)</strong>.
-								</p>
-							</div>
-						</div>
-
-						<!-- Step 4 -->
-						<div
-							class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-						>
-							<div>
-								<div class="mb-4 flex items-center gap-3">
-									<span
-										class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
-									>
-										4
-									</span>
-									<h4 class="font-sans text-[15px] font-semibold text-ink">
-										Inspect Top Keywords &amp; Clean Formatting
-									</h4>
-								</div>
-								<p class="text-[14px] leading-relaxed text-body">
-									Switch to <strong class="font-medium text-ink">Top Keywords</strong> to check word frequency and density, use <strong class="font-medium text-ink">Clean spaces</strong> to strip extra whitespace, or click <strong class="font-medium text-ink">Copy summary</strong>.
-								</p>
-							</div>
-						</div>
+							))
+						}
 					</div>
 				</div>
 
@@ -433,111 +195,27 @@ const comparisonData = [
 					<h3
 						class="font-sans text-[20px] font-semibold tracking-[-0.5px] text-ink sm:text-[22px]"
 					>
-						What Does This Word Counter Measure?
+						{t("wordCounter.page.guide.whatMeasuresH3")}
 					</h3>
 
 					<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
-						<!-- Metric 1: Words & Unique Frequency -->
-						<div
-							class="rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-						>
-							<div class="flex items-center gap-2.5">
-								<span
-									class="inline-block h-2 w-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"
-								></span>
-								<h4 class="font-sans text-[16px] font-semibold text-ink">
-									Words &amp; Unique Frequency
-								</h4>
-							</div>
-							<p class="mt-2.5 text-[14px] leading-relaxed text-body">
-								Computes exact total word counts across standard space-separated Western languages as well as character-based CJK scripts. You can switch to the <strong class="font-medium text-ink">Top Keywords</strong> tab to isolate high-repetition vocabulary, avoid keyword stuffing, and ensure natural lexical variation.
-							</p>
-						</div>
-
-						<!-- Metric 2: Characters (With & Without Spaces + CJK) -->
-						<div
-							class="rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-						>
-							<div class="flex items-center gap-2.5">
-								<span
-									class="inline-block h-2 w-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"
-								></span>
-								<h4 class="font-sans text-[16px] font-semibold text-ink">
-									Characters (With &amp; Without Spaces + CJK)
-								</h4>
-							</div>
-							<p class="mt-2.5 text-[14px] leading-relaxed text-body">
-								Provides dual character tallies: overall keystrokes (with spaces) for strict social media or title limits, and compact length (without spaces) for translation or essay standards. Built-in CJK detection surfaces a dedicated counter whenever Chinese or Japanese glyphs are detected.
-							</p>
-						</div>
-
-						<!-- Metric 3: Sentences & Paragraphs -->
-						<div
-							class="rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-						>
-							<div class="flex items-center gap-2.5">
-								<span
-									class="inline-block h-2 w-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"
-								></span>
-								<h4 class="font-sans text-[16px] font-semibold text-ink">
-									Sentences &amp; Paragraphs
-								</h4>
-							</div>
-							<p class="mt-2.5 text-[14px] leading-relaxed text-body">
-								Breaks down overall document architecture by analyzing terminal punctuation marks (<strong class="font-medium text-ink">. ! ?</strong>) and line spacing breaks. Maintaining balanced sentence lengths prevents fatigue and keeps digital and printed copy engaging.
-							</p>
-						</div>
-
-						<!-- Metric 4: Page Count Estimate (250 words/page) -->
-						<div
-							class="rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-						>
-							<div class="flex items-center gap-2.5">
-								<span
-									class="inline-block h-2 w-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"
-								></span>
-								<h4 class="font-sans text-[16px] font-semibold text-ink">
-									Page Count Estimate (250 words/page)
-								</h4>
-							</div>
-							<p class="mt-2.5 text-[14px] leading-relaxed text-body">
-								Translates raw word counts into standard academic pages based on the universally recognized publishing guideline of 250 words per double-spaced page (12pt font, 1-inch margins). Ideal for planning college assignments, book drafts, and journal submissions.
-							</p>
-						</div>
-
-						<!-- Metric 5: Reading Time (238 WPM) & Speaking Time (130 WPM) -->
-						<div
-							class="rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-						>
-							<div class="flex items-center gap-2.5">
-								<span
-									class="inline-block h-2 w-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"
-								></span>
-								<h4 class="font-sans text-[16px] font-semibold text-ink">
-									Reading Time (238 WPM) &amp; Speaking Time (130 WPM)
-								</h4>
-							</div>
-							<p class="mt-2.5 text-[14px] leading-relaxed text-body">
-								Calculates silent reading duration at the cognitive scientific average of 238 words per minute and oral presentation length at 130 WPM. Rehearse conference keynotes, podcasts, wedding toasts, and video scripts with confidence before taking the stage.
-							</p>
-						</div>
-
-						<!-- Metric 6: Flesch-Kincaid Readability Grade -->
-						<div
-							class="rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-						>
-							<div class="flex items-center gap-2.5">
-								<span
-									class="inline-block h-2 w-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"
-								></span>
-								<h4 class="font-sans text-[16px] font-semibold text-ink">
-									Flesch-Kincaid Readability Grade
-								</h4>
-							</div>
-							<p class="mt-2.5 text-[14px] leading-relaxed text-body">
-								Evaluates lexical complexity by factoring average sentence length against syllable count per word. Instantly see whether your text matches standard 8th-grade web content accessibility, high school comprehension, or specialized academic prose.
-							</p>
-						</div>
+						{
+							guideMetrics.map((metric) => (
+								<div
+									class="rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+								>
+									<div class="flex items-center gap-2.5">
+										<span
+											class="inline-block h-2 w-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0]"
+										></span>
+										<h4 class="font-sans text-[16px] font-semibold text-ink">
+											{metric.title}
+										</h4>
+									</div>
+									<p class="mt-2.5 text-[14px] leading-relaxed text-body" set:html={localizeHtmlLinks(metric.bodyHtml, locale)} />
+								</div>
+							))
+						}
 					</div>
 				</div>
 			</section>
@@ -545,22 +223,22 @@ const comparisonData = [
 			<!-- Section 2A: Essay Word Count Standards & Word Count in Pages Guide -->
 			<section
 				id="essay-word-count-standards"
-				aria-label="Essay Word Count Standards and Word Count in Pages Guide"
+				aria-label={t("wordCounter.page.essayStandards.aria")}
 				class="space-y-6 pt-4"
 			>
 				<div>
 					<span
 						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
 					>
-						Academic &amp; Publishing Reference
+						{t("wordCounter.page.essayStandards.badge")}
 					</span>
 					<h2
 						class="mt-3 font-sans text-[24px] font-semibold tracking-[-0.7px] text-ink sm:text-[28px] sm:tracking-[-0.9px]"
 					>
-						Essay Word Count Standards &amp; Word Count in Pages Guide
+						{t("wordCounter.page.essayStandards.h2")}
 					</h2>
 					<p class="mt-2 text-[15px] leading-relaxed text-body">
-						Use this reference table to plan academic essays, IELTS/TOEFL tasks, blog articles, and books—along with estimated double-spaced page counts (250 words/page) and reading times.
+						{t("wordCounter.page.essayStandards.intro")}
 					</p>
 				</div>
 
@@ -568,10 +246,10 @@ const comparisonData = [
 					<table class="w-full min-w-[640px] border-collapse text-left">
 						<thead>
 							<tr class="border-b border-hairline bg-[#0f2e26]/5 text-[13px] font-semibold text-ink dark:bg-[#111111]/80">
-								<th scope="col" class="py-3.5 pl-5 pr-4">Content / Essay Type</th>
-								<th scope="col" class="px-4 py-3.5">Typical Word Count</th>
-								<th scope="col" class="px-4 py-3.5">Double-Spaced Pages (~250 w/p)</th>
-								<th scope="col" class="py-3.5 pl-4 pr-5">Estimated Reading Time (238 WPM)</th>
+								<th scope="col" class="py-3.5 pl-5 pr-4">{essayStandardsHeaders[0]}</th>
+								<th scope="col" class="px-4 py-3.5">{essayStandardsHeaders[1]}</th>
+								<th scope="col" class="px-4 py-3.5">{essayStandardsHeaders[2]}</th>
+								<th scope="col" class="py-3.5 pl-4 pr-5">{essayStandardsHeaders[3]}</th>
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-hairline text-[14px]">
@@ -599,24 +277,24 @@ const comparisonData = [
 
 				<!-- Link Strip -->
 				<div class="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-xl border border-hairline bg-canvas px-5 py-3.5 text-[13px] text-body">
-					<span class="font-medium text-ink">Related converters:</span>
+					<span class="font-medium text-ink">{t("wordCounter.page.essayStandards.relatedLabel")}</span>
 					<a
 						href={getLocalizedPath("/words-to-pages/", locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						Words to Pages Converter &rarr;
+						{t("wordCounter.page.essayStandards.linkWordsToPages")} &rarr;
 					</a>
 					<a
 						href={getLocalizedPath("/reading-time-calculator/", locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						Reading Time Calculator &rarr;
+						{t("wordCounter.page.essayStandards.linkReadingTime")} &rarr;
 					</a>
 					<a
 						href={getLocalizedPath("/speech-time-calculator/", locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						Speech Time Calculator &rarr;
+						{t("wordCounter.page.essayStandards.linkSpeechTime")} &rarr;
 					</a>
 				</div>
 			</section>
@@ -624,22 +302,22 @@ const comparisonData = [
 			<!-- Section 2B: Social Media & SEO Character Limits Reference Table -->
 			<section
 				id="character-limits-reference"
-				aria-label="Social Media and SEO Character Limits Reference Table"
+				aria-label={t("wordCounter.page.characterLimits.aria")}
 				class="space-y-6 pt-4"
 			>
 				<div>
 					<span
 						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
 					>
-						Character Limits Benchmark
+						{t("wordCounter.page.characterLimits.badge")}
 					</span>
 					<h2
 						class="mt-3 font-sans text-[24px] font-semibold tracking-[-0.7px] text-ink sm:text-[28px] sm:tracking-[-0.9px]"
 					>
-						Social Media &amp; SEO Character Limits Reference Table
+						{t("wordCounter.page.characterLimits.h2")}
 					</h2>
 					<p class="mt-2 text-[15px] leading-relaxed text-body">
-						Most platforms count characters including spaces and punctuation—check these limits before publishing meta tags, ads, or social posts.
+						{t("wordCounter.page.characterLimits.intro")}
 					</p>
 				</div>
 
@@ -647,10 +325,10 @@ const comparisonData = [
 					<table class="w-full min-w-[640px] border-collapse text-left">
 						<thead>
 							<tr class="border-b border-hairline bg-[#0f2e26]/5 text-[13px] font-semibold text-ink dark:bg-[#111111]/80">
-								<th scope="col" class="py-3.5 pl-5 pr-4">Platform / Element</th>
-								<th scope="col" class="px-4 py-3.5">Maximum Character Limit</th>
-								<th scope="col" class="px-4 py-3.5">Recommended Sweet Spot</th>
-								<th scope="col" class="py-3.5 pl-4 pr-5">Count Method</th>
+								<th scope="col" class="py-3.5 pl-5 pr-4">{characterLimitsHeaders[0]}</th>
+								<th scope="col" class="px-4 py-3.5">{characterLimitsHeaders[1]}</th>
+								<th scope="col" class="px-4 py-3.5">{characterLimitsHeaders[2]}</th>
+								<th scope="col" class="py-3.5 pl-4 pr-5">{characterLimitsHeaders[3]}</th>
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-hairline text-[14px]">
@@ -680,22 +358,22 @@ const comparisonData = [
 			<!-- Section 2C: Wordora Word Counter vs. Microsoft Word & Google Docs -->
 			<section
 				id="wordora-vs-docs"
-				aria-label="Wordora Word Counter vs. Microsoft Word & Google Docs"
+				aria-label={t("wordCounter.page.comparison.aria")}
 				class="space-y-6 pt-4"
 			>
 				<div>
 					<span
 						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
 					>
-						Feature Comparison
+						{t("wordCounter.page.comparison.badge")}
 					</span>
 					<h2
 						class="mt-3 font-sans text-[24px] font-semibold tracking-[-0.7px] text-ink sm:text-[28px] sm:tracking-[-0.9px]"
 					>
-						Wordora Word Counter vs. Microsoft Word &amp; Google Docs
+						{t("wordCounter.page.comparison.h2")}
 					</h2>
 					<p class="mt-2 text-[15px] leading-relaxed text-body">
-						Compare how Wordora's zero-friction, client-side word counter stacks up against conventional office word processors for speed, live metrics, and data privacy.
+						{t("wordCounter.page.comparison.intro")}
 					</p>
 				</div>
 
@@ -703,12 +381,12 @@ const comparisonData = [
 					<table class="w-full min-w-[700px] border-collapse text-left">
 						<thead>
 							<tr class="border-b border-hairline bg-[#0f2e26]/5 text-[13px] font-semibold text-ink dark:bg-[#111111]/80">
-								<th scope="col" class="py-3.5 pl-5 pr-4">Feature</th>
+								<th scope="col" class="py-3.5 pl-5 pr-4">{comparisonHeaders[0]}</th>
 								<th scope="col" class="px-4 py-3.5 text-[#0f2e26] dark:text-[#afe3d0]">
-									Wordora Word Counter
+									{comparisonHeaders[1]}
 								</th>
-								<th scope="col" class="px-4 py-3.5">Google Docs</th>
-								<th scope="col" class="py-3.5 pl-4 pr-5">Microsoft Word</th>
+								<th scope="col" class="px-4 py-3.5">{comparisonHeaders[2]}</th>
+								<th scope="col" class="py-3.5 pl-4 pr-5">{comparisonHeaders[3]}</th>
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-hairline text-[14px]">
@@ -740,131 +418,69 @@ const comparisonData = [
 			<!-- Section 3: How to Reduce Word Count in Essays & Papers -->
 			<section
 				id="reduce-word-count-guide"
-				aria-label="How to Reduce Word Count in Essays and Papers"
+				aria-label={t("wordCounter.page.reduceGuide.aria")}
 				class="space-y-6 pt-4"
 			>
 				<div>
 					<span
 						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
 					>
-						Editing &amp; Reducer Strategies
+						{t("wordCounter.page.reduceGuide.badge")}
 					</span>
 					<h2
 						class="mt-3 font-sans text-[24px] font-semibold tracking-[-0.7px] text-ink sm:text-[28px] sm:tracking-[-0.9px]"
 					>
-						How to Reduce Word Count in Essays &amp; Papers
+						{t("wordCounter.page.reduceGuide.h2")}
 					</h2>
 					<p class="mt-2 text-[15px] leading-relaxed text-body">
-						When your academic draft exceeds the upper limit or word budget, use these targeted editorial strategies to trim wordiness without compromising thesis depth or critical evidence.
+						{t("wordCounter.page.reduceGuide.intro")}
 					</p>
 				</div>
 
 				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-					<!-- Card 1 -->
-					<div
-						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-					>
-						<div>
-							<div class="mb-4 flex items-center gap-3">
-								<span
-									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
-								>
-									1
-								</span>
-								<h3 class="font-sans text-[15px] font-semibold text-ink">
-									Cut Filler Phrases &amp; Redundancies
-								</h3>
+					{
+						reduceCards.map((card, idx) => (
+							<div
+								class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
+							>
+								<div>
+									<div class="mb-4 flex items-center gap-3">
+										<span
+											class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
+										>
+											{idx + 1}
+										</span>
+										<h3 class="font-sans text-[15px] font-semibold text-ink">
+											{card.title}
+										</h3>
+									</div>
+									<p class="text-[14px] leading-relaxed text-body" set:html={localizeHtmlLinks(card.bodyHtml, locale)} />
+								</div>
 							</div>
-							<p class="text-[14px] leading-relaxed text-body">
-								Replace wordy phrases like <strong class="font-medium text-ink">"due to the fact that"</strong> with <strong class="font-medium text-ink">"because"</strong>, <strong class="font-medium text-ink">"in order to"</strong> with <strong class="font-medium text-ink">"to"</strong>, and <strong class="font-medium text-ink">"at this point in time"</strong> with <strong class="font-medium text-ink">"now"</strong>. Prune unnecessary padding to immediately recover 5–10% of your total word limit.
-							</p>
-						</div>
-					</div>
-
-					<!-- Card 2 -->
-					<div
-						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-					>
-						<div>
-							<div class="mb-4 flex items-center gap-3">
-								<span
-									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
-								>
-									2
-								</span>
-								<h3 class="font-sans text-[15px] font-semibold text-ink">
-									Convert Passive Voice to Active Voice
-								</h3>
-							</div>
-							<p class="text-[14px] leading-relaxed text-body">
-								Change <strong class="font-medium text-ink">"The experiment was conducted by the researchers"</strong> (8 words) to <strong class="font-medium text-ink">"The researchers conducted the experiment"</strong> (5 words) to trim ~20–30% wordiness. Active voice tightens sentence momentum and strengthens academic rigor.
-							</p>
-						</div>
-					</div>
-
-					<!-- Card 3 -->
-					<div
-						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-					>
-						<div>
-							<div class="mb-4 flex items-center gap-3">
-								<span
-									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
-								>
-									3
-								</span>
-								<h3 class="font-sans text-[15px] font-semibold text-ink">
-									Trim Weak Adverbs &amp; Qualifiers
-								</h3>
-							</div>
-							<p class="text-[14px] leading-relaxed text-body">
-								Remove <strong class="font-medium text-ink">"very"</strong>, <strong class="font-medium text-ink">"really"</strong>, <strong class="font-medium text-ink">"basically"</strong>, and <strong class="font-medium text-ink">"actually"</strong> when the verb or adjective already carries the meaning. Strong, specific verbs (e.g., "demolished" instead of "completely destroyed") naturally lower word counts.
-							</p>
-						</div>
-					</div>
-
-					<!-- Card 4 -->
-					<div
-						class="flex flex-col justify-between rounded-2xl border border-hairline bg-canvas-elevated p-6 transition-all hover:border-[#0f2e26]/30 dark:hover:border-[#afe3d0]/30"
-					>
-						<div>
-							<div class="mb-4 flex items-center gap-3">
-								<span
-									class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:bg-[#afe3d0] dark:text-[#0f2e26]"
-								>
-									4
-								</span>
-								<h3 class="font-sans text-[15px] font-semibold text-ink">
-									Tighten Introductions &amp; Repetitive Transitions
-								</h3>
-							</div>
-							<p class="text-[14px] leading-relaxed text-body">
-								Keep essay openings crisp (10–12% of total word count) and merge overlapping summary sentences. Avoid prolonged throat-clearing before your thesis statement, and delete redundant connective phrases between paragraphs.
-							</p>
-						</div>
-					</div>
+						))
+					}
 				</div>
 			</section>
 
 			<!-- Section 4: Readability Score, Keyword Frequency & Counting Accuracy Rules -->
 			<section
 				id="readability-and-rules"
-				aria-label="Readability Score, Keyword Frequency and Counting Accuracy Rules"
+				aria-label={t("wordCounter.page.readabilityRules.aria")}
 				class="space-y-6 pt-4"
 			>
 				<div>
 					<span
 						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
 					>
-						Readability &amp; Accuracy
+						{t("wordCounter.page.readabilityRules.badge")}
 					</span>
 					<h2
 						class="mt-3 font-sans text-[24px] font-semibold tracking-[-0.7px] text-ink sm:text-[28px] sm:tracking-[-0.9px]"
 					>
-						Readability Score, Keyword Frequency &amp; Counting Accuracy Rules
+						{t("wordCounter.page.readabilityRules.h2")}
 					</h2>
 					<p class="mt-2 text-[15px] leading-relaxed text-body">
-						Understand how automated readability benchmarks are calculated, how keyword density guides natural SEO copy, and how our engine handles edge-case punctuation.
+						{t("wordCounter.page.readabilityRules.intro")}
 					</p>
 				</div>
 
@@ -880,27 +496,23 @@ const comparisonData = [
 								Aa
 							</span>
 							<h3 class="font-sans text-[18px] font-semibold text-ink">
-								Readability Score &amp; Keyword Frequency Explained
+								{t("wordCounter.page.readabilityRules.leftTitle")}
 							</h3>
 						</div>
 
 						<div class="space-y-4 text-[14px] leading-relaxed text-body">
 							<div>
 								<h4 class="font-sans text-[15px] font-semibold text-ink">
-									Flesch-Kincaid Grade Level
+									{t("wordCounter.page.readabilityRules.leftFleschTitle")}
 								</h4>
-								<p class="mt-1">
-									Evaluates lexical difficulty by calculating average sentence length and syllable density per word. A score of <strong class="font-medium text-ink">Grade 6–8</strong> is ideal for consumer blog posts, email newsletters, and public websites. A score of <strong class="font-medium text-ink">Grade 10–12+</strong> is standard for undergraduate essays, technical documentation, and academic journals.
-								</p>
+								<p class="mt-1" set:html={localizeHtmlLinks(t("wordCounter.page.readabilityRules.leftFleschHtml"), locale)} />
 							</div>
 
 							<div class="border-t border-hairline pt-4">
 								<h4 class="font-sans text-[15px] font-semibold text-ink">
-									Keyword Frequency &amp; Density %
+									{t("wordCounter.page.readabilityRules.leftKeywordTitle")}
 								</h4>
-								<p class="mt-1">
-									Keyword density measures how often a specific term appears relative to total words: <strong class="font-medium text-ink tabular-nums">(Keyword Count &divide; Total Words) &times; 100</strong>. For SEO copy and essays, a healthy target is between <strong class="font-medium text-ink">1% and 2%</strong>. Repetition exceeding 2.5% signals unnatural keyword stuffing that risks search penalties and fatigues readers.
-								</p>
+								<p class="mt-1" set:html={localizeHtmlLinks(t("wordCounter.page.readabilityRules.leftKeywordHtml"), locale)} />
 							</div>
 						</div>
 					</div>
@@ -916,51 +528,21 @@ const comparisonData = [
 								&check;
 							</span>
 							<h3 class="font-sans text-[18px] font-semibold text-ink">
-								How Our Word Counter Handles Edge Cases
+								{t("wordCounter.page.readabilityRules.rightTitle")}
 							</h3>
 						</div>
 
 						<ul class="space-y-3 text-[14px] leading-relaxed text-body">
-							<li class="flex items-start gap-2.5">
-								<span
-									class="inline-block h-1.5 w-1.5 mt-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0] shrink-0"
-								></span>
-								<span>
-									<strong class="font-semibold text-ink">Hyphenated Words (<code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">well-being</code>, <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">state-of-the-art</code>):</strong> Counted as 1 word so essay limits match standard editorial style guides (APA, MLA, Chicago).
-								</span>
-							</li>
-							<li class="flex items-start gap-2.5">
-								<span
-									class="inline-block h-1.5 w-1.5 mt-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0] shrink-0"
-								></span>
-								<span>
-									<strong class="font-semibold text-ink">Numbers &amp; Dates (<code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">2026</code>, <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">1,500</code>, <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">99.9%</code>):</strong> Each standalone numeric token counts as 1 word.
-								</span>
-							</li>
-							<li class="flex items-start gap-2.5">
-								<span
-									class="inline-block h-1.5 w-1.5 mt-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0] shrink-0"
-								></span>
-								<span>
-									<strong class="font-semibold text-ink">Contractions (<code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">don't</code>, <code class="rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink">it's</code>):</strong> Counted as 1 word.
-								</span>
-							</li>
-							<li class="flex items-start gap-2.5">
-								<span
-									class="inline-block h-1.5 w-1.5 mt-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0] shrink-0"
-								></span>
-								<span>
-									<strong class="font-semibold text-ink">Chinese &amp; Japanese Characters (CJK):</strong> Automatically detected and counted per character alongside space-separated words.
-								</span>
-							</li>
-							<li class="flex items-start gap-2.5">
-								<span
-									class="inline-block h-1.5 w-1.5 mt-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0] shrink-0"
-								></span>
-								<span>
-									<strong class="font-semibold text-ink">Extra Spaces &amp; Blank Lines:</strong> Ignored in word counts, and removable in one click with <strong class="font-medium text-ink">Clean spaces</strong>.
-								</span>
-							</li>
+							{
+								edgeCasesHtml.map((itemHtml) => (
+									<li class="flex items-start gap-2.5">
+										<span
+											class="inline-block h-1.5 w-1.5 mt-2 rounded-full bg-[#0f2e26] dark:bg-[#afe3d0] shrink-0"
+										></span>
+										<span set:html={localizeHtmlLinks(itemHtml, locale)} />
+									</li>
+								))
+							}
 						</ul>
 					</div>
 				</div>
@@ -976,16 +558,16 @@ const comparisonData = [
 					<span
 						class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]"
 					>
-						Got Questions?
+						{t("wordCounter.faq.badge")}
 					</span>
 					<h2
 						id="faq-heading"
 						class="mt-3 font-sans text-[24px] font-semibold tracking-[-0.7px] text-ink sm:text-[28px] sm:tracking-[-0.9px]"
 					>
-						Frequently Asked Questions
+						{t("wordCounter.faq.heading")}
 					</h2>
 					<p class="mt-2 text-[15px] leading-relaxed text-body">
-						Clear answers to common questions about word counting methods, page estimates, character limits, readability scoring, and browser privacy.
+						{t("wordCounter.faq.intro")}
 					</p>
 				</div>
 

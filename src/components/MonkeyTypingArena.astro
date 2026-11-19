@@ -1,4 +1,33 @@
 ---
+import {
+	getLocaleFromUrl,
+	getLocalizedPath,
+	useTranslations,
+	type Locale,
+} from '../i18n/ui';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const exitPath = getLocalizedPath('/typing-speed-test/', locale);
+const pngSiteUrl = `wordora.site${exitPath}`;
+
+const wordList = t.raw<string[]>('typingSpeedTest.wordLists') ?? [];
+const quotes = t.raw<Array<{ text: string; author: string }>>('typingSpeedTest.quotes') ?? [];
+const clientStrings = t.raw<Record<string, unknown>>('typingSpeedTest.arena.client') ?? {};
+
+const arenaI18n = {
+	locale,
+	exitUrl: exitPath,
+	pngSiteUrl,
+	wordList,
+	quotes,
+	strings: clientStrings,
+};
 ---
 
 <div
@@ -13,15 +42,15 @@
 		<!-- Left: Abort + status -->
 		<div class="flex items-center gap-4">
 			<a
-				href="/typing-speed-test/"
+				href={exitPath}
 				class="rounded-md border border-[#00ff9d]/30 bg-[#0a1410]/90 px-3 py-2 text-[13px] font-semibold tracking-wide text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d]/10 hover:shadow-[0_0_12px_rgba(0,255,157,0.25)]"
-				aria-label="Abort mission and exit to Typing Speed Test"
+				aria-label={t('typingSpeedTest.arena.abortAria')}
 			>
-				[ ← ABORT MISSION ]
+				{t('typingSpeedTest.arena.abortBtn')}
 			</a>
 			<span id="mta-status" class="inline-flex items-center gap-2 text-[12px] font-medium tracking-wide text-[#6ee7b7]">
 				<span id="mta-status-dot" class="inline-block h-2 w-2 animate-pulse rounded-full bg-[#00ff9d] shadow-[0_0_8px_#00ff9d]"></span>
-				<span id="mta-status-text">TERMINAL READY</span>
+				<span id="mta-status-text">{t('typingSpeedTest.arena.statusReady')}</span>
 			</span>
 		</div>
 
@@ -29,21 +58,21 @@
 		<div
 			id="mta-control-pill"
 			role="toolbar"
-			aria-label="Mission protocol and modifiers"
+			aria-label={t('typingSpeedTest.arena.controlToolbarAria')}
 			class="flex flex-wrap items-center justify-center gap-1.5 rounded-xl border border-[#00ff9d]/25 bg-[#0a1410]/90 px-3 py-2 text-[13px] backdrop-blur-md"
 		>
 			<div id="mta-modifiers-group" class="flex items-center gap-1">
-				<button type="button" id="mta-mod-punctuation" aria-pressed="false" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">@ punctuation</button>
-				<button type="button" id="mta-mod-numbers" aria-pressed="false" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]"># numbers</button>
+				<button type="button" id="mta-mod-punctuation" aria-pressed="false" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">{t('typingSpeedTest.arena.modPunctuation')}</button>
+				<button type="button" id="mta-mod-numbers" aria-pressed="false" class="cursor-pointer rounded-md px-2.5 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">{t('typingSpeedTest.arena.modNumbers')}</button>
 				<span class="mx-1 h-4 w-[1px] bg-[#00ff9d]/25" aria-hidden="true"></span>
 			</div>
 
-			<div class="flex flex-wrap items-center gap-1" role="group" aria-label="Test mode">
-				<button type="button" data-mta-mode="time" aria-pressed="true" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">time</button>
-				<button type="button" data-mta-mode="words" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">words</button>
-				<button type="button" data-mta-mode="quote" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">quote</button>
-				<button type="button" data-mta-mode="zen" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">zen</button>
-				<button type="button" data-mta-mode="custom" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">custom</button>
+			<div class="flex flex-wrap items-center gap-1" role="group" aria-label={t('typingSpeedTest.arena.testModeGroupAria')}>
+				<button type="button" data-mta-mode="time" aria-pressed="true" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">{t('typingSpeedTest.arena.modes.time')}</button>
+				<button type="button" data-mta-mode="words" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">{t('typingSpeedTest.arena.modes.words')}</button>
+				<button type="button" data-mta-mode="quote" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">{t('typingSpeedTest.arena.modes.quote')}</button>
+				<button type="button" data-mta-mode="zen" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">{t('typingSpeedTest.arena.modes.zen')}</button>
+				<button type="button" data-mta-mode="custom" aria-pressed="false" class="cursor-pointer rounded-md px-3 py-1 font-medium text-[#7fb69f] transition-all hover:text-[#00ff9d]">{t('typingSpeedTest.arena.modes.custom')}</button>
 			</div>
 
 			<div id="mta-suboptions-wrapper" class="flex items-center gap-1">
@@ -64,7 +93,7 @@
 				</div>
 
 				<div id="mta-sub-custom" class="hidden items-center gap-1">
-					<button type="button" id="mta-btn-open-custom" class="cursor-pointer rounded-md bg-[#00ff9d] px-3 py-1 font-bold text-[#050a08] shadow-[0_0_12px_rgba(0,255,157,0.45)] transition hover:brightness-110">edit payload</button>
+					<button type="button" id="mta-btn-open-custom" class="cursor-pointer rounded-md bg-[#00ff9d] px-3 py-1 font-bold text-[#050a08] shadow-[0_0_12px_rgba(0,255,157,0.45)] transition hover:brightness-110">{t('typingSpeedTest.arena.editPayload')}</button>
 				</div>
 			</div>
 		</div>
@@ -72,28 +101,28 @@
 		<!-- Right: Live Telemetry Pill + Ghost Pacer + SFX Toggle -->
 		<div
 			class="flex flex-wrap items-center gap-2.5 rounded-xl border border-[#00ff9d]/25 bg-[#0a1410]/90 px-3.5 py-2 text-[12px] font-semibold tracking-wide text-[#00ff9d] tabular-nums backdrop-blur-md"
-			aria-label="Live telemetry and tactical controls"
+			aria-label={t('typingSpeedTest.arena.telemetryAria')}
 		>
-			<span>LIVE WPM: <span id="mta-live-wpm">00</span></span>
+			<span>{t('typingSpeedTest.arena.liveWpmLabel')} <span id="mta-live-wpm">00</span></span>
 			<span class="h-3.5 w-[1px] bg-[#00ff9d]/25" aria-hidden="true"></span>
-			<span>INTEGRITY: <span id="mta-live-integrity">100%</span></span>
+			<span>{t('typingSpeedTest.arena.integrityLabel')} <span id="mta-live-integrity">100%</span></span>
 			<span class="h-3.5 w-[1px] bg-[#00ff9d]/25" aria-hidden="true"></span>
 			<button
 				type="button"
 				id="mta-pace-toggle"
-				title="Cycle Ghost Pacer Caret (OFF / 40 / 60 / 80 WPM / LAST RUN)"
+				title={t('typingSpeedTest.arena.paceToggleTitle')}
 				class="cursor-pointer rounded px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#6ee7b7] transition hover:bg-[#00ff9d]/15 hover:text-[#00ff9d]"
 			>
-				[ PACE: OFF ]
+				{t('typingSpeedTest.arena.paceOff')}
 			</button>
 			<button
 				type="button"
 				id="mta-sfx-toggle"
 				aria-pressed="false"
-				title="Toggle synthesized mechanical terminal keystroke audio"
+				title={t('typingSpeedTest.arena.sfxToggleTitle')}
 				class="cursor-pointer rounded px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#6ee7b7] transition hover:bg-[#00ff9d]/15 hover:text-[#00ff9d]"
 			>
-				[ SFX: OFF ]
+				{t('typingSpeedTest.arena.sfxOff')}
 			</button>
 		</div>
 	</div>
@@ -109,13 +138,13 @@
 						aria-live="polite"
 						class="font-mono text-2xl font-bold tracking-wide text-[#00ff9d] tabular-nums drop-shadow-[0_0_10px_rgba(0,255,157,0.55)] sm:text-3xl"
 					>
-						T-MINUS 60s
+						{t('typingSpeedTest.arena.initialTimer')}
 					</output>
 					<span
 						id="mta-repeated-badge"
 						class="hidden rounded border border-[#ffb020]/50 bg-[#ffb020]/10 px-2.5 py-0.5 text-[12px] font-bold tracking-wide text-[#ffb020] shadow-[0_0_10px_rgba(255,176,32,0.2)]"
 					>
-						[ REPEATED PAYLOAD ]
+						{t('typingSpeedTest.arena.repeatedPayloadBadge')}
 					</span>
 					<span id="mta-quote-source" class="hidden text-[13px] font-medium text-[#6ee7b7]"></span>
 				</div>
@@ -126,23 +155,23 @@
 						id="mta-zen-finish-btn"
 						class="hidden cursor-pointer items-center gap-1.5 rounded-md bg-[#00ff9d] px-4 py-1.5 text-[13px] font-bold text-[#050a08] shadow-[0_0_12px_rgba(0,255,157,0.45)] transition hover:brightness-110"
 					>
-						<span>[ EXECUTE LOG ]</span>
-						<span class="text-[11px] opacity-75">(Shift+Enter)</span>
+						<span>{t('typingSpeedTest.arena.zenExecuteLog')}</span>
+						<span class="text-[11px] opacity-75">{t('typingSpeedTest.arena.zenShiftEnter')}</span>
 					</button>
 
 					<button
 						type="button"
 						id="mta-quick-restart-btn"
-						title="Restart sequence (Tab)"
+						title={t('typingSpeedTest.arena.restartTitle')}
 						class="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-[#00ff9d]/30 bg-[#0a1410]/90 px-3.5 py-1.5 text-[13px] font-medium text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d]/10"
 					>
-						[ RESTART ]
+						{t('typingSpeedTest.arena.restartBtn')}
 					</button>
 				</div>
 			</div>
 
 			<!-- Payload Progress Bar -->
-			<div class="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-[#0f2a1f]" role="progressbar" aria-label="Payload progress" aria-valuemin="0" aria-valuemax="100">
+			<div class="mb-5 h-1.5 w-full overflow-hidden rounded-full bg-[#0f2a1f]" role="progressbar" aria-label={t('typingSpeedTest.arena.progressAria')} aria-valuemin="0" aria-valuemax="100">
 				<div
 					id="mta-progress-fill"
 					class="h-full w-0 rounded-full bg-[#00ff9d] shadow-[0_0_10px_#00ff9d] transition-[width] duration-150 ease-out"
@@ -151,7 +180,7 @@
 
 			<!-- Click-Anywhere Typing Viewport Box -->
 			<div id="mta-canvas-box" class="relative w-full cursor-text rounded-xl py-2 focus-within:outline-none">
-				<label for="mta-hidden-input" class="sr-only">Type the payload shown</label>
+				<label for="mta-hidden-input" class="sr-only">{t('typingSpeedTest.arena.inputSrLabel')}</label>
 				<input
 					id="mta-hidden-input"
 					type="text"
@@ -159,7 +188,7 @@
 					autocomplete="off"
 					autocorrect="off"
 					spellcheck="false"
-					aria-label="Typing speed test input"
+					aria-label={t('typingSpeedTest.arena.inputAria')}
 					class="pointer-events-none fixed top-0 left-0 h-1 w-1 opacity-0"
 				/>
 
@@ -196,20 +225,20 @@
 				<!-- Left Column: w-44 shrink-0 -->
 				<div class="flex w-full flex-row items-baseline justify-start gap-10 lg:w-44 lg:shrink-0 lg:flex-col lg:gap-6">
 					<div class="group relative">
-						<div class="text-2xl leading-none font-medium text-[#5f8f7a]">wpm</div>
+						<div class="text-2xl leading-none font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.wpmLabel')}</div>
 						<div
 							id="mta-res-wpm"
-							title="0.00 wpm"
+							title={t('typingSpeedTest.arena.results.initialWpmTitle')}
 							class="mt-1 cursor-help text-6xl leading-none font-bold text-[#00ff9d] tabular-nums drop-shadow-[0_0_16px_rgba(0,255,157,0.45)] sm:text-7xl"
 						>
 							0
 						</div>
 					</div>
 					<div class="group relative">
-						<div class="text-2xl leading-none font-medium text-[#5f8f7a]">acc</div>
+						<div class="text-2xl leading-none font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.accLabel')}</div>
 						<div
 							id="mta-res-acc"
-							title="100.00% accuracy"
+							title={t('typingSpeedTest.arena.results.initialAccTitle')}
 							class="mt-1 cursor-help text-5xl leading-none font-bold text-[#00ff9d] tabular-nums drop-shadow-[0_0_16px_rgba(0,255,157,0.45)] sm:text-6xl"
 						>
 							100%
@@ -220,16 +249,16 @@
 				<!-- Right Column: Smooth Bezier SVG Telemetry Chart -->
 				<div class="flex min-w-0 flex-1 flex-col gap-2">
 					<div class="flex flex-wrap items-center justify-end gap-4 text-[11px] text-[#5f8f7a]">
-						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-2 w-2 rounded-full bg-[#00ff9d]"></span>wpm</span>
-						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-0 w-3 border-t-2 border-dashed border-[#4b7a66]"></span>raw</span>
-						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-0.5 w-3 bg-[#38bdf8]"></span>burst</span>
-						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-2 w-2 rounded-full bg-[#ff3b5c]"></span>errors</span>
+						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-2 w-2 rounded-full bg-[#00ff9d]"></span>{t('typingSpeedTest.arena.results.legendWpm')}</span>
+						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-0 w-3 border-t-2 border-dashed border-[#4b7a66]"></span>{t('typingSpeedTest.arena.results.legendRaw')}</span>
+						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-0.5 w-3 bg-[#38bdf8]"></span>{t('typingSpeedTest.arena.results.legendBurst')}</span>
+						<span class="inline-flex items-center gap-1.5"><span class="inline-block h-2 w-2 rounded-full bg-[#ff3b5c]"></span>{t('typingSpeedTest.arena.results.legendErrors')}</span>
 					</div>
 					<div
 						id="mta-chart-container"
 						class="relative h-[220px] w-full overflow-hidden rounded-xl bg-[#070f0b]/60 p-2"
 					>
-						<svg id="mta-chart-svg" viewBox="0 0 700 200" preserveAspectRatio="none" class="h-full w-full overflow-visible" aria-label="Per-second WPM, raw WPM, burst WPM, and errors chart"></svg>
+						<svg id="mta-chart-svg" viewBox="0 0 700 200" preserveAspectRatio="none" class="h-full w-full overflow-visible" aria-label={t('typingSpeedTest.arena.results.chartAria')}></svg>
 						<!-- Floating Hover Tooltip -->
 						<div
 							id="mta-chart-tooltip"
@@ -242,46 +271,46 @@
 			<!-- 2. Clean Horizontal 6-Column Telemetry Row Below the Graph -->
 			<div class="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-[1.1fr_1fr_0.8fr_1.45fr_1fr_1fr]">
 				<div class="min-w-0">
-					<div class="text-[13px] font-medium text-[#5f8f7a]">test type</div>
+					<div class="text-[13px] font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.testTypeLabel')}</div>
 					<div id="mta-stat-type" class="mt-1 text-[16px] leading-snug font-semibold text-[#00ff9d]">
-						time 60s<br />english
+						{t('typingSpeedTest.arena.results.defaultTestTypeLine1')}<br />{t('typingSpeedTest.arena.results.defaultTestTypeLine2')}
 					</div>
 				</div>
 				<div class="min-w-0">
-					<div class="text-[13px] font-medium text-[#5f8f7a]">other</div>
+					<div class="text-[13px] font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.otherLabel')}</div>
 					<div id="mta-stat-other" class="mt-1 text-[16px] leading-snug font-semibold text-[#00ff9d]">
-						clean run
+						{t('typingSpeedTest.arena.results.defaultOther')}
 					</div>
 				</div>
 				<div class="min-w-0">
-					<div class="text-[13px] font-medium text-[#5f8f7a]">raw</div>
-					<div id="mta-stat-raw" title="0.00 raw wpm" class="mt-1 cursor-help text-3xl leading-none font-bold text-[#00ff9d] tabular-nums">
+					<div class="text-[13px] font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.rawLabel')}</div>
+					<div id="mta-stat-raw" title={t('typingSpeedTest.arena.results.initialRawTitle')} class="mt-1 cursor-help text-3xl leading-none font-bold text-[#00ff9d] tabular-nums">
 						0
 					</div>
 				</div>
 				<div class="min-w-0">
-					<div class="text-[13px] font-medium text-[#5f8f7a]">characters</div>
+					<div class="text-[13px] font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.charactersLabel')}</div>
 					<div
 						id="mta-stat-chars"
-						title="correct / incorrect / extra / missed"
+						title={t('typingSpeedTest.arena.results.initialCharsTitle')}
 						class="mt-1 cursor-help text-2xl leading-none font-bold tracking-tight whitespace-nowrap text-[#00ff9d] tabular-nums sm:text-[1.65rem]"
 					>
 						0/0/0/0
 					</div>
 				</div>
 				<div class="min-w-0">
-					<div class="text-[13px] font-medium text-[#5f8f7a]">consistency</div>
-					<div id="mta-stat-consistency" title="100% consistency" class="mt-1 cursor-help text-3xl leading-none font-bold text-[#00ff9d] tabular-nums">
+					<div class="text-[13px] font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.consistencyLabel')}</div>
+					<div id="mta-stat-consistency" title={t('typingSpeedTest.arena.results.initialConsistencyTitle')} class="mt-1 cursor-help text-3xl leading-none font-bold text-[#00ff9d] tabular-nums">
 						100%
 					</div>
 				</div>
 				<div class="min-w-0">
-					<div class="text-[13px] font-medium text-[#5f8f7a]">time</div>
+					<div class="text-[13px] font-medium text-[#5f8f7a]">{t('typingSpeedTest.arena.results.timeLabel')}</div>
 					<div id="mta-stat-time" class="mt-1 text-3xl leading-none font-bold text-[#00ff9d] tabular-nums">
 						60s
 					</div>
 					<div id="mta-stat-time-sub" class="mt-1.5 text-[11px] leading-tight text-[#5f8f7a] tabular-nums">
-						0% afk · 00:01:00 session
+						{t('typingSpeedTest.arena.results.defaultTimeSub')}
 					</div>
 				</div>
 			</div>
@@ -291,68 +320,68 @@
 				<button
 					type="button"
 					id="mta-btn-next-test"
-					title="Next Test (Tab + Enter)"
-					aria-label="Next Test"
+					title={t('typingSpeedTest.arena.results.nextTestTitle')}
+					aria-label={t('typingSpeedTest.arena.results.nextTestAria')}
 					class="group inline-flex cursor-pointer items-center gap-2 rounded-lg border border-[#00ff9d]/30 bg-[#00ff9d]/10 px-4 py-2.5 text-[14px] font-bold text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d] hover:text-[#050a08] hover:shadow-[0_0_16px_rgba(0,255,157,0.45)]"
 				>
 					<span class="text-base leading-none">&gt;</span>
-					<span>Next Test</span>
+					<span>{t('typingSpeedTest.arena.results.nextTestBtn')}</span>
 				</button>
 
 				<button
 					type="button"
 					id="mta-btn-repeat-test"
-					title="Repeat Test"
-					aria-label="Repeat Test"
+					title={t('typingSpeedTest.arena.results.repeatTitle')}
+					aria-label={t('typingSpeedTest.arena.results.repeatAria')}
 					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
 				>
 					<span class="text-base leading-none">↻</span>
-					<span>Repeat</span>
+					<span>{t('typingSpeedTest.arena.results.repeatBtn')}</span>
 				</button>
 
 				<button
 					type="button"
 					id="mta-btn-practice-missed"
 					disabled
-					title="Practice Missed Words"
-					aria-label="Practice Missed Words"
+					title={t('typingSpeedTest.arena.results.practiceMissedTitle')}
+					aria-label={t('typingSpeedTest.arena.results.practiceMissedAria')}
 					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#ff3b5c]/40 hover:bg-[#ff3b5c]/10 hover:text-[#ff6b84] disabled:cursor-not-allowed disabled:opacity-35"
 				>
 					<span class="text-base leading-none">⚠</span>
-					<span id="mta-missed-btn-label">Practice Missed (0)</span>
+					<span id="mta-missed-btn-label">{t('typingSpeedTest.arena.results.practiceMissedBtn')}</span>
 				</button>
 
 				<button
 					type="button"
 					id="mta-btn-toggle-history"
 					aria-expanded="false"
-					title="Toggle Words History"
-					aria-label="Toggle Words History"
+					title={t('typingSpeedTest.arena.results.toggleHistoryTitle')}
+					aria-label={t('typingSpeedTest.arena.results.toggleHistoryAria')}
 					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
 				>
 					<span class="text-base leading-none">≡</span>
-					<span>Words History</span>
+					<span>{t('typingSpeedTest.arena.results.toggleHistoryBtn')}</span>
 				</button>
 
 				<button
 					type="button"
 					id="mta-btn-export-png"
-					title="Export Result Card PNG"
-					aria-label="Export Result Card PNG"
+					title={t('typingSpeedTest.arena.results.exportPngTitle')}
+					aria-label={t('typingSpeedTest.arena.results.exportPngAria')}
 					class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
 				>
 					<span class="text-base leading-none">🖼</span>
-					<span id="mta-export-png-label">Export PNG</span>
+					<span id="mta-export-png-label">{t('typingSpeedTest.arena.results.exportPngBtn')}</span>
 				</button>
 
 				<a
-					href="/typing-speed-test/"
-					title="Exit to Guide (/typing-speed-test/)"
-					aria-label="Exit to Guide"
+					href={exitPath}
+					title={t('typingSpeedTest.arena.results.exitTitle', { exitPath })}
+					aria-label={t('typingSpeedTest.arena.results.exitAria')}
 					class="inline-flex items-center gap-2 rounded-lg border border-transparent px-3.5 py-2.5 text-[14px] font-medium text-[#5f8f7a] transition hover:border-[#00ff9d]/30 hover:bg-[#0a1410] hover:text-[#00ff9d]"
 				>
 					<span class="text-base leading-none">←</span>
-					<span>Exit</span>
+					<span>{t('typingSpeedTest.arena.results.exitBtn')}</span>
 				</a>
 			</div>
 
@@ -362,8 +391,8 @@
 				class="mt-6 hidden rounded-xl border border-[#00ff9d]/20 bg-[#070f0b]/90 p-5"
 			>
 				<div class="mb-3 flex items-center justify-between gap-2 text-[12px] text-[#5f8f7a]">
-					<span class="font-semibold tracking-wide text-[#00ff9d]">WORDS HISTORY // TYPED STREAM</span>
-					<span>Mistyped characters highlighted in crimson</span>
+					<span class="font-semibold tracking-wide text-[#00ff9d]">{t('typingSpeedTest.arena.results.historyHeading')}</span>
+					<span>{t('typingSpeedTest.arena.results.historyLegend')}</span>
 				</div>
 				<div
 					id="mta-words-history-list"
@@ -383,21 +412,21 @@
 	>
 		<div class="w-full max-w-xl rounded-xl border border-[#00ff9d]/30 bg-[#08110d] p-6 shadow-[0_0_40px_rgba(0,255,157,0.12)]">
 			<div class="flex items-center justify-between gap-3">
-				<h2 id="mta-custom-modal-title" class="text-[16px] font-bold tracking-wide text-[#00ff9d]">&gt; CUSTOM PAYLOAD</h2>
+				<h2 id="mta-custom-modal-title" class="text-[16px] font-bold tracking-wide text-[#00ff9d]">{t('typingSpeedTest.arena.customModal.title')}</h2>
 				<button
 					type="button"
 					id="mta-custom-close"
-					aria-label="Close custom payload dialog"
+					aria-label={t('typingSpeedTest.arena.customModal.closeAria')}
 					class="cursor-pointer rounded-md px-2 py-1 text-[13px] font-semibold text-[#6ee7b7] transition hover:bg-[#00ff9d]/10 hover:text-[#00ff9d]"
 				>
 					[ X ]
 				</button>
 			</div>
-			<p class="mt-1.5 text-[13px] text-[#7fb69f]">Paste any text or code below, then start practicing immediately.</p>
+			<p class="mt-1.5 text-[13px] text-[#7fb69f]">{t('typingSpeedTest.arena.customModal.description')}</p>
 			<textarea
 				id="mta-custom-textarea"
 				rows="6"
-				placeholder="Paste or type your payload here..."
+				placeholder={t('typingSpeedTest.arena.customModal.placeholder')}
 				class="mt-4 w-full rounded-lg border-[1px] border-[#00ff9d]/30 bg-[#050a08] p-3.5 font-mono text-[14px] leading-relaxed text-[#d1fae5] placeholder:text-[#345949] focus:border-[#00ff9d] focus:outline-none"
 			></textarea>
 			<div class="mt-5 flex items-center justify-end gap-2.5">
@@ -406,14 +435,14 @@
 					id="mta-custom-cancel"
 					class="cursor-pointer rounded-md border border-[#00ff9d]/30 px-4 py-2 text-[13px] font-semibold text-[#6ee7b7] transition hover:bg-[#00ff9d]/10"
 				>
-					[ CANCEL ]
+					{t('typingSpeedTest.arena.customModal.cancelBtn')}
 				</button>
 				<button
 					type="button"
 					id="mta-custom-apply"
 					class="cursor-pointer rounded-md bg-[#00ff9d] px-5 py-2 text-[13px] font-bold text-[#050a08] shadow-[0_0_12px_rgba(0,255,157,0.45)] transition hover:brightness-110"
 				>
-					[ EXECUTE ]
+					{t('typingSpeedTest.arena.customModal.executeBtn')}
 				</button>
 			</div>
 		</div>
@@ -421,62 +450,45 @@
 
 	<!-- Bottom Terminal Keybind Legend & Caret Style Toggle -->
 	<div class="mx-auto flex w-full max-w-[1320px] flex-wrap items-center justify-center gap-x-3 gap-y-2 px-4 pt-2 pb-6 text-center font-mono text-[12px] tracking-wide text-[#5f8f7a]">
-		<span>[TAB] RESTART SEQUENCE &nbsp;·&nbsp; [SHIFT+ENTER] EXECUTE ZEN LOG &nbsp;·&nbsp; [CTRL+BKSP] CLEAR WORD &nbsp;·&nbsp; [ESC] ABORT TO /typing-speed-test/</span>
+		<span>{t('typingSpeedTest.arena.footer.legend', { exitPath })}</span>
 		<span>·</span>
 		<button
 			type="button"
 			id="mta-caret-style-toggle"
 			class="cursor-pointer rounded border border-[#00ff9d]/25 bg-[#0a1410]/80 px-2 py-0.5 text-[11px] font-bold text-[#00ff9d] transition hover:border-[#00ff9d] hover:bg-[#00ff9d]/15"
 		>
-			[ CARET: LINE ]
+			{t('typingSpeedTest.arena.footer.caretLine')}
 		</button>
 	</div>
+
+	<script
+		type="application/json"
+		id="mta-i18n"
+		set:html={JSON.stringify(arenaI18n).replace(/</g, '\\u003c')}
+	/>
 </div>
 
 <script>
 	function initMonkeyTypingArena() {
-		const COMMON_WORDS = [
-			'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'it',
-			'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this',
-			'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or',
-			'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so',
-			'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when',
-			'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people',
-			'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than',
-			'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back',
-			'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 'even',
-			'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us', 'system',
-			'program', 'question', 'number', 'night', 'point', 'home', 'water', 'room', 'mother', 'area',
-			'money', 'story', 'fact', 'month', 'lot', 'right', 'study', 'book', 'eye', 'job',
-			'word', 'business', 'issue', 'side', 'kind', 'head', 'house', 'service', 'friend', 'father',
-			'power', 'hour', 'game', 'line', 'end', 'member', 'law', 'car', 'city', 'community',
-			'name', 'team', 'minute', 'idea', 'body', 'information', 'nothing', 'lead', 'social', 'understand',
-			'watch', 'together', 'follow', 'around', 'stop', 'face', 'create', 'public', 'speak', 'read',
-			'level', 'allow', 'office', 'health', 'person', 'history', 'result', 'open', 'change', 'morning',
-			'research', 'early', 'food', 'moment', 'force', 'offer', 'enough', 'education', 'across', 'remember',
-			'policy', 'everything', 'love', 'process', 'music', 'consider', 'human', 'market', 'build', 'nation',
-			'plan', 'interest', 'experience', 'reach', 'effect', 'class', 'control', 'light', 'voice', 'mind',
-			'network', 'signal', 'packet', 'cipher', 'access', 'secure', 'server', 'binary', 'kernel', 'matrix'
-		];
+		const i18nEl = document.getElementById('mta-i18n');
+		const I18N = i18nEl ? JSON.parse(i18nEl.textContent || '{}') : {};
+		const S = I18N.strings || {};
+		const EXIT_URL: string = typeof I18N.exitUrl === 'string' && I18N.exitUrl ? I18N.exitUrl : '/typing-speed-test/';
+		const PNG_SITE_URL: string = typeof I18N.pngSiteUrl === 'string' && I18N.pngSiteUrl ? I18N.pngSiteUrl : 'wordora.site/typing-speed-test/';
 
-		const QUOTES: Array<{ text: string; author: string }> = [
-			{ text: "Simplicity is about subtracting the obvious and adding the meaningful. Every word on the page should earn its place through clarity and rhythm.", author: "John Maeda" },
-			{ text: "The art of writing is the art of discovering what you believe. When you sit down at the keyboard with patience, scattered thoughts begin to take shape.", author: "Gustave Flaubert" },
-			{ text: "Focus is a matter of deciding what things you are not going to do. Deep work flourishes in quiet spaces where distractions fade into the background.", author: "John Carmack" },
-			{ text: "A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away.", author: "Antoine de Saint-Exupery" },
-			{ text: "Words are a lens to focus one's mind. Clear prose does not happen by accident; it emerges from steady habits and deliberate revision.", author: "Ayn Rand" },
-			{ text: "Speed follows accuracy. When you train your fingers to strike each key without tension or hesitation, fluency becomes effortless and natural.", author: "Typing Craft" },
-			{ text: "The scariest moment is always just before you start. After that, things can only get better once the first sentence is on the screen.", author: "Stephen King" },
-			{ text: "Either write something worth reading or do something worth writing. Small daily steps build momentum that occasional bursts of effort never match.", author: "Benjamin Franklin" },
-			{ text: "Details make perfection, and perfection is not a detail. Clean typography and balanced spacing invite the reader to linger and understand.", author: "Leonardo da Vinci" },
-			{ text: "What is written without effort is in general read without pleasure. Thoughtful structure turns complex ideas into a welcoming conversation.", author: "Samuel Johnson" },
-			{ text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit practiced quietly every single morning.", author: "Will Durant" },
-			{ text: "First, solve the problem. Then, write the code. Clean architecture begins in the mind long before your fingers touch the keyboard.", author: "John Johnson" },
-			{ text: "Reading furnishes the mind only with materials of knowledge; it is thinking that makes what we read ours.", author: "John Locke" },
-			{ text: "Never use a long word where a short one will do. Direct language respects the reader's time and sharpens your own argument.", author: "George Orwell" },
-			{ text: "In the middle of difficulty lies opportunity. A calm posture and steady cadence will carry you through the longest manuscript.", author: "Albert Einstein" },
-			{ text: "Programming isn't about what you know; it's about what you can figure out through curiosity, patience, and careful testing.", author: "Chris Pine" }
-		];
+		function fmt(template: string, vars: Record<string, string | number>): string {
+			return String(template || '').replace(/\{(\w+)\}/g, (_, k: string) =>
+				k in vars ? String(vars[k]) : `{${k}}`,
+			);
+		}
+
+		const COMMON_WORDS: string[] = Array.isArray(I18N.wordList) && I18N.wordList.length > 0
+			? I18N.wordList
+			: ['the', 'be', 'to', 'of', 'and', 'time', 'work', 'word', 'system', 'network'];
+
+		const QUOTES: Array<{ text: string; author: string }> = Array.isArray(I18N.quotes) && I18N.quotes.length > 0
+			? I18N.quotes
+			: [{ text: 'Simplicity is about subtracting the obvious and adding the meaningful.', author: 'John Maeda' }];
 
 		type TestMode = 'time' | 'words' | 'quote' | 'zen' | 'custom';
 		type PaceOption = 'OFF' | '40' | '60' | '80' | 'LAST';
@@ -559,7 +571,7 @@
 		let wordLimit = 25;
 		let usePunctuation = false;
 		let useNumbers = false;
-		let customText = 'Clear writing begins with steady rhythm and attention to detail. Type your own custom payload here to practice.';
+		let customText = S.defaultCustomText || 'Clear writing begins with steady rhythm and attention to detail. Type your own custom payload here to practice.';
 		let currentQuoteAuthor = '';
 		let lastQuoteIndex = -1;
 
@@ -668,7 +680,9 @@
 				caretEl.className = 'pointer-events-none absolute top-1 left-0 z-10 h-[1.9rem] w-[3px] rounded-full bg-[#00ff9d] shadow-[0_0_10px_#00ff9d] transition-all duration-75 sm:h-[2.35rem]';
 			}
 			if (caretStyleToggleBtn) {
-				caretStyleToggleBtn.textContent = `[ CARET: ${caretStyle} ]`;
+				caretStyleToggleBtn.textContent = caretStyle === 'BLOCK'
+					? (S.caretBlock || '[ CARET: BLOCK ]')
+					: (S.caretLine || '[ CARET: LINE ]');
 			}
 		}
 
@@ -683,13 +697,13 @@
 			if (!paceToggleBtn) return;
 			const mode = PACE_OPTIONS[paceOptionIndex];
 			if (mode === 'OFF') {
-				paceToggleBtn.textContent = '[ PACE: OFF ]';
+				paceToggleBtn.textContent = S.paceOff || '[ PACE: OFF ]';
 				paceToggleBtn.className = 'cursor-pointer rounded px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#6ee7b7] transition hover:bg-[#00ff9d]/15 hover:text-[#00ff9d]';
 			} else if (mode === 'LAST') {
-				paceToggleBtn.textContent = `[ PACE: LAST (${lastRunWpm} WPM) ]`;
+				paceToggleBtn.textContent = fmt(S.paceLast || '[ PACE: LAST ({wpm} WPM) ]', { wpm: lastRunWpm });
 				paceToggleBtn.className = 'cursor-pointer rounded bg-[#38bdf8]/15 px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#38bdf8] transition hover:bg-[#38bdf8]/25';
 			} else {
-				paceToggleBtn.textContent = `[ PACE: ${mode} WPM ]`;
+				paceToggleBtn.textContent = fmt(S.paceFixed || '[ PACE: {wpm} WPM ]', { wpm: mode });
 				paceToggleBtn.className = 'cursor-pointer rounded bg-[#38bdf8]/15 px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#38bdf8] transition hover:bg-[#38bdf8]/25';
 			}
 		}
@@ -761,13 +775,13 @@
 		function setStatus(state: 'ready' | 'running' | 'done') {
 			if (!statusText || !statusDot) return;
 			if (state === 'ready') {
-				statusText.textContent = 'TERMINAL READY';
+				statusText.textContent = S.statusReady || 'TERMINAL READY';
 				statusDot.className = 'inline-block h-2 w-2 animate-pulse rounded-full bg-[#00ff9d] shadow-[0_0_8px_#00ff9d]';
 			} else if (state === 'running') {
-				statusText.textContent = 'BREACHING...';
+				statusText.textContent = S.statusRunning || 'BREACHING...';
 				statusDot.className = 'inline-block h-2 w-2 animate-pulse rounded-full bg-[#ffb020] shadow-[0_0_8px_#ffb020]';
 			} else {
-				statusText.textContent = 'ACCESS GRANTED';
+				statusText.textContent = S.statusDone || 'ACCESS GRANTED';
 				statusDot.className = 'inline-block h-2 w-2 rounded-full bg-[#00ff9d] shadow-[0_0_8px_#00ff9d]';
 			}
 		}
@@ -839,7 +853,10 @@
 				targetWords = q.text.trim().split(/\s+/);
 			} else if (currentMode === 'custom') {
 				const cleaned = customText.trim();
-				targetWords = cleaned.length > 0 ? cleaned.split(/\s+/) : ['Type', 'your', 'custom', 'text', 'here.'];
+				const fallbackWords: string[] = Array.isArray(S.fallbackCustomWords) && S.fallbackCustomWords.length > 0
+					? S.fallbackCustomWords
+					: ['Type', 'your', 'custom', 'text', 'here.'];
+				targetWords = cleaned.length > 0 ? cleaned.split(/\s+/) : fallbackWords;
 			} else {
 				targetWords = [];
 			}
@@ -905,7 +922,7 @@
 			if (typedWords.length === 0 || (typedWords.length === 1 && typedWords[0] === '')) {
 				const placeholder = document.createElement('div');
 				placeholder.className = CLS_UNTYPED;
-				placeholder.textContent = 'Start typing freely... press Shift + Enter when done.';
+				placeholder.textContent = S.zenPlaceholder || 'Start typing freely... press Shift + Enter when done.';
 				wordsStream.appendChild(placeholder);
 			}
 
@@ -1018,12 +1035,16 @@
 					if (isRunning && startTimeMs !== null) {
 						rem = Math.max(0, timeLimit - Math.floor((performance.now() - startTimeMs) / 1000));
 					}
-					liveIndicator.textContent = `T-MINUS ${rem}s`;
+					liveIndicator.textContent = fmt(S.tMinus || 'T-MINUS {sec}s', { sec: rem });
 				} else if (currentMode === 'zen') {
 					const count = typedWords.filter((w) => w.length > 0).length;
-					liveIndicator.textContent = `ZEN LOG · ${count} ${count === 1 ? 'word' : 'words'} · Shift+Enter to execute`;
+					const wordUnit = count === 1 ? (S.wordSingular || 'word') : (S.wordPlural || 'words');
+					liveIndicator.textContent = fmt(S.zenLog || 'ZEN LOG · {count} {wordUnit} · Shift+Enter to execute', { count, wordUnit });
 				} else {
-					liveIndicator.textContent = `PACKETS ${Math.min(activeWordIndex, targetWords.length)}/${targetWords.length}`;
+					liveIndicator.textContent = fmt(S.packets || 'PACKETS {done}/{total}', {
+						done: Math.min(activeWordIndex, targetWords.length),
+						total: targetWords.length,
+					});
 				}
 			}
 
@@ -1036,7 +1057,7 @@
 					quoteSource.textContent = `// ${currentQuoteAuthor}`;
 					quoteSource.classList.remove('hidden');
 				} else if (isMissedDrillActive) {
-					quoteSource.textContent = '// FAILED NODES DRILL';
+					quoteSource.textContent = S.failedNodesDrill || '// FAILED NODES DRILL';
 					quoteSource.classList.remove('hidden');
 				} else {
 					quoteSource.classList.add('hidden');
@@ -1196,7 +1217,8 @@
 			const hrs = Math.floor(totalSec / 3600);
 			const mins = Math.floor((totalSec % 3600) / 60);
 			const secs = Math.floor(totalSec % 60);
-			return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')} session`;
+			const hms = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+			return fmt(S.sessionHms || '{hms} session', { hms });
 		}
 
 		function renderWordsHistoryDrawer() {
@@ -1223,7 +1245,7 @@
 				const wordWrap = document.createElement('span');
 				const hasErr = typed !== target;
 				wordWrap.className = `inline-flex items-baseline${hasErr ? ' border-b border-[#ff3b5c]/80' : ''}`;
-				wordWrap.title = hasErr ? `target: "${target}" | typed: "${typed}"` : target;
+				wordWrap.title = hasErr ? fmt(S.historyWordTitle || 'target: "{target}" | typed: "{typed}"', { target, typed }) : target;
 
 				for (let c = 0; c < target.length; c++) {
 					const ch = document.createElement('span');
@@ -1275,16 +1297,18 @@
 			// Header Brand
 			ctx.fillStyle = '#00ff9d';
 			ctx.font = 'bold 22px monospace';
-			ctx.fillText('WORDORA // CYBER-TERMINAL TYPING TELEMETRY', 64, 82);
+			ctx.fillText(S.pngHeader || 'WORDORA // CYBER-TERMINAL TYPING TELEMETRY', 64, 82);
 
 			ctx.fillStyle = '#5f8f7a';
 			ctx.font = '16px monospace';
-			ctx.fillText('wordora.site/typing-speed-test/', 830, 82);
+			ctx.textAlign = 'right';
+			ctx.fillText(PNG_SITE_URL, 1136, 82);
+			ctx.textAlign = 'left';
 
 			// Left Big WPM & ACC
 			ctx.fillStyle = '#5f8f7a';
 			ctx.font = '24px monospace';
-			ctx.fillText('wpm', 64, 165);
+			ctx.fillText(S.pngWpm || 'wpm', 64, 165);
 
 			ctx.fillStyle = '#00ff9d';
 			ctx.font = 'bold 112px monospace';
@@ -1292,7 +1316,7 @@
 
 			ctx.fillStyle = '#5f8f7a';
 			ctx.font = '24px monospace';
-			ctx.fillText('acc', 64, 330);
+			ctx.fillText(S.pngAcc || 'acc', 64, 330);
 
 			ctx.fillStyle = '#00ff9d';
 			ctx.font = 'bold 84px monospace';
@@ -1351,11 +1375,11 @@
 			// Bottom Stat Row
 			const statsY = 500;
 			const cols = [
-				{ label: 'test type', val: lastResultSnapshot.modeLabel },
-				{ label: 'raw', val: String(lastResultSnapshot.raw) },
-				{ label: 'characters', val: lastResultSnapshot.charsLabel },
-				{ label: 'consistency', val: `${lastResultSnapshot.consistency}%` },
-				{ label: 'time', val: lastResultSnapshot.durationLabel }
+				{ label: S.pngTestType || 'test type', val: lastResultSnapshot.modeLabel },
+				{ label: S.pngRaw || 'raw', val: String(lastResultSnapshot.raw) },
+				{ label: S.pngCharacters || 'characters', val: lastResultSnapshot.charsLabel },
+				{ label: S.pngConsistency || 'consistency', val: `${lastResultSnapshot.consistency}%` },
+				{ label: S.pngTime || 'time', val: lastResultSnapshot.durationLabel }
 			];
 
 			cols.forEach((c, idx) => {
@@ -1381,9 +1405,9 @@
 					if (navigator.clipboard && 'write' in navigator.clipboard && typeof ClipboardItem !== 'undefined') {
 						await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
 						if (exportPngLabel) {
-							exportPngLabel.textContent = 'Copied & Saved PNG!';
+							exportPngLabel.textContent = S.exportPngCopied || 'Copied & Saved PNG!';
 							window.setTimeout(() => {
-								exportPngLabel.textContent = 'Export PNG';
+								exportPngLabel.textContent = S.exportPngDefault || 'Export PNG';
 							}, 2200);
 						}
 					}
@@ -1423,8 +1447,8 @@
 			let svgHtml = '';
 
 			// Dual Y-Axis Titles (Words per Minute on left, Errors on right)
-			svgHtml += `<text x="12" y="${padTop + plotH / 2}" text-anchor="middle" fill="${labelColor}" font-size="10" font-family="monospace" transform="rotate(-90 12 ${padTop + plotH / 2})">Words per Minute</text>`;
-			svgHtml += `<text x="${width - 10}" y="${padTop + plotH / 2}" text-anchor="middle" fill="#ff3b5c" font-size="10" font-family="monospace" opacity="0.75" transform="rotate(90 ${width - 10} ${padTop + plotH / 2})">Errors</text>`;
+			svgHtml += `<text x="12" y="${padTop + plotH / 2}" text-anchor="middle" fill="${labelColor}" font-size="10" font-family="monospace" transform="rotate(-90 12 ${padTop + plotH / 2})">${S.chartYAxisWpm || 'Words per Minute'}</text>`;
+			svgHtml += `<text x="${width - 10}" y="${padTop + plotH / 2}" text-anchor="middle" fill="#ff3b5c" font-size="10" font-family="monospace" opacity="0.75" transform="rotate(90 ${width - 10} ${padTop + plotH / 2})">${S.chartYAxisErrors || 'Errors'}</text>`;
 
 			// Horizontal Grid Lines & Left/Right Axis Ticks
 			const ySteps = [0, Math.round(yMax / 2), yMax];
@@ -1468,7 +1492,13 @@
 				svgHtml += `<circle cx="${x}" cy="${yWpm}" r="2.75" fill="${neon}" />`;
 				if (s.errors > 0) {
 					const yErr = getErrY(s.errors);
-					svgHtml += `<circle cx="${x}" cy="${yErr}" r="4.2" fill="#ff3b5c" stroke="#050a08" stroke-width="1.5"><title>${s.errors} error(s) at ${i + 1}s</title></circle>`;
+					const errTitle = fmt(
+						s.errors === 1
+							? (S.chartErrorTitleSingular || '{count} error at {sec}s')
+							: (S.chartErrorTitlePlural || '{count} errors at {sec}s'),
+						{ count: s.errors, sec: i + 1 },
+					);
+					svgHtml += `<circle cx="${x}" cy="${yErr}" r="4.2" fill="#ff3b5c" stroke="#050a08" stroke-width="1.5"><title>${errTitle}</title></circle>`;
 				}
 			}
 
@@ -1523,9 +1553,9 @@
 				}
 
 				chartTooltip.innerHTML = `
-					<div class="font-bold text-[#00ff9d] border-b border-[#00ff9d]/25 pb-1 mb-1">T+${sec}s TELEMETRY</div>
-					<div>WPM: <strong class="text-[#00ff9d]">${sample.wpm}</strong> &nbsp;·&nbsp; RAW: <strong>${sample.raw}</strong></div>
-					<div>BURST: <strong class="text-[#38bdf8]">${sample.burst}</strong> &nbsp;·&nbsp; ERR: <strong class="text-[#ff3b5c]">${sample.errors}</strong></div>
+					<div class="font-bold text-[#00ff9d] border-b border-[#00ff9d]/25 pb-1 mb-1">${fmt(S.tooltipHeader || 'T+{sec}s TELEMETRY', { sec })}</div>
+					<div>${S.tooltipWpm || 'WPM'}: <strong class="text-[#00ff9d]">${sample.wpm}</strong> &nbsp;·&nbsp; ${S.tooltipRaw || 'RAW'}: <strong>${sample.raw}</strong></div>
+					<div>${S.tooltipBurst || 'BURST'}: <strong class="text-[#38bdf8]">${sample.burst}</strong> &nbsp;·&nbsp; ${S.tooltipErr || 'ERR'}: <strong class="text-[#ff3b5c]">${sample.errors}</strong></div>
 				`;
 				chartTooltip.classList.remove('hidden');
 
@@ -1612,23 +1642,30 @@
 
 			if (resWpm) {
 				resWpm.textContent = String(netWpm);
-				resWpm.title = `${netWpmExact.toFixed(2)} wpm (${charStats.correct} correct chars)`;
+				resWpm.title = fmt(S.resWpmTitle || '{wpm} wpm ({correct} correct chars)', {
+					wpm: netWpmExact.toFixed(2),
+					correct: charStats.correct,
+				});
 			}
 			if (resAcc) {
 				resAcc.textContent = `${accuracy}%`;
-				resAcc.title = `${accExact.toFixed(2)}% (${totalEvaluated - totalErrors}/${totalEvaluated} keystrokes)`;
+				resAcc.title = fmt(S.resAccTitle || '{acc}% ({valid}/{total} keystrokes)', {
+					acc: accExact.toFixed(2),
+					valid: totalEvaluated - totalErrors,
+					total: totalEvaluated,
+				});
 			}
 
 			let typeLabel = '';
-			if (isMissedDrillActive) typeLabel = 'missed drill';
-			else if (currentMode === 'time') typeLabel = `time ${timeLimit}s`;
-			else if (currentMode === 'words') typeLabel = `words ${wordLimit}`;
-			else typeLabel = currentMode;
+			if (isMissedDrillActive) typeLabel = S.typeMissedDrill || 'missed drill';
+			else if (currentMode === 'time') typeLabel = fmt(S.typeTime || 'time {sec}s', { sec: timeLimit });
+			else if (currentMode === 'words') typeLabel = fmt(S.typeWords || 'words {count}', { count: wordLimit });
+			else typeLabel = (S.typeModes && S.typeModes[currentMode]) || currentMode;
 
-			const mods: string[] = ['english'];
+			const mods: string[] = [S.languageLabel || 'english'];
 			if ((currentMode === 'time' || currentMode === 'words') && !isMissedDrillActive) {
-				if (usePunctuation) mods.push('punctuation');
-				if (useNumbers) mods.push('numbers');
+				if (usePunctuation) mods.push(S.modPunctuationTag || 'punctuation');
+				if (useNumbers) mods.push(S.modNumbersTag || 'numbers');
 			}
 
 			if (statType) {
@@ -1637,32 +1674,43 @@
 
 			if (statOther) {
 				const otherTags: string[] = [];
-				if (isRepeatedPayload) otherTags.push('repeated');
-				if (afkPct > 0) otherTags.push('afk detected');
+				if (isRepeatedPayload) otherTags.push(S.otherRepeated || 'repeated');
+				if (afkPct > 0) otherTags.push(S.otherAfk || 'afk detected');
 				if (otherTags.length === 0) {
-					otherTags.push(totalErrors === 0 ? 'clean run' : 'standard');
+					otherTags.push(totalErrors === 0 ? (S.otherCleanRun || 'clean run') : (S.otherStandard || 'standard'));
 				}
 				statOther.textContent = otherTags.join(' · ');
 			}
 
 			if (statRaw) {
 				statRaw.textContent = String(rawWpm);
-				statRaw.title = `${rawWpmExact.toFixed(2)} raw wpm`;
+				statRaw.title = fmt(S.statRawTitle || '{raw} raw wpm', { raw: rawWpmExact.toFixed(2) });
 			}
 			if (statChars) {
 				statChars.textContent = `${charStats.correct}/${charStats.incorrect}/${charStats.extra}/${charStats.missed}`;
-				statChars.title = `correct: ${charStats.correct} / incorrect: ${charStats.incorrect} / extra: ${charStats.extra} / missed: ${charStats.missed}`;
+				statChars.title = fmt(
+					S.statCharsTitle || 'correct: {correct} / incorrect: {incorrect} / extra: {extra} / missed: {missed}',
+					{
+						correct: charStats.correct,
+						incorrect: charStats.incorrect,
+						extra: charStats.extra,
+						missed: charStats.missed,
+					},
+				);
 			}
 			if (statConsistency) {
 				statConsistency.textContent = `${consistency}%`;
-				statConsistency.title = `${consistency}% keystroke pacing consistency`;
+				statConsistency.title = fmt(S.statConsistencyTitle || '{consistency}% keystroke pacing consistency', { consistency });
 			}
 			const displaySec = currentMode === 'time' ? timeLimit : Math.max(1, Math.round(elapsedSec));
 			if (statTime) {
 				statTime.textContent = `${displaySec}s`;
 			}
 			if (statTimeSub) {
-				statTimeSub.textContent = `${afkPct}% afk · ${formatSessionHms(cumulativeSessionSeconds)}`;
+				statTimeSub.textContent = fmt(S.statTimeSub || '{afk}% afk · {session}', {
+					afk: afkPct,
+					session: formatSessionHms(cumulativeSessionSeconds),
+				});
 			}
 
 			lastResultSnapshot = {
@@ -1678,7 +1726,7 @@
 			const missedCount = missedWordsSet.size;
 			if (btnPracticeMissed && missedBtnLabel) {
 				btnPracticeMissed.disabled = missedCount === 0;
-				missedBtnLabel.textContent = `Practice Missed (${missedCount})`;
+				missedBtnLabel.textContent = fmt(S.practiceMissedCount || 'Practice Missed ({count})', { count: missedCount });
 			}
 
 			renderWordsHistoryDrawer();
@@ -1931,7 +1979,7 @@
 			}
 			if (e.key === 'Escape') {
 				e.preventDefault();
-				window.location.href = '/typing-speed-test/';
+				window.location.href = EXIT_URL;
 				return;
 			}
 			if (e.key === 'Enter' && e.shiftKey) {
@@ -1967,7 +2015,7 @@
 			}
 			if (e.key === 'Escape') {
 				e.preventDefault();
-				window.location.href = '/typing-speed-test/';
+				window.location.href = EXIT_URL;
 				return;
 			}
 			if (e.key === 'Enter') {
@@ -2013,7 +2061,7 @@
 		sfxToggleBtn?.addEventListener('click', () => {
 			sfxEnabled = !sfxEnabled;
 			sfxToggleBtn.setAttribute('aria-pressed', sfxEnabled ? 'true' : 'false');
-			sfxToggleBtn.textContent = sfxEnabled ? '[ SFX: ON ]' : '[ SFX: OFF ]';
+			sfxToggleBtn.textContent = sfxEnabled ? (S.sfxOn || '[ SFX: ON ]') : (S.sfxOff || '[ SFX: OFF ]');
 			sfxToggleBtn.className = sfxEnabled
 				? 'cursor-pointer rounded bg-[#00ff9d]/20 px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#00ff9d] transition hover:bg-[#00ff9d]/30'
 				: 'cursor-pointer rounded px-1.5 py-0.5 text-[11px] font-bold tracking-wide text-[#6ee7b7] transition hover:bg-[#00ff9d]/15 hover:text-[#00ff9d]';

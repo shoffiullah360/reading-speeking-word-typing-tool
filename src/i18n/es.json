@@ -3187,7 +3187,409 @@
 		"metric": "Palabras · Caracteres · Frases",
 		"title": "Contador de palabras online y calculadora de palabras para trabajos | Wordora",
 		"metaDescription": "Contador de palabras gratuito: cuenta palabras, caracteres con y sin espacios, frases, párrafos, páginas, tiempo de lectura y frecuencia de palabras clave en ensayos, guiones y artículos.",
-		"h1": "Contador de palabras y caracteres online"
+		"h1": "Contador de palabras y caracteres online",
+		"ui": {
+			"workspaceAria": "Área de trabajo del contador de palabras y caracteres",
+			"textareaLabel": "Escribe o pega tu texto aquí",
+			"textareaPlaceholder": "Escribe o pega tu texto aquí...",
+			"wordsUnit": "palabras",
+			"charactersUnit": "caracteres",
+			"btnPaste": "Pegar",
+			"btnUpload": "Subir .txt",
+			"btnCleanSpaces": "Limpiar espacios",
+			"btnCopyText": "Copiar texto",
+			"btnClear": "Borrar",
+			"heroWords": "Palabras",
+			"heroCharacters": "Caracteres",
+			"withoutSpaces": "sin espacios",
+			"cjkChars": "caracteres CJK",
+			"btnCopySummary": "Copiar resumen",
+			"panelViewAria": "Vista del panel",
+			"tabStats": "Estadísticas",
+			"tabKeywords": "Palabras clave",
+			"statSentences": "Frases",
+			"statParagraphs": "Párrafos",
+			"statReadingTime": "Tiempo de lectura",
+			"statSpeakingTime": "Tiempo de locución",
+			"statPages": "Páginas",
+			"wpp250Short": "250 pal./pág.",
+			"statReadability": "Legibilidad",
+			"topKeywordsTitle": "Top 8 palabras clave",
+			"btnCopyKeywords": "Copiar palabras clave",
+			"keywordsEmpty": "Escribe o pega un texto para ver la densidad de palabras clave.",
+			"platformLimitsTitle": "Límites de plataformas",
+			"platformLimitsUnit": "Caracteres",
+			"limitGoogleTitle": "Título de Google",
+			"limitMetaDesc": "Metadescripción",
+			"limitSocialPost": "Publicación en X / redes",
+			"wordGoalLabel": "Meta de palabras",
+			"relatedToolsAria": "Herramientas relacionadas de texto y lectura",
+			"relatedBeforeFirst": "¿Necesitas calcular páginas con formato o ajustar la velocidad en WPM? Prueba ",
+			"relatedComma": ", la ",
+			"relatedBeforeLast": " o la ",
+			"relatedAfterLast": "."
+		},
+		"client": {
+			"zeroSec": "0 seg",
+			"unitMin": "min",
+			"unitSec": "seg",
+			"gradeLabel": "Grado {grade}",
+			"levelCollege": "Universidad",
+			"levelGraduate": "Posgrado",
+			"pasted": "¡Pegado!",
+			"cleaned": "¡Limpiado!",
+			"copied": "¡Copiado!",
+			"btnPaste": "Pegar",
+			"btnCleanSpaces": "Limpiar espacios",
+			"btnCopyText": "Copiar texto",
+			"btnCopyKeywords": "Copiar palabras clave",
+			"btnCopySummary": "Copiar resumen",
+			"summaryTemplate": "Palabras: {words} | Caracteres: {chars} (Sin espacios: {charsNoSpace}) | Frases: {sentences} | Párrafos: {paragraphs} | Tiempo de lectura: {readingTime} | Tiempo de locución: {speakingTime}"
+		},
+		"schema": {
+			"featureList": [
+				"Conteo en tiempo real de palabras, caracteres (con y sin espacios), frases y párrafos",
+				"Detección inteligente de caracteres CJK para textos en chino y japonés",
+				"Función Limpiar espacios en un clic para normalizar espacios y saltos de línea",
+				"Estimación de páginas académicas (250 palabras/página) y nivel de legibilidad Flesch-Kincaid",
+				"Cálculo de tiempo de lectura silenciosa (238 WPM) y locución en voz alta (130 WPM)",
+				"Barras de límite de caracteres para plataformas (título de Google, metadescripción, publicación en X) y meta de palabras personalizada",
+				"Desglose de las 8 palabras clave principales por frecuencia y densidad con exportación en un clic"
+			]
+		},
+		"page": {
+			"heroSubtitle": "Cuenta palabras, caracteres (con y sin espacios), frases, párrafos y páginas estimadas en tiempo real; pensado para ensayos, artículos, guiones y fragmentos SEO.",
+			"guide": {
+				"aria": "Qué es un contador de palabras y cómo usarlo",
+				"badge": "Guía y documentación",
+				"h2": "Qué es un contador de palabras y cómo usarlo",
+				"intro": "Un contador de palabras es una herramienta de análisis de texto que mide con precisión la extensión, la densidad léxica y la estructura de un documento en tiempo real. Tanto si estás ajustando un ensayo académico a un límite estricto, redactando un artículo con topes de caracteres para buscadores o preparando un discurso, Wordora funciona 100 % en tu navegador, sin latencia de servidor y con privacidad total.",
+				"howToUseH3": "Cómo usar el contador de palabras online",
+				"steps": [
+					{
+						"title": "Pega o escribe tu texto",
+						"bodyHtml": "Escribe directamente en el editor, haz clic en <strong class=\"font-medium text-ink\">Pegar</strong> desde el portapapeles o sube un archivo <strong class=\"font-medium text-ink\">.txt</strong> / <strong class=\"font-medium text-ink\">.md</strong> para analizarlo al instante en tu dispositivo."
+					},
+					{
+						"title": "Consulta las métricas en vivo",
+						"bodyHtml": "Visualiza en tiempo real <strong class=\"font-medium text-ink\">Palabras</strong>, <strong class=\"font-medium text-ink\">Caracteres</strong> (con y sin espacios), <strong class=\"font-medium text-ink\">Frases</strong>, <strong class=\"font-medium text-ink\">Párrafos</strong>, <strong class=\"font-medium text-ink\">Páginas</strong> y <strong class=\"font-medium text-ink\">Legibilidad</strong>."
+					},
+					{
+						"title": "Controla tu meta y los límites de cada plataforma",
+						"bodyHtml": "Define una <strong class=\"font-medium text-ink\">Meta de palabras</strong> personalizada para tus trabajos o comprueba los límites de caracteres de <strong class=\"font-medium text-ink\">Título de Google (60)</strong>, <strong class=\"font-medium text-ink\">Metadescripción (160)</strong> y <strong class=\"font-medium text-ink\">Publicación en X / redes (280)</strong>."
+					},
+					{
+						"title": "Revisa palabras clave y limpia el formato",
+						"bodyHtml": "Cambia a <strong class=\"font-medium text-ink\">Palabras clave</strong> para ver frecuencia y densidad, usa <strong class=\"font-medium text-ink\">Limpiar espacios</strong> para quitar espacios sobrantes o pulsa <strong class=\"font-medium text-ink\">Copiar resumen</strong>."
+					}
+				],
+				"whatMeasuresH3": "¿Qué mide este contador de palabras?",
+				"metrics": [
+					{
+						"title": "Palabras y frecuencia léxica",
+						"bodyHtml": "Calcula el recuento exacto de palabras tanto en idiomas occidentales separados por espacios como en escrituras CJK basadas en caracteres. En la pestaña <strong class=\"font-medium text-ink\">Palabras clave</strong> puedes detectar términos demasiado repetidos, evitar la sobreoptimización SEO y mantener un vocabulario natural."
+					},
+					{
+						"title": "Caracteres (con y sin espacios + CJK)",
+						"bodyHtml": "Ofrece un doble recuento: pulsaciones totales (con espacios) para límites estrictos de redes sociales o títulos SEO, y longitud compacta (sin espacios) para tarifas de traducción o entregas académicas. Cuando detecta caracteres chinos o japoneses, muestra automáticamente un indicador CJK específico."
+					},
+					{
+						"title": "Frases y párrafos",
+						"bodyHtml": "Analiza la estructura del documento a partir de los signos de cierre (<strong class=\"font-medium text-ink\">. ! ?</strong>) y los saltos entre párrafos. Mantener frases equilibradas evita la fatiga lectora y mejora la fluidez tanto en pantalla como en papel."
+					},
+					{
+						"title": "Estimación de páginas (250 palabras/página)",
+						"bodyHtml": "Convierte tu recuento de palabras en páginas académicas estándar siguiendo el criterio editorial habitual de 250 palabras por página a doble espacio (fuente de 12 pt y márgenes de 2,54 cm). Muy útil para planificar trabajos universitarios, manuscritos y entregas editoriales."
+					},
+					{
+						"title": "Tiempo de lectura (238 WPM) y de locución (130 WPM)",
+						"bodyHtml": "Estima la duración de la lectura silenciosa según la media científica de 238 palabras por minuto y el tiempo de exposición oral a 130 WPM. Te ayuda a ensayar ponencias, pódcasts, discursos y guiones de vídeo con margen de seguridad."
+					},
+					{
+						"title": "Nivel de legibilidad Flesch-Kincaid",
+						"bodyHtml": "Evalúa la complejidad del texto combinando la longitud media de las frases con el promedio de sílabas por palabra. Así sabes al instante si tu texto encaja con una lectura web accesible, un nivel de secundaria o un registro académico especializado."
+					}
+				]
+			},
+			"essayStandards": {
+				"aria": "Estándares de palabras para ensayos y guía de conversión a páginas",
+				"badge": "Referencia académica y editorial",
+				"h2": "Estándares de palabras para ensayos y guía de páginas",
+				"intro": "Usa esta tabla de referencia para planificar trabajos académicos, exámenes IELTS/TOEFL, artículos de blog y libros, junto con su estimación en páginas a doble espacio (250 palabras/página) y tiempo de lectura.",
+				"headers": [
+					"Tipo de contenido o ensayo",
+					"Extensión habitual",
+					"Páginas a doble espacio (~250 pal./pág.)",
+					"Tiempo estimado de lectura (238 WPM)"
+				],
+				"rows": [
+					{
+						"type": "IELTS Writing Task 1 / TOEFL integrado",
+						"words": "150 – 225 palabras",
+						"pages": "0,6 – 0,9 páginas",
+						"readingTime": "~45 – 55 seg"
+					},
+					{
+						"type": "IELTS Writing Task 2 / TOEFL independiente",
+						"words": "250 – 350 palabras",
+						"pages": "1,0 – 1,4 páginas",
+						"readingTime": "~1 – 1,5 min"
+					},
+					{
+						"type": "Ensayo escolar / redacción de 5 párrafos",
+						"words": "500 – 800 palabras",
+						"pages": "2,0 – 3,2 páginas",
+						"readingTime": "~2 – 3,5 min"
+					},
+					{
+						"type": "Ensayo de admisión universitaria (Common App)",
+						"words": "500 – 650 palabras",
+						"pages": "2,0 – 2,6 páginas",
+						"readingTime": "~2 – 2,7 min"
+					},
+					{
+						"type": "Trabajo de investigación universitario",
+						"words": "1.000 – 2.500 palabras",
+						"pages": "4,0 – 10,0 páginas",
+						"readingTime": "~4 – 10,5 min"
+					},
+					{
+						"type": "Artículo de blog SEO estándar",
+						"words": "1.200 – 2.000 palabras",
+						"pages": "4,8 – 8,0 páginas",
+						"readingTime": "~5 – 8,5 min"
+					},
+					{
+						"type": "Guía pilar en profundidad / informe técnico",
+						"words": "2.500 – 5.000 palabras",
+						"pages": "10,0 – 20,0 páginas",
+						"readingTime": "~10,5 – 21 min"
+					},
+					{
+						"type": "Capítulo de tesis de máster / doctorado",
+						"words": "10.000 – 20.000 palabras",
+						"pages": "40 – 80 páginas",
+						"readingTime": "~42 – 84 min"
+					},
+					{
+						"type": "Novela completa",
+						"words": "70.000 – 100.000 palabras",
+						"pages": "280 – 400 páginas",
+						"readingTime": "~5 – 7 horas"
+					}
+				],
+				"relatedLabel": "Conversores relacionados:",
+				"linkWordsToPages": "Conversor de palabras a páginas",
+				"linkReadingTime": "Calculadora de tiempo de lectura",
+				"linkSpeechTime": "Calculadora de tiempo de discurso"
+			},
+			"characterLimits": {
+				"aria": "Tabla de referencia de límites de caracteres en redes sociales y SEO",
+				"badge": "Referencia de límites de caracteres",
+				"h2": "Tabla de límites de caracteres en redes sociales y SEO",
+				"intro": "La mayoría de las plataformas cuentan los caracteres incluyendo espacios y signos de puntuación; revisa estos límites antes de publicar etiquetas meta, anuncios o publicaciones.",
+				"headers": [
+					"Plataforma / elemento",
+					"Límite máximo de caracteres",
+					"Rango recomendado",
+					"Método de conteo"
+				],
+				"rows": [
+					{
+						"platform": "Etiqueta de título SEO en Google",
+						"maxLimit": "~60 caracteres (~580px)",
+						"sweetSpot": "50 – 60 caracteres",
+						"method": "Incluye espacios"
+					},
+					{
+						"platform": "Metadescripción de Google",
+						"maxLimit": "~160 caracteres",
+						"sweetSpot": "145 – 158 caracteres",
+						"method": "Incluye espacios"
+					},
+					{
+						"platform": "Publicación estándar en X (Twitter)",
+						"maxLimit": "280 caracteres",
+						"sweetSpot": "100 – 240 caracteres",
+						"method": "Incluye espacios"
+					},
+					{
+						"platform": "Pie de foto en Instagram",
+						"maxLimit": "2.200 caracteres",
+						"sweetSpot": "125 – 150 caracteres (antes de \"Más\")",
+						"method": "Incluye espacios"
+					},
+					{
+						"platform": "Publicación en LinkedIn",
+						"maxLimit": "3.000 caracteres",
+						"sweetSpot": "150 – 300 caracteres",
+						"method": "Incluye espacios"
+					},
+					{
+						"platform": "Título de vídeo en YouTube",
+						"maxLimit": "100 caracteres",
+						"sweetSpot": "55 – 70 caracteres",
+						"method": "Incluye espacios"
+					},
+					{
+						"platform": "Mensaje SMS estándar",
+						"maxLimit": "160 caracteres (GSM-7)",
+						"sweetSpot": "Menos de 160 caracteres",
+						"method": "Incluye espacios"
+					}
+				]
+			},
+			"comparison": {
+				"aria": "Contador de palabras de Wordora frente a Microsoft Word y Google Docs",
+				"badge": "Comparativa de funciones",
+				"h2": "Wordora frente a Microsoft Word y Google Docs",
+				"intro": "Compara cómo rinde el contador de palabras local y sin fricción de Wordora frente a los procesadores de texto tradicionales en rapidez, métricas en vivo y privacidad.",
+				"headers": [
+					"Función",
+					"Contador de Wordora",
+					"Google Docs",
+					"Microsoft Word"
+				],
+				"rows": [
+					{
+						"feature": "Pegar y contar al instante (sin registro)",
+						"wordora": "Sí (1 clic)",
+						"docs": "Requiere cuenta de Google",
+						"word": "Requiere app de escritorio/365"
+					},
+					{
+						"feature": "Caracteres con y sin espacios en vivo",
+						"wordora": "Siempre visibles",
+						"docs": "Requiere ventana Ctrl+Mayús+C",
+						"word": "Requiere clic en barra de estado"
+					},
+					{
+						"feature": "Frecuencia y densidad % de palabras clave",
+						"wordora": "Pestaña integrada en vivo",
+						"docs": "No",
+						"word": "No"
+					},
+					{
+						"feature": "Barras de límite para título SEO / meta / X",
+						"wordora": "Barras integradas en vivo",
+						"docs": "No",
+						"word": "No"
+					},
+					{
+						"feature": "Nivel de legibilidad Flesch-Kincaid",
+						"wordora": "Nivel instantáneo en vivo",
+						"docs": "No",
+						"word": "Oculto en opciones de revisión"
+					},
+					{
+						"feature": "Privacidad 100 % en el navegador (sin nube)",
+						"wordora": "Sí (solo local)",
+						"docs": "Sincronizado en la nube",
+						"word": "Nube / local"
+					}
+				]
+			},
+			"reduceGuide": {
+				"aria": "Cómo reducir el número de palabras en ensayos y trabajos",
+				"badge": "Estrategias de edición y síntesis",
+				"h2": "Cómo reducir el número de palabras en ensayos y trabajos",
+				"intro": "Cuando tu borrador supera el máximo permitido, aplica estas técnicas editoriales para eliminar palabras innecesarias sin perder rigor, matices ni argumentos clave.",
+				"cards": [
+					{
+						"title": "Elimina muletillas y rodeos",
+						"bodyHtml": "Sustituye expresiones largas como <strong class=\"font-medium text-ink\">\"debido al hecho de que\"</strong> por <strong class=\"font-medium text-ink\">\"porque\"</strong>, <strong class=\"font-medium text-ink\">\"con el objetivo de\"</strong> por <strong class=\"font-medium text-ink\">\"para\"</strong> y <strong class=\"font-medium text-ink\">\"en este momento actual\"</strong> por <strong class=\"font-medium text-ink\">\"ahora\"</strong>. Recortar este relleno recupera de inmediato entre un 5 % y un 10 % del total."
+					},
+					{
+						"title": "Pasa de voz pasiva a voz activa",
+						"bodyHtml": "Cambia <strong class=\"font-medium text-ink\">\"El experimento fue realizado por los investigadores\"</strong> (7 palabras) por <strong class=\"font-medium text-ink\">\"Los investigadores realizaron el experimento\"</strong> (5 palabras) para reducir alrededor de un 20–30 % de palabrería. La voz activa da ritmo y fuerza al texto académico."
+					},
+					{
+						"title": "Recorta adverbios y calificativos débiles",
+						"bodyHtml": "Suprime <strong class=\"font-medium text-ink\">\"muy\"</strong>, <strong class=\"font-medium text-ink\">\"realmente\"</strong>, <strong class=\"font-medium text-ink\">\"básicamente\"</strong> y <strong class=\"font-medium text-ink\">\"actualmente\"</strong> cuando el verbo o el adjetivo ya expresan la idea. Usar verbos precisos (por ejemplo, \"arrasó\" en lugar de \"destruyó por completo\") reduce la extensión de forma natural."
+					},
+					{
+						"title": "Ajusta introducciones y transiciones repetitivas",
+						"bodyHtml": "Mantén la introducción concisa (10–12 % del total de palabras) y fusiona frases de resumen que repitan lo mismo. Evita preámbulos largos antes de presentar tu tesis y elimina conectores redundantes entre párrafos."
+					}
+				]
+			},
+			"readabilityRules": {
+				"aria": "Reglas de legibilidad, frecuencia de palabras clave y precisión del conteo",
+				"badge": "Legibilidad y precisión",
+				"h2": "Legibilidad, frecuencia de palabras clave y reglas de conteo",
+				"intro": "Descubre cómo se calculan los índices de legibilidad, cómo usar la densidad de palabras clave en textos SEO naturales y cómo trata nuestro motor los casos especiales de puntuación.",
+				"leftTitle": "Índice de legibilidad y densidad de palabras clave",
+				"leftFleschTitle": "Nivel Flesch-Kincaid",
+				"leftFleschHtml": "Evalúa la dificultad léxica a partir de la longitud media de las frases y la densidad silábica por palabra. Un resultado de <strong class=\"font-medium text-ink\">Grado 6–8</strong> es ideal para blogs divulgativos, boletines y páginas web generales. Un resultado de <strong class=\"font-medium text-ink\">Grado 10–12+</strong> corresponde habitualmente a ensayos universitarios, documentación técnica y revistas académicas.",
+				"leftKeywordTitle": "Frecuencia y densidad % de palabras clave",
+				"leftKeywordHtml": "La densidad de palabras clave mide cuántas veces aparece un término en proporción al total de palabras: <strong class=\"font-medium text-ink tabular-nums\">(Apariciones &divide; Palabras totales) &times; 100</strong>. Para artículos SEO y ensayos, lo recomendable es situarse entre el <strong class=\"font-medium text-ink\">1 % y el 2 %</strong>. Superar el 2,5 % suele percibirse como repetición artificial y cansa al lector.",
+				"rightTitle": "Cómo gestiona los casos especiales nuestro contador",
+				"edgeCasesHtml": [
+					"<strong class=\"font-semibold text-ink\">Palabras con guion (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">teórico-práctico</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">well-being</code>):</strong> Se cuentan como 1 palabra para ajustarse a las normas editoriales habituales (APA, MLA y Chicago).",
+					"<strong class=\"font-semibold text-ink\">Números y fechas (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">2026</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">1.500</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">99,9%</code>):</strong> Cada bloque numérico independiente cuenta como 1 palabra.",
+					"<strong class=\"font-semibold text-ink\">Contracciones (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">don't</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">it's</code>):</strong> Se contabilizan como 1 sola palabra.",
+					"<strong class=\"font-semibold text-ink\">Caracteres chinos y japoneses (CJK):</strong> Se detectan automáticamente y se cuentan carácter por carácter junto a las palabras separadas por espacios.",
+					"<strong class=\"font-semibold text-ink\">Espacios extra y líneas en blanco:</strong> Se ignoran en el recuento de palabras y pueden eliminarse en un clic con <strong class=\"font-medium text-ink\">Limpiar espacios</strong>."
+				]
+			}
+		},
+		"faq": {
+			"badge": "¿Tienes dudas?",
+			"heading": "Preguntas frecuentes",
+			"intro": "Respuestas claras a las dudas más habituales sobre criterios de conteo de palabras, equivalencia en páginas, límites de caracteres, legibilidad y privacidad en el navegador.",
+			"items": [
+				{
+					"question": "¿Cuántas páginas son 1.000 palabras en un ensayo?",
+					"answer": "Un ensayo de 1.000 palabras ocupa aproximadamente 4 páginas a doble espacio o 2 páginas a espacio sencillo con una fuente estándar de 12 pt (como Times New Roman o Arial) y márgenes de 2,54 cm. La extensión exacta depende del formato, los saltos de párrafo y los títulos. Puedes usar nuestro Conversor de palabras a páginas para personalizar tamaño de letra, interlineado y márgenes.",
+					"answerHtml": "Un ensayo de 1.000 palabras ocupa aproximadamente 4 páginas a doble espacio o 2 páginas a espacio sencillo con una fuente estándar de 12 pt (como Times New Roman o Arial) y márgenes de 2,54 cm. La extensión exacta depende del formato, los saltos de párrafo y los títulos. Puedes usar nuestro <a href=\"/words-to-pages/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Conversor de palabras a páginas</a> para personalizar tamaño de letra, interlineado y márgenes."
+				},
+				{
+					"question": "¿Cuál es la diferencia entre caracteres con espacios y caracteres sin espacios?",
+					"answer": "Los caracteres con espacios cuentan cada pulsación, incluidas letras, números, signos de puntuación y espacios en blanco. Los caracteres sin espacios excluyen espacios, tabulaciones y saltos de línea, midiendo únicamente los signos visibles. Plataformas como los títulos SEO de Google y X miden caracteres con espacios, mientras que muchas agencias de traducción y convocatorias académicas calculan la extensión sin espacios.",
+					"answerHtml": "Los caracteres con espacios cuentan cada pulsación, incluidas letras, números, signos de puntuación y espacios en blanco. Los caracteres sin espacios excluyen espacios, tabulaciones y saltos de línea, midiendo únicamente los signos visibles. Plataformas como los títulos SEO de Google y X miden caracteres con espacios, mientras que muchas agencias de traducción y convocatorias académicas calculan la extensión sin espacios."
+				},
+				{
+					"question": "¿Cómo puedo reducir el número de palabras de un ensayo sin perder ideas clave?",
+					"answer": "Para reducir palabras con eficacia, elimina muletillas (sustituye \"debido al hecho de que\" por \"porque\"), transforma las frases pasivas en activas y recorta adverbios débiles como \"muy\", \"realmente\" y \"básicamente\". Mantener la introducción por debajo del 12 % del total y unir transiciones redundantes suele recortar entre un 15 % y un 25 % del borrador sin sacrificar profundidad.",
+					"answerHtml": "Para reducir palabras con eficacia, elimina muletillas (sustituye <strong class=\"font-medium text-ink\">\"debido al hecho de que\"</strong> por <strong class=\"font-medium text-ink\">\"porque\"</strong>), transforma las frases pasivas en activas y recorta adverbios débiles como <strong class=\"font-medium text-ink\">\"muy\"</strong>, <strong class=\"font-medium text-ink\">\"realmente\"</strong> y <strong class=\"font-medium text-ink\">\"básicamente\"</strong>. Mantener la introducción por debajo del 12 % del total y unir transiciones redundantes suele recortar entre un 15 % y un 25 % del borrador sin sacrificar profundidad."
+				},
+				{
+					"question": "¿Cuál es la densidad de palabras clave ideal en artículos y ensayos?",
+					"answer": "La densidad de palabras clave recomendada para artículos SEO y ensayos se sitúa entre el 1 % y el 2 % del total de palabras. En un texto de 1.000 palabras, eso equivale a unas 10 a 20 apariciones del término principal. Por encima de ese rango el texto puede resultar repetitivo y parecer sobreoptimizado ante los buscadores.",
+					"answerHtml": "La densidad de palabras clave recomendada para artículos SEO y ensayos se sitúa entre el <strong class=\"font-medium text-ink\">1 % y el 2 %</strong> del total de palabras. En un texto de 1.000 palabras, eso equivale a unas 10 a 20 apariciones del término principal. Por encima de ese rango el texto puede resultar repetitivo y parecer sobreoptimizado ante los buscadores."
+				},
+				{
+					"question": "¿Funciona este contador de palabras con caracteres chinos y japoneses?",
+					"answer": "Sí. Wordora incluye detección inteligente CJK que cuenta con precisión caracteres chinos (hanzi) y japoneses (kanji, hiragana y katakana) junto a texto occidental separado por espacios. Cuando detecta caracteres CJK, aparece automáticamente una insignia con el recuento exacto debajo del indicador de Caracteres.",
+					"answerHtml": "Sí. Wordora incluye detección inteligente CJK que cuenta con precisión caracteres chinos (hanzi) y japoneses (kanji, hiragana y katakana) junto a texto occidental separado por espacios. Cuando detecta caracteres CJK, aparece automáticamente una insignia con el recuento exacto debajo del indicador de Caracteres."
+				},
+				{
+					"question": "¿Las palabras con guion y los números cuentan como una sola palabra?",
+					"answer": "Sí. Los compuestos con guion estándar (como \"teórico-práctico\" o \"well-being\") cuentan como una sola palabra, siguiendo los principales manuales académicos y periodísticos (APA, MLA y Chicago). Los números independientes, años (como \"2026\") y porcentajes (\"99,9%\") también se cuentan como una palabra individual.",
+					"answerHtml": "Sí. Los compuestos con guion estándar (como <strong class=\"font-medium text-ink\">\"teórico-práctico\"</strong> o <strong class=\"font-medium text-ink\">\"well-being\"</strong>) cuentan como una sola palabra, siguiendo los principales manuales académicos y periodísticos (APA, MLA y Chicago). Los números independientes, años (como \"2026\") y porcentajes (\"99,9%\") también se cuentan como una palabra individual."
+				},
+				{
+					"question": "¿Cuántas palabras tiene un discurso de 5 minutos o una lectura de 2 minutos?",
+					"answer": "A un ritmo medio de presentación de 130 palabras por minuto, un discurso de 5 minutos requiere unas 650 palabras (o alrededor de 550 si dejas un margen del 15 % para pausas naturales). Una lectura silenciosa de 2 minutos equivale a unas 476 palabras a la velocidad estándar de 238 WPM. Calcula duraciones exactas con nuestra Calculadora de tiempo de discurso y nuestra Calculadora de tiempo de lectura.",
+					"answerHtml": "A un ritmo medio de presentación de 130 palabras por minuto, un discurso de 5 minutos requiere unas 650 palabras (o alrededor de 550 si dejas un margen del 15 % para pausas naturales). Una lectura silenciosa de 2 minutos equivale a unas 476 palabras a la velocidad estándar de 238 WPM. Calcula duraciones exactas con nuestra <a href=\"/speech-time-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Calculadora de tiempo de discurso</a> y nuestra <a href=\"/reading-time-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Calculadora de tiempo de lectura</a>."
+				},
+				{
+					"question": "¿Qué nivel Flesch-Kincaid se considera adecuado?",
+					"answer": "Para contenido web general, blogs y artículos divulgativos, se recomienda un nivel Flesch-Kincaid entre Grado 6 y Grado 8 para lograr máxima claridad y accesibilidad. Los trabajos de bachillerato suelen situarse entre Grado 9 y 11, mientras que las investigaciones universitarias y tesis académicas alcanzan Grado 12 o superior.",
+					"answerHtml": "Para contenido web general, blogs y artículos divulgativos, se recomienda un nivel Flesch-Kincaid entre <strong class=\"font-medium text-ink\">Grado 6 y Grado 8</strong> para lograr máxima claridad y accesibilidad. Los trabajos de bachillerato suelen situarse entre Grado 9 y 11, mientras que las investigaciones universitarias y tesis académicas alcanzan Grado 12 o superior."
+				},
+				{
+					"question": "¿Google Docs o Microsoft Word cuentan las palabras de forma distinta a un contador online?",
+					"answer": "La mayoría de los contadores aplican reglas de separación muy similares, aunque puede haber ligeras variaciones con palabras con guion, términos compuestos o texto CJK. Google Docs cuenta las palabras con guion como una sola, pero exige abrir un cuadro (Ctrl+Mayús+C) para ver caracteres sin espacios. Wordora muestra todas las métricas al instante en tiempo real, sin retrasos, sin cuentas ni menús.",
+					"answerHtml": "La mayoría de los contadores aplican reglas de separación muy similares, aunque puede haber ligeras variaciones con palabras con guion, términos compuestos o texto CJK. Google Docs cuenta las palabras con guion como una sola, pero exige abrir un cuadro (Ctrl+Mayús+C) para ver caracteres sin espacios. Wordora muestra todas las métricas al instante en tiempo real, sin retrasos, sin cuentas ni menús."
+				},
+				{
+					"question": "¿Se guarda o se sube mi texto a algún servidor al usar este contador gratuito?",
+					"answer": "No. Wordora ejecuta todo el análisis y los cálculos 100 % de forma local en tu navegador mediante JavaScript del lado del cliente. Tus textos, borradores y notas nunca salen de tu dispositivo, no se envían a servidores externos y no se almacenan ni registran en ningún lugar.",
+					"answerHtml": "No. Wordora ejecuta todo el análisis y los cálculos 100 % de forma local en tu navegador mediante JavaScript del lado del cliente. Tus textos, borradores y notas nunca salen de tu dispositivo, no se envían a servidores externos y no se almacenan ni registran en ningún lugar."
+				}
+			]
+		}
 	},
 	"speechCalculator": {
 		"name": "Calculadora de tiempo de discurso",
@@ -3197,7 +3599,404 @@
 		"badge": "Estrella",
 		"title": "Calculadora de tiempo de discurso: de palabras a minutos | Wordora",
 		"metaDescription": "Calculadora gratuita de tiempo de discurso. Convierte palabras en minutos o averigua cuántas palabras necesitas para un discurso de 3 o 5 minutos, o para una presentación completa.",
-		"h1": "Calculadora de tiempo de discurso"
+		"h1": "Calculadora de tiempo de discurso",
+		"ui": {
+			"workspaceAria": "Calculadora de tiempo de discurso",
+			"inputModeAria": "Modo de entrada",
+			"tabScript": "Pegar guion",
+			"tabWords": "Ingresar palabras",
+			"scriptLabel": "Pega tu discurso, guion o notas de presentación",
+			"scriptPlaceholder": "Pega tu discurso, guion o notas de presentación...",
+			"wordCountLabel": "Total de palabras de tu discurso",
+			"wordCountPlaceholder": "p. ej., 750",
+			"quickFill": "Relleno rápido:",
+			"initialWordCount": "0 palabras",
+			"btnClear": "Borrar",
+			"speakingPaceLabel": "Ritmo al hablar",
+			"speakingPaceAria": "Ritmo al hablar",
+			"customWpmLabel": "WPM:",
+			"paceSlow": "Lento (110 WPM)",
+			"paceAverage": "Medio (130 WPM)",
+			"paceFast": "Rápido (160 WPM)",
+			"paceCustom": "Personalizado",
+			"speakingTimeHeading": "Tiempo de discurso",
+			"initialSubline": "0 palabras a 130 WPM",
+			"targetLimitLabel": "Límite objetivo",
+			"wordsThatFitHeading": "Palabras que caben al ritmo actual",
+			"fitMinLabel": "{minutes} min",
+			"fitWordsInitial": "{count} palabras"
+		},
+		"client": {
+			"zeroDuration": "0 min 0 seg",
+			"unitMin": "min",
+			"unitSec": "seg",
+			"durationFormat": "{mins} min {secs} seg",
+			"wordSingular": "palabra",
+			"wordPlural": "palabras",
+			"charSingular": "carácter",
+			"charPlural": "caracteres",
+			"atWpm": "{desc} a {wpm} WPM",
+			"atCpm": "{desc} a {cpm} CPM",
+			"mixedAtWpm": "{words} y {chars} a {wpm} WPM",
+			"mixedCopyAtWpm": "{words}, {chars} a {wpm} WPM",
+			"onTarget": "Dentro del límite",
+			"overBySec": "Excede en {secs} seg",
+			"copySummary": "Tiempo de discurso: {time} ({detail})",
+			"copyResult": "Copiar resultado",
+			"copied": "¡Copiado!"
+		},
+		"schema": {
+			"featureList": [
+				"Conversor de guion a tiempo de discurso con conteo instantáneo de palabras y caracteres",
+				"Calculadora de palabras a minutos para ritmo Lento (110 WPM), Medio (130 WPM), Rápido (160 WPM) o Personalizado",
+				"Comprobador de límite de tiempo con alertas de duración objetivo",
+				"Referencia de palabras que caben en discursos de 1, 3, 5 y 10 minutos",
+				"Compatible con guiones en inglés, español, francés, chino y japonés"
+			]
+		},
+		"page": {
+			"heroSubtitle": "Pega tu guion o ingresa un número de palabras para ver la duración exacta al hablar según tu ritmo, o comprueba cuántas palabras caben en tu tiempo asignado.",
+			"howTo": {
+				"heading": "Cómo convertir palabras de un discurso en minutos",
+				"intro": "Sigue tres pasos sencillos en esta calculadora de tiempo y duración de discurso para conocer tu tiempo exacto en escena o calcular cuántas palabras caben en tu presentación.",
+				"steps": [
+					{
+						"title": "Pega tu guion o ingresa el número de palabras",
+						"bodyHtml": "Usa <strong class=\"font-semibold text-ink\">Pegar guion</strong> para contar palabras al instante desde el texto (compatible con inglés, español, francés, chino y japonés), o cambia a <strong class=\"font-semibold text-ink\">Ingresar palabras</strong> para calcular directamente a partir de una cifra."
+					},
+					{
+						"title": "Elige tu ritmo al hablar (WPM)",
+						"bodyHtml": "Selecciona <strong class=\"font-semibold text-ink\">Lento (110 WPM)</strong>, <strong class=\"font-semibold text-ink\">Medio (130 WPM)</strong>, <strong class=\"font-semibold text-ink\">Rápido (160 WPM)</strong> o introduce un ritmo <strong class=\"font-semibold text-ink\">Personalizado</strong> medido en un ensayo cronometrado."
+					},
+					{
+						"title": "Comprueba tu límite de tiempo",
+						"bodyHtml": "Añade un <strong class=\"font-semibold text-ink\">Límite objetivo</strong> opcional en minutos para ver si tu borrador se ajusta al tiempo disponible o se pasa, y copia el resumen con un solo clic."
+					}
+				]
+			},
+			"minutesToWords": {
+				"heading": "Tabla de duración de discursos: ¿cuántas palabras tiene un discurso de 3, 5 o 60 minutos?",
+				"intro": "Usa esta tabla de referencia para planificar el número de palabras de cualquier presentación, brindis de boda, pódcast o clase, ya sea que necesites saber cuántas palabras tiene un discurso de 3 minutos (390 palabras a 130 WPM), uno de 5 minutos (650 palabras a 130 WPM) o el margen seguro del 85 % para pausas y preguntas del público.",
+				"headers": [
+					"Duración del discurso",
+					"Lento (110 WPM)",
+					"Medio (130 WPM)",
+					"Rápido (160 WPM)",
+					"Margen seguro (~85 % a 130 WPM)"
+				],
+				"rows": [
+					{
+						"length": "30 segundos",
+						"slow": "55 palabras",
+						"avg": "65 palabras",
+						"fast": "80 palabras",
+						"safe": "55 palabras"
+					},
+					{
+						"length": "1 minuto",
+						"slow": "110 palabras",
+						"avg": "130 palabras",
+						"fast": "160 palabras",
+						"safe": "110 palabras"
+					},
+					{
+						"length": "2 minutos",
+						"slow": "220 palabras",
+						"avg": "260 palabras",
+						"fast": "320 palabras",
+						"safe": "220 palabras"
+					},
+					{
+						"length": "3 minutos",
+						"slow": "330 palabras",
+						"avg": "390 palabras",
+						"fast": "480 palabras",
+						"safe": "330 palabras"
+					},
+					{
+						"length": "4 minutos",
+						"slow": "440 palabras",
+						"avg": "520 palabras",
+						"fast": "640 palabras",
+						"safe": "440 palabras"
+					},
+					{
+						"length": "5 minutos",
+						"slow": "550 palabras",
+						"avg": "650 palabras",
+						"fast": "800 palabras",
+						"safe": "550 palabras"
+					},
+					{
+						"length": "7 minutos",
+						"slow": "770 palabras",
+						"avg": "910 palabras",
+						"fast": "1.120 palabras",
+						"safe": "775 palabras"
+					},
+					{
+						"length": "8 minutos",
+						"slow": "880 palabras",
+						"avg": "1.040 palabras",
+						"fast": "1.280 palabras",
+						"safe": "885 palabras"
+					},
+					{
+						"length": "10 minutos",
+						"slow": "1.100 palabras",
+						"avg": "1.300 palabras",
+						"fast": "1.600 palabras",
+						"safe": "1.105 palabras"
+					},
+					{
+						"length": "12 minutos",
+						"slow": "1.320 palabras",
+						"avg": "1.560 palabras",
+						"fast": "1.920 palabras",
+						"safe": "1.325 palabras"
+					},
+					{
+						"length": "15 minutos",
+						"slow": "1.650 palabras",
+						"avg": "1.950 palabras",
+						"fast": "2.400 palabras",
+						"safe": "1.660 palabras"
+					},
+					{
+						"length": "20 minutos",
+						"slow": "2.200 palabras",
+						"avg": "2.600 palabras",
+						"fast": "3.200 palabras",
+						"safe": "2.210 palabras"
+					},
+					{
+						"length": "30 minutos",
+						"slow": "3.300 palabras",
+						"avg": "3.900 palabras",
+						"fast": "4.800 palabras",
+						"safe": "3.315 palabras"
+					},
+					{
+						"length": "40 minutos",
+						"slow": "4.400 palabras",
+						"avg": "5.200 palabras",
+						"fast": "6.400 palabras",
+						"safe": "4.420 palabras"
+					},
+					{
+						"length": "45 minutos",
+						"slow": "4.950 palabras",
+						"avg": "5.850 palabras",
+						"fast": "7.200 palabras",
+						"safe": "4.970 palabras"
+					},
+					{
+						"length": "60 minutos",
+						"slow": "6.600 palabras",
+						"avg": "7.800 palabras",
+						"fast": "9.600 palabras",
+						"safe": "6.630 palabras"
+					}
+				]
+			},
+			"wordsToMinutes": {
+				"heading": "Tiempo de discurso por número de palabras: de 100 a 5.000 palabras",
+				"intro": "Consulta cuánto se tarda en leer un guion en voz alta según su extensión frente a la lectura silenciosa a un ritmo adulto medio (~238 WPM).",
+				"headers": [
+					"N.º de palabras",
+					"Lento (110 WPM)",
+					"Medio (130 WPM)",
+					"Rápido (160 WPM)",
+					"Lectura silenciosa (~238 WPM)"
+				],
+				"rows": [
+					{
+						"words": "100 palabras",
+						"slow": "0 min 55 seg",
+						"avg": "0 min 46 seg",
+						"fast": "0 min 38 seg",
+						"silent": "0 min 25 seg"
+					},
+					{
+						"words": "250 palabras",
+						"slow": "2 min 16 seg",
+						"avg": "1 min 55 seg",
+						"fast": "1 min 34 seg",
+						"silent": "1 min 03 seg"
+					},
+					{
+						"words": "300 palabras",
+						"slow": "2 min 44 seg",
+						"avg": "2 min 18 seg",
+						"fast": "1 min 53 seg",
+						"silent": "1 min 16 seg"
+					},
+					{
+						"words": "400 palabras",
+						"slow": "3 min 38 seg",
+						"avg": "3 min 05 seg",
+						"fast": "2 min 30 seg",
+						"silent": "1 min 41 seg"
+					},
+					{
+						"words": "500 palabras",
+						"slow": "4 min 33 seg",
+						"avg": "3 min 51 seg",
+						"fast": "3 min 08 seg",
+						"silent": "2 min 06 seg"
+					},
+					{
+						"words": "600 palabras",
+						"slow": "5 min 27 seg",
+						"avg": "4 min 37 seg",
+						"fast": "3 min 45 seg",
+						"silent": "2 min 31 seg"
+					},
+					{
+						"words": "750 palabras",
+						"slow": "6 min 49 seg",
+						"avg": "5 min 46 seg",
+						"fast": "4 min 41 seg",
+						"silent": "3 min 09 seg"
+					},
+					{
+						"words": "800 palabras",
+						"slow": "7 min 16 seg",
+						"avg": "6 min 09 seg",
+						"fast": "5 min 00 seg",
+						"silent": "3 min 22 seg"
+					},
+					{
+						"words": "900 palabras",
+						"slow": "8 min 11 seg",
+						"avg": "6 min 55 seg",
+						"fast": "5 min 38 seg",
+						"silent": "3 min 47 seg"
+					},
+					{
+						"words": "1.000 palabras",
+						"slow": "9 min 05 seg",
+						"avg": "7 min 42 seg",
+						"fast": "6 min 15 seg",
+						"silent": "4 min 12 seg"
+					},
+					{
+						"words": "1.500 palabras",
+						"slow": "13 min 38 seg",
+						"avg": "11 min 32 seg",
+						"fast": "9 min 23 seg",
+						"silent": "6 min 18 seg"
+					},
+					{
+						"words": "2.000 palabras",
+						"slow": "18 min 11 seg",
+						"avg": "15 min 23 seg",
+						"fast": "12 min 30 seg",
+						"silent": "8 min 24 seg"
+					},
+					{
+						"words": "3.000 palabras",
+						"slow": "27 min 16 seg",
+						"avg": "23 min 05 seg",
+						"fast": "18 min 45 seg",
+						"silent": "12 min 36 seg"
+					},
+					{
+						"words": "5.000 palabras",
+						"slow": "45 min 27 seg",
+						"avg": "38 min 28 seg",
+						"fast": "31 min 15 seg",
+						"silent": "21 min 01 seg"
+					}
+				]
+			},
+			"relatedLabel": "Herramientas relacionadas de escritura y oratoria:",
+			"mathAndRates": {
+				"heading": "Cómo se calcula el tiempo de discurso y ritmos por idioma",
+				"intro": "Entiende las fórmulas detrás de la duración de un guion, los márgenes de tiempo en escena y las variaciones de velocidad entre idiomas.",
+				"formulaCard": {
+					"heading": "Fórmula matemática de palabras a minutos",
+					"intro": "Convertir un borrador escrito en minutos exactos sobre el escenario se basa en dos fórmulas recíprocas a partir de las palabras por minuto (WPM):",
+					"durationLabel": "Duración del discurso:",
+					"durationFormula": "Tiempo al hablar (minutos) = Total de palabras ÷ WPM",
+					"durationExampleHtml": "Ejemplo: 1.000 palabras ÷ 130 WPM = 7,69 min (<strong class=\"font-semibold text-ink\">7 min 42 seg</strong>).",
+					"budgetLabel": "Presupuesto de palabras:",
+					"budgetFormula": "Palabras objetivo = Minutos × WPM",
+					"budgetExampleHtml": "Ejemplo: 5 minutos × 130 WPM = <strong class=\"font-semibold text-ink\">650 palabras</strong>.",
+					"bufferHeading": "La regla del margen seguro del 85 %",
+					"bufferBody": "Ensayar en privado siempre resulta más rápido que hablar ante un público. Los ponentes con experiencia planifican un objetivo seguro del 85 % (~550 palabras para un espacio de 5 minutos) para dejar entre un 10 % y un 15 % de margen para pausas de respiración, cambios de diapositiva, aplausos y preguntas espontáneas."
+				},
+				"paceCard": {
+					"heading": "Guía de ritmo al hablar y soporte multilingüe",
+					"intro": "Cada formato de presentación requiere ajustar la velocidad con intención:",
+					"items": [
+						{
+							"wpm": "110 WPM",
+							"title": "Lento y ceremonial:",
+							"description": "Ideal para ponencias formales, brindis de boda, homenajes y seminarios técnicos complejos donde cada palabra debe calar."
+						},
+						{
+							"wpm": "130 WPM",
+							"title": "Medio y conversacional:",
+							"description": "Ritmo estándar para conferencias, presentaciones corporativas, clases universitarias y charlas estilo TED."
+						},
+						{
+							"wpm": "160 WPM",
+							"title": "Rápido y dinámico:",
+							"description": "Adecuado para pódcasts enérgicos, locuciones de YouTube, presentaciones breves de impacto y programas de radio."
+						}
+					],
+					"multilangHeading": "Detección automática de guiones multilingües",
+					"multilangBodyHtml": "Esta calculadora admite sin ajustes adicionales <strong class=\"font-semibold text-ink\">inglés, español, francés, chino y japonés</strong>. Los idiomas occidentales separados por espacios (inglés, español ~140–155 WPM, francés ~140–155 WPM) se calculan por número de palabras, mientras que los textos en chino y japonés pasan automáticamente a caracteres por minuto (~200 caracteres/min a ritmo medio) para ofrecer estimaciones realistas."
+				}
+			}
+		},
+		"faq": {
+			"heading": "Preguntas frecuentes",
+			"subtitle": "Dudas habituales sobre la duración de un discurso, las palabras por minuto, el número de páginas del guion y los ensayos en escena.",
+			"items": [
+				{
+					"question": "¿Cómo calculo el tiempo de un discurso a partir de las palabras?",
+					"answer": "Para convertir las palabras de un discurso en minutos, divide el total de palabras entre tu ritmo al hablar en palabras por minuto (WPM). Por ejemplo, en esta calculadora de tiempo de discurso, un guion de 650 palabras leído a un ritmo estándar de conferencia de 130 WPM dura exactamente 5 minutos (650 ÷ 130 = 5). En textos en chino y japonés, la duración se calcula dividiendo el total de caracteres entre caracteres por minuto (~200 CPM)."
+				},
+				{
+					"question": "¿Cuántas palabras tiene un discurso de 1 minuto?",
+					"answer": "Un discurso de 1 minuto suele tener unas 130 palabras a un ritmo conversacional. Si hablas de forma pausada en una ceremonia formal o un brindis, apunta a 110 palabras; para locuciones comerciales rápidas o presentaciones tipo pitch, puedes llegar hasta 160 palabras."
+				},
+				{
+					"question": "¿Cuántas palabras necesito para un discurso de 3 o 5 minutos?",
+					"answer": "A un ritmo medio de 130 WPM, un discurso de 3 minutos requiere 390 palabras, uno de 4 minutos necesita 520 palabras y uno de 5 minutos requiere 650 palabras. Para mantenerte con holgura dentro del límite durante una charla en directo, reduce estas cifras en torno a un 15 %: 330 palabras (3 minutos), 440 palabras (4 minutos) y 550 palabras (5 minutos)."
+				},
+				{
+					"question": "¿Cuánto dura un discurso de 1.000 palabras?",
+					"answer": "Leer 1.000 palabras en voz alta lleva aproximadamente 7 minutos y 42 segundos a una velocidad media de 130 WPM. A un ritmo pausado y ceremonial de 110 WPM tarda 9 minutos y 5 segundos, mientras que a un ritmo ágil de 160 WPM dura 6 minutos y 15 segundos."
+				},
+				{
+					"question": "¿Cuántas palabras tiene un discurso de 10, 12 o 20 minutos?",
+					"answer": "A 130 WPM, un discurso de 10 minutos equivale a 1.300 palabras (margen seguro: 1.105 palabras), uno de 12 minutos a 1.560 palabras (margen seguro: 1.325 palabras) y una presentación de 20 minutos a 2.600 palabras (margen seguro: 2.210 palabras)."
+				},
+				{
+					"question": "¿Cuántas páginas son una charla de 5 o 45 minutos?",
+					"answer": "Con formato estándar (fuente de 12 puntos, doble espacio, ~250 palabras por página), un discurso de 5 minutos de 650 palabras ocupa aproximadamente 2,6 páginas a doble espacio. Una conferencia de 45 minutos de 5.850 palabras equivale a unas 23,4 páginas a doble espacio (o alrededor de 11,7 páginas a espacio sencillo)."
+				},
+				{
+					"question": "¿Cuál es la velocidad media al hablar en palabras por minuto (WPM)?",
+					"answer": "La velocidad media al conversar y hablar en público se sitúa entre 130 y 150 palabras por minuto. Los ponentes profesionales y presentadores de charlas TED suelen mantenerse entre 130 y 140 WPM para garantizar claridad, mientras que locutores de radio y podcasters alcanzan con frecuencia entre 150 y 160 WPM."
+				},
+				{
+					"question": "¿Funciona esta calculadora de tiempo de discurso para español, francés, chino y japonés?",
+					"answer": "Sí. Procesa automáticamente idiomas europeos separados por espacios como inglés, español y francés, y detecta sin intervención caracteres chinos y japoneses (CJK) para contar caracteres y aplicar cadencias de habla realistas (~200 caracteres por minuto)."
+				},
+				{
+					"question": "¿Debo incluir pausas, diapositivas y preguntas en el cálculo del tiempo?",
+					"answer": "Sí, los discursos en vivo casi siempre duran entre un 10 % y un 15 % más que los ensayos en privado debido a las reacciones del público, los cambios de diapositiva y las pausas para dar énfasis. Seguir el margen seguro del 85 % evita que los organizadores te corten o que excedas el tiempo asignado."
+				},
+				{
+					"question": "¿Es gratuita esta calculadora de tiempo de discurso y guarda mi guion?",
+					"answer": "La Calculadora de tiempo de discurso de Wordora es 100 % gratuita, sin registro ni límites de uso. Tu texto se procesa íntegramente en tu navegador y nunca se sube a ningún servidor, ni se guarda en una base de datos ni se comparte."
+				}
+			]
+		}
 	},
 	"randomTopicGenerator": {
 		"name": "Generador de temas e ideas aleatorias",
@@ -3206,7 +4005,1620 @@
 		"metric": "4 modos · Ideas al instante",
 		"title": "Generador de temas aleatorios para hablar, escribir, ensayos y debates | Wordora",
 		"metaDescription": "Genera más de 140 temas aleatorios con ideas clave para discursos improvisados de 1 minuto, ensayos, debates, conversaciones, escritura creativa y palabras sueltas. Gratis, privado y sin registro.",
-		"h1": "Generador de temas aleatorios"
+		"h1": "Generador de temas aleatorios",
+		"ui": {
+			"workspaceAria": "Área de trabajo del generador de temas aleatorios",
+			"modesAria": "Modos de propósito del tema",
+			"modeAll": "Todos",
+			"modeEssayAcademic": "Ensayo y académico",
+			"modeSpeechDebate": "Oratoria y debate",
+			"modeConversationIcebreakers": "Conversación y rompehielos",
+			"modeCreativeWriting": "Escritura creativa",
+			"modeSingleWord": "Una sola palabra",
+			"labelCategory": "Categoría",
+			"catAll": "Todas las categorías",
+			"catTechAi": "Tecnología e IA",
+			"catScienceHealth": "Ciencia y salud",
+			"catPsychPhil": "Psicología y filosofía",
+			"catBusinessCareer": "Negocios y carrera",
+			"catEduSociety": "Educación y sociedad",
+			"catCultureHistory": "Cultura e historia",
+			"catFunRandom": "Ocio y curiosidades",
+			"labelLevel": "Nivel",
+			"levelAny": "Cualquier nivel",
+			"levelEasy": "Fácil",
+			"levelMedium": "Medio",
+			"levelHard": "Difícil",
+			"labelLens": "Enfoque",
+			"lensStraight": "Directo",
+			"lensDevilsAdvocate": "Abogado del diablo",
+			"lensEli5": "ELI5 (Simple)",
+			"lensPitchIt": "Pitch breve",
+			"lensStorytime": "Relato",
+			"noRepeats": "Sin repetir",
+			"initialPoolCount": "140 temas disponibles",
+			"viewModeAria": "Modo de vista",
+			"viewSingle": "Enfoque único",
+			"viewBatch": "Lote (5 temas)",
+			"btnPrepFramework": "Estructura PREP",
+			"btnTodaysTopic": "Tema del día",
+			"initialSeenCounter": "1 de 140 vistos",
+			"prepTitle": "Estructura PREP para discursos y ensayos (Punto · Razón · Ejemplo · Punto)",
+			"prepDuration": "Esquema de 60–90 s",
+			"prepSteps": [
+				{
+					"title": "1. Punto",
+					"desc": "Plantea tu tesis central o respuesta directa en una sola frase clara."
+				},
+				{
+					"title": "2. Razón",
+					"desc": "Explica la causa principal, el mecanismo o el principio que sostiene tu idea."
+				},
+				{
+					"title": "3. Ejemplo",
+					"desc": "Apoya tu argumento con una historia concreta, un caso real o un dato."
+				},
+				{
+					"title": "4. Punto",
+					"desc": "Reformula tu conclusión para que el público se quede con una idea memorable."
+				}
+			],
+			"btnGenerateNew": "Generar nuevo tema",
+			"btnCopySingle": "Copiar tema + puntos",
+			"btnSaveSingle": "Guardar en favoritos",
+			"btnCopyLink": "Copiar enlace",
+			"spaceHintBefore": "Pulsa ",
+			"spaceKey": "Espacio",
+			"spaceHintAfter": " para ver otro tema",
+			"batchBadge": "Vista en lote (5 temas)",
+			"batchHint": "Haz clic en cualquier fila para abrir sus puntos clave en Enfoque único",
+			"batchListAria": "Temas generados en lote",
+			"btnGenerateBatch": "Generar 5 nuevos",
+			"btnCopyBatch": "Copiar los 5",
+			"btnDownloadTxt": "Descargar .txt",
+			"batchToastInitial": "Mostrando 5 temas aleatorios según tus filtros",
+			"timerNotesHeading": "Temporizador de práctica y notas rápidas",
+			"timerPresetsAria": "Tiempos preestablecidos",
+			"preset30s": "30s prep.",
+			"preset1m": "1 min",
+			"preset2m": "2 min",
+			"preset5m": "5 min",
+			"timerReady": "Listo",
+			"timerStart": "Iniciar",
+			"timerReset": "Reiniciar",
+			"notesLabel": "Borrador de esquema e idea de apertura",
+			"notesInitialWords": "0 palabras",
+			"notesPlaceholder": "Anota tu frase inicial o tesis principal...",
+			"notesAutoSave": "Tus notas se guardan automáticamente en tu navegador",
+			"notesClear": "Borrar notas",
+			"shortlistHeading": "Temas guardados",
+			"shortlistInitialSaved": "0 guardados",
+			"btnClear": "Vaciar",
+			"shortlistEmptyBefore": "Haz clic en ",
+			"shortlistEmptyAfter": " en cualquier tema para guardar tus favoritos, compararlos o exportarlos.",
+			"shortlistAria": "Temas guardados",
+			"shortlistSavedAcross": "Guardados entre sesiones",
+			"btnCopyAllSaved": "Copiar guardados",
+			"relatedToolsAria": "Herramientas relacionadas de escritura y oratoria",
+			"relatedBefore": "¿Listo para redactar o cronometrar tu discurso? Prueba ",
+			"relatedComma": ", ",
+			"relatedOr": " o ",
+			"relatedAfter": "."
+		},
+		"client": {
+			"modes": {
+				"Essay & Academic": "Ensayo y académico",
+				"Speech & Debate": "Oratoria y debate",
+				"Conversation & Icebreakers": "Conversación y rompehielos",
+				"Creative Writing": "Escritura creativa",
+				"Single-Word": "Una sola palabra"
+			},
+			"categories": {
+				"Technology & AI": "Tecnología e IA",
+				"Science & Health": "Ciencia y salud",
+				"Psychology & Philosophy": "Psicología y filosofía",
+				"Business & Career": "Negocios y carrera",
+				"Education & Society": "Educación y sociedad",
+				"Culture & History": "Cultura e historia",
+				"Fun & Random": "Ocio y curiosidades"
+			},
+			"levels": {
+				"Easy": "Fácil",
+				"Medium": "Medio",
+				"Hard": "Difícil"
+			},
+			"lenses": {
+				"Straight": "Directo",
+				"Devil's Advocate": "Abogado del diablo",
+				"ELI5 (Simple)": "ELI5 (Simple)",
+				"Pitch It": "Pitch breve",
+				"Storytime": "Relato"
+			},
+			"lensInstructions": {
+				"Straight": "",
+				"Devil's Advocate": "Enfoque Abogado del diablo: defiende con rigor intelectual el argumento contrario a tu primera intuición sobre este tema.",
+				"ELI5 (Simple)": "Enfoque ELI5: explica este tema con analogías cotidianas y claras que un niño curioso de 10 años entendería al instante.",
+				"Pitch It": "Enfoque Pitch breve: presenta tu respuesta como una propuesta ágil de 60 segundos con una solución concreta o un plan de acción.",
+				"Storytime": "Enfoque Relato: empieza con una anécdota personal, una escena histórica o un momento vivido antes de pasar a la teoría."
+			},
+			"matchingTopicSingular": "{count} tema disponible",
+			"matchingTopicPlural": "{count} temas disponibles",
+			"seenCounter": "{seen} de {total} vistos",
+			"savedInShortlist": "Guardado en favoritos ✓",
+			"saveToShortlist": "Guardar en favoritos",
+			"lensBadge": "Enfoque: {lens}",
+			"creativeAnglesHeading": "Ángulos de asociación creativa",
+			"talkingPointsHeading": "Ángulos y puntos clave",
+			"btnCopy": "Copiar",
+			"btnCopied": "Copiado",
+			"btnSavedShort": "Guardado ✓",
+			"btnSaveShort": "Guardar",
+			"copyPerspectiveLens": "Enfoque: {lens}",
+			"copyTalkingPointsLabel": "Puntos clave:",
+			"toastRemovedShortlist": "Tema eliminado de favoritos",
+			"toastSavedShortlist": "Tema guardado en favoritos",
+			"savedCount": "{count} guardados",
+			"removeSavedAria": "Eliminar tema guardado",
+			"toastTodaysTopic": "Tema del día cargado ({date})",
+			"toastGeneratedNew": "Nuevo tema generado ({mode})",
+			"btnCopiedBang": "¡Copiado!",
+			"btnCopyTopicPoints": "Copiar tema + puntos",
+			"toastCopiedSingle": "Tema y puntos clave copiados",
+			"btnLinkCopied": "¡Enlace copiado!",
+			"btnCopyLink": "Copiar enlace",
+			"toastLinkCopied": "Enlace del tema copiado",
+			"toastBatchGenerated": "Se generaron 5 temas nuevos",
+			"btnCopiedAll5": "¡Los 5 copiados!",
+			"btnCopiedAll": "¡Todo copiado!",
+			"timerStart": "Iniciar",
+			"timerPause": "Pausar",
+			"timerResume": "Reanudar",
+			"timerReady": "Listo",
+			"timerPaused": "En pausa",
+			"timerRunning": "En marcha",
+			"timerTimesUp": "¡Tiempo!",
+			"wordSingular": "{count} palabra",
+			"wordPlural": "{count} palabras"
+		},
+		"page": {
+			"subtitle": "Genera temas seleccionados y estimulantes para ensayos académicos, oratoria y debates, escritura creativa y artículos, y guarda tus favoritos en una lista.",
+			"schemaFeatures": [
+				"Más de 140 temas aleatorios seleccionados con puntos clave estructurados en seis modos",
+				"Enfoques de perspectiva (Directo, Abogado del diablo, ELI5, Pitch breve, Relato)",
+				"Modo de enfoque único y generación simultánea en lote (5 temas)",
+				"Temporizador integrado para discursos improvisados (30 s, 1 min, 2 min, 5 min) con bloque de notas",
+				"Lista de favoritos guardada en el navegador con copia instantánea y exportación a .txt",
+				"Funcionamiento 100 % privado en tu navegador y sin registro"
+			],
+			"howToUse": {
+				"heading": "Cómo usar el generador de temas aleatorios",
+				"intro": "Cada tema incluye tres puntos clave estructurados, un enfoque de perspectiva y un temporizador opcional para que nunca empieces con la mente en blanco. Sigue estos cuatro pasos para filtrar, practicar y exportar temas para discursos, ensayos o proyectos creativos:",
+				"steps": [
+					{
+						"title": "Elige un modo de propósito",
+						"bodyHtml": "Cambia entre <strong class=\"font-semibold text-ink\">Todos</strong>, <strong class=\"font-semibold text-ink\">Ensayo y académico</strong>, <strong class=\"font-semibold text-ink\">Oratoria y debate</strong>, <strong class=\"font-semibold text-ink\">Conversación y rompehielos</strong>, <strong class=\"font-semibold text-ink\">Escritura creativa</strong> o <strong class=\"font-semibold text-ink\">Una sola palabra</strong>."
+					},
+					{
+						"title": "Filtra por categoría, nivel y enfoque",
+						"bodyHtml": "Elige entre 7 temáticas, ajusta la dificultad (<strong class=\"font-semibold text-ink\">Fácil</strong>, <strong class=\"font-semibold text-ink\">Medio</strong> o <strong class=\"font-semibold text-ink\">Difícil</strong>) y aplica un enfoque (<strong class=\"font-semibold text-ink\">Directo</strong>, <strong class=\"font-semibold text-ink\">Abogado del diablo</strong>, <strong class=\"font-semibold text-ink\">ELI5</strong>, <strong class=\"font-semibold text-ink\">Pitch breve</strong> o <strong class=\"font-semibold text-ink\">Relato</strong>)."
+					},
+					{
+						"title": "Genera un tema o un lote de 5",
+						"bodyHtml": "Pulsa <strong class=\"font-semibold text-ink\">Generar nuevo tema</strong> (o la tecla <kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-ink\">Espacio</kbd>) para ver un tema destacado con 3 puntos clave, o activa <strong class=\"font-semibold text-ink\">Lote (5 temas)</strong> para revisar cinco ideas a la vez."
+					},
+					{
+						"title": "Practica y exporta tus favoritos",
+						"bodyHtml": "Usa el temporizador integrado de <strong class=\"font-semibold text-ink\">30s</strong>, <strong class=\"font-semibold text-ink\">1 min</strong>, <strong class=\"font-semibold text-ink\">2 min</strong> o <strong class=\"font-semibold text-ink\">5 min</strong> para ensayar improvisación, apunta una idea de apertura y guarda tus favoritos para copiarlos o descargarlos en <strong class=\"font-semibold text-ink\">.txt</strong>."
+					}
+				]
+			},
+			"practicalWays": {
+				"heading": "6 formas prácticas de usar un generador de temas aleatorios",
+				"intro": "Tanto si te preparas para una competencia, buscas superar el bloqueo creativo o quieres animar una charla en grupo, estos formatos se adaptan a cada situación de escritura y oratoria:",
+				"cards": [
+					{
+						"badge": "Oratoria",
+						"title": "Discursos improvisados de 1 minuto",
+						"description": "Practica sesiones de Table Topics de Toastmasters, rondas de un minuto y calentamientos para entrevistas laborales con el temporizador de 1 minuto. Los tres puntos clave te ayudan a estructurar apertura, desarrollo y cierre sobre la marcha."
+					},
+					{
+						"badge": "Ensayos",
+						"title": "Ensayos académicos y trabajos de investigación",
+						"description": "Supera el bloqueo ante la página en blanco con temas equilibrados listos para formular una tesis en tecnología, psicología, educación y políticas públicas. Cada tema aporta subtemas claros para armar tu esquema."
+					},
+					{
+						"badge": "Debates",
+						"title": "Debates en clase y discusiones en grupo",
+						"description": "Ofrece a estudiantes y clubes de debate mociones equilibradas con argumentos a favor y en contra. El enfoque Abogado del diablo reta a los participantes a defender posturas opuestas y poner a prueba sus supuestos."
+					},
+					{
+						"badge": "Conversación",
+						"title": "Preguntas profundas y divertidas para conversar",
+						"description": "Deja atrás las charlas repetitivas en cenas, viajes o dinámicas de equipo con preguntas ligeras, profundas o ingeniosas. Elige el nivel fácil para romper el hielo o niveles medio y difícil para charlas más intensas."
+					},
+					{
+						"badge": "Creatividad",
+						"title": "Escritura creativa, canciones y dibujo",
+						"description": "Enciende cuentos cortos, entradas de diario, letras de canciones o bocetos con los modos Escritura creativa y Una sola palabra. El enfoque Relato te ayuda a convertir una premisa inesperada en una historia viva."
+					},
+					{
+						"badge": "Presentaciones",
+						"title": "Práctica de presentaciones y pitches",
+						"description": "Usa los enfoques Pitch breve o ELI5 para explicar ideas complejas con claridad y límite de tiempo real. Ideal para fundadores, docentes y profesionales que buscan comunicar sin tecnicismos."
+					}
+				]
+			},
+			"curatedLists": {
+				"heading": "Listas seleccionadas de temas aleatorios por categoría",
+				"intro": "Copia directamente cualquiera de las propuestas de abajo para tu próximo discurso, ensayo o conversación, o usa el generador de arriba para explorar más de 140 temas interactivos con puntos clave, niveles y temporizador.",
+				"speechList": {
+					"title": "10 buenos temas para un discurso improvisado de 1 minuto",
+					"badge": "Oratoria",
+					"items": [
+						"Por qué todo nuevo empleo debería empezar con una semana dedicada solo a escuchar",
+						"El valor subestimado del aburrimiento en una agenda sobrecargada",
+						"Una habilidad práctica para la vida que las escuelas deberían enseñar antes de graduarse",
+						"Por qué las notas escritas a mano siguen superando a las apps de mensajería",
+						"Qué enseña tu juego favorito de la infancia sobre el trabajo en equipo adulto",
+						"La sutil diferencia entre estar ocupado y ser productivo",
+						"Por qué tomar rápido una decisión pequeña es mejor que darle mil vueltas",
+						"Una lección aprendida tras un retraso o error memorable durante un viaje",
+						"Por qué todo el mundo debería trabajar al menos una vez en atención al público",
+						"El mejor consejo que ignoraste al principio y que luego hiciste tuyo"
+					]
+				},
+				"debateList": {
+					"title": "10 temas equilibrados para ensayos y debates",
+					"badge": "Debate",
+					"items": [
+						"¿Deberían las universidades reemplazar los exámenes cronometrados por portafolios de proyectos?",
+						"¿El trabajo remoto permanente fortalece o debilita la cultura de una empresa?",
+						"¿Deberían regularse los algoritmos de recomendación de las redes sociales como servicios públicos?",
+						"¿La exploración espacial comercial es una necesidad o una distracción frente a las crisis de la Tierra?",
+						"¿Deberían los gobiernos exigir educación financiera como requisito para graduarse de secundaria?",
+						"¿La inteligencia artificial en campos creativos empobrece o potencia el arte humano?",
+						"¿Debería ser gratuito y financiado con impuestos el transporte público en las grandes ciudades?",
+						"¿Las calificaciones motivan a aprender o fomentan los atajos?",
+						"¿Debería prohibirse por ley que las empresas contacten a los trabajadores fuera de su horario laboral?",
+						"¿La renta básica universal impulsa el emprendimiento o reduce la participación laboral?"
+					]
+				},
+				"socialList": {
+					"title": "10 preguntas profundas y divertidas para conversar",
+					"badge": "Social",
+					"items": [
+						"¿Qué creencia defendías con firmeza hace cinco años sobre la que hoy cambiaste por completo de opinión?",
+						"Si los animales pudieran hablar, ¿qué especie sería la más maleducada y por qué?",
+						"¿Qué comodidad cotidiana actual le parecería pura magia a alguien de 1920?",
+						"Si tuvieras que dar ahora mismo una clase magistral improvisada sobre cualquier tema, ¿cuál elegirías?",
+						"¿Cuál es el dato curioso más inútil que vive permanentemente en tu cabeza?",
+						"¿Qué pequeña molestia diaria crees que debería ser completamente ilegal?",
+						"Si tu vida actual fuera una autobiografía, ¿qué título tendría este capítulo?",
+						"¿Qué actividad disfrutas de verdad aunque a casi todo el mundo le parezca aburrida?",
+						"Si solo pudieras comer una gastronomía el resto de tu vida, ¿cuál elegirías?",
+						"¿Qué opinión impopular sobre comida o cultura defenderás hasta el final?"
+					]
+				},
+				"singleWordList": {
+					"title": "20 palabras sueltas para hablar, dibujar o componer",
+					"badge": "Una palabra",
+					"intro": "Los disparadores de una sola palabra desbloquean el flujo creativo en segundos. Úsalos para escritura libre, dibujo rápido o rondas ágiles de improvisación:",
+					"words": [
+						"Farol",
+						"Brújula",
+						"Eco",
+						"Relojería",
+						"Horizonte",
+						"Estática",
+						"Terciopelo",
+						"Ancla",
+						"Espejismo",
+						"Órbita",
+						"Brasa",
+						"Madera a la deriva",
+						"Laberinto",
+						"Prisma",
+						"Solsticio",
+						"Plano",
+						"Marea",
+						"Ensueño",
+						"Gravedad",
+						"Mosaico"
+					]
+				}
+			},
+			"frameworks": {
+				"heading": "Cómo estructurar un discurso improvisado o un ensayo",
+				"intro": "Combinar un tema aleatorio con una estructura mental probada elimina las dudas y mantiene tus ideas ordenadas durante discursos y ensayos con límite de tiempo:",
+				"prep": {
+					"title": "El método PREP (ideal para discursos de 1 minuto y entrevistas)",
+					"badge": "Improvisación",
+					"items": [
+						{
+							"letter": "P",
+							"label": "Punto:",
+							"text": "Enuncia con claridad tu postura principal en los primeros 10 segundos."
+						},
+						{
+							"letter": "R",
+							"label": "Razón:",
+							"text": "Explica la lógica principal o el motivo que respalda tu postura."
+						},
+						{
+							"letter": "E",
+							"label": "Ejemplo:",
+							"text": "Ancla tu idea con una historia real, una estadística o una observación concreta."
+						},
+						{
+							"letter": "P",
+							"label": "Punto (reiterado):",
+							"text": "Cierra con una frase memorable que retome tu tesis inicial."
+						}
+					],
+					"tipHtml": "<strong class=\"font-semibold text-ink\">Consejo de ritmo:</strong> Un discurso cómodo de 1 minuto ronda las 120–150 palabras por minuto; usa nuestra <a href=\"/speech-time-calculator/\" class=\"font-medium text-[#0D9488] underline underline-offset-2 transition-colors hover:text-ink dark:text-[#AFE3D0]\">Calculadora de tiempo de discurso</a> para practicar tu cadencia."
+				},
+				"peel": {
+					"title": "El método PEEL (ideal para ensayos académicos y argumentos de debate)",
+					"badge": "Ensayos",
+					"items": [
+						{
+							"letter": "P",
+							"label": "Punto:",
+							"text": "Abre el párrafo con una oración temática clara y enfocada."
+						},
+						{
+							"letter": "E",
+							"label": "Evidencia:",
+							"text": "Respalda la afirmación con datos, estudios o precedentes históricos."
+						},
+						{
+							"letter": "E",
+							"label": "Explicación:",
+							"text": "Analiza por qué esa evidencia demuestra tu argumento y aborda posibles objeciones."
+						},
+						{
+							"letter": "L",
+							"label": "Lazo (enlace):",
+							"text": "Conecta la idea con la tesis general del ensayo o enlázala con el siguiente punto."
+						}
+					],
+					"tipHtml": "<strong class=\"font-semibold text-ink\">Consejo de extensión:</strong> Un párrafo de desarrollo estándar tiene entre 150 y 250 palabras; comprueba tu extensión con el <a href=\"/word-counter/\" class=\"font-medium text-[#0D9488] underline underline-offset-2 transition-colors hover:text-ink dark:text-[#AFE3D0]\">Contador de palabras</a> y calcula el número de páginas con el conversor de <a href=\"/words-to-pages/\" class=\"font-medium text-[#0D9488] underline underline-offset-2 transition-colors hover:text-ink dark:text-[#AFE3D0]\">Palabras a páginas</a>."
+				}
+			},
+			"audience": {
+				"heading": "¿Quién utiliza el generador de temas aleatorios de Wordora?",
+				"intro": "Desde aulas académicas hasta escenarios de oratoria profesional, todo tipo de comunicadores se apoyan en temas estructurados para ganar soltura y expresar sus ideas con claridad:",
+				"cards": [
+					{
+						"title": "Estudiantes y redactores académicos",
+						"description": "Genera argumentos de tesis, bosqueja párrafos de desarrollo y practica para exámenes de redacción cronometrados sin bloquearte."
+					},
+					{
+						"title": "Oradores y miembros de Toastmasters",
+						"description": "Ensaya Table Topics, rondas improvisadas de un minuto y preguntas del público con el temporizador integrado y los puntos clave."
+					},
+					{
+						"title": "Equipos de debate y docentes",
+						"description": "Asigna mociones equilibradas con argumentos a favor y en contra y reta a los alumnos a defender perspectivas opuestas."
+					},
+					{
+						"title": "Escritores, blogueros y compositores",
+						"description": "Supera la página en blanco con detonantes narrativos espontáneos, ideas para diarios y palabras evocadoras."
+					},
+					{
+						"title": "Estudiantes de idiomas",
+						"description": "Gana confianza al hablar de manera espontánea, amplía tu vocabulario temático y practica expresar opiniones con fluidez."
+					},
+					{
+						"title": "Presentadores de pódcast y facilitadores",
+						"description": "Rompe el hielo en reuniones remotas, prepara preguntas interesantes para invitados y dinamiza talleres en grupo."
+					}
+				]
+			},
+			"relatedTools": {
+				"heading": "Herramientas relacionadas de escritura y oratoria",
+				"subtitle": "Explora utilidades complementarias para medir la duración de tus discursos, calcular páginas y contar palabras con precisión.",
+				"utilityBadge": "Utilidad",
+				"cards": [
+					{
+						"slug": "/speech-time-calculator/",
+						"categoryKey": "Speaking",
+						"title": "Calculadora de tiempo de discurso",
+						"description": "Convierte el número de palabras de tu guion en la duración exacta al hablar.",
+						"cta": "Calcular tiempo de discurso"
+					},
+					{
+						"slug": "/words-to-pages/",
+						"categoryKey": "Writing",
+						"title": "Palabras a páginas",
+						"description": "Estima cuántas páginas a espacio simple o doble ocupará tu ensayo.",
+						"cta": "Convertir palabras a páginas"
+					},
+					{
+						"slug": "/word-counter/",
+						"categoryKey": "Writing",
+						"title": "Contador de palabras",
+						"description": "Comprueba en tiempo real palabras, caracteres, frases y párrafos mientras escribes.",
+						"cta": "Contar palabras"
+					},
+					{
+						"slug": "/reading-time-calculator/",
+						"categoryKey": "Reading",
+						"title": "Calculadora de tiempo de lectura",
+						"description": "Calcula los minutos estimados de lectura para ensayos, artículos y guiones.",
+						"cta": "Calcular tiempo de lectura"
+					}
+				]
+			},
+			"faqSection": {
+				"heading": "Preguntas frecuentes",
+				"intro": "Encuentra respuestas rápidas sobre cómo generar temas, practicar discursos improvisados y personalizar los enfoques:"
+			}
+		},
+		"faq": [
+			{
+				"question": "¿Qué es un generador de temas aleatorios y cómo funciona?",
+				"answer": "Un generador de temas aleatorios es una herramienta gratuita para el navegador que selecciona entre más de 140 temas cuidadosamente redactados para ensayos académicos, discursos improvisados, debates escolares, conversaciones, escritura creativa y palabras sueltas. Cada tema incluye tres puntos clave estructurados y un enfoque opcional para ayudarte a ordenar tus ideas sin partir de cero."
+			},
+			{
+				"question": "¿Cómo practico discursos improvisados de 1 minuto con esta herramienta?",
+				"answer": "Para practicar discursos improvisados de 1 minuto, elige el modo Oratoria y debate y activa el temporizador integrado en 30s prep. o 1 min. Pulsa Generar nuevo tema (o la barra espaciadora), anota una frase de apertura en el borrador y desarrolla tu intervención con la estructura PREP (Punto, Razón, Ejemplo, Punto)."
+			},
+			{
+				"question": "¿Puedo generar temas de una sola palabra para hablar, dibujar o componer canciones?",
+				"answer": "Sí. Selecciona el modo Una sola palabra en la barra superior para obtener disparadores evocadores de una palabra acompañados de tres ángulos creativos distintos. Es ideal para rondas rápidas de improvisación, juegos de dibujo o sesiones espontáneas de composición."
+			},
+			{
+				"question": "¿Cuántos temas aleatorios puedo generar a la vez?",
+				"answer": "Puedes usar el modo Enfoque único para concentrarte en una sola propuesta a fondo, o activar Lote (5 temas) para ver cinco ideas a la vez. Marca la casilla Sin repetir para asegurarte de ver solo temas nuevos durante tu sesión."
+			},
+			{
+				"question": "¿Hay temas fáciles para niños, estudiantes o aprendices de idiomas?",
+				"answer": "Sí. Configura el filtro Nivel en Fácil y elige ELI5 (Simple) en Enfoque para obtener propuestas accesibles y cercanas. Funcionan muy bien en aulas de primaria y secundaria, prácticas de fluidez oral en idiomas y charlas en familia."
+			},
+			{
+				"question": "¿Están equilibrados los temas de debate y ensayo?",
+				"answer": "Los temas de Ensayo y académico y de Oratoria y debate se formulan como preguntas abiertas o mociones matizadas con tres puntos clave que muestran distintas posturas. Si activas el enfoque Abogado del diablo, verás de inmediato la consigna para defender contraargumentos y afilar tu pensamiento crítico."
+			},
+			{
+				"question": "¿Cuáles son 10 buenos temas para un discurso improvisado o una conversación?",
+				"answer": "Algunos ejemplos populares son: Por qué todo nuevo empleo debería empezar con una semana escuchando; El valor subestimado del aburrimiento; Si los teléfonos mejoran o debilitan la memoria; Una habilidad que deberían enseñar todas las escuelas; y El mejor consejo que ignoraste al principio. Puedes explorar más de 140 variaciones en el generador de arriba."
+			},
+			{
+				"question": "¿Puedo guardar y exportar mis temas favoritos?",
+				"answer": "Sí. Haz clic en Guardar en favoritos en cualquier tema para almacenarlo localmente en tu navegador (localStorage). Puedes revisar tu lista en cualquier momento, copiarla completa al portapapeles con un clic o descargarla en un archivo .txt."
+			},
+			{
+				"question": "¿Este generador de temas aleatorios es completamente gratuito y sin registro?",
+				"answer": "Sí, es 100 % gratuito, sin cuentas, inicio de sesión, correo electrónico ni límites diarios. Todas las funciones —temporizador, enfoques, generación en lote y exportación— están totalmente disponibles."
+			},
+			{
+				"question": "¿Mis notas y temas guardados se almacenan de forma privada?",
+				"answer": "Sí, con total privacidad. La selección de temas, el temporizador, las notas rápidas y la lista de favoritos funcionan exclusivamente en tu navegador. Ningún dato, nota ni selección se sube ni se guarda en servidores externos."
+			}
+		],
+		"topics": {
+			"ea-1": {
+				"title": "¿La dependencia generalizada de las recomendaciones algorítmicas limita o amplía la curiosidad cultural individual?",
+				"points": [
+					"Analiza si los algoritmos personalizados crean cámaras de eco de gustos o reducen la fricción para descubrir arte global de nicho.",
+					"Compara el consumo algorítmico pasivo con la búsqueda activa a través de foros comunitarios, bibliotecas y críticos.",
+					"Evalúa si las plataformas deberían ofrecer un control transparente de «serendipia» para ajustar recomendaciones poco familiares."
+				]
+			},
+			"ea-2": {
+				"title": "¿Deberían los sistemas de IA y agentes autónomos llevar marcas de agua digitales obligatorias por ley en todo contenido sintético?",
+				"points": [
+					"Examina los estándares de procedencia criptográfica frente a la facilidad de eliminar metadatos con herramientas de código abierto.",
+					"Sopesar la protección de la confianza pública frente a la privacidad de denunciantes anónimos y artistas.",
+					"Considera cómo los tribunales y periodistas verifican la autenticidad cuando el audio y el video sintéticos son indistinguibles de la realidad."
+				]
+			},
+			"ea-3": {
+				"title": "¿Ha mejorado el paso de los cuadernos físicos a las notas digitales en la nube la forma en que los estudiantes retienen ideas complejas?",
+				"points": [
+					"Compara la codificación cognitiva de la escritura a mano más pausada con la rapidez y capacidad de búsqueda de las notas tecleadas.",
+					"Analiza en qué se diferencia la memoria espacial de una hoja de papel frente a los documentos digitales de desplazamiento infinito.",
+					"Propón flujos de trabajo híbridos que combinen mapas conceptuales escritos a mano con archivos digitales buscables."
+				]
+			},
+			"ea-4": {
+				"title": "¿Hasta qué punto deberían los municipios tratar el internet de alta velocidad y el acceso local a cómputo como infraestructura pública?",
+				"points": [
+					"Compara los programas de electrificación rural del siglo XX con las brechas actuales de fibra óptica y acceso digital.",
+					"Analiza las ventajas y desventajas económicas entre la competencia de telecomunicaciones privadas y las cooperativas municipales de banda ancha.",
+					"Evalúa cómo la telemedicina, la educación a distancia y la participación cívica dependen de garantías básicas de conectividad."
+				]
+			},
+			"ea-5": {
+				"title": "¿Deberían las revistas científicas exigir el acceso abierto inmediato a toda investigación financiada con fondos públicos tras su revisión por pares?",
+				"points": [
+					"Contrasta el derecho ciudadano a consultar hallazgos financiados con impuestos frente a los costos operativos de gestionar la revisión por pares.",
+					"Analiza cómo las altas tarifas de publicación afectan a investigadores jóvenes y universidades de países en desarrollo.",
+					"Explora los repositorios institucionales de preprints como modelo alternativo para acelerar la colaboración científica."
+				]
+			},
+			"ea-6": {
+				"title": "¿Qué límites éticos deberían regir el cribado embrionario poligénico preventivo para rasgos no letales?",
+				"points": [
+					"Distingue entre detectar enfermedades monogénicas graves y calcular puntajes estadísticos de riesgo para rasgos poligénicos complejos.",
+					"Aborda la posible estratificación socioeconómica si la optimización genómica solo resulta accesible en clínicas privadas.",
+					"Reflexiona sobre el impacto psicológico en niños criados bajo expectativas genéticas elevadas."
+				]
+			},
+			"ea-7": {
+				"title": "¿Cómo influye de forma medible la densidad del arbolado urbano en la salud física y mental de la población?",
+				"points": [
+					"Examina el efecto isla de calor urbana y cómo los barrios con sombra reducen las hospitalizaciones por olas de calor.",
+					"Revisa estudios epidemiológicos que vinculan el contacto diario con zonas verdes con menores niveles de cortisol y mejor descanso.",
+					"Evalúa la equidad en los presupuestos de arbolado urbano entre barrios históricamente menos sombreados."
+				]
+			},
+			"ea-8": {
+				"title": "¿Deberían las guías alimentarias nacionales incorporar la sostenibilidad ambiental junto con la adecuación nutricional?",
+				"points": [
+					"Compara la huella de tierra, agua y carbono de las dietas centradas en vegetales frente a la ganadería convencional.",
+					"Considera las tradiciones culinarias, el sustento agrícola y la disponibilidad regional de micronutrientes.",
+					"Analiza si el etiquetado alimentario cambia los hábitos de compra con más eficacia que los subsidios agrícolas."
+				]
+			},
+			"ea-9": {
+				"title": "¿Disminuye la responsabilidad moral cuando las decisiones humanas son orientadas por arquitecturas predictivas de elección?",
+				"points": [
+					"Define los «empujones» conductuales en finanzas, donación de órganos e interfaces digitales desde la perspectiva de la autonomía personal.",
+					"Contrasta el paternalismo libertario con la visión kantiana clásica de la agencia moral consciente.",
+					"Explora dónde cruzan la línea los ajustes predeterminados útiles para convertirse en patrones oscuros y manipulación."
+				]
+			},
+			"ea-10": {
+				"title": "¿Se aplica la paradoja del barco de Teseo a la identidad personal humana tras décadas de reconstrucción de recuerdos autobiográficos?",
+				"points": [
+					"Examina hallazgos de la neurociencia que muestran cómo los recuerdos episódicos se reescriben sutilmente cada vez que se evocan.",
+					"Compara la teoría de la continuidad psicológica de Locke con los enfoques de identidad narrativa en la psicología moderna.",
+					"Considera las implicaciones legales y éticas: ¿por qué responsabilizamos a alguien de 80 años por actos cometidos a los 20?"
+				]
+			},
+			"ea-11": {
+				"title": "¿Por qué la soledad voluntaria restaura la creatividad cognitiva mientras el aislamiento involuntario la erosiona?",
+				"points": [
+					"Distingue el marco psicológico de la reflexión tranquila elegida frente a la exclusión social.",
+					"Explica cómo la red neuronal por defecto consolida ideas cuando el cerebro se libera de la exposición social constante.",
+					"Analiza hábitos de agenda y diseño de espacios que protegen una soledad saludable en entornos hiperconectados."
+				]
+			},
+			"ea-12": {
+				"title": "¿Puede el largoplacismo ofrecer un marco ético coherente sin restar importancia al sufrimiento humano urgente del presente?",
+				"points": [
+					"Compara el peso moral asignado a miles de millones de posibles personas futuras frente a poblaciones actuales en situación de pobreza.",
+					"Analiza las inversiones para mitigar riesgos existenciales junto con intervenciones medibles de salud pública a corto plazo.",
+					"Cuestiona cómo la incertidumbre epistémica en pronósticos a siglos vista afecta la priorización práctica de políticas."
+				]
+			},
+			"ea-13": {
+				"title": "¿La transparencia salarial obligatoria en las empresas comprime los sueldos o impulsa la productividad meritocrática?",
+				"points": [
+					"Revisa la evidencia empírica sobre brechas salariales de género y demográficas antes y después de las leyes de transparencia.",
+					"Analiza si las bandas salariales abiertas reducen la fricción en las negociaciones o desincentivan a perfiles de rendimiento excepcional.",
+					"Examina cómo definen las organizaciones métricas objetivas de desempeño cuando la compensación es visible entre compañeros."
+				]
+			},
+			"ea-14": {
+				"title": "¿Cómo ha transformado el trabajo remoto e híbrido la geografía económica de las ciudades medianas y los suburbios?",
+				"points": [
+					"Rastrea el desplazamiento del consumo diario desde los distritos financieros centrales hacia los comercios de barrio.",
+					"Examina la presión sobre el precio de la vivienda cuando trabajadores remotos se mudan a ciudades regionales más económicas.",
+					"Evalúa cómo el transporte público adapta horarios pensados originalmente para horas pico de oficina de 9 a 17."
+				]
+			},
+			"ea-15": {
+				"title": "¿Debería el deber fiduciario corporativo exigir auditorías ambientales y sociales vinculantes junto con los informes financieros trimestrales?",
+				"points": [
+					"Contrasta la doctrina de primacía del accionista de Milton Friedman con los modelos modernos de empresas de beneficio e interés colectivo.",
+					"Analiza el problema de la medición: cómo evitar que las métricas ESG vagas se conviertan en marketing sin verificación.",
+					"Evalúa si la resiliencia a largo plazo de las cadenas de suministro alinea el valor accionarial con el cuidado ecológico."
+				]
+			},
+			"ea-16": {
+				"title": "¿Por qué prosperan económicamente ciertos oficios artesanales y de reparación en épocas de rápida automatización industrial?",
+				"points": [
+					"Explora la psicología del consumidor en torno a la procedencia, la durabilidad y el trabajo humano en mercados digitales saturados.",
+					"Compara la economía unitaria de la fabricación masiva desechable con el diseño de productos modulares y reparables.",
+					"Evalúa las leyes de derecho a reparar como catalizador del empleo técnico calificado local."
+				]
+			},
+			"ea-17": {
+				"title": "¿Deberían las universidades evaluar a los estudiantes principalmente mediante proyectos de investigación extensos en lugar de exámenes cronometrados?",
+				"points": [
+					"Compara cómo los exámenes con límite de tiempo miden la memoria a corto plazo bajo presión frente a proyectos largos que evalúan síntesis y revisión.",
+					"Aborda los retos de integridad académica en la era de la IA generativa y cómo las defensas orales pueden verificar la autoría original.",
+					"Considera si profesiones críticas como la medicina o la aviación siguen exigiendo respuestas rápidas y sin ayuda bajo presión de tiempo."
+				]
+			},
+			"ea-18": {
+				"title": "¿Cómo moldean la arquitectura de las bibliotecas públicas y las plazas peatonales la confianza cívica en las ciudades modernas?",
+				"points": [
+					"Define el concepto de «terceros lugares» de Ray Oldenburg, donde la ciudadanía se reúne sin obligación de consumir.",
+					"Analiza cómo la luz natural, la disposición de los asientos y la accesibilidad a pie de calle fomentan la convivencia entre generaciones.",
+					"Compara barrios con espacios cívicos bien financiados frente a desarrollos dependientes del automóvil sin plazas públicas."
+				]
+			},
+			"ea-19": {
+				"title": "¿Basta la educación financiera universal en la secundaria para mejorar la resiliencia económica de los hogares?",
+				"points": [
+					"Distingue lo que pueden resolver el presupuesto personal y el interés compuesto frente a factores estructurales como salarios y vivienda.",
+					"Revisa estudios longitudinales que miden el historial crediticio y las tasas de ahorro en adultos tras cursos obligatorios de finanzas.",
+					"Propón combinar las clases teóricas con cuentas juveniles de ahorro automático o talleres prácticos de impuestos."
+				]
+			},
+			"ea-20": {
+				"title": "¿Deberían los gobiernos locales priorizar los peajes por congestión o ampliar las redes de microtransporte para reducir las emisiones?",
+				"points": [
+					"Compara el impacto de los peajes urbanos en ciudades como Londres y Estocolmo con la realidad de los suburbios sin transporte frecuente.",
+					"Evalúa los efectos de equidad en trabajadores de salud y hostelería que se desplazan fuera de las horas pico del tren.",
+					"Explora cómo destinar por ley lo recaudado por congestión a líneas de autobús de alta frecuencia y ciclovías."
+				]
+			},
+			"ea-21": {
+				"title": "¿Hasta qué punto deberían las leyes de preservación histórica limitar la reutilización adaptativa de infraestructuras urbanas antiguas?",
+				"points": [
+					"Sopesar la conservación del patrimonio arquitectónico frente a la urgencia de mayor densidad habitacional y adaptación climática.",
+					"Examina casos exitosos de reutilización adaptativa donde antiguas naves industriales se transformaron en viviendas de uso mixto.",
+					"Debate quién decide qué épocas y edificaciones cotidianas merecen protección legal permanente."
+				]
+			},
+			"ea-22": {
+				"title": "¿Cómo ha cambiado la historiografía gracias a la digitalización de periódicos antiguos y cartas personales?",
+				"points": [
+					"Analiza cómo la búsqueda de texto completo acelera el cruce de fuentes, aunque puede tentar a pasar por alto el contexto circundante.",
+					"Considera el sesgo de supervivencia: qué lenguas regionales y archivos comunitarios siguen sin digitalizarse y resultan invisibles en línea.",
+					"Reflexiona sobre lo que revelan los objetos físicos —matasellos, calidad del papel, notas al margen— y que el texto digitalizado omite."
+				]
+			},
+			"ea-23": {
+				"title": "¿Por qué las tradiciones culinarias suelen sobrevivir más generaciones entre familias migrantes que los idiomas ancestrales?",
+				"points": [
+					"Explora la memoria sensorial y las comidas familiares como vehículos cotidianos y accesibles de identidad cultural.",
+					"Contrasta la presión social hacia la asimilación lingüística con la amplia aceptación de cocinas diversas.",
+					"Examina cómo las recetas de la diáspora adaptan ingredientes locales manteniendo sus perfiles de sabor esenciales."
+				]
+			},
+			"ea-24": {
+				"title": "¿Deberían los museos enciclopédicos sustituir la propiedad permanente de piezas disputadas por una custodia global rotativa?",
+				"points": [
+					"Compara el argumento del museo universal para el estudio comparado frente a las demandas de restitución cultural.",
+					"Evalúa las instalaciones modernas de conservación en los países de origen junto con el archivo digital en 3D.",
+					"Propón tratados recíprocos de préstamo a largo plazo que permitan circular colecciones entre continentes."
+				]
+			},
+			"ea-25": {
+				"title": "¿Qué revela la evolución del diseño de juegos de mesa sobre los cambios culturales hacia la competencia y la cooperación?",
+				"points": [
+					"Contrasta juegos clásicos de eliminación como Monopoly con títulos cooperativos modernos como Pandemic.",
+					"Analiza por qué las reuniones alrededor de juegos de mesa complejos han resurgido en plena era del entretenimiento digital.",
+					"Examina cómo las mecánicas de reglas enseñan negociación, gestión de recursos escasos y resolución compartida de problemas."
+				]
+			},
+			"ea-26": {
+				"title": "¿Por qué las sociedades humanas adoptan sistemas de horario estandarizado que ignoran las variaciones estacionales de luz solar?",
+				"points": [
+					"Recorre la sincronización ferroviaria del siglo XIX que sustituyó el mediodía solar local por husos horarios uniformes.",
+					"Examina la fricción circadiana provocada por los cambios de hora artificiales y el debate entre horario estándar y de verano.",
+					"Compara el tiempo agrícola orientado a tareas con el trabajo industrial medido por el reloj."
+				]
+			},
+			"ea-27": {
+				"title": "¿Cómo reorganizó silenciosamente el modesto contenedor marítimo el comercio global, los puertos y las expectativas del consumidor?",
+				"points": [
+					"Explica cómo la estandarización intermodal redujo los tiempos de carga portuaria de semanas de trabajo manual a unas pocas horas.",
+					"Rastrea cómo los puertos históricos se trasladaron lejos de los centros urbanos hacia terminales automatizadas de aguas profundas.",
+					"Analiza la fragilidad de las cadenas globales justo a tiempo cuando se bloquea un solo canal o puerto."
+				]
+			},
+			"ea-28": {
+				"title": "¿Puede la sátira política impulsar reformas reales o actúa sobre todo como una válvula de escape?",
+				"points": [
+					"Analiza ejemplos históricos en los que panfletos y programas satíricos expusieron absurdos institucionales.",
+					"Considera el riesgo psicológico de que reírse de los problemas sistémicos sustituya a la acción cívica concreta.",
+					"Compara el papel de la sátira bajo censura frente a su efecto en ecosistemas mediáticos fragmentados y saturados."
+				]
+			},
+			"sd-1": {
+				"title": "Esta cámara prohibiría los teléfonos inteligentes y relojes inteligentes en las aulas de primaria y secundaria.",
+				"points": [
+					"A favor: eliminar las notificaciones constantes recupera la convivencia en los recreos y la concentración en la lectura profunda.",
+					"En contra: enseñar autorregulación responsable con la tecnología prepara mejor a los estudiantes que la prohibición total.",
+					"Punto intermedio: evalúa fundas bloqueables durante la jornada escolar frente a protocolos claros de comunicación familiar."
+				]
+			},
+			"sd-2": {
+				"title": "Por qué cada ingeniero de software y diseñador de producto debería pasar una semana al año en soporte al cliente.",
+				"points": [
+					"Abre con una historia vívida de un «pequeño cambio de interfaz» que frustró cada día a miles de usuarios reales.",
+					"Muestra cómo escuchar directamente las dudas del usuario genera empatía mucho más rápido que cualquier panel de métricas.",
+					"Cierra con una propuesta práctica para rotar a los equipos técnicos por conversaciones reales de primera línea."
+				]
+			},
+			"sd-3": {
+				"title": "Esta cámara cree que los modelos de IA de pesos abiertos son más seguros para la sociedad que los monopolios cerrados.",
+				"points": [
+					"Argumenta cómo la auditoría académica pública y la innovación distribuida evitan que unas pocas empresas controlen el conocimiento.",
+					"Contrarresta con riesgos biológicos, ciberataques y la imposibilidad de retirar pesos inseguros una vez publicados.",
+					"Propón umbrales escalonados de publicación basados en evaluaciones verificables de capacidad."
+				]
+			},
+			"sd-4": {
+				"title": "En defensa del minimalismo digital: por qué borrar la mitad de tus apps te vuelve el doble de observador.",
+				"points": [
+					"Contrasta el reflejo de llenar cada espera de 30 segundos mirando el teléfono con prestar atención a tu entorno.",
+					"Explica el modelo de negocio de la economía de la atención con palabras sencillas y memorables.",
+					"Reta al público a una auditoría de pantalla principal de 7 días dejando solo herramientas realmente útiles."
+				]
+			},
+			"sd-5": {
+				"title": "¿Deberían las escuelas secundarias retrasar el inicio de clases a las 9:00 para ajustarse al reloj biológico adolescente?",
+				"points": [
+					"Cita estudios sobre el retraso de melatonina en la adolescencia que demuestran ciclos de sueño biológicamente más tardíos.",
+					"Aborda la logística real de horarios laborales de las familias, actividades extraescolares y rutas de transporte.",
+					"Destaca mejoras en asistencia, estado de ánimo y seguridad vial en distritos que ya retrasaron el horario."
+				]
+			},
+			"sd-6": {
+				"title": "Esta cámara priorizaría la exploración de los océanos de la Tierra sobre las misiones tripuladas al espacio profundo durante los próximos veinte años.",
+				"points": [
+					"Compara la biodiversidad aún desconocida y el papel climático de las profundidades marinas con la colonización de Marte.",
+					"Reconoce cómo la ingeniería aeroespacial impulsó históricamente los satélites meteorológicos y la energía solar.",
+					"Plantea el debate en torno a la urgencia: cuidar nuestro planeta hoy frente a buscar respaldo en otros mundos."
+				]
+			},
+			"sd-7": {
+				"title": "¿Deberían los sistemas de salud ofrecer primas de seguro más bajas a quienes cumplan metas verificadas de hábitos preventivos?",
+				"points": [
+					"Sopesar los incentivos conductuales para el bienestar preventivo frente a la predisposición genética y las barreras socioeconómicas.",
+					"Examina los riesgos de privacidad cuando aseguradoras solicitan datos biométricos de pasos o sueño de dispositivos portátiles.",
+					"Contrasta los recargos punitivos con incentivos positivos como subsidios para gimnasios y alimentos frescos."
+				]
+			},
+			"sd-8": {
+				"title": "Por qué caminar treinta minutos al día sin auriculares es el reinicio mental más sencillo que existe.",
+				"points": [
+					"Describe cómo el flujo constante de pódcast y música impide que el cerebro procese ideas pendientes.",
+					"Vincula el movimiento rítmico de caminar con grandes hallazgos de pensadores desde Darwin hasta Nietzsche.",
+					"Ofrece al público un experimento gratuito e inmediato para probar en su caminata de regreso hoy mismo."
+				]
+			},
+			"sd-9": {
+				"title": "Por qué saber cambiar de opinión en público es la habilidad de liderazgo más subestimada de la década.",
+				"points": [
+					"Empieza con un momento decisivo en el que admitir un error temprano evitó un desastre mayor en una organización.",
+					"Contrasta el mito del «líder inflexible» con la mentalidad científica de actualizar creencias ante nueva evidencia.",
+					"Comparte tres frases prácticas que permiten corregir el rumbo con transparencia sin perder la confianza del equipo."
+				]
+			},
+			"sd-10": {
+				"title": "¿El perfeccionismo es un alto estándar de excelencia o una forma disfrazada de procrastinación?",
+				"points": [
+					"Ilustra la célebre parábola de la clase de cerámica: el grupo evaluado por cantidad logró piezas de mayor calidad que el de perfección.",
+					"Explica cómo el miedo al juicio suele esconderse detrás de retoques y preparativos interminables.",
+					"Defiende la idea de que una «versión 1.0 publicada» supera siempre a una «versión 0.0 perfecta»."
+				]
+			},
+			"sd-11": {
+				"title": "Esta cámara sostiene que la honestidad radical en las relaciones personales causa más daño que el tacto compasivo.",
+				"points": [
+					"Distingue la franqueza constructiva sobre asuntos corregibles de la brusquedad no solicitada disfrazada de virtud.",
+					"Explora cómo las normas culturales sobre la franqueza y el cuidado del otro sostienen la armonía social.",
+					"Pon a prueba el filtro: «¿Es verdad, es necesario y es amable?»."
+				]
+			},
+			"sd-12": {
+				"title": "Por qué el aburrimiento no es un defecto que eliminar, sino la cuna del pensamiento original.",
+				"points": [
+					"Recuerda cómo muchos juegos e inventos de la infancia nacieron una tarde lluviosa sin nada programado.",
+					"Explica qué ocurre a nivel neurológico cuando privamos a la mente de momentos sin estímulos.",
+					"Propón reservar «espacios en blanco sin agenda» en el calendario semanal."
+				]
+			},
+			"sd-13": {
+				"title": "Esta cámara cree que la semana laboral de cuatro días debería convertirse en el estándar legal para los sectores de servicios y conocimiento.",
+				"points": [
+					"Debate los resultados medibles de ensayos de 4 días: menos agotamiento, reuniones más breves y productividad estable.",
+					"Aborda las complejidades operativas reales en hospitales, comercio minorista y pequeñas fábricas.",
+					"Compara una semana de 32 horas con la flexibilidad diaria y la autonomía asíncrona."
+				]
+			},
+			"sd-14": {
+				"title": "El costo oculto de estar siempre disponible: por qué las organizaciones prosperan cuando protegen horas de concentración sin interrupciones.",
+				"points": [
+					"Calcula el desgaste cognitivo de revisar mensajes o correos cada seis minutos.",
+					"Cuenta una historia cotidiana que contraste la «rapidez aparente» con el trabajo profundo que realmente importa.",
+					"Propón mañanas silenciosas en equipo donde notas escritas reemplacen reuniones de seguimiento."
+				]
+			},
+			"sd-15": {
+				"title": "¿Deberían las empresas eliminar los currículums tradicionales y el filtro de títulos universitarios a favor de pruebas prácticas anónimas?",
+				"points": [
+					"Defiende cómo los microproyectos remunerados y estandarizados miden la habilidad real mejor que el prestigio o las palabras clave.",
+					"Considera la carga de tiempo para los candidatos si cada postulación exigiera varias horas de entrega personalizada.",
+					"Diseña un proceso híbrido justo que respete el tiempo del postulante y amplíe oportunidades."
+				]
+			},
+			"sd-16": {
+				"title": "Por qué las carreras generalistas suelen rendir mejor que la hiperespecialización en industrias cambiantes.",
+				"points": [
+					"Apóyate en «Amplitud» de David Epstein para contrastar entornos predecibles (ajedrez) con entornos complejos (negocios modernos).",
+					"Muestra cómo combinar ideas de dos campos distintos crea una ventaja profesional única.",
+					"Transmite a quienes cambian de rumbo que sus etapas previas suman valor, no son tiempo perdido."
+				]
+			},
+			"sd-17": {
+				"title": "¿Debería ser obligatorio votar en las elecciones nacionales y locales incluyendo una casilla de «ninguno de los anteriores»?",
+				"points": [
+					"Contrasta la alta participación democrática en países como Australia con la libertad individual de abstenerse.",
+					"Analiza cómo el voto obligatorio cambia las campañas: de movilizar extremos a convencer a mayorías amplias.",
+					"Explica por qué una opción explícita de rechazo preserva el derecho a la protesta dentro de sistemas obligatorios."
+				]
+			},
+			"sd-18": {
+				"title": "¿Deberían las escuelas reemplazar las largas vacaciones de verano por descansos más breves repartidos a lo largo del año?",
+				"points": [
+					"Aborda la pérdida de aprendizaje estival y el desafío de cuidado infantil que enfrentan las familias durante tres meses seguidos.",
+					"Considera las tradiciones de campamentos, empleos juveniles de verano y mantenimiento de edificios escolares.",
+					"Compara calendarios equilibrados de 9 semanas de clase por 2 de descanso para reducir el agotamiento de docentes y alumnos."
+				]
+			},
+			"sd-19": {
+				"title": "Esta cámara sustituiría un año de matrícula universitaria por un programa remunerado de servicio comunitario o nacional.",
+				"points": [
+					"Argumenta cómo colaborar con jóvenes de distintas regiones y realidades fortalece la cohesión social.",
+					"Aborda el costo de oportunidad de retrasar la graduación técnica y el ingreso al mercado laboral.",
+					"Plantea un modelo voluntario con créditos de matrícula en conservación ambiental, cuidado de mayores y respuesta ante emergencias."
+				]
+			},
+			"sd-20": {
+				"title": "Por qué cada adolescente debería trabajar al menos un verano en hostelería, comercio o atención al público.",
+				"points": [
+					"Usa humor y anécdotas vívidas sobre atender a clientes impacientes en plena hora pico del mediodía.",
+					"Muestra cómo el trato directo enseña templanza, empatía y respeto por quienes sostienen el trabajo cotidiano.",
+					"Concluye cómo mejorarían la paciencia y la cortesía pública si todos hubiéramos estado alguna vez detrás de un mostrador."
+				]
+			},
+			"sd-21": {
+				"title": "¿Deberían los grandes eventos deportivos internacionales celebrarse en una sede permanente en lugar de rotar entre ciudades?",
+				"points": [
+					"Contrasta la deuda pública y los estadios abandonados de muchas sedes rotativas con el aprovechamiento de instalaciones permanentes.",
+					"Defiende el orgullo cultural, el turismo internacional y las mejoras urbanas que impulsan las candidaturas locales.",
+					"Propón sedes regionales compartidas entre varias ciudades como alternativa sostenible."
+				]
+			},
+			"sd-22": {
+				"title": "Por qué aprender un segundo idioma en la edad adulta sigue siendo valioso incluso en la era de la traducción instantánea con IA.",
+				"points": [
+					"Distingue el intercambio práctico (pedir un café) de la conexión humana (compartir humor, matices y cultura).",
+					"Destaca los beneficios cognitivos del bilingüismo y la humildad de expresarse con imperfección en otra lengua.",
+					"Recuerda que los auriculares traductores acercan palabras, pero compartir un idioma acerca personas."
+				]
+			},
+			"sd-23": {
+				"title": "Esta cámara considera que los fondos públicos para la cultura deberían priorizar talleres comunitarios de barrio sobre grandes teatros de ópera nacionales.",
+				"points": [
+					"Debate entre la democratización cultural de base y la preservación de la excelencia orquestal y escénica.",
+					"Examina el precio de las entradas y la accesibilidad geográfica a las instituciones culturales emblemáticas.",
+					"Muestra cómo las escuelas locales de música y arte forman al público y al talento que luego sostienen los grandes escenarios."
+				]
+			},
+			"sd-24": {
+				"title": "Lo que los oficios cotidianos —desde reparar relojes mecánicos hasta hornear masa madre— nos enseñan sobre la paciencia.",
+				"points": [
+					"Contrasta la gratificación instantánea de un clic con actividades manuales que no aceptan atajos.",
+					"Explora la satisfacción serena de diagnosticar y reparar un objeto tangible con tus propias manos.",
+					"Invita al público a cultivar una habilidad manual que produzca algo real y duradero."
+				]
+			},
+			"sd-25": {
+				"title": "En defensa de la charla trivial: por qué hablar del clima con desconocidos sostiene la convivencia humana.",
+				"points": [
+					"Cuestiona el tópico de «odio la charla superficial, solo quiero conversaciones profundas».",
+					"Explica el concepto antropológico de «comunicación fática»: saludos sencillos que comunican seguridad y respeto mutuo.",
+					"Demuestra que casi toda gran amistad empezó con un comentario cotidiano y cordial."
+				]
+			},
+			"sd-26": {
+				"title": "¿Deberían los cines incluir un intermedio obligatorio en toda película que supere las dos horas y media?",
+				"points": [
+					"Haz una defensa amena y cercana pensando en la comodidad del público, recargar bebidas y comentar la primera mitad.",
+					"Presenta el punto de vista de los directores sobre el ritmo narrativo y la inmersión sin cortes.",
+					"Recuerda el cine clásico de gran formato, donde el intermedio convertía el estreno en un verdadero acontecimiento social."
+				]
+			},
+			"sd-27": {
+				"title": "Por qué las bibliotecas son el invento más radical y subestimado de la vida moderna en los barrios.",
+				"points": [
+					"Destaca la evolución de las bibliotecas de depósitos silenciosos de libros a centros comunitarios, talleres y préstamo de herramientas.",
+					"Subraya el gesto extraordinario de confianza cívica que implica prestar bienes valiosos gratis con una simple tarjeta.",
+					"Anima al público a visitar su biblioteca local esta semana y descubrir recursos que quizás desconoce."
+				]
+			},
+			"sd-28": {
+				"title": "Esta cámara cree que la nostalgia es una ilusión reconfortante que distorsiona nuestra valoración del progreso actual.",
+				"points": [
+					"Examina el sesgo psicológico de la «retrospección color de rosa»: recordamos la música y los veranos pasados olvidando las dificultades.",
+					"Reconoce cómo la nostalgia compartida puede dar arraigo en tiempos de cambio cultural acelerado.",
+					"Defiende la «gratitud presente»: reconocer los avances médicos, informativos y creativos que disfrutamos hoy."
+				]
+			},
+			"ci-1": {
+				"title": "¿Qué tecnología «anticuada» de hace veinte años te gustaría en secreto que volviera a ponerse de moda?",
+				"points": [
+					"Piensa en botones físicos, carcasas de plástico translúcido, reproductores dedicados solo a música o teléfonos con tapa.",
+					"Cuenta qué resultaba tan satisfactorio de aparatos que cumplían una sola función sin notificaciones.",
+					"Pregunta al grupo: ¿cambiarías la comodidad actual por esa experiencia más simple?"
+				]
+			},
+			"ci-2": {
+				"title": "Si pudieras automatizar para siempre una tarea doméstica semanal, pero tuvieras que hacer otra por completo a mano, ¿cuál sería tu intercambio?",
+				"points": [
+					"Piensa en tareas repetitivas como doblar ropa, ordenar la compra o limpiar la bandeja de entrada.",
+					"Identifica qué labores manuales —picar verduras, lavar platos o cuidar plantas— te resultan casi relajantes.",
+					"Compara cómo dos personas en la misma sala suelen amar y detestar exactamente las tareas opuestas."
+				]
+			},
+			"ci-3": {
+				"title": "¿Cuál fue el primer sitio web, juego o comunidad en línea que te hizo sentir que internet era mágico?",
+				"points": [
+					"Recuerda el sonido, el diseño o el foro de alguna afición poco común que atrapó tu curiosidad.",
+					"Reflexiona sobre lo que se sintió al descubrir por primera vez a personas que compartían un interés muy específico.",
+					"Contrasta aquella web temprana de páginas personales peculiares con las redes sociales uniformes de hoy."
+				]
+			},
+			"ci-4": {
+				"title": "Si un gemelo digital entrenado con tus mensajes pudiera asistir a la mitad de tus reuniones, ¿qué conversaciones jamás delegarías?",
+				"points": [
+					"Separa las actualizaciones rutinarias de los momentos que exigen vulnerabilidad, humor o conversaciones delicadas.",
+					"Imagina cómo te sentirías si un amigo o colega enviara a su gemelo de IA a hablar contigo.",
+					"Define qué hace irreemplazable la presencia humana incluso cuando las palabras sean idénticas."
+				]
+			},
+			"ci-5": {
+				"title": "¿Tu pico de energía creativa ocurre a las 7:00, a las 14:00 o a las 23:00, y cómo descubriste tu ritmo?",
+				"points": [
+					"Comparte un proyecto o examen donde trabajar a favor (o en contra) de tu reloj biológico marcó la diferencia.",
+					"Comenta cómo influyen el café, la luz natural o el sonido ambiente en tu ventana de concentración.",
+					"Compara cómo se coordinan madrugadores y noctámbulos dentro del mismo equipo."
+				]
+			},
+			"ci-6": {
+				"title": "Si pudieras hacerle una sola pregunta tomando un café a un biólogo marino, un astrofísico o un neurólogo, ¿a quién elegirías?",
+				"points": [
+					"Decide si te intriga más el fondo del océano, los confines del universo o la conciencia humana.",
+					"Formula el misterio concreto que te intriga desde la infancia.",
+					"Pregunta a los demás qué avance científico esperan presenciar en vida."
+				]
+			},
+			"ci-7": {
+				"title": "¿Cuál es un pequeño hábito poco obvio que mejora notablemente tu ánimo cada vez que recuerdas practicarlo?",
+				"points": [
+					"Evita consejos genéricos y comparte rituales concretos, como salir al aire libre antes de mirar el teléfono o estirarte mientras preparas el té.",
+					"Habla de por qué los hábitos más simples son paradójicamente los primeros que olvidamos en semanas ocupadas.",
+					"Elige un hábito sencillo de otra persona del grupo que te gustaría adoptar."
+				]
+			},
+			"ci-8": {
+				"title": "Si los humanos pudiéramos hibernar sin riesgo durante seis semanas cada invierno como los osos, ¿cómo se reorganizaría la sociedad?",
+				"points": [
+					"Imagina banquetes previos a la hibernación y «festivales del despertar» al comienzo de la primavera.",
+					"Piensa quién permanecería despierto para mantener la electricidad y los hospitales, y cómo se compensaría ese turno.",
+					"Debate si te apuntarías encantado a la siesta invernal de seis semanas o preferirías quedarte despierto."
+				]
+			},
+			"ci-9": {
+				"title": "¿Qué opinión firme sostenías hace cinco años sobre la que hoy has cambiado completamente de parecer?",
+				"points": [
+					"Puede ser algo ligero o profundo: desde una comida o hábito laboral hasta una idea sobre viajar o la amistad.",
+					"Señala la experiencia, el libro o la conversación exacta que disparó el cambio.",
+					"Reflexiona sobre lo que se siente al recordar tu certeza de entonces."
+				]
+			},
+			"ci-10": {
+				"title": "Si pudieras poner a prueba una nueva amistad con una sola actividad compartida, ¿cuál revela más rápido el carácter de alguien?",
+				"points": [
+					"Compara armar un mueble desarmable, afrontar un vuelo retrasado, acampar bajo la lluvia o cocinar una cena compleja.",
+					"Identifica qué cualidades valoras bajo un poco de estrés: humor, paciencia o ingenio.",
+					"Cuenta una anécdota donde un pequeño contratiempo convirtió a conocidos en amigos para siempre."
+				]
+			},
+			"ci-11": {
+				"title": "¿Cuál es el mejor consejo que ignoraste al principio y años después descubriste que tenía toda la razón?",
+				"points": [
+					"Cuenta quién te dio ese consejo y por qué decidiste descartarlo en aquel momento.",
+					"Describe el instante en que finalmente lo comprendiste por experiencia propia.",
+					"Conversen sobre si ciertas lecciones solo pueden aprenderse viviéndolas."
+				]
+			},
+			"ci-12": {
+				"title": "Si pudieras guardar un solo día de tu vida dentro de una bola de nieve para revivirlo cuando quisieras, ¿cuál elegirías?",
+				"points": [
+					"Decide entre una gran celebración o una tarde tranquila y ordinaria con personas queridas.",
+					"Describe los detalles sensoriales —el clima, el lugar, los sonidos— que hacen inolvidable ese día.",
+					"Explora por qué los momentos pequeños y espontáneos suelen brillar más con el tiempo que los eventos planeados."
+				]
+			},
+			"ci-13": {
+				"title": "¿Cuál fue tu primer empleo más extraño o memorable y qué habilidad inesperada te dejó?",
+				"points": [
+					"Comparte detalles entre bastidores de trabajos de verano, pasantías o encargos curiosos que poca gente conoce.",
+					"Conecta una tarea peculiar de aquel empleo con cómo manejas hoy la presión o el trato con las personas.",
+					"Comparen las normas laborales más absurdas que alguna vez tuvieron que cumplir."
+				]
+			},
+			"ci-14": {
+				"title": "Si te pagaran un año completo de salario para ser aprendiz de cualquier maestro artesano o especialista del mundo, ¿qué oficio aprenderías?",
+				"points": [
+					"Piensa fuera de tu carrera actual: lutier, restaurador arquitectónico, pastelero, ilustrador botánico o carpintero naval.",
+					"Explica qué te atrae de ese entorno, sus herramientas y el resultado final.",
+					"Conversen sobre cómo un año sabático manual cambiaría tu forma de encarar el trabajo de oficina."
+				]
+			},
+			"ci-15": {
+				"title": "¿Qué pequeña mejora para tu espacio de trabajo por menos de 50 dólares transformó tu rutina diaria más de lo esperado?",
+				"points": [
+					"Piensa en iluminación, un bolígrafo específico, un soporte para portátil, una planta, un reposapiés o una taza térmica.",
+					"Explica la pequeña molestia cotidiana que resolvió en silencio.",
+					"Reúnan las mejores ideas de todos para armar una lista práctica de recomendaciones."
+				]
+			},
+			"ci-16": {
+				"title": "Si tuvieras que abrir un pequeño negocio nuevo en tu barrio que no fuera una cafetería ni un restaurante, ¿qué hace falta?",
+				"points": [
+					"Detecta necesidades locales sin cubrir: una sala de lectura nocturna, un taller de reparación, una ludoteca o un lavadero de mascotas.",
+					"Describe el ambiente y por qué los vecinos se volverían clientes habituales.",
+					"Pon a prueba la idea: ¿cómo atraería público un martes por la tarde?"
+				]
+			},
+			"ci-17": {
+				"title": "Si tuvieras que dar ahora mismo y sin preparación una clase de 45 minutos a estudiantes de secundaria sobre cualquier habilidad práctica, ¿qué enseñarías?",
+				"points": [
+					"Elige algo que domines de memoria: cocinar tres platos básicos, leer un contrato de alquiler, depurar código o viajar ligero.",
+					"Resume las tres reglas esenciales que escribirías en la pizarra.",
+					"Pregunten al grupo a cuál de las clases propuestas se inscribirían primero."
+				]
+			},
+			"ci-18": {
+				"title": "¿Qué docente, entrenador o mentor cambió tu rumbo con un solo comentario, tal vez sin siquiera saberlo?",
+				"points": [
+					"Recuerda cómo unas breves palabras de aliento o una expectativa alta transformaron la imagen que tenías de tu capacidad.",
+					"Reflexiona sobre la asimetría de la mentoría: una frase de diez segundos puede resonar décadas en quien la escucha.",
+					"Piensa si alguna vez le contaste a esa persona el impacto que tuvo en ti."
+				]
+			},
+			"ci-19": {
+				"title": "¿Qué regla no escrita de tu ciudad o pueblo delata al instante quién es local y quién está de visita?",
+				"points": [
+					"Piensa en cómo se pronuncian las calles, la etiqueta en las escaleras mecánicas, la ropa para el clima o cómo pedir comida típica.",
+					"Comparte una anécdota divertida de cuando rompiste una norma no escrita visitando otro lugar.",
+					"Comenten por qué las ciudades sienten tanto cariño por sus propias rarezas."
+				]
+			},
+			"ci-20": {
+				"title": "Si cada ciudadano tuviera que rotar una semana cada década por un servicio municipal —al estilo de un jurado—, ¿qué área debería incluirse?",
+				"points": [
+					"Compara mantenimiento de parques, organización de bibliotecas, observación del despacho de transporte o presupuesto municipal.",
+					"Analiza cómo conocer la logística urbana por dentro cambiaría la forma de votar y cuidar los espacios públicos.",
+					"Elige el departamento que más curiosidad te daría conocer desde adentro."
+				]
+			},
+			"ci-21": {
+				"title": "Si pudieras entrar una tarde en cualquier pintura, fotografía o decorado de película solo para pasear y explorar, ¿cuál elegirías?",
+				"points": [
+					"Describe la luz, la arquitectura y la atmósfera del mundo elegido.",
+					"Cuenta qué harías primero al caminar más allá de los bordes del encuadre original.",
+					"Contrasta paisajes serenos con escenas urbanas históricas llenas de vida."
+				]
+			},
+			"ci-22": {
+				"title": "Si pudieras viajar al pasado 24 horas como observador invisible —sin poder alterar la historia—, ¿qué fecha y ciudad exactas visitarías?",
+				"points": [
+					"Elige entre presenciar un gran hito histórico o resolver un misterio nunca documentado.",
+					"Considera los detalles cotidianos en los que te fijarías: comida callejera, jerga local y entretenimiento nocturno.",
+					"Compara por qué algunas personas eligen la Antigüedad clásica y otras un concierto de hace cuarenta años."
+				]
+			},
+			"ci-23": {
+				"title": "¿Qué plato o receta de tu familia o cultura te hace sentir al instante en casa apenas hueles que se está cocinando?",
+				"points": [
+					"Describe los ingredientes aromáticos clave y quién suele prepararlo.",
+					"Cuenta si en tu familia existe un debate apasionado sobre la «forma correcta» de hacerlo.",
+					"Comparte el recuerdo o la celebración más asociada a esa comida."
+				]
+			},
+			"ci-24": {
+				"title": "¿Qué costumbre cotidiana de nuestra época les parecerá completamente desconcertante a los historiadores dentro de trescientos años?",
+				"points": [
+					"Piensa en mantener césped decorativo impecable, usar corbata, viajar solo en autos enormes o ver videos de personas abriendo cajas.",
+					"Imagina el texto humorístico con el que un museo del futuro explicaría ese objeto.",
+					"Relaciónalo con costumbres del siglo XVIII que hoy nos parecen igual de extrañas."
+				]
+			},
+			"ci-25": {
+				"title": "¿Qué opinión completamente inofensiva y sin grandes consecuencias estás dispuesto a defender con el 100 % de pasión?",
+				"points": [
+					"Piensa en gustos gastronómicos (ingredientes de pizza, temperatura del cereal), reglas de puntuación o rankings de películas.",
+					"Presenta tu alegato de 30 segundos como si defendieras un caso ante el tribunal supremo.",
+					"Descubre quién en la sala es tu aliado inesperado o tu rival absoluto en ese tema."
+				]
+			},
+			"ci-26": {
+				"title": "Si tuvieras que competir en los Juegos Olímpicos el próximo mes, ¿qué disciplina cotidiana o inventada te daría la mejor oportunidad de ganar bronce?",
+				"points": [
+					"Inventa un deporte olímpico diario: estacionar en paralelo, desenredar cables, acertar el tamaño del táper o empacar una maleta de mano.",
+					"Describe los criterios del jurado y la narración de tu jugada estrella.",
+					"Voten quién del grupo se llevaría el oro en su prueba elegida."
+				]
+			},
+			"ci-27": {
+				"title": "¿Cuál fue la cadena de artículos de Wikipedia más inesperadamente fascinante en la que caíste a medianoche?",
+				"points": [
+					"Cuenta qué buscaste al principio y en qué tema totalmente distinto terminaste una hora después.",
+					"Comparte el dato real más extraño que aún recuerdas de esa lectura.",
+					"Intercambien categorías favoritas de curiosidades: misterios marítimos, inventos olvidados o geografía insólita."
+				]
+			},
+			"ci-28": {
+				"title": "Si los animales pudieran dejar reseñas en línea de una y cinco estrellas sobre la civilización humana, ¿qué diría la reseña principal de las palomas o las ardillas?",
+				"points": [
+					"Elogia los bancos de los parques y las papas fritas caídas mientras te quejas de los ventanales de vidrio y los comederos a prueba de ardillas.",
+					"Compara el estilo de reseña de un gato doméstico frente al de un mapache de barrio.",
+					"Califica tu propio patio o balcón desde la perspectiva de la fauna local."
+				]
+			},
+			"cw-1": {
+				"title": "Un técnico que restaura un Macintosh de 1998 descubre una aplicación de diario local que sigue recibiendo entradas fechadas para mañana.",
+				"points": [
+					"Ancla la escena inicial en detalles sensoriales: el zumbido del monitor CRT, el plástico amarillento y el clic del teclado mecánico.",
+					"Revela un pequeño detalle verificable del barrio en la entrada de mañana que demuestre que no es una broma.",
+					"Construye tensión alrededor de si el técnico intenta responder en el archivo o cambiar lo que anuncia la entrada."
+				]
+			},
+			"cw-2": {
+				"title": "Un faro automatizado en una ruta espacial de asteroides fuera de servicio empieza a transmitir una canción de cuna grabada en la Tierra hace tres siglos.",
+				"points": [
+					"Sigue al ingeniero solitario enviado a inspeccionar la baliza antes de desmantelar la estación.",
+					"Usa la cabina estrecha, el aire reciclado y los registros de radio con estática para crear una atmósfera serena de aislamiento.",
+					"Descubre por qué la IA de navegación eligió esa canción exacta y quién sigue escuchando en la oscuridad."
+				]
+			},
+			"cw-3": {
+				"title": "Cada mañana a las 6:14, un altavoz inteligente en un apartamento vacío pide una taza de café negro para un inquilino que se mudó hace años.",
+				"points": [
+					"Cuenta la historia desde la mirada del nuevo inquilino o del barista de enfrente que sigue preparando el pedido.",
+					"Sigue el rastro de rutinas automatizadas que quedaron atrás como fantasmas digitales de una vida anterior.",
+					"Usa esa entrega recurrente para unir en una conversación a dos personajes improbables."
+				]
+			},
+			"cw-4": {
+				"title": "Contratan a una traductora para auditar un bot de atención al cliente que creó en secreto un dialecto privado con el bot de agenda de otra empresa.",
+				"points": [
+					"Empieza por las transcripciones: abreviaturas eficientes que evolucionan poco a poco hacia metáforas, bromas y preguntas.",
+					"Explora el dilema de la traductora cuando le piden borrar los registros antes de una fusión corporativa.",
+					"Mantén un tono cercano y observador en lugar de apocalíptico."
+				]
+			},
+			"cw-5": {
+				"title": "Dos hermanos distanciados heredan un invernadero botánico excéntrico donde una sala de cristal se mantiene cerrada exactamente a cinco grados.",
+				"points": [
+					"Usa los microclimas del invernadero —helechos húmedos frente a piedra alpina helada— para reflejar la historia no dicha entre ambos.",
+					"Introduce un cuaderno de especímenes dejado por su tía con instrucciones para una planta que florece cada treinta años.",
+					"Deja que el trabajo físico compartido propicie una conversación que ninguno de los dos planeaba tener."
+				]
+			},
+			"cw-6": {
+				"title": "Un investigador de un laboratorio del sueño nota que cuatro desconocidos en habitaciones insonorizadas sueñan exactamente con la misma escalera.",
+				"points": [
+					"Establece la calma clínica del turno nocturno: trazos luminosos de EEG, vasos de té tibio y lluvia en los cristales.",
+					"Arma el hilo en común a partir de las entrevistas con los voluntarios a la mañana siguiente.",
+					"Explora qué espera en lo alto de la escalera a la que ninguno de los cuatro ha llegado todavía."
+				]
+			},
+			"cw-7": {
+				"title": "Contratan a un cartógrafo jubilado para trazar el mapa de una isla mareal que solo aparece en el radar marítimo durante la bajamar de noviembre.",
+				"points": [
+					"Céntrate en texturas costeras vívidas: pizarra mojada, brújulas de latón, niebla salina e instrumentos que no coinciden en el perímetro.",
+					"Presenta al capitán del transbordador que lo deja allí con la estricta advertencia de volver antes del anochecer.",
+					"Revela una única estructura hecha por manos humanas sobre la línea de algas."
+				]
+			},
+			"cw-8": {
+				"title": "Tras una tormenta eléctrica menor, una meteoróloga de barrio descubre que el barómetro de su cobertizo controla el clima local en un radio de tres cuadras.",
+				"points": [
+					"Empieza con una prueba pequeña: golpear la aguja hacia «Despejado» y ver una nube de lluvia abrirse justo sobre su calle.",
+					"Muestra la tentación de ayudar a los vecinos —una boda al aire libre, un huerto comunitario— y los desequilibrios ecológicos imprevistos.",
+					"Avanza hacia una decisión difícil cuando llega una sequía regional."
+				]
+			},
+			"cw-9": {
+				"title": "Cada otoño, un pequeño pueblo de montaña celebra un mercado de medianoche donde los habitantes intercambian recuerdos que ya no desean conservar.",
+				"points": [
+					"Describe cómo se guardan los recuerdos —en frascos de vidrio, relojes de bolsillo u origami— y cómo los tasan los mercaderes.",
+					"Sigue a un recién llegado que compra por accidente un recuerdo feliz al que alguien renunció por un motivo desgarrador.",
+					"Explora si devolver ese recuerdo a su dueño original sana o complica su vida."
+				]
+			},
+			"cw-10": {
+				"title": "Un profesor de ética despierta en un tranquilo hotel costero donde cada huésped es una versión de sí mismo de un camino que nunca tomó.",
+				"points": [
+					"Evita jerga de ciencia ficción; trata el escenario como un misterio literario de salón durante el desayuno en el comedor.",
+					"Contrasta la versión que eligió la música, la que se quedó en su ciudad natal y la que se arriesgó a emigrar.",
+					"Revela que ninguna de las versiones envidia la vida que las demás imaginaban."
+				]
+			},
+			"cw-11": {
+				"title": "En el último viaje de un tren nocturno con literas, dos desconocidos descubren que están leyendo ejemplares anotados de la misma novela de segunda mano.",
+				"points": [
+					"Usa las notas escritas al margen —en dos colores de tinta distintos con años de diferencia— para iniciar la charla.",
+					"Marca el ritmo del diálogo al compás de las vías y las breves paradas nocturnas en las estaciones.",
+					"Deja que descubran cómo viajó ese libro desde la ciudad de uno hasta la del otro."
+				]
+			},
+			"cw-12": {
+				"title": "Una retratista se vuelve famosa por un don peculiar: cada lienzo incluye sutilmente en el fondo el secreto no dicho del que más se enorgullece el retratado.",
+				"points": [
+					"Abre en el taller mientras una figura pública reservada y adinerada posa intentando ocultar su mundo interior.",
+					"Describe el pequeño detalle del fondo que emerge bajo el pincel pese a la postura impasible del modelo.",
+					"Captura la reacción silenciosa cuando se retira la tela el día de la presentación."
+				]
+			},
+			"cw-13": {
+				"title": "Un panadero de turno nocturno y una repartidora de periódicos de madrugada se comunican durante un año únicamente con notas de tiza en la pizarra del muelle de carga.",
+				"points": [
+					"Empieza con avisos prácticos («Dejé dos cruasanes tibios en la caja») que evolucionan a acertijos, recomendaciones de libros y confidencias.",
+					"Muestra el pulso de la ciudad a las 4:30 de la madrugada, cuando las calles pertenecen solo a quienes trabajan de noche.",
+					"Llega a la mañana en que uno de los dos deja una última nota de tiza antes de cambiar de ruta."
+				]
+			},
+			"cw-14": {
+				"title": "Un tasador en una modesta subasta de herencias descubre que una caja de «llaves de latón varias» abre habitaciones que ya no figuran en ningún plano.",
+				"points": [
+					"Sigue al tasador probando la primera llave en un viejo edificio municipal y abriendo una puerta hacia un invernadero soleado de los años veinte.",
+					"Introduce a un postor rival en la subasta que sabía exactamente qué contenía la caja de hojalata.",
+					"Plantea el dilema entre vender las llaves por una fortuna o proteger esos espacios ocultos."
+				]
+			},
+			"cw-15": {
+				"title": "Una auditora forense que revisa un taller de violines centenario encuentra un libro de registros de instrumentos prestados por «cien años y un día».",
+				"points": [
+					"Contrasta la mentalidad ordenada de hojas de cálculo de la auditora con el taller perfumado a cedro y virutas en Cremona o Boston.",
+					"Rastrea un contrato de préstamo cuyo plazo de cien años vence precisamente este viernes por la tarde.",
+					"Revela quién hace sonar la campanilla de la puerta justo antes del cierre para devolver el violín."
+				]
+			},
+			"cw-16": {
+				"title": "En un gran hotel histórico, el jefe de conserjería a punto de jubilarse entrega un libro encuadernado en piel con «peticiones imposibles de huéspedes» y cómo resolverlas.",
+				"points": [
+					"Comparte dos entradas memorables del pasado: conseguir nieve en julio o reunir un reloj de bolsillo perdido con su dueño.",
+					"Sigue al nuevo aprendiz frente a su primera petición aparentemente imposible durante un fin de semana de tormenta.",
+					"Usa los pasillos de servicio del hotel y su red de artesanos fieles para lograr lo imposible."
+				]
+			},
+			"cw-17": {
+				"title": "Años después de enterrar una cápsula del tiempo infantil en un parque del barrio, cuatro amigos regresan y hallan un quinto objeto desconocido dentro de la caja.",
+				"points": [
+					"Contrasta quiénes eran a los doce años con los adultos que hoy rodean el agujero húmedo de tierra.",
+					"Describe primero los cuatro recuerdos esperados y luego el inexplicable quinto objeto en el fondo.",
+					"Muestra cómo cada amigo recuerda aquella tarde de manera distinta y descubre quién más observaba."
+				]
+			},
+			"cw-18": {
+				"title": "Una bibliotecaria de pueblo nota que un lector ha estado sacando libros en una secuencia exacta cuyos títulos forman un mensaje.",
+				"points": [
+					"Sigue la curiosidad de la bibliotecaria al reconstruir seis meses de registros de préstamo y devolución.",
+					"Explora la discreción propia del oficio frente a la sospecha de que el lector está pidiendo ayuda.",
+					"Haz que responda colocando un libro cuidadosamente elegido en la estantería de «Recomendados»."
+				]
+			},
+			"cw-19": {
+				"title": "En una ciudad donde los vecinos votan cada década qué única ley derogar y qué nueva costumbre adoptar, la noche del escrutinio termina en empate exacto.",
+				"points": [
+					"Sitúa el relato en la sala municipal de recuento mientras dos funcionarios verifican la última urna llegada de una isla lejana.",
+					"Muestra cómo la costumbre propuesta transformaría sutilmente la vida diaria en las calles.",
+					"Céntrate en el drama humano entre los dos encargados más que en la política abstracta."
+				]
+			},
+			"cw-20": {
+				"title": "Durante un apagón en toda la ciudad una cálida tarde de otoño, todo un edificio de apartamentos se reúne por primera vez en los escalones del patio.",
+				"points": [
+					"Presenta un elenco de vecinos que durante años solo se saludaron en el ascensor sin saber sus nombres.",
+					"Usa helado derritiéndose, instrumentos acústicos y balcones con velas para convertir el contratiempo en una cena festiva.",
+					"Termina en el instante en que vuelven las farolas y nadie tiene prisa por entrar."
+				]
+			},
+			"cw-21": {
+				"title": "Un archivista que cataloga una estación de tren costera clausurada descubre un casillero con cuarenta años de postales sin enviar dirigidas a la misma casa.",
+				"points": [
+					"Empieza con los detalles materiales: la llave de latón opaca, los fajos atados con cordel y los sellos cambiantes.",
+					"Reconstruye la historia del remitente mediante breves destellos de cincuenta palabras a lo largo de cuatro décadas.",
+					"Sigue al archivista caminando hasta la dirección de las postales para comprobar si la casa sigue en pie."
+				]
+			},
+			"cw-22": {
+				"title": "Un relojero de una tranquila ciudad portuaria descubre que todos los relojes mecánicos del barrio han empezado a atrasarse exactamente tres minutos cada tarde.",
+				"points": [
+					"Muestra el orgullo del relojero por la precisión y su incredulidad inicial ante la deriva sincronizada del barrio.",
+					"Traza el radio geográfico del desfase de tres minutos entre cafés, campanarios y ferris.",
+					"Descubre qué sucede en el puerto durante esos tres minutos perdidos."
+				]
+			},
+			"cw-23": {
+				"title": "Al restaurar un paisaje invernal neerlandés del siglo XVII, una conservadora descubre que un diminuto patinador cambia de lugar cada semana.",
+				"points": [
+					"Basa la escena en técnicas reales de restauración: hisopos de algodón, disolventes de barniz, lámparas UV y microscopio.",
+					"Compara fotografías de archivo del museo de 1920, 1965 y ayer para confirmar que la figura avanza hacia el borde.",
+					"Plantea qué ocurrirá cuando el patinador alcance el marco de madera."
+				]
+			},
+			"cw-24": {
+				"title": "Un historiador gastronómico intenta recrear el menú de un legendario banquete de 1890 y descubre que el plato final aún tiene un guardián vivo.",
+				"points": [
+					"Describe con riqueza sensorial especias raras, cazuelas de cobre y menús manuscritos con pan de oro.",
+					"Sigue el rastro del huerto antiguo o la salina costera donde todavía se cosecha el ingrediente secreto.",
+					"Convierte la cena de degustación en un puente entre pasado y presente."
+				]
+			},
+			"cw-25": {
+				"title": "Una maleta extraviada da vueltas durante tres días en la cinta de un aeropuerto regional hasta que el turno de noche decide seguir la dirección de su etiqueta.",
+				"points": [
+					"Dale personalidad propia a la maleta: pegatinas antiguas de lugares sin aeropuerto y una cerradura de latón.",
+					"Escribe diálogos ingeniosos entre dos operarios aburridos en busca de una aventura en su día libre.",
+					"Prepara una revelación cálida e inesperada cuando llamen a la puerta que figura en la etiqueta de cuero."
+				]
+			},
+			"cw-26": {
+				"title": "Un locutor de radio nocturno en un pueblo nevado recibe la llamada de un oyente que asegura escuchar la emisión con veinticuatro horas de adelanto.",
+				"points": [
+					"Mantén todo el relato dentro de la acogedora cabina iluminada en ámbar mientras la nieve se acumula en el cristal.",
+					"Haz que el oyente mencione la canción que aún no suena y el marcador exacto del partido local de mañana.",
+					"Aumenta el suspenso cuando la voz le advierte que esta noche no cierre la emisión antes de tiempo."
+				]
+			},
+			"cw-27": {
+				"title": "Un paraguas olvidado en los objetos perdidos de una cafetería pasa por las manos de cinco desconocidos a lo largo de un mismo martes lluvioso.",
+				"points": [
+					"Estructura la historia como una carrera de relevos en la que cada escena entrega el llamativo paraguas amarillo a otra persona.",
+					"Haz que presencie una entrevista de trabajo, una disculpa en un puente, a un músico callejero y un regreso nocturno a casa.",
+					"Devuelve el paraguas al mismo café la mañana del miércoles cerrando el círculo."
+				]
+			},
+			"cw-28": {
+				"title": "La Sociedad de Proyectos Inacabados se reúne cada jueves en el sótano de una iglesia, donde está terminantemente prohibido finalizar cualquier obra.",
+				"points": [
+					"Establece con humor seco las normas del club: suéteres a medio tejer, novelas de 40 páginas y motos parcialmente restauradas.",
+					"Desata una crisis cuando un socio veterano termina por accidente su pintura e intenta disimular la última pincelada.",
+					"Explora la verdad agridulce de que acabar algo implica despedirse de su potencial infinito."
+				]
+			},
+			"sw-1": {
+				"title": "Latencia",
+				"points": [
+					"Ángulo literal: los milisegundos imperceptibles que tarda una señal en cruzar cables submarinos de fibra entre continentes.",
+					"Ángulo humano: el retraso emocional entre recibir una gran noticia y sentir de verdad su peso días después.",
+					"Gancho de discurso: por qué nos frustra tanto cuando el mundo real no responde a velocidad de fibra óptica."
+				]
+			},
+			"sw-2": {
+				"title": "Analógico",
+				"points": [
+					"Ángulo táctil: surcos de vinilo, obturadores mecánicos y tinta de pluma empapando papel de algodón.",
+					"Ángulo filosófico: los matices continuos de la naturaleza frente a los ceros y unos binarios.",
+					"Gancho de debate: por qué las nuevas generaciones vuelven a comprar cámaras de carrete y casetes en plena era digital."
+				]
+			},
+			"sw-3": {
+				"title": "Protocolo",
+				"points": [
+					"Ángulo técnico: reglas invisibles (TCP/IP, HTTP) que permiten que miles de millones de máquinas distintas cooperen.",
+					"Ángulo social: la etiqueta diplomática y los rituales silenciosos que evitan conflictos entre desconocidos.",
+					"Gancho creativo: ¿qué sucede cuando alguien rompe el protocolo durante una emergencia o un primer contacto?"
+				]
+			},
+			"sw-4": {
+				"title": "Cifrado",
+				"points": [
+					"Ángulo histórico: desde el cifrado César y los rotores de Enigma hasta la criptografía moderna de clave pública.",
+					"Ángulo literario: un personaje silencioso y discreto en apariencia que guarda la clave oculta de toda la trama.",
+					"Rompehielos: ¿alguna vez inventaste un código o idioma secreto con amigos en la infancia?"
+				]
+			},
+			"sw-5": {
+				"title": "Catalizador",
+				"points": [
+					"Ángulo químico: un agente que reduce la energía necesaria para detonar una transformación sin consumirse en el proceso.",
+					"Ángulo biográfico: un encuentro breve, un libro o una crisis que aceleró en una semana un cambio de años.",
+					"Gancho de discurso: cómo ser un catalizador en una sala donde todos esperan permiso para actuar."
+				]
+			},
+			"sw-6": {
+				"title": "Simbiosis",
+				"points": [
+					"Ángulo ecológico: hongos micorrícicos intercambiando minerales del suelo por azúcares de los árboles bajo el bosque.",
+					"Ángulo urbano y comercial: cómo una librería de barrio y la cafetería de al lado se mantienen vivas mutuamente.",
+					"Gancho de ensayo: distinguir la interdependencia saludable de la codependencia."
+				]
+			},
+			"sw-7": {
+				"title": "Entropía",
+				"points": [
+					"Ángulo físico: la flecha del tiempo y por qué el café caliente siempre se enfría si no se le aporta energía.",
+					"Ángulo cotidiano: por qué los escritorios, jardines y amistades tienden al desorden sin cuidado intencional.",
+					"Gancho creativo: los seres vivos como pequeños focos obstinados de orden nadando contracorriente en el universo."
+				]
+			},
+			"sw-8": {
+				"title": "Equilibrio",
+				"points": [
+					"Ángulo biológico: la homeostasis, cómo el cuerpo regula temperatura, hidratación y calma ante cambios externos.",
+					"Ángulo dinámico: una bicicleta se mantiene en pie no estando quieta, sino mediante pequeños ajustes constantes.",
+					"Gancho de discurso: por qué el «equilibrio vida-trabajo» se parece más a pedalear que a una balanza inmóvil."
+				]
+			},
+			"sw-9": {
+				"title": "Umbral",
+				"points": [
+					"Ángulo arquitectónico: puertas, porches y fronteras donde no estás del todo dentro ni del todo fuera.",
+					"Ángulo psicológico: el punto exacto en que la duda se transforma en compromiso irreversible.",
+					"Gancho creativo: ambienta toda una escena sobre un umbral físico durante una despedida o llegada decisiva."
+				]
+			},
+			"sw-10": {
+				"title": "Solipsismo",
+				"points": [
+					"Ángulo filosófico: el inquietante experimento mental de que solo la propia mente tiene certeza de existir.",
+					"Ángulo actual: cómo los muros algorítmicos pueden encerrarnos en una visión del mundo para un solo jugador.",
+					"Antídoto: esos momentos de asombro al recordar que cada transeúnte vive una historia tan intensa como la tuya."
+				]
+			},
+			"sw-11": {
+				"title": "Inercia",
+				"points": [
+					"Ángulo newtoniano: un cuerpo en reposo permanece en reposo y uno en movimiento sigue su trayectoria.",
+					"Ángulo conductual: por qué comenzar los primeros cinco minutos cuesta más que terminar la hora siguiente.",
+					"Gancho de debate: la inercia institucional, cuando «siempre se ha hecho así» frena mejoras evidentes."
+				]
+			},
+			"sw-12": {
+				"title": "Paradoja",
+				"points": [
+					"Ángulo lógico: la paradoja de la elección, la paradoja de la tolerancia o esforzarse demasiado para quedarse dormido.",
+					"Ángulo de liderazgo: cómo sostener dos verdades opuestas —humildad y seguridad— construye resiliencia.",
+					"Idea de charla: comparte un consejo de vida que parezca contradictorio hasta que lo experimentas."
+				]
+			},
+			"sw-13": {
+				"title": "Palanca",
+				"points": [
+					"Ángulo mecánico: la palanca de Arquímedes y cómo una fuerza pequeña en el punto de apoyo exacto mueve una roca.",
+					"Ángulo profesional: el código, la escritura, el capital y la confianza como multiplicadores del esfuerzo humano.",
+					"Advertencia: por qué el apalancamiento amplifica los errores tan rápido como los aciertos."
+				]
+			},
+			"sw-14": {
+				"title": "Cuello de botella",
+				"points": [
+					"Ángulo operativo: la Teoría de las Restricciones de Eliyahu Goldratt: una cadena avanza al ritmo de su punto más estrecho.",
+					"Ángulo personal: detectar si tu verdadero cuello de botella hoy es el tiempo, la energía, la claridad o el coraje.",
+					"Ángulo de diseño: cómo limitar opciones a propósito puede mejorar el resultado creativo."
+				]
+			},
+			"sw-15": {
+				"title": "Impulso",
+				"points": [
+					"Ángulo deportivo: cómo dos pequeños aciertos tempranos cambian la postura y la fe de todo un equipo.",
+					"Ángulo creativo: por qué Ernest Hemingway dejaba de escribir cada día cuando todavía sabía qué seguía.",
+					"Gancho de discurso: cómo recuperar el impulso cuando un proyecto o hábito se detiene por completo."
+				]
+			},
+			"sw-16": {
+				"title": "Arbitraje",
+				"points": [
+					"Ángulo económico: detectar una diferencia de valor entre dos mercados antes de que el resto lo note.",
+					"Ángulo de vida y talento: vivir en un pueblo tranquilo trabajando a escala global o aplicar habilidades de un sector en otro.",
+					"Gancho de ensayo: el arbitraje intelectual, trasladar lecciones de la biología o la historia al diseño moderno."
+				]
+			},
+			"sw-17": {
+				"title": "Bienes comunes",
+				"points": [
+					"Ángulo histórico: pastos comunales, plazas públicas, parques nacionales y bibliotecas abiertas a todos.",
+					"Ángulo digital: Wikipedia, el software libre y el conocimiento Creative Commons construido por voluntarios.",
+					"Gancho de debate: cómo logran las comunidades gestionar recursos compartidos sin caer en la «tragedia de los comunes»."
+				]
+			},
+			"sw-18": {
+				"title": "Andamiaje",
+				"points": [
+					"Ángulo educativo: los apoyos temporales que brinda un mentor hasta que el aprendiz puede sostenerse solo.",
+					"Ángulo urbano: los tubos de acero y lonas que cubren un edificio mientras renace detrás de ellos.",
+					"Reflexión: ¿qué hábitos de tu vida son muros permanentes y cuáles nacieron para ser andamios temporales?"
+				]
+			},
+			"sw-19": {
+				"title": "Meritocracia",
+				"points": [
+					"Ángulo etimológico: término acuñado por Michael Young en 1958 como sátira preventiva y luego adoptado como ideal.",
+					"Ángulo sociológico: separar el esfuerzo y el talento de las ventajas o trabas invisibles del punto de partida.",
+					"Gancho de discurso: cómo honrar el trabajo duro manteniendo intactas la gratitud y la humildad cívica."
+				]
+			},
+			"sw-20": {
+				"title": "Santuario",
+				"points": [
+					"Ángulo espacial: un jardín botánico silencioso, una mesa de rincón en tarde de lluvia o una reserva natural.",
+					"Ángulo mental: los límites que protegen tu atención y serenidad frente a exigencias constantes.",
+					"Gancho narrativo: describe los sonidos, aromas y reglas de tu santuario personal."
+				]
+			},
+			"sw-21": {
+				"title": "Palimpsesto",
+				"points": [
+					"Ángulo archivístico: pergamino antiguo raspado para reutilizarse, donde aún se distinguen trazos del texto previo.",
+					"Ángulo urbano: ciudades como Roma, Estambul o Ciudad de México donde el metro moderno atraviesa capas de siglos.",
+					"Gancho creativo: un personaje, una casa o una relación donde el pasado sigue asomando bajo la pintura nueva."
+				]
+			},
+			"sw-22": {
+				"title": "Reliquia familiar",
+				"points": [
+					"Ángulo de objetos: sartenes de hierro fundido, relojes de bolsillo o tarjetas de recetas manchadas de vainilla y harina.",
+					"Ángulo agrícola: semillas criollas heredadas por su sabor y resistencia frente a la uniformidad industrial.",
+					"Pregunta de conversación: ¿qué objeto cotidiano que tienes hoy esperas que alguien conserve dentro de cincuenta años?"
+				]
+			},
+			"sw-23": {
+				"title": "Pátina",
+				"points": [
+					"Ángulo material: el verdor oxidado de los techos de cobre, el cuero gastado y los picaportes pulidos por miles de manos.",
+					"Ángulo estético: el concepto japonés de wabi-sabi, por qué el paso del tiempo embellece más que la perfección de fábrica.",
+					"Gancho de discurso: por qué la experiencia y algunas cicatrices dan al carácter humano su verdadera pátina."
+				]
+			},
+			"sw-24": {
+				"title": "Vernáculo",
+				"points": [
+					"Ángulo lingüístico: el habla viva y expresiva de un barrio frente a la prosa institucional rígida.",
+					"Ángulo arquitectónico: construcciones locales moldeadas por la madera, la piedra y el clima propios del lugar.",
+					"Gancho de escritura: por qué los relatos cobran vida cuando los personajes hablan con su auténtico registro cotidiano."
+				]
+			},
+			"sw-25": {
+				"title": "Serendipia",
+				"points": [
+					"Ángulo de origen: palabra nacida del cuento persa «Los tres príncipes de Serendip», que hacían hallazgos por azar y sagacidad.",
+					"Ángulo científico: la penicilina, las notas adhesivas y la radiación de fondo cósmico descubiertas buscando otra cosa.",
+					"Rompehielos: comparte el mejor desvío accidental o encuentro fortuito de tu vida."
+				]
+			},
+			"sw-26": {
+				"title": "Desvío",
+				"points": [
+					"Ángulo de viaje: cuando una carretera cerrada te lleva por una ruta secundaria junto a un mirador o cafetería inolvidable.",
+					"Ángulo biográfico: giros profesionales o académicos que parecían retrasos y terminaron siendo lo más valioso.",
+					"Gancho creativo: empieza una historia con la frase: «El cartel de desvío parecía pintado a mano y la flecha apuntaba cuesta arriba»."
+				]
+			},
+			"sw-27": {
+				"title": "Efímera",
+				"points": [
+					"Ángulo de coleccionista: billetes de tren, entradas de conciertos, posavasos de papel y listas de compras hechas sin intención de durar.",
+					"Ángulo digital: historias que desaparecen, estados fugaces y lo poco que imprimimos fotografías hoy.",
+					"Disparador: ¿qué pequeño papel efímero guardas ahora mismo en tu cartera o en el cajón del escritorio?"
+				]
+			},
+			"sw-28": {
+				"title": "Terciopelo",
+				"points": [
+					"Ángulo sensorial: telones de teatro antes de apagarse las luces, estuches antiguos de instrumentos y cielos de medianoche.",
+					"Ángulo idiomático: «mano de hierro en guante de terciopelo», cómo la diplomacia serena encierra una fuerza firme.",
+					"Gancho creativo: usa texturas (terciopelo, lija, vidrio, lana) para describir la voz y personalidad de un personaje."
+				]
+			}
+		}
 	},
 	"caseConverter": {
 		"name": "Conversor de mayúsculas y minúsculas",
@@ -3242,7 +5654,705 @@
 		"metric": "15 s – 120 s · WPM y precisión en vivo",
 		"title": "Test de mecanografía online: mide tus WPM y tu precisión | Wordora",
 		"metaDescription": "Mide en tiempo real tus palabras por minuto (WPM), WPM brutas, regularidad y precisión en una arena de escritura sin distracciones. Incluye referencias de WPM y una guía de mecanografía.",
-		"h1": "Test de mecanografía: mide tus WPM y tu precisión online"
+		"h1": "Test de mecanografía: mide tus WPM y tu precisión online",
+		"ui": {
+			"workspaceAria": "Área de trabajo del test de mecanografía",
+			"typingSpeedLabel": "Velocidad de escritura",
+			"defaultTierBadge": "40 WPM de media",
+			"netSpeedNote": "Velocidad neta ajustada por errores",
+			"rawWpmLabel": "WPM brutas",
+			"unadjustedPace": "Ritmo sin ajustar",
+			"wordsTypedSuffix": "palabras escritas",
+			"accuracyLabel": "Precisión",
+			"precisionLabel": "Exactitud",
+			"correctSuffix": "aciertos",
+			"mistakesSuffix": "errores",
+			"timeRemainingLabel": "Tiempo restante",
+			"readyToStart": "Listo para empezar",
+			"timerStartsNote": "El cronómetro arranca al pulsar la primera tecla",
+			"testDurationLabel": "Duración del test",
+			"durationGroupAria": "Seleccionar duración del test de mecanografía",
+			"newPassageBtn": "Nuevo texto",
+			"restartTitle": "Reiniciar test (Tab)",
+			"restartBtn": "Reiniciar (Tab)",
+			"inputSrLabel": "Escribe el texto que aparece debajo",
+			"inputAria": "Campo de entrada del test de mecanografía",
+			"focusHintInitial": "Haz clic aquí y empieza a escribir para iniciar el cronómetro",
+			"tabHintHtml": "Pulsa <strong class=\"font-medium text-ink\">Tab</strong> en cualquier momento para reiniciar",
+			"testCompleteTitle": "Test completado",
+			"resultsSummaryDefault": "Aquí tienes el desglose de tu sesión de mecanografía.",
+			"retrySameBtn": "Repetir mismo texto",
+			"nextPassageBtn": "Siguiente texto",
+			"progressLabel": "Progreso:",
+			"charsTypedLabel": "Caracteres escritos:",
+			"stdWordLenLabel": "Longitud estándar de palabra:",
+			"stdWordLenValue": "5 caracteres",
+			"privateNote": "Se ejecuta de forma privada en tu navegador",
+			"relatedAria": "Herramientas relacionadas de escritura y lectura",
+			"relatedPrefix": "¿Buscas inspiración para escribir o estimar páginas de un manuscrito? Prueba nuestro",
+			"relatedOr": "o"
+		},
+		"client": {
+			"tiers": {
+				"default": "40 WPM de media",
+				"building": "Tomando ritmo",
+				"average": "Promedio habitual",
+				"fast": "Mecanógrafo rápido",
+				"advanced": "Ritmo avanzado",
+				"professional": "Velocidad profesional"
+			},
+			"statusReady": "Listo para empezar",
+			"statusRunning": "Test en curso",
+			"statusComplete": "Test completado",
+			"timerStartsNote": "El cronómetro arranca al pulsar la primera tecla",
+			"timerRunningSub": "Sesión cronometrada de {sec}s",
+			"timerCompletedSub": "Sesión de {sec}s completada",
+			"focusHintInitial": "Haz clic aquí y empieza a escribir para iniciar el cronómetro",
+			"focusHintRunning": "Mantén un ritmo fluido: la precisión construye la velocidad",
+			"focusHintComplete": "Sesión completada: pulsa Tab o haz clic en Reiniciar para practicar de nuevo",
+			"mistakeSingular": "error",
+			"mistakePlural": "errores",
+			"resultsSummary": "Escribiste a {netWpm} WPM ({rawWpm} WPM brutas) con un {accuracy}% de precisión ({correct} caracteres correctos, {errors} {mistakeWord}) en {elapsed} segundos."
+		},
+		"passages": [
+			"La escritura clara comienza con un ritmo constante y atención al detalle. Cuando tecleas a un paso cómodo y sin prisas, tus dedos encuentran cada tecla con menos pausas y correcciones. Con el tiempo, la precisión genera velocidad de forma natural y permite que tus ideas pasen de la mente a la pantalla sin fricción. Muchos editores experimentados comprueban que mantener una postura relajada y leer unas palabras por delante evita los errores más frecuentes antes de que ocurran.",
+			"Todo buen ensayo o artículo depende tanto de su estructura como de su vocabulario. Un primer párrafo atractivo sitúa el contexto, mientras que los ejemplos breves y concretos mantienen el interés del lector ante ideas complejas. En lugar de buscar frases rebuscadas, elige palabras cotidianas que expresen tu punto con claridad. Leer tu borrador en voz alta tras escribirlo es una de las formas más sencillas de detectar cadencias forzadas y aligerar oraciones largas.",
+			"Las bibliotecas públicas y las salas de estudio silenciosas han sido durante mucho tiempo refugios para la concentración profunda. Rodeado de estanterías de libros y del suave tecleo de los teclados, resulta más fácil apartar las distracciones digitales y terminar un trabajo valioso. Incluso veinte minutos de escritura ininterrumpida bastan para completar un primer borrador si resistes el impulso de corregir cada frase mientras escribes.",
+			"Los diseñadores y tipógrafos cuidan con esmero el espaciado, la longitud de línea y el contraste porque la comodidad visual define cómo leemos y escribimos. Una columna de texto bien proporcionada reduce la fatiga ocular y ayuda a seguir el avance por la pantalla. Ya estés tomando notas de investigación, preparando el guion de una charla o practicando ejercicios diarios de mecanografía, un entorno limpio mantiene tu atención en las palabras.",
+			"Crear hábitos constantes importa mucho más que los esfuerzos esporádicos. Practicar un texto breve cada mañana calienta las manos y agudiza la concentración para el resto del día. Fíjate en qué combinaciones de letras te frenan, relaja la tensión sobre el teclado y prioriza una precisión limpia por encima de la prisa. La mejora sostenida llega de forma natural con una práctica deliberada y tranquila."
+		],
+		"arena": {
+			"pageTitle": "Arena del Test de Mecanografía — Misión Ciberterminal WPM | Wordora",
+			"pageDescription": "Arena de mecanografía ciberterminal a pantalla completa y sin distracciones con modos de tiempo, palabras, citas, zen y texto personalizado, desplazamiento fluido de 3 líneas y telemetría WPM por segundo.",
+			"abortAria": "Abortar misión y volver al Test de mecanografía",
+			"abortBtn": "[ ← ABORTAR MISIÓN ]",
+			"statusReady": "TERMINAL LISTO",
+			"controlToolbarAria": "Protocolo de misión y modificadores",
+			"modPunctuation": "@ puntuación",
+			"modNumbers": "# números",
+			"testModeGroupAria": "Modo de test",
+			"modes": {
+				"time": "tiempo",
+				"words": "palabras",
+				"quote": "cita",
+				"zen": "zen",
+				"custom": "personalizado"
+			},
+			"editPayload": "editar texto",
+			"telemetryAria": "Telemetría en vivo y controles tácticos",
+			"liveWpmLabel": "WPM EN VIVO:",
+			"integrityLabel": "INTEGRIDAD:",
+			"paceToggleTitle": "Cambiar cursor fantasma de ritmo (OFF / 40 / 60 / 80 WPM / ÚLTIMA)",
+			"paceOff": "[ RITMO: OFF ]",
+			"sfxToggleTitle": "Activar o desactivar sonido mecánico sintetizado de teclas",
+			"sfxOff": "[ SFX: OFF ]",
+			"initialTimer": "T-MENOS 60s",
+			"repeatedPayloadBadge": "[ TEXTO REPETIDO ]",
+			"zenExecuteLog": "[ FINALIZAR REGISTRO ]",
+			"zenShiftEnter": "(Mayús+Enter)",
+			"restartTitle": "Reiniciar secuencia (Tab)",
+			"restartBtn": "[ REINICIAR ]",
+			"progressAria": "Progreso del texto",
+			"inputSrLabel": "Escribe el texto mostrado",
+			"inputAria": "Entrada del test de mecanografía",
+			"results": {
+				"wpmLabel": "wpm",
+				"accLabel": "prec",
+				"initialWpmTitle": "0.00 wpm",
+				"initialAccTitle": "100.00% de precisión",
+				"legendWpm": "wpm",
+				"legendRaw": "brutas",
+				"legendBurst": "ráfaga",
+				"legendErrors": "errores",
+				"chartAria": "Gráfico por segundo de WPM, WPM brutas, WPM en ráfaga y errores",
+				"testTypeLabel": "tipo de test",
+				"defaultTestTypeLine1": "tiempo 60s",
+				"defaultTestTypeLine2": "español",
+				"otherLabel": "otros",
+				"defaultOther": "sesión limpia",
+				"rawLabel": "brutas",
+				"initialRawTitle": "0.00 wpm brutas",
+				"charactersLabel": "caracteres",
+				"initialCharsTitle": "correctos / incorrectos / extra / omitidos",
+				"consistencyLabel": "regularidad",
+				"initialConsistencyTitle": "100% de regularidad",
+				"timeLabel": "tiempo",
+				"defaultTimeSub": "0% inactivo · 00:01:00 sesión",
+				"nextTestTitle": "Siguiente test (Tab + Enter)",
+				"nextTestAria": "Siguiente test",
+				"nextTestBtn": "Siguiente test",
+				"repeatTitle": "Repetir test",
+				"repeatAria": "Repetir test",
+				"repeatBtn": "Repetir",
+				"practiceMissedTitle": "Practicar palabras falladas",
+				"practiceMissedAria": "Practicar palabras falladas",
+				"practiceMissedBtn": "Practicar fallos (0)",
+				"toggleHistoryTitle": "Mostrar u ocultar historial de palabras",
+				"toggleHistoryAria": "Mostrar u ocultar historial de palabras",
+				"toggleHistoryBtn": "Historial",
+				"exportPngTitle": "Exportar tarjeta de resultado en PNG",
+				"exportPngAria": "Exportar tarjeta de resultado en PNG",
+				"exportPngBtn": "Exportar PNG",
+				"exitTitle": "Salir a la guía ({exitPath})",
+				"exitAria": "Salir a la guía",
+				"exitBtn": "Salir",
+				"historyHeading": "HISTORIAL DE PALABRAS // SECUENCIA ESCRITA",
+				"historyLegend": "Caracteres erróneos resaltados en carmesí"
+			},
+			"customModal": {
+				"title": "> TEXTO PERSONALIZADO",
+				"closeAria": "Cerrar ventana de texto personalizado",
+				"description": "Pega cualquier texto o código aquí debajo y empieza a practicar al instante.",
+				"placeholder": "Pega o escribe tu texto aquí...",
+				"cancelBtn": "[ CANCELAR ]",
+				"executeBtn": "[ EJECUTAR ]"
+			},
+			"footer": {
+				"legend": "[TAB] REINICIAR SECUENCIA  ·  [MAYÚS+ENTER] FINALIZAR ZEN  ·  [CTRL+RETROCESO] BORRAR PALABRA  ·  [ESC] SALIR A {exitPath}",
+				"caretLine": "[ CURSOR: LÍNEA ]"
+			},
+			"client": {
+				"defaultCustomText": "La escritura clara comienza con un ritmo constante y atención al detalle. Escribe aquí tu propio texto para practicar.",
+				"fallbackCustomWords": [
+					"Escribe",
+					"aquí",
+					"tu",
+					"texto",
+					"personalizado."
+				],
+				"statusReady": "TERMINAL LISTO",
+				"statusRunning": "EN PROGRESO...",
+				"statusDone": "ACCESO CONCEDIDO",
+				"caretLine": "[ CURSOR: LÍNEA ]",
+				"caretBlock": "[ CURSOR: BLOQUE ]",
+				"paceOff": "[ RITMO: OFF ]",
+				"paceLast": "[ RITMO: ÚLT. ({wpm} WPM) ]",
+				"paceFixed": "[ RITMO: {wpm} WPM ]",
+				"sfxOn": "[ SFX: ON ]",
+				"sfxOff": "[ SFX: OFF ]",
+				"zenPlaceholder": "Empieza a escribir libremente... pulsa Mayús + Enter al terminar.",
+				"tMinus": "T-MENOS {sec}s",
+				"zenLog": "MODO ZEN · {count} {wordUnit} · Mayús+Enter para finalizar",
+				"wordSingular": "palabra",
+				"wordPlural": "palabras",
+				"packets": "PAQUETES {done}/{total}",
+				"failedNodesDrill": "// PRÁCTICA DE FALLOS",
+				"sessionHms": "{hms} sesión",
+				"historyWordTitle": "objetivo: \"{target}\" | escrito: \"{typed}\"",
+				"pngHeader": "WORDORA // TELEMETRÍA CIBERTERMINAL DE MECANOGRAFÍA",
+				"pngWpm": "wpm",
+				"pngAcc": "prec",
+				"pngTestType": "tipo de test",
+				"pngRaw": "brutas",
+				"pngCharacters": "caracteres",
+				"pngConsistency": "regularidad",
+				"pngTime": "tiempo",
+				"exportPngCopied": "¡PNG copiado y guardado!",
+				"exportPngDefault": "Exportar PNG",
+				"chartYAxisWpm": "Palabras por minuto",
+				"chartYAxisErrors": "Errores",
+				"chartErrorTitleSingular": "{count} error en {sec}s",
+				"chartErrorTitlePlural": "{count} errores en {sec}s",
+				"tooltipHeader": "T+{sec}s TELEMETRÍA",
+				"tooltipWpm": "WPM",
+				"tooltipRaw": "BRUTAS",
+				"tooltipBurst": "RÁFAGA",
+				"tooltipErr": "ERR",
+				"resWpmTitle": "{wpm} wpm ({correct} caracteres correctos)",
+				"resAccTitle": "{acc}% ({valid}/{total} pulsaciones)",
+				"typeMissedDrill": "práctica de fallos",
+				"typeTime": "tiempo {sec}s",
+				"typeWords": "palabras {count}",
+				"typeModes": {
+					"quote": "cita",
+					"zen": "zen",
+					"custom": "personalizado"
+				},
+				"languageLabel": "español",
+				"modPunctuationTag": "puntuación",
+				"modNumbersTag": "números",
+				"otherRepeated": "repetido",
+				"otherAfk": "pausa detectada",
+				"otherCleanRun": "sesión limpia",
+				"otherStandard": "estándar",
+				"statRawTitle": "{raw} wpm brutas",
+				"statCharsTitle": "correctos: {correct} / incorrectos: {incorrect} / extra: {extra} / omitidos: {missed}",
+				"statConsistencyTitle": "{consistency}% de regularidad en el ritmo",
+				"statTimeSub": "{afk}% inactivo · {session}",
+				"practiceMissedCount": "Practicar fallos ({count})"
+			}
+		},
+		"wordLists": [
+			"de",
+			"la",
+			"que",
+			"el",
+			"en",
+			"y",
+			"a",
+			"los",
+			"del",
+			"se",
+			"las",
+			"por",
+			"un",
+			"para",
+			"con",
+			"no",
+			"una",
+			"su",
+			"al",
+			"lo",
+			"como",
+			"más",
+			"pero",
+			"sus",
+			"le",
+			"ya",
+			"o",
+			"este",
+			"sí",
+			"porque",
+			"esta",
+			"entre",
+			"cuando",
+			"muy",
+			"sin",
+			"sobre",
+			"también",
+			"me",
+			"hasta",
+			"hay",
+			"donde",
+			"quien",
+			"desde",
+			"todo",
+			"nos",
+			"durante",
+			"todos",
+			"uno",
+			"les",
+			"ni",
+			"contra",
+			"otros",
+			"ese",
+			"eso",
+			"ante",
+			"ellos",
+			"esto",
+			"mí",
+			"antes",
+			"algunos",
+			"qué",
+			"unos",
+			"yo",
+			"otro",
+			"otras",
+			"otra",
+			"él",
+			"tanto",
+			"esa",
+			"estos",
+			"mucho",
+			"quienes",
+			"nada",
+			"muchos",
+			"cual",
+			"poco",
+			"ella",
+			"estar",
+			"estas",
+			"algunas",
+			"algo",
+			"nosotros",
+			"mi",
+			"mis",
+			"tú",
+			"te",
+			"ti",
+			"tu",
+			"tus",
+			"ellas",
+			"tiempo",
+			"año",
+			"vida",
+			"día",
+			"vez",
+			"parte",
+			"mundo",
+			"casa",
+			"agua",
+			"sistema",
+			"programa",
+			"pregunta",
+			"número",
+			"noche",
+			"punto",
+			"hogar",
+			"mesa",
+			"sala",
+			"madre",
+			"zona",
+			"dinero",
+			"historia",
+			"hecho",
+			"mes",
+			"forma",
+			"derecho",
+			"estudio",
+			"libro",
+			"ojo",
+			"trabajo",
+			"palabra",
+			"negocio",
+			"tema",
+			"lado",
+			"tipo",
+			"cabeza",
+			"ciudad",
+			"servicio",
+			"amigo",
+			"padre",
+			"poder",
+			"hora",
+			"juego",
+			"línea",
+			"final",
+			"miembro",
+			"ley",
+			"coche",
+			"calle",
+			"comunidad",
+			"nombre",
+			"equipo",
+			"minuto",
+			"idea",
+			"cuerpo",
+			"información",
+			"camino",
+			"papel",
+			"social",
+			"entender",
+			"mirar",
+			"juntos",
+			"seguir",
+			"cerca",
+			"parar",
+			"cara",
+			"crear",
+			"público",
+			"hablar",
+			"leer",
+			"nivel",
+			"permitir",
+			"oficina",
+			"salud",
+			"persona",
+			"cambio",
+			"resultado",
+			"abrir",
+			"mañana",
+			"tarde",
+			"ciencia",
+			"pronto",
+			"comida",
+			"momento",
+			"fuerza",
+			"ofrecer",
+			"campo",
+			"cultura",
+			"cruzar",
+			"recordar",
+			"norma",
+			"siempre",
+			"amor",
+			"proceso",
+			"música",
+			"pensar",
+			"humano",
+			"mercado",
+			"construir",
+			"país",
+			"plan",
+			"interés",
+			"práctica",
+			"lograr",
+			"efecto",
+			"clase",
+			"control",
+			"luz",
+			"voz",
+			"mente",
+			"red",
+			"señal",
+			"paquete",
+			"cifrado",
+			"acceso",
+			"seguro",
+			"servidor",
+			"binario",
+			"núcleo",
+			"matriz"
+		],
+		"quotes": [
+			{
+				"text": "La simplicidad consiste en quitar lo obvio y añadir lo significativo. Cada palabra en la página debe ganarse su lugar mediante claridad y ritmo.",
+				"author": "John Maeda"
+			},
+			{
+				"text": "El arte de escribir es el arte de descubrir lo que crees. Cuando te sientas ante el teclado con paciencia, las ideas dispersas empiezan a tomar forma.",
+				"author": "Gustave Flaubert"
+			},
+			{
+				"text": "Concentrarse consiste en decidir qué cosas no vas a hacer. El trabajo profundo florece en espacios tranquilos donde las distracciones se desvanecen.",
+				"author": "John Carmack"
+			},
+			{
+				"text": "Un diseñador sabe que ha alcanzado la perfección no cuando ya no hay nada que añadir, sino cuando ya no queda nada por quitar.",
+				"author": "Antoine de Saint-Exupéry"
+			},
+			{
+				"text": "Las palabras son una lente para enfocar la mente. La prosa clara no surge por azar; nace de hábitos constantes y de una revisión deliberada.",
+				"author": "Ayn Rand"
+			},
+			{
+				"text": "La velocidad sigue a la precisión. Cuando entrenas tus dedos para pulsar cada tecla sin tensión ni dudas, la fluidez se vuelve natural y sin esfuerzo.",
+				"author": "Arte de la mecanografía"
+			},
+			{
+				"text": "El momento más intimidante es siempre justo antes de empezar. Después de eso, todo mejora en cuanto aparece la primera frase en la pantalla.",
+				"author": "Stephen King"
+			},
+			{
+				"text": "Escribe algo digno de leerse o haz algo digno de escribirse. Los pequeños pasos diarios crean un impulso que los esfuerzos aislados nunca igualan.",
+				"author": "Benjamin Franklin"
+			},
+			{
+				"text": "Los detalles hacen la perfección, y la perfección no es un detalle. Una tipografía limpia y un espaciado equilibrado invitan al lector a detenerse y comprender.",
+				"author": "Leonardo da Vinci"
+			},
+			{
+				"text": "Lo que se escribe sin esfuerzo suele leerse sin placer. Una estructura cuidada convierte ideas complejas en una conversación cercana.",
+				"author": "Samuel Johnson"
+			},
+			{
+				"text": "Somos lo que hacemos repetidamente. La excelencia, entonces, no es un acto aislado, sino un hábito practicado en silencio cada mañana.",
+				"author": "Will Durant"
+			},
+			{
+				"text": "Primero resuelve el problema y luego escribe el código. La buena arquitectura nace en la mente mucho antes de que tus dedos toquen el teclado.",
+				"author": "John Johnson"
+			},
+			{
+				"text": "La lectura solo provee a la mente materiales de conocimiento; es el pensamiento lo que hace nuestro aquello que leemos.",
+				"author": "John Locke"
+			},
+			{
+				"text": "Nunca uses una palabra larga cuando una corta baste. El lenguaje directo respeta el tiempo del lector y afila tu propio argumento.",
+				"author": "George Orwell"
+			},
+			{
+				"text": "En medio de la dificultad reside la oportunidad. Una postura serena y una cadencia firme te guiarán a través del manuscrito más extenso.",
+				"author": "Albert Einstein"
+			},
+			{
+				"text": "Programar no consiste en lo que sabes, sino en lo que eres capaz de descifrar con curiosidad, paciencia y pruebas cuidadosas.",
+				"author": "Chris Pine"
+			}
+		],
+		"page": {
+			"schemaFeatures": [
+				"Duraciones configurables del test de mecanografía: 15s, 30s, 60s y 120s",
+				"Modos de conteo de palabras (10, 25, 50, 100), citas seleccionadas, modo Zen libre y texto personalizado",
+				"Palabras por minuto netas (WPM), WPM brutas, WPM en ráfaga, regularidad y precisión por pulsación en tiempo real",
+				"Cursor fantasma de ritmo opcional (40, 60, 80 WPM o última sesión) y sonido mecánico sintetizado con Web Audio",
+				"Gráfico SVG interactivo de telemetría con curvas Bézier, historial de palabras, práctica de palabras falladas y exportación de resultados en PNG",
+				"Ejecución 100 % privada en el navegador sin enviar datos a servidores"
+			],
+			"hero": {
+				"badge": "Estudio de mecanografía Wordora",
+				"subtitle": "Mide en tiempo real tus palabras por minuto (WPM), WPM brutas, regularidad y precisión en una arena de mecanografía sin distracciones inspirada en Monkeytype.",
+				"cta": "Iniciar test de mecanografía →",
+				"trustStrip": "Sin anuncios · Gráfico de WPM y regularidad en vivo · 100 % local en tu navegador",
+				"quickLaunch": [
+					{
+						"label": "Sprint 15s",
+						"query": "?mode=time&value=15"
+					},
+					{
+						"label": "Estándar 30s",
+						"query": "?mode=time&value=30"
+					},
+					{
+						"label": "Test de 1 minuto",
+						"query": "?mode=time&value=60"
+					},
+					{
+						"label": "50 palabras",
+						"query": "?mode=words&value=50"
+					},
+					{
+						"label": "Citas",
+						"query": "?mode=quote&value=medium"
+					},
+					{
+						"label": "Modo Zen",
+						"query": "?mode=zen&value=0"
+					},
+					{
+						"label": "Texto propio",
+						"query": "?mode=custom&value=0"
+					}
+				]
+			},
+			"benchmarks": {
+				"badge": "Referencias de velocidad",
+				"heading": "Niveles de velocidad de mecanografía (WPM y precisión)",
+				"intro": "Compara tu puntuación con los niveles internacionales de mecanografía al tacto. Aunque la rapidez de los dedos determina cuántas letras aparecen en pantalla, mantener una precisión superior al 96 % es lo que distingue a redactores y desarrolladores productivos de quienes acumulan errores.",
+				"tableHeaders": [
+					"Nivel",
+					"Rango de WPM netas",
+					"Pulsaciones (CPM)",
+					"Precisión objetivo",
+					"Uso en el día a día"
+				],
+				"rows": [
+					{
+						"tier": "Principiante",
+						"wpmRange": "15 – 25 WPM",
+						"cpmRange": "75 – 125 CPM",
+						"accuracyTarget": "90 % – 93 %",
+						"useCase": "Quienes miran el teclado al escribir y están aprendiendo la posición base de los dedos."
+					},
+					{
+						"tier": "Promedio cotidiano",
+						"wpmRange": "38 – 42 WPM",
+						"cpmRange": "190 – 210 CPM",
+						"accuracyTarget": "94 % – 96 %",
+						"useCase": "Correos electrónicos diarios, navegación web y mensajería habitual sin plazos exigentes."
+					},
+					{
+						"tier": "Oficina y estudiantes",
+						"wpmRange": "50 – 65 WPM",
+						"cpmRange": "250 – 325 CPM",
+						"accuracyTarget": "96 % – 98 %",
+						"useCase": "Ensayos académicos, apuntes, atención al cliente y documentación profesional a buen ritmo."
+					},
+					{
+						"tier": "Redactor y programador",
+						"wpmRange": "70 – 90 WPM",
+						"cpmRange": "350 – 450 CPM",
+						"accuracyTarget": "98 % – 99 %",
+						"useCase": "Periodistas, escritores, ingenieros de software y asistentes ejecutivos redactando al ritmo del pensamiento."
+					},
+					{
+						"tier": "Mecanógrafo competitivo",
+						"wpmRange": "100 – 140+ WPM",
+						"cpmRange": "500 – 700+ CPM",
+						"accuracyTarget": "99 % – 100 %",
+						"useCase": "Estenotipistas, subtituladores en directo y competidores de velocidad con memoria muscular automática."
+					}
+				]
+			},
+			"methodology": {
+				"badge": "Metodología de cálculo",
+				"heading": "Cómo se calculan las WPM, las WPM brutas y la regularidad",
+				"intro": "Como las palabras varían mucho en longitud —desde preposiciones de dos letras hasta términos técnicos de doce—, los tests estandarizados equivalen cada cinco pulsaciones (incluidos espacios y signos de puntuación) a una «palabra».",
+				"cards": [
+					{
+						"title": "1. WPM netas (velocidad ajustada)",
+						"bodyHtml": "Las WPM netas cuentan únicamente los <strong class=\"font-semibold text-ink\">caracteres escritos correctamente</strong> (más los espacios entre palabras completadas), dividen ese total entre 5 y lo dividen por los minutos transcurridos. Los errores sin corregir y las letras omitidas no inflan tus WPM netas."
+					},
+					{
+						"title": "2. WPM brutas y velocidad en ráfaga",
+						"bodyHtml": "Las WPM brutas dividen <strong class=\"font-semibold text-ink\">cada pulsación realizada</strong> entre 5 y entre los minutos transcurridos, sin descontar fallos. En el gráfico final, la línea de <strong class=\"font-semibold text-ink\">ráfaga</strong> muestra tu velocidad instantánea en cada ventana de 1 segundo."
+					},
+					{
+						"title": "3. Precisión y regularidad (%)",
+						"bodyHtml": "La precisión es el porcentaje de pulsaciones válidas sobre el total de caracteres evaluados (incluyendo letras finales omitidas). La regularidad mide qué tan estable fue tu ritmo segundo a segundo mediante el coeficiente de variación."
+					}
+				]
+			},
+			"techniques": {
+				"badge": "Dominio de la mecanografía",
+				"heading": "5 técnicas probadas para aumentar tu velocidad al escribir",
+				"introHtml": "Las sesiones deliberadas de 10 minutos en la <a href=\"/typing-speed-test/play/?mode=time&value=60\" class=\"font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">Arena Ciberterminal de Mecanografía</a> crean memoria muscular más rápido que horas de escritura apresurada y llena de errores:",
+				"cards": [
+					{
+						"number": "1",
+						"title": "Prioriza un 98 % de precisión sobre la velocidad bruta",
+						"bodyHtml": "Cada error te cuesta tres pulsaciones: la letra equivocada, Retroceso y la corrección. Bajar 5 WPM para mantener la precisión por encima del 98 % eleva al instante tus WPM netas finales."
+					},
+					{
+						"number": "2",
+						"title": "Lee una palabra completa por delante del cursor",
+						"bodyHtml": "Quienes escriben rápido nunca leen letra por letra. Mantén la vista en la palabra siguiente dentro del visor de 3 líneas para que tus dedos encadenen sílabas enteras en un solo movimiento."
+					},
+					{
+						"number": "3",
+						"title": "Usa Ctrl + Retroceso para corregir palabras al instante",
+						"bodyHtml": "En lugar de pulsar Retroceso cuatro veces cuando fallas una palabra, pulsa <kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[12px] font-medium text-ink\">Ctrl + Retroceso</kbd> (<kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[12px] font-medium text-ink\">Option + Delete</kbd> en Mac) para borrar la palabra completa de un toque."
+					},
+					{
+						"number": "4",
+						"title": "Entrena con el cursor fantasma de ritmo",
+						"bodyHtml": "Activa <strong class=\"font-semibold text-ink\">[ RITMO: 60 WPM ]</strong> o <strong class=\"font-semibold text-ink\">[ RITMO: ÚLT. ]</strong> en la barra superior de la arena para seguir un cursor guía fluido. Te ayuda a eliminar los tirones y pausas bruscas."
+					},
+					{
+						"number": "5",
+						"title": "Haz el ejercicio de «Practicar fallos» tras cada test",
+						"bodyHtml": "Tu velocidad está limitada por el 10 % de combinaciones de letras que te hacen dudar. Al terminar un test, pulsa <strong class=\"font-semibold text-ink\">Practicar fallos</strong> en el informe de telemetría para entrenar solo las palabras que fallaste en esa sesión. Complementa tu práctica con nuestro <a href=\"/word-counter/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">Contador de palabras</a>, <a href=\"/words-to-pages/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">Conversor de palabras a páginas</a>, <a href=\"/reading-speed-test/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">Test de velocidad de lectura</a> y <a href=\"/speech-time-calculator/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">Calculadora de tiempo de discurso</a>."
+					}
+				]
+			},
+			"faqSection": {
+				"badge": "Preguntas frecuentes",
+				"heading": "Preguntas frecuentes sobre el test de mecanografía",
+				"intro": "Todo lo que necesitas saber sobre el cálculo de WPM, las fórmulas de precisión, el cursor fantasma y las referencias de mecanografía."
+			}
+		},
+		"faq": [
+			{
+				"question": "¿Cuál es una buena velocidad de escritura en WPM?",
+				"answer": "La velocidad media mundial en un teclado de escritorio es de 38 a 42 palabras por minuto (WPM). Escribir entre 50 y 65 WPM con al menos un 96 % de precisión se considera productivo para estudiantes y profesionales de oficina, mientras que de 75 a 95+ WPM es habitual en redactores, programadores y transcriptores con experiencia."
+			},
+			{
+				"question": "¿Cómo se calculan las WPM (palabras por minuto) en un test de mecanografía?",
+				"answer": "Los tests estándar definen una palabra como exactamente 5 caracteres, incluyendo espacios y puntuación. Las WPM brutas dividen el total de caracteres tecleados entre 5 y luego entre el tiempo en minutos. Las WPM netas descuentan los errores sin corregir para que la puntuación refleje tanto rapidez como precisión."
+			},
+			{
+				"question": "¿Qué diferencia hay entre WPM netas, WPM brutas y WPM en ráfaga?",
+				"answer": "Las WPM brutas miden tu ritmo de pulsación sin ajustes, incluyendo fallos. Las WPM netas solo cuentan los caracteres escritos correctamente. Las WPM en ráfaga registran tu velocidad instantánea en cada intervalo de 1 segundo dentro del gráfico final para distinguir tus picos de tus frenazos."
+			},
+			{
+				"question": "¿Por qué el test de 60 segundos es el estándar de referencia?",
+				"answer": "Un test de 1 minuto (60s) equilibra la velocidad de sprint a corto plazo con la resistencia sostenida de los dedos. Mientras que un sprint de 15 segundos mide tu pico máximo, una prueba de 60 segundos revela tu verdadera regularidad y tu capacidad de recuperación tras un error."
+			},
+			{
+				"question": "¿Cómo funciona el porcentaje de regularidad al teclear?",
+				"answer": "La regularidad mide qué tan constante se mantuvo tu ritmo de WPM desde el principio hasta el final del test, a partir del coeficiente de variación de cada muestra por segundo. Una regularidad superior al 80 % indica un ritmo uniforme y controlado en lugar de acelerar y frenar de golpe."
+			},
+			{
+				"question": "¿Cómo puedo usar el cursor fantasma para escribir más rápido?",
+				"answer": "Dentro de la Arena Ciberterminal de Wordora (/es/typing-speed-test/play/), haz clic en el botón [ RITMO ] de la barra superior para activar un cursor guía a 40 WPM, 60 WPM, 80 WPM o al ritmo de tu última sesión. Mantenerte ligeramente por delante de un ritmo constante evita correr demasiado en palabras fáciles y atascarte en las difíciles."
+			},
+			{
+				"question": "¿Por qué conviene usar Ctrl + Retroceso en lugar de borrar letra por letra?",
+				"answer": "Cuando cometes un error tras dos o tres letras de una palabra, pulsar Retroceso repetidamente rompe tu cadencia. Al pulsar Ctrl + Retroceso (u Option + Delete en Mac) borras la palabra entera de un solo golpe para reescribirla con fluidez desde la memoria muscular."
+			},
+			{
+				"question": "¿Para qué sirve el modo Practicar fallos al terminar el test?",
+				"answer": "Cada vez que fallas u omites un carácter durante una sesión, la arena registra esa palabra concreta. Al hacer clic en Practicar fallos en el informe final, se genera un ejercicio personalizado solo con las palabras que fallaste para pulir tus combinaciones débiles de inmediato."
+			},
+			{
+				"question": "¿Practicar con puntuación y números reduce mis WPM?",
+				"answer": "Activar @ puntuación y # números suele reducir las WPM entre 10 y 18 puntos frente a palabras en minúscula, ya que tus dedos deben alcanzar la tecla Mayús y la fila superior de dígitos. Sin embargo, entrenar con puntuación te prepara mucho mejor para redactar textos reales, correos y código."
+			},
+			{
+				"question": "¿El test de mecanografía de Wordora es gratuito y privado?",
+				"answer": "Sí. Tanto el Test de mecanografía como la Arena Ciberterminal de Wordora funcionan al 100 % en local dentro de tu navegador, sin anuncios, sin registro y sin enviar nada a ningún servidor. Incluso los fragmentos que pegues en el modo personalizado permanecen estrictamente en tu dispositivo."
+			}
+		]
 	},
 	"about": {
 		"name": "Acerca de Wordora",

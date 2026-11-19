@@ -4,7 +4,13 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { resolveCanonicalUrl } from "../config/site";
 
-import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "../i18n/ui";
+import {
+	getLocaleFromUrl,
+	getLocalizedPath,
+	localizeHtmlLinks,
+	useTranslations,
+} from "../i18n/ui";
+
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 
@@ -12,132 +18,49 @@ const pageTitle = t("typingSpeedTest.title");
 const pageDescription = t("typingSpeedTest.metaDescription");
 const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/typing-speed-test/", locale));
 
-const quickLaunchModes = [
-	{
-		label: "15s Sprint",
-		href: "/typing-speed-test/play/?mode=time&value=15",
-	},
-	{
-		label: "30s Standard",
-		href: "/typing-speed-test/play/?mode=time&value=30",
-	},
-	{
-		label: "1 Minute Test",
-		href: "/typing-speed-test/play/?mode=time&value=60",
-	},
-	{
-		label: "50 Words",
-		href: "/typing-speed-test/play/?mode=words&value=50",
-	},
-	{
-		label: "Quotes",
-		href: "/typing-speed-test/play/?mode=quote&value=medium",
-	},
-	{
-		label: "Zen Mode",
-		href: "/typing-speed-test/play/?mode=zen&value=0",
-	},
-	{
-		label: "Custom Text",
-		href: "/typing-speed-test/play/?mode=custom&value=0",
-	},
-];
+interface QuickLaunchMode {
+	label: string;
+	query: string;
+}
 
-const speedBenchmarks = [
-	{
-		tier: "Beginner",
-		wpmRange: "15 – 25 WPM",
-		cpmRange: "75 – 125 CPM",
-		accuracyTarget: "90% – 93%",
-		useCase:
-			"Hunt-and-peck typists learning home-row finger placement and visual keyboard familiarity.",
-	},
-	{
-		tier: "Average Casual",
-		wpmRange: "38 – 42 WPM",
-		cpmRange: "190 – 210 CPM",
-		accuracyTarget: "94% – 96%",
-		useCase:
-			"General everyday email, web browsing, and casual chat communication without strict deadlines.",
-	},
-	{
-		tier: "Productive Office & Student",
-		wpmRange: "50 – 65 WPM",
-		cpmRange: "250 – 325 CPM",
-		accuracyTarget: "96% – 98%",
-		useCase:
-			"Academic essays, research notes, customer support, and business documentation at a steady pace.",
-	},
-	{
-		tier: "Professional Writer & Coder",
-		wpmRange: "70 – 90 WPM",
-		cpmRange: "350 – 450 CPM",
-		accuracyTarget: "98% – 99%",
-		useCase:
-			"Journalists, novelists, software engineers, and executive assistants drafting complex text at the speed of thought.",
-	},
-	{
-		tier: "Competitive Speed Typist",
-		wpmRange: "100 – 140+ WPM",
-		cpmRange: "500 – 700+ CPM",
-		accuracyTarget: "99% – 100%",
-		useCase:
-			"Realtime court transcriptionists, live captioners, and leaderboard speed typists with automatic muscle memory.",
-	},
-];
+interface BenchmarkRow {
+	tier: string;
+	wpmRange: string;
+	cpmRange: string;
+	accuracyTarget: string;
+	useCase: string;
+}
 
-const faqs = [
-	{
-		question: "What is a good typing speed in WPM?",
-		answer:
-			"The global average typing speed on a desktop keyboard is 38 to 42 Words Per Minute (WPM). A typing speed of 50 to 65 WPM with at least 96% accuracy is considered productive for students and office professionals, while 75 to 95+ WPM is typical for experienced writers, programmers, and transcriptionists.",
-	},
-	{
-		question: "How is WPM (Words Per Minute) calculated on a typing test?",
-		answer:
-			"Standard typing tests define one word as exactly 5 characters, including spaces and punctuation. Raw WPM divides your total typed characters by 5 and then divides by the elapsed time in minutes. Net WPM subtracts uncorrected errors so your final score reflects both speed and precision.",
-	},
-	{
-		question: "What is the difference between Net WPM, Raw WPM, and Burst WPM?",
-		answer:
-			"Raw WPM measures your unadjusted keystroke pace including mistakes. Net WPM counts only accurately typed characters in valid words. Burst WPM tracks your instantaneous typing speed within each 1-second window on the post-test telemetry chart so you can see peak speed versus slowdowns.",
-	},
-	{
-		question: "Why is a 60-second typing test the gold standard?",
-		answer:
-			"A 1-minute (60s) typing test balances short-term sprint speed with sustained finger endurance. While a 15-second sprint measures peak burst speed, a 60-second test reveals your true rhythm consistency and error recovery under realistic writing conditions.",
-	},
-	{
-		question: "How does typing consistency percentage work?",
-		answer:
-			"Consistency measures how steady your per-second WPM remained from the start of the test to the finish, calculated from the coefficient of variation across every 1-second sample. A consistency score above 80% means you maintained an even, controlled rhythm rather than rushing and stalling.",
-	},
-	{
-		question: "How can I use the Ghost Pacer caret to type faster?",
-		answer:
-			"Inside the Wordora Cyber-Terminal Arena (/typing-speed-test/play/), click the [ PACE ] pill in the top bar to activate a translucent Ghost Caret at 40 WPM, 60 WPM, 80 WPM, or your Last Run speed. Racing slightly ahead of a steady pacer prevents you from over-sprinting on easy words and crashing on hard ones.",
-	},
-	{
-		question: "Why should I use Ctrl + Backspace instead of single Backspace?",
-		answer:
-			"When you make a typo two or three letters deep into a word, tapping Backspace repeatedly breaks your rhythm. Pressing Ctrl + Backspace (or Option + Backspace on Mac) clears the entire current word in a single motion so you can re-type the whole word cleanly from muscle memory.",
-	},
-	{
-		question: "What does the Practice Missed Words drill do after a test?",
-		answer:
-			"Whenever you mistype or skip a character during a run, the arena logs that specific word. Clicking Practice Missed on the post-test report generates a custom drill built exclusively from the words you missed so you can eliminate weak letter combinations immediately.",
-	},
-	{
-		question: "Does practicing with punctuation and numbers lower my WPM?",
-		answer:
-			"Enabling @ punctuation and # numbers typically lowers WPM by 10 to 18 WPM compared to lowercase word streams because your fingers must reach for Shift keys and top-row digits. Practicing with punctuation enabled prepares you far better for real-world essays, emails, and coding.",
-	},
-	{
-		question: "Is Wordora's Typing Speed Test free and private?",
-		answer:
-			"Yes. Wordora's Typing Speed Test and Cyber-Terminal Arena run 100% locally in your browser with zero ads, zero login requirements, and zero server uploads. Even custom text snippets you paste into Custom Mode stay strictly on your device.",
-	},
-];
+interface MethodologyCard {
+	title: string;
+	bodyHtml: string;
+}
+
+interface TechniqueCard {
+	number: string;
+	title: string;
+	bodyHtml: string;
+}
+
+interface FaqItem {
+	question: string;
+	answer: string;
+}
+
+const schemaFeatures = t.raw<string[]>("typingSpeedTest.page.schemaFeatures") ?? [];
+const quickLaunchModes = (t.raw<QuickLaunchMode[]>("typingSpeedTest.page.hero.quickLaunch") ?? []).map(
+	(mode) => ({
+		label: mode.label,
+		href: getLocalizedPath(`/typing-speed-test/play/${mode.query}`, locale),
+	}),
+);
+const benchmarkHeaders = t.raw<string[]>("typingSpeedTest.page.benchmarks.tableHeaders") ?? [];
+const speedBenchmarks = t.raw<BenchmarkRow[]>("typingSpeedTest.page.benchmarks.rows") ?? [];
+const methodologyCards = t.raw<MethodologyCard[]>("typingSpeedTest.page.methodology.cards") ?? [];
+const techniqueCards = t.raw<TechniqueCard[]>("typingSpeedTest.page.techniques.cards") ?? [];
+const faqs = t.raw<FaqItem[]>("typingSpeedTest.faq") ?? [];
+
+const primaryCtaHref = getLocalizedPath("/typing-speed-test/play/?mode=time&value=60", locale);
 
 const structuredData = {
 	"@context": "https://schema.org",
@@ -155,14 +78,7 @@ const structuredData = {
 				priceCurrency: "USD",
 			},
 			description: pageDescription,
-			featureList: [
-				"Selectable timed typing test durations: 15s, 30s, 60s, and 120s",
-				"Word count (10, 25, 50, 100), curated quotes, open Zen mode, and custom text practice",
-				"Live Net Words Per Minute (WPM), Raw WPM, Burst WPM, consistency, and keystroke accuracy",
-				"Optional Ghost Pacer caret (40, 60, 80 WPM, or Last Run) and synthesized Web Audio keystroke feedback",
-				"Interactive post-test Bezier SVG telemetry chart, Words History drawer, Practice Missed Words drill, and PNG result card export",
-				"100% private client-side execution in your browser",
-			],
+			featureList: schemaFeatures,
 		},
 		{
 			"@type": "FAQPage",
@@ -202,24 +118,24 @@ const structuredData = {
 					<div class="mx-auto flex max-w-3xl flex-col items-center text-center">
 						<span class="inline-flex items-center gap-2 rounded-full border border-[#afe3d0]/30 bg-[#afe3d0]/10 px-3.5 py-1 text-[13px] font-medium text-[#afe3d0]">
 							<span class="h-2 w-2 rounded-full bg-[#afe3d0]"></span>
-							<span>Wordora Typing Studio</span>
+							<span>{t("typingSpeedTest.page.hero.badge")}</span>
 						</span>
 
 						<h1 class="mt-5 font-sans text-3xl leading-tight font-semibold tracking-[-1px] text-white sm:text-5xl sm:leading-[1.15] sm:tracking-[-1.5px]">
-					{t("typingSpeedTest.h1")}
-				</h1>
+							{t("typingSpeedTest.h1")}
+						</h1>
 
 						<p class="mt-4 max-w-2xl text-base leading-relaxed text-[#afe3d0]/85 sm:text-lg">
-							Measure your real-time Words Per Minute (WPM), Raw WPM, consistency, and keystroke accuracy in a distraction-free Monkeytype-inspired typing arena.
+							{t("typingSpeedTest.page.hero.subtitle")}
 						</p>
 
 						<!-- Primary CTA Button -->
 						<div class="mt-8">
 							<a
-								href="/typing-speed-test/play/?mode=time&value=60"
+								href={primaryCtaHref}
 								class="inline-flex items-center justify-center rounded-2xl bg-[#afe3d0] px-8 py-4 text-lg font-bold text-[#0f2e26] shadow-md transition hover:brightness-105"
 							>
-								Start Typing Test →
+								{t("typingSpeedTest.page.hero.cta")}
 							</a>
 						</div>
 
@@ -239,7 +155,7 @@ const structuredData = {
 
 						<!-- Subtle Trust Strip -->
 						<p class="mt-8 border-t border-[#afe3d0]/15 pt-5 text-[13px] text-[#afe3d0]/75">
-							Zero ads · Live WPM &amp; consistency chart · Runs 100% locally in your browser
+							{t("typingSpeedTest.page.hero.trustStrip")}
 						</p>
 					</div>
 				</div>
@@ -255,16 +171,16 @@ const structuredData = {
 			<div class="border-t border-hairline pt-10">
 				<div class="max-w-3xl">
 					<span class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
-						Speed Standards
+						{t("typingSpeedTest.page.benchmarks.badge")}
 					</span>
 					<h2
 						id="wpm-benchmarks-heading"
 						class="mt-3 font-sans text-2xl font-semibold tracking-[-0.8px] text-ink sm:text-3xl"
 					>
-						Typing Speed Benchmarks (WPM &amp; Accuracy Tiers)
+						{t("typingSpeedTest.page.benchmarks.heading")}
 					</h2>
 					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
-						Compare your test score against global touch-typing tiers. While raw finger speed determines how fast letters appear on screen, sustained accuracy above 96% is what separates productive writers and developers from error-prone typists.
+						{t("typingSpeedTest.page.benchmarks.intro")}
 					</p>
 				</div>
 
@@ -273,11 +189,11 @@ const structuredData = {
 						<table class="w-full border-collapse text-left text-[14px]">
 							<thead>
 								<tr class="border-b border-hairline bg-[#0f2e26]/5 text-[13px] font-semibold text-ink dark:bg-[#afe3d0]/5">
-									<th class="p-4 sm:px-6">Skill Tier</th>
-									<th class="p-4 sm:px-6">Net WPM Range</th>
-									<th class="p-4 sm:px-6">Keystrokes (CPM)</th>
-									<th class="p-4 sm:px-6">Target Accuracy</th>
-									<th class="p-4 sm:px-6">Real-World Use Case</th>
+									{
+										benchmarkHeaders.map((header) => (
+											<th class="p-4 sm:px-6">{header}</th>
+										))
+									}
 								</tr>
 							</thead>
 							<tbody class="divide-y divide-hairline">
@@ -318,46 +234,33 @@ const structuredData = {
 			<div class="border-t border-hairline pt-10">
 				<div class="max-w-3xl">
 					<span class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
-						Scoring Methodology
+						{t("typingSpeedTest.page.methodology.badge")}
 					</span>
 					<h2
 						id="calculation-heading"
 						class="mt-3 font-sans text-2xl font-semibold tracking-[-0.8px] text-ink sm:text-3xl"
 					>
-						How WPM, Raw WPM &amp; Consistency Are Calculated
+						{t("typingSpeedTest.page.methodology.heading")}
 					</h2>
 					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
-						Because English words vary wildly in length—from two-letter prepositions to twelve-letter technical terms—standardized typing tests normalize every five keystrokes (including spaces and punctuation) as one "word."
+						{t("typingSpeedTest.page.methodology.intro")}
 					</p>
 				</div>
 
 				<div class="mt-7 grid grid-cols-1 gap-5 md:grid-cols-3">
-					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
-						<h3 class="text-[17px] font-semibold text-ink">
-							1. Net WPM (Adjusted Speed)
-						</h3>
-						<p class="mt-2 text-[14px] leading-relaxed text-body">
-							Net WPM counts only <strong class="font-semibold text-ink">correctly typed characters</strong> (plus spaces between completed words), divides that total by 5, and divides by the test duration in minutes. Uncorrected mistakes and skipped letters do not inflate your Net WPM.
-						</p>
-					</div>
-
-					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
-						<h3 class="text-[17px] font-semibold text-ink">
-							2. Raw WPM &amp; Burst Speed
-						</h3>
-						<p class="mt-2 text-[14px] leading-relaxed text-body">
-							Raw WPM divides <strong class="font-semibold text-ink">every keystroke pressed</strong> by 5 and by the elapsed minutes, regardless of errors. On the post-test chart, <strong class="font-semibold text-ink">Burst WPM</strong> plots your instantaneous speed inside each 1-second window.
-						</p>
-					</div>
-
-					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
-						<h3 class="text-[17px] font-semibold text-ink">
-							3. Accuracy &amp; Consistency %
-						</h3>
-						<p class="mt-2 text-[14px] leading-relaxed text-body">
-							Accuracy is the percentage of valid keystrokes out of total evaluated characters (including missed trailing letters). Consistency measures how steady your per-second WPM remained across the entire test using the coefficient of variation.
-						</p>
-					</div>
+					{
+						methodologyCards.map((card) => (
+							<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
+								<h3 class="text-[17px] font-semibold text-ink">
+									{card.title}
+								</h3>
+								<p
+									class="mt-2 text-[14px] leading-relaxed text-body"
+									set:html={localizeHtmlLinks(card.bodyHtml, locale)}
+								/>
+							</div>
+						))
+					}
 				</div>
 			</div>
 		</section>
@@ -371,79 +274,43 @@ const structuredData = {
 			<div class="border-t border-hairline pt-10">
 				<div class="max-w-3xl">
 					<span class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
-						Touch-Typing Mastery
+						{t("typingSpeedTest.page.techniques.badge")}
 					</span>
 					<h2
 						id="techniques-heading"
 						class="mt-3 font-sans text-2xl font-semibold tracking-[-0.8px] text-ink sm:text-3xl"
 					>
-						5 Proven Techniques to Increase Your Typing Speed
+						{t("typingSpeedTest.page.techniques.heading")}
 					</h2>
-					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
-						Deliberate 10-minute practice sessions inside the <a href="/typing-speed-test/play/?mode=time&value=60" class="font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">Cyber-Terminal Typing Arena</a> build faster muscle memory than hours of rushed, error-filled typing:
-					</p>
+					<p
+						class="mt-2.5 text-[15px] leading-relaxed text-body"
+						set:html={localizeHtmlLinks(t("typingSpeedTest.page.techniques.introHtml"), locale)}
+					/>
 				</div>
 
 				<div class="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
-						<span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
-							1
-						</span>
-						<h3 class="mt-3 text-[16px] font-semibold text-ink">
-							Prioritize 98% Accuracy Over Raw Sprint Speed
-						</h3>
-						<p class="mt-2 text-[14px] leading-relaxed text-body">
-							Every typo costs three keystrokes: the wrong letter, Backspace, and the correction. Slowing down by 5 WPM to keep accuracy above 98% raises your final Net WPM immediately.
-						</p>
-					</div>
-
-					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
-						<span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
-							2
-						</span>
-						<h3 class="mt-3 text-[16px] font-semibold text-ink">
-							Read One Full Word Ahead of Your Caret
-						</h3>
-						<p class="mt-2 text-[14px] leading-relaxed text-body">
-							Fast typists never read letter-by-letter. Keep your eyes focused on the upcoming word in the 3-line viewport so your fingers queue entire syllables as a single motor pattern.
-						</p>
-					</div>
-
-					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
-						<span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
-							3
-						</span>
-						<h3 class="mt-3 text-[16px] font-semibold text-ink">
-							Use Ctrl + Backspace for Instant Word Recovery
-						</h3>
-						<p class="mt-2 text-[14px] leading-relaxed text-body">
-							Instead of pecking Backspace four times when a word goes wrong, press <kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[12px] font-medium text-ink">Ctrl + Backspace</kbd> (<kbd class="rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[12px] font-medium text-ink">Option + Backspace</kbd> on Mac) to clear the whole word in one tap.
-						</p>
-					</div>
-
-					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6">
-						<span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
-							4
-						</span>
-						<h3 class="mt-3 text-[16px] font-semibold text-ink">
-							Train With the Ghost Pacer Caret
-						</h3>
-						<p class="mt-2 text-[14px] leading-relaxed text-body">
-							Toggle <strong class="font-semibold text-ink">[ PACE: 60 WPM ]</strong> or <strong class="font-semibold text-ink">[ PACE: LAST ]</strong> in the arena header to race a smooth moving pacer caret. It smooths out erratic burst-and-pause habits.
-						</p>
-					</div>
-
-					<div class="rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:col-span-2 lg:col-span-2">
-						<span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
-							5
-						</span>
-						<h3 class="mt-3 text-[16px] font-semibold text-ink">
-							Run the "Practice Missed Words" Drill After Every Test
-						</h3>
-						<p class="mt-2 text-[14px] leading-relaxed text-body">
-							Your typing speed is bottlenecked by the 10% of letter combinations that make you hesitate. After completing a test, click <strong class="font-semibold text-ink">Practice Missed</strong> on the telemetry report to launch a custom drill generated from the exact words you mistyped during that run. Pair your writing practice with our <a href={getLocalizedPath("/word-counter/", locale)} class="font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">Word Counter</a>, <a href={getLocalizedPath("/words-to-pages/", locale)} class="font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">Words to Pages Converter</a>, <a href={getLocalizedPath("/reading-speed-test/", locale)} class="font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">Reading Speed Test</a>, and <a href={getLocalizedPath("/speech-time-calculator/", locale)} class="font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]">Speech Time Calculator</a>.
-						</p>
-					</div>
+					{
+						techniqueCards.map((card, idx) => (
+							<div
+								class={
+									idx === 4
+										? "rounded-2xl border border-hairline bg-canvas-elevated p-6 sm:col-span-2 lg:col-span-2"
+										: "rounded-2xl border border-hairline bg-canvas-elevated p-6"
+								}
+							>
+								<span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#0f2e26] text-[13px] font-semibold text-[#afe3d0] dark:bg-[#afe3d0] dark:text-[#0f2e26]">
+									{card.number}
+								</span>
+								<h3 class="mt-3 text-[16px] font-semibold text-ink">
+									{card.title}
+								</h3>
+								<p
+									class="mt-2 text-[14px] leading-relaxed text-body"
+									set:html={localizeHtmlLinks(card.bodyHtml, locale)}
+								/>
+							</div>
+						))
+					}
 				</div>
 			</div>
 		</section>
@@ -457,16 +324,16 @@ const structuredData = {
 			<div class="border-t border-hairline pt-10">
 				<div class="max-w-3xl">
 					<span class="inline-flex items-center gap-1.5 rounded-full border border-[#0f2e26]/15 bg-[#0f2e26]/5 px-3 py-1 text-[12px] font-medium text-[#0f2e26] dark:border-[#afe3d0]/20 dark:bg-[#afe3d0]/10 dark:text-[#afe3d0]">
-						Frequently Asked Questions
+						{t("typingSpeedTest.page.faqSection.badge")}
 					</span>
 					<h2
 						id="faq-heading"
 						class="mt-3 font-sans text-2xl font-semibold tracking-[-0.8px] text-ink sm:text-3xl"
 					>
-						Typing Speed Test FAQs
+						{t("typingSpeedTest.page.faqSection.heading")}
 					</h2>
 					<p class="mt-2.5 text-[15px] leading-relaxed text-body">
-						Everything you need to know about WPM scoring, accuracy formulas, Ghost Pacer drills, and touch-typing benchmarks.
+						{t("typingSpeedTest.page.faqSection.intro")}
 					</p>
 				</div>
 

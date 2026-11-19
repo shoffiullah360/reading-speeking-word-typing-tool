@@ -57,11 +57,11 @@ export function localePath(path: string, url: URL): string {
 
 /**
  * Rewrites internal `href="/slug/"` links inside trusted HTML strings (e.g. FAQ answers)
- * so they stay in the visitor's language. Utility routes such as the typing arena are left alone.
+ * so they stay in the visitor's language (preserving query strings and #hash fragments).
  */
 export function localizeHtmlLinks(html: string, locale: Locale): string {
-	return html.replace(/href="(\/(?:[a-z0-9-]+\/)*(?:#[^"]*)?)"/g, (match, path: string) =>
-		path.startsWith('/typing-speed-test/play/') ? match : `href="${getLocalizedPath(path, locale)}"`,
+	return html.replace(/href="(\/(?:[a-z0-9-]+\/)*(?:\?[^"#]*)?(?:#[^"]*)?)"/g, (_, path: string) =>
+		`href="${getLocalizedPath(path, locale)}"`,
 	);
 }
 

@@ -1,0 +1,15 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { prefixedLocales, type Locale } from '../../../../i18n/ui';
+import TypingArenaPage from '../../../../views/TypingArenaPage.astro';
+
+export const getStaticPaths = (() =>
+	prefixedLocales.map((lang) => ({
+		params: { lang },
+		props: { locale: lang as Locale },
+	}))) satisfies GetStaticPaths;
+
+const { locale } = Astro.props;
+---
+
+<TypingArenaPage locale={locale} />

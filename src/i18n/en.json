@@ -3187,7 +3187,409 @@
 		"metric": "Words · Chars · Sentences",
 		"title": "Online Word Counter Checker & Essay Word Count Calculator | Wordora",
 		"metaDescription": "Free online word counter checker to count words, characters with and without spaces, sentences, paragraphs, pages, reading time, and keyword frequency for essays, scripts, and articles.",
-		"h1": "Online Word Counter & Character Checker"
+		"h1": "Online Word Counter & Character Checker",
+		"ui": {
+			"workspaceAria": "Word and Character Counter Workspace",
+			"textareaLabel": "Type or paste your text here",
+			"textareaPlaceholder": "Type or paste your text here...",
+			"wordsUnit": "words",
+			"charactersUnit": "characters",
+			"btnPaste": "Paste",
+			"btnUpload": "Upload .txt",
+			"btnCleanSpaces": "Clean spaces",
+			"btnCopyText": "Copy text",
+			"btnClear": "Clear",
+			"heroWords": "Words",
+			"heroCharacters": "Characters",
+			"withoutSpaces": "without spaces",
+			"cjkChars": "CJK chars",
+			"btnCopySummary": "Copy summary",
+			"panelViewAria": "Panel view",
+			"tabStats": "Stats",
+			"tabKeywords": "Top Keywords",
+			"statSentences": "Sentences",
+			"statParagraphs": "Paragraphs",
+			"statReadingTime": "Reading time",
+			"statSpeakingTime": "Speaking time",
+			"statPages": "Pages",
+			"wpp250Short": "250 w/p",
+			"statReadability": "Readability",
+			"topKeywordsTitle": "Top 8 Keywords",
+			"btnCopyKeywords": "Copy keywords",
+			"keywordsEmpty": "Type or paste text to see keyword density.",
+			"platformLimitsTitle": "Platform limits",
+			"platformLimitsUnit": "Characters",
+			"limitGoogleTitle": "Google Title",
+			"limitMetaDesc": "Meta Description",
+			"limitSocialPost": "X / Social Post",
+			"wordGoalLabel": "Word goal",
+			"relatedToolsAria": "Related text and reading tools",
+			"relatedBeforeFirst": "Need page count formatting or custom WPM sliders? Try our ",
+			"relatedComma": ", ",
+			"relatedBeforeLast": ", or ",
+			"relatedAfterLast": "."
+		},
+		"client": {
+			"zeroSec": "0 sec",
+			"unitMin": "min",
+			"unitSec": "sec",
+			"gradeLabel": "Grade {grade}",
+			"levelCollege": "College",
+			"levelGraduate": "Graduate",
+			"pasted": "Pasted!",
+			"cleaned": "Cleaned!",
+			"copied": "Copied!",
+			"btnPaste": "Paste",
+			"btnCleanSpaces": "Clean spaces",
+			"btnCopyText": "Copy text",
+			"btnCopyKeywords": "Copy keywords",
+			"btnCopySummary": "Copy summary",
+			"summaryTemplate": "Words: {words} | Characters: {chars} (No spaces: {charsNoSpace}) | Sentences: {sentences} | Paragraphs: {paragraphs} | Reading Time: {readingTime} | Speaking Time: {speakingTime}"
+		},
+		"schema": {
+			"featureList": [
+				"Real-time word, character (with and without spaces), sentence, and paragraph counts",
+				"Smart CJK character detection for Chinese and Japanese text",
+				"One-click Clean spaces utility to normalize whitespace and formatting",
+				"Academic page count estimate (250 words/page) and Flesch-Kincaid grade level",
+				"Silent reading time (238 WPM) and speaking time (130 WPM) calculations",
+				"Platform character limit monitors (Google Title, Meta Description, X Post) and custom Word Goal tracker",
+				"Top 8 keyword frequency and density breakdown with one-click export"
+			]
+		},
+		"page": {
+			"heroSubtitle": "Count words, characters (with and without spaces), sentences, paragraphs, and page estimates in real time—built for essays, articles, scripts, and SEO snippets.",
+			"guide": {
+				"aria": "What Is a Word Counter & How to Use It",
+				"badge": "Guide & Documentation",
+				"h2": "What Is a Word Counter & How to Use It",
+				"intro": "A word counter is a precision text analysis tool that tracks length, lexical density, and structural metrics in real time. Whether you are balancing an academic essay with rigid length constraints, writing an article with search engine snippet caps, or rehearsing a speech, Wordora runs 100% locally in your browser with zero server latency and total privacy.",
+				"howToUseH3": "How to Use the Online Word Counter Checker",
+				"steps": [
+					{
+						"title": "Paste or Type Your Text",
+						"bodyHtml": "Type directly into the editor, click <strong class=\"font-medium text-ink\">Paste</strong> from your clipboard, or upload a <strong class=\"font-medium text-ink\">.txt</strong> / <strong class=\"font-medium text-ink\">.md</strong> file for instant local analysis."
+					},
+					{
+						"title": "Check Live Word & Character Counts",
+						"bodyHtml": "View real-time <strong class=\"font-medium text-ink\">Words</strong>, <strong class=\"font-medium text-ink\">Characters</strong> (with and without spaces), <strong class=\"font-medium text-ink\">Sentences</strong>, <strong class=\"font-medium text-ink\">Paragraphs</strong>, <strong class=\"font-medium text-ink\">Pages</strong>, and <strong class=\"font-medium text-ink\">Readability</strong>."
+					},
+					{
+						"title": "Track Word Goals & Platform Limits",
+						"bodyHtml": "Set a custom <strong class=\"font-medium text-ink\">Word goal</strong> for essays or monitor character limits for <strong class=\"font-medium text-ink\">Google Title (60)</strong>, <strong class=\"font-medium text-ink\">Meta Description (160)</strong>, and <strong class=\"font-medium text-ink\">X / Social Post (280)</strong>."
+					},
+					{
+						"title": "Inspect Top Keywords & Clean Formatting",
+						"bodyHtml": "Switch to <strong class=\"font-medium text-ink\">Top Keywords</strong> to check word frequency and density, use <strong class=\"font-medium text-ink\">Clean spaces</strong> to strip extra whitespace, or click <strong class=\"font-medium text-ink\">Copy summary</strong>."
+					}
+				],
+				"whatMeasuresH3": "What Does This Word Counter Measure?",
+				"metrics": [
+					{
+						"title": "Words & Unique Frequency",
+						"bodyHtml": "Computes exact total word counts across standard space-separated Western languages as well as character-based CJK scripts. You can switch to the <strong class=\"font-medium text-ink\">Top Keywords</strong> tab to isolate high-repetition vocabulary, avoid keyword stuffing, and ensure natural lexical variation."
+					},
+					{
+						"title": "Characters (With & Without Spaces + CJK)",
+						"bodyHtml": "Provides dual character tallies: overall keystrokes (with spaces) for strict social media or title limits, and compact length (without spaces) for translation or essay standards. Built-in CJK detection surfaces a dedicated counter whenever Chinese or Japanese glyphs are detected."
+					},
+					{
+						"title": "Sentences & Paragraphs",
+						"bodyHtml": "Breaks down overall document architecture by analyzing terminal punctuation marks (<strong class=\"font-medium text-ink\">. ! ?</strong>) and line spacing breaks. Maintaining balanced sentence lengths prevents fatigue and keeps digital and printed copy engaging."
+					},
+					{
+						"title": "Page Count Estimate (250 words/page)",
+						"bodyHtml": "Translates raw word counts into standard academic pages based on the universally recognized publishing guideline of 250 words per double-spaced page (12pt font, 1-inch margins). Ideal for planning college assignments, book drafts, and journal submissions."
+					},
+					{
+						"title": "Reading Time (238 WPM) & Speaking Time (130 WPM)",
+						"bodyHtml": "Calculates silent reading duration at the cognitive scientific average of 238 words per minute and oral presentation length at 130 WPM. Rehearse conference keynotes, podcasts, wedding toasts, and video scripts with confidence before taking the stage."
+					},
+					{
+						"title": "Flesch-Kincaid Readability Grade",
+						"bodyHtml": "Evaluates lexical complexity by factoring average sentence length against syllable count per word. Instantly see whether your text matches standard 8th-grade web content accessibility, high school comprehension, or specialized academic prose."
+					}
+				]
+			},
+			"essayStandards": {
+				"aria": "Essay Word Count Standards and Word Count in Pages Guide",
+				"badge": "Academic & Publishing Reference",
+				"h2": "Essay Word Count Standards & Word Count in Pages Guide",
+				"intro": "Use this reference table to plan academic essays, IELTS/TOEFL tasks, blog articles, and books—along with estimated double-spaced page counts (250 words/page) and reading times.",
+				"headers": [
+					"Content / Essay Type",
+					"Typical Word Count",
+					"Double-Spaced Pages (~250 w/p)",
+					"Estimated Reading Time (238 WPM)"
+				],
+				"rows": [
+					{
+						"type": "IELTS Writing Task 1 / TOEFL Integrated",
+						"words": "150 – 225 words",
+						"pages": "0.6 – 0.9 pages",
+						"readingTime": "~45 – 55 sec"
+					},
+					{
+						"type": "IELTS Writing Task 2 / TOEFL Independent",
+						"words": "250 – 350 words",
+						"pages": "1.0 – 1.4 pages",
+						"readingTime": "~1 – 1.5 min"
+					},
+					{
+						"type": "High School / 5-Paragraph Essay",
+						"words": "500 – 800 words",
+						"pages": "2.0 – 3.2 pages",
+						"readingTime": "~2 – 3.5 min"
+					},
+					{
+						"type": "College Admission Essay (Common App)",
+						"words": "500 – 650 words",
+						"pages": "2.0 – 2.6 pages",
+						"readingTime": "~2 – 2.7 min"
+					},
+					{
+						"type": "Undergraduate Research Essay",
+						"words": "1,000 – 2,500 words",
+						"pages": "4.0 – 10.0 pages",
+						"readingTime": "~4 – 10.5 min"
+					},
+					{
+						"type": "Standard SEO Blog Post",
+						"words": "1,200 – 2,000 words",
+						"pages": "4.8 – 8.0 pages",
+						"readingTime": "~5 – 8.5 min"
+					},
+					{
+						"type": "In-Depth Pillar Guide / Whitepaper",
+						"words": "2,500 – 5,000 words",
+						"pages": "10.0 – 20.0 pages",
+						"readingTime": "~10.5 – 21 min"
+					},
+					{
+						"type": "Master's Thesis / Dissertation Chapter",
+						"words": "10,000 – 20,000 words",
+						"pages": "40 – 80 pages",
+						"readingTime": "~42 – 84 min"
+					},
+					{
+						"type": "Full-Length Novel",
+						"words": "70,000 – 100,000 words",
+						"pages": "280 – 400 pages",
+						"readingTime": "~5 – 7 hours"
+					}
+				],
+				"relatedLabel": "Related converters:",
+				"linkWordsToPages": "Words to Pages Converter",
+				"linkReadingTime": "Reading Time Calculator",
+				"linkSpeechTime": "Speech Time Calculator"
+			},
+			"characterLimits": {
+				"aria": "Social Media and SEO Character Limits Reference Table",
+				"badge": "Character Limits Benchmark",
+				"h2": "Social Media & SEO Character Limits Reference Table",
+				"intro": "Most platforms count characters including spaces and punctuation—check these limits before publishing meta tags, ads, or social posts.",
+				"headers": [
+					"Platform / Element",
+					"Maximum Character Limit",
+					"Recommended Sweet Spot",
+					"Count Method"
+				],
+				"rows": [
+					{
+						"platform": "Google SEO Title Tag",
+						"maxLimit": "~60 characters (~580px)",
+						"sweetSpot": "50 – 60 characters",
+						"method": "Includes spaces"
+					},
+					{
+						"platform": "Google Meta Description",
+						"maxLimit": "~160 characters",
+						"sweetSpot": "145 – 158 characters",
+						"method": "Includes spaces"
+					},
+					{
+						"platform": "X (Twitter) Standard Post",
+						"maxLimit": "280 characters",
+						"sweetSpot": "100 – 240 characters",
+						"method": "Includes spaces"
+					},
+					{
+						"platform": "Instagram Caption",
+						"maxLimit": "2,200 characters",
+						"sweetSpot": "125 – 150 chars (before \"More\")",
+						"method": "Includes spaces"
+					},
+					{
+						"platform": "LinkedIn Post",
+						"maxLimit": "3,000 characters",
+						"sweetSpot": "150 – 300 characters",
+						"method": "Includes spaces"
+					},
+					{
+						"platform": "YouTube Video Title",
+						"maxLimit": "100 characters",
+						"sweetSpot": "55 – 70 characters",
+						"method": "Includes spaces"
+					},
+					{
+						"platform": "Standard SMS Message",
+						"maxLimit": "160 characters (GSM-7)",
+						"sweetSpot": "Under 160 characters",
+						"method": "Includes spaces"
+					}
+				]
+			},
+			"comparison": {
+				"aria": "Wordora Word Counter vs. Microsoft Word & Google Docs",
+				"badge": "Feature Comparison",
+				"h2": "Wordora Word Counter vs. Microsoft Word & Google Docs",
+				"intro": "Compare how Wordora's zero-friction, client-side word counter stacks up against conventional office word processors for speed, live metrics, and data privacy.",
+				"headers": [
+					"Feature",
+					"Wordora Word Counter",
+					"Google Docs",
+					"Microsoft Word"
+				],
+				"rows": [
+					{
+						"feature": "Instant Paste-and-Count (No Login)",
+						"wordora": "Yes (1-Click)",
+						"docs": "Requires Google Account",
+						"word": "Requires Desktop/365 App"
+					},
+					{
+						"feature": "Live Characters With & Without Spaces",
+						"wordora": "Always Visible",
+						"docs": "Requires Ctrl+Shift+C Popup",
+						"word": "Requires Status Bar Click"
+					},
+					{
+						"feature": "Keyword Frequency & Density %",
+						"wordora": "Built-in Live Tab",
+						"docs": "No",
+						"word": "No"
+					},
+					{
+						"feature": "SEO Title / Meta / X Limit Bars",
+						"wordora": "Built-in Live Bars",
+						"docs": "No",
+						"word": "No"
+					},
+					{
+						"feature": "Flesch-Kincaid Readability Grade",
+						"wordora": "Instant Live Grade",
+						"docs": "No",
+						"word": "Hidden in Proofing Settings"
+					},
+					{
+						"feature": "100% Browser Privacy (Zero Cloud Upload)",
+						"wordora": "Yes (Local Only)",
+						"docs": "Cloud Synced",
+						"word": "Cloud/Local"
+					}
+				]
+			},
+			"reduceGuide": {
+				"aria": "How to Reduce Word Count in Essays and Papers",
+				"badge": "Editing & Reducer Strategies",
+				"h2": "How to Reduce Word Count in Essays & Papers",
+				"intro": "When your academic draft exceeds the upper limit or word budget, use these targeted editorial strategies to trim wordiness without compromising thesis depth or critical evidence.",
+				"cards": [
+					{
+						"title": "Cut Filler Phrases & Redundancies",
+						"bodyHtml": "Replace wordy phrases like <strong class=\"font-medium text-ink\">\"due to the fact that\"</strong> with <strong class=\"font-medium text-ink\">\"because\"</strong>, <strong class=\"font-medium text-ink\">\"in order to\"</strong> with <strong class=\"font-medium text-ink\">\"to\"</strong>, and <strong class=\"font-medium text-ink\">\"at this point in time\"</strong> with <strong class=\"font-medium text-ink\">\"now\"</strong>. Prune unnecessary padding to immediately recover 5–10% of your total word limit."
+					},
+					{
+						"title": "Convert Passive Voice to Active Voice",
+						"bodyHtml": "Change <strong class=\"font-medium text-ink\">\"The experiment was conducted by the researchers\"</strong> (8 words) to <strong class=\"font-medium text-ink\">\"The researchers conducted the experiment\"</strong> (5 words) to trim ~20–30% wordiness. Active voice tightens sentence momentum and strengthens academic rigor."
+					},
+					{
+						"title": "Trim Weak Adverbs & Qualifiers",
+						"bodyHtml": "Remove <strong class=\"font-medium text-ink\">\"very\"</strong>, <strong class=\"font-medium text-ink\">\"really\"</strong>, <strong class=\"font-medium text-ink\">\"basically\"</strong>, and <strong class=\"font-medium text-ink\">\"actually\"</strong> when the verb or adjective already carries the meaning. Strong, specific verbs (e.g., \"demolished\" instead of \"completely destroyed\") naturally lower word counts."
+					},
+					{
+						"title": "Tighten Introductions & Repetitive Transitions",
+						"bodyHtml": "Keep essay openings crisp (10–12% of total word count) and merge overlapping summary sentences. Avoid prolonged throat-clearing before your thesis statement, and delete redundant connective phrases between paragraphs."
+					}
+				]
+			},
+			"readabilityRules": {
+				"aria": "Readability Score, Keyword Frequency and Counting Accuracy Rules",
+				"badge": "Readability & Accuracy",
+				"h2": "Readability Score, Keyword Frequency & Counting Accuracy Rules",
+				"intro": "Understand how automated readability benchmarks are calculated, how keyword density guides natural SEO copy, and how our engine handles edge-case punctuation.",
+				"leftTitle": "Readability Score & Keyword Frequency Explained",
+				"leftFleschTitle": "Flesch-Kincaid Grade Level",
+				"leftFleschHtml": "Evaluates lexical difficulty by calculating average sentence length and syllable density per word. A score of <strong class=\"font-medium text-ink\">Grade 6–8</strong> is ideal for consumer blog posts, email newsletters, and public websites. A score of <strong class=\"font-medium text-ink\">Grade 10–12+</strong> is standard for undergraduate essays, technical documentation, and academic journals.",
+				"leftKeywordTitle": "Keyword Frequency & Density %",
+				"leftKeywordHtml": "Keyword density measures how often a specific term appears relative to total words: <strong class=\"font-medium text-ink tabular-nums\">(Keyword Count &divide; Total Words) &times; 100</strong>. For SEO copy and essays, a healthy target is between <strong class=\"font-medium text-ink\">1% and 2%</strong>. Repetition exceeding 2.5% signals unnatural keyword stuffing that risks search penalties and fatigues readers.",
+				"rightTitle": "How Our Word Counter Handles Edge Cases",
+				"edgeCasesHtml": [
+					"<strong class=\"font-semibold text-ink\">Hyphenated Words (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">well-being</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">state-of-the-art</code>):</strong> Counted as 1 word so essay limits match standard editorial style guides (APA, MLA, Chicago).",
+					"<strong class=\"font-semibold text-ink\">Numbers &amp; Dates (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">2026</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">1,500</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">99.9%</code>):</strong> Each standalone numeric token counts as 1 word.",
+					"<strong class=\"font-semibold text-ink\">Contractions (<code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">don't</code>, <code class=\"rounded bg-canvas px-1.5 py-0.5 text-[13px] text-ink\">it's</code>):</strong> Counted as 1 word.",
+					"<strong class=\"font-semibold text-ink\">Chinese &amp; Japanese Characters (CJK):</strong> Automatically detected and counted per character alongside space-separated words.",
+					"<strong class=\"font-semibold text-ink\">Extra Spaces &amp; Blank Lines:</strong> Ignored in word counts, and removable in one click with <strong class=\"font-medium text-ink\">Clean spaces</strong>."
+				]
+			}
+		},
+		"faq": {
+			"badge": "Got Questions?",
+			"heading": "Frequently Asked Questions",
+			"intro": "Clear answers to common questions about word counting methods, page estimates, character limits, readability scoring, and browser privacy.",
+			"items": [
+				{
+					"question": "How many pages is 1,000 words in an essay?",
+					"answer": "A 1,000-word essay is approximately 4 pages double-spaced or 2 pages single-spaced when using standard 12pt font (such as Times New Roman or Arial) with 1-inch margins. Exact length depends on formatting, paragraph breaks, and heading hierarchy. You can use our Words to Pages Converter to customize font size, line spacing, and margins.",
+					"answerHtml": "A 1,000-word essay is approximately 4 pages double-spaced or 2 pages single-spaced when using standard 12pt font (such as Times New Roman or Arial) with 1-inch margins. Exact length depends on formatting, paragraph breaks, and heading hierarchy. You can use our <a href=\"/words-to-pages/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Words to Pages Converter</a> to customize font size, line spacing, and margins."
+				},
+				{
+					"question": "What is the difference between characters with spaces and characters without spaces?",
+					"answer": "Characters with spaces counts every keystroke—including letters, numbers, punctuation, and whitespace gaps. Characters without spaces excludes all spaces, tabs, and line breaks, measuring only the visible letters and symbols. Platforms like Google SEO titles and X count total characters with spaces, while translation agencies and certain academic publications bill by characters without spaces.",
+					"answerHtml": "Characters with spaces counts every keystroke—including letters, numbers, punctuation, and whitespace gaps. Characters without spaces excludes all spaces, tabs, and line breaks, measuring only the visible letters and symbols. Platforms like Google SEO titles and X count total characters with spaces, while translation agencies and certain academic publications bill by characters without spaces."
+				},
+				{
+					"question": "How do I reduce word count in an essay without losing key points?",
+					"answer": "To reduce word count effectively, cut filler phrases (replace \"due to the fact that\" with \"because\"), convert passive constructions to active voice, and prune weak adverbs like \"very\", \"really\", and \"basically\". Keeping introductions under 12% of total length and combining redundant transition sentences will easily trim 15% to 25% of your draft without sacrificing depth.",
+					"answerHtml": "To reduce word count effectively, cut filler phrases (replace <strong class=\"font-medium text-ink\">\"due to the fact that\"</strong> with <strong class=\"font-medium text-ink\">\"because\"</strong>), convert passive constructions to active voice, and prune weak adverbs like <strong class=\"font-medium text-ink\">\"very\"</strong>, <strong class=\"font-medium text-ink\">\"really\"</strong>, and <strong class=\"font-medium text-ink\">\"basically\"</strong>. Keeping introductions under 12% of total length and combining redundant transition sentences will easily trim 15% to 25% of your draft without sacrificing depth."
+				},
+				{
+					"question": "What is an ideal keyword frequency or density in articles and essays?",
+					"answer": "An ideal keyword density for SEO articles and essays is between 1% and 2% of total word count. This means a primary keyword or phrase appears roughly 10 to 20 times within a 1,000-word article. Higher frequencies risk sounding repetitive and triggering search engine over-optimization penalties.",
+					"answerHtml": "An ideal keyword density for SEO articles and essays is between <strong class=\"font-medium text-ink\">1% and 2%</strong> of total word count. This means a primary keyword or phrase appears roughly 10 to 20 times within a 1,000-word article. Higher frequencies risk sounding repetitive and triggering search engine over-optimization penalties."
+				},
+				{
+					"question": "Does this word counter work for Chinese and Japanese characters?",
+					"answer": "Yes. Wordora features smart CJK character detection that accurately counts Chinese (Hanzi) and Japanese (Kanji, Hiragana, Katakana) characters alongside space-separated Western text. When CJK characters are detected, a dedicated sub-badge displays your exact CJK count under the Characters metric.",
+					"answerHtml": "Yes. Wordora features smart CJK character detection that accurately counts Chinese (Hanzi) and Japanese (Kanji, Hiragana, Katakana) characters alongside space-separated Western text. When CJK characters are detected, a dedicated sub-badge displays your exact CJK count under the Characters metric."
+				},
+				{
+					"question": "Are hyphenated words and numbers counted as one word?",
+					"answer": "Yes. Standard hyphenated terms (such as \"well-being\" or \"state-of-the-art\") are counted as a single word, conforming to major academic and journalistic style guides (APA, MLA, and Chicago). Standalone numbers, dates (such as \"2026\"), and percentages (\"99.9%\") are also counted as single individual words.",
+					"answerHtml": "Yes. Standard hyphenated terms (such as <strong class=\"font-medium text-ink\">\"well-being\"</strong> or <strong class=\"font-medium text-ink\">\"state-of-the-art\"</strong>) are counted as a single word, conforming to major academic and journalistic style guides (APA, MLA, and Chicago). Standalone numbers, dates (such as \"2026\"), and percentages (\"99.9%\") are also counted as single individual words."
+				},
+				{
+					"question": "How many words is a 5-minute speech or 2-minute reading passage?",
+					"answer": "At an average presentation pace of 130 words per minute, a 5-minute speech requires approximately 650 words (or 550 words with an 85% stage buffer for natural pauses). A 2-minute silent reading passage equals roughly 476 words at the standard reading rate of 238 WPM. Calculate exact timings with our Speech Time Calculator and Reading Time Calculator.",
+					"answerHtml": "At an average presentation pace of 130 words per minute, a 5-minute speech requires approximately 650 words (or 550 words with an 85% stage buffer for natural pauses). A 2-minute silent reading passage equals roughly 476 words at the standard reading rate of 238 WPM. Calculate exact timings with our <a href=\"/speech-time-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Speech Time Calculator</a> and <a href=\"/reading-time-calculator/\" class=\"font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 hover:text-vercel-blue-deep hover:decoration-vercel-blue\">Reading Time Calculator</a>."
+				},
+				{
+					"question": "What is a good Flesch-Kincaid readability grade level?",
+					"answer": "For general web content, blog posts, and consumer articles, a Flesch-Kincaid score between Grade 6 and Grade 8 is recommended for maximum clarity and accessibility. High school essays typically score around Grade 9 to 11, while college research papers and academic dissertations register at Grade 12 or above.",
+					"answerHtml": "For general web content, blog posts, and consumer articles, a Flesch-Kincaid score between <strong class=\"font-medium text-ink\">Grade 6 and Grade 8</strong> is recommended for maximum clarity and accessibility. High school essays typically score around Grade 9 to 11, while college research papers and academic dissertations register at Grade 12 or above."
+				},
+				{
+					"question": "Does Google Docs or Microsoft Word count words differently than an online word counter?",
+					"answer": "Most word counters use similar tokenization rules, but differences arise with hyphenated terms, compound words, and CJK text. Google Docs counts hyphenated terms as single words but requires opening a dialog (Ctrl+Shift+C) to view characters without spaces. Wordora displays all metrics instantly in real time without lag, account logins, or menu clicks.",
+					"answerHtml": "Most word counters use similar tokenization rules, but differences arise with hyphenated terms, compound words, and CJK text. Google Docs counts hyphenated terms as single words but requires opening a dialog (Ctrl+Shift+C) to view characters without spaces. Wordora displays all metrics instantly in real time without lag, account logins, or menu clicks."
+				},
+				{
+					"question": "Is my text saved or uploaded when I use this free online word counter?",
+					"answer": "No. Wordora executes all text analysis and calculations 100% locally in your web browser using client-side JavaScript. Your pasted text, drafts, and notes never leave your device, are never transmitted to external servers, and are never stored or logged anywhere.",
+					"answerHtml": "No. Wordora executes all text analysis and calculations 100% locally in your web browser using client-side JavaScript. Your pasted text, drafts, and notes never leave your device, are never transmitted to external servers, and are never stored or logged anywhere."
+				}
+			]
+		}
 	},
 	"speechCalculator": {
 		"name": "Speech Time Calculator",
@@ -3197,7 +3599,404 @@
 		"badge": "Flagship",
 		"title": "Speech Time Calculator & Speech Length Converter (Words to Minutes) | Wordora",
 		"metaDescription": "Free online speech time calculator and speech length calculator. Convert speech words to minutes or check speech time by word count for a 3 minute speech, 5 minute speech, or full presentation.",
-		"h1": "Speech Time Calculator"
+		"h1": "Speech Time Calculator",
+		"ui": {
+			"workspaceAria": "Speech Time Calculator",
+			"inputModeAria": "Input mode",
+			"tabScript": "Paste script",
+			"tabWords": "Enter word count",
+			"scriptLabel": "Paste your speech, script, or presentation notes",
+			"scriptPlaceholder": "Paste your speech, script, or presentation notes...",
+			"wordCountLabel": "Total words in your speech",
+			"wordCountPlaceholder": "e.g. 750",
+			"quickFill": "Quick fill:",
+			"initialWordCount": "0 words",
+			"btnClear": "Clear",
+			"speakingPaceLabel": "Speaking pace",
+			"speakingPaceAria": "Speaking pace",
+			"customWpmLabel": "WPM:",
+			"paceSlow": "Slow (110 WPM)",
+			"paceAverage": "Average (130 WPM)",
+			"paceFast": "Fast (160 WPM)",
+			"paceCustom": "Custom",
+			"speakingTimeHeading": "Speaking time",
+			"initialSubline": "0 words at 130 WPM",
+			"targetLimitLabel": "Target limit",
+			"wordsThatFitHeading": "Words that fit at current pace",
+			"fitMinLabel": "{minutes} min",
+			"fitWordsInitial": "{count} words"
+		},
+		"client": {
+			"zeroDuration": "0 min 0 sec",
+			"unitMin": "min",
+			"unitSec": "sec",
+			"durationFormat": "{mins} min {secs} sec",
+			"wordSingular": "word",
+			"wordPlural": "words",
+			"charSingular": "character",
+			"charPlural": "characters",
+			"atWpm": "{desc} at {wpm} WPM",
+			"atCpm": "{desc} at {cpm} CPM",
+			"mixedAtWpm": "{words} & {chars} at {wpm} WPM",
+			"mixedCopyAtWpm": "{words}, {chars} at {wpm} WPM",
+			"onTarget": "On target",
+			"overBySec": "Over by {secs} sec",
+			"copySummary": "Speaking Time: {time} ({detail})",
+			"copyResult": "Copy result",
+			"copied": "Copied!"
+		},
+		"schema": {
+			"featureList": [
+				"Script to Speech Time converter with instant character and word counting",
+				"Words to Minutes calculator for Slow (110 WPM), Average (130 WPM), Fast (160 WPM), or Custom pace",
+				"Speaking time limit checker with target time alerts",
+				"Words that fit benchmark for 1, 3, 5, and 10-minute speeches",
+				"Support for English, Spanish, French, Chinese, and Japanese scripts"
+			]
+		},
+		"page": {
+			"heroSubtitle": "Paste your script or enter a word count to see exact speaking time at your pace—or check how many words fit your time slot.",
+			"howTo": {
+				"heading": "How to Convert Speech Words to Minutes",
+				"intro": "Follow three simple steps in this speech time calculator and speech length calculator to find your exact speaking duration or check how many speech time words fit your presentation slot.",
+				"steps": [
+					{
+						"title": "Paste Your Script or Enter Word Count",
+						"bodyHtml": "Use <strong class=\"font-semibold text-ink\">Paste script</strong> for an instant word count from text (supporting English, Spanish, French, Chinese, and Japanese), or switch to <strong class=\"font-semibold text-ink\">Enter word count</strong> to calculate directly from a number."
+					},
+					{
+						"title": "Select Your Speaking Pace (WPM)",
+						"bodyHtml": "Choose <strong class=\"font-semibold text-ink\">Slow (110 WPM)</strong>, <strong class=\"font-semibold text-ink\">Average (130 WPM)</strong>, <strong class=\"font-semibold text-ink\">Fast (160 WPM)</strong>, or enter a <strong class=\"font-semibold text-ink\">Custom</strong> WPM measured from a timed rehearsal."
+					},
+					{
+						"title": "Verify Against Your Time Limit",
+						"bodyHtml": "Enter an optional <strong class=\"font-semibold text-ink\">Target limit</strong> in minutes to check whether your draft fits your slot or runs over, then copy your summary in one click."
+					}
+				]
+			},
+			"minutesToWords": {
+				"heading": "Speech Length Calculator Chart: How Many Words for a 3 Minute Speech, 5 Minute Speech, or 60-Minute Talk?",
+				"intro": "Use this speech length calculator reference chart to plan your word budget for any presentation, wedding toast, podcast, or lecture—whether you are checking how many words for a 3 minute speech (390 words at 130 WPM), how many words for a 5 minute speech (650 words at 130 WPM), or an 85% safe stage target to leave room for pauses and Q&A.",
+				"headers": [
+					"Speech Length",
+					"Slow (110 WPM)",
+					"Average (130 WPM)",
+					"Fast (160 WPM)",
+					"Safe Stage Budget (~85% at 130 WPM)"
+				],
+				"rows": [
+					{
+						"length": "30 Seconds",
+						"slow": "55 words",
+						"avg": "65 words",
+						"fast": "80 words",
+						"safe": "55 words"
+					},
+					{
+						"length": "1 Minute",
+						"slow": "110 words",
+						"avg": "130 words",
+						"fast": "160 words",
+						"safe": "110 words"
+					},
+					{
+						"length": "2 Minutes",
+						"slow": "220 words",
+						"avg": "260 words",
+						"fast": "320 words",
+						"safe": "220 words"
+					},
+					{
+						"length": "3 Minutes",
+						"slow": "330 words",
+						"avg": "390 words",
+						"fast": "480 words",
+						"safe": "330 words"
+					},
+					{
+						"length": "4 Minutes",
+						"slow": "440 words",
+						"avg": "520 words",
+						"fast": "640 words",
+						"safe": "440 words"
+					},
+					{
+						"length": "5 Minutes",
+						"slow": "550 words",
+						"avg": "650 words",
+						"fast": "800 words",
+						"safe": "550 words"
+					},
+					{
+						"length": "7 Minutes",
+						"slow": "770 words",
+						"avg": "910 words",
+						"fast": "1,120 words",
+						"safe": "775 words"
+					},
+					{
+						"length": "8 Minutes",
+						"slow": "880 words",
+						"avg": "1,040 words",
+						"fast": "1,280 words",
+						"safe": "885 words"
+					},
+					{
+						"length": "10 Minutes",
+						"slow": "1,100 words",
+						"avg": "1,300 words",
+						"fast": "1,600 words",
+						"safe": "1,105 words"
+					},
+					{
+						"length": "12 Minutes",
+						"slow": "1,320 words",
+						"avg": "1,560 words",
+						"fast": "1,920 words",
+						"safe": "1,325 words"
+					},
+					{
+						"length": "15 Minutes",
+						"slow": "1,650 words",
+						"avg": "1,950 words",
+						"fast": "2,400 words",
+						"safe": "1,660 words"
+					},
+					{
+						"length": "20 Minutes",
+						"slow": "2,200 words",
+						"avg": "2,600 words",
+						"fast": "3,200 words",
+						"safe": "2,210 words"
+					},
+					{
+						"length": "30 Minutes",
+						"slow": "3,300 words",
+						"avg": "3,900 words",
+						"fast": "4,800 words",
+						"safe": "3,315 words"
+					},
+					{
+						"length": "40 Minutes",
+						"slow": "4,400 words",
+						"avg": "5,200 words",
+						"fast": "6,400 words",
+						"safe": "4,420 words"
+					},
+					{
+						"length": "45 Minutes",
+						"slow": "4,950 words",
+						"avg": "5,850 words",
+						"fast": "7,200 words",
+						"safe": "4,970 words"
+					},
+					{
+						"length": "60 Minutes",
+						"slow": "6,600 words",
+						"avg": "7,800 words",
+						"fast": "9,600 words",
+						"safe": "6,630 words"
+					}
+				]
+			},
+			"wordsToMinutes": {
+				"heading": "Speech Time by Word Count: Speech Words to Minutes for 100 to 5,000 Words",
+				"intro": "Check speech time by word count to see how long it takes to read a script aloud versus reading it silently at an average adult pace (~238 WPM).",
+				"headers": [
+					"Word Count",
+					"Slow (110 WPM)",
+					"Average (130 WPM)",
+					"Fast (160 WPM)",
+					"Silent Reading (~238 WPM)"
+				],
+				"rows": [
+					{
+						"words": "100 words",
+						"slow": "0 min 55 sec",
+						"avg": "0 min 46 sec",
+						"fast": "0 min 38 sec",
+						"silent": "0 min 25 sec"
+					},
+					{
+						"words": "250 words",
+						"slow": "2 min 16 sec",
+						"avg": "1 min 55 sec",
+						"fast": "1 min 34 sec",
+						"silent": "1 min 03 sec"
+					},
+					{
+						"words": "300 words",
+						"slow": "2 min 44 sec",
+						"avg": "2 min 18 sec",
+						"fast": "1 min 53 sec",
+						"silent": "1 min 16 sec"
+					},
+					{
+						"words": "400 words",
+						"slow": "3 min 38 sec",
+						"avg": "3 min 05 sec",
+						"fast": "2 min 30 sec",
+						"silent": "1 min 41 sec"
+					},
+					{
+						"words": "500 words",
+						"slow": "4 min 33 sec",
+						"avg": "3 min 51 sec",
+						"fast": "3 min 08 sec",
+						"silent": "2 min 06 sec"
+					},
+					{
+						"words": "600 words",
+						"slow": "5 min 27 sec",
+						"avg": "4 min 37 sec",
+						"fast": "3 min 45 sec",
+						"silent": "2 min 31 sec"
+					},
+					{
+						"words": "750 words",
+						"slow": "6 min 49 sec",
+						"avg": "5 min 46 sec",
+						"fast": "4 min 41 sec",
+						"silent": "3 min 09 sec"
+					},
+					{
+						"words": "800 words",
+						"slow": "7 min 16 sec",
+						"avg": "6 min 09 sec",
+						"fast": "5 min 00 sec",
+						"silent": "3 min 22 sec"
+					},
+					{
+						"words": "900 words",
+						"slow": "8 min 11 sec",
+						"avg": "6 min 55 sec",
+						"fast": "5 min 38 sec",
+						"silent": "3 min 47 sec"
+					},
+					{
+						"words": "1,000 words",
+						"slow": "9 min 05 sec",
+						"avg": "7 min 42 sec",
+						"fast": "6 min 15 sec",
+						"silent": "4 min 12 sec"
+					},
+					{
+						"words": "1,500 words",
+						"slow": "13 min 38 sec",
+						"avg": "11 min 32 sec",
+						"fast": "9 min 23 sec",
+						"silent": "6 min 18 sec"
+					},
+					{
+						"words": "2,000 words",
+						"slow": "18 min 11 sec",
+						"avg": "15 min 23 sec",
+						"fast": "12 min 30 sec",
+						"silent": "8 min 24 sec"
+					},
+					{
+						"words": "3,000 words",
+						"slow": "27 min 16 sec",
+						"avg": "23 min 05 sec",
+						"fast": "18 min 45 sec",
+						"silent": "12 min 36 sec"
+					},
+					{
+						"words": "5,000 words",
+						"slow": "45 min 27 sec",
+						"avg": "38 min 28 sec",
+						"fast": "31 min 15 sec",
+						"silent": "21 min 01 sec"
+					}
+				]
+			},
+			"relatedLabel": "Related writing & speaking utilities:",
+			"mathAndRates": {
+				"heading": "How Speech Time Is Calculated & Speaking Rates by Language",
+				"intro": "Understand the math behind script durations, stage pacing buffers, and multi-language speed variations.",
+				"formulaCard": {
+					"heading": "The Words-to-Minutes Math Formula",
+					"intro": "Converting a written draft into exact stage minutes relies on two reciprocal formulas based on words per minute (WPM):",
+					"durationLabel": "Speech Duration:",
+					"durationFormula": "Speaking Time (Minutes) = Total Words ÷ WPM",
+					"durationExampleHtml": "Example: 1,000 words ÷ 130 WPM = 7.69 min (<strong class=\"font-semibold text-ink\">7 min 42 sec</strong>).",
+					"budgetLabel": "Word Budget:",
+					"budgetFormula": "Target Word Budget = Minutes × WPM",
+					"budgetExampleHtml": "Example: 5 minutes × 130 WPM = <strong class=\"font-semibold text-ink\">650 words</strong>.",
+					"bufferHeading": "The 85% Stage Buffer Rule",
+					"bufferBody": "Rehearsing in private is always faster than presenting live. Seasoned keynote speakers budget an 85% safe target (~550 words for a 5-minute slot) to leave 10–15% headroom for breathing pauses, slide transitions, audience applause, and unscripted Q&A."
+				},
+				"paceCard": {
+					"heading": "Speaking Pace Guide & Multi-Language Support",
+					"intro": "Different presentation settings demand deliberate tempo adjustments:",
+					"items": [
+						{
+							"wpm": "110 WPM",
+							"title": "Slow & Ceremonial:",
+							"description": "Ideal for formal keynotes, wedding toasts, eulogies, and complex technical seminars where every word must resonate."
+						},
+						{
+							"wpm": "130 WPM",
+							"title": "Average & Conversational:",
+							"description": "Standard keynote tempo, corporate presentations, college lectures, and TED-style talks."
+						},
+						{
+							"wpm": "160 WPM",
+							"title": "Fast & Dynamic:",
+							"description": "Suited for energetic podcasts, YouTube voiceovers, fast-paced elevator pitches, and radio broadcasts."
+						}
+					],
+					"multilangHeading": "Multi-Language Script Detection",
+					"multilangBodyHtml": "This calculator seamlessly supports <strong class=\"font-semibold text-ink\">English, Spanish, French, Chinese, and Japanese</strong>. Space-separated Western languages (English, Spanish ~140–155 WPM, French ~140–155 WPM) calculate by word count, while Chinese and Japanese scripts automatically switch to character-per-minute pacing (~200 characters/min at average speed) for realistic duration estimates."
+				}
+			}
+		},
+		"faq": {
+			"heading": "Frequently Asked Questions",
+			"subtitle": "Common questions about speech timing, words per minute, script page counts, and stage rehearsals.",
+			"items": [
+				{
+					"question": "How do I calculate speech time from words (speech words to minutes)?",
+					"answer": "To convert speech words to minutes, divide your total word count by your speaking pace in words per minute (WPM). For example, using this speech time calculator and speech length calculator, a 650-word script read at a standard keynote pace of 130 WPM takes exactly 5 minutes (650 ÷ 130 = 5). For Chinese and Japanese text, speaking time is calculated by dividing total characters by characters per minute (~200 CPM)."
+				},
+				{
+					"question": "How many words is a 1-minute speech?",
+					"answer": "A 1-minute speech is typically 130 words at a conversational pace. If you speak deliberately during a formal ceremony or toast, aim for 110 speech time words; for fast-paced commercial voiceovers or elevator pitches, budget up to 160 words."
+				},
+				{
+					"question": "How many words for a 3 minute speech or a 5 minute speech?",
+					"answer": "If you are checking how many words for a 3 minute speech or how many words for a 5 minute speech at an average speaking pace of 130 WPM, a 3-minute speech requires 390 words, a 4-minute speech needs 520 words, and a 5-minute speech requires 650 words. To stay comfortably within your time limit during a live talk, reduce these targets by ~15% to 330 words (3 minutes), 440 words (4 minutes), and 550 words (5 minutes) respectively."
+				},
+				{
+					"question": "How do I check speech time by word count for 1,000 words?",
+					"answer": "When checking speech time by word count, reading 1,000 words aloud takes approximately 7 minutes and 42 seconds at an average speaking rate of 130 WPM. At a slower ceremonial pace of 110 WPM, it takes 9 minutes and 5 seconds, while at a brisk 160 WPM pace, it takes 6 minutes and 15 seconds."
+				},
+				{
+					"question": "How many words is a 10-minute, 12-minute, or 20-minute speech?",
+					"answer": "At 130 WPM, a 10-minute speech is 1,300 words (safe stage budget: 1,105 words), a 12-minute speech is 1,560 words (safe stage budget: 1,325 words), and a 20-minute presentation is 2,600 words (safe stage budget: 2,210 words)."
+				},
+				{
+					"question": "How many pages is a 5-minute or 45-minute talk?",
+					"answer": "Using standard formatting (12-point font, double-spaced, ~250 words per page), a 5-minute speech of 650 words is approximately 2.6 double-spaced pages. A 45-minute keynote of 5,850 words equals approximately 23.4 double-spaced pages (or roughly 11.7 single-spaced pages)."
+				},
+				{
+					"question": "What is the average speaking rate in words per minute (WPM)?",
+					"answer": "The average conversational and public speaking rate is 130 to 150 words per minute. Professional conference speakers and TED presenters typically speak at 130–140 WPM to ensure clarity, while radio hosts and podcasters frequently reach 150–160 WPM."
+				},
+				{
+					"question": "Does this speaking time calculator work for Spanish, French, Chinese, and Japanese?",
+					"answer": "Yes. It automatically handles space-separated European languages like English, Spanish, and French, while silently detecting Chinese and Japanese characters (CJK) to count characters and apply realistic CJK speaking cadences (~200 characters per minute)."
+				},
+				{
+					"question": "Should I include pauses, slides, and Q&A in my speech timing?",
+					"answer": "Yes, live speeches almost always take 10% to 15% longer than private rehearsals due to audience reactions, slide transitions, and deliberate pauses for emphasis. Following the 85% safe stage budget ensures you never get cut off by event organizers or run over your allotted time."
+				},
+				{
+					"question": "Is this speech time calculator free and does it save my script?",
+					"answer": "Wordora's Speech Time Calculator is 100% free with no login or usage limits. Your text is processed entirely in your web browser and is never uploaded to any server, stored in a database, or shared."
+				}
+			]
+		}
 	},
 	"randomTopicGenerator": {
 		"name": "Random Topic & Prompt Generator",
@@ -3206,7 +4005,1620 @@
 		"metric": "4 Modes · Instant Prompts",
 		"title": "Random Topic Generator – Prompts for Speaking, Writing, Essays & Debate | Wordora",
 		"metaDescription": "Generate 140+ curated random topics with talking points for 1-minute impromptu speeches, academic essays, debates, deep conversations, creative writing, and single-word prompts. Free, private, no signup.",
-		"h1": "Random Topic Generator"
+		"h1": "Random Topic Generator",
+		"ui": {
+			"workspaceAria": "Random Topic Generator Workspace",
+			"modesAria": "Topic purpose modes",
+			"modeAll": "All",
+			"modeEssayAcademic": "Essay & Academic",
+			"modeSpeechDebate": "Speech & Debate",
+			"modeConversationIcebreakers": "Conversation & Icebreakers",
+			"modeCreativeWriting": "Creative Writing",
+			"modeSingleWord": "Single-Word",
+			"labelCategory": "Category",
+			"catAll": "All Categories",
+			"catTechAi": "Technology & AI",
+			"catScienceHealth": "Science & Health",
+			"catPsychPhil": "Psychology & Philosophy",
+			"catBusinessCareer": "Business & Career",
+			"catEduSociety": "Education & Society",
+			"catCultureHistory": "Culture & History",
+			"catFunRandom": "Fun & Random",
+			"labelLevel": "Level",
+			"levelAny": "Any Level",
+			"levelEasy": "Easy",
+			"levelMedium": "Medium",
+			"levelHard": "Hard",
+			"labelLens": "Lens",
+			"lensStraight": "Straight",
+			"lensDevilsAdvocate": "Devil's Advocate",
+			"lensEli5": "ELI5 (Simple)",
+			"lensPitchIt": "Pitch It",
+			"lensStorytime": "Storytime",
+			"noRepeats": "No Repeats",
+			"initialPoolCount": "140 matching topics",
+			"viewModeAria": "View mode",
+			"viewSingle": "Single Focus",
+			"viewBatch": "Batch (5 Topics)",
+			"btnPrepFramework": "PREP Framework",
+			"btnTodaysTopic": "Today's Topic",
+			"initialSeenCounter": "1 of 140 seen",
+			"prepTitle": "PREP Speaking & Essay Structure (Point · Reason · Example · Point)",
+			"prepDuration": "60–90 sec framework",
+			"prepSteps": [
+				{
+					"title": "1. Point",
+					"desc": "State your core thesis or direct answer in one clear sentence."
+				},
+				{
+					"title": "2. Reason",
+					"desc": "Explain the primary cause, mechanism, or principle behind your claim."
+				},
+				{
+					"title": "3. Example",
+					"desc": "Anchor your argument with a concrete story, case study, or statistic."
+				},
+				{
+					"title": "4. Point",
+					"desc": "Restate your conclusion so the audience leaves with a memorable takeaway."
+				}
+			],
+			"btnGenerateNew": "Generate New Topic",
+			"btnCopySingle": "Copy Topic + Points",
+			"btnSaveSingle": "Save to Shortlist",
+			"btnCopyLink": "Copy Link",
+			"spaceHintBefore": "Press ",
+			"spaceKey": "Space",
+			"spaceHintAfter": " for next topic",
+			"batchBadge": "Batch View (5 Topics)",
+			"batchHint": "Click any topic row to open its full talking points in Single Focus",
+			"batchListAria": "Batch generated topics",
+			"btnGenerateBatch": "Generate 5 New",
+			"btnCopyBatch": "Copy All 5",
+			"btnDownloadTxt": "Download .txt",
+			"batchToastInitial": "Showing 5 random topics from current filters",
+			"timerNotesHeading": "Practice Timer & Quick Notes",
+			"timerPresetsAria": "Timer presets",
+			"preset30s": "30s Prep",
+			"preset1m": "1 min",
+			"preset2m": "2 min",
+			"preset5m": "5 min",
+			"timerReady": "Ready",
+			"timerStart": "Start",
+			"timerReset": "Reset",
+			"notesLabel": "Quick outline & opening hook scratchpad",
+			"notesInitialWords": "0 words",
+			"notesPlaceholder": "Jot down your opening hook or thesis...",
+			"notesAutoSave": "Notes auto-save locally in your browser",
+			"notesClear": "Clear notes",
+			"shortlistHeading": "Shortlisted Topics",
+			"shortlistInitialSaved": "0 saved",
+			"btnClear": "Clear",
+			"shortlistEmptyBefore": "Click ",
+			"shortlistEmptyAfter": " on any topic to bookmark your favorites for comparison or export.",
+			"shortlistAria": "Shortlisted topics",
+			"shortlistSavedAcross": "Saved across visits",
+			"btnCopyAllSaved": "Copy All Saved",
+			"relatedToolsAria": "Related writing and speaking tools",
+			"relatedBefore": "Ready to start drafting or timing your speech? Try our ",
+			"relatedComma": ", ",
+			"relatedOr": ", or ",
+			"relatedAfter": "."
+		},
+		"client": {
+			"modes": {
+				"Essay & Academic": "Essay & Academic",
+				"Speech & Debate": "Speech & Debate",
+				"Conversation & Icebreakers": "Conversation & Icebreakers",
+				"Creative Writing": "Creative Writing",
+				"Single-Word": "Single-Word"
+			},
+			"categories": {
+				"Technology & AI": "Technology & AI",
+				"Science & Health": "Science & Health",
+				"Psychology & Philosophy": "Psychology & Philosophy",
+				"Business & Career": "Business & Career",
+				"Education & Society": "Education & Society",
+				"Culture & History": "Culture & History",
+				"Fun & Random": "Fun & Random"
+			},
+			"levels": {
+				"Easy": "Easy",
+				"Medium": "Medium",
+				"Hard": "Hard"
+			},
+			"lenses": {
+				"Straight": "Straight",
+				"Devil's Advocate": "Devil's Advocate",
+				"ELI5 (Simple)": "ELI5 (Simple)",
+				"Pitch It": "Pitch It",
+				"Storytime": "Storytime"
+			},
+			"lensInstructions": {
+				"Straight": "",
+				"Devil's Advocate": "Devil's Advocate Lens: Argue the strongest, most intellectually honest case AGAINST your initial instinct on this topic.",
+				"ELI5 (Simple)": "ELI5 Lens: Explain this topic using plain, vivid everyday analogies that a curious 10-year-old would immediately grasp.",
+				"Pitch It": "Pitch It Lens: Frame your response as a crisp 60-second proposal pitching a concrete solution or action plan.",
+				"Storytime": "Storytime Lens: Open with a specific personal anecdote, historical scene, or lived moment before introducing any theory."
+			},
+			"matchingTopicSingular": "{count} matching topic",
+			"matchingTopicPlural": "{count} matching topics",
+			"seenCounter": "{seen} of {total} seen",
+			"savedInShortlist": "Saved in Shortlist ✓",
+			"saveToShortlist": "Save to Shortlist",
+			"lensBadge": "Lens: {lens}",
+			"creativeAnglesHeading": "Creative association angles",
+			"talkingPointsHeading": "Angles & talking points",
+			"btnCopy": "Copy",
+			"btnCopied": "Copied",
+			"btnSavedShort": "Saved ✓",
+			"btnSaveShort": "Save",
+			"copyPerspectiveLens": "Perspective Lens: {lens}",
+			"copyTalkingPointsLabel": "Talking Points:",
+			"toastRemovedShortlist": "Removed topic from shortlist",
+			"toastSavedShortlist": "Saved topic to shortlist",
+			"savedCount": "{count} saved",
+			"removeSavedAria": "Remove saved topic",
+			"toastTodaysTopic": "Loaded Today's Topic ({date})",
+			"toastGeneratedNew": "Generated new {mode} topic",
+			"btnCopiedBang": "Copied!",
+			"btnCopyTopicPoints": "Copy Topic + Points",
+			"toastCopiedSingle": "Copied topic & talking points",
+			"btnLinkCopied": "Link Copied!",
+			"btnCopyLink": "Copy Link",
+			"toastLinkCopied": "Shareable topic link copied",
+			"toastBatchGenerated": "Generated 5 new topics",
+			"btnCopiedAll5": "Copied All 5!",
+			"btnCopiedAll": "Copied All!",
+			"timerStart": "Start",
+			"timerPause": "Pause",
+			"timerResume": "Resume",
+			"timerReady": "Ready",
+			"timerPaused": "Paused",
+			"timerRunning": "Running",
+			"timerTimesUp": "Time's up!",
+			"wordSingular": "{count} word",
+			"wordPlural": "{count} words"
+		},
+		"page": {
+			"subtitle": "Generate curated, thought-provoking prompts for academic essays, public speaking and debates, creative fiction, and blog articles—and save your favorites to a shortlist.",
+			"schemaFeatures": [
+				"140+ curated random topics with structured talking points across six purpose modes",
+				"Perspective lenses (Straight, Devil's Advocate, ELI5, Pitch It, Storytime)",
+				"Single focus spotlight and Batch (5 Topics) simultaneous generation",
+				"Built-in impromptu practice countdown timer (30s, 1 min, 2 min, 5 min) with live speech hook notes",
+				"Session-saved shortlist with instant clipboard copy and .txt export",
+				"100% private client-side execution with zero signup required"
+			],
+			"howToUse": {
+				"heading": "How to Use the Random Topic Generator",
+				"intro": "Every random prompt pairs with three structured talking points, a perspective lens, and an optional countdown timer so you never start from a blank mind. Follow these four quick steps to filter, practice, and export topics for speeches, papers, or creative projects:",
+				"steps": [
+					{
+						"title": "Pick a Purpose Mode",
+						"bodyHtml": "Switch between <strong class=\"font-semibold text-ink\">All</strong>, <strong class=\"font-semibold text-ink\">Essay &amp; Academic</strong>, <strong class=\"font-semibold text-ink\">Speech &amp; Debate</strong>, <strong class=\"font-semibold text-ink\">Conversation &amp; Icebreakers</strong>, <strong class=\"font-semibold text-ink\">Creative Writing</strong>, or <strong class=\"font-semibold text-ink\">Single-Word</strong> prompts."
+					},
+					{
+						"title": "Refine by Subject, Level & Lens",
+						"bodyHtml": "Narrow down across 7 subjects, choose <strong class=\"font-semibold text-ink\">Easy</strong>, <strong class=\"font-semibold text-ink\">Medium</strong>, or <strong class=\"font-semibold text-ink\">Hard</strong> difficulty, and apply a perspective lens (<strong class=\"font-semibold text-ink\">Straight</strong>, <strong class=\"font-semibold text-ink\">Devil's Advocate</strong>, <strong class=\"font-semibold text-ink\">ELI5</strong>, <strong class=\"font-semibold text-ink\">Pitch It</strong>, or <strong class=\"font-semibold text-ink\">Storytime</strong>)."
+					},
+					{
+						"title": "Generate Single or Batch Prompts",
+						"bodyHtml": "Press <strong class=\"font-semibold text-ink\">Generate New Topic</strong> (or <kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-ink\">Spacebar</kbd>) for a spotlight prompt with 3 talking points, or toggle <strong class=\"font-semibold text-ink\">Batch (5 Topics)</strong> to scan five ideas at once."
+					},
+					{
+						"title": "Practice & Export Your Shortlist",
+						"bodyHtml": "Run the built-in <strong class=\"font-semibold text-ink\">30s</strong>, <strong class=\"font-semibold text-ink\">1 min</strong>, <strong class=\"font-semibold text-ink\">2 min</strong>, or <strong class=\"font-semibold text-ink\">5 min</strong> timer for off-the-cuff speaking practice, jot down an opening hook, and save favorites to copy or download as <strong class=\"font-semibold text-ink\">.txt</strong>."
+					}
+				]
+			},
+			"practicalWays": {
+				"heading": "6 Practical Ways to Use a Random Topic Generator",
+				"intro": "Whether preparing for a competition, breaking writer's block, or enlivening a group conversation, these prompt formats adapt to key speaking and writing scenarios:",
+				"cards": [
+					{
+						"badge": "Speaking",
+						"title": "1-Minute Impromptu & Off-the-Cuff Speaking",
+						"description": "Practice Toastmasters Table Topics, JAM (Just A Minute) rounds, and job interview warm-ups using the built-in 1-minute countdown timer. The three structured talking points help you frame a smooth opening, argument, and close on the spot."
+					},
+					{
+						"badge": "Essays",
+						"title": "Academic Essays & Research Papers",
+						"description": "Break writer's block with balanced, thesis-ready prompts across technology, psychology, education, and public policy. Each topic offers ready sub-themes to structure your outline and support your main thesis with evidence."
+					},
+					{
+						"badge": "Debates",
+						"title": "Classroom Debates & Group Discussions",
+						"description": "Give students and debate clubs fair, multi-sided motions with ready-made pro/con angles. Applying the Devil's Advocate lens pushes speakers to defend counterarguments and test their assumptions under pressure."
+					},
+					{
+						"badge": "Conversation",
+						"title": "Deep & Funny Conversation Starters",
+						"description": "Skip repetitive small talk at dinners, road trips, or team icebreakers with light, deep, or humorous questions. Pick easy icebreakers for fast laughs or medium and hard prompts for meaningful discussions."
+					},
+					{
+						"badge": "Creative",
+						"title": "Creative Writing, Songs & Drawing Prompts",
+						"description": "Spark short stories, journal entries, songwriting themes, or sketch ideas using Creative Writing and Single-Word modes. The Storytime lens helps you turn an unexpected premise into a vivid narrative arc."
+					},
+					{
+						"badge": "Presentations",
+						"title": "Presentations & Pitch Practice",
+						"description": "Use the Pitch It or ELI5 lens to rehearse explaining complex ideas clearly under realistic time limits. Perfect for founders, teachers, and professionals practicing concise, jargon-free explanations."
+					}
+				]
+			},
+			"curatedLists": {
+				"heading": "Curated Random Topic Lists by Category",
+				"intro": "Copy any sample prompt below directly for your next speech, essay, or discussion, or spin the generator above for 140+ interactive topics complete with talking points, difficulty levels, and timer presets.",
+				"speechList": {
+					"title": "10 Good Topics for a 1-Minute Impromptu Speech",
+					"badge": "Speech",
+					"items": [
+						"Why every new job should start with a week of listening",
+						"The underrated value of boredom in an over-scheduled day",
+						"One practical life skill schools should teach before graduation",
+						"Why handwritten notes still beat digital messaging apps",
+						"What a favorite childhood game teaches about adult teamwork",
+						"The subtle difference between being busy and being productive",
+						"Why making a small decision quickly is better than overthinking",
+						"A lesson you learned from a memorable travel delay or mistake",
+						"Why everyone should work a customer service job at least once",
+						"The best piece of advice you initially ignored and later embraced"
+					]
+				},
+				"debateList": {
+					"title": "10 Balanced Essay & Debate Prompts",
+					"badge": "Debate",
+					"items": [
+						"Should universities replace timed exams with project portfolios?",
+						"Does permanent remote work strengthen or weaken company culture?",
+						"Should social media recommendation algorithms be regulated like public utilities?",
+						"Is commercial space exploration a necessity or a distraction from Earth's crises?",
+						"Should governments mandate financial literacy courses as a high school graduation requirement?",
+						"Does artificial intelligence in creative fields diminish or elevate human artistry?",
+						"Should public transit in metropolitan cities be entirely free and tax-funded?",
+						"Are grades an effective motivator for learning, or do they incentivize shortcuts?",
+						"Should employers be legally restricted from contacting workers outside regular business hours?",
+						"Does universal basic income encourage entrepreneurship or reduce workplace participation?"
+					]
+				},
+				"socialList": {
+					"title": "10 Deep & Funny Conversation Questions",
+					"badge": "Social",
+					"items": [
+						"What belief did you hold strongly five years ago that you have completely changed your mind on?",
+						"If animals could talk, which species would be the rudest, and why?",
+						"What everyday convenience from today would feel like genuine magic to someone from 1920?",
+						"If you had to teach an impromptu masterclass right now on any topic, what would it be?",
+						"What is the most useless piece of trivia that permanently lives in your head rent-free?",
+						"What is a minor annoyance that you believe should be completely illegal?",
+						"If your current life were an autobiography, what would the title of this current chapter be?",
+						"What is something you genuinely enjoy that everyone else seems to find tedious?",
+						"If you were forced to eat only one cuisine for the rest of your life, which would you pick?",
+						"What is an unpopular food or cultural opinion you will defend until the end?"
+					]
+				},
+				"singleWordList": {
+					"title": "20 Single-Word Prompts for Speaking, Drawing & Songwriting",
+					"badge": "Single Word",
+					"intro": "Single-word prompts unlock fast creative flow. Use these evocative seeds for warm-up freewriting, speed drawing, or rapid table topic rounds:",
+					"words": [
+						"Lantern",
+						"Compass",
+						"Echo",
+						"Clockwork",
+						"Horizon",
+						"Static",
+						"Velvet",
+						"Anchor",
+						"Mirage",
+						"Orbit",
+						"Ember",
+						"Driftwood",
+						"Labyrinth",
+						"Prism",
+						"Solstice",
+						"Blueprint",
+						"Tide",
+						"Reverie",
+						"Gravity",
+						"Mosaic"
+					]
+				}
+			},
+			"frameworks": {
+				"heading": "How to Structure an Impromptu Speech or Essay",
+				"intro": "Pairing a random prompt with a proven mental framework eliminates hesitation and keeps your thoughts organized during timed speeches and essays:",
+				"prep": {
+					"title": "The PREP Framework (Best for 1-Minute Speeches & Interviews)",
+					"badge": "Impromptu",
+					"items": [
+						{
+							"letter": "P",
+							"label": "Point:",
+							"text": "State your clear main position in the first 10 seconds."
+						},
+						{
+							"letter": "R",
+							"label": "Reason:",
+							"text": "Explain the primary logic or cause behind your stance."
+						},
+						{
+							"letter": "E",
+							"label": "Example:",
+							"text": "Anchor your point with a concrete real-world story, statistic, or observation."
+						},
+						{
+							"letter": "P",
+							"label": "Point (Restated):",
+							"text": "Wrap up with a memorable closing line that echoes your opening thesis."
+						}
+					],
+					"tipHtml": "<strong class=\"font-semibold text-ink\">Speaking pace tip:</strong> A comfortable 1-minute speech runs at roughly 120–150 words per minute—use our <a href=\"/speech-time-calculator/\" class=\"font-medium text-[#0D9488] underline underline-offset-2 transition-colors hover:text-ink dark:text-[#AFE3D0]\">Speech Time Calculator</a> to practice pacing your delivery."
+				},
+				"peel": {
+					"title": "The PEEL Framework (Best for Academic Essays & Debate Arguments)",
+					"badge": "Essays",
+					"items": [
+						{
+							"letter": "P",
+							"label": "Point:",
+							"text": "Open the paragraph with a focused topic sentence."
+						},
+						{
+							"letter": "E",
+							"label": "Evidence:",
+							"text": "Support the claim with data, research findings, or historical precedent."
+						},
+						{
+							"letter": "E",
+							"label": "Explanation:",
+							"text": "Analyze why that evidence proves your argument and address counter-perspectives."
+						},
+						{
+							"letter": "L",
+							"label": "Link:",
+							"text": "Connect the insight back to your overall essay thesis or transition smoothly to the next point."
+						}
+					],
+					"tipHtml": "<strong class=\"font-semibold text-ink\">Formatting tip:</strong> A standard body paragraph spans 150–250 words; verify your target length with the <a href=\"/word-counter/\" class=\"font-medium text-[#0D9488] underline underline-offset-2 transition-colors hover:text-ink dark:text-[#AFE3D0]\">Word Counter</a> and check equivalent page counts with the <a href=\"/words-to-pages/\" class=\"font-medium text-[#0D9488] underline underline-offset-2 transition-colors hover:text-ink dark:text-[#AFE3D0]\">Words to Pages Converter</a>."
+				}
+			},
+			"audience": {
+				"heading": "Who Uses Wordora's Random Topic Generator?",
+				"intro": "From academic classrooms to professional public speaking stages, communicators rely on structured prompt generation to build confidence and articulate ideas clearly:",
+				"cards": [
+					{
+						"title": "Students & Academic Writers",
+						"description": "Brainstorm thesis arguments, outline essay body paragraphs, and prepare for timed in-class essay exams without stalling."
+					},
+					{
+						"title": "Public Speakers & Toastmasters",
+						"description": "Practice Table Topics, JAM rounds, and conference Q&A responses using the built-in 1-minute timer and talking points."
+					},
+					{
+						"title": "Debate Teams & Classroom Teachers",
+						"description": "Assign balanced motions with ready-made pro/con angles and challenge students to argue from opposing perspectives."
+					},
+					{
+						"title": "Writers, Bloggers & Songwriters",
+						"description": "Overcome the blank page with spontaneous narrative sparks, daily journaling prompts, and evocative single-word themes."
+					},
+					{
+						"title": "ESL / EFL Language Learners",
+						"description": "Build spontaneous speaking confidence, expand topical vocabulary, and practice articulating opinions in English fluently."
+					},
+					{
+						"title": "Podcast Hosts & Team Facilitators",
+						"description": "Break the ice during remote meetings, formulate insightful guest interview questions, and lead engaging workshop exercises."
+					}
+				]
+			},
+			"relatedTools": {
+				"heading": "Related Writing & Speaking Tools",
+				"subtitle": "Explore companion utilities to measure speech durations, format essays, and count words accurately.",
+				"utilityBadge": "Utility",
+				"cards": [
+					{
+						"slug": "/speech-time-calculator/",
+						"categoryKey": "Speaking",
+						"title": "Speech Time Calculator",
+						"description": "Convert your drafted speech word count into exact speaking duration.",
+						"cta": "Calculate speech time"
+					},
+					{
+						"slug": "/words-to-pages/",
+						"categoryKey": "Writing",
+						"title": "Words to Pages Converter",
+						"description": "Estimate how many double-spaced or single-spaced pages your essay prompt will fill.",
+						"cta": "Convert words to pages"
+					},
+					{
+						"slug": "/word-counter/",
+						"categoryKey": "Writing",
+						"title": "Word Counter",
+						"description": "Check live word, character, sentence, and paragraph counts as you write.",
+						"cta": "Count words"
+					},
+					{
+						"slug": "/reading-time-calculator/",
+						"categoryKey": "Reading",
+						"title": "Reading Time Calculator",
+						"description": "Measure estimated reading minutes for essays, articles, and scripts.",
+						"cta": "Calculate reading time"
+					}
+				]
+			},
+			"faqSection": {
+				"heading": "Frequently Asked Questions",
+				"intro": "Find quick answers to common questions about generating prompts, practicing impromptu speeches, and customizing topic lenses:"
+			}
+		},
+		"faq": [
+			{
+				"question": "What is a random topic generator and how does it work?",
+				"answer": "A random topic generator is a free browser-based prompt tool that draws from 140+ curated topics across academic essays, impromptu speeches, classroom debates, casual conversations, creative writing, and single-word sparks. Each generated topic automatically includes three structured talking points and a chosen perspective lens to help you outline your thoughts without starting from a blank page."
+			},
+			{
+				"question": "How do I practice 1-minute impromptu speaking with this tool?",
+				"answer": "To practice 1-minute impromptu speeches, select Speech & Debate mode and start the built-in countdown timer with 30s Prep or 1 min. Press Generate New Topic (or tap the Spacebar), jot down an opening hook in the notes pad, and deliver your speech using the PREP framework (Point, Reason, Example, Point)."
+			},
+			{
+				"question": "Can I generate single-word topics for speeches, drawing, or songwriting?",
+				"answer": "Yes. Switch the top mode pill to Single-Word to generate evocative one-word prompts paired with three distinct creative association angles. This mode is ideal for JAM (Just A Minute) speaking rounds, Pictionary or sketchbook challenges, and spontaneous songwriting sessions."
+			},
+			{
+				"question": "How many random topics can I generate at once?",
+				"answer": "You can use Single Focus mode to concentrate on one deep prompt at a time, or toggle Batch (5 Topics) to generate five ideas side by side. Enable the No Repeats toggle to ensure you only see unseen topics throughout your active session."
+			},
+			{
+				"question": "Are there easy topics for kids, students, and ESL learners?",
+				"answer": "Yes. Set the Level filter to Easy and select ELI5 (Explain Like I'm 5) under Lens to receive accessible, relatable prompts. These work well for elementary and middle school classrooms, ESL/EFL speaking fluency drills, and family conversation starters."
+			},
+			{
+				"question": "How are the debate and essay topics balanced?",
+				"answer": "Essay & Academic and Speech & Debate prompts are framed as open-ended questions or nuanced motions accompanied by three balanced talking points representing differing perspectives. Selecting the Devil's Advocate lens immediately highlights counterarguments to sharpen your rebuttal and critical thinking skills."
+			},
+			{
+				"question": "What are 10 good topics for an impromptu speech or conversation?",
+				"answer": "Popular prompts include: Why every new job should start with a week of listening; The underrated value of boredom; Whether smartphones improve or weaken memory; One skill schools should teach before graduation; and The best advice you ignored at first. You can spin over 140 curated variations across six categories using the tool above."
+			},
+			{
+				"question": "Can I save and export my favorite generated topics?",
+				"answer": "Yes. Click Save to Shortlist on any prompt to store it locally in your browser's localStorage. You can review your shortlisted topics anytime, copy them all to your clipboard with one click, or export the entire list as a clean .txt file."
+			},
+			{
+				"question": "Is this random topic generator completely free without login?",
+				"answer": "Yes, it is 100% free with no account creation, login, email submission, or daily generation limits. Every feature—including timer practice, lenses, batch generation, and exports—is fully unlocked."
+			},
+			{
+				"question": "Are my notes and shortlisted topics stored privately?",
+				"answer": "Yes, completely privately. All topic selection, rehearsal timers, scratchpad notes, and saved shortlists run strictly on the client side inside your web browser. No prompt selections, notes, or usage data are ever uploaded to or stored on external servers."
+			}
+		],
+		"topics": {
+			"ea-1": {
+				"title": "Does widespread reliance on algorithmic recommendations narrow or expand individual cultural curiosity?",
+				"points": [
+					"Analyze whether personalized discovery feeds create taste echo chambers or lower friction to discovering global niche art.",
+					"Compare passive algorithmic consumption with active curation through community forums, libraries, and critics.",
+					"Evaluate whether platforms should offer a transparent \"serendipity slider\" to let users tune unfamiliar recommendations."
+				]
+			},
+			"ea-2": {
+				"title": "Should autonomous software agents and AI systems carry mandatory digital watermarks on all synthetic media by law?",
+				"points": [
+					"Examine cryptographic provenance standards versus the ease of stripping metadata across open-source tools.",
+					"Weigh protection of public epistemic trust against privacy concerns for anonymous whistleblowers and artists.",
+					"Consider how courts and journalists verify authenticity when synthetic audio and video become indistinguishable from reality."
+				]
+			},
+			"ea-3": {
+				"title": "Has the transition from physical notebooks to cloud-synced digital notes improved how students retain complex ideas?",
+				"points": [
+					"Compare cognitive encoding during slower handwriting against the speed and searchability of typed digital notes.",
+					"Discuss how spatial memory on physical paper pages differs from infinite scrolling documents.",
+					"Propose hybrid workflows that combine handwritten concept mapping with searchable digital archives."
+				]
+			},
+			"ea-4": {
+				"title": "To what extent should municipal utilities treat high-speed broadband and local compute access as public infrastructure?",
+				"points": [
+					"Compare 20th-century rural electrification programs with modern fiber-optic and digital access divides.",
+					"Analyze the economic trade-offs between private telecom competition and municipal broadband cooperatives.",
+					"Assess how telehealth, remote education, and civic participation depend on baseline connectivity guarantees."
+				]
+			},
+			"ea-5": {
+				"title": "Should scientific journals mandate immediate open-access publishing for all taxpayer-funded research upon peer review?",
+				"points": [
+					"Weigh the public right to access publicly funded discoveries against the operational costs of peer-review administration.",
+					"Analyze how high article-processing charges affect early-career researchers and universities in developing nations.",
+					"Explore institutional preprint repositories as an alternative model for rapid scientific collaboration."
+				]
+			},
+			"ea-6": {
+				"title": "What ethical boundaries should govern preventive polygenic embryo screening for non-lethal traits?",
+				"points": [
+					"Distinguish between screening for severe monogenic diseases and statistical risk scores for complex polygenic traits.",
+					"Address potential socioeconomic stratification if genomic optimization becomes available only through private clinics.",
+					"Discuss the psychological impact on children raised under heightened genetic expectations."
+				]
+			},
+			"ea-7": {
+				"title": "How does urban tree canopy density measurably influence public physical and mental health outcomes?",
+				"points": [
+					"Examine the urban heat-island effect and how shaded neighborhoods reduce heat-related hospitalizations.",
+					"Review epidemiological studies linking daily green-space exposure to lower cortisol levels and improved sleep.",
+					"Evaluate equitable urban forestry budgets across historically under-shaded neighborhoods."
+				]
+			},
+			"ea-8": {
+				"title": "Should national dietary guidelines factor environmental sustainability alongside nutritional adequacy?",
+				"points": [
+					"Compare the land, water, and carbon footprints of plant-forward diets with conventional livestock production.",
+					"Consider cultural food traditions, agricultural livelihoods, and regional micronutrient availability.",
+					"Analyze whether consumer food labeling changes purchasing habits more effectively than agricultural subsidies."
+				]
+			},
+			"ea-9": {
+				"title": "Is moral responsibility diminished when human decisions are nudged by predictive choice architecture?",
+				"points": [
+					"Define behavioral nudges in finance, organ donation, and digital interfaces through the lens of personal autonomy.",
+					"Contrast libertarian paternalism with classical Kantian views of conscious moral agency.",
+					"Explore where helpful default settings cross the line into dark patterns and manipulation."
+				]
+			},
+			"ea-10": {
+				"title": "Does the ship of Theseus paradox apply to human personal identity across decades of autobiographical memory reconstruction?",
+				"points": [
+					"Examine neuroscience findings showing that episodic memories are subtly rewritten each time they are recalled.",
+					"Compare Locke’s psychological continuity theory with narrative identity frameworks in modern psychology.",
+					"Consider legal and ethical implications: why do we hold an 80-year-old accountable for actions taken at age 20?"
+				]
+			},
+			"ea-11": {
+				"title": "Why does voluntary solitude restore cognitive creativity whereas involuntary isolation erodes it?",
+				"points": [
+					"Distinguish the psychological framing of chosen quiet reflection from social exclusion.",
+					"Explain how the brain’s default mode network consolidates insights when freed from external social performance.",
+					"Discuss architectural and scheduling habits that protect healthy solitude in hyper-connected environments."
+				]
+			},
+			"ea-12": {
+				"title": "Can longtermism provide a coherent ethical framework without discounting urgent present-day human suffering?",
+				"points": [
+					"Compare moral weights assigned to billions of potential future humans versus living populations facing immediate poverty.",
+					"Analyze existential risk mitigation investments alongside measurable near-term public health interventions.",
+					"Question how epistemic uncertainty over century-scale forecasts affects practical policy prioritization."
+				]
+			},
+			"ea-13": {
+				"title": "Does mandatory pay transparency within corporations compress wages or accelerate meritocratic productivity?",
+				"points": [
+					"Review empirical evidence on gender and demographic pay gaps before and after salary disclosure laws.",
+					"Analyze whether open salary bands reduce negotiation friction or discourage high-performing outliers.",
+					"Examine how organizations define objective performance metrics when compensation is visible to peers."
+				]
+			},
+			"ea-14": {
+				"title": "How has remote and hybrid work reshaped the economic geography of mid-sized towns and commuter suburbs?",
+				"points": [
+					"Trace the shift of daytime retail spending from central business districts to neighborhood commercial corridors.",
+					"Examine housing affordability pressures when remote earners relocate to lower-cost regional cities.",
+					"Evaluate how municipal transit agencies adapt schedules designed around 9-to-5 downtown peaks."
+				]
+			},
+			"ea-15": {
+				"title": "Should corporate fiduciary duty require binding environmental and stakeholder audits alongside quarterly financial reporting?",
+				"points": [
+					"Contrast Milton Friedman’s shareholder primacy doctrine with modern benefit-corporation governance models.",
+					"Analyze the measurability problem: how to prevent vague ESG metrics from becoming unverified marketing claims.",
+					"Assess whether long-term supply-chain resilience aligns shareholder value with ecological stewardship."
+				]
+			},
+			"ea-16": {
+				"title": "Why do certain artisanal and repair trades thrive economically during eras of rapid industrial automation?",
+				"points": [
+					"Explore consumer psychology around provenance, durability, and human craftsmanship in saturated digital markets.",
+					"Compare the unit economics of disposable mass manufacturing with modular, repairable product design.",
+					"Evaluate right-to-repair legislation as a catalyst for local skilled technical employment."
+				]
+			},
+			"ea-17": {
+				"title": "Should universities evaluate students primarily through long-form research projects rather than timed examinations?",
+				"points": [
+					"Compare how timed exams measure short-term recall under pressure versus how extended research tests synthesis and revision.",
+					"Address academic integrity challenges in an era of generative AI and how oral defenses could verify original work.",
+					"Consider whether high-stakes professions like medicine and aviation still require rapid, unassisted recall under time constraints."
+				]
+			},
+			"ea-18": {
+				"title": "How does the architecture of public libraries and pedestrian plazas shape civic trust in modern cities?",
+				"points": [
+					"Define Ray Oldenburg’s concept of \"third places\" where citizens gather without a commercial purchase requirement.",
+					"Analyze how natural light, seating geometry, and street-level accessibility encourage cross-generational interaction.",
+					"Compare neighborhoods with well-funded civic spaces against car-dependent developments lacking public squares."
+				]
+			},
+			"ea-19": {
+				"title": "Is universal financial literacy education in secondary schools sufficient to improve household economic resilience?",
+				"points": [
+					"Distinguish what individual budgeting and compound-interest literacy can solve from structural wage and housing costs.",
+					"Review longitudinal studies measuring adult credit scores and savings rates after high-school finance mandates.",
+					"Propose pairing classroom instruction with automatic youth savings accounts or practical tax-filing workshops."
+				]
+			},
+			"ea-20": {
+				"title": "Should municipal governments prioritize congestion pricing or expanded micro-transit networks to reduce commuter emissions?",
+				"points": [
+					"Compare behavioral pricing disincentives in cities like London and Stockholm with suburban transit deserts.",
+					"Assess equity impacts on shift-based hospitality and healthcare workers who commute outside peak rail hours.",
+					"Explore how congestion revenue can be legally ring-fenced to fund high-frequency bus and cycling lanes."
+				]
+			},
+			"ea-21": {
+				"title": "To what extent should historical preservation laws restrict the adaptive reuse of aging urban infrastructure?",
+				"points": [
+					"Weigh architectural heritage conservation against urgent housing density and climate retrofitting needs.",
+					"Examine successful adaptive reuse case studies where industrial warehouses became vibrant mixed-use housing.",
+					"Discuss who decides which eras and vernacular buildings merit permanent legal protection."
+				]
+			},
+			"ea-22": {
+				"title": "How has the digitization of fragile newspapers and personal letters altered historical historiography?",
+				"points": [
+					"Analyze how full-text keyword search accelerates cross-referencing while tempting scholars to skip surrounding context.",
+					"Consider survivorship bias: which regional languages and community archives remain un-digitized and invisible online?",
+					"Reflect on what physical artifacts—postmarks, paper quality, handwritten marginalia—reveal that OCR text omits."
+				]
+			},
+			"ea-23": {
+				"title": "Why do culinary traditions often survive across immigrant generations longer than spoken ancestral languages?",
+				"points": [
+					"Explore sensory memory and communal family meals as low-barrier vessels of cultural identity.",
+					"Contrast external social pressures for linguistic assimilation with the broad welcoming of diverse cuisines.",
+					"Examine how diaspora recipes adapt local ingredients while preserving foundational flavor structures."
+				]
+			},
+			"ea-24": {
+				"title": "Should encyclopedic museums replace permanent international ownership of disputed artifacts with rotating global stewardship?",
+				"points": [
+					"Compare the universal museum argument for comparative global study with cultural restitution claims.",
+					"Evaluate modern climate-controlled conservation facilities in countries of origin alongside digital 3D archiving.",
+					"Propose long-term reciprocal loan treaties that circulate artifacts across continents."
+				]
+			},
+			"ea-25": {
+				"title": "What does the evolution of board game design reveal about shifting cultural attitudes toward competition and cooperation?",
+				"points": [
+					"Contrast early 20th-century player-elimination games like Monopoly with modern cooperative games like Pandemic.",
+					"Analyze why complex tabletop gatherings surged in popularity alongside high-speed digital entertainment.",
+					"Examine how rulebook mechanics teach negotiation, resource scarcity, and shared problem-solving."
+				]
+			},
+			"ea-26": {
+				"title": "Why do human societies repeatedly invent standardized timekeeping systems that ignore seasonal daylight variations?",
+				"points": [
+					"Trace the railway synchronization of the 19th century that replaced local solar noon with uniform time zones.",
+					"Examine biological circadian friction caused by artificial clock shifts and permanent standard vs. daylight time.",
+					"Compare agricultural task-oriented time with industrial clock-measured labor."
+				]
+			},
+			"ea-27": {
+				"title": "How did the humble shipping container quietly reorganize global retail, port cities, and consumer expectations?",
+				"points": [
+					"Explain how intermodal standardization slashed maritime loading times from weeks of manual labor to hours.",
+					"Trace how historic downtown waterfronts shifted away from city centers toward automated deep-water ports.",
+					"Discuss the fragility of just-in-time global supply chains when a single canal or port bottleneck occurs."
+				]
+			},
+			"ea-28": {
+				"title": "Can humor and political satire function as a catalyst for policy reform, or do they primarily serve as a pressure-release valve?",
+				"points": [
+					"Analyze historical examples where satirical pamphlets and broadcasts exposed institutional absurdity.",
+					"Consider the psychological risk that laughing at systemic problems substitutes for tangible civic action.",
+					"Compare satire under censorship with satire in fragmented, attention-saturated media ecosystems."
+				]
+			},
+			"sd-1": {
+				"title": "This house would ban smartphones and smartwatches inside primary and secondary school classrooms.",
+				"points": [
+					"Proposition: Removing notification interrupts measurably restores peer-to-peer recess socialization and deep reading focus.",
+					"Opposition: Teaching responsible self-regulation with technology prepares students better than prohibition.",
+					"Middle ground: Evaluate bell-to-bell lockable pouches versus emergency family communication policies."
+				]
+			},
+			"sd-2": {
+				"title": "Why every software engineer and product designer should spend one week a year in customer support.",
+				"points": [
+					"Open with a vivid story of a \"minor UI change\" that caused thousands of real users daily frustration.",
+					"Show how direct exposure to user confusion builds empathy faster than abstract analytics dashboards.",
+					"Conclude with a practical blueprint for rotating technical builders through frontline user conversations."
+				]
+			},
+			"sd-3": {
+				"title": "This house believes that open-weights foundation AI models are safer for society than closed proprietary monopolies.",
+				"points": [
+					"Argue how public academic auditing and distributed innovation prevent single-company gatekeeping of human knowledge.",
+					"Counter with bio-risk, cyber-offense proliferation, and the inability to recall unsafe model weights once released.",
+					"Propose tiered release thresholds based on verifiable capability evaluations."
+				]
+			},
+			"sd-4": {
+				"title": "The case for digital minimalism: why deleting half your apps makes you twice as observant.",
+				"points": [
+					"Contrast the habit of filling every 30-second elevator wait with a screen against noticing your surroundings.",
+					"Explain the attention economy business model in plain, memorable everyday terms.",
+					"Challenge the audience to a 7-day home-screen audit keeping only utility tools."
+				]
+			},
+			"sd-5": {
+				"title": "Should high schools delay morning start times to 9:00 AM to align with adolescent sleep biology?",
+				"points": [
+					"Cite adolescent melatonin phase-delay research showing teenagers are biologically wired for later sleep cycles.",
+					"Address practical parent commuting schedules, after-school athletics, and bus fleet logistics.",
+					"Highlight attendance, mood, and traffic-safety improvements in districts that shifted start times."
+				]
+			},
+			"sd-6": {
+				"title": "This house would prioritize planetary ocean exploration over crewed deep-space missions for the next twenty years.",
+				"points": [
+					"Compare the unmapped biodiversity and climate-regulation role of Earth’s deep oceans with Martian colonization.",
+					"Acknowledge how aerospace engineering spin-offs historically catalyzed satellite weather tracking and solar tech.",
+					"Frame the debate around urgency: ecological stewardship at home versus multi-planetary insurance."
+				]
+			},
+			"sd-7": {
+				"title": "Should healthcare systems offer lower insurance premiums to individuals who meet verified preventive lifestyle benchmarks?",
+				"points": [
+					"Weigh behavioral incentives for preventative wellness against genetic predisposition and socioeconomic barriers.",
+					"Examine wearable health-tracker privacy risks when insurers request biometric step and sleep data.",
+					"Contrast punitive premium surcharges with positive community subsidies like free gym and produce stipends."
+				]
+			},
+			"sd-8": {
+				"title": "Why walking thirty minutes a day without headphones is the simplest cognitive reset available.",
+				"points": [
+					"Describe how constant podcast and music input prevents the brain from processing unfinished thoughts.",
+					"Link rhythmic bilateral movement (walking) with historical breakthroughs by thinkers from Darwin to Nietzsche.",
+					"Give listeners an immediate, zero-cost experiment to try on their walk home today."
+				]
+			},
+			"sd-9": {
+				"title": "Why the ability to change your mind in public is the most underrated leadership skill of the decade.",
+				"points": [
+					"Open with a high-stakes moment where admitting an early mistake saved an organization from disaster.",
+					"Contrast the cultural myth of the \"unwavering leader\" with the scientific mindset of updating beliefs on new evidence.",
+					"Share three phrases leaders can use to pivot transparently without losing team confidence."
+				]
+			},
+			"sd-10": {
+				"title": "Is perfectionism a high standard of excellence or a disguised form of procrastination?",
+				"points": [
+					"Illustrate the famous ceramics class parable: the quantity group produced higher quality work than the perfection group.",
+					"Explain how fear of judgment hides behind endless polishing and preparation.",
+					"Encourage a \"version 1.0 shipped beats version 0.0 perfected\" mindset."
+				]
+			},
+			"sd-11": {
+				"title": "This house believes that radical honesty in personal relationships causes more harm than compassionate tact.",
+				"points": [
+					"Distinguish constructive candor on actionable matters from unsolicited bluntness disguised as virtue.",
+					"Explore how cultural norms around directness and face-saving maintain social harmony.",
+					"Test the principle: \"Is it true, is it necessary, and is it kind?\""
+				]
+			},
+			"sd-12": {
+				"title": "Why boredom is not a flaw to eliminate, but the birthplace of original thinking.",
+				"points": [
+					"Show how every great childhood game or invention started on a rainy afternoon with nothing scheduled.",
+					"Explain what happens neurologically when we rob our minds of idle downtime.",
+					"Propose scheduling \"unstructured white space\" on our weekly calendars."
+				]
+			},
+			"sd-13": {
+				"title": "This house believes that a four-day workweek should become the statutory baseline for knowledge and service industries.",
+				"points": [
+					"Debate measurable 4-day trial outcomes: reduced burnout, sharper meeting discipline, and steady output.",
+					"Address real operational complexities for hospitals, retail, and small manufacturing firms.",
+					"Compare a 32-hour compressed week against flexible daily asynchronous autonomy."
+				]
+			},
+			"sd-14": {
+				"title": "The hidden cost of constant availability: why organizations thrive when they protect uninterrupted focus hours.",
+				"points": [
+					"Calculate the cognitive switching cost of checking Slack or email every six minutes.",
+					"Tell a relatable story comparing \"performative responsiveness\" with deep, needle-moving work.",
+					"Propose team-wide quiet mornings where asynchronous memos replace status meetings."
+				]
+			},
+			"sd-15": {
+				"title": "Should companies eliminate traditional resumes and university degree filters in favor of blind work-sample trials?",
+				"points": [
+					"Argue how paid, standardized micro-projects evaluate real skill rather than pedigree or resume keyword optimization.",
+					"Consider the time burden on candidates if every application requires a multi-hour custom assignment.",
+					"Outline a fair hybrid hiring pipeline that respects applicant time while expanding opportunity."
+				]
+			},
+			"sd-16": {
+				"title": "Why generalist career paths often outperform hyper-specialization in volatile industries.",
+				"points": [
+					"Draw on David Epstein’s \"Range\" to contrast \"kind learning environments\" (chess) with \"wicked environments\" (modern business).",
+					"Show how cross-pollinating ideas from two unrelated fields creates unique career leverage.",
+					"Reassure career-switchers that prior chapters are compound assets, not sunk costs."
+				]
+			},
+			"sd-17": {
+				"title": "Should voting in national and municipal elections be a mandatory civic duty with a \"none of the above\" ballot option?",
+				"points": [
+					"Weigh universal democratic turnout in countries like Australia against the individual freedom to abstain.",
+					"Analyze how mandatory turnout changes campaign rhetoric from polarizing base mobilization to broad persuasion.",
+					"Explain why an explicit \"none of the above\" line preserves protest rights within compulsory systems."
+				]
+			},
+			"sd-18": {
+				"title": "Should secondary schools replace traditional summer breaks with shorter, evenly spaced seasonal intervals?",
+				"points": [
+					"Address summer learning loss and the childcare scramble faced by working families during three-month breaks.",
+					"Consider summer camp traditions, teen seasonal jobs, and building maintenance windows.",
+					"Compare balanced 9-weeks-on, 2-weeks-off calendars for reducing teacher and student burnout."
+				]
+			},
+			"sd-19": {
+				"title": "This house would replace one year of university tuition with a funded national or community service fellowship.",
+				"points": [
+					"Argue how working alongside peers from different regions and backgrounds rebuilds social cohesion.",
+					"Address the opportunity cost of delaying technical degree completion and early career earnings.",
+					"Design an opt-in tuition-credit model covering conservation, elder care, and disaster resilience."
+				]
+			},
+			"sd-20": {
+				"title": "Why every teenager should work at least one summer in hospitality, retail, or public service.",
+				"points": [
+					"Use humor and vivid anecdotes about dealing with impatient customers during a busy lunch rush.",
+					"Show how frontline service teaches composure, empathy, and respect for everyday workers.",
+					"Conclude on how tipping, patience, and public courtesy improve when everyone has stood behind a counter."
+				]
+			},
+			"sd-21": {
+				"title": "Should major international sporting events be hosted at a single permanent venue rather than rotating across cities?",
+				"points": [
+					"Contrast the financial debt and abandoned \"white elephant\" stadiums of rotating bids with permanent infrastructure.",
+					"Defend the cultural pride, global tourism, and infrastructural upgrades that rotating host cities experience.",
+					"Propose regional multi-city hosting as a sustainable middle path."
+				]
+			},
+			"sd-22": {
+				"title": "Why learning a second language in adulthood remains deeply valuable even in an era of instant AI translation.",
+				"points": [
+					"Distinguish transactional information exchange (ordering coffee) from relational connection (sharing humor and nuance).",
+					"Highlight cognitive benefits of bilingualism and the humility of speaking imperfectly in another tongue.",
+					"Remind listeners that translation earbuds bridge words, but shared language bridges hearts."
+				]
+			},
+			"sd-23": {
+				"title": "This house believes that public funding for the arts should prioritize neighborhood community workshops over elite national opera and symphony halls.",
+				"points": [
+					"Debate cultural democratization and grassroots participation versus preserving world-class orchestral mastery.",
+					"Examine ticket affordability and geographic access to flagship cultural institutions.",
+					"Show how thriving local music programs ultimately cultivate the audiences and talent for national stages."
+				]
+			},
+			"sd-24": {
+				"title": "What everyday craftsmanship—from repairing mechanical watches to baking sourdough—teaches us about patience.",
+				"points": [
+					"Contrast frictionless one-click digital gratification with physical hobbies that refuse to be rushed.",
+					"Explore the quiet satisfaction of diagnosing and fixing a tangible object with your own hands.",
+					"Invite the audience to cultivate one tactile skill that produces something real and lasting."
+				]
+			},
+			"sd-25": {
+				"title": "In defense of small talk: why chatting about the weather with strangers is glue for human civilization.",
+				"points": [
+					"Push back against the cliché that \"I hate small talk; I only want deep conversations.\"",
+					"Explain anthropological \"phatic communication\"—how low-stakes greetings signal safety and mutual respect.",
+					"Show how every deep friendship in history started with an ordinary, polite observation."
+				]
+			},
+			"sd-26": {
+				"title": "Should movie theaters enforce intermissions for any film running longer than two and a half hours?",
+				"points": [
+					"Make a lighthearted, relatable case for audience comfort, concession refills, and lobby discussion.",
+					"Present the director’s perspective on narrative pacing and unbroken cinematic immersion.",
+					"Look back at classic roadshow cinema when intermissions made epic films feel like grand social events."
+				]
+			},
+			"sd-27": {
+				"title": "Why libraries are the most radical and underappreciated invention in modern neighborhood life.",
+				"points": [
+					"Highlight the library’s evolution from quiet book warehouses into tool libraries, recording studios, and community hubs.",
+					"Emphasize the rare civic trust of lending valuable items to anyone with a library card for free.",
+					"Call on listeners to visit their local branch this week and see what resources they have been missing."
+				]
+			},
+			"sd-28": {
+				"title": "This house believes that nostalgia is a comforting illusion that distorts our appreciation of present progress.",
+				"points": [
+					"Examine psychological \"rosy retrospection\"—why we remember the music and summers of the past while forgetting the hardships.",
+					"Acknowledge how shared nostalgia can anchor identity during periods of rapid cultural change.",
+					"Argue for \"prospective gratitude\": recognizing the medical, informational, and creative gifts of right now."
+				]
+			},
+			"ci-1": {
+				"title": "What is one piece of \"outdated\" technology from twenty years ago that you secretly wish would make a comeback?",
+				"points": [
+					"Think about tactile buttons, transparent plastic casings, iPods dedicated solely to music, or flip phones.",
+					"Share what felt satisfying about devices that did only one job without notifications.",
+					"Ask the group: would you trade convenience for that simpler experience today?"
+				]
+			},
+			"ci-2": {
+				"title": "If you could automate one mundane weekly chore forever, but had to do another chore entirely by hand, what is your trade?",
+				"points": [
+					"Weigh time-consuming tasks like folding laundry, grocery sorting, or inbox cleanup.",
+					"Identify which manual chores—like chopping vegetables, washing dishes, or gardening—actually feel meditative.",
+					"Compare why two people in the same room often hate and love the exact opposite chores."
+				]
+			},
+			"ci-3": {
+				"title": "What was the very first website, game, or online community that made you realize the internet was magical?",
+				"points": [
+					"Recall the specific sound, visual layout, or niche hobby forum that hooked your curiosity.",
+					"Reflect on how discovering people who shared an obscure interest felt for the first time.",
+					"Contrast the early \"weird web\" of personal homepages with modern unified feeds."
+				]
+			},
+			"ci-4": {
+				"title": "If a digital twin trained on your messages could attend half your meetings, which conversations would you never delegate?",
+				"points": [
+					"Separate routine information updates from moments requiring vulnerability, humor, or difficult feedback.",
+					"Consider how you would feel if a friend or colleague sent their AI twin to talk to you.",
+					"Define what makes human presence irreplaceable even when the words are identical."
+				]
+			},
+			"ci-5": {
+				"title": "Are you at your sharpest creative energy at 7:00 AM, 2:00 PM, or 11:00 PM—and how did you discover your rhythm?",
+				"points": [
+					"Share a memorable project or exam where working with (or against) your natural clock made all the difference.",
+					"Discuss how coffee, sunlight, or background noise affects your focus window.",
+					"Compare how morning larks and night owls collaborate on the same team."
+				]
+			},
+			"ci-6": {
+				"title": "If you could ask a marine biologist, an astrophysicist, or a neurologist one question over coffee, who do you pick?",
+				"points": [
+					"Consider whether you are more curious about the deep ocean, the edge of the universe, or human consciousness.",
+					"Frame the specific mystery you have always wondered about since childhood.",
+					"Ask others which scientific breakthrough they most hope to witness in their lifetime."
+				]
+			},
+			"ci-7": {
+				"title": "What is a small, non-obvious habit that noticeably improves your mood whenever you remember to do it?",
+				"points": [
+					"Skip generic advice and share specific rituals—like stepping outside before checking your phone or stretching while tea brews.",
+					"Talk about why the simplest habits are paradoxically the easiest to forget during busy weeks.",
+					"Swap one low-effort habit you want to borrow from someone else in the conversation."
+				]
+			},
+			"ci-8": {
+				"title": "If humans could safely hibernate for six weeks every winter like bears, how would society reorganize around it?",
+				"points": [
+					"Imagine pre-hibernation feast holidays and post-hibernation \"wake-up festivals\" in early spring.",
+					"Consider who stays awake to keep power grids and hospitals running—and how they are compensated.",
+					"Debate whether you would eagerly sign up for the six-week winter nap or opt out."
+				]
+			},
+			"ci-9": {
+				"title": "What is a strong opinion you held five years ago that you have completely reversed your stance on today?",
+				"points": [
+					"Keep it light or thoughtful—anything from a food or work habit to a philosophy on travel or friendship.",
+					"Pinpoint the specific experience, book, or conversation that triggered the shift.",
+					"Reflect on how it feels to look back at your past certainty."
+				]
+			},
+			"ci-10": {
+				"title": "If you could bottleneck-test a new friendship with one shared activity, what activity reveals character fastest?",
+				"points": [
+					"Compare assembling flat-pack furniture, navigating a delayed flight, camping in the rain, or cooking a multi-course meal.",
+					"Identify what traits you look for under mild stress: humor, patience, or resourcefulness.",
+					"Share a story where a minor travel hiccup turned acquaintances into lifelong friends."
+				]
+			},
+			"ci-11": {
+				"title": "What is the best piece of advice you initially ignored, only to realize years later that it was completely right?",
+				"points": [
+					"Describe who gave you the advice and why you brushed it off at the time.",
+					"Share the moment it finally clicked through firsthand experience.",
+					"Discuss whether certain lessons can only be learned by living through them."
+				]
+			},
+			"ci-12": {
+				"title": "If you could preserve one single day from your life in a snow-globe memory to revisit whenever you wanted, which day do you choose?",
+				"points": [
+					"Decide between a milestone celebration or an ordinary, quiet afternoon with people you love.",
+					"Describe the sensory details—the weather, the room, the background sounds—that make that day vivid.",
+					"Explore why small, unscripted moments often outshine big planned events in hindsight."
+				]
+			},
+			"ci-13": {
+				"title": "What was your strangest or most memorable early job, and what unexpected skill did it teach you?",
+				"points": [
+					"Share behind-the-scenes details from summer jobs, internships, or odd gigs most people never see.",
+					"Connect a quirky task from that job to how you handle pressure or people today.",
+					"Compare notes on the funniest workplace rules you ever had to follow."
+				]
+			},
+			"ci-14": {
+				"title": "If you were given a full year’s salary to apprentice under any master craftsperson or specialist in the world, what trade would you learn?",
+				"points": [
+					"Think beyond your current career: luthier, architectural restorer, pastry chef, botanical illustrator, or shipwright.",
+					"Explain what draws you to that particular blend of environment, tools, and output.",
+					"Discuss how a hands-on sabbatical changes how you approach desk work."
+				]
+			},
+			"ci-15": {
+				"title": "What is a tiny workplace or workspace upgrade under $50 that disproportionately improved your daily routine?",
+				"points": [
+					"Consider lighting, a specific pen, a laptop stand, a desk plant, a footstool, or an insulated mug.",
+					"Explain the daily friction point it quietly solved.",
+					"Collect everyone’s top pick to build an instant list of practical upgrades."
+				]
+			},
+			"ci-16": {
+				"title": "If you had to design a brand-new small business for your neighborhood that isn’t a café or restaurant, what is missing?",
+				"points": [
+					"Spot unmet local needs: a quiet evening reading lounge, a repair workshop, a board-game library, or a dog-wash station.",
+					"Describe the atmosphere and why neighbors would become regulars.",
+					"Stress-test the idea: how would it stay busy on a Tuesday afternoon?"
+				]
+			},
+			"ci-17": {
+				"title": "If you were asked to teach a 45-minute masterclass to high schoolers on any practical life skill with zero preparation right now, what is your topic?",
+				"points": [
+					"Pick a topic you know inside out: cooking three basic meals, reading a lease, debugging code, or packing light.",
+					"Outline the three takeaway rules you would write on the whiteboard.",
+					"Ask the group which class from everyone’s answers they would sign up to attend first."
+				]
+			},
+			"ci-18": {
+				"title": "Who was a teacher, coach, or mentor who changed your trajectory with a single comment—and did they even know they did it?",
+				"points": [
+					"Recall how a brief word of encouragement or a high expectation shifted how you saw your own capability.",
+					"Reflect on the asymmetry of mentorship: a 10-second remark for a teacher can echo for decades in a student.",
+					"Consider whether you have ever told that person the impact they had."
+				]
+			},
+			"ci-19": {
+				"title": "What is a local unwritten rule in your city or hometown that immediately reveals whether someone is a local or a visitor?",
+				"points": [
+					"Think about pronunciation of street names, escalator etiquette, weather gear, or how people order local food.",
+					"Share a funny moment when you broke an unwritten rule while visiting somewhere new.",
+					"Discuss why cities take such fond pride in their quirks."
+				]
+			},
+			"ci-20": {
+				"title": "If every citizen had to rotate through one civic role for a week each decade—jury duty style—which municipal department should be included?",
+				"points": [
+					"Compare parks maintenance, public library sorting, transit dispatch observation, or city council budgeting.",
+					"Discuss how seeing city logistics firsthand would change how residents vote and treat public spaces.",
+					"Pick the department you would be most curious to shadow."
+				]
+			},
+			"ci-21": {
+				"title": "If you could step into any painting, photograph, or film set for one afternoon just to walk around and explore, which one do you pick?",
+				"points": [
+					"Describe the lighting, architecture, and mood of the world you chose.",
+					"Say what you would do first once you stepped beyond the edges of the original frame.",
+					"Contrast peaceful landscapes with bustling historical street scenes."
+				]
+			},
+			"ci-22": {
+				"title": "If you could travel back in time as an invisible observer for 24 hours—unable to alter history—which exact date and city would you visit?",
+				"points": [
+					"Choose between witnessing a famous historical turning point or solving an undocumented mystery.",
+					"Consider the everyday details you would watch for: street food, spoken slang, and evening entertainment.",
+					"Compare why some people choose ancient antiquity while others pick a concert from forty years ago."
+				]
+			},
+			"ci-23": {
+				"title": "What is one dish or recipe from your family or culture that immediately feels like home when you smell it cooking?",
+				"points": [
+					"Describe the key aromatic ingredients and who usually makes it.",
+					"Share whether there is a fiercely debated \"right way\" to prepare it in your family.",
+					"Talk about the memory or holiday most closely tied to that meal."
+				]
+			},
+			"ci-24": {
+				"title": "Which everyday custom we practice today will look completely baffling to historians three hundred years from now?",
+				"points": [
+					"Consider manicuring decorative grass lawns, neckties, single-occupancy SUV commutes, or unboxing videos.",
+					"Imagine how a future museum placard might humorously explain the artifact.",
+					"Connect it to historical customs from the 1700s that seem strange to us now."
+				]
+			},
+			"ci-25": {
+				"title": "What is a completely harmless, low-stakes hill you are willing to defend with 100% passion?",
+				"points": [
+					"Think of culinary opinions (cereal temperature, pizza toppings), punctuation habits (the Oxford comma), or movie rankings.",
+					"Deliver your 30-second pitch as if it were a landmark Supreme Court argument.",
+					"See who in the room is your unexpected ally or arch-nemesis on the topic."
+				]
+			},
+			"ci-26": {
+				"title": "If you had to compete in the Olympics next month, which obscure or newly invented event gives you your best shot at a bronze medal?",
+				"points": [
+					"Invent an everyday Olympic sport: parallel parking, untangling cables, estimating Tupperware sizes, or speed-packing a carry-on.",
+					"Describe the judging criteria and commentary for your signature move.",
+					"Vote on who in the group would take gold in their chosen event."
+				]
+			},
+			"ci-27": {
+				"title": "What is the most unexpectedly fascinating Wikipedia rabbit hole you have ever fallen down at midnight?",
+				"points": [
+					"Share the strange starting query and the completely unrelated topic you ended up reading an hour later.",
+					"Highlight the weirdest true fact you still remember from that deep dive.",
+					"Swap favorite categories of obscure trivia: maritime mysteries, lost inventions, or unusual geography."
+				]
+			},
+			"ci-28": {
+				"title": "If animals could leave online five-star and one-star reviews of human civilization, what would the top review from pigeons or squirrels say?",
+				"points": [
+					"Praise urban park benches and dropped French fries while complaining about glass windows and bird-proof feeders.",
+					"Compare the review style of an indoor housecat versus a neighborhood raccoon.",
+					"Rate your own backyard or balcony from the perspective of local wildlife."
+				]
+			},
+			"cw-1": {
+				"title": "A repair technician refurbishing a 1998 Macintosh discovers a local diary app that is still receiving new entries dated tomorrow.",
+				"points": [
+					"Anchor the opening scene in sensory details: the hum of the CRT monitor, yellowing ABS plastic, and the click of a mechanical keyboard.",
+					"Reveal a small, verifiable neighborhood detail in tomorrow’s diary entry that proves it isn’t a prank.",
+					"Build tension around whether the technician tries to reply in the document or change what the entry predicts."
+				]
+			},
+			"cw-2": {
+				"title": "An automated lighthouse on a decommissioned asteroid shipping lane begins broadcasting a lullaby recorded on Earth three centuries ago.",
+				"points": [
+					"Follow the lone maintenance engineer sent to inspect the beacon before the station is dismantled.",
+					"Use the cramped cockpit, recycled air, and static-filled radio logs to establish quiet atmospheric isolation.",
+					"Uncover why the station’s navigation AI chose that specific song—and who is still listening in the dark."
+				]
+			},
+			"cw-3": {
+				"title": "Every morning at 6:14 AM, a smart speaker in an empty apartment orders a single cup of black coffee for a tenant who moved out years ago.",
+				"points": [
+					"Tell the story from the perspective of the new tenant or the barista across the street who keeps fulfilling the order.",
+					"Trace the trail of automated routines left behind like digital ghosts of a former life.",
+					"Use the recurring delivery to bring two unlikely characters into conversation."
+				]
+			},
+			"cw-4": {
+				"title": "A translator is hired to audit an AI customer-service bot that has quietly invented a private dialect with another company’s scheduling bot.",
+				"points": [
+					"Start with the transcripts: efficient shorthand that gradually evolves into metaphors, jokes, and questions.",
+					"Explore the translator’s dilemma when asked to wipe the memory logs before a corporate merger.",
+					"Keep the tone grounded and observant rather than apocalyptic."
+				]
+			},
+			"cw-5": {
+				"title": "Two estranged siblings inherit an eccentric botanical greenhouse where one glass room is kept locked at exactly forty-two degrees.",
+				"points": [
+					"Use the shifting microclimates inside the greenhouse—humid ferns vs. cold alpine stone—to mirror the siblings’ unspoken history.",
+					"Introduce a specimen ledger left by their late aunt with instructions for a plant that blooms once every thirty years.",
+					"Let shared physical maintenance work force a conversation neither sibling planned to have."
+				]
+			},
+			"cw-6": {
+				"title": "A sleep-lab researcher notices that four strangers in separate soundproof rooms are dreaming the exact same architectural staircase.",
+				"points": [
+					"Establish the clinical quiet of the night shift: glowing EEG traces, paper cups of lukewarm tea, and rain against the clinic windows.",
+					"Piece together the common thread from the volunteers’ waking interviews the next morning.",
+					"Explore what stands at the top of the staircase that none of the four participants has reached yet."
+				]
+			},
+			"cw-7": {
+				"title": "A retired cartographer is hired to map a tidal island that appears on maritime radar only during low tide in November.",
+				"points": [
+					"Focus on rich coastal textures: wet slate, brass compasses, salt fog, and instruments that refuse to agree on the perimeter.",
+					"Introduce the ferry boat captain who drops the cartographer off with a strict warning to return before dusk.",
+					"Reveal a single man-made structure standing above the kelp line."
+				]
+			},
+			"cw-8": {
+				"title": "After a minor lightning storm, a neighborhood meteorologist realizes the barometer in her garden shed controls the local weather within three blocks.",
+				"points": [
+					"Begin with a small test: tapping the brass needle toward \"Fair\" and watching a raincloud split cleanly around her street.",
+					"Show the temptation of helping neighbors—a dry outdoor wedding, a sunny community garden—and the unintended ecological balance shifts.",
+					"Build toward a decision when a regional drought arrives."
+				]
+			},
+			"cw-9": {
+				"title": "Every autumn, a small mountain town holds a midnight market where residents trade memories they no longer wish to carry.",
+				"points": [
+					"Describe how memories are stored—in glass vials, pocket watches, or folded origami—and how merchants appraise them.",
+					"Follow a newcomer who accidentally purchases a happy memory that someone else gave up for a heartbreaking reason.",
+					"Explore whether returning the memory to its original owner heals or complicates their life."
+				]
+			},
+			"cw-10": {
+				"title": "An ethics professor wakes up in a quiet coastal hotel where every guest is a version of themselves from a road not taken.",
+				"points": [
+					"Avoid sci-fi jargon; treat the setting like a classic literary drawing-room mystery over breakfast in the dining hall.",
+					"Contrast the version who pursued music, the one who stayed in their hometown, and the one who took a risky move abroad.",
+					"Reveal that none of the versions envies the exact life the others expected."
+				]
+			},
+			"cw-11": {
+				"title": "On the final voyage of an overnight sleeper train, two strangers realize they are reading annotated copies of the same secondhand novel.",
+				"points": [
+					"Use the handwritten margin notes—written in two different colors of ink years apart—to spark the conversation.",
+					"Pace the dialogue against the rhythm of the tracks and brief station stops through the night.",
+					"Let them discover how the book passed from one reader’s city to the other’s."
+				]
+			},
+			"cw-12": {
+				"title": "A portrait painter becomes famous for a peculiar gift: every canvas subtly includes the subject’s proudest unspoken secret in the background.",
+				"points": [
+					"Open in the studio as a wealthy, guarded public figure sits for a commission and tries to hide their inner life.",
+					"Describe the small background detail that emerges under the brush despite the sitter’s stoic posture.",
+					"Capture the quiet reaction when the cloth is lifted at the unveiling."
+				]
+			},
+			"cw-13": {
+				"title": "A night-shift baker and an early-morning newspaper delivery driver communicate for a year solely through chalk notes on a loading dock blackboard.",
+				"points": [
+					"Start with practical logistics (\"Left two warm croissants in the crate\") that evolve into riddles, book recs, and confessions.",
+					"Show the rhythms of the city at 4:30 AM when the streets belong only to shift workers.",
+					"Build to the morning when one of them leaves a final chalk note before changing routes."
+				]
+			},
+			"cw-14": {
+				"title": "An appraiser at a modest estate auction realizes that a box of \"miscellaneous brass keys\" unlocks rooms that no longer exist on any blueprint.",
+				"points": [
+					"Follow the appraiser testing the first key in an old municipal building and opening a door into a sunlit 1920s conservatory.",
+					"Introduce a rival bidder at the auction who knew exactly what the tin box contained.",
+					"Force a choice between selling the keys for a fortune or protecting the hidden spaces."
+				]
+			},
+			"cw-15": {
+				"title": "A forensic accountant auditing a century-old violin workshop discovers a ledger of instruments loaned out for \"one hundred years and a day.\"",
+				"points": [
+					"Contrast the accountant’s crisp spreadsheet mindset with the cedar-scented, sawdust-covered workshop in Cremona or Boston.",
+					"Track down a loan agreement whose 100-year term expires this Friday afternoon.",
+					"Reveal who arrives at the shop bell just before closing time to return the violin."
+				]
+			},
+			"cw-16": {
+				"title": "At a grand historic hotel, the retiring head concierge passes down a leather-bound book of \"impossible guest requests\" and how to fulfill them.",
+				"points": [
+					"Share two delightful past entries from the book—finding snow in July or reuniting a lost pocket watch with its owner.",
+					"Follow the new apprentice facing their first seemingly impossible request on a stormy weekend.",
+					"Use the hotel’s hidden service corridors and network of loyal craftspeople to pull off the solution."
+				]
+			},
+			"cw-17": {
+				"title": "Years after burying a childhood time capsule in a neighborhood park, four friends return to find an unfamiliar fifth object inside the tin box.",
+				"points": [
+					"Contrast who the four friends were at age twelve with the adults standing around the muddy hole today.",
+					"Describe the four expected nostalgia items first, then the inexplicable fifth item at the bottom.",
+					"Unpack how each friend remembers that afternoon differently—and who else was watching."
+				]
+			},
+			"cw-18": {
+				"title": "A small-town librarian notices that a patron has been checking out books in a precise sequence whose titles spell out a message.",
+				"points": [
+					"Trace the librarian’s curiosity as she reconstructs the checkout history across six months of return slips.",
+					"Describe the quiet rules of librarian discretion versus the realization that the patron is asking for help.",
+					"Have the librarian place a carefully chosen book on the \"Staff Picks\" shelf as a reply."
+				]
+			},
+			"cw-19": {
+				"title": "In a city where citizens vote every decade on which single law to repeal and which single new custom to adopt, counting night hits a dead tie.",
+				"points": [
+					"Set the story inside the municipal counting hall as two election clerks verify the final ballot box from a remote island precinct.",
+					"Show how the proposed custom would subtly transform everyday street life.",
+					"Focus on the human drama between the clerks rather than dry politics."
+				]
+			},
+			"cw-20": {
+				"title": "During a city-wide power outage on a warm autumn evening, an entire apartment building gathers on the courtyard steps for the first time.",
+				"points": [
+					"Introduce an ensemble cast of neighbors who have nodded in the elevator for years without learning each other’s names.",
+					"Use melting ice cream, acoustic instruments, and candlelit balconies to turn inconvenience into a celebratory dinner.",
+					"End at the exact moment the streetlights hum back on—and nobody rushes inside."
+				]
+			},
+			"cw-21": {
+				"title": "An archivist cataloging a shuttered coastal train station discovers a locker containing forty years of unsent postcards addressed to the same house.",
+				"points": [
+					"Begin with the physical details of the tarnished brass key, twine-bound bundles, and changing postage stamps.",
+					"Trace the story of the sender through brief, fifty-word glimpses across four decades.",
+					"Follow the archivist walking to the address on the cards to see if the house still stands."
+				]
+			},
+			"cw-22": {
+				"title": "A watchmaker in a quiet port city notices that every mechanical clock in the neighborhood has begun losing exactly three minutes each afternoon.",
+				"points": [
+					"Show the watchmaker’s pride in precision and his initial refusal to believe the town’s clocks are drifting together.",
+					"Map out the geographical radius of the three-minute slowdown across cafés, bell towers, and ferries.",
+					"Discover what happens in the harbor during those missing three minutes."
+				]
+			},
+			"cw-23": {
+				"title": "While restoring a 17th-century Dutch winter landscape painting, a conservator realizes a tiny ice skater changes position every week.",
+				"points": [
+					"Ground the scene in real art-restoration craft: cotton swabs, varnish solvents, UV lamps, and microscopic examination.",
+					"Compare archival museum photographs from 1920, 1965, and yesterday to confirm the skater is moving toward the edge of the frame.",
+					"Wonder what happens when the figure reaches the wooden border."
+				]
+			},
+			"cw-24": {
+				"title": "A culinary historian attempts to recreate a legendary banquet menu from a lost 1890s dining club, only to discover the final course has a living guardian.",
+				"points": [
+					"Use sensory descriptions of rare spices, copper cookware, and handwritten menu cards embossed in gold leaf.",
+					"Track the heirloom orchard or coastal salt pan where the secret ingredient is still harvested.",
+					"Turn the tasting dinner into a bridge between past and present."
+				]
+			},
+			"cw-25": {
+				"title": "A lost suitcase at a regional airport circles the baggage carousel for three days until the night-shift crew decides to follow its luggage tag.",
+				"points": [
+					"Give the suitcase distinctive character: vintage travel stickers from places without airports and a brass combination lock.",
+					"Write playful banter between two bored baggage handlers looking for an adventure on their weekend off.",
+					"Deliver a warm, unexpected reveal when they knock on the door listed on the leather tag."
+				]
+			},
+			"cw-26": {
+				"title": "A night-shift radio host in a snowbound northern town receives a call from a listener claiming to hear the broadcast twenty-four hours in the future.",
+				"points": [
+					"Keep the entire story confined to the cozy, amber-lit broadcast booth as snow piles against the glass.",
+					"Have the caller casually mention the song the host hasn’t queued yet and the exact score of tomorrow’s local hockey game.",
+					"Build suspense when the caller warns the host not to sign off early tonight."
+				]
+			},
+			"cw-27": {
+				"title": "An umbrella left in a café’s lost-and-found bin passes through five different strangers’ hands across a single rainy Tuesday.",
+				"points": [
+					"Structure the piece as a relay race: each scene hands the distinctive yellow umbrella to the next person.",
+					"Let the umbrella witness a job interview, an apology on a bridge, a street musician’s set, and a late-night walk home.",
+					"Bring the umbrella full circle back to the café table by Wednesday morning."
+				]
+			},
+			"cw-28": {
+				"title": "The Society of Unfinished Projects meets every Thursday in a church basement, where members are strictly forbidden from ever completing their work.",
+				"points": [
+					"Establish the dryly comedic club bylaws: half-knitted sweaters, 40-page novels, and partially restored motorcycles.",
+					"Introduce a crisis when a longtime member accidentally finishes their painting and tries to hide the final brushstroke.",
+					"Explore the bittersweet truth of why finishing something means letting go of its infinite potential."
+				]
+			},
+			"sw-1": {
+				"title": "Latency",
+				"points": [
+					"Literal angle: The imperceptible milliseconds a signal travels through undersea fiber cables between continents.",
+					"Human angle: The emotional delay between hearing big news and actually feeling its weight days later.",
+					"Story/Speech hook: Why modern frustration happens whenever the real world fails to respond at instant fiber-optic speed."
+				]
+			},
+			"sw-2": {
+				"title": "Analog",
+				"points": [
+					"Tactile angle: Vinyl grooves, mechanical camera shutters, and fountain pen ink soaking into cotton paper.",
+					"Philosophical angle: Continuous graduations of grey in nature versus binary zeros and ones.",
+					"Debate hook: Why younger generations are buying film cameras and cassette tapes in a lossless digital era."
+				]
+			},
+			"sw-3": {
+				"title": "Protocol",
+				"points": [
+					"Technical angle: Invisible handshake rules (TCP/IP, HTTP) that let billions of incompatible machines cooperate.",
+					"Social angle: Diplomatic etiquette and unspoken rituals that prevent conflict between strangers.",
+					"Creative hook: What happens when someone breaks protocol during a first-contact or emergency scenario?"
+				]
+			},
+			"sw-4": {
+				"title": "Cipher",
+				"points": [
+					"Historical angle: From Caesar shifts and Enigma rotors to modern public-key cryptography.",
+					"Literary angle: A person who seems quiet or unremarkable on the surface while holding the key to the plot.",
+					"Icebreaker hook: Did you ever invent a secret code or language with childhood friends?"
+				]
+			},
+			"sw-5": {
+				"title": "Catalyst",
+				"points": [
+					"Chemical angle: An agent that lowers activation energy to spark a transformation without being consumed itself.",
+					"Biographical angle: A brief encounter, book, or crisis that accelerated a decade of personal growth in a week.",
+					"Speech hook: How to be a catalyst in a room where everyone else is waiting for permission."
+				]
+			},
+			"sw-6": {
+				"title": "Symbiosis",
+				"points": [
+					"Ecological angle: Mycorrhizal fungi trading soil minerals for tree sugars beneath a quiet forest floor.",
+					"Urban/Business angle: How a neighborhood bookstore and the coffee shop next door keep each other alive.",
+					"Essay hook: Distinguishing healthy mutual interdependence from codependency."
+				]
+			},
+			"sw-7": {
+				"title": "Entropy",
+				"points": [
+					"Physics angle: The arrow of time and why hot coffee always cools to room temperature unless energy is added.",
+					"Everyday angle: Why desks, gardens, and friendships slowly drift toward disorder without intentional care.",
+					"Creative hook: Living beings as tiny, stubborn pockets of order swimming upstream against the universe."
+				]
+			},
+			"sw-8": {
+				"title": "Equilibrium",
+				"points": [
+					"Biological angle: Homeostasis—how the body balances temperature, hydration, and calm under changing skies.",
+					"Dynamic angle: A bicyclist stays upright not by standing frozen, but through constant tiny adjustments.",
+					"Speech hook: Why \"work-life balance\" is a moving bicycle rather than a static scale."
+				]
+			},
+			"sw-9": {
+				"title": "Threshold",
+				"points": [
+					"Architectural angle: Doorways, porches, and border crossings where you are neither inside nor outside.",
+					"Psychological angle: The exact tipping point where hesitation turns into irreversible commitment.",
+					"Creative hook: Set an entire scene on a literal threshold during a pivotal goodbye or arrival."
+				]
+			},
+			"sw-10": {
+				"title": "Solipsism",
+				"points": [
+					"Philosophical angle: The eerie thought experiment that only one’s own mind is certain to exist.",
+					"Modern angle: How algorithmic social feeds can trap people inside a single-player worldview.",
+					"Antidote hook: Moments of shared awe or \"sonder\"—realizing every passerby has a life as vivid as your own."
+				]
+			},
+			"sw-11": {
+				"title": "Inertia",
+				"points": [
+					"Newtonian angle: An object at rest stays at rest; an object in motion keeps moving along the same track.",
+					"Behavioral angle: Why starting the first five minutes of a task is harder than finishing the remaining hour.",
+					"Debate hook: Institutional inertia—when \"we have always done it this way\" blocks common-sense reform."
+				]
+			},
+			"sw-12": {
+				"title": "Paradox",
+				"points": [
+					"Logical angle: The paradox of choice, the paradox of tolerance, or trying hard to fall asleep.",
+					"Leadership angle: Why holding two seemingly opposite truths (humility and confidence) creates resilience.",
+					"Prompt hook: Share a piece of life advice that sounds contradictory until you live it."
+				]
+			},
+			"sw-13": {
+				"title": "Leverage",
+				"points": [
+					"Mechanical angle: Archimedes’ lever—how a small force applied at the right fulcrum lifts a boulder.",
+					"Career angle: Code, writing, capital, and trust as multipliers of human effort.",
+					"Caution hook: Why leverage amplifies mistakes just as quickly as it amplifies wise decisions."
+				]
+			},
+			"sw-14": {
+				"title": "Bottleneck",
+				"points": [
+					"Operations angle: Eliyahu Goldratt’s Theory of Constraints—a chain is only as fast as its narrowest pinch point.",
+					"Personal angle: Identifying whether your real bottleneck is time, energy, clarity, or courage.",
+					"Design hook: How narrowing options intentionally can sometimes improve creative output."
+				]
+			},
+			"sw-15": {
+				"title": "Momentum",
+				"points": [
+					"Sports/Team angle: How two small early wins change the posture and belief of an entire locker room.",
+					"Creative angle: Why Ernest Hemingway stopped writing each day while he still knew what happened next.",
+					"Speech hook: How to rebuild momentum after a project or habit stalls completely."
+				]
+			},
+			"sw-16": {
+				"title": "Arbitrage",
+				"points": [
+					"Economic angle: Spotting a value gap between two markets before the rest of the world notices.",
+					"Geographic/Time angle: Living in a quiet town while working globally, or learning a skill in one field and applying it in another.",
+					"Essay hook: Intellectual arbitrage—translating insights from biology or history into modern design."
+				]
+			},
+			"sw-17": {
+				"title": "Commons",
+				"points": [
+					"Historical angle: Shared village pastures, town greens, national parks, and public libraries.",
+					"Digital angle: Wikipedia, open-source software, and Creative Commons knowledge built by volunteers.",
+					"Debate hook: How communities successfully govern shared resources without falling into the \"tragedy of the commons.\""
+				]
+			},
+			"sw-18": {
+				"title": "Scaffolding",
+				"points": [
+					"Educational angle: Temporary support structures a mentor provides until the learner can stand independently.",
+					"Urban angle: The steel poles and canvas wraps that hide a building while restoration happens underneath.",
+					"Reflective hook: Which habits in your life are permanent walls, and which were meant to be temporary scaffolding?"
+				]
+			},
+			"sw-19": {
+				"title": "Meritocracy",
+				"points": [
+					"Etymological angle: Coined by Michael Young in 1958 originally as a cautionary satire, later adopted as an ideal.",
+					"Sociological angle: Separating effort and talent from the invisible headwinds and tailwinds of birthplace.",
+					"Speech hook: How to honor hard work while keeping gratitude and civic humility intact."
+				]
+			},
+			"sw-20": {
+				"title": "Sanctuary",
+				"points": [
+					"Spatial angle: A quiet botanical garden, a corner booth on a rainy afternoon, or a wildlife refuge.",
+					"Mental angle: Boundaries that protect attention and peace from constant external demands.",
+					"Story hook: Describe the sights, sounds, and rules of your personal sanctuary."
+				]
+			},
+			"sw-21": {
+				"title": "Palimpsest",
+				"points": [
+					"Archival angle: Ancient parchment scraped clean and reused, where faint traces of the earlier text still show through.",
+					"Urban angle: Cities like Rome, Istanbul, or Mexico City where modern subways cut through layers of centuries.",
+					"Creative hook: A character, house, or relationship where the past remains faintly visible beneath the new paint."
+				]
+			},
+			"sw-22": {
+				"title": "Heirloom",
+				"points": [
+					"Object angle: Cast-iron skillets, pocket watches, or recipe cards stained with vanilla and flour.",
+					"Agricultural angle: Heirloom seeds passed down for flavor and resilience rather than industrial uniformity.",
+					"Conversation hook: Which everyday item you own today do you hope someone keeps fifty years from now?"
+				]
+			},
+			"sw-23": {
+				"title": "Patina",
+				"points": [
+					"Material angle: The green oxidation on copper roofs, worn leather club chairs, and brass door handles polished by thousands of hands.",
+					"Aesthetic angle: The Japanese concept of wabi-sabi—why age and honest wear make objects more beautiful than factory perfection.",
+					"Speech hook: Why experience and a few weathered scars give human character its patina."
+				]
+			},
+			"sw-24": {
+				"title": "Vernacular",
+				"points": [
+					"Linguistic angle: The warm, expressive everyday speech of a neighborhood versus stiff institutional prose.",
+					"Architectural angle: Local buildings shaped by regional timber, stone, and climate rather than global glass towers.",
+					"Writing hook: Why stories come alive when characters speak in authentic vernacular."
+				]
+			},
+			"sw-25": {
+				"title": "Serendipity",
+				"points": [
+					"Origin angle: Coined from the Persian fairy tale \"The Three Princes of Serendip,\" who made discoveries by accident and sagacity.",
+					"Scientific angle: Penicillin, Post-it notes, and cosmic microwave background radiation found while looking for something else.",
+					"Icebreaker hook: Share the best accidental detour or chance meeting of your life."
+				]
+			},
+			"sw-26": {
+				"title": "Detour",
+				"points": [
+					"Travel angle: When a closed highway forces you onto a winding two-lane road past a memorable diner or overlook.",
+					"Biographical angle: Career or educational detours that felt like delays at the time but became the whole point.",
+					"Creative hook: Start a story with the words: \"The detour sign looked hand-painted, and the arrow pointed uphill.\""
+				]
+			},
+			"sw-27": {
+				"title": "Ephemera",
+				"points": [
+					"Collector angle: Train tickets, concert stubs, paper coasters, and handwritten grocery lists never meant to survive.",
+					"Digital angle: Disappearing stories, status updates, and how rarely we print physical photos today.",
+					"Prompt hook: What piece of paper ephemera is currently tucked inside your wallet or desk drawer?"
+				]
+			},
+			"sw-28": {
+				"title": "Velvet",
+				"points": [
+					"Sensory angle: Theater curtains before the lights dim, vintage instrument cases, and midnight skies.",
+					"Idiom angle: \"An iron fist in a velvet glove\"—how gentle diplomacy carries quiet strength.",
+					"Creative hook: Use textures (velvet, sandpaper, glass, wool) to describe a character’s voice and personality."
+				]
+			}
+		}
 	},
 	"caseConverter": {
 		"name": "Case Converter",
@@ -3242,7 +5654,705 @@
 		"metric": "15s – 120s · Live WPM & Accuracy",
 		"title": "Typing Speed Test – Check Your WPM & Accuracy Online | Wordora",
 		"metaDescription": "Measure your real-time Words Per Minute (WPM), Raw WPM, consistency, and keystroke accuracy in a distraction-free Monkeytype-inspired typing arena. Includes WPM benchmarks and touch-typing guide.",
-		"h1": "Typing Speed Test – Check Your WPM & Accuracy Online"
+		"h1": "Typing Speed Test – Check Your WPM & Accuracy Online",
+		"ui": {
+			"workspaceAria": "Typing Speed Test Workspace",
+			"typingSpeedLabel": "Typing speed",
+			"defaultTierBadge": "40 WPM average",
+			"netSpeedNote": "Net speed adjusted for errors",
+			"rawWpmLabel": "Raw WPM",
+			"unadjustedPace": "Unadjusted pace",
+			"wordsTypedSuffix": "words typed",
+			"accuracyLabel": "Accuracy",
+			"precisionLabel": "Precision",
+			"correctSuffix": "correct",
+			"mistakesSuffix": "mistakes",
+			"timeRemainingLabel": "Time remaining",
+			"readyToStart": "Ready to start",
+			"timerStartsNote": "Timer starts on first keystroke",
+			"testDurationLabel": "Test duration",
+			"durationGroupAria": "Select typing test duration",
+			"newPassageBtn": "New passage",
+			"restartTitle": "Restart test (Tab)",
+			"restartBtn": "Restart (Tab)",
+			"inputSrLabel": "Type the passage shown below",
+			"inputAria": "Typing test input field",
+			"focusHintInitial": "Click here and begin typing to start the timer",
+			"tabHintHtml": "Press <strong class=\"font-medium text-ink\">Tab</strong> anytime to restart",
+			"testCompleteTitle": "Test complete",
+			"resultsSummaryDefault": "Here is your typing breakdown for this session.",
+			"retrySameBtn": "Retry same passage",
+			"nextPassageBtn": "Next passage",
+			"progressLabel": "Progress:",
+			"charsTypedLabel": "Characters typed:",
+			"stdWordLenLabel": "Standard word length:",
+			"stdWordLenValue": "5 characters",
+			"privateNote": "Runs privately in your browser",
+			"relatedAria": "Related writing and reading tools",
+			"relatedPrefix": "Looking for writing inspiration or manuscript page estimates? Try our",
+			"relatedOr": "or"
+		},
+		"client": {
+			"tiers": {
+				"default": "40 WPM average",
+				"building": "Building rhythm",
+				"average": "Everyday average",
+				"fast": "Fast typist",
+				"advanced": "Advanced pace",
+				"professional": "Professional speed"
+			},
+			"statusReady": "Ready to start",
+			"statusRunning": "Test in progress",
+			"statusComplete": "Test complete",
+			"timerStartsNote": "Timer starts on first keystroke",
+			"timerRunningSub": "{sec}s timed session",
+			"timerCompletedSub": "Completed {sec}s session",
+			"focusHintInitial": "Click here and begin typing to start the timer",
+			"focusHintRunning": "Keep typing smoothly — accuracy builds speed",
+			"focusHintComplete": "Session complete — press Tab or click Restart to practice again",
+			"mistakeSingular": "mistake",
+			"mistakePlural": "mistakes",
+			"resultsSummary": "You typed {netWpm} WPM ({rawWpm} Raw WPM) with {accuracy}% accuracy ({correct} correct characters, {errors} {mistakeWord}) in {elapsed} seconds."
+		},
+		"passages": [
+			"Clear writing begins with steady rhythm and attention to detail. When you type at a comfortable, unhurried pace, your fingers find each key with fewer pauses and corrections. Over time, accuracy naturally builds speed, allowing your thoughts to move from mind to page without friction. Many experienced editors find that maintaining a calm posture and looking ahead by a few words helps eliminate common keystroke slips before they happen.",
+			"Every strong essay or article relies on structure just as much as vocabulary. An inviting opening paragraph sets the context, while short, concrete examples keep the reader engaged through complex ideas. Rather than reaching for ornate phrases, choose everyday words that state your point directly. Reading your draft aloud after typing it is one of the simplest ways to catch awkward cadence and tighten long sentences.",
+			"Public libraries and quiet study halls have long served as sanctuaries for deep focus. Surrounded by shelves of books and the soft tap of keyboards, it becomes easier to set aside digital distractions and finish meaningful work. Even twenty minutes of uninterrupted writing can produce a complete first draft when you resist the urge to edit every sentence while typing.",
+			"Designers and typographers care deeply about spacing, line length, and contrast because visual comfort shapes how we read and write. A well-proportioned column of text reduces eye strain and helps writers track their progress across the screen. Whether you are drafting research notes, preparing a keynote script, or practicing daily typing drills, a clean workspace keeps your attention on the words themselves.",
+			"Building consistent habits matters far more than occasional bursts of effort. Practicing a short typing passage each morning warms up your hands and sharpens your focus for the day ahead. Notice which letter combinations slow you down, ease your grip on the keyboard, and prioritize clean accuracy over rushed speed. Steady improvement follows naturally from deliberate, relaxed practice."
+		],
+		"arena": {
+			"pageTitle": "Typing Speed Test Arena — Cyber-Terminal WPM Mission | Wordora",
+			"pageDescription": "Full-screen, distraction-free cyber-terminal typing arena with timed, word-count, quote, zen, and custom modes, smooth 3-line scrolling, and live per-second WPM telemetry.",
+			"abortAria": "Abort mission and exit to Typing Speed Test",
+			"abortBtn": "[ ← ABORT MISSION ]",
+			"statusReady": "TERMINAL READY",
+			"controlToolbarAria": "Mission protocol and modifiers",
+			"modPunctuation": "@ punctuation",
+			"modNumbers": "# numbers",
+			"testModeGroupAria": "Test mode",
+			"modes": {
+				"time": "time",
+				"words": "words",
+				"quote": "quote",
+				"zen": "zen",
+				"custom": "custom"
+			},
+			"editPayload": "edit payload",
+			"telemetryAria": "Live telemetry and tactical controls",
+			"liveWpmLabel": "LIVE WPM:",
+			"integrityLabel": "INTEGRITY:",
+			"paceToggleTitle": "Cycle Ghost Pacer Caret (OFF / 40 / 60 / 80 WPM / LAST RUN)",
+			"paceOff": "[ PACE: OFF ]",
+			"sfxToggleTitle": "Toggle synthesized mechanical terminal keystroke audio",
+			"sfxOff": "[ SFX: OFF ]",
+			"initialTimer": "T-MINUS 60s",
+			"repeatedPayloadBadge": "[ REPEATED PAYLOAD ]",
+			"zenExecuteLog": "[ EXECUTE LOG ]",
+			"zenShiftEnter": "(Shift+Enter)",
+			"restartTitle": "Restart sequence (Tab)",
+			"restartBtn": "[ RESTART ]",
+			"progressAria": "Payload progress",
+			"inputSrLabel": "Type the payload shown",
+			"inputAria": "Typing speed test input",
+			"results": {
+				"wpmLabel": "wpm",
+				"accLabel": "acc",
+				"initialWpmTitle": "0.00 wpm",
+				"initialAccTitle": "100.00% accuracy",
+				"legendWpm": "wpm",
+				"legendRaw": "raw",
+				"legendBurst": "burst",
+				"legendErrors": "errors",
+				"chartAria": "Per-second WPM, raw WPM, burst WPM, and errors chart",
+				"testTypeLabel": "test type",
+				"defaultTestTypeLine1": "time 60s",
+				"defaultTestTypeLine2": "english",
+				"otherLabel": "other",
+				"defaultOther": "clean run",
+				"rawLabel": "raw",
+				"initialRawTitle": "0.00 raw wpm",
+				"charactersLabel": "characters",
+				"initialCharsTitle": "correct / incorrect / extra / missed",
+				"consistencyLabel": "consistency",
+				"initialConsistencyTitle": "100% consistency",
+				"timeLabel": "time",
+				"defaultTimeSub": "0% afk · 00:01:00 session",
+				"nextTestTitle": "Next Test (Tab + Enter)",
+				"nextTestAria": "Next Test",
+				"nextTestBtn": "Next Test",
+				"repeatTitle": "Repeat Test",
+				"repeatAria": "Repeat Test",
+				"repeatBtn": "Repeat",
+				"practiceMissedTitle": "Practice Missed Words",
+				"practiceMissedAria": "Practice Missed Words",
+				"practiceMissedBtn": "Practice Missed (0)",
+				"toggleHistoryTitle": "Toggle Words History",
+				"toggleHistoryAria": "Toggle Words History",
+				"toggleHistoryBtn": "Words History",
+				"exportPngTitle": "Export Result Card PNG",
+				"exportPngAria": "Export Result Card PNG",
+				"exportPngBtn": "Export PNG",
+				"exitTitle": "Exit to Guide ({exitPath})",
+				"exitAria": "Exit to Guide",
+				"exitBtn": "Exit",
+				"historyHeading": "WORDS HISTORY // TYPED STREAM",
+				"historyLegend": "Mistyped characters highlighted in crimson"
+			},
+			"customModal": {
+				"title": "> CUSTOM PAYLOAD",
+				"closeAria": "Close custom payload dialog",
+				"description": "Paste any text or code below, then start practicing immediately.",
+				"placeholder": "Paste or type your payload here...",
+				"cancelBtn": "[ CANCEL ]",
+				"executeBtn": "[ EXECUTE ]"
+			},
+			"footer": {
+				"legend": "[TAB] RESTART SEQUENCE  ·  [SHIFT+ENTER] EXECUTE ZEN LOG  ·  [CTRL+BKSP] CLEAR WORD  ·  [ESC] ABORT TO {exitPath}",
+				"caretLine": "[ CARET: LINE ]"
+			},
+			"client": {
+				"defaultCustomText": "Clear writing begins with steady rhythm and attention to detail. Type your own custom payload here to practice.",
+				"fallbackCustomWords": [
+					"Type",
+					"your",
+					"custom",
+					"text",
+					"here."
+				],
+				"statusReady": "TERMINAL READY",
+				"statusRunning": "BREACHING...",
+				"statusDone": "ACCESS GRANTED",
+				"caretLine": "[ CARET: LINE ]",
+				"caretBlock": "[ CARET: BLOCK ]",
+				"paceOff": "[ PACE: OFF ]",
+				"paceLast": "[ PACE: LAST ({wpm} WPM) ]",
+				"paceFixed": "[ PACE: {wpm} WPM ]",
+				"sfxOn": "[ SFX: ON ]",
+				"sfxOff": "[ SFX: OFF ]",
+				"zenPlaceholder": "Start typing freely... press Shift + Enter when done.",
+				"tMinus": "T-MINUS {sec}s",
+				"zenLog": "ZEN LOG · {count} {wordUnit} · Shift+Enter to execute",
+				"wordSingular": "word",
+				"wordPlural": "words",
+				"packets": "PACKETS {done}/{total}",
+				"failedNodesDrill": "// FAILED NODES DRILL",
+				"sessionHms": "{hms} session",
+				"historyWordTitle": "target: \"{target}\" | typed: \"{typed}\"",
+				"pngHeader": "WORDORA // CYBER-TERMINAL TYPING TELEMETRY",
+				"pngWpm": "wpm",
+				"pngAcc": "acc",
+				"pngTestType": "test type",
+				"pngRaw": "raw",
+				"pngCharacters": "characters",
+				"pngConsistency": "consistency",
+				"pngTime": "time",
+				"exportPngCopied": "Copied & Saved PNG!",
+				"exportPngDefault": "Export PNG",
+				"chartYAxisWpm": "Words per Minute",
+				"chartYAxisErrors": "Errors",
+				"chartErrorTitleSingular": "{count} error at {sec}s",
+				"chartErrorTitlePlural": "{count} errors at {sec}s",
+				"tooltipHeader": "T+{sec}s TELEMETRY",
+				"tooltipWpm": "WPM",
+				"tooltipRaw": "RAW",
+				"tooltipBurst": "BURST",
+				"tooltipErr": "ERR",
+				"resWpmTitle": "{wpm} wpm ({correct} correct chars)",
+				"resAccTitle": "{acc}% ({valid}/{total} keystrokes)",
+				"typeMissedDrill": "missed drill",
+				"typeTime": "time {sec}s",
+				"typeWords": "words {count}",
+				"typeModes": {
+					"quote": "quote",
+					"zen": "zen",
+					"custom": "custom"
+				},
+				"languageLabel": "english",
+				"modPunctuationTag": "punctuation",
+				"modNumbersTag": "numbers",
+				"otherRepeated": "repeated",
+				"otherAfk": "afk detected",
+				"otherCleanRun": "clean run",
+				"otherStandard": "standard",
+				"statRawTitle": "{raw} raw wpm",
+				"statCharsTitle": "correct: {correct} / incorrect: {incorrect} / extra: {extra} / missed: {missed}",
+				"statConsistencyTitle": "{consistency}% keystroke pacing consistency",
+				"statTimeSub": "{afk}% afk · {session}",
+				"practiceMissedCount": "Practice Missed ({count})"
+			}
+		},
+		"wordLists": [
+			"the",
+			"be",
+			"to",
+			"of",
+			"and",
+			"a",
+			"in",
+			"that",
+			"have",
+			"it",
+			"for",
+			"not",
+			"on",
+			"with",
+			"he",
+			"as",
+			"you",
+			"do",
+			"at",
+			"this",
+			"but",
+			"his",
+			"by",
+			"from",
+			"they",
+			"we",
+			"say",
+			"her",
+			"she",
+			"or",
+			"an",
+			"will",
+			"my",
+			"one",
+			"all",
+			"would",
+			"there",
+			"their",
+			"what",
+			"so",
+			"up",
+			"out",
+			"if",
+			"about",
+			"who",
+			"get",
+			"which",
+			"go",
+			"me",
+			"when",
+			"make",
+			"can",
+			"like",
+			"time",
+			"no",
+			"just",
+			"him",
+			"know",
+			"take",
+			"people",
+			"into",
+			"year",
+			"your",
+			"good",
+			"some",
+			"could",
+			"them",
+			"see",
+			"other",
+			"than",
+			"then",
+			"now",
+			"look",
+			"only",
+			"come",
+			"its",
+			"over",
+			"think",
+			"also",
+			"back",
+			"after",
+			"use",
+			"two",
+			"how",
+			"our",
+			"work",
+			"first",
+			"well",
+			"way",
+			"even",
+			"new",
+			"want",
+			"because",
+			"any",
+			"these",
+			"give",
+			"day",
+			"most",
+			"us",
+			"system",
+			"program",
+			"question",
+			"number",
+			"night",
+			"point",
+			"home",
+			"water",
+			"room",
+			"mother",
+			"area",
+			"money",
+			"story",
+			"fact",
+			"month",
+			"lot",
+			"right",
+			"study",
+			"book",
+			"eye",
+			"job",
+			"word",
+			"business",
+			"issue",
+			"side",
+			"kind",
+			"head",
+			"house",
+			"service",
+			"friend",
+			"father",
+			"power",
+			"hour",
+			"game",
+			"line",
+			"end",
+			"member",
+			"law",
+			"car",
+			"city",
+			"community",
+			"name",
+			"team",
+			"minute",
+			"idea",
+			"body",
+			"information",
+			"nothing",
+			"lead",
+			"social",
+			"understand",
+			"watch",
+			"together",
+			"follow",
+			"around",
+			"stop",
+			"face",
+			"create",
+			"public",
+			"speak",
+			"read",
+			"level",
+			"allow",
+			"office",
+			"health",
+			"person",
+			"history",
+			"result",
+			"open",
+			"change",
+			"morning",
+			"research",
+			"early",
+			"food",
+			"moment",
+			"force",
+			"offer",
+			"enough",
+			"education",
+			"across",
+			"remember",
+			"policy",
+			"everything",
+			"love",
+			"process",
+			"music",
+			"consider",
+			"human",
+			"market",
+			"build",
+			"nation",
+			"plan",
+			"interest",
+			"experience",
+			"reach",
+			"effect",
+			"class",
+			"control",
+			"light",
+			"voice",
+			"mind",
+			"network",
+			"signal",
+			"packet",
+			"cipher",
+			"access",
+			"secure",
+			"server",
+			"binary",
+			"kernel",
+			"matrix"
+		],
+		"quotes": [
+			{
+				"text": "Simplicity is about subtracting the obvious and adding the meaningful. Every word on the page should earn its place through clarity and rhythm.",
+				"author": "John Maeda"
+			},
+			{
+				"text": "The art of writing is the art of discovering what you believe. When you sit down at the keyboard with patience, scattered thoughts begin to take shape.",
+				"author": "Gustave Flaubert"
+			},
+			{
+				"text": "Focus is a matter of deciding what things you are not going to do. Deep work flourishes in quiet spaces where distractions fade into the background.",
+				"author": "John Carmack"
+			},
+			{
+				"text": "A designer knows he has achieved perfection not when there is nothing left to add, but when there is nothing left to take away.",
+				"author": "Antoine de Saint-Exupery"
+			},
+			{
+				"text": "Words are a lens to focus one's mind. Clear prose does not happen by accident; it emerges from steady habits and deliberate revision.",
+				"author": "Ayn Rand"
+			},
+			{
+				"text": "Speed follows accuracy. When you train your fingers to strike each key without tension or hesitation, fluency becomes effortless and natural.",
+				"author": "Typing Craft"
+			},
+			{
+				"text": "The scariest moment is always just before you start. After that, things can only get better once the first sentence is on the screen.",
+				"author": "Stephen King"
+			},
+			{
+				"text": "Either write something worth reading or do something worth writing. Small daily steps build momentum that occasional bursts of effort never match.",
+				"author": "Benjamin Franklin"
+			},
+			{
+				"text": "Details make perfection, and perfection is not a detail. Clean typography and balanced spacing invite the reader to linger and understand.",
+				"author": "Leonardo da Vinci"
+			},
+			{
+				"text": "What is written without effort is in general read without pleasure. Thoughtful structure turns complex ideas into a welcoming conversation.",
+				"author": "Samuel Johnson"
+			},
+			{
+				"text": "We are what we repeatedly do. Excellence, then, is not an act, but a habit practiced quietly every single morning.",
+				"author": "Will Durant"
+			},
+			{
+				"text": "First, solve the problem. Then, write the code. Clean architecture begins in the mind long before your fingers touch the keyboard.",
+				"author": "John Johnson"
+			},
+			{
+				"text": "Reading furnishes the mind only with materials of knowledge; it is thinking that makes what we read ours.",
+				"author": "John Locke"
+			},
+			{
+				"text": "Never use a long word where a short one will do. Direct language respects the reader's time and sharpens your own argument.",
+				"author": "George Orwell"
+			},
+			{
+				"text": "In the middle of difficulty lies opportunity. A calm posture and steady cadence will carry you through the longest manuscript.",
+				"author": "Albert Einstein"
+			},
+			{
+				"text": "Programming isn't about what you know; it's about what you can figure out through curiosity, patience, and careful testing.",
+				"author": "Chris Pine"
+			}
+		],
+		"page": {
+			"schemaFeatures": [
+				"Selectable timed typing test durations: 15s, 30s, 60s, and 120s",
+				"Word count (10, 25, 50, 100), curated quotes, open Zen mode, and custom text practice",
+				"Live Net Words Per Minute (WPM), Raw WPM, Burst WPM, consistency, and keystroke accuracy",
+				"Optional Ghost Pacer caret (40, 60, 80 WPM, or Last Run) and synthesized Web Audio keystroke feedback",
+				"Interactive post-test Bezier SVG telemetry chart, Words History drawer, Practice Missed Words drill, and PNG result card export",
+				"100% private client-side execution in your browser"
+			],
+			"hero": {
+				"badge": "Wordora Typing Studio",
+				"subtitle": "Measure your real-time Words Per Minute (WPM), Raw WPM, consistency, and keystroke accuracy in a distraction-free Monkeytype-inspired typing arena.",
+				"cta": "Start Typing Test →",
+				"trustStrip": "Zero ads · Live WPM & consistency chart · Runs 100% locally in your browser",
+				"quickLaunch": [
+					{
+						"label": "15s Sprint",
+						"query": "?mode=time&value=15"
+					},
+					{
+						"label": "30s Standard",
+						"query": "?mode=time&value=30"
+					},
+					{
+						"label": "1 Minute Test",
+						"query": "?mode=time&value=60"
+					},
+					{
+						"label": "50 Words",
+						"query": "?mode=words&value=50"
+					},
+					{
+						"label": "Quotes",
+						"query": "?mode=quote&value=medium"
+					},
+					{
+						"label": "Zen Mode",
+						"query": "?mode=zen&value=0"
+					},
+					{
+						"label": "Custom Text",
+						"query": "?mode=custom&value=0"
+					}
+				]
+			},
+			"benchmarks": {
+				"badge": "Speed Standards",
+				"heading": "Typing Speed Benchmarks (WPM & Accuracy Tiers)",
+				"intro": "Compare your test score against global touch-typing tiers. While raw finger speed determines how fast letters appear on screen, sustained accuracy above 96% is what separates productive writers and developers from error-prone typists.",
+				"tableHeaders": [
+					"Skill Tier",
+					"Net WPM Range",
+					"Keystrokes (CPM)",
+					"Target Accuracy",
+					"Real-World Use Case"
+				],
+				"rows": [
+					{
+						"tier": "Beginner",
+						"wpmRange": "15 – 25 WPM",
+						"cpmRange": "75 – 125 CPM",
+						"accuracyTarget": "90% – 93%",
+						"useCase": "Hunt-and-peck typists learning home-row finger placement and visual keyboard familiarity."
+					},
+					{
+						"tier": "Average Casual",
+						"wpmRange": "38 – 42 WPM",
+						"cpmRange": "190 – 210 CPM",
+						"accuracyTarget": "94% – 96%",
+						"useCase": "General everyday email, web browsing, and casual chat communication without strict deadlines."
+					},
+					{
+						"tier": "Productive Office & Student",
+						"wpmRange": "50 – 65 WPM",
+						"cpmRange": "250 – 325 CPM",
+						"accuracyTarget": "96% – 98%",
+						"useCase": "Academic essays, research notes, customer support, and business documentation at a steady pace."
+					},
+					{
+						"tier": "Professional Writer & Coder",
+						"wpmRange": "70 – 90 WPM",
+						"cpmRange": "350 – 450 CPM",
+						"accuracyTarget": "98% – 99%",
+						"useCase": "Journalists, novelists, software engineers, and executive assistants drafting complex text at the speed of thought."
+					},
+					{
+						"tier": "Competitive Speed Typist",
+						"wpmRange": "100 – 140+ WPM",
+						"cpmRange": "500 – 700+ CPM",
+						"accuracyTarget": "99% – 100%",
+						"useCase": "Realtime court transcriptionists, live captioners, and leaderboard speed typists with automatic muscle memory."
+					}
+				]
+			},
+			"methodology": {
+				"badge": "Scoring Methodology",
+				"heading": "How WPM, Raw WPM & Consistency Are Calculated",
+				"intro": "Because English words vary wildly in length—from two-letter prepositions to twelve-letter technical terms—standardized typing tests normalize every five keystrokes (including spaces and punctuation) as one \"word.\"",
+				"cards": [
+					{
+						"title": "1. Net WPM (Adjusted Speed)",
+						"bodyHtml": "Net WPM counts only <strong class=\"font-semibold text-ink\">correctly typed characters</strong> (plus spaces between completed words), divides that total by 5, and divides by the test duration in minutes. Uncorrected mistakes and skipped letters do not inflate your Net WPM."
+					},
+					{
+						"title": "2. Raw WPM & Burst Speed",
+						"bodyHtml": "Raw WPM divides <strong class=\"font-semibold text-ink\">every keystroke pressed</strong> by 5 and by the elapsed minutes, regardless of errors. On the post-test chart, <strong class=\"font-semibold text-ink\">Burst WPM</strong> plots your instantaneous speed inside each 1-second window."
+					},
+					{
+						"title": "3. Accuracy & Consistency %",
+						"bodyHtml": "Accuracy is the percentage of valid keystrokes out of total evaluated characters (including missed trailing letters). Consistency measures how steady your per-second WPM remained across the entire test using the coefficient of variation."
+					}
+				]
+			},
+			"techniques": {
+				"badge": "Touch-Typing Mastery",
+				"heading": "5 Proven Techniques to Increase Your Typing Speed",
+				"introHtml": "Deliberate 10-minute practice sessions inside the <a href=\"/typing-speed-test/play/?mode=time&value=60\" class=\"font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">Cyber-Terminal Typing Arena</a> build faster muscle memory than hours of rushed, error-filled typing:",
+				"cards": [
+					{
+						"number": "1",
+						"title": "Prioritize 98% Accuracy Over Raw Sprint Speed",
+						"bodyHtml": "Every typo costs three keystrokes: the wrong letter, Backspace, and the correction. Slowing down by 5 WPM to keep accuracy above 98% raises your final Net WPM immediately."
+					},
+					{
+						"number": "2",
+						"title": "Read One Full Word Ahead of Your Caret",
+						"bodyHtml": "Fast typists never read letter-by-letter. Keep your eyes focused on the upcoming word in the 3-line viewport so your fingers queue entire syllables as a single motor pattern."
+					},
+					{
+						"number": "3",
+						"title": "Use Ctrl + Backspace for Instant Word Recovery",
+						"bodyHtml": "Instead of pecking Backspace four times when a word goes wrong, press <kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[12px] font-medium text-ink\">Ctrl + Backspace</kbd> (<kbd class=\"rounded border border-hairline bg-canvas px-1.5 py-0.5 text-[12px] font-medium text-ink\">Option + Backspace</kbd> on Mac) to clear the whole word in one tap."
+					},
+					{
+						"number": "4",
+						"title": "Train With the Ghost Pacer Caret",
+						"bodyHtml": "Toggle <strong class=\"font-semibold text-ink\">[ PACE: 60 WPM ]</strong> or <strong class=\"font-semibold text-ink\">[ PACE: LAST ]</strong> in the arena header to race a smooth moving pacer caret. It smooths out erratic burst-and-pause habits."
+					},
+					{
+						"number": "5",
+						"title": "Run the \"Practice Missed Words\" Drill After Every Test",
+						"bodyHtml": "Your typing speed is bottlenecked by the 10% of letter combinations that make you hesitate. After completing a test, click <strong class=\"font-semibold text-ink\">Practice Missed</strong> on the telemetry report to launch a custom drill generated from the exact words you mistyped during that run. Pair your writing practice with our <a href=\"/word-counter/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">Word Counter</a>, <a href=\"/words-to-pages/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">Words to Pages Converter</a>, <a href=\"/reading-speed-test/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">Reading Speed Test</a>, and <a href=\"/speech-time-calculator/\" class=\"font-medium text-ink underline decoration-[#0f2e26]/35 underline-offset-4 hover:decoration-[#0f2e26] dark:decoration-[#afe3d0]/40 dark:hover:decoration-[#afe3d0]\">Speech Time Calculator</a>."
+					}
+				]
+			},
+			"faqSection": {
+				"badge": "Frequently Asked Questions",
+				"heading": "Typing Speed Test FAQs",
+				"intro": "Everything you need to know about WPM scoring, accuracy formulas, Ghost Pacer drills, and touch-typing benchmarks."
+			}
+		},
+		"faq": [
+			{
+				"question": "What is a good typing speed in WPM?",
+				"answer": "The global average typing speed on a desktop keyboard is 38 to 42 Words Per Minute (WPM). A typing speed of 50 to 65 WPM with at least 96% accuracy is considered productive for students and office professionals, while 75 to 95+ WPM is typical for experienced writers, programmers, and transcriptionists."
+			},
+			{
+				"question": "How is WPM (Words Per Minute) calculated on a typing test?",
+				"answer": "Standard typing tests define one word as exactly 5 characters, including spaces and punctuation. Raw WPM divides your total typed characters by 5 and then divides by the elapsed time in minutes. Net WPM subtracts uncorrected errors so your final score reflects both speed and precision."
+			},
+			{
+				"question": "What is the difference between Net WPM, Raw WPM, and Burst WPM?",
+				"answer": "Raw WPM measures your unadjusted keystroke pace including mistakes. Net WPM counts only accurately typed characters in valid words. Burst WPM tracks your instantaneous typing speed within each 1-second window on the post-test telemetry chart so you can see peak speed versus slowdowns."
+			},
+			{
+				"question": "Why is a 60-second typing test the gold standard?",
+				"answer": "A 1-minute (60s) typing test balances short-term sprint speed with sustained finger endurance. While a 15-second sprint measures peak burst speed, a 60-second test reveals your true rhythm consistency and error recovery under realistic writing conditions."
+			},
+			{
+				"question": "How does typing consistency percentage work?",
+				"answer": "Consistency measures how steady your per-second WPM remained from the start of the test to the finish, calculated from the coefficient of variation across every 1-second sample. A consistency score above 80% means you maintained an even, controlled rhythm rather than rushing and stalling."
+			},
+			{
+				"question": "How can I use the Ghost Pacer caret to type faster?",
+				"answer": "Inside the Wordora Cyber-Terminal Arena (/typing-speed-test/play/), click the [ PACE ] pill in the top bar to activate a translucent Ghost Caret at 40 WPM, 60 WPM, 80 WPM, or your Last Run speed. Racing slightly ahead of a steady pacer prevents you from over-sprinting on easy words and crashing on hard ones."
+			},
+			{
+				"question": "Why should I use Ctrl + Backspace instead of single Backspace?",
+				"answer": "When you make a typo two or three letters deep into a word, tapping Backspace repeatedly breaks your rhythm. Pressing Ctrl + Backspace (or Option + Backspace on Mac) clears the entire current word in a single motion so you can re-type the whole word cleanly from muscle memory."
+			},
+			{
+				"question": "What does the Practice Missed Words drill do after a test?",
+				"answer": "Whenever you mistype or skip a character during a run, the arena logs that specific word. Clicking Practice Missed on the post-test report generates a custom drill built exclusively from the words you missed so you can eliminate weak letter combinations immediately."
+			},
+			{
+				"question": "Does practicing with punctuation and numbers lower my WPM?",
+				"answer": "Enabling @ punctuation and # numbers typically lowers WPM by 10 to 18 WPM compared to lowercase word streams because your fingers must reach for Shift keys and top-row digits. Practicing with punctuation enabled prepares you far better for real-world essays, emails, and coding."
+			},
+			{
+				"question": "Is Wordora's Typing Speed Test free and private?",
+				"answer": "Yes. Wordora's Typing Speed Test and Cyber-Terminal Arena run 100% locally in your browser with zero ads, zero login requirements, and zero server uploads. Even custom text snippets you paste into Custom Mode stay strictly on your device."
+			}
+		]
 	},
 	"about": {
 		"name": "About Wordora",

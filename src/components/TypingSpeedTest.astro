@@ -1,15 +1,36 @@
 ---
-import { localePath } from '../i18n/ui';
 import { getToolById } from '../config/site';
+import {
+	getLocaleFromUrl,
+	getLocalizedPath,
+	useTranslations,
+	type Locale,
+} from '../i18n/ui';
+
+interface Props {
+	locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 
 const wordsToPagesTool = getToolById('words-to-pages');
 const randomTopicTool = getToolById('random-topic-generator');
 const readingSpeedTool = getToolById('reading-speed-test');
+
+const passages = t.raw<string[]>('typingSpeedTest.passages') ?? [];
+const clientStrings = t.raw<Record<string, unknown>>('typingSpeedTest.client') ?? {};
+
+const clientI18n = {
+	locale,
+	passages,
+	strings: clientStrings,
+};
 ---
 
 <section
 	id="typing-speed-workspace"
-	aria-label="Typing Speed Test Workspace"
+	aria-label={t('typingSpeedTest.ui.workspaceAria')}
 	class="mx-auto max-w-[1200px] px-4 pt-4 pb-12 sm:px-6"
 >
 	<!-- Live Metrics Summary Bar -->
@@ -18,10 +39,10 @@ const readingSpeedTool = getToolById('reading-speed-test');
 		<article class="kpi-card flex flex-col justify-between p-5">
 			<div class="flex items-center justify-between gap-2">
 				<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
-					Typing speed
+					{t('typingSpeedTest.ui.typingSpeedLabel')}
 				</span>
 				<span id="tst-tier-badge" class="text-[12px] text-[#afe3d0]/80 dark:text-mute">
-					40 WPM average
+					{t('typingSpeedTest.ui.defaultTierBadge')}
 				</span>
 			</div>
 			<div class="my-2.5 flex items-baseline gap-2">
@@ -35,7 +56,7 @@ const readingSpeedTool = getToolById('reading-speed-test');
 				<span class="text-[14px] text-[#e2f5ee] dark:text-body">WPM</span>
 			</div>
 			<p id="tst-metric-net-note" class="text-[12px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-				Net speed adjusted for errors
+				{t('typingSpeedTest.ui.netSpeedNote')}
 			</p>
 		</article>
 
@@ -43,10 +64,10 @@ const readingSpeedTool = getToolById('reading-speed-test');
 		<article class="kpi-card flex flex-col justify-between p-5 sm:border-l sm:border-[#1d463b] lg:border-l-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
 				<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
-					Raw WPM
+					{t('typingSpeedTest.ui.rawWpmLabel')}
 				</span>
 				<span class="text-[12px] text-[#afe3d0]/80 dark:text-mute">
-					Unadjusted pace
+					{t('typingSpeedTest.ui.unadjustedPace')}
 				</span>
 			</div>
 			<div class="my-2.5 flex items-baseline gap-2">
@@ -60,7 +81,7 @@ const readingSpeedTool = getToolById('reading-speed-test');
 				<span class="text-[14px] text-[#e2f5ee] dark:text-body">WPM</span>
 			</div>
 			<p class="text-[12px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-				<strong id="tst-metric-words-typed" class="font-medium text-white dark:text-ink">0</strong> words typed
+				<strong id="tst-metric-words-typed" class="font-medium text-white dark:text-ink">0</strong> {t('typingSpeedTest.ui.wordsTypedSuffix')}
 			</p>
 		</article>
 
@@ -68,10 +89,10 @@ const readingSpeedTool = getToolById('reading-speed-test');
 		<article class="kpi-card flex flex-col justify-between p-5 sm:border-t sm:border-[#1d463b] lg:border-t-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
 				<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
-					Accuracy
+					{t('typingSpeedTest.ui.accuracyLabel')}
 				</span>
 				<span class="text-[12px] text-[#afe3d0]/80 dark:text-mute">
-					Precision
+					{t('typingSpeedTest.ui.precisionLabel')}
 				</span>
 			</div>
 			<div class="my-2.5 flex items-baseline gap-1.5">
@@ -84,7 +105,7 @@ const readingSpeedTool = getToolById('reading-speed-test');
 				</output>
 			</div>
 			<p class="text-[12px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-				<strong id="tst-metric-correct-chars" class="font-medium text-white dark:text-ink">0</strong> correct · <strong id="tst-metric-error-chars" class="font-medium text-white dark:text-ink">0</strong> mistakes
+				<strong id="tst-metric-correct-chars" class="font-medium text-white dark:text-ink">0</strong> {t('typingSpeedTest.ui.correctSuffix')} · <strong id="tst-metric-error-chars" class="font-medium text-white dark:text-ink">0</strong> {t('typingSpeedTest.ui.mistakesSuffix')}
 			</p>
 		</article>
 
@@ -92,10 +113,10 @@ const readingSpeedTool = getToolById('reading-speed-test');
 		<article class="kpi-card flex flex-col justify-between p-5 sm:border-t sm:border-l sm:border-[#1d463b] lg:border-t-0 lg:border-l-0 dark:sm:border-hairline">
 			<div class="flex items-center justify-between gap-2">
 				<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-body">
-					Time remaining
+					{t('typingSpeedTest.ui.timeRemainingLabel')}
 				</span>
 				<span id="tst-status-label" class="text-[12px] text-[#afe3d0]/80 dark:text-mute">
-					Ready to start
+					{t('typingSpeedTest.ui.readyToStart')}
 				</span>
 			</div>
 			<div class="my-2.5 flex items-baseline gap-2">
@@ -108,7 +129,7 @@ const readingSpeedTool = getToolById('reading-speed-test');
 				</output>
 			</div>
 			<p id="tst-timer-subtext" class="text-[12px] text-[#e2f5ee]/80 tabular-nums dark:text-mute">
-				Timer starts on first keystroke
+				{t('typingSpeedTest.ui.timerStartsNote')}
 			</p>
 		</article>
 	</div>
@@ -119,11 +140,11 @@ const readingSpeedTool = getToolById('reading-speed-test');
 		<div class="flex flex-wrap items-center justify-between gap-3 border-b border-hairline px-5 py-3.5">
 			<div class="flex flex-wrap items-center gap-3">
 				<span class="text-[13px] font-medium text-body">
-					Test duration
+					{t('typingSpeedTest.ui.testDurationLabel')}
 				</span>
 				<div
 					role="group"
-					aria-label="Select typing test duration"
+					aria-label={t('typingSpeedTest.ui.durationGroupAria')}
 					class="inline-flex items-center rounded-sm border border-hairline bg-canvas p-0.5"
 				>
 					<button
@@ -167,13 +188,13 @@ const readingSpeedTool = getToolById('reading-speed-test');
 					id="tst-btn-new-passage"
 					class="cursor-pointer rounded-sm border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
 				>
-					New passage
+					{t('typingSpeedTest.ui.newPassageBtn')}
 				</button>
 
 				<button
 					type="button"
 					id="tst-btn-restart"
-					title="Restart test (Tab)"
+					title={t('typingSpeedTest.ui.restartTitle')}
 					class="inline-flex cursor-pointer items-center gap-1.5 rounded-sm bg-primary px-3.5 py-1.5 text-[13px] font-semibold text-on-primary transition-opacity hover:opacity-90"
 				>
 					<svg
@@ -189,7 +210,7 @@ const readingSpeedTool = getToolById('reading-speed-test');
 						<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
 						<path d="M3 3v5h5" />
 					</svg>
-					<span>Restart (Tab)</span>
+					<span>{t('typingSpeedTest.ui.restartBtn')}</span>
 				</button>
 			</div>
 		</div>
@@ -201,7 +222,7 @@ const readingSpeedTool = getToolById('reading-speed-test');
 				class="relative cursor-text rounded-md border border-hairline bg-canvas p-5 transition-colors focus-within:border-ink sm:p-6"
 			>
 				<label for="tst-hidden-input" class="sr-only">
-					Type the passage shown below
+					{t('typingSpeedTest.ui.inputSrLabel')}
 				</label>
 				<textarea
 					id="tst-hidden-input"
@@ -210,18 +231,16 @@ const readingSpeedTool = getToolById('reading-speed-test');
 					autocomplete="off"
 					autocorrect="off"
 					spellcheck="false"
-					aria-label="Typing test input field"
+					aria-label={t('typingSpeedTest.ui.inputAria')}
 					class=" absolute inset-0 h-full w-full cursor-text resize-none opacity-0 focus:outline-none"
 				></textarea>
 
 				<!-- Focus Prompt Banner -->
 				<div class="mb-3 flex items-center justify-between gap-2 text-[12px] text-mute">
 					<span id="tst-focus-hint">
-						Click here and begin typing to start the timer
+						{t('typingSpeedTest.ui.focusHintInitial')}
 					</span>
-					<span class="tabular-nums">
-						Press <strong class="font-medium text-ink">Tab</strong> anytime to restart
-					</span>
+					<span class="tabular-nums" set:html={t('typingSpeedTest.ui.tabHintHtml')} />
 				</div>
 
 				<!-- Character-by-Character Passage Viewport -->
@@ -242,10 +261,10 @@ const readingSpeedTool = getToolById('reading-speed-test');
 				<div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
 					<div>
 						<h2 class="text-[18px] font-semibold tracking-[-0.3px] text-ink">
-							Test complete
+							{t('typingSpeedTest.ui.testCompleteTitle')}
 						</h2>
 						<p id="tst-results-summary" class="mt-1 text-[14px] text-body">
-							Here is your typing breakdown for this session.
+							{t('typingSpeedTest.ui.resultsSummaryDefault')}
 						</p>
 					</div>
 					<div class="flex flex-wrap items-center gap-2.5">
@@ -254,14 +273,14 @@ const readingSpeedTool = getToolById('reading-speed-test');
 							id="tst-btn-repeat-same"
 							class="cursor-pointer rounded-sm border border-hairline bg-canvas-elevated px-3.5 py-2 text-[13px] font-medium text-ink transition-colors hover:bg-hairline-soft"
 						>
-							Retry same passage
+							{t('typingSpeedTest.ui.retrySameBtn')}
 						</button>
 						<button
 							type="button"
 							id="tst-btn-next-test"
 							class="cursor-pointer rounded-sm bg-primary px-4 py-2 text-[13px] font-semibold text-on-primary transition-opacity hover:opacity-90"
 						>
-							Next passage
+							{t('typingSpeedTest.ui.nextPassageBtn')}
 						</button>
 					</div>
 				</div>
@@ -270,12 +289,12 @@ const readingSpeedTool = getToolById('reading-speed-test');
 			<!-- Footer Bar Inside Workspace -->
 			<div class="mt-4 flex flex-wrap items-center justify-between gap-2 text-[13px] text-mute">
 				<div class="flex flex-wrap items-center gap-4 tabular-nums">
-					<span>Progress: <strong id="tst-inline-progress" class="font-medium text-ink">0%</strong></span>
-					<span>Characters typed: <strong id="tst-inline-chars" class="font-medium text-ink">0</strong></span>
-					<span>Standard word length: <strong class="font-medium text-ink">5 characters</strong></span>
+					<span>{t('typingSpeedTest.ui.progressLabel')} <strong id="tst-inline-progress" class="font-medium text-ink">0%</strong></span>
+					<span>{t('typingSpeedTest.ui.charsTypedLabel')} <strong id="tst-inline-chars" class="font-medium text-ink">0</strong></span>
+					<span>{t('typingSpeedTest.ui.stdWordLenLabel')} <strong class="font-medium text-ink">{t('typingSpeedTest.ui.stdWordLenValue')}</strong></span>
 				</div>
 				<span class="text-[12px] text-mute">
-					Runs privately in your browser
+					{t('typingSpeedTest.ui.privateNote')}
 				</span>
 			</div>
 		</div>
@@ -283,24 +302,24 @@ const readingSpeedTool = getToolById('reading-speed-test');
 
 	<!-- Related Tools Note (Protected Against Draft Links) -->
 	<aside
-		aria-label="Related writing and reading tools"
+		aria-label={t('typingSpeedTest.ui.relatedAria')}
 		class="mt-5 flex flex-col items-start justify-between gap-3 pt-2 text-[14px] text-body sm:flex-row sm:items-center"
 	>
 		<p class="leading-[22px]">
-			Looking for writing inspiration or manuscript page estimates? Try our{' '}
+			{t('typingSpeedTest.ui.relatedPrefix')}{' '}
 			{
 				randomTopicTool?.status === 'live' ? (
 					<a
-						href={localePath(randomTopicTool.slug, Astro.url)}
+						href={getLocalizedPath(randomTopicTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{randomTopicTool.shortName}
+						{t(`${randomTopicTool.dictKey}.shortName`)}
 					</a>
 				) : (
 					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-						<span>{randomTopicTool?.shortName ?? 'Random Topic Generator'}</span>
+						<span>{randomTopicTool ? t(`${randomTopicTool.dictKey}.shortName`) : t('randomTopicGenerator.shortName')}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
@@ -309,51 +328,66 @@ const readingSpeedTool = getToolById('reading-speed-test');
 			{
 				wordsToPagesTool?.status === 'live' ? (
 					<a
-						href={localePath(wordsToPagesTool.slug, Astro.url)}
+						href={getLocalizedPath(wordsToPagesTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{wordsToPagesTool.shortName}
+						{t(`${wordsToPagesTool.dictKey}.shortName`)}
 					</a>
 				) : (
 					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-						<span>{wordsToPagesTool?.shortName ?? 'Words to Pages'}</span>
+						<span>{wordsToPagesTool ? t(`${wordsToPagesTool.dictKey}.shortName`) : t('wordsToPages.shortName')}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
 			}
-			, or{' '}
+			, {t('typingSpeedTest.ui.relatedOr')}{' '}
 			{
 				readingSpeedTool?.status === 'live' ? (
 					<a
-						href={localePath(readingSpeedTool.slug, Astro.url)}
+						href={getLocalizedPath(readingSpeedTool.slug, locale)}
 						class="font-medium text-vercel-blue underline decoration-vercel-blue/30 underline-offset-4 transition-colors hover:text-vercel-blue-deep hover:decoration-vercel-blue"
 					>
-						{readingSpeedTool.shortName}
+						{t(`${readingSpeedTool.dictKey}.shortName`)}
 					</a>
 				) : (
 					<span aria-disabled="true" class="inline-flex items-center gap-1.5 font-medium text-ink">
-						<span>{readingSpeedTool?.shortName ?? 'Reading Speed Test'}</span>
+						<span>{readingSpeedTool ? t(`${readingSpeedTool.dictKey}.shortName`) : t('readingSpeedTest.shortName')}</span>
 						<span class="rounded-full bg-hairline-soft px-2 py-0.5 text-[11px] font-medium text-mute">
-							Soon
+							{t('common.soon')}
 						</span>
 					</span>
 				)
 			}.
 		</p>
 	</aside>
+
+	<script
+		type="application/json"
+		id="tst-i18n"
+		set:html={JSON.stringify(clientI18n).replace(/</g, '\\u003c')}
+	/>
 </section>
 
 <script>
 	function initTypingSpeedTest() {
-		const PASSAGES = [
-			"Clear writing begins with steady rhythm and attention to detail. When you type at a comfortable, unhurried pace, your fingers find each key with fewer pauses and corrections. Over time, accuracy naturally builds speed, allowing your thoughts to move from mind to page without friction. Many experienced editors find that maintaining a calm posture and looking ahead by a few words helps eliminate common keystroke slips before they happen.",
-			"Every strong essay or article relies on structure just as much as vocabulary. An inviting opening paragraph sets the context, while short, concrete examples keep the reader engaged through complex ideas. Rather than reaching for ornate phrases, choose everyday words that state your point directly. Reading your draft aloud after typing it is one of the simplest ways to catch awkward cadence and tighten long sentences.",
-			"Public libraries and quiet study halls have long served as sanctuaries for deep focus. Surrounded by shelves of books and the soft tap of keyboards, it becomes easier to set aside digital distractions and finish meaningful work. Even twenty minutes of uninterrupted writing can produce a complete first draft when you resist the urge to edit every sentence while typing.",
-			"Designers and typographers care deeply about spacing, line length, and contrast because visual comfort shapes how we read and write. A well-proportioned column of text reduces eye strain and helps writers track their progress across the screen. Whether you are drafting research notes, preparing a keynote script, or practicing daily typing drills, a clean workspace keeps your attention on the words themselves.",
-			"Building consistent habits matters far more than occasional bursts of effort. Practicing a short typing passage each morning warms up your hands and sharpens your focus for the day ahead. Notice which letter combinations slow you down, ease your grip on the keyboard, and prioritize clean accuracy over rushed speed. Steady improvement follows naturally from deliberate, relaxed practice."
-		];
+		const i18nEl = document.getElementById('tst-i18n');
+		const I18N = i18nEl ? JSON.parse(i18nEl.textContent || '{}') : {};
+		const S = I18N.strings || {};
+		const TIERS = S.tiers || {};
+
+		function fmt(template: string, vars: Record<string, string | number>): string {
+			return String(template || '').replace(/\{(\w+)\}/g, (_, k: string) =>
+				k in vars ? String(vars[k]) : `{${k}}`,
+			);
+		}
+
+		const PASSAGES: string[] = Array.isArray(I18N.passages) && I18N.passages.length > 0
+			? I18N.passages
+			: [
+				"Clear writing begins with steady rhythm and attention to detail. When you type at a comfortable, unhurried pace, your fingers find each key with fewer pauses and corrections. Over time, accuracy naturally builds speed, allowing your thoughts to move from mind to page without friction. Many experienced editors find that maintaining a calm posture and looking ahead by a few words helps eliminate common keystroke slips before they happen.",
+			];
 
 		// DOM Elements
 		const durationButtons = Array.from(
@@ -399,7 +433,7 @@ const readingSpeedTool = getToolById('reading-speed-test');
 		let charSpans: HTMLSpanElement[] = [];
 
 		function buildTargetText(startIndex: number): string {
-			// Combine 2 passages so even 120s fast typists have plenty of natural English text
+			// Combine 2 passages so even 120s fast typists have plenty of natural text
 			const first = PASSAGES[startIndex % PASSAGES.length];
 			const second = PASSAGES[(startIndex + 1) % PASSAGES.length];
 			return `${first} ${second}`;
@@ -427,12 +461,12 @@ const readingSpeedTool = getToolById('reading-speed-test');
 		}
 
 		function getSpeedTier(wpm: number): string {
-			if (wpm <= 0) return '40 WPM average';
-			if (wpm < 35) return 'Building rhythm';
-			if (wpm < 55) return 'Everyday average';
-			if (wpm < 75) return 'Fast typist';
-			if (wpm < 95) return 'Advanced pace';
-			return 'Professional speed';
+			if (wpm <= 0) return TIERS.default || '40 WPM average';
+			if (wpm < 35) return TIERS.building || 'Building rhythm';
+			if (wpm < 55) return TIERS.average || 'Everyday average';
+			if (wpm < 75) return TIERS.fast || 'Fast typist';
+			if (wpm < 95) return TIERS.advanced || 'Advanced pace';
+			return TIERS.professional || 'Professional speed';
 		}
 
 		function stopTimer() {
@@ -473,16 +507,16 @@ const readingSpeedTool = getToolById('reading-speed-test');
 			const wordsTyped = Math.floor(typedLen / 5);
 			const progressPct = targetText.length > 0 ? Math.min(100, Math.round((typedLen / targetText.length) * 100)) : 0;
 
-			if (metricWpm) metricWpm.textContent = netWpm.toLocaleString();
+			if (metricWpm) metricWpm.textContent = netWpm.toLocaleString(I18N.locale || undefined);
 			if (tierBadge) tierBadge.textContent = getSpeedTier(netWpm);
-			if (metricRawWpm) metricRawWpm.textContent = rawWpm.toLocaleString();
-			if (metricWordsTyped) metricWordsTyped.textContent = wordsTyped.toLocaleString();
+			if (metricRawWpm) metricRawWpm.textContent = rawWpm.toLocaleString(I18N.locale || undefined);
+			if (metricWordsTyped) metricWordsTyped.textContent = wordsTyped.toLocaleString(I18N.locale || undefined);
 			if (metricAccuracy) metricAccuracy.textContent = `${accuracy}%`;
-			if (metricCorrectChars) metricCorrectChars.textContent = correct.toLocaleString();
-			if (metricErrorChars) metricErrorChars.textContent = errors.toLocaleString();
+			if (metricCorrectChars) metricCorrectChars.textContent = correct.toLocaleString(I18N.locale || undefined);
+			if (metricErrorChars) metricErrorChars.textContent = errors.toLocaleString(I18N.locale || undefined);
 
 			if (inlineProgress) inlineProgress.textContent = `${progressPct}%`;
-			if (inlineChars) inlineChars.textContent = `${typedLen.toLocaleString()} / ${targetText.length.toLocaleString()}`;
+			if (inlineChars) inlineChars.textContent = `${typedLen.toLocaleString(I18N.locale || undefined)} / ${targetText.length.toLocaleString(I18N.locale || undefined)}`;
 
 			return { netWpm, rawWpm, accuracy, correct, errors, typedLen };
 		}
@@ -494,9 +528,9 @@ const readingSpeedTool = getToolById('reading-speed-test');
 			timeRemaining = 0;
 
 			if (metricTimer) metricTimer.textContent = '0s';
-			if (statusLabel) statusLabel.textContent = 'Test complete';
-			if (timerSubtext) timerSubtext.textContent = `Completed ${selectedDuration}s session`;
-			if (focusHint) focusHint.textContent = 'Session complete — press Tab or click Restart to practice again';
+			if (statusLabel) statusLabel.textContent = S.statusComplete || 'Test complete';
+			if (timerSubtext) timerSubtext.textContent = fmt(S.timerCompletedSub || 'Completed {sec}s session', { sec: selectedDuration });
+			if (focusHint) focusHint.textContent = S.focusHintComplete || 'Session complete — press Tab or click Restart to practice again';
 
 			const elapsed = startTimeMs !== null
 				? Math.min(selectedDuration, Math.max(1, (performance.now() - startTimeMs) / 1000))
@@ -505,7 +539,21 @@ const readingSpeedTool = getToolById('reading-speed-test');
 			const stats = calculateAndRenderStats(elapsed);
 
 			if (resultsSummary) {
-				resultsSummary.textContent = `You typed ${stats.netWpm} WPM (${stats.rawWpm} Raw WPM) with ${stats.accuracy}% accuracy (${stats.correct} correct characters, ${stats.errors} ${stats.errors === 1 ? 'mistake' : 'mistakes'}) in ${Math.round(elapsed)} seconds.`;
+				const mistakeWord = stats.errors === 1
+					? (S.mistakeSingular || 'mistake')
+					: (S.mistakePlural || 'mistakes');
+				resultsSummary.textContent = fmt(
+					S.resultsSummary || 'You typed {netWpm} WPM ({rawWpm} Raw WPM) with {accuracy}% accuracy ({correct} correct characters, {errors} {mistakeWord}) in {elapsed} seconds.',
+					{
+						netWpm: stats.netWpm,
+						rawWpm: stats.rawWpm,
+						accuracy: stats.accuracy,
+						correct: stats.correct,
+						errors: stats.errors,
+						mistakeWord,
+						elapsed: Math.round(elapsed),
+					},
+				);
 			}
 			resultsPanel?.classList.remove('hidden');
 		}
@@ -514,9 +562,9 @@ const readingSpeedTool = getToolById('reading-speed-test');
 			if (isRunning || isFinished) return;
 			isRunning = true;
 			startTimeMs = performance.now();
-			if (statusLabel) statusLabel.textContent = 'Test in progress';
-			if (timerSubtext) timerSubtext.textContent = `${selectedDuration}s timed session`;
-			if (focusHint) focusHint.textContent = 'Keep typing smoothly — accuracy builds speed';
+			if (statusLabel) statusLabel.textContent = S.statusRunning || 'Test in progress';
+			if (timerSubtext) timerSubtext.textContent = fmt(S.timerRunningSub || '{sec}s timed session', { sec: selectedDuration });
+			if (focusHint) focusHint.textContent = S.focusHintRunning || 'Keep typing smoothly — accuracy builds speed';
 
 			timerInterval = window.setInterval(() => {
 				if (!startTimeMs) return;
@@ -583,18 +631,18 @@ const readingSpeedTool = getToolById('reading-speed-test');
 			renderPassage();
 
 			if (metricWpm) metricWpm.textContent = '0';
-			if (tierBadge) tierBadge.textContent = '40 WPM average';
+			if (tierBadge) tierBadge.textContent = TIERS.default || '40 WPM average';
 			if (metricRawWpm) metricRawWpm.textContent = '0';
 			if (metricWordsTyped) metricWordsTyped.textContent = '0';
 			if (metricAccuracy) metricAccuracy.textContent = '100%';
 			if (metricCorrectChars) metricCorrectChars.textContent = '0';
 			if (metricErrorChars) metricErrorChars.textContent = '0';
 			if (metricTimer) metricTimer.textContent = `${selectedDuration}s`;
-			if (statusLabel) statusLabel.textContent = 'Ready to start';
-			if (timerSubtext) timerSubtext.textContent = 'Timer starts on first keystroke';
-			if (focusHint) focusHint.textContent = 'Click here and begin typing to start the timer';
+			if (statusLabel) statusLabel.textContent = S.statusReady || 'Ready to start';
+			if (timerSubtext) timerSubtext.textContent = S.timerStartsNote || 'Timer starts on first keystroke';
+			if (focusHint) focusHint.textContent = S.focusHintInitial || 'Click here and begin typing to start the timer';
 			if (inlineProgress) inlineProgress.textContent = '0%';
-			if (inlineChars) inlineChars.textContent = `0 / ${targetText.length.toLocaleString()}`;
+			if (inlineChars) inlineChars.textContent = `0 / ${targetText.length.toLocaleString(I18N.locale || undefined)}`;
 
 			resultsPanel?.classList.add('hidden');
 
@@ -693,4 +741,3 @@ const readingSpeedTool = getToolById('reading-speed-test');
 
 	initTypingSpeedTest();
 </script>
-

@@ -129,7 +129,7 @@ function runValidation() {
 		if (route.startsWith('/en/')) errors.push(`Forbidden /en/ prefixed route expected: ${route}`);
 	}
 	const utilityErrorRoutes = new Set(['/404.html']);
-	const noindexPlayRoutes = new Set(['/typing-speed-test/play/']);
+	const noindexPlayRoutes = new Set(LOCALES.map((locale) => localize('/typing-speed-test/play/', locale)));
 	const draftSlugs = new Set(draftTools.map((t) => t.slug));
 
 	// 2. Discover all HTML files in dist/
@@ -185,8 +185,9 @@ function runValidation() {
 	for (const [route, html] of routeHtmlMap.entries()) {
 		const isUtilityErrorPage = utilityErrorRoutes.has(route);
 		const isNoindexPlayPage = noindexPlayRoutes.has(route);
+		const playLocale = LOCALES.find((l) => l !== 'en' && route.startsWith(`/${l}/`)) ?? 'en';
 		const expectedCanonical = new URL(
-			isUtilityErrorPage ? '/' : isNoindexPlayPage ? '/typing-speed-test/' : route,
+			isUtilityErrorPage ? '/' : isNoindexPlayPage ? localize('/typing-speed-test/', playLocale) : route,
 			origin
 		).toString();
 
