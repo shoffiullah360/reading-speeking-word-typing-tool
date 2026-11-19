@@ -359,6 +359,34 @@ html:not(.dark) .emerald-result-panel,
   color: #E2F5EE !important;
 }
 
+/* Deep Forest Emerald Result Panels & Primary Output Cards Elevation in Light Mode */
+html:not(.dark) .kpi-summary-bar,
+html:not(.dark) .kpi-card:not(.kpi-summary-bar-responsive > .kpi-card),
+html:not(.dark) .emerald-result-panel,
+html:not(.dark) .tool-card-live,
+html:not(.dark) #rst-window-results > div:first-child,
+html:not(.dark) #random-topic-workspace > div:first-child,
+[data-theme="light"] .kpi-summary-bar,
+[data-theme="light"] .kpi-card:not(.kpi-summary-bar-responsive > .kpi-card),
+[data-theme="light"] .emerald-result-panel,
+[data-theme="light"] .tool-card-live,
+[data-theme="light"] #rst-window-results > div:first-child,
+[data-theme="light"] #random-topic-workspace > div:first-child {
+  box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.18), 0 4px 12px -3px rgba(0, 0, 0, 0.10) !important;
+}
+
+@media (min-width: 1024px) {
+  html:not(.dark) .kpi-summary-bar-responsive,
+  [data-theme="light"] .kpi-summary-bar-responsive {
+    box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.18), 0 4px 12px -3px rgba(0, 0, 0, 0.10) !important;
+  }
+}
+
+html:not(.dark) .tool-card-live:hover,
+[data-theme="light"] .tool-card-live:hover {
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.24), 0 6px 16px -3px rgba(0, 0, 0, 0.12) !important;
+}
+
 @media (max-width: 1023px) {
   html:not(.dark) .kpi-summary-bar-responsive,
   [data-theme="light"] .kpi-summary-bar-responsive {
@@ -414,6 +442,51 @@ html:not(.dark) :is(.kpi-summary-bar, .kpi-summary-bar-responsive, .kpi-card) :i
 /* ========================================================================== */
 /* MAIN TOOL PANELS, NESTED SUB-BOXES & INPUTS IN LIGHT MODE                  */
 /* ========================================================================== */
+
+/* Main White Tool Containers, Input/Editor Panels, Control Cards & Outer Tool Wrapper Cards in Light Mode */
+html:not(.dark) :is(
+  .whisper-shadow,
+  #calculator > div.grid > div:not(.kpi-summary-bar-responsive),
+  #reading-speed-test-workspace #rst-window-setup,
+  #reading-speed-test-workspace #rst-window-read,
+  #reading-speed-test-workspace #rst-window-quiz,
+  #reading-speed-test-workspace #rst-window-history,
+  #reading-speed-test-workspace #rst-answer-review-card,
+  #audiobook-calculator-workspace > div:first-child,
+  #words-to-pages-workspace > div.grid > div > div.whisper-shadow,
+  #word-counter-workspace > div:first-child,
+  #speech-calculator > div:first-child,
+  #random-topic-workspace > div.whisper-shadow,
+  #case-converter-workspace > div:first-child,
+  #text-repeater-workspace > div:first-child,
+  #text-reverser-workspace > div:first-child,
+  #typing-speed-workspace > div.whisper-shadow,
+  #tst-results-panel,
+  article.tool-card
+):not(button):not(a):not(input):not(select):not(span):not(.category-filter-btn):not(.kpi-card):not(.kpi-summary-bar):not(.kpi-summary-bar-responsive):not(.tool-card-live):not([class*="bg-[#0f2e26]"]),
+[data-theme="light"] :is(
+  .whisper-shadow,
+  #calculator > div.grid > div:not(.kpi-summary-bar-responsive),
+  #reading-speed-test-workspace #rst-window-setup,
+  #reading-speed-test-workspace #rst-window-read,
+  #reading-speed-test-workspace #rst-window-quiz,
+  #reading-speed-test-workspace #rst-window-history,
+  #reading-speed-test-workspace #rst-answer-review-card,
+  #audiobook-calculator-workspace > div:first-child,
+  #words-to-pages-workspace > div.grid > div > div.whisper-shadow,
+  #word-counter-workspace > div:first-child,
+  #speech-calculator > div:first-child,
+  #random-topic-workspace > div.whisper-shadow,
+  #case-converter-workspace > div:first-child,
+  #text-repeater-workspace > div:first-child,
+  #text-reverser-workspace > div:first-child,
+  #typing-speed-workspace > div.whisper-shadow,
+  #tst-results-panel,
+  article.tool-card
+):not(button):not(a):not(input):not(select):not(span):not(.category-filter-btn):not(.kpi-card):not(.kpi-summary-bar):not(.kpi-summary-bar-responsive):not(.tool-card-live):not([class*="bg-[#0f2e26]"]) {
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  box-shadow: 0 10px 28px -6px rgba(0, 0, 0, 0.12), 0 4px 10px -3px rgba(0, 0, 0, 0.07) !important;
+}
 
 /* Nested sub-boxes inside white tool cards: #F8FAF9 with #E2E8E5 border */
 html:not(.dark) :is(.bg-canvas-elevated, .whisper-shadow):not(.emerald-result-panel):not(.kpi-card) :is(div, li, aside, section, article).bg-canvas,

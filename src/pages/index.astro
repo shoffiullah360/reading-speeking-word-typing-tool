@@ -63,7 +63,7 @@ const webSiteSchema = {
 					</a>
 					<a
 						href="/reading-time-calculator/#benchmarks"
-						class="whisper-shadow inline-flex h-10 items-center rounded-pill border border-hairline bg-canvas-elevated px-5 text-[15px] font-medium text-ink transition-all hover:border-ink"
+						class="inline-flex h-10 items-center rounded-pill border border-hairline bg-canvas-elevated px-5 text-[15px] font-medium text-ink transition-all hover:border-ink"
 					>
 						Reading time chart
 					</a>
@@ -114,7 +114,7 @@ const webSiteSchema = {
 								role="tab"
 								aria-selected="false"
 								data-category-filter={cat}
-								class="category-filter-btn whisper-shadow cursor-pointer rounded-pill-category border border-hairline bg-canvas-elevated px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:border-ink hover:text-ink"
+								class="category-filter-btn cursor-pointer rounded-pill-category border border-hairline bg-canvas-elevated px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:border-ink hover:text-ink"
 							>
 								{cat}
 							</button>
@@ -228,7 +228,7 @@ const webSiteSchema = {
 					b.setAttribute("aria-selected", isActive ? "true" : "false");
 					b.className = isActive
 						? "category-filter-btn cursor-pointer rounded-pill-category bg-primary px-4 py-1.5 text-[13px] font-semibold text-on-primary transition-all"
-						: "category-filter-btn whisper-shadow cursor-pointer rounded-pill-category border border-hairline bg-canvas-elevated px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:border-ink hover:text-ink";
+						: "category-filter-btn cursor-pointer rounded-pill-category border border-hairline bg-canvas-elevated px-4 py-1.5 text-[13px] font-medium text-body transition-all hover:border-ink hover:text-ink";
 				});
 
 				cards.forEach((card) => {
