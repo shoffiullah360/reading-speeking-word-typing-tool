@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import SpeechCalculator from "../components/SpeechCalculator.astro";
+import RelatedTools from "../components/RelatedTools.astro";
 import Footer from "../components/Footer.astro";
 import { resolveCanonicalUrl } from "../config/site";
 import { getLocaleFromUrl, getLocalizedPath, localizeHtmlLinks, useTranslations } from "../i18n/ui";
@@ -122,6 +123,9 @@ const structuredData = {
 
 		<!-- Flagship Interactive Speech Time Calculator Workspace -->
 		<SpeechCalculator locale={locale} />
+
+		<!-- Topical cluster interlinking -->
+		<RelatedTools toolId="speech-time-calculator" locale={locale} />
 
 		<!-- Section 1: How to Convert Words to Minutes -->
 		<section class="mx-auto max-w-[1140px] px-4 pb-16 sm:px-6">

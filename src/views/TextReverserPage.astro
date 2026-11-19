@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import TextReverserTool from "../components/TextReverserTool.astro";
+import RelatedTools from "../components/RelatedTools.astro";
 import Footer from "../components/Footer.astro";
 import { resolveCanonicalUrl } from "../config/site";
 
@@ -113,6 +114,9 @@ const structuredData = {
 
 		<!-- Interactive Text Reverser Workspace -->
 		<TextReverserTool locale={locale} />
+
+		<!-- Topical cluster interlinking -->
+		<RelatedTools toolId="text-reverser" locale={locale} />
 
 		<!-- Section 1 — How to Use the Online Text Reverser & Flipper (4-Step Grid) -->
 		<section

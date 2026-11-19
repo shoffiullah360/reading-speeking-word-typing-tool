@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import RandomTopicGenerator from "../components/RandomTopicGenerator.astro";
+import RelatedTools from "../components/RelatedTools.astro";
 import Footer from "../components/Footer.astro";
 import { resolveCanonicalUrl } from "../config/site";
 
@@ -40,14 +41,6 @@ interface AudienceCard {
 	description: string;
 }
 
-interface RelatedToolCard {
-	slug: string;
-	categoryKey: string;
-	title: string;
-	description: string;
-	cta: string;
-}
-
 const faqs = t.raw<FaqItem[]>("randomTopicGenerator.faq") ?? [];
 const schemaFeatures = t.raw<string[]>("randomTopicGenerator.page.schemaFeatures") ?? [];
 const howToSteps = t.raw<HowToStep[]>("randomTopicGenerator.page.howToUse.steps") ?? [];
@@ -59,7 +52,6 @@ const singleWordListWords = t.raw<string[]>("randomTopicGenerator.page.curatedLi
 const prepItems = t.raw<FrameworkItem[]>("randomTopicGenerator.page.frameworks.prep.items") ?? [];
 const peelItems = t.raw<FrameworkItem[]>("randomTopicGenerator.page.frameworks.peel.items") ?? [];
 const audienceCards = t.raw<AudienceCard[]>("randomTopicGenerator.page.audience.cards") ?? [];
-const relatedCards = t.raw<RelatedToolCard[]>("randomTopicGenerator.page.relatedTools.cards") ?? [];
 
 const jsonLdSchema = {
 	"@context": "https://schema.org",
@@ -129,6 +121,9 @@ const jsonLdSchema = {
 
 		<!-- Interactive Random Topic Generator Workspace -->
 		<RandomTopicGenerator locale={locale} />
+
+		<!-- Topical cluster interlinking -->
+		<RelatedTools toolId="random-topic-generator" locale={locale} />
 
 		<!-- Section 1: How to Use the Random Topic Generator (Clean 4-Step Grid) -->
 		<section
@@ -413,49 +408,6 @@ const jsonLdSchema = {
 									{card.description}
 								</p>
 							</div>
-						))
-					}
-				</div>
-			</div>
-
-			<!-- Related Wordora Tools Strip (4 Clean Internal Link Cards) -->
-			<div class="space-y-6 border-t border-hairline pt-10">
-				<div>
-					<h3 class="text-xl font-bold tracking-tight text-ink sm:text-2xl">
-						{t("randomTopicGenerator.page.relatedTools.heading")}
-					</h3>
-					<p class="mt-1 text-[15px] text-body">
-						{t("randomTopicGenerator.page.relatedTools.subtitle")}
-					</p>
-				</div>
-
-				<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-					{
-						relatedCards.map((card) => (
-							<a
-								href={getLocalizedPath(card.slug, locale)}
-								class="group flex flex-col justify-between rounded-xl border border-hairline bg-canvas-elevated p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink"
-							>
-								<div>
-									<div class="flex items-center justify-between gap-2">
-										<span class="text-[12px] font-medium text-mute">
-											{t(`common.categories.${card.categoryKey}`)}
-										</span>
-										<span class="inline-flex items-center rounded-full border border-[#7ED4B6] bg-[#AFE3D0] px-2 py-0.5 text-[11px] font-semibold text-[#111827] dark:border-hairline dark:bg-canvas dark:text-ink">
-											{t("randomTopicGenerator.page.relatedTools.utilityBadge")}
-										</span>
-									</div>
-									<h4 class="mt-3 text-[16px] font-semibold tracking-tight text-ink group-hover:text-[#0D9488] dark:group-hover:text-[#AFE3D0] transition-colors">
-										{card.title}
-									</h4>
-									<p class="mt-2 text-[13.5px] leading-relaxed text-body">
-										{card.description}
-									</p>
-								</div>
-								<span class="mt-4 inline-flex items-center gap-1 text-[13px] font-medium text-[#0D9488] group-hover:underline dark:text-[#AFE3D0]">
-									{card.cta} &rarr;
-								</span>
-							</a>
 						))
 					}
 				</div>

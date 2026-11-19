@@ -17,6 +17,31 @@
 		"available": "Disponible",
 		"openTool": "Abrir herramienta"
 	},
+	"relatedTools": {
+		"ariaLabel": "Herramientas relacionadas",
+		"heading": "Herramientas relacionadas",
+		"subtitle": "Utilidades de Wordora elegidas a mano que combinan de forma natural con esta herramienta.",
+		"spotlightBadge": "Popular",
+		"cardCta": "Abrir herramienta",
+		"blurbs": {
+			"readingTimeCalculator": "Calcula el tiempo de lectura silenciosa y en voz alta de cualquier texto.",
+			"readingSpeedTest": "Mide tu velocidad de lectura silenciosa en palabras por minuto.",
+			"audiobookCalculator": "Planifica el tiempo de escucha según la velocidad de reproducción.",
+			"wordsToPages": "Convierte recuentos de palabras en páginas de manuscrito, académicas y de libro.",
+			"wordCounter": "Cuenta palabras, caracteres, frases y párrafos mientras escribes.",
+			"speechCalculator": "Calcula la duración de un discurso, pódcast o presentación antes de subir al escenario.",
+			"randomTopicGenerator": "Encuentra un tema para escribir o hablar en segundos.",
+			"caseConverter": "Cambia cualquier texto entre mayúsculas, formato de título y más.",
+			"textRepeater": "Repite cualquier palabra, frase o bloque de texto con separadores propios.",
+			"textReverser": "Invierte, refleja o voltea texto al instante en tu navegador.",
+			"typingSpeedTest": "Pon a prueba tu velocidad, precisión y constancia al teclear."
+		}
+	},
+	"spotlightTools": {
+		"ariaLabel": "Herramientas destacadas de Wordora",
+		"heading": "Populares ahora mismo",
+		"subtitle": "Dos utilidades rápidas que la gente usa con más frecuencia."
+	},
 	"nav": {
 		"reading": "Lectura",
 		"writing": "Escritura",

@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import CaseConverterTool from "../components/CaseConverterTool.astro";
+import RelatedTools from "../components/RelatedTools.astro";
 import Footer from "../components/Footer.astro";
 import { resolveCanonicalUrl } from "../config/site";
 
@@ -127,6 +128,9 @@ const structuredData = {
 
 		<!-- Interactive Case Converter Workspace -->
 		<CaseConverterTool locale={locale} />
+
+		<!-- Topical cluster interlinking -->
+		<RelatedTools toolId="case-converter" locale={locale} />
 
 		<!-- Section 1 — What Is an Online Case Converter & How to Use It (4-Step Grid) -->
 		<section

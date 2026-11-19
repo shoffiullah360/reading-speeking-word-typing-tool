@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import SpotlightTools from "../components/SpotlightTools.astro";
 import { SITE_CONFIG, getLiveTools, resolveCanonicalUrl } from "../config/site";
 
 import {
@@ -116,6 +117,9 @@ const principles = t.raw<PrincipleItem[]>("about.page.principles") ?? [];
 				</div>
 			</div>
 		</section>
+
+		<!-- Spotlight: Random Topic Generator + Typing Speed Test -->
+		<SpotlightTools locale={locale} />
 	</main>
 
 	<Footer />

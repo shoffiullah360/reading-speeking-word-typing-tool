@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import TextRepeaterTool from "../components/TextRepeaterTool.astro";
+import RelatedTools from "../components/RelatedTools.astro";
 import Footer from "../components/Footer.astro";
 import { resolveCanonicalUrl } from "../config/site";
 
@@ -142,6 +143,9 @@ const structuredData = {
 
 		<!-- Interactive Text Repeater Workspace -->
 		<TextRepeaterTool locale={locale} />
+
+		<!-- Topical cluster interlinking -->
+		<RelatedTools toolId="text-repeater" locale={locale} />
 
 		<!-- Section 1 — What Is an Online Text Repeater & How to Use It (4-Step Grid) -->
 		<section

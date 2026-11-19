@@ -17,6 +17,31 @@
 		"available": "Available",
 		"openTool": "Open tool"
 	},
+	"relatedTools": {
+		"ariaLabel": "Related tools",
+		"heading": "Related tools",
+		"subtitle": "Hand-picked Wordora utilities that pair naturally with this tool.",
+		"spotlightBadge": "Popular",
+		"cardCta": "Open tool",
+		"blurbs": {
+			"readingTimeCalculator": "Estimate silent reading time and read-aloud duration from any text.",
+			"readingSpeedTest": "Measure your personal silent reading speed in words per minute.",
+			"audiobookCalculator": "Plan listening time across audiobook playback speeds.",
+			"wordsToPages": "Convert word counts into manuscript, academic, and book pages.",
+			"wordCounter": "Count words, characters, sentences, and paragraphs as you type.",
+			"speechCalculator": "Time a speech, podcast, or presentation before you take the stage.",
+			"randomTopicGenerator": "Find a fresh writing prompt or speaking topic in seconds.",
+			"caseConverter": "Switch any text between sentence case, title case, and more.",
+			"textRepeater": "Repeat any word, phrase, or block of text with custom separators.",
+			"textReverser": "Reverse, mirror, or flip text instantly in your browser.",
+			"typingSpeedTest": "Test your typing speed, accuracy, and consistency."
+		}
+	},
+	"spotlightTools": {
+		"ariaLabel": "Featured Wordora tools",
+		"heading": "Popular right now",
+		"subtitle": "Two fast utilities people reach for most often."
+	},
 	"nav": {
 		"reading": "Reading",
 		"writing": "Writing",

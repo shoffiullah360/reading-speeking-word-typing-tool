@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import SpotlightTools from "../components/SpotlightTools.astro";
 import {
 	SITE_CONFIG,
 	TOOLS_REGISTRY,
@@ -73,6 +74,9 @@ const webSiteSchema = {
 				</div>
 			</div>
 		</section>
+
+		<!-- Spotlight: Random Topic Generator + Typing Speed Test -->
+		<SpotlightTools locale={locale} />
 
 		<!-- Multi-Tool Directory Grid (4 Canonical Categories) -->
 		<section

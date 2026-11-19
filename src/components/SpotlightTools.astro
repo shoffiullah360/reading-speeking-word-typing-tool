@@ -1,0 +1,31 @@
+---
+import ToolLinkCard from './ToolLinkCard.astro';
+import { SPOTLIGHT_TOOL_IDS } from '../config/related';
+import { useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section aria-label={t('spotlightTools.ariaLabel')} class="px-4 pb-4 sm:px-6">
+	<div class="mx-auto max-w-[1200px]">
+		<div class="rounded-xl border border-hairline bg-canvas-elevated p-5 sm:p-6">
+			<div class="max-w-2xl">
+				<h2 class="text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink sm:text-[22px]">
+					{t('spotlightTools.heading')}
+				</h2>
+				<p class="mt-1.5 text-[14.5px] leading-relaxed text-body">
+					{t('spotlightTools.subtitle')}
+				</p>
+			</div>
+
+			<div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+				{SPOTLIGHT_TOOL_IDS.map((id) => <ToolLinkCard toolId={id} locale={locale} />)}
+			</div>
+		</div>
+	</div>
+</section>

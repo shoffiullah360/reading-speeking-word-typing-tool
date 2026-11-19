@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import ReadingCalculator from "../components/ReadingCalculator.astro";
+import RelatedTools from "../components/RelatedTools.astro";
 import BenchmarkTable from "../components/BenchmarkTable.astro";
 import FAQSection, { faqItems as defaultFaqItems, type FAQItem } from "../components/FAQSection.astro";
 import Footer from "../components/Footer.astro";
@@ -137,6 +138,9 @@ const appsItems = t.raw<LeadItem[]>("readingTimeCalculator.page.apps.items") ?? 
 
 		<!-- Flagship Interactive Calculator Workspace -->
 		<ReadingCalculator locale={locale} />
+
+		<!-- Topical cluster interlinking -->
+		<RelatedTools toolId="reading-time-calculator" locale={locale} />
 
 		<!-- Editorial Content: How Is Reading Time Calculated? -->
 		<section

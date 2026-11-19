@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import SpotlightTools from "../components/SpotlightTools.astro";
 import { resolveCanonicalUrl } from "../config/site";
 
 import {
@@ -167,6 +168,9 @@ const clientI18n = {
 				</div>
 			</div>
 		</section>
+
+		<!-- Spotlight: Random Topic Generator + Typing Speed Test -->
+		<SpotlightTools locale={locale} />
 	</main>
 
 	<Footer />
