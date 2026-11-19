@@ -6,7 +6,7 @@ import { SITE_CONFIG, isPublicLiveUrl } from './src/config/site.ts';
 
 // https://astro.build/config
 export default defineConfig({
-	site: SITE_CONFIG.origin,
+	site: 'https://wordora.site',
 	trailingSlash: 'always',
 	build: {
 		format: 'directory',
