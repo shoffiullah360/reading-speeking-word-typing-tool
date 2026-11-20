@@ -10,7 +10,7 @@
 			"Writing": "Escritura",
 			"Speaking": "Oratoria",
 			"Text": "Texto",
-			"Typing Speed Test": "Test de mecanografía"
+			"Typing": "Mecanografía"
 		},
 		"soon": "Pronto",
 		"comingSoon": "Próximamente",
@@ -48,7 +48,7 @@
 		"speaking": "Oratoria",
 		"text": "Texto",
 		"random": "Aleatorio",
-		"typingTest": "Test de mecanografía",
+		"typing": "Mecanografía",
 		"home": "Inicio de {name}",
 		"primaryNav": "Navegación principal por categorías",
 		"mobileNav": "Navegación móvil por categorías",

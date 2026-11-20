@@ -49,7 +49,24 @@ function loadSiteRegistry() {
 		return { id, slug, availableLocales };
 	});
 
-	return { origin, tools, staticPages };
+	// Root-level pages that live outside the locale routing (single URL, own <html lang>).
+	const standaloneBlockMatch = raw.match(/export const STANDALONE_TOOLS[\s\S]*?=\s*\[([\s\S]*?)\];/);
+	const standaloneObjectMatches = standaloneBlockMatch
+		? [...standaloneBlockMatch[1].matchAll(/\{([\s\S]*?)\}/g)]
+		: [];
+	const standaloneTools = standaloneObjectMatches.map((m) => {
+		const body = m[1];
+		const id = body.match(/id:\s*['"]([^'"]+)['"]/)?.[1] ?? '';
+		const slug = body.match(/slug:\s*['"]([^'"]+)['"]/)?.[1] ?? '';
+		const category = body.match(/category:\s*['"]([^'"]+)['"]/)?.[1] ?? '';
+		const status = body.match(/status:\s*['"]([^'"]+)['"]/)?.[1] ?? '';
+		const htmlLang = body.match(/htmlLang:\s*['"]([^'"]+)['"]/)?.[1] ?? '';
+		const localesBlock = body.match(/availableLocales:\s*\[([^\]]*)\]/)?.[1] ?? '';
+		const availableLocales = [...localesBlock.matchAll(/['"]([^'"]+)['"]/g)].map((x) => x[1]);
+		return { id, slug, category, status, htmlLang, availableLocales };
+	});
+
+	return { origin, tools, staticPages, standaloneTools };
 }
 
 function walkHtmlFiles(dir, fileList = []) {
@@ -88,8 +105,8 @@ function runValidation() {
 		process.exit(1);
 	}
 
-	const { origin, tools, staticPages } = loadSiteRegistry();
-	const allowedCategories = new Set(['Reading', 'Writing', 'Speaking', 'Text', 'Typing Speed Test']);
+	const { origin, tools, staticPages, standaloneTools } = loadSiteRegistry();
+	const allowedCategories = new Set(['Reading', 'Writing', 'Speaking', 'Text', 'Typing']);
 
 	// 1. Validate Registry Integrity
 	for (const tool of tools) {
@@ -100,13 +117,24 @@ function runValidation() {
 			errors.push(`Registry tool "${tool.id}" slug "${tool.slug}" must start and end with "/".`);
 		}
 	}
+	for (const tool of standaloneTools) {
+		if (!allowedCategories.has(tool.category)) {
+			errors.push(`Standalone tool "${tool.id}" has invalid category "${tool.category}".`);
+		}
+		if (!tool.slug.startsWith('/') || !tool.slug.endsWith('/')) {
+			errors.push(`Standalone tool "${tool.id}" slug "${tool.slug}" must start and end with "/".`);
+		}
+		if (!tool.htmlLang) {
+			errors.push(`Standalone tool "${tool.id}" must declare an htmlLang.`);
+		}
+	}
 	for (const page of staticPages) {
 		if (!page.slug.startsWith('/') || !page.slug.endsWith('/')) {
 			errors.push(`Static page "${page.id}" slug "${page.slug}" must start and end with "/".`);
 		}
 	}
 	checks.push(
-		`Registry check passed (${tools.length} tools across 4 canonical categories + ${staticPages.length} trust/legal pages).`
+		`Registry check passed (${tools.length} tools across 4 canonical categories + ${standaloneTools.length} standalone root page(s) + ${staticPages.length} trust/legal pages).`
 	);
 
 	const liveTools = tools.filter((t) => t.status === 'live');
@@ -124,6 +152,17 @@ function runValidation() {
 	const expectedLiveRoutes = new Set();
 	for (const slug of ['/', ...liveTools.map((t) => t.slug), ...staticPages.map((p) => p.slug)]) {
 		for (const locale of LOCALES) expectedLiveRoutes.add(localize(slug, locale));
+	}
+
+	// Standalone root pages: exactly one URL each, never locale-prefixed, own <html lang>.
+	const standaloneRouteMeta = new Map();
+	for (const tool of standaloneTools) {
+		if (tool.status !== 'live') continue;
+		for (const locale of tool.availableLocales) {
+			const route = localize(tool.slug, locale);
+			expectedLiveRoutes.add(route);
+			standaloneRouteMeta.set(route, { id: tool.id, htmlLang: tool.htmlLang });
+		}
 	}
 	for (const route of expectedLiveRoutes) {
 		if (route.startsWith('/en/')) errors.push(`Forbidden /en/ prefixed route expected: ${route}`);
@@ -185,6 +224,7 @@ function runValidation() {
 	for (const [route, html] of routeHtmlMap.entries()) {
 		const isUtilityErrorPage = utilityErrorRoutes.has(route);
 		const isNoindexPlayPage = noindexPlayRoutes.has(route);
+		const standaloneMeta = standaloneRouteMeta.get(route);
 		const playLocale = LOCALES.find((l) => l !== 'en' && route.startsWith(`/${l}/`)) ?? 'en';
 		const expectedCanonical = new URL(
 			isUtilityErrorPage ? '/' : isNoindexPlayPage ? localize('/typing-speed-test/', playLocale) : route,
@@ -205,6 +245,44 @@ function runValidation() {
 			const canonicalHref = canonicalMatches[0]?.[0].match(/\bhref=["']([^"']+)["']/i)?.[1] ?? '';
 			if (canonicalHref !== expectedCanonical) {
 				errors.push(`Play route "${route}" canonical mismatch: expected "${expectedCanonical}", found "${canonicalHref}".`);
+			}
+		} else if (standaloneMeta) {
+			// Standalone root page: one self-referencing canonical, indexable, own language, no hreflang.
+			const canonicalMatches = [...html.matchAll(/<link\b[^>]*\brel=["']canonical["'][^>]*>/gi)];
+			if (canonicalMatches.length !== 1) {
+				errors.push(
+					`Standalone route "${route}" must have exactly 1 <link rel="canonical">, found ${canonicalMatches.length}.`
+				);
+			} else {
+				const canonicalHref = canonicalMatches[0][0].match(/\bhref=["']([^"']+)["']/i)?.[1] ?? '';
+				if (canonicalHref !== expectedCanonical) {
+					errors.push(
+						`Standalone route "${route}" canonical mismatch: expected "${expectedCanonical}", found "${canonicalHref}".`
+					);
+				}
+				if (!canonicalHref.endsWith('/')) {
+					errors.push(`Standalone route "${route}" canonical URL "${canonicalHref}" does not end with a trailing slash.`);
+				}
+			}
+
+			const alternateLinks = [
+				...html.matchAll(/<link\b[^>]*\brel=["']alternate["'][^>]*>/gi),
+			];
+			if (alternateLinks.length > 0) {
+				errors.push(
+					`Standalone route "${route}" must not emit hreflang alternates (found ${alternateLinks.length}).`
+				);
+			}
+
+			if (!new RegExp(`<html[^>]*\\blang="${standaloneMeta.htmlLang}"`).test(html)) {
+				errors.push(`Standalone route "${route}" must declare <html lang="${standaloneMeta.htmlLang}">.`);
+			}
+
+			const robotsTag = html.match(/<meta\b[^>]*\bname=["']robots["'][^>]*>/i)?.[0] ?? '';
+			if (!/content=["'][^"']*\bindex\b/i.test(robotsTag) || /noindex/i.test(robotsTag)) {
+				errors.push(
+					`Standalone route "${route}" must be indexable (<meta name="robots" content="index, follow">).`
+				);
 			}
 		} else {
 			// Canonical check
@@ -344,7 +422,7 @@ function runValidation() {
 	}
 
 	checks.push(
-		`Self-referencing canonicals & reciprocal hreflang (en, es, pt + x-default) + html[lang] verified on all ${routeHtmlMap.size} page(s).`
+		`Self-referencing canonicals & reciprocal hreflang (en, es, pt + x-default) + html[lang] verified on all ${routeHtmlMap.size} page(s) (${standaloneRouteMeta.size} standalone root page(s) use a single self-referencing canonical).`
 	);
 	checks.push(
 		`Internal link & hash integrity verified (${totalInternalLinksChecked} internal <a> links checked, 0 broken, 0 draft links).`

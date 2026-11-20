@@ -1,0 +1,1066 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import BanglaTypingPractice from "../components/BanglaTypingPractice.astro";
+import RelatedTools from "../components/RelatedTools.astro";
+import Footer from "../components/Footer.astro";
+import { resolveCanonicalUrl, STANDALONE_TOOLS } from "../config/site";
+
+// Root-level Bengali page: single canonical URL, <html lang="bn">, no hreflang alternates.
+const pageTitle = "বাংলা টাইপিং প্র্যাকটিস – শিখুন ও অনুশীলন করুন | Wordora";
+const pageDescription =
+	"নতুনদের জন্য বিনামূল্যে বাংলা টাইপিং প্র্যাকটিস করুন। স্বরবর্ণ, ব্যঞ্জনবর্ণ, শব্দ ও বাক্য টাইপ শিখুন, ভুল সংশোধন করুন এবং নিজের অগ্রগতি দেখুন।";
+const canonicalUrl = resolveCanonicalUrl("/bangla-typing-practice/");
+const practiceTool = STANDALONE_TOOLS.find((tool) => tool.id === "bangla-typing-practice");
+
+/** Avro phonetic examples only — Wordora itself does not convert Latin input to Bengali. */
+const phoneticExamples = [
+	{ input: "ami", output: "আমি" },
+	{ input: "bangla", output: "বাংলা" },
+	{ input: "amar", output: "আমার" },
+	{ input: "tumi", output: "তুমি" },
+];
+
+/**
+ * Avro phonetic key → Bengali, on a US QWERTY board.
+ * Taken from the Avro phonetic rule set (jsAvroPhonetic), not guessed.
+ */
+const avroKeyboardRows = [
+	{
+		label: "সংখ্যা সারি",
+		keys: [
+			{ key: "1", bn: "১" },
+			{ key: "2", bn: "২" },
+			{ key: "3", bn: "৩" },
+			{ key: "4", bn: "৪" },
+			{ key: "5", bn: "৫" },
+			{ key: "6", bn: "৬" },
+			{ key: "7", bn: "৭" },
+			{ key: "8", bn: "৮" },
+			{ key: "9", bn: "৯" },
+			{ key: "0", bn: "০" },
+		],
+	},
+	{
+		label: "টপ রো (Q–P)",
+		keys: [
+			{ key: "q", bn: "ক" },
+			{ key: "w", bn: "ও" },
+			{ key: "e", bn: "এ" },
+			{ key: "r", bn: "র" },
+			{ key: "t", bn: "ত" },
+			{ key: "y", bn: "য়" },
+			{ key: "u", bn: "উ" },
+			{ key: "i", bn: "ই" },
+			{ key: "o", bn: "অ" },
+			{ key: "p", bn: "প" },
+		],
+	},
+	{
+		label: "হোম রো (A–L)",
+		keys: [
+			{ key: "a", bn: "আ" },
+			{ key: "s", bn: "স" },
+			{ key: "d", bn: "দ" },
+			{ key: "f", bn: "ফ" },
+			{ key: "g", bn: "গ" },
+			{ key: "h", bn: "হ" },
+			{ key: "j", bn: "জ" },
+			{ key: "k", bn: "ক" },
+			{ key: "l", bn: "ল" },
+		],
+	},
+	{
+		label: "বটম রো (Z–M)",
+		keys: [
+			{ key: "z", bn: "য" },
+			{ key: "x", bn: "ক্স" },
+			{ key: "c", bn: "চ" },
+			{ key: "v", bn: "ভ" },
+			{ key: "b", bn: "ব" },
+			{ key: "n", bn: "ন" },
+			{ key: "m", bn: "ম" },
+		],
+	},
+];
+
+/** Independent vowels in Avro phonetic. */
+const avroVowels = [
+	{ input: "o", output: "অ" },
+	{ input: "a", output: "আ" },
+	{ input: "i", output: "ই" },
+	{ input: "I", output: "ঈ" },
+	{ input: "u", output: "উ" },
+	{ input: "U", output: "ঊ" },
+	{ input: "rri", output: "ঋ" },
+	{ input: "e", output: "এ" },
+	{ input: "OI", output: "ঐ" },
+	{ input: "O", output: "ও" },
+	{ input: "OU", output: "ঔ" },
+];
+
+/** Vowel signs: the same keys once a consonant comes first. */
+const avroKars = [
+	{ input: "a", sign: "◌া", example: "ka → কা" },
+	{ input: "i", sign: "◌ি", example: "ki → কি" },
+	{ input: "I", sign: "◌ী", example: "kI → কী" },
+	{ input: "u", sign: "◌ু", example: "ku → কু" },
+	{ input: "U", sign: "◌ূ", example: "kU → কূ" },
+	{ input: "rri", sign: "◌ৃ", example: "krri → কৃ" },
+	{ input: "e", sign: "◌ে", example: "ke → কে" },
+	{ input: "OI", sign: "◌ৈ", example: "kOI → কৈ" },
+	{ input: "O", sign: "◌ো", example: "kO → কো" },
+	{ input: "OU", sign: "◌ৌ", example: "kOU → কৌ" },
+	{ input: ",,", sign: "◌্", example: "k,, → ক্" },
+];
+
+const avroConsonants = [
+	{ input: "k", output: "ক" },
+	{ input: "kh", output: "খ" },
+	{ input: "g", output: "গ" },
+	{ input: "gh", output: "ঘ" },
+	{ input: "Ng", output: "ঙ" },
+	{ input: "c", output: "চ" },
+	{ input: "ch", output: "ছ" },
+	{ input: "j", output: "জ" },
+	{ input: "jh", output: "ঝ" },
+	{ input: "NG", output: "ঞ" },
+	{ input: "T", output: "ট" },
+	{ input: "Th", output: "ঠ" },
+	{ input: "D", output: "ড" },
+	{ input: "Dh", output: "ঢ" },
+	{ input: "N", output: "ণ" },
+	{ input: "t", output: "ত" },
+	{ input: "th", output: "থ" },
+	{ input: "d", output: "দ" },
+	{ input: "dh", output: "ধ" },
+	{ input: "n", output: "ন" },
+	{ input: "p", output: "প" },
+	{ input: "ph / f", output: "ফ" },
+	{ input: "b", output: "ব" },
+	{ input: "bh / v", output: "ভ" },
+	{ input: "m", output: "ম" },
+	{ input: "z", output: "য" },
+	{ input: "r", output: "র" },
+	{ input: "l", output: "ল" },
+	{ input: "sh / S", output: "শ" },
+	{ input: "Sh", output: "ষ" },
+	{ input: "s", output: "স" },
+	{ input: "h", output: "হ" },
+	{ input: "R", output: "ড়" },
+	{ input: "Rh", output: "ঢ়" },
+	{ input: "y", output: "য়" },
+	{ input: "q", output: "ক" },
+	{ input: "x", output: "ক্স" },
+];
+
+/** Conjuncts and phalas Avro builds as you keep typing. */
+const avroConjuncts = [
+	{ input: "kk", output: "ক্ক", kind: "যুক্তাক্ষর" },
+	{ input: "kkh / kSh", output: "ক্ষ", kind: "যুক্তাক্ষর" },
+	{ input: "gg / jNG", output: "জ্ঞ", kind: "যুক্তাক্ষর" },
+	{ input: "nt", output: "ন্ত", kind: "যুক্তাক্ষর" },
+	{ input: "ndh", output: "ন্ধ", kind: "যুক্তাক্ষর" },
+	{ input: "st", output: "স্ত", kind: "যুক্তাক্ষর" },
+	{ input: "ky", output: "ক্য", kind: "য-ফলা" },
+	{ input: "kri", output: "ক্রি", kind: "র-ফলা" },
+	{ input: ",,", output: "◌্", kind: "হসন্ত" },
+];
+
+const avroSymbols = [
+	{ input: "1 – 0", output: "১ – ০" },
+	{ input: ".", output: "।" },
+	{ input: "..", output: "।।" },
+	{ input: ":", output: "ঃ" },
+	{ input: "^", output: "ঁ" },
+	{ input: ",,", output: "◌্" },
+	{ input: "t``", output: "ৎ" },
+	{ input: "$", output: "৳" },
+];
+
+/**
+ * Bijoy row-by-row layout. Normal and Shift values follow the published Bijoy
+ * chart; ◌ marks the spot where a consonant or vowel joins the sign.
+ */
+const bijoyKeyboardRows = [
+	{
+		label: "সংখ্যা সারি",
+		keys: [
+			{ key: "1", normal: "১", shift: "!" },
+			{ key: "2", normal: "২", shift: "@" },
+			{ key: "3", normal: "৩", shift: "#" },
+			{ key: "4", normal: "৪", shift: "৳" },
+			{ key: "5", normal: "৫", shift: "%" },
+			{ key: "6", normal: "৬", shift: "÷" },
+			{ key: "7", normal: "৭", shift: "ঁ" },
+			{ key: "8", normal: "৮", shift: "×" },
+			{ key: "9", normal: "৯", shift: "(" },
+			{ key: "0", normal: "০", shift: ")" },
+		],
+	},
+	{
+		label: "টপ রো (Q–P)",
+		keys: [
+			{ key: "Q", normal: "ঙ", shift: "ং" },
+			{ key: "W", normal: "য", shift: "য়" },
+			{ key: "E", normal: "ড", shift: "ঢ" },
+			{ key: "R", normal: "প", shift: "ফ" },
+			{ key: "T", normal: "ট", shift: "ঠ" },
+			{ key: "Y", normal: "চ", shift: "ছ" },
+			{ key: "U", normal: "জ", shift: "ঝ" },
+			{ key: "I", normal: "হ", shift: "ঞ" },
+			{ key: "O", normal: "গ", shift: "ঘ" },
+			{ key: "P", normal: "ড়", shift: "ঢ়" },
+		],
+	},
+	{
+		label: "হোম রো (A–L)",
+		keys: [
+			{ key: "A", normal: "◌ৃ", shift: "র্" },
+			{ key: "S", normal: "◌ু", shift: "◌ূ" },
+			{ key: "D", normal: "◌ি", shift: "◌ী" },
+			{ key: "F", normal: "◌া", shift: "অ" },
+			{ key: "G", normal: "◌্", shift: "।" },
+			{ key: "H", normal: "ব", shift: "ভ" },
+			{ key: "J", normal: "ক", shift: "খ" },
+			{ key: "K", normal: "ত", shift: "থ" },
+			{ key: "L", normal: "দ", shift: "ধ" },
+		],
+	},
+	{
+		label: "বটম রো (Z–M)",
+		keys: [
+			{ key: "Z", normal: "◌্র", shift: "◌্য" },
+			{ key: "X", normal: "ও", shift: "◌ৌ" },
+			{ key: "C", normal: "◌ে", shift: "◌ৈ" },
+			{ key: "V", normal: "র", shift: "ল" },
+			{ key: "B", normal: "ন", shift: "ণ" },
+			{ key: "N", normal: "স", shift: "ষ" },
+			{ key: "M", normal: "ম", shift: "শ" },
+		],
+	},
+];
+
+const structuredData = {
+	"@context": "https://schema.org",
+	"@type": "WebApplication",
+	name: practiceTool?.name ?? "বাংলা টাইপিং প্র্যাকটিস",
+	url: canonicalUrl,
+	inLanguage: "bn",
+	applicationCategory: "EducationalApplication",
+	operatingSystem: "Web",
+	offers: {
+		"@type": "Offer",
+		price: "0",
+		priceCurrency: "BDT",
+	},
+	description: pageDescription,
+};
+---
+
+<Layout
+	title={pageTitle}
+	description={pageDescription}
+	canonicalUrl={canonicalUrl}
+	htmlLang="bn"
+	ogLocale="bn_BD"
+	robots="index, follow"
+>
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+	</Fragment>
+
+	<Header />
+
+	<main class="bangla-page flex-1">
+		<!-- Hero: soft mint band with a three-step start hint -->
+		<section class="bp-hero px-4 pt-10 pb-9 sm:px-6 sm:pt-14 sm:pb-11">
+			<div class="mx-auto max-w-[1100px]">
+				<p class="bangla-copy bp-eyebrow text-[13px] font-medium">টাইপিং অনুশীলন</p>
+				<h1
+					class="bangla-copy mt-2 text-[32px] leading-[42px] font-semibold tracking-[-1.2px] text-ink sm:text-[42px] sm:leading-[52px] sm:tracking-[-1.6px]"
+				>
+					বাংলা টাইপিং প্র্যাকটিস
+				</h1>
+				<p class="bangla-copy mt-3 max-w-2xl text-[16px] leading-[26px] text-body">
+					স্বরবর্ণ থেকে অনুচ্ছেদ—নিজের গতিতে অনুশীলন করুন, ভুল হলে সঙ্গে সঙ্গে সংশোধন করুন আর অগ্রগতি
+					নিজের ব্রাউজারেই জমা রাখুন।
+				</p>
+
+				<!-- 3-step start hint -->
+				<ol class="bp-steps bangla-copy mt-6" aria-label="শুরুর তিন ধাপ">
+					<li class="bp-step" data-tone="mint">
+						<span class="bp-step-num" aria-hidden="true">১</span>
+						<span>শিখুন</span>
+					</li>
+					<li class="bp-step-arrow" aria-hidden="true">→</li>
+					<li class="bp-step" data-tone="sand">
+						<span class="bp-step-num" aria-hidden="true">২</span>
+						<span>অনুশীলন করুন</span>
+					</li>
+					<li class="bp-step-arrow" aria-hidden="true">→</li>
+					<li class="bp-step" data-tone="orange">
+						<span class="bp-step-num" aria-hidden="true">৩</span>
+						<span>ভুল সংশোধন করুন</span>
+					</li>
+				</ol>
+
+				<p class="bangla-copy mt-4 text-[13px] text-mute">
+					ব্রাউজারেই চলে &middot; কোনো অ্যাকাউন্ট লাগে না &middot; সম্পূর্ণ বিনামূল্যে
+				</p>
+			</div>
+		</section>
+
+		<!-- Interactive typing workspace -->
+		<section
+			id="practice"
+			aria-labelledby="practice-heading"
+			class="mx-auto max-w-[1100px] px-4 pt-8 pb-2 sm:px-6"
+		>
+			<div class="mb-3.5 flex flex-wrap items-end justify-between gap-2">
+				<h2
+					id="practice-heading"
+					class="bangla-copy text-[20px] leading-[28px] font-semibold tracking-[-0.4px] text-ink"
+				>
+					অনুশীলন ক্ষেত্র
+				</h2>
+				<p class="bangla-copy text-[13px] text-mute">
+					আগে মোড বেছে নিন, তারপর নিচের পাঠ থেকে শুরু করুন।
+				</p>
+			</div>
+
+			<div id="typing-workspace">
+				<BanglaTypingPractice />
+			</div>
+		</section>
+
+		<!-- Keyboard input guidance: the learner's own IME produces the Bengali text -->
+		<section aria-labelledby="input-guide-heading" class="mx-auto max-w-[1100px] px-4 py-10 sm:px-6">
+			<div class="max-w-3xl">
+				<h2
+					id="input-guide-heading"
+					class="bangla-copy text-[24px] leading-[32px] font-semibold tracking-[-0.8px] text-ink sm:text-[28px]"
+				>
+					বাংলা কীভাবে টাইপ করবেন
+				</h2>
+				<p class="bangla-copy mt-2 text-[15px] leading-relaxed text-body">
+					Wordora নিজে কোনো ফোনেটিক বা বিজয় রূপান্তর ইঞ্জিন চালায় না। আপনার কম্পিউটারে ইনস্টল করা
+					অভ্র, বিজয় বা অন্য বাংলা ইনপুট পদ্ধতি দিয়েই বাংলা অক্ষর তৈরি হয়, আর সেই লেখা এখানে হুবহু
+					মিলিয়ে দেখা হয়।
+				</p>
+				<p class="bangla-copy bp-note mt-3 text-[13px] leading-relaxed text-body">
+					মনে রাখুন: Wordora আপনার ইনস্টল করা বাংলা ইনপুট সফটওয়্যারের বিকল্প নয়। এটি OS-স্তরের কোনো
+					কিবোর্ড ইনস্টল করে না বা বদলায় না—আপনার কম্পিউটারে থাকা অভ্র, বিজয় বা অন্য ইউনিকোড বাংলা
+					ইনপুট পদ্ধতিই বাংলা অক্ষর তৈরি করে।
+				</p>
+			</div>
+
+			<div class="mt-6 flex flex-col gap-5">
+				<!-- Avro: keyboard layout first, mapping rows and tables directly below it -->
+				<article class="bp-guide bp-guide-mint min-w-0">
+					<h3 class="bangla-copy text-[17px] font-semibold text-ink">অভ্র ফোনেটিক</h3>
+					<p class="bangla-copy mt-2 text-[14px] leading-relaxed text-body">
+						অভ্র ফোনেটিকে ইংরেজি বর্ণে লিখলে বাংলা অক্ষর আসে। নিচের কীবোর্ডে প্রতিটি ইংরেজি কী-এর
+						নিচে সেই কী থেকে তৈরি হওয়া মূল বাংলা অক্ষর দেখানো হয়েছে।
+					</p>
+
+					<div class="bp-kb-block">
+						<p class="bp-kb-title">অভ্র ফোনেটিক কীবোর্ড</p>
+						<div
+							class="bp-kb"
+							role="img"
+							aria-label="অভ্র ফোনেটিক কীবোর্ড লেআউট: সংখ্যা সারি, টপ রো, হোম রো ও বটম রো"
+						>
+							{
+								avroKeyboardRows.map((row) => (
+									<div class="bp-kb-row">
+										<p class="bp-kb-rowlabel">{row.label}</p>
+										<div class="bp-kb-keys">
+											{row.keys.map((cap) => (
+												<div class="bp-kb-key">
+													<span class="bp-kb-key-latin">{cap.key}</span>
+													<span class="bp-kb-key-bn">{cap.bn}</span>
+												</div>
+											))}
+										</div>
+									</div>
+								))
+							}
+						</div>
+						<p class="bp-kb-note">
+							একাধিক কী মিলেও একটি বর্ণ তৈরি হয়—<span class="bp-inkey">ch</span> → ছ,
+							<span class="bp-inkey">kkh</span> → ক্ষ। বড় হাতের অক্ষর আলাদা বর্ণ দেয়:
+							<span class="bp-inkey">T</span> → ট, <span class="bp-inkey">D</span> → ড,
+							<span class="bp-inkey">N</span> → ণ, <span class="bp-inkey">Sh</span> → ষ।
+						</p>
+					</div>
+
+					<div class="bp-map-stack">
+						<div class="bp-map-block">
+							<h4 class="bp-map-title">স্বরবর্ণ</h4>
+							<p class="bp-map-desc">শব্দের শুরুতে বা অন্য স্বরের পরে এই পূর্ণ রূপগুলো আসে।</p>
+							<ul class="bp-map-list">
+								{
+									avroVowels.map((item) => (
+										<li class="bp-map-item">
+											<span class="bp-map-input">{item.input}</span>
+											<span class="bp-map-arrow" aria-hidden="true">→</span>
+											<span class="bp-map-output" lang="bn">{item.output}</span>
+										</li>
+									))
+								}
+							</ul>
+						</div>
+
+						<div class="bp-map-block">
+							<h4 class="bp-map-title">কারচিহ্ন</h4>
+							<p class="bp-map-desc">ব্যঞ্জনবর্ণের পরে লিখলে একই কী থেকে কার বসে। উদাহরণে ক-এর সঙ্গে দেখানো হয়েছে।</p>
+							<table class="bp-map-table">
+								<thead>
+									<tr>
+										<th scope="col">যা টাইপ করবেন</th>
+										<th scope="col">কার</th>
+										<th scope="col">উদাহরণ</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										avroKars.map((item) => (
+											<tr>
+												<td class="bp-map-input">{item.input}</td>
+												<td class="bp-key-glyph" lang="bn">{item.sign}</td>
+												<td class="bp-key-example" lang="bn">{item.example}</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+							<p class="bp-map-note">
+								ব্যঞ্জনবর্ণের পরে <span class="bp-inkey">o</span> লিখলে কোনো কার বসে না—সেটিই
+								অ-এর সহজাত উচ্চারণ (kol → কল)। ◌ চিহ্নটি বোঝায় ওই জায়গায় ব্যঞ্জনবর্ণ বসবে।
+							</p>
+						</div>
+
+						<div class="bp-map-block">
+							<h4 class="bp-map-title">ব্যঞ্জনবর্ণ</h4>
+							<p class="bp-map-desc">প্রতিটি সারিতে বাঁ দিকে যা টাইপ করবেন, ডানে যা আসবে।</p>
+							<ul class="bp-map-list">
+								{
+									avroConsonants.map((item) => (
+										<li class="bp-map-item">
+											<span class="bp-map-input">{item.input}</span>
+											<span class="bp-map-arrow" aria-hidden="true">→</span>
+											<span class="bp-map-output" lang="bn">{item.output}</span>
+										</li>
+									))
+								}
+							</ul>
+						</div>
+
+						<div class="bp-map-block">
+							<h4 class="bp-map-title">যুক্তাক্ষর ও ফলা</h4>
+							<p class="bp-map-desc">
+								দুটি ব্যঞ্জনবর্ণ পাশাপাশি লিখলে মাঝে হসন্ত বসে যুক্তাক্ষর তৈরি হয়; ব্যঞ্জনবর্ণের
+								পরে <span class="bp-inkey">y</span> দিলে য-ফলা, <span class="bp-inkey">r</span> দিলে
+								র-ফলা আসে।
+							</p>
+							<table class="bp-map-table">
+								<thead>
+									<tr>
+										<th scope="col">যা টাইপ করবেন</th>
+										<th scope="col">যা আসবে</th>
+										<th scope="col">ধরন</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										avroConjuncts.map((item) => (
+											<tr>
+												<td class="bp-map-input">{item.input}</td>
+												<td class="bp-key-glyph" lang="bn">{item.output}</td>
+												<td class="bp-key-example">{item.kind}</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+
+						<div class="bp-map-block">
+							<h4 class="bp-map-title">সংখ্যা ও চিহ্ন</h4>
+							<p class="bp-map-desc">সংখ্যা ও বিরামচিহ্নও অভ্র ফোনেটিকে বাংলা রূপে আসে।</p>
+							<ul class="bp-map-list">
+								{
+									avroSymbols.map((item) => (
+										<li class="bp-map-item">
+											<span class="bp-map-input">{item.input}</span>
+											<span class="bp-map-arrow" aria-hidden="true">→</span>
+											<span class="bp-map-output" lang="bn">{item.output}</span>
+										</li>
+									))
+								}
+							</ul>
+						</div>
+
+						<div class="bp-map-block">
+							<h4 class="bp-map-title">উদাহরণ</h4>
+							<p class="bp-map-desc">এই শব্দগুলো আপনার ইনস্টল করা অভ্র কিবোর্ডে হুবহু কাজ করে।</p>
+							<table class="bp-map-table">
+								<thead>
+									<tr>
+										<th scope="col">যা টাইপ করবেন</th>
+										<th scope="col">যা দেখা যাবে</th>
+									</tr>
+								</thead>
+								<tbody>
+									{
+										phoneticExamples.map((example) => (
+											<tr>
+												<td class="bp-map-input">{example.input}</td>
+												<td class="bp-key-glyph" lang="bn">{example.output}</td>
+											</tr>
+										))
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</article>
+
+				<!-- Bijoy: keyboard layout first, row-by-row key tables directly below it -->
+				<article class="bp-guide bp-guide-sand min-w-0">
+					<h3 class="bangla-copy text-[17px] font-semibold text-ink">বিজয় কিবোর্ড</h3>
+					<p class="bangla-copy mt-2 text-[14px] leading-relaxed text-body">
+						বিজয় লেআউটে প্রতিটি ইংরেজি কী-এর সঙ্গে নির্দিষ্ট বাংলা অক্ষর যুক্ত থাকে। নিচের
+						কীবোর্ডে Normal স্তর দেখানো হয়েছে; Shift বেছে নিলে একই কী-গুলোর দ্বিতীয় স্তর দেখা যাবে।
+					</p>
+
+					<div class="bp-kb-block" data-kb="bijoy">
+						<p class="bp-kb-title">বিজয় কিবোর্ড</p>
+						<div class="bp-layer-switch" role="radiogroup" aria-label="বিজয় কীবোর্ডের স্তর">
+							<div class="bp-layer-option">
+								<input
+									type="radio"
+									name="bijoy-layer"
+									id="bijoy-layer-normal"
+									class="bp-layer-input"
+									checked
+								/>
+								<label class="bp-layer-label" for="bijoy-layer-normal">Normal</label>
+							</div>
+							<div class="bp-layer-option">
+								<input
+									type="radio"
+									name="bijoy-layer"
+									id="bijoy-layer-shift"
+									class="bp-layer-input"
+								/>
+								<label class="bp-layer-label" for="bijoy-layer-shift">Shift</label>
+							</div>
+						</div>
+						<div
+							class="bp-kb"
+							role="img"
+							aria-label="বিজয় কীবোর্ড লেআউট: সংখ্যা সারি, টপ রো, হোম রো ও বটম রো"
+						>
+							{
+								bijoyKeyboardRows.map((row) => (
+									<div class="bp-kb-row">
+										<p class="bp-kb-rowlabel">{row.label}</p>
+										<div class="bp-kb-keys">
+											{row.keys.map((cap) => (
+												<div class="bp-kb-key">
+													<span class="bp-kb-key-latin">{cap.key}</span>
+													<span class="bp-kb-key-layers">
+														<span class="bp-kb-key-bn bp-kb-key-normal" lang="bn">
+															{cap.normal}
+														</span>
+														<span class="bp-kb-key-bn bp-kb-key-shift" lang="bn">
+															{cap.shift}
+														</span>
+													</span>
+												</div>
+											))}
+										</div>
+									</div>
+								))
+							}
+						</div>
+						<p class="bp-kb-note">
+							◌ চিহ্নটির মানে, ওই জায়গায় একটি ব্যঞ্জনবর্ণ বসবে। বিজয়ে
+							<span class="bp-inkey">ি</span> ও <span class="bp-inkey">ে</span> কার আগে লিখে তারপর
+							ব্যঞ্জনবর্ণ লিখতে হয়—<span class="bp-inkey">ি</span> + ক = কি।
+						</p>
+					</div>
+
+					<div class="bp-map-stack">
+						{
+							bijoyKeyboardRows.map((row) => (
+								<div class="bp-map-block">
+									<h4 class="bp-map-title">{row.label}</h4>
+									<table class="bp-map-table">
+										<thead>
+											<tr>
+												<th scope="col">Key</th>
+												<th scope="col">Normal</th>
+												<th scope="col">Shift</th>
+											</tr>
+										</thead>
+										<tbody>
+											{row.keys.map((cap) => (
+												<tr>
+													<td class="bp-map-input">{cap.key}</td>
+													<td class="bp-key-glyph" lang="bn">{cap.normal}</td>
+													<td class="bp-key-glyph" lang="bn">{cap.shift}</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+								</div>
+							))
+						}
+					</div>
+
+					<p class="bangla-copy bp-map-note mt-4">
+						লেআউট সংস্করণভেদে কিছু কী-এর অবস্থান বদলাতে পারে, তাই নিশ্চিত হতে আপনার নিজের বিজয়
+						লেআউট চার্ট মিলিয়ে নিন।
+					</p>
+					<p class="bangla-copy bp-note mt-3 text-[13px] leading-relaxed text-body">
+						মনে রাখুন: বিজয় ক্লাসিক (SutonnyMJ ফন্ট) লেখা ANSI এনকোডিং ব্যবহার করে, যা এই পাতায়
+						ইউনিকোড হিসেবে ধরা হবে না। এখানে অনুশীলনের জন্য অভ্র, রিদ্মিক, উইন্ডোজের বাংলা কিবোর্ড বা
+						Google Bengali ইনপুটের মতো ইউনিকোড পদ্ধতি ব্যবহার করুন।
+					</p>
+				</article>
+			</div>
+		</section>
+
+		<!-- Topical cluster interlinking (English card labels follow the global chrome) -->
+		<div class="bp-related">
+			<RelatedTools toolId="bangla-typing-practice" locale="en" maxWidthClass="max-w-[1100px]" />
+		</div>
+
+		{/*
+			Editorial content slot — owner-managed.
+			Add your own researched Bengali content here (for example input-method notes or
+			practice guidance you have verified). Nothing on this page is auto-generated, so this
+			area intentionally stays empty until you fill it in.
+		*/}
+		<div id="editorial-content-slot" class="mx-auto max-w-[1100px] px-4 pb-4 sm:px-6"></div>
+	</main>
+
+	<Footer />
+</Layout>
+
+<style>
+	/* Page palette: soft mint, warm sand and warm orange, tuned for light and dark. */
+	.bangla-page {
+		--bp-mint: #afe3d0;
+		--bp-mint-ink: #0f2e26;
+		--bp-mint-soft: #e4f4ec;
+		--bp-mint-line: #bfe6d5;
+
+		--bp-sand: #ecdcc5;
+		--bp-sand-ink: #4a3624;
+		--bp-sand-soft: #f7efe3;
+		--bp-sand-line: #e6d6c1;
+
+		--bp-orange: #f7bd90;
+		--bp-orange-ink: #7a3a12;
+		--bp-orange-soft: #fdece0;
+		--bp-orange-line: #f4cba9;
+
+		--bp-paper: #fdfaf4;
+		--bp-line: #e2d9cb;
+	}
+
+	:global(.dark) .bangla-page {
+		--bp-mint: #16473a;
+		--bp-mint-ink: #b9efd9;
+		--bp-mint-soft: #122a22;
+		--bp-mint-line: #1f4a3c;
+
+		--bp-sand: #3a2f20;
+		--bp-sand-ink: #f2ddc0;
+		--bp-sand-soft: #221d16;
+		--bp-sand-line: #3a3226;
+
+		--bp-orange: #4a2a14;
+		--bp-orange-ink: #ffcaa1;
+		--bp-orange-soft: #251a12;
+		--bp-orange-line: #452c18;
+
+		--bp-paper: #191a1d;
+		--bp-line: #2e2e36;
+	}
+
+	.bangla-copy {
+		font-family:
+			'Noto Sans Bengali', 'Hind Siliguri', 'Nirmala UI', 'Vrinda', 'Geist', 'Inter', -apple-system,
+			sans-serif;
+	}
+
+	/* Hero band */
+	.bangla-page .bp-hero {
+		background: var(--bp-mint-soft);
+	}
+
+	.bangla-page .bp-eyebrow {
+		color: var(--bp-mint-ink);
+	}
+
+	/* Three-step start hint */
+	.bangla-page .bp-steps {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+
+	.bangla-page .bp-step {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		min-height: 40px;
+		padding: 0.3rem 0.85rem 0.3rem 0.35rem;
+		border: 1px solid var(--bp-line);
+		border-radius: 999px;
+		background: var(--bp-paper);
+		color: var(--c-ink);
+		font-size: 13.5px;
+		font-weight: 500;
+	}
+
+	.bangla-page .bp-step-num {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 26px;
+		height: 26px;
+		border-radius: 999px;
+		background: var(--bp-mint);
+		color: var(--bp-mint-ink);
+		font-size: 12.5px;
+		font-weight: 600;
+		font-variant-numeric: tabular-nums;
+	}
+
+	.bangla-page .bp-step[data-tone='sand'] .bp-step-num {
+		background: var(--bp-sand);
+		color: var(--bp-sand-ink);
+	}
+
+	.bangla-page .bp-step[data-tone='orange'] .bp-step-num {
+		background: var(--bp-orange);
+		color: var(--bp-orange-ink);
+	}
+
+	.bangla-page .bp-step-arrow {
+		color: var(--bp-mint-ink);
+		font-size: 14px;
+	}
+
+	/* Input-method guidance panels */
+	.bangla-page .bp-guide {
+		border-radius: 18px;
+		padding: 1.25rem;
+		font-family:
+			'Noto Sans Bengali', 'Hind Siliguri', 'Nirmala UI', 'Vrinda', 'Geist', 'Inter', -apple-system,
+			sans-serif;
+	}
+
+	@media (min-width: 640px) {
+		.bangla-page .bp-guide {
+			padding: 1.5rem;
+		}
+	}
+
+	.bangla-page .bp-guide-mint {
+		border: 1px solid var(--bp-mint-line);
+		background: var(--bp-mint-soft);
+	}
+
+	.bangla-page .bp-guide-sand {
+		border: 1px solid var(--bp-sand-line);
+		background: var(--bp-sand-soft);
+	}
+
+	@media (max-width: 400px) {
+		.bangla-page .bp-guide {
+			padding: 0.9rem;
+		}
+	}
+
+	/* Visual keyboard: keys keep one tenth of the row so rows stay aligned */
+	.bangla-page .bp-kb-block {
+		margin-top: 1rem;
+	}
+
+	.bangla-page .bp-kb-title {
+		margin-bottom: 0.5rem;
+		font-size: 12.5px;
+		font-weight: 600;
+		color: var(--bp-mint-ink);
+	}
+
+	.bangla-page .bp-guide-sand .bp-kb-title {
+		color: var(--bp-sand-ink);
+	}
+
+	.bangla-page .bp-kb {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.bangla-page .bp-kb-row {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.bangla-page .bp-kb-rowlabel {
+		font-size: 11px;
+		font-weight: 500;
+		color: var(--c-mute);
+	}
+
+	.bangla-page .bp-kb-keys {
+		display: grid;
+		grid-template-columns: repeat(10, minmax(0, 1fr));
+		gap: 3px;
+	}
+
+	.bangla-page .bp-kb-key {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 1px;
+		min-width: 0;
+		min-height: 44px;
+		padding: 0.2rem 1px;
+		border: 1px solid var(--bp-line);
+		border-radius: 8px;
+		background: var(--bp-paper);
+		overflow: hidden;
+	}
+
+	.bangla-page .bp-kb-key-latin {
+		font-size: clamp(8.5px, 2.5vw, 11px);
+		line-height: 1.1;
+		color: var(--c-mute);
+	}
+
+	.bangla-page .bp-kb-key-bn {
+		font-size: clamp(10px, 3.2vw, 14px);
+		line-height: 1.35;
+		font-weight: 500;
+		color: var(--c-ink);
+		white-space: nowrap;
+	}
+
+	.bangla-page .bp-kb-key-layers {
+		display: flex;
+		gap: 2px;
+		min-width: 0;
+	}
+
+	/* Normal / Shift switch, driven by the radios (no JavaScript) */
+	.bangla-page .bp-layer-switch {
+		display: inline-flex;
+		gap: 2px;
+		margin-bottom: 0.6rem;
+		padding: 3px;
+		border: 1px solid var(--bp-sand-line);
+		border-radius: 999px;
+		background: var(--bp-paper);
+	}
+
+	.bangla-page .bp-layer-option {
+		display: flex;
+	}
+
+	.bangla-page .bp-layer-input {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.bangla-page .bp-layer-label {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 84px;
+		min-height: 44px;
+		padding: 0 0.9rem;
+		border-radius: 999px;
+		font-size: 13px;
+		font-weight: 500;
+		color: var(--c-body);
+		cursor: pointer;
+		transition:
+			background-color 0.15s ease,
+			color 0.15s ease;
+	}
+
+	.bangla-page .bp-layer-input:checked + .bp-layer-label {
+		background: var(--bp-sand);
+		color: var(--bp-sand-ink);
+		font-weight: 600;
+	}
+
+	.bangla-page .bp-layer-input:focus-visible + .bp-layer-label {
+		outline: 2px solid var(--c-ink);
+		outline-offset: 2px;
+	}
+
+	.bangla-page .bp-kb-block:has(#bijoy-layer-normal:checked) .bp-kb-key-shift,
+	.bangla-page .bp-kb-block:has(#bijoy-layer-shift:checked) .bp-kb-key-normal {
+		display: none;
+	}
+
+	/* Mapping rows and tables sitting directly below each keyboard */
+	.bangla-page .bp-map-stack {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		margin-top: 1.5rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--bp-line);
+	}
+
+	.bangla-page .bp-map-block {
+		min-width: 0;
+	}
+
+	.bangla-page .bp-map-title {
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--c-ink);
+	}
+
+	.bangla-page .bp-kb-note,
+	.bangla-page .bp-map-desc,
+	.bangla-page .bp-map-note {
+		margin-top: 0.3rem;
+		font-size: 12.5px;
+		line-height: 1.7;
+		color: var(--c-mute);
+	}
+
+	.bangla-page .bp-map-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+		column-gap: 1.25rem;
+		margin: 0.5rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.bangla-page .bp-map-item {
+		display: flex;
+		align-items: baseline;
+		gap: 0.35rem;
+		min-width: 0;
+		padding: 0.4rem 0;
+		border-bottom: 1px solid var(--bp-line);
+		font-size: 13.5px;
+	}
+
+	.bangla-page .bp-map-input {
+		color: var(--c-body);
+		font-weight: 500;
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-page .bp-map-arrow {
+		color: var(--c-faint);
+	}
+
+	.bangla-page .bp-map-output {
+		margin-left: auto;
+		font-size: 15px;
+		color: var(--c-ink);
+	}
+
+	.bangla-page .bp-map-table {
+		width: 100%;
+		margin-top: 0.5rem;
+		border-collapse: collapse;
+		table-layout: fixed;
+		font-size: 13.5px;
+	}
+
+	.bangla-page .bp-map-table th {
+		padding: 0.35rem 0.6rem 0.35rem 0;
+		border-bottom: 1px solid var(--bp-line);
+		font-size: 11.5px;
+		font-weight: 500;
+		color: var(--c-mute);
+		text-align: left;
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-page .bp-map-table th:last-child,
+	.bangla-page .bp-map-table td:last-child {
+		padding-right: 0;
+	}
+
+	.bangla-page .bp-map-table td {
+		padding: 0.4rem 0.6rem 0.4rem 0;
+		border-bottom: 1px solid var(--bp-line);
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-page .bp-map-table tr:last-child td {
+		border-bottom: 0;
+	}
+
+	.bangla-page .bp-key-glyph {
+		font-size: 15px;
+		color: var(--c-ink);
+	}
+
+	.bangla-page .bp-key-example {
+		font-size: 13px;
+		color: var(--c-body);
+	}
+
+	.bangla-page .bp-inkey {
+		display: inline-block;
+		padding: 0 0.35rem;
+		border: 1px solid var(--bp-line);
+		border-radius: 6px;
+		background: var(--bp-paper);
+		font-size: 12.5px;
+		font-weight: 500;
+		line-height: 1.6;
+		color: var(--c-ink);
+	}
+
+	.bangla-page .bp-note {
+		padding: 0.75rem 0.9rem;
+		border: 1px solid var(--bp-sand-line);
+		border-radius: 12px;
+		background: var(--bp-paper);
+	}
+
+	/* Keep the shared related-tools cards in the page palette (this page only). */
+	.bangla-page :global(.bp-related a) {
+		border-color: var(--bp-sand-line);
+		background: var(--bp-sand-soft);
+	}
+
+	.bangla-page :global(.bp-related a:hover) {
+		border-color: var(--bp-sand-ink);
+	}
+</style>

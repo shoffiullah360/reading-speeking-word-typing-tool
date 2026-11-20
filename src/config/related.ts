@@ -22,12 +22,14 @@ const TOPICAL_CLUSTERS: Record<string, readonly [string, string]> = {
 	'text-repeater': ['text-reverser', 'case-converter'],
 	'text-reverser': ['case-converter', 'text-repeater'],
 	'typing-speed-test': ['reading-speed-test', 'word-counter'],
+	'bangla-typing-practice': ['typing-speed-test', 'word-counter'],
 };
 
 /** Extra contextual tool used when a spotlight slot is already occupied. */
 const BALANCE_FILLERS: Record<string, string> = {
 	'random-topic-generator': 'word-counter',
 	'typing-speed-test': 'speech-time-calculator',
+	'bangla-typing-practice': 'reading-speed-test',
 };
 
 /** Stable global fallback order, used only when a page still needs more cards. */

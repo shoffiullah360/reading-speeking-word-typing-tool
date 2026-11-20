@@ -1,4 +1,4 @@
-export type ToolCategory = 'Reading' | 'Writing' | 'Speaking' | 'Text' | 'Typing Speed Test';
+export type ToolCategory = 'Reading' | 'Writing' | 'Speaking' | 'Text' | 'Typing';
 export type ToolStatus = 'live' | 'draft';
 export type LocaleCode = 'en' | 'es' | 'pt';
 
@@ -17,6 +17,24 @@ export interface ToolDefinition {
 	badge?: string;
 }
 
+export interface StandaloneToolDefinition {
+	id: string;
+	slug: `/${string}/`;
+	name: string;
+	shortName: string;
+	description: string;
+	category: ToolCategory;
+	status: ToolStatus;
+	/** `<html lang>` for this page; root-level pages may publish copy in a non-site language. */
+	htmlLang: string;
+	/** Locales that serve this single root URL. Standalone tools are never locale-prefixed. */
+	availableLocales: LocaleCode[];
+	/** Short headline figure shown on the home directory card. */
+	metricPreview?: string;
+	/** Plain-language summary for the home directory card (falls back to `description`). */
+	summary?: string;
+}
+
 export interface StaticPageDefinition {
 	id: string;
 	/** Section key inside src/i18n/*.json holding this page's translated copy. */
@@ -33,7 +51,7 @@ export const SITE_CONFIG = {
 	origin: 'https://wordora.site',
 	defaultLocale: 'en' as LocaleCode,
 	supportedLocales: ['en', 'es', 'pt'] as LocaleCode[],
-	categories: ['Reading', 'Writing', 'Speaking', 'Text', 'Typing Speed Test'] as ToolCategory[],
+	categories: ['Reading', 'Writing', 'Speaking', 'Text', 'Typing'] as ToolCategory[],
 	dropdownCategories: ['Reading', 'Writing', 'Speaking', 'Text'] as ToolCategory[],
 } as const;
 
@@ -178,10 +196,36 @@ export const TOOLS_REGISTRY: ToolDefinition[] = [
 		shortName: 'Typing Speed Test',
 		description:
 			'Test your typing speed in Words Per Minute (WPM), raw WPM, and keystroke accuracy across 15s, 30s, 60s, and 120s timed passages.',
-		category: 'Typing Speed Test',
+		category: 'Typing',
 		status: 'live',
 		availableLocales: ['en', 'es', 'pt'],
 		metricPreview: '15s – 120s · Live WPM & Accuracy',
+	},
+];
+
+/**
+ * Root-level tool pages that intentionally sit outside the en/es/pt locale routing.
+ *
+ * Each one keeps a single canonical root URL (no `/es/`, `/pt/` variants), emits no
+ * hreflang alternates, and declares its own `<html lang>`. They surface only inside the
+ * Typing category of the shared navigation (header dropdown, footer, and home directory),
+ * where they are always linked by their unprefixed root URL.
+ */
+export const STANDALONE_TOOLS: StandaloneToolDefinition[] = [
+	{
+		id: 'bangla-typing-practice',
+		slug: '/bangla-typing-practice/',
+		name: 'বাংলা টাইপিং প্র্যাকটিস',
+		shortName: 'Bangla Typing Practice',
+		description:
+			'নতুনদের জন্য বিনামূল্যে বাংলা টাইপিং প্র্যাকটিস করুন। স্বরবর্ণ, ব্যঞ্জনবর্ণ, শব্দ ও বাক্য টাইপ শিখুন, ভুল সংশোধন করুন এবং নিজের অগ্রগতি দেখুন।',
+		category: 'Typing',
+		status: 'live',
+		htmlLang: 'bn',
+		availableLocales: ['en'],
+		metricPreview: '১২টি লেসন · ৬টি মোড',
+		summary:
+			'Practice Bengali typing step by step — letters, words, sentences, and full paragraphs, with instant error feedback and progress saved in your browser.',
 	},
 ];
 
@@ -342,6 +386,11 @@ export function getAllowedSitemapUrls(): Set<string> {
 	};
 	add('/', [...SITE_CONFIG.supportedLocales]);
 	for (const tool of getLiveTools()) add(tool.slug, tool.availableLocales);
+	for (const tool of STANDALONE_TOOLS) {
+		if (tool.status === 'live' && tool.availableLocales.includes(SITE_CONFIG.defaultLocale)) {
+			allowed.add(resolveCanonicalUrl(tool.slug));
+		}
+	}
 	for (const page of STATIC_PAGES) add(page.slug, page.availableLocales);
 	return allowed;
 }

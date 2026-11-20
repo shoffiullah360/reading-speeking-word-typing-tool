@@ -10,7 +10,7 @@
 			"Writing": "Writing",
 			"Speaking": "Speaking",
 			"Text": "Text",
-			"Typing Speed Test": "Typing Speed Test"
+			"Typing": "Typing"
 		},
 		"soon": "Soon",
 		"comingSoon": "Coming soon",
@@ -48,7 +48,7 @@
 		"speaking": "Speaking",
 		"text": "Text",
 		"random": "Random",
-		"typingTest": "Typing Test",
+		"typing": "Typing",
 		"home": "{name} Home",
 		"primaryNav": "Primary category navigation",
 		"mobileNav": "Mobile category navigation",

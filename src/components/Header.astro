@@ -1,5 +1,10 @@
 ---
-import { SITE_CONFIG, getLiveTools, normalizeTrailingSlashPath } from '../config/site';
+import {
+	SITE_CONFIG,
+	STANDALONE_TOOLS,
+	getLiveTools,
+	normalizeTrailingSlashPath,
+} from '../config/site';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import { getLocaleFromUrl, getLocalizedPath, useTranslations } from '../i18n/ui';
 
@@ -7,67 +12,75 @@ const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 const currentPath = normalizeTrailingSlashPath(Astro.url.pathname);
 const liveTools = getLiveTools();
+const liveStandaloneTools = STANDALONE_TOOLS.filter((tool) => tool.status === 'live');
+
+interface NavToolLink {
+	slug: string;
+	shortName: string;
+}
 
 interface NavCategory {
-	category: string;
 	label: string;
 	id: string;
-	tools: Array<{
-		slug: string;
-		shortName: string;
-	}>;
+	tools: NavToolLink[];
 	isActiveCategory: boolean;
 }
 
-const categoriesWithTools: NavCategory[] = [
-	{
-		category: 'Reading',
-		id: 'reading',
-		tools: liveTools.filter((tool) => tool.category === 'Reading'),
-		isActiveCategory: false,
-	},
-	{
-		category: 'Writing',
-		id: 'writing',
-		tools: liveTools.filter((tool) => tool.category === 'Writing'),
-		isActiveCategory: false,
-	},
-	{
-		category: 'Speaking',
-		id: 'speaking',
-		tools: liveTools.filter((tool) => tool.category === 'Speaking' && tool.slug !== '/random-topic-generator/'),
-		isActiveCategory: false,
-	},
-	{
-		category: 'Text',
-		id: 'text',
-		tools: liveTools.filter((tool) => tool.category === 'Text'),
-		isActiveCategory: false,
-	},
-	{
-		category: 'Random',
-		id: 'random',
-		tools: liveTools.filter((tool) => tool.slug === '/random-topic-generator/'),
-		isActiveCategory: false,
-	},
-	{
-		category: 'Typing Test',
-		id: 'typing-test',
-		tools: liveTools.filter((tool) => tool.slug === '/typing-speed-test/'),
-		isActiveCategory: false,
-	},
-].map((cat) => {
-	const tools = cat.tools.map((tool) => ({
+const localizedLinks = (tools: typeof liveTools): NavToolLink[] =>
+	tools.map((tool) => ({
 		slug: getLocalizedPath(tool.slug, locale),
 		shortName: t(`${tool.dictKey}.shortName`),
 	}));
-	return {
-		...cat,
-		label: t(`nav.${cat.id === 'typing-test' ? 'typingTest' : cat.id}`),
-		tools,
-		isActiveCategory: tools.some((tool) => tool.slug === currentPath),
-	};
-});
+
+/** Standalone tools keep a single root URL, so their slug is never locale-prefixed. */
+const standaloneLinks = (category: string): NavToolLink[] =>
+	liveStandaloneTools
+		.filter((tool) => tool.category === category)
+		.map((tool) => ({ slug: tool.slug, shortName: tool.shortName }));
+
+const categoriesWithTools: NavCategory[] = [
+	{
+		label: t('nav.reading'),
+		id: 'reading',
+		tools: localizedLinks(liveTools.filter((tool) => tool.category === 'Reading')),
+		isActiveCategory: false,
+	},
+	{
+		label: t('nav.writing'),
+		id: 'writing',
+		tools: localizedLinks(liveTools.filter((tool) => tool.category === 'Writing')),
+		isActiveCategory: false,
+	},
+	{
+		label: t('nav.speaking'),
+		id: 'speaking',
+		tools: localizedLinks(
+			liveTools.filter((tool) => tool.category === 'Speaking' && tool.slug !== '/random-topic-generator/')
+		),
+		isActiveCategory: false,
+	},
+	{
+		label: t('nav.text'),
+		id: 'text',
+		tools: localizedLinks(liveTools.filter((tool) => tool.category === 'Text')),
+		isActiveCategory: false,
+	},
+	{
+		label: t('nav.random'),
+		id: 'random',
+		tools: localizedLinks(liveTools.filter((tool) => tool.slug === '/random-topic-generator/')),
+		isActiveCategory: false,
+	},
+	{
+		label: t('nav.typing'),
+		id: 'typing',
+		tools: [...localizedLinks(liveTools.filter((tool) => tool.category === 'Typing')), ...standaloneLinks('Typing')],
+		isActiveCategory: false,
+	},
+].map((cat) => ({
+	...cat,
+	isActiveCategory: cat.tools.some((tool) => tool.slug === currentPath),
+}));
 ---
 
 <header class="sticky top-0 z-50 w-full border-b border-[#e2e8e5] bg-[#ffffff] backdrop-blur-md dark:border-hairline dark:bg-header-bg">
@@ -360,7 +373,7 @@ const categoriesWithTools: NavCategory[] = [
 			syncIcons();
 		});
 
-		// 2. Desktop 4-Category Dropdown Menus
+		// 2. Desktop category dropdown menus
 		const dropdownContainers = Array.from(
 			document.querySelectorAll<HTMLElement>('[data-nav-dropdown]')
 		);

@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import SpotlightTools from "../components/SpotlightTools.astro";
 import {
 	SITE_CONFIG,
+	STANDALONE_TOOLS,
 	TOOLS_REGISTRY,
 	resolveCanonicalUrl,
 } from "../config/site";
@@ -12,6 +13,7 @@ import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "../i18n/ui"
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
+const liveStandaloneTools = STANDALONE_TOOLS.filter((tool) => tool.status === "live");
 
 const pageTitle = t("home.title");
 const pageDescription = t("home.metaDescription");
@@ -211,6 +213,48 @@ const webSiteSchema = {
 							</article>
 						)
 					)
+				}
+
+				<!-- Root-level standalone tools belong to the Typing category -->
+				{
+					liveStandaloneTools.map((tool) => (
+						<a
+							href={tool.slug}
+							data-tool-category={tool.category}
+							data-tool-status="live"
+							class="tool-card tool-card-live group flex flex-col justify-between rounded-md border border-[#1d463b] bg-[#0f2e26] p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#afe3d0] dark:border-hairline dark:bg-canvas-elevated dark:hover:border-ink"
+						>
+							<div>
+								<div class="flex items-center justify-between gap-2">
+									<span class="text-[13px] font-medium text-[#e2f5ee] dark:text-mute">
+										{t(`common.categories.${tool.category}`)}
+									</span>
+									<span class="inline-flex items-center gap-1.5 rounded-full border border-[#1d463b] bg-[#153d33] px-2.5 py-0.5 text-[12px] font-medium text-[#afe3d0] dark:border-transparent dark:bg-hairline-soft dark:text-ink">
+										<span class="inline-block h-1.5 w-1.5 rounded-full bg-[#afe3d0] dark:bg-vercel-blue" />
+										{t("common.available")}
+									</span>
+								</div>
+
+								<h3 class="mt-3 text-[19px] leading-[26px] font-semibold tracking-[-0.3px] text-white group-hover:text-[#afe3d0] transition-colors dark:text-ink dark:group-hover:text-vercel-blue">
+									{tool.shortName}
+								</h3>
+
+								<p class="mt-2 text-[14px] leading-[22px] text-[#e2f5ee]/85 dark:text-body">
+									{tool.summary ?? tool.description}
+								</p>
+							</div>
+
+							<div class="mt-6 flex items-center justify-between border-t border-[#1d463b] pt-4 dark:border-hairline">
+								<span class="text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:font-normal dark:text-mute">
+									{tool.metricPreview}
+								</span>
+								<span class="inline-flex items-center gap-1 rounded-full bg-[#afe3d0] px-3 py-1 text-[12px] font-semibold text-[#0f2e26] group-hover:translate-x-0.5 transition-transform dark:bg-transparent dark:p-0 dark:text-[13px] dark:font-medium dark:text-ink">
+									<span>{t("common.openTool")}</span>
+									<span aria-hidden="true">→</span>
+								</span>
+							</div>
+						</a>
+					))
 				}
 			</div>
 		</section>

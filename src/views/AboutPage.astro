@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SpotlightTools from "../components/SpotlightTools.astro";
-import { SITE_CONFIG, getLiveTools, resolveCanonicalUrl } from "../config/site";
+import { SITE_CONFIG, STANDALONE_TOOLS, getLiveTools, resolveCanonicalUrl } from "../config/site";
 
 import {
 	getLocaleFromUrl,
@@ -24,6 +24,7 @@ const pageTitle = t("about.title");
 const pageDescription = t("about.metaDescription");
 const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/about/", locale));
 const liveTools = getLiveTools();
+const liveStandaloneTools = STANDALONE_TOOLS.filter((tool) => tool.status === "live");
 const principles = t.raw<PrincipleItem[]>("about.page.principles") ?? [];
 ---
 
@@ -82,6 +83,7 @@ const principles = t.raw<PrincipleItem[]>("about.page.principles") ?? [];
 						{
 							SITE_CONFIG.categories.map((cat) => {
 								const toolsInCat = liveTools.filter((tool) => tool.category === cat);
+								const standaloneInCat = liveStandaloneTools.filter((tool) => tool.category === cat);
 								return (
 									<div class="rounded-sm border border-hairline bg-canvas-elevated p-4">
 										<h3 class="text-[15px] font-semibold text-ink">
@@ -95,6 +97,16 @@ const principles = t.raw<PrincipleItem[]>("about.page.principles") ?? [];
 														class="text-body transition-colors hover:text-vercel-blue"
 													>
 														{t(`${tool.dictKey}.name`)} →
+													</a>
+												</li>
+											))}
+											{standaloneInCat.map((tool) => (
+												<li>
+													<a
+														href={tool.slug}
+														class="text-body transition-colors hover:text-vercel-blue"
+													>
+														{tool.name} →
 													</a>
 												</li>
 											))}

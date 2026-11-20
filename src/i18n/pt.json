@@ -10,7 +10,7 @@
 			"Writing": "Escrita",
 			"Speaking": "Oratória",
 			"Text": "Texto",
-			"Typing Speed Test": "Teste de digitação"
+			"Typing": "Digitação"
 		},
 		"soon": "Em breve",
 		"comingSoon": "Em breve",
@@ -48,7 +48,7 @@
 		"speaking": "Oratória",
 		"text": "Texto",
 		"random": "Aleatório",
-		"typingTest": "Teste de digitação",
+		"typing": "Digitação",
 		"home": "Página inicial da {name}",
 		"primaryNav": "Navegação principal por categorias",
 		"mobileNav": "Navegação móvel por categorias",

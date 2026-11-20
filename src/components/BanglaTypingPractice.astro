@@ -1,0 +1,1582 @@
+---
+import {
+	BANGLA_LESSONS,
+	LESSON_LEVELS,
+	PRACTICE_MODES,
+	type BanglaTypingLesson,
+} from "../data/banglaTypingCurriculum";
+
+const lessonsByLevel = LESSON_LEVELS.map((level) => ({
+	...level,
+	lessons: BANGLA_LESSONS.filter((lesson: BanglaTypingLesson) => lesson.level === level.id),
+}));
+
+const firstLesson = BANGLA_LESSONS[0];
+
+const bengaliDigits = (value: number) =>
+	String(value).replace(/[0-9]/g, (digit) => "০১২৩৪৫৬৭৮৯"[Number(digit)]);
+
+/** Grapheme-safe split so matras and conjuncts count as a single character. */
+const splitClusters = (text: string) =>
+	Array.from(new Intl.Segmenter("bn", { granularity: "grapheme" }).segment(text.normalize("NFC")), (part) => part.segment);
+
+const firstLessonClusters = splitClusters(firstLesson.target);
+
+/** Level → palette tone, so beginner/intermediate/advanced stay colour-coded. */
+const levelTones: Record<string, "mint" | "sand" | "orange"> = {
+	beginner: "mint",
+	intermediate: "sand",
+	advanced: "orange",
+};
+---
+
+<div class="bangla-practice" data-bangla-practice>
+	<!-- Workspace surface: modes, exercise and lessons sit on one warm-sand panel -->
+	<div class="bp-workspace">
+	<!-- Practice mode selector -->
+	<div>
+		<h3 class="text-[15px] font-semibold text-ink">অনুশীলনের ধরন বেছে নিন</h3>
+		<p class="mt-1 text-[13.5px] leading-relaxed text-body">
+			যে ধরনের লেখা নিয়ে অনুশীলন করতে চান, সেটি বেছে নিন। পাঠ বেছে নিলে অনুশীলন সেই পাঠেই চলে যাবে।
+		</p>
+		<div role="group" aria-label="টাইপিং অনুশীলন মোড" class="mt-3 flex flex-wrap gap-2">
+			{
+				PRACTICE_MODES.map((mode) => (
+					<button
+						type="button"
+						class="bp-choice"
+						data-mode-id={mode.id}
+						data-tone={mode.kind === 'drill' ? 'mint' : mode.kind === 'custom' ? 'sand' : 'orange'}
+						aria-pressed="false"
+					>
+						<span class="bp-dot" aria-hidden="true"></span>
+						{mode.label}
+					</button>
+				))
+			}
+		</div>
+	</div>
+
+	<!-- Custom text panel -->
+	<div id="custom-panel" hidden class="bp-inset bp-inset-sand mt-4">
+		<label for="custom-text" class="block text-[13.5px] font-medium text-ink">আপনার লেখা</label>
+		<textarea
+			id="custom-text"
+			rows="5"
+			maxlength="1200"
+			lang="bn"
+			spellcheck="false"
+			autocomplete="off"
+			class="bp-input mt-2 w-full px-3.5 py-3 text-[17px] leading-[1.8] text-ink"
+			placeholder="এখানে বাংলা লেখা পেস্ট করুন বা টাইপ করুন…"></textarea>
+		<p class="mt-2 text-[12.5px] leading-relaxed text-mute">
+			লেখাটি শুধু আপনার ব্রাউজারেই থাকে, কোনো সার্ভারে পাঠানো হয় না। লাইন ব্রেক স্পেস হিসেবে ধরা হয়।
+		</p>
+		<p id="custom-error" hidden class="mt-1.5 text-[12.5px] font-medium text-[#B42318] dark:text-[#FDA29B]"></p>
+		<div class="mt-3 flex flex-wrap gap-2">
+			<button type="button" id="btn-use-custom" class="bp-action bp-action-primary">
+				এই লেখা দিয়ে শুরু করুন
+			</button>
+			<button type="button" id="btn-clear-custom" class="bp-action bp-action-secondary">লেখা মুছুন</button>
+		</div>
+	</div>
+
+	<!-- Revision empty state -->
+	<div id="revision-empty" hidden class="bp-inset bp-inset-orange mt-4">
+		<p class="text-[14px] leading-relaxed text-body">
+			এখনো নির্ভরযোগ্য কোনো ভুলের তথ্য নেই। অন্তত একটি অনুশীলনে ভুল টাইপ করলে সেই অক্ষরগুলো এখানে জমা হবে,
+			তারপর এই মোডে শুধু সেগুলো দিয়েই ড্রিল তৈরি হবে।
+		</p>
+		<button type="button" id="btn-start-letters" class="bp-action bp-action-secondary mt-3">
+			বর্ণ অনুশীলন শুরু করুন
+		</button>
+	</div>
+
+	<!-- Exercise panel -->
+	<div id="exercise-panel" class="mt-6 border-t border-hairline pt-5">
+		<div class="flex flex-wrap items-start justify-between gap-3">
+			<div class="min-w-0">
+				<p id="exercise-source" class="text-[12.5px] font-medium text-mute">
+					পাঠ {firstLesson.number} · শিক্ষানবিস
+				</p>
+				<h3
+					id="exercise-title"
+					class="mt-1 text-[19px] leading-[26px] font-semibold tracking-[-0.3px] text-ink"
+				>
+					{firstLesson.title}
+				</h3>
+			</div>
+			<div class="flex flex-wrap items-center gap-2">
+				<span id="exercise-difficulty" class="bp-pill bp-pill-sand">
+					{firstLesson.difficulty}
+				</span>
+				<span id="exercise-accuracy" class="bp-pill bp-pill-orange tabular-nums">
+					ন্যূনতম নির্ভুলতা ৯৫%
+				</span>
+			</div>
+		</div>
+
+		<p id="exercise-summary" class="mt-2.5 max-w-2xl text-[14px] leading-relaxed text-body">
+			{firstLesson.summary}
+		</p>
+		<p id="exercise-criteria" class="mt-1.5 max-w-2xl text-[13.5px] leading-relaxed text-mute">
+			সম্পন্ন করার শর্ত: {firstLesson.criteria}
+		</p>
+
+		<dl class="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+			<div class="bp-metric" data-tone="mint">
+				<dt class="text-[12px] font-medium text-mute">গতি (অক্ষর/মিনিট)</dt>
+				<dd id="metric-speed" class="bp-metric-value tabular-nums">—</dd>
+			</div>
+			<div class="bp-metric" data-tone="orange">
+				<dt class="text-[12px] font-medium text-mute">নির্ভুলতা</dt>
+				<dd id="metric-accuracy" class="bp-metric-value tabular-nums">১০০%</dd>
+			</div>
+			<div class="bp-metric" data-tone="sand">
+				<dt class="text-[12px] font-medium text-mute">সময়</dt>
+				<dd id="metric-time" class="bp-metric-value tabular-nums">০:০০</dd>
+			</div>
+			<div class="bp-metric" data-tone="paper">
+				<dt class="text-[12px] font-medium text-mute">অগ্রগতি</dt>
+				<dd id="metric-progress" class="bp-metric-value tabular-nums">
+					০ / {bengaliDigits(firstLessonClusters.length)}
+				</dd>
+			</div>
+		</dl>
+
+		<div
+			id="progress-track"
+			class="mt-3 h-1.5 w-full overflow-hidden rounded-full"
+			role="progressbar"
+			aria-label="অনুশীলনের অগ্রগতি"
+			aria-valuemin="0"
+			aria-valuemax="100"
+			aria-valuenow="0"
+		>
+			<div id="progress-bar" class="h-full w-0 rounded-full"></div>
+		</div>
+
+		<p class="mt-5 text-[12.5px] font-medium text-mute">যে লেখাটি টাইপ করবেন</p>
+		<div
+			id="target-text"
+			class="bp-target mt-2 min-h-[96px] text-[20px] leading-[1.9] text-ink"
+			lang="bn"
+		>
+			{
+				firstLessonClusters.map((glyph) => (
+					<span class="bp-glyph" data-state="pending">
+						{glyph}
+					</span>
+				))
+			}
+		</div>
+
+		<p id="practice-instructions" class="sr-only">
+			উপরের লক্ষ্য লেখাটি পড়ে হুবহু টাইপ করুন। আপনার ইনস্টল করা বাংলা ইনপুট পদ্ধতি দিয়ে লিখুন। ভুল হলে
+			সংশোধন করা যাবে, আর বাক্স সম্পূর্ণ খালি করলে টাইমার আবার শুরু হবে।
+		</p>
+
+		<label for="typing-input" class="mt-4 block text-[12.5px] font-medium text-mute">
+			এখানে টাইপ করুন
+		</label>
+		<textarea
+			id="typing-input"
+			rows="3"
+			lang="bn"
+			spellcheck="false"
+			autocomplete="off"
+			autocapitalize="off"
+			autocorrect="off"
+			aria-describedby="practice-instructions"
+			class="bp-input mt-1.5 w-full px-4 py-3 text-[17px] leading-[1.8] text-ink"
+			placeholder="আপনার ইনস্টল করা অভ্র, বিজয় বা অন্য ইউনিকোড বাংলা ইনপুট পদ্ধতি দিয়ে টাইপ শুরু করুন…"
+		></textarea>
+
+		<div class="mt-4 flex flex-wrap items-center gap-2.5">
+			<button type="button" id="btn-restart" class="bp-action bp-action-primary">আবার শুরু করুন</button>
+			<button type="button" id="btn-next-lesson" class="bp-action bp-action-secondary">পরের পাঠ</button>
+			<button type="button" id="btn-new-drill" hidden class="bp-action bp-action-secondary">নতুন ড্রিল</button>
+		</div>
+
+		<p id="practice-status" class="mt-3 min-h-[22px] text-[14px] leading-relaxed text-body" role="status" aria-live="polite"></p>
+		<p id="result-details" hidden class="mt-1 text-[13px] leading-relaxed text-mute tabular-nums"></p>
+	</div>
+
+	<!-- Lesson list: no locks, any lesson can be opened -->
+	<div class="mt-7 border-t border-hairline pt-5">
+		<h3 class="text-[15px] font-semibold text-ink">১২টি পাঠ</h3>
+		<p class="mt-1 text-[13.5px] leading-relaxed text-body">
+			যেকোনো পাঠ থেকে শুরু করতে পারেন, কোনো পাঠ লক করা নেই।
+		</p>
+		<div class="mt-4 grid gap-5 md:grid-cols-3">
+			{
+				lessonsByLevel.map((level) => (
+					<div class="bp-level" data-tone={levelTones[level.id]}>
+						<p class="bp-level-title text-[13px] font-semibold text-ink">
+							<span class="bp-dot" aria-hidden="true" />
+							<span>{level.label}</span>
+						</p>
+						<p class="mt-1 text-[12.5px] leading-relaxed text-mute">{level.description}</p>
+						<div class="mt-2.5 flex flex-col gap-2">
+							{level.lessons.map((lesson) => (
+								<button
+									type="button"
+									class="bp-choice bp-choice-row"
+									data-lesson-id={lesson.id}
+									data-tone={levelTones[level.id]}
+									aria-pressed="false"
+								>
+									<span class="shrink-0 text-[12px] font-medium text-mute tabular-nums">
+										{lesson.number}
+									</span>
+									<span class="min-w-0 flex-1 break-words">{lesson.title}</span>
+									<span class="shrink-0 text-[11.5px] text-mute">{lesson.difficulty}</span>
+								</button>
+							))}
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+	</div>
+	<!-- /.bp-workspace -->
+
+	<!-- Learning progress: everything below is stored only in this browser -->
+	<section id="progress-panel" aria-labelledby="progress-heading" class="bp-progress">
+		<div class="flex flex-wrap items-start justify-between gap-3">
+			<div class="min-w-0">
+				<h3 id="progress-heading" class="text-[15px] font-semibold text-ink">আপনার অগ্রগতি</h3>
+				<p class="mt-1 max-w-xl text-[13.5px] leading-relaxed text-body">
+					সম্পন্ন পাঠ, মোট অনুশীলন, সময় ও নির্ভুলতা আপনার ব্রাউজারেই জমা থাকে। কোনো তথ্য সার্ভারে
+					পাঠানো হয় না।
+				</p>
+			</div>
+			<button type="button" id="btn-reset-progress" class="bp-action bp-action-secondary">
+				অগ্রগতি রিসেট করুন
+			</button>
+		</div>
+
+		<div
+			id="reset-confirm"
+			hidden
+			class="mt-3 rounded-xl border border-[#B42318]/35 bg-[#B42318]/5 p-4 dark:border-[#FDA29B]/40 dark:bg-[#FDA29B]/10"
+		>
+			<p class="text-[13.5px] leading-relaxed text-body">
+				এতে সম্পন্ন পাঠ, অনুশীলনের হিসাব, সেরা ফলাফল এবং জমে থাকা ভুল অক্ষরের তালিকা মুছে যাবে। এটি ফেরানো
+				যাবে না। আপনি কি নিশ্চিত?
+			</p>
+			<div class="mt-3 flex flex-wrap gap-2">
+				<button type="button" id="btn-reset-confirm" class="bp-action bp-action-danger">
+					হ্যাঁ, সব মুছে ফেলুন
+				</button>
+				<button type="button" id="btn-reset-cancel" class="bp-action bp-action-secondary">বাতিল</button>
+			</div>
+		</div>
+
+		<dl class="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+			<div class="bp-metric" data-tone="mint">
+				<dt class="text-[12px] font-medium text-mute">সম্পন্ন পাঠ</dt>
+				<dd id="progress-lessons" class="bp-metric-value tabular-nums">০ / ১২</dd>
+			</div>
+			<div class="bp-metric" data-tone="orange">
+				<dt class="text-[12px] font-medium text-mute">পাঠ সম্পূর্ণ</dt>
+				<dd id="progress-percent" class="bp-metric-value tabular-nums">০%</dd>
+			</div>
+			<div class="bp-metric" data-tone="sand">
+				<dt class="text-[12px] font-medium text-mute">মোট অনুশীলন</dt>
+				<dd id="progress-sessions" class="bp-metric-value tabular-nums">০</dd>
+			</div>
+			<div class="bp-metric" data-tone="mint">
+				<dt class="text-[12px] font-medium text-mute">গড় নির্ভুলতা</dt>
+				<dd id="progress-accuracy" class="bp-metric-value tabular-nums">—</dd>
+			</div>
+			<div class="bp-metric" data-tone="sand">
+				<dt class="text-[12px] font-medium text-mute">মোট সময় (মিনিট:সেকেন্ড)</dt>
+				<dd id="progress-time" class="bp-metric-value tabular-nums">০:০০</dd>
+			</div>
+			<div class="bp-metric" data-tone="paper">
+				<dt class="text-[12px] font-medium text-mute">মোট শব্দ</dt>
+				<dd id="progress-words" class="bp-metric-value tabular-nums">০</dd>
+			</div>
+			<div class="bp-metric" data-tone="orange">
+				<dt class="text-[12px] font-medium text-mute">টানা অনুশীলন</dt>
+				<dd id="progress-streak" class="bp-metric-value tabular-nums">—</dd>
+			</div>
+			<div class="bp-metric" data-tone="paper">
+				<dt class="text-[12px] font-medium text-mute">সেরা সেশন</dt>
+				<dd id="progress-best" class="bp-metric-value tabular-nums">—</dd>
+			</div>
+		</dl>
+
+		<div
+			id="progress-lesson-track"
+			class="mt-3 h-1.5 w-full overflow-hidden rounded-full"
+			role="progressbar"
+			aria-label="পাঠ সম্পন্নের অগ্রগতি"
+			aria-valuemin="0"
+			aria-valuemax="100"
+			aria-valuenow="0"
+		>
+			<div id="progress-lesson-bar" class="h-full w-0 rounded-full"></div>
+		</div>
+
+		<div class="mt-4">
+			<p class="text-[12.5px] font-medium text-mute">সবচেয়ে বেশি ভুল হওয়া অক্ষর</p>
+			<div id="weak-glyphs" class="mt-2 flex flex-wrap gap-2"></div>
+			<p id="weak-empty" class="mt-1 text-[13px] leading-relaxed text-mute">
+				এখনো ভুলের তথ্য জমা হয়নি। ভুল টাইপ করলে অক্ষরগুলো এখানে দেখা যাবে।
+			</p>
+		</div>
+
+		<p id="progress-status" class="mt-3 text-[13px] leading-relaxed text-mute" role="status" aria-live="polite"></p>
+	</section>
+</div>
+
+<style is:global>
+	/*
+		Namespaced inside .bangla-practice so nothing leaks into other pages.
+		Colours come from the page palette (--bp-*) defined on .bangla-page in the view.
+	*/
+	.bangla-practice {
+		font-family:
+			'Noto Sans Bengali', 'Hind Siliguri', 'Nirmala UI', 'Vrinda', 'Geist', 'Inter', -apple-system,
+			sans-serif;
+	}
+
+	.bangla-practice [hidden] {
+		display: none !important;
+	}
+
+	/* Warm-sand workspace surface */
+	.bangla-practice .bp-workspace {
+		padding: 1.15rem;
+		border: 1px solid var(--bp-sand-line, #e6d6c1);
+		border-radius: 20px;
+		background: var(--bp-sand-soft, #f7efe3);
+	}
+
+	@media (min-width: 640px) {
+		.bangla-practice .bp-workspace {
+			padding: 1.6rem;
+		}
+	}
+
+	/* Tone families: every chip, row and tile picks mint, sand, orange or paper */
+	.bangla-practice [data-tone='mint'] {
+		--tone: var(--bp-mint, #afe3d0);
+		--tone-ink: var(--bp-mint-ink, #0f2e26);
+		--tone-soft: var(--bp-mint-soft, #e4f4ec);
+		--tone-line: var(--bp-mint-line, #bfe6d5);
+	}
+
+	.bangla-practice [data-tone='sand'] {
+		--tone: var(--bp-sand, #ecdcc5);
+		--tone-ink: var(--bp-sand-ink, #4a3624);
+		--tone-soft: var(--bp-sand-soft, #f7efe3);
+		--tone-line: var(--bp-sand-line, #e6d6c1);
+	}
+
+	.bangla-practice [data-tone='orange'] {
+		--tone: var(--bp-orange, #f7bd90);
+		--tone-ink: var(--bp-orange-ink, #7a3a12);
+		--tone-soft: var(--bp-orange-soft, #fdece0);
+		--tone-line: var(--bp-orange-line, #f4cba9);
+	}
+
+	.bangla-practice [data-tone='paper'] {
+		--tone: var(--bp-line, #e2d9cb);
+		--tone-ink: var(--c-ink);
+		--tone-soft: var(--bp-paper, #fdfaf4);
+		--tone-line: var(--bp-line, #e2d9cb);
+	}
+
+	/* Mode pills and lesson rows */
+	.bangla-practice .bp-choice {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		min-height: 44px;
+		padding: 0.5rem 0.9rem;
+		border: 1px solid var(--tone-line);
+		border-radius: 999px;
+		background: var(--tone-soft);
+		color: var(--c-body);
+		font-size: 13.5px;
+		font-weight: 500;
+		line-height: 1.4;
+		text-align: left;
+		cursor: pointer;
+		transition:
+			border-color 0.15s ease,
+			background-color 0.15s ease,
+			color 0.15s ease;
+	}
+
+	.bangla-practice .bp-choice:hover {
+		border-color: var(--tone);
+		background: var(--bp-paper, #fdfaf4);
+		color: var(--c-ink);
+	}
+
+	.bangla-practice .bp-choice:focus-visible {
+		outline: 2px solid var(--c-ink);
+		outline-offset: 2px;
+	}
+
+	.bangla-practice .bp-choice.is-active {
+		border-color: var(--tone);
+		background: var(--tone);
+		color: var(--tone-ink);
+		font-weight: 600;
+	}
+
+	.bangla-practice .bp-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 999px;
+		background: var(--tone);
+		flex: none;
+	}
+
+	.bangla-practice .bp-choice.is-active .bp-dot {
+		background: var(--tone-ink);
+	}
+
+	.bangla-practice .bp-choice-row {
+		width: 100%;
+		border-radius: 12px;
+		padding: 0.45rem 0.7rem;
+		font-size: 13.5px;
+	}
+
+	.bangla-practice .bp-choice-row::before {
+		content: '';
+		flex: none;
+		align-self: stretch;
+		width: 3px;
+		border-radius: 999px;
+		background: var(--tone);
+		opacity: 0.55;
+		transition: opacity 0.15s ease;
+	}
+
+	.bangla-practice .bp-choice-row:hover::before,
+	.bangla-practice .bp-choice-row.is-active::before {
+		opacity: 1;
+	}
+
+	.bangla-practice .bp-level-title {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.2rem 0.7rem 0.2rem 0.5rem;
+		border-radius: 999px;
+		background: var(--tone-soft);
+		color: var(--tone-ink);
+	}
+
+	/* Contextual inset panels (custom text, revision empty state) */
+	.bangla-practice .bp-inset {
+		padding: 0.95rem 1rem;
+		border-radius: 14px;
+		background: var(--tone-soft);
+		box-shadow: inset 3px 0 0 0 var(--tone);
+	}
+
+	.bangla-practice .bp-inset-sand {
+		--tone: var(--bp-sand, #ecdcc5);
+		--tone-ink: var(--bp-sand-ink, #4a3624);
+		--tone-soft: var(--bp-sand-soft, #f7efe3);
+		--tone-line: var(--bp-sand-line, #e6d6c1);
+	}
+
+	.bangla-practice .bp-inset-orange {
+		--tone: var(--bp-orange, #f7bd90);
+		--tone-ink: var(--bp-orange-ink, #7a3a12);
+		--tone-soft: var(--bp-orange-soft, #fdece0);
+		--tone-line: var(--bp-orange-line, #f4cba9);
+	}
+
+	/* Small sentence-case badges */
+	.bangla-practice .bp-pill {
+		display: inline-flex;
+		align-items: center;
+		min-height: 26px;
+		padding: 0.15rem 0.6rem;
+		border-radius: 999px;
+		border: 1px solid var(--tone-line);
+		background: var(--tone-soft);
+		color: var(--tone-ink);
+		font-size: 12px;
+		font-weight: 500;
+	}
+
+	.bangla-practice .bp-pill-sand {
+		--tone: var(--bp-sand, #ecdcc5);
+		--tone-ink: var(--bp-sand-ink, #4a3624);
+		--tone-soft: var(--bp-sand-soft, #f7efe3);
+		--tone-line: var(--bp-sand-line, #e6d6c1);
+	}
+
+	.bangla-practice .bp-pill-orange {
+		--tone: var(--bp-orange, #f7bd90);
+		--tone-ink: var(--bp-orange-ink, #7a3a12);
+		--tone-soft: var(--bp-orange-soft, #fdece0);
+		--tone-line: var(--bp-orange-line, #f4cba9);
+	}
+
+	/* Metric tiles */
+	.bangla-practice .bp-metric {
+		min-width: 0;
+		padding: 0.6rem 0.75rem;
+		border-radius: 14px;
+		background: var(--tone-soft);
+	}
+
+	.bangla-practice .bp-metric-value {
+		margin-top: 0.15rem;
+		font-size: 17px;
+		line-height: 24px;
+		font-weight: 600;
+		color: var(--tone-ink);
+		font-variant-numeric: tabular-nums;
+		overflow-wrap: anywhere;
+	}
+
+	/* Progress band */
+	.bangla-practice .bp-progress {
+		margin-top: 1.25rem;
+		padding: 1.1rem;
+		border: 1px solid var(--bp-mint-line, #bfe6d5);
+		border-radius: 18px;
+		background: var(--bp-mint-soft, #e4f4ec);
+	}
+
+	@media (min-width: 640px) {
+		.bangla-practice .bp-progress {
+			padding: 1.4rem;
+		}
+	}
+
+	/* Bars: sand track, orange typing fill, mint-to-orange lesson fill */
+	.bangla-practice #progress-track,
+	.bangla-practice #progress-lesson-track {
+		background: var(--bp-sand-line, #e6d6c1);
+	}
+
+	.bangla-practice #progress-bar {
+		background: var(--bp-orange, #f7bd90);
+	}
+
+	.bangla-practice #progress-lesson-bar {
+		background: linear-gradient(90deg, var(--bp-mint, #afe3d0) 0%, var(--bp-orange, #f7bd90) 100%);
+	}
+
+	/* Target paper and input field (the only nested writing surfaces) */
+	.bangla-practice .bp-target {
+		padding: 0.9rem 1rem 0.9rem 1.15rem;
+		border-radius: 14px;
+		background: var(--bp-paper, #fdfaf4);
+		box-shadow: inset 4px 0 0 0 var(--bp-mint, #afe3d0);
+		white-space: pre-wrap;
+		overflow-wrap: break-word;
+	}
+
+	.bangla-practice .bp-input {
+		border: 1px solid var(--bp-line, #e2d9cb);
+		border-radius: 14px;
+		background: var(--bp-paper, #fdfaf4);
+		font-family: inherit;
+		font-size: 17px;
+	}
+
+	.bangla-practice .bp-input::placeholder {
+		color: var(--c-faint);
+	}
+
+	/* Buttons */
+	.bangla-practice .bp-action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 44px;
+		padding: 0.5rem 1.1rem;
+		border-radius: 12px;
+		border: 1px solid transparent;
+		font-size: 14px;
+		font-weight: 600;
+		cursor: pointer;
+		transition:
+			opacity 0.15s ease,
+			border-color 0.15s ease,
+			background-color 0.15s ease;
+	}
+
+	.bangla-practice .bp-action-primary {
+		background: var(--bp-mint, #afe3d0);
+		color: var(--bp-mint-ink, #0f2e26);
+	}
+
+	.bangla-practice .bp-action-primary:hover {
+		opacity: 0.88;
+	}
+
+	.bangla-practice .bp-action-secondary {
+		border-color: var(--bp-line, #e2d9cb);
+		background: var(--bp-paper, #fdfaf4);
+		color: var(--c-ink);
+		font-weight: 500;
+	}
+
+	.bangla-practice .bp-action-secondary:hover {
+		border-color: var(--c-ink);
+	}
+
+	.bangla-practice .bp-action-danger {
+		border-color: #b42318;
+		background: #b42318;
+		color: #ffffff;
+	}
+
+	.bangla-practice .bp-action-danger:hover {
+		opacity: 0.9;
+	}
+
+	.bangla-practice .bp-action:focus-visible,
+	.bangla-practice .bp-input:focus-visible {
+		outline: 2px solid var(--c-ink);
+		outline-offset: 2px;
+	}
+
+	/* Dark mode swaps ink for the near-white primary so the focus ring stays visible. */
+	.dark .bangla-practice .bp-choice:focus-visible,
+	.dark .bangla-practice .bp-action:focus-visible,
+	.dark .bangla-practice .bp-input:focus-visible {
+		outline-color: var(--c-primary);
+	}
+
+	.bangla-practice .bp-weak-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		min-height: 32px;
+		padding: 0.25rem 0.65rem;
+		border: 1px solid var(--bp-sand-line, #e6d6c1);
+		border-radius: 999px;
+		background: var(--bp-paper, #fdfaf4);
+		color: var(--c-ink);
+		font-size: 13px;
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* Glyph states */
+	.bangla-practice .bp-glyph {
+		border-radius: 3px;
+		transition:
+			background-color 0.12s ease,
+			color 0.12s ease;
+	}
+
+	.bangla-practice .bp-glyph[data-state='pending'] {
+		color: var(--c-mute);
+	}
+
+	.bangla-practice .bp-glyph[data-state='correct'] {
+		background: rgba(175, 227, 208, 0.38);
+		color: #0f2e26;
+	}
+
+	.bangla-practice .bp-glyph[data-state='wrong'] {
+		background: rgba(180, 35, 24, 0.12);
+		color: #b42318;
+		text-decoration: underline wavy #b42318;
+		text-underline-offset: 3px;
+	}
+
+	.bangla-practice .bp-glyph[data-state='current'] {
+		color: var(--c-ink);
+		box-shadow: inset 0 -2px 0 0 #0f2e26;
+	}
+
+	.dark .bangla-practice .bp-glyph[data-state='correct'] {
+		background: rgba(126, 212, 182, 0.18);
+		color: #afe3d0;
+	}
+
+	.dark .bangla-practice .bp-glyph[data-state='wrong'] {
+		background: rgba(253, 162, 155, 0.16);
+		color: #fda29b;
+		text-decoration-color: #fda29b;
+	}
+
+	.dark .bangla-practice .bp-glyph[data-state='current'] {
+		box-shadow: inset 0 -2px 0 0 #afe3d0;
+	}
+</style>
+
+<script>
+	import {
+		BANGLA_LESSONS,
+		LESSON_LEVELS,
+		PRACTICE_MODES,
+		PRACTICE_POOLS,
+		type BanglaPracticeMode,
+		type BanglaPracticeModeId,
+		type BanglaTypingLesson,
+	} from '../data/banglaTypingCurriculum';
+
+	const MISTAKE_STORE_KEY = 'wordora-bangla-typing-mistakes-v1';
+	const PROGRESS_STORE_KEY = 'wordora-bangla-typing-progress-v1';
+	const MAX_CUSTOM_LENGTH = 1200;
+
+	interface Exercise {
+		key: string;
+		kind: 'lesson' | 'drill' | 'custom' | 'revision';
+		title: string;
+		source: string;
+		difficulty: string;
+		minAccuracy: number;
+		summary: string;
+		criteria: string;
+		target: string;
+	}
+
+	type SegmenterCtor = new (
+		locales?: string | string[],
+		options?: { granularity: 'grapheme' }
+	) => { segment(input: string): Iterable<{ segment: string }> };
+
+	const Segmenter = (Intl as unknown as { Segmenter?: SegmenterCtor }).Segmenter;
+	const segmenter = Segmenter ? new Segmenter('bn', { granularity: 'grapheme' }) : null;
+
+	/** NFC keeps decomposed nukta forms (e.g. ড + ়) equal to their precomposed letters. */
+	function normalizeText(text: string): string {
+		try {
+			return text.normalize('NFC');
+		} catch {
+			return text;
+		}
+	}
+
+	/** Bengali vowel signs, nukta, virama, zero-width joiners and variation selectors. */
+	const CLUSTER_MARK = /[\u09BC\u09BE-\u09CD\u09D7\u09E2\u09E3\u200C\u200D\uFE00-\uFE0F]/;
+
+	/**
+	 * Grapheme fallback for browsers without Intl.Segmenter: a base character keeps every
+	 * following Bengali vowel sign/combining mark, and a virama or ZWJ joins the next consonant.
+	 */
+	function splitClustersFallback(text: string): string[] {
+		const clusters: string[] = [];
+		let joinsNext = false;
+		for (const char of text) {
+			if (clusters.length > 0 && (joinsNext || CLUSTER_MARK.test(char))) {
+				clusters[clusters.length - 1] += char;
+			} else {
+				clusters.push(char);
+			}
+			joinsNext = char === '\u09CD' || char === '\u200D';
+		}
+		return clusters;
+	}
+
+	/**
+	 * Splits NFC-normalised text into user-perceived Bengali clusters so "ক্ষ" or "কি" counts as one unit.
+	 * Never indexes raw code units, so matras and conjuncts stay whole.
+	 */
+	function splitGraphemes(text: string): string[] {
+		const normalized = normalizeText(text);
+		return segmenter
+			? Array.from(segmenter.segment(normalized), (part) => part.segment)
+			: splitClustersFallback(normalized);
+	}
+
+	const BN_DIGITS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+
+	function bnNumber(value: number): string {
+		return String(Math.round(value)).replace(/[0-9]/g, (digit) => BN_DIGITS[Number(digit)]);
+	}
+
+	function formatDuration(ms: number): string {
+		const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+		const minutes = Math.floor(totalSeconds / 60);
+		const seconds = totalSeconds % 60;
+		return `${bnNumber(minutes)}:${bnNumber(seconds).padStart(2, '০')}`;
+	}
+
+	function readMistakes(): Record<string, number> {
+		try {
+			const raw = window.localStorage.getItem(MISTAKE_STORE_KEY);
+			if (!raw) return {};
+			const parsed: unknown = JSON.parse(raw);
+			if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+			const result: Record<string, number> = {};
+			for (const [glyph, count] of Object.entries(parsed as Record<string, unknown>)) {
+				if (typeof count === 'number' && Number.isFinite(count) && count > 0) result[glyph] = count;
+			}
+			return result;
+		} catch {
+			return {};
+		}
+	}
+
+	function saveMistakes(store: Record<string, number>) {
+		try {
+			window.localStorage.setItem(MISTAKE_STORE_KEY, JSON.stringify(store));
+		} catch {
+			// Storage can be unavailable (private mode); practice still works, revision just stays empty.
+		}
+	}
+
+	interface LessonRecord {
+		attempts: number;
+		completed: boolean;
+		bestAccuracy: number;
+		bestCpm: number;
+		lastPracticedAt: string;
+	}
+
+	interface PracticeProgress {
+		sessions: number;
+		totalTimeMs: number;
+		totalWords: number;
+		totalCorrectChars: number;
+		accuracySum: number;
+		lessons: Record<string, LessonRecord>;
+		bestSession: { accuracy: number; cpm: number; at: string } | null;
+		streakCurrent: number;
+		streakBest: number;
+		streakLastDate: string;
+	}
+
+	function emptyProgress(): PracticeProgress {
+		return {
+			sessions: 0,
+			totalTimeMs: 0,
+			totalWords: 0,
+			totalCorrectChars: 0,
+			accuracySum: 0,
+			lessons: {},
+			bestSession: null,
+			streakCurrent: 0,
+			streakBest: 0,
+			streakLastDate: '',
+		};
+	}
+
+	function safeNumber(value: unknown, min = 0, max = 1e12): number {
+		if (typeof value !== 'number' || !Number.isFinite(value)) return min;
+		return Math.min(max, Math.max(min, value));
+	}
+
+	/** Loads saved progress, discarding anything malformed so corrupt data can never break the tool. */
+	function readProgress(): PracticeProgress {
+		const empty = emptyProgress();
+		try {
+			const raw = window.localStorage.getItem(PROGRESS_STORE_KEY);
+			if (!raw) return empty;
+			const parsed: unknown = JSON.parse(raw);
+			if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return empty;
+			const data = parsed as Record<string, unknown>;
+			const progress = emptyProgress();
+
+			progress.sessions = Math.round(safeNumber(data.sessions));
+			progress.totalTimeMs = Math.round(safeNumber(data.totalTimeMs));
+			progress.totalWords = Math.round(safeNumber(data.totalWords));
+			progress.totalCorrectChars = Math.round(safeNumber(data.totalCorrectChars));
+			progress.accuracySum = safeNumber(data.accuracySum);
+			progress.streakCurrent = Math.round(safeNumber(data.streakCurrent));
+			progress.streakBest = Math.round(safeNumber(data.streakBest));
+			progress.streakLastDate =
+				typeof data.streakLastDate === 'string' ? data.streakLastDate.slice(0, 10) : '';
+
+			const lessons = data.lessons;
+			if (lessons && typeof lessons === 'object' && !Array.isArray(lessons)) {
+				for (const [lessonId, entry] of Object.entries(lessons as Record<string, unknown>)) {
+					if (!entry || typeof entry !== 'object' || Array.isArray(entry)) continue;
+					const record = entry as Record<string, unknown>;
+					progress.lessons[lessonId] = {
+						attempts: Math.round(safeNumber(record.attempts)),
+						completed: record.completed === true,
+						bestAccuracy: safeNumber(record.bestAccuracy, 0, 100),
+						bestCpm: safeNumber(record.bestCpm),
+						lastPracticedAt: typeof record.lastPracticedAt === 'string' ? record.lastPracticedAt : '',
+					};
+				}
+			}
+
+			const best = data.bestSession;
+			if (best && typeof best === 'object' && !Array.isArray(best)) {
+				const record = best as Record<string, unknown>;
+				progress.bestSession = {
+					accuracy: safeNumber(record.accuracy, 0, 100),
+					cpm: safeNumber(record.cpm),
+					at: typeof record.at === 'string' ? record.at : '',
+				};
+			}
+
+			return progress;
+		} catch {
+			return empty;
+		}
+	}
+
+	function saveProgress(progress: PracticeProgress) {
+		try {
+			window.localStorage.setItem(PROGRESS_STORE_KEY, JSON.stringify(progress));
+		} catch {
+			// Storage may be blocked; practice still works without saved progress.
+		}
+	}
+
+	function localDateKey(date = new Date()): string {
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const day = String(date.getDate()).padStart(2, '0');
+		return `${year}-${month}-${day}`;
+	}
+
+	/** Whole-day gap between two `YYYY-MM-DD` keys; Infinity when the previous key is missing. */
+	function dayGap(from: string, to: string): number {
+		if (!/^\d{4}-\d{2}-\d{2}$/.test(from)) return Number.POSITIVE_INFINITY;
+		const parse = (value: string) => {
+			const [year, month, day] = value.split('-').map(Number);
+			return Date.UTC(year, (month || 1) - 1, day || 1);
+		};
+		return Math.round((parse(to) - parse(from)) / 86400000);
+	}
+
+	function samplePool(pool: readonly string[], size: number): string[] {
+		const copy = [...pool];
+		for (let i = copy.length - 1; i > 0; i -= 1) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[copy[i], copy[j]] = [copy[j], copy[i]];
+		}
+		return copy.slice(0, Math.min(size, copy.length));
+	}
+
+	function lessonExercise(lesson: BanglaTypingLesson): Exercise {
+		const level = LESSON_LEVELS.find((entry) => entry.id === lesson.level);
+		return {
+			key: lesson.id,
+			kind: 'lesson',
+			title: lesson.title,
+			source: `পাঠ ${lesson.number} · ${level?.label ?? ''}`.trim(),
+			difficulty: lesson.difficulty,
+			minAccuracy: lesson.minAccuracy,
+			summary: lesson.summary,
+			criteria: lesson.criteria,
+			target: lesson.target,
+		};
+	}
+
+	function generateDrill(mode: BanglaPracticeMode): string {
+		if (!mode.poolKey) return '';
+		const pool = PRACTICE_POOLS[mode.poolKey];
+		const size = mode.sampleSize ?? Math.min(8, pool.length);
+		return samplePool(pool, size).join(' ');
+	}
+
+	const root = document.querySelector<HTMLElement>('[data-bangla-practice]');
+	if (root) setupPractice(root);
+
+	function setupPractice(root: HTMLElement) {
+		function requireElement<T extends HTMLElement>(id: string): T {
+			const element = root.querySelector<T>(`#${id}`);
+			if (!element) throw new Error(`Bangla typing practice: missing #${id}`);
+			return element;
+		}
+
+		function optionalElement<T extends HTMLElement>(id: string): T | null {
+			return root.querySelector<T>(`#${id}`);
+		}
+
+		const exercisePanel = requireElement<HTMLDivElement>('exercise-panel');
+		const targetEl = requireElement<HTMLDivElement>('target-text');
+		const input = requireElement<HTMLTextAreaElement>('typing-input');
+		const customPanel = requireElement<HTMLDivElement>('custom-panel');
+		const customText = requireElement<HTMLTextAreaElement>('custom-text');
+		const revisionEmpty = requireElement<HTMLDivElement>('revision-empty');
+		const statusEl = requireElement<HTMLParagraphElement>('practice-status');
+		const titleEl = requireElement<HTMLHeadingElement>('exercise-title');
+		const sourceEl = requireElement<HTMLParagraphElement>('exercise-source');
+		const difficultyEl = requireElement<HTMLSpanElement>('exercise-difficulty');
+		const accuracyEl = requireElement<HTMLSpanElement>('exercise-accuracy');
+		const summaryEl = requireElement<HTMLParagraphElement>('exercise-summary');
+		const criteriaEl = requireElement<HTMLParagraphElement>('exercise-criteria');
+		const speedEl = requireElement<HTMLElement>('metric-speed');
+		const metricAccuracyEl = requireElement<HTMLElement>('metric-accuracy');
+		const timeEl = requireElement<HTMLElement>('metric-time');
+		const progressEl = requireElement<HTMLElement>('metric-progress');
+		const progressTrack = requireElement<HTMLDivElement>('progress-track');
+		const progressBar = requireElement<HTMLDivElement>('progress-bar');
+		const restartBtn = requireElement<HTMLButtonElement>('btn-restart');
+		const nextLessonBtn = requireElement<HTMLButtonElement>('btn-next-lesson');
+		const newDrillBtn = requireElement<HTMLButtonElement>('btn-new-drill');
+		const progressSessionsEl = requireElement<HTMLElement>('progress-sessions');
+		const progressLessonsEl = requireElement<HTMLElement>('progress-lessons');
+		const progressPercentEl = requireElement<HTMLElement>('progress-percent');
+		const progressAccuracyEl = requireElement<HTMLElement>('progress-accuracy');
+		const progressTimeEl = requireElement<HTMLElement>('progress-time');
+		const progressWordsEl = requireElement<HTMLElement>('progress-words');
+		const progressStreakEl = requireElement<HTMLElement>('progress-streak');
+		const progressBestEl = requireElement<HTMLElement>('progress-best');
+		const progressTrackEl = requireElement<HTMLDivElement>('progress-lesson-track');
+		const progressBarEl = requireElement<HTMLDivElement>('progress-lesson-bar');
+		const weakGlyphsEl = requireElement<HTMLDivElement>('weak-glyphs');
+		const weakEmptyEl = requireElement<HTMLParagraphElement>('weak-empty');
+		const progressStatusEl = requireElement<HTMLParagraphElement>('progress-status');
+		const resetBtn = requireElement<HTMLButtonElement>('btn-reset-progress');
+		const resetConfirm = requireElement<HTMLDivElement>('reset-confirm');
+		const resetConfirmBtn = requireElement<HTMLButtonElement>('btn-reset-confirm');
+		const resetCancelBtn = requireElement<HTMLButtonElement>('btn-reset-cancel');
+
+		// Optional only because they live in panels that may be re-styled later.
+		const customError = optionalElement<HTMLParagraphElement>('custom-error');
+		const resultEl = optionalElement<HTMLParagraphElement>('result-details');
+		const useCustomBtn = optionalElement<HTMLButtonElement>('btn-use-custom');
+		const clearCustomBtn = optionalElement<HTMLButtonElement>('btn-clear-custom');
+		const startLettersBtn = optionalElement<HTMLButtonElement>('btn-start-letters');
+
+		const lessonButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-lesson-id]'));
+		const modeButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-mode-id]'));
+
+		let current: Exercise | null = null;
+		let currentModeId: BanglaPracticeModeId | null = null;
+		let currentLessonIndex = -1;
+		let targetGlyphs: string[] = [];
+		let glyphEls: HTMLSpanElement[] = [];
+		let startedAt: number | null = null;
+		let finishedAt: number | null = null;
+		let finished = false;
+		let composing = false;
+		let timerId: number | null = null;
+		const recordedMistakes = new Set<number>();
+
+		function setStatus(message: string) {
+			statusEl.textContent = message;
+		}
+
+		function setResult(details: string | null) {
+			if (!resultEl) return;
+			resultEl.textContent = details ?? '';
+			resultEl.hidden = details === null;
+		}
+
+		function renderWeakGlyphs() {
+			const entries = Object.entries(readMistakes())
+				.filter(([glyph]) => glyph.trim().length > 0)
+				.sort((a, b) => b[1] - a[1])
+				.slice(0, 8);
+
+			weakGlyphsEl.textContent = '';
+			weakEmptyEl.hidden = entries.length > 0;
+
+			for (const [glyph, count] of entries) {
+				const chip = document.createElement('span');
+				chip.className = 'bp-weak-chip';
+				chip.textContent = `${glyph} · ${bnNumber(count)}`;
+				weakGlyphsEl.append(chip);
+			}
+		}
+
+		function renderProgress() {
+			const progress = readProgress();
+			const completedLessons = BANGLA_LESSONS.filter(
+				(lesson) => progress.lessons[lesson.id]?.completed
+			).length;
+			const percent =
+				BANGLA_LESSONS.length > 0 ? (completedLessons / BANGLA_LESSONS.length) * 100 : 0;
+			const averageAccuracy = progress.sessions > 0 ? progress.accuracySum / progress.sessions : null;
+
+			progressLessonsEl.textContent = `${bnNumber(completedLessons)} / ${bnNumber(BANGLA_LESSONS.length)}`;
+			progressPercentEl.textContent = `${bnNumber(percent)}%`;
+			progressSessionsEl.textContent = bnNumber(progress.sessions);
+			progressAccuracyEl.textContent =
+				averageAccuracy === null ? '—' : `${bnNumber(averageAccuracy)}%`;
+			progressTimeEl.textContent = formatDuration(progress.totalTimeMs);
+			progressWordsEl.textContent = bnNumber(progress.totalWords);
+			progressStreakEl.textContent =
+				progress.streakCurrent > 0
+					? `${bnNumber(progress.streakCurrent)} দিন (সেরা ${bnNumber(progress.streakBest)})`
+					: '—';
+			progressBestEl.textContent = progress.bestSession
+				? progress.bestSession.cpm > 0
+					? `${bnNumber(progress.bestSession.accuracy)}% · ${bnNumber(progress.bestSession.cpm)} অক্ষর/মিনিট`
+					: `${bnNumber(progress.bestSession.accuracy)}%`
+				: '—';
+
+			progressBarEl.style.width = `${percent.toFixed(1)}%`;
+			progressTrackEl.setAttribute('aria-valuenow', String(Math.round(percent)));
+
+			renderWeakGlyphs();
+		}
+
+		function recordSession(
+			stats: { accuracy: number; cpm: number | null; correct: number; ms: number },
+			lessonId: string | null,
+			success: boolean,
+			target: string
+		) {
+			const progress = readProgress();
+			const now = new Date();
+			const today = localDateKey(now);
+			const cpm = stats.cpm ?? 0;
+
+			progress.sessions += 1;
+			progress.totalTimeMs += Math.max(0, stats.ms);
+			progress.totalCorrectChars += Math.max(0, stats.correct);
+			progress.totalWords += normalizeText(target)
+				.trim()
+				.split(/\s+/)
+				.filter(Boolean).length;
+			progress.accuracySum += stats.accuracy;
+
+			const best = progress.bestSession;
+			const betterAccuracy = !best || stats.accuracy > best.accuracy + 0.01;
+			const sameAccuracyFaster =
+				!!best && Math.abs(stats.accuracy - best.accuracy) <= 0.01 && cpm > best.cpm;
+			if (betterAccuracy || sameAccuracyFaster) {
+				progress.bestSession = {
+					accuracy: stats.accuracy,
+					cpm,
+					at: now.toISOString(),
+				};
+			}
+
+			if (progress.streakLastDate === today) {
+				progress.streakCurrent = Math.max(1, progress.streakCurrent);
+			} else {
+				const gap = dayGap(progress.streakLastDate, today);
+				progress.streakCurrent = gap === 1 ? progress.streakCurrent + 1 : 1;
+			}
+			progress.streakLastDate = today;
+			progress.streakBest = Math.max(progress.streakBest, progress.streakCurrent);
+
+			if (lessonId) {
+				const existing = progress.lessons[lessonId] ?? {
+					attempts: 0,
+					completed: false,
+					bestAccuracy: 0,
+					bestCpm: 0,
+					lastPracticedAt: '',
+				};
+				existing.attempts += 1;
+				existing.completed = existing.completed || success;
+				existing.bestAccuracy = Math.max(existing.bestAccuracy, stats.accuracy);
+				existing.bestCpm = Math.max(existing.bestCpm, cpm);
+				existing.lastPracticedAt = now.toISOString();
+				progress.lessons[lessonId] = existing;
+			}
+
+			saveProgress(progress);
+			renderProgress();
+		}
+
+		function elapsedMs(): number {
+			if (startedAt === null) return 0;
+			return (finishedAt ?? Date.now()) - startedAt;
+		}
+
+		function stopTimer() {
+			if (timerId !== null) {
+				window.clearInterval(timerId);
+				timerId = null;
+			}
+		}
+
+		function startTimer() {
+			if (timerId !== null) return;
+			timerId = window.setInterval(() => {
+				if (!finished) updateMetrics();
+			}, 250);
+		}
+
+		/**
+		 * Single source of truth for every visible metric. Correct/incorrect counts, accuracy,
+		 * progress and speed are all derived from the same grapheme comparison, so the numbers
+		 * on screen, the completion check and the saved session can never disagree.
+		 */
+		function analyze() {
+			const typed = splitGraphemes(input.value);
+			const total = targetGlyphs.length;
+			const overlap = Math.min(typed.length, total);
+			let correct = 0;
+			for (let i = 0; i < overlap; i += 1) {
+				if (typed[i] === targetGlyphs[i]) correct += 1;
+			}
+			const mismatched = overlap - correct;
+			const extra = Math.max(0, typed.length - total);
+			const incorrect = mismatched + extra;
+			const missing = Math.max(0, total - typed.length);
+			const accuracy = typed.length > 0 ? (correct / typed.length) * 100 : 100;
+			const progress = total > 0 ? overlap / total : 0;
+			const ms = elapsedMs();
+			// Speed only becomes meaningful after a full second; shorter spans report null, not a fake number.
+			const cpm = ms >= 1000 ? correct / (ms / 60000) : null;
+			return { typed, total, correct, incorrect, mismatched, extra, missing, accuracy, progress, ms, cpm };
+		}
+
+		function paintTarget(typed: string[]) {
+			for (let i = 0; i < glyphEls.length; i += 1) {
+				let state: 'correct' | 'wrong' | 'current' | 'pending';
+				if (i < typed.length) {
+					state = typed[i] === targetGlyphs[i] ? 'correct' : 'wrong';
+				} else if (i === typed.length) {
+					state = 'current';
+				} else {
+					state = 'pending';
+				}
+				const glyph = glyphEls[i];
+				if (glyph.dataset.state !== state) glyph.dataset.state = state;
+			}
+		}
+
+		function updateMetrics() {
+			const stats = analyze();
+			speedEl.textContent = stats.cpm === null ? '—' : bnNumber(stats.cpm);
+			metricAccuracyEl.textContent = `${bnNumber(stats.accuracy)}%`;
+			timeEl.textContent = formatDuration(stats.ms);
+			progressEl.textContent = `${bnNumber(stats.total - stats.missing)} / ${bnNumber(stats.total)}`;
+			progressTrack.setAttribute('aria-valuenow', String(Math.round(stats.progress * 100)));
+			progressBar.style.width = `${(stats.progress * 100).toFixed(1)}%`;
+
+			paintTarget(stats.typed);
+		}
+
+		function renderTarget(text: string) {
+			targetGlyphs = splitGraphemes(text);
+			glyphEls = [];
+			const fragment = document.createDocumentFragment();
+			for (const glyph of targetGlyphs) {
+				const span = document.createElement('span');
+				span.className = 'bp-glyph';
+				span.dataset.state = 'pending';
+				span.textContent = glyph;
+				glyphEls.push(span);
+				fragment.append(span);
+			}
+			targetEl.textContent = '';
+			targetEl.append(fragment);
+		}
+
+		function addMistake(glyph: string) {
+			if (!glyph || !glyph.trim()) return;
+			const store = readMistakes();
+			store[glyph] = (store[glyph] ?? 0) + 1;
+			saveMistakes(store);
+		}
+
+		function recordMistakes(typed: string[]) {
+			for (let i = 0; i < typed.length && i < targetGlyphs.length; i += 1) {
+				if (typed[i] !== targetGlyphs[i] && !recordedMistakes.has(i)) {
+					recordedMistakes.add(i);
+					addMistake(targetGlyphs[i]);
+				}
+			}
+		}
+
+		function syncSelection(source: { kind: 'lesson' | 'mode'; id: string } | null) {
+			for (const button of lessonButtons) {
+				const active = source?.kind === 'lesson' && button.dataset.lessonId === source.id;
+				button.classList.toggle('is-active', active);
+				button.setAttribute('aria-pressed', active ? 'true' : 'false');
+			}
+			for (const button of modeButtons) {
+				const active = source?.kind === 'mode' && button.dataset.modeId === source.id;
+				button.classList.toggle('is-active', active);
+				button.setAttribute('aria-pressed', active ? 'true' : 'false');
+			}
+		}
+
+		function updateActionVisibility() {
+			nextLessonBtn.hidden = !(
+				current?.kind === 'lesson' &&
+				currentLessonIndex >= 0 &&
+				currentLessonIndex < BANGLA_LESSONS.length - 1
+			);
+			newDrillBtn.hidden = !(current?.kind === 'drill' && currentModeId !== null);
+		}
+
+		function startExercise(exercise: Exercise, options: { focus?: boolean } = {}) {
+			current = exercise;
+			targetGlyphs = [];
+			recordedMistakes.clear();
+			finished = false;
+			composing = false;
+			startedAt = null;
+			finishedAt = null;
+			stopTimer();
+
+			titleEl.textContent = exercise.title;
+			sourceEl.textContent = exercise.source;
+			difficultyEl.textContent = exercise.difficulty;
+			accuracyEl.textContent = `ন্যূনতম নির্ভুলতা ${bnNumber(exercise.minAccuracy)}%`;
+			summaryEl.textContent = exercise.summary;
+			criteriaEl.textContent = `সম্পন্ন করার শর্ত: ${exercise.criteria}`;
+
+			input.value = '';
+			input.readOnly = false;
+			renderTarget(exercise.target);
+			exercisePanel.hidden = false;
+			setStatus('');
+			setResult(null);
+			updateMetrics();
+			updateActionVisibility();
+			if (options.focus !== false) input.focus();
+		}
+
+		function checkCompletion() {
+			if (finished || !current || targetGlyphs.length === 0) return;
+			const typed = splitGraphemes(input.value);
+			if (typed.length < targetGlyphs.length) return;
+
+			finished = true;
+			finishedAt = Date.now();
+			stopTimer();
+			input.readOnly = true;
+			updateMetrics();
+
+			const stats = analyze();
+			const success = stats.accuracy >= current.minAccuracy;
+			const speedSummary =
+				stats.cpm === null
+					? 'গতি পরিমাপ হয়নি (১ সেকেন্ডের কম সময়)'
+					: `গতি ${bnNumber(stats.cpm)} অক্ষর/মিনিট`;
+			setStatus(
+				success
+					? `${current.title} সম্পন্ন হয়েছে। নির্ভুলতা ${bnNumber(stats.accuracy)}%। চাইলে পরের পাঠে যান বা একই পাঠ আবার করুন।`
+					: `লেখাটি শেষ হয়েছে, তবে নির্ভুলতা ${bnNumber(stats.accuracy)}% — লক্ষ্য ${bnNumber(current.minAccuracy)}%। "আবার শুরু করুন" চেপে আবার চেষ্টা করুন।`
+			);
+			setResult(
+				`${speedSummary} · সময় ${formatDuration(stats.ms)} · ভুল ${bnNumber(
+					stats.incorrect
+				)}টি · সঠিক ${bnNumber(stats.correct)} / ${bnNumber(stats.total)} অক্ষর`
+			);
+
+			recordSession(stats, current.kind === 'lesson' ? current.key : null, success, current.target);
+		}
+
+		function handleInput() {
+			if (finished || composing) return;
+			const typed = splitGraphemes(input.value);
+
+			if (typed.length === 0) {
+				// Clearing the field restarts the clock instead of leaving a stalled timer behind.
+				stopTimer();
+				startedAt = null;
+				finishedAt = null;
+			} else if (startedAt === null) {
+				startedAt = Date.now();
+				startTimer();
+			}
+
+			recordMistakes(typed);
+			updateMetrics();
+			checkCompletion();
+		}
+
+		function selectLesson(lessonId: string, focus = true) {
+			const index = BANGLA_LESSONS.findIndex((lesson) => lesson.id === lessonId);
+			if (index === -1) return;
+			const lesson = BANGLA_LESSONS[index];
+			currentLessonIndex = index;
+			currentModeId = null;
+			customPanel.hidden = true;
+			revisionEmpty.hidden = true;
+			syncSelection({ kind: 'lesson', id: lesson.id });
+			startExercise(lessonExercise(lesson), { focus });
+		}
+
+		function getRevisionGlyphs(): string[] {
+			return Object.entries(readMistakes())
+				.filter(([glyph]) => glyph.trim().length > 0)
+				.sort((a, b) => b[1] - a[1])
+				.slice(0, 12)
+				.map(([glyph]) => glyph);
+		}
+
+		function selectMode(modeId: BanglaPracticeModeId) {
+			const mode = PRACTICE_MODES.find((entry) => entry.id === modeId);
+			if (!mode) return;
+
+			currentModeId = mode.id;
+			currentLessonIndex = -1;
+			customPanel.hidden = mode.kind !== 'custom';
+			revisionEmpty.hidden = true;
+			syncSelection({ kind: 'mode', id: mode.id });
+
+			if (mode.kind === 'custom') {
+				exercisePanel.hidden = true;
+				current = null;
+				updateActionVisibility();
+				setResult(null);
+				setStatus('নিচের বাক্সে আপনার লেখা দিন, তারপর "এই লেখা দিয়ে শুরু করুন" চাপুন।');
+				customText.focus();
+				return;
+			}
+
+			if (mode.kind === 'revision') {
+				const glyphs = getRevisionGlyphs();
+				if (glyphs.length === 0) {
+					exercisePanel.hidden = true;
+					current = null;
+					updateActionVisibility();
+					setResult(null);
+					setStatus('');
+					revisionEmpty.hidden = false;
+					return;
+				}
+				startExercise({
+					key: `revision-${Date.now()}`,
+					kind: 'revision',
+					title: mode.label,
+					source: 'অনুশীলন মোড',
+					difficulty: mode.difficulty,
+					minAccuracy: mode.minAccuracy,
+					summary: mode.summary,
+					criteria: `আপনার জমে থাকা ভুল অক্ষরগুলো সম্পূর্ণ টাইপ করুন, ন্যূনতম ${bnNumber(
+						mode.minAccuracy
+					)}% নির্ভুলতায়।`,
+					target: glyphs.join(' '),
+				});
+				setStatus(
+					`আপনার জমে থাকা ${bnNumber(glyphs.length)}টি ভুল অক্ষর থেকে ড্রিল তৈরি হয়েছে। যেগুলো বেশি ভুল হয়েছে সেগুলো আগে আছে।`
+				);
+				return;
+			}
+
+			startExercise({
+				key: `${mode.id}-${Date.now()}`,
+				kind: 'drill',
+				title: mode.label,
+				source: 'অনুশীলন মোড',
+				difficulty: mode.difficulty,
+				minAccuracy: mode.minAccuracy,
+				summary: mode.summary,
+				criteria: `পুরো ড্রিলটি সম্পূর্ণ টাইপ করুন, ন্যূনতম ${bnNumber(
+					mode.minAccuracy
+				)}% নির্ভুলতায়।`,
+				target: generateDrill(mode),
+			});
+		}
+
+		function startCustomText() {
+			const normalized = customText.value.replace(/\s+/g, ' ').trim();
+			// Counted in code points, not clusters: short words like "বাংলা" are only two clusters.
+			if (Array.from(normalized).length < 3) {
+				if (customError) {
+					customError.textContent = 'কমপক্ষে ৩টি অক্ষর লিখুন বা পেস্ট করুন।';
+					customError.hidden = false;
+				}
+				return;
+			}
+			if (customError) customError.hidden = true;
+
+			const mode = PRACTICE_MODES.find((entry) => entry.id === 'custom');
+			const truncated = splitGraphemes(normalized).slice(0, MAX_CUSTOM_LENGTH).join('');
+			startExercise({
+				key: `custom-${Date.now()}`,
+				kind: 'custom',
+				title: 'আপনার নিজের লেখা',
+				source: 'অনুশীলন মোড',
+				difficulty: mode?.difficulty ?? 'নিজের পছন্দ',
+				minAccuracy: mode?.minAccuracy ?? 85,
+				summary:
+					'আপনার দেওয়া লেখাটি হুবহু টাইপ করুন। লেখাটি কোথাও পাঠানো হয় না, শুধু এই ব্রাউজার সেশনেই থাকে।',
+				criteria: `আপনার লেখাটি সম্পূর্ণ টাইপ করুন, ন্যূনতম ${bnNumber(
+					mode?.minAccuracy ?? 85
+				)}% নির্ভুলতায়।`,
+				target: truncated,
+			});
+			if (truncated !== normalized) {
+				setStatus(`লেখাটি ${bnNumber(MAX_CUSTOM_LENGTH)} অক্ষরে সীমিত রাখা হয়েছে।`);
+			}
+		}
+
+		for (const button of lessonButtons) {
+			button.addEventListener('click', () => {
+				const lessonId = button.dataset.lessonId;
+				if (lessonId) selectLesson(lessonId);
+			});
+		}
+
+		for (const button of modeButtons) {
+			button.addEventListener('click', () => {
+				const modeId = button.dataset.modeId as BanglaPracticeModeId | undefined;
+				if (modeId) selectMode(modeId);
+			});
+		}
+
+		input.addEventListener('input', (event) => {
+			// IME (Avro/Bijoy/Ridmik) commits arrive as composition events; never score uncommitted text.
+			if (event.isComposing || composing) return;
+			handleInput();
+		});
+		input.addEventListener('compositionstart', () => {
+			composing = true;
+		});
+		input.addEventListener('compositionupdate', () => {
+			composing = true;
+		});
+		input.addEventListener('compositionend', () => {
+			composing = false;
+			handleInput();
+		});
+		input.addEventListener('keydown', (event) => {
+			// Targets never contain line breaks, so Enter would only insert an accidental newline.
+			if (event.key === 'Enter' && !event.isComposing && !composing) event.preventDefault();
+		});
+
+		restartBtn.addEventListener('click', () => {
+			if (!current) return;
+			startExercise(current);
+		});
+
+		nextLessonBtn.addEventListener('click', () => {
+			const next = BANGLA_LESSONS[currentLessonIndex + 1];
+			if (next) selectLesson(next.id);
+		});
+
+		newDrillBtn.addEventListener('click', () => {
+			if (currentModeId) selectMode(currentModeId);
+		});
+
+		useCustomBtn?.addEventListener('click', startCustomText);
+		customText.addEventListener('input', () => {
+			if (customError) customError.hidden = true;
+		});
+		clearCustomBtn?.addEventListener('click', () => {
+			customText.value = '';
+			if (customError) customError.hidden = true;
+			customText.focus();
+		});
+		startLettersBtn?.addEventListener('click', () => selectMode('letters'));
+
+		resetBtn.addEventListener('click', () => {
+			resetConfirm.hidden = false;
+			progressStatusEl.textContent = '';
+			resetConfirmBtn.focus();
+		});
+		resetCancelBtn.addEventListener('click', () => {
+			resetConfirm.hidden = true;
+			resetBtn.focus();
+		});
+		resetConfirmBtn.addEventListener('click', () => {
+			try {
+				window.localStorage.removeItem(PROGRESS_STORE_KEY);
+				window.localStorage.removeItem(MISTAKE_STORE_KEY);
+			} catch {
+				// Ignore storage errors; the in-memory state is still cleared below.
+			}
+			recordedMistakes.clear();
+			resetConfirm.hidden = true;
+			renderProgress();
+			progressStatusEl.textContent = 'সব অগ্রগতি মুছে ফেলা হয়েছে।';
+		});
+
+		// Start on lesson 01 so the workspace is usable immediately (without stealing focus on load).
+		selectLesson(BANGLA_LESSONS[0].id, false);
+		renderProgress();
+	}
+</script>

@@ -3,6 +3,7 @@
 import HomePage from './HomePage.astro';
 import AboutPage from './AboutPage.astro';
 import AudiobookCalculatorPage from './AudiobookCalculatorPage.astro';
+import BanglaTypingPracticePage from './BanglaTypingPracticePage.astro';
 import CaseConverterPage from './CaseConverterPage.astro';
 import ContactPage from './ContactPage.astro';
 import PrivacyPolicyPage from './PrivacyPolicyPage.astro';
@@ -21,6 +22,7 @@ export const views = {
 	home: HomePage,
 	about: AboutPage,
 	audiobookCalculator: AudiobookCalculatorPage,
+	banglaTypingPractice: BanglaTypingPracticePage,
 	caseConverter: CaseConverterPage,
 	contact: ContactPage,
 	privacy: PrivacyPolicyPage,
