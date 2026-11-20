@@ -1,10 +1,12 @@
 ---
 import {
 	BANGLA_LESSONS,
+	KEYBOARD_CONTEXTS,
 	LESSON_LEVELS,
 	PRACTICE_MODES,
 	type BanglaTypingLesson,
 } from "../data/banglaTypingCurriculum";
+import { BANGLA_CHALLENGES } from "../data/banglaTypingChallenges";
 
 const lessonsByLevel = LESSON_LEVELS.map((level) => ({
 	...level,
@@ -28,13 +30,101 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 	intermediate: "sand",
 	advanced: "orange",
 };
+
+/** Keyboard context → palette tone, matching the visual keyboards further down the page. */
+const keyboardTones: Record<string, "mint" | "sand" | "orange"> = {
+	avro: "mint",
+	bijoy: "sand",
+	general: "orange",
+};
+
+const firstGuidance = firstLesson.guidance.avro;
 ---
 
 <div class="bangla-practice" data-bangla-practice>
 	<!-- Workspace surface: modes, exercise and lessons sit on one warm-sand panel -->
 	<div class="bp-workspace">
+	<!-- Learning path: keyboard context, level and the lesson 01 entry point -->
+	<section id="learning-path" aria-labelledby="learning-path-heading">
+		<div class="flex flex-wrap items-start justify-between gap-3">
+			<div class="min-w-0">
+				<h3 id="learning-path-heading" class="text-[15px] font-semibold text-ink">শেখার পথ</h3>
+				<p class="mt-1 max-w-xl text-[13.5px] leading-relaxed text-body">
+					প্রথমে কীবোর্ড ও স্তর বেছে নিন, তারপর পাঠ ০১ থেকে শুরু করুন। চাইলে শব্দ, বাক্য, অনুচ্ছেদ বা
+					নিজের লেখা দিয়ে সরাসরি অনুশীলনও করতে পারেন।
+				</p>
+			</div>
+			<span id="path-progress" class="bp-pill bp-pill-sand tabular-nums">
+				০ / {bengaliDigits(BANGLA_LESSONS.length)} পাঠ সম্পন্ন
+			</span>
+		</div>
+
+		<div class="mt-4 grid gap-4 sm:grid-cols-2">
+			<div class="min-w-0">
+				<p id="keyboard-label" class="text-[12.5px] font-medium text-mute">কীবোর্ড</p>
+				<div role="group" aria-labelledby="keyboard-label" class="mt-2 flex flex-wrap gap-2">
+					{
+						KEYBOARD_CONTEXTS.map((keyboard, index) => (
+							<button
+								type="button"
+								class={index === 0 ? 'bp-choice is-active' : 'bp-choice'}
+								data-keyboard-id={keyboard.id}
+								data-tone={keyboardTones[keyboard.id]}
+								aria-pressed={index === 0 ? 'true' : 'false'}
+							>
+								<span class="bp-dot" aria-hidden="true" />
+								{keyboard.label}
+							</button>
+						))
+					}
+				</div>
+				<p id="keyboard-note" class="mt-2 text-[12.5px] leading-relaxed text-mute">
+					{KEYBOARD_CONTEXTS[0].summary}
+				</p>
+			</div>
+			<div class="min-w-0">
+				<p id="level-label" class="text-[12.5px] font-medium text-mute">স্তর</p>
+				<div role="group" aria-labelledby="level-label" class="mt-2 flex flex-wrap gap-2">
+					{
+						LESSON_LEVELS.map((level, index) => (
+							<button
+								type="button"
+								class={index === 0 ? 'bp-choice is-active' : 'bp-choice'}
+								data-level-id={level.id}
+								data-tone={levelTones[level.id]}
+								aria-pressed={index === 0 ? 'true' : 'false'}
+							>
+								<span class="bp-dot" aria-hidden="true" />
+								{level.label}
+								<span class="bp-choice-count tabular-nums" data-level-count={level.id}>
+									০ / {bengaliDigits(lessonsByLevel[index].lessons.length)}
+								</span>
+							</button>
+						))
+					}
+				</div>
+				<p id="level-note" class="mt-2 text-[12.5px] leading-relaxed text-mute">
+					{LESSON_LEVELS[0].description}
+				</p>
+			</div>
+		</div>
+
+		<div class="mt-4 flex flex-wrap items-center gap-2.5">
+			<button type="button" id="btn-continue" class="bp-action bp-action-primary">
+				পাঠ ০১ শুরু করুন
+			</button>
+		</div>
+		<p class="mt-3 text-[12.5px] font-medium text-mute">দ্রুত অনুশীলন</p>
+		<div class="mt-2 flex flex-wrap gap-2">
+			<button type="button" id="btn-quick-words" class="bp-action bp-action-secondary">শব্দ</button>
+			<button type="button" id="btn-quick-sentences" class="bp-action bp-action-secondary">বাক্য</button>
+			<button type="button" id="btn-quick-paragraphs" class="bp-action bp-action-secondary">অনুচ্ছেদ</button>
+			<button type="button" id="btn-quick-custom" class="bp-action bp-action-secondary">নিজের লেখা</button>
+		</div>
+	</section>
+
 	<!-- Practice mode selector -->
-	<div>
+	<div class="mt-6 border-t border-hairline pt-5">
 		<h3 class="text-[15px] font-semibold text-ink">অনুশীলনের ধরন বেছে নিন</h3>
 		<p class="mt-1 text-[13.5px] leading-relaxed text-body">
 			যে ধরনের লেখা নিয়ে অনুশীলন করতে চান, সেটি বেছে নিন। পাঠ বেছে নিলে অনুশীলন সেই পাঠেই চলে যাবে।
@@ -51,6 +141,30 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 					>
 						<span class="bp-dot" aria-hidden="true"></span>
 						{mode.label}
+					</button>
+				))
+			}
+		</div>
+	</div>
+
+	<!-- Practice games: three compact challenges running on the same typing engine -->
+	<div class="mt-6 border-t border-hairline pt-5">
+		<h3 class="text-[15px] font-semibold text-ink">চ্যালেঞ্জ</h3>
+		<p class="mt-1 text-[13.5px] leading-relaxed text-body">
+			সময়, নির্ভুলতা বা কঠিন শব্দ—একটি বেছে নিন। টাইপিং শুরু করলেই চ্যালেঞ্জের হিসাব শুরু হবে।
+		</p>
+		<div role="group" aria-label="টাইপিং চ্যালেঞ্জ" class="mt-3 grid gap-2 sm:grid-cols-3">
+			{
+				BANGLA_CHALLENGES.map((challenge) => (
+					<button
+						type="button"
+						class="bp-challenge-card"
+						data-challenge-id={challenge.id}
+						data-tone={challenge.tone}
+						aria-pressed="false"
+					>
+						<span class="bp-challenge-card-title">{challenge.label}</span>
+						<span class="bp-challenge-card-note">{challenge.summary}</span>
 					</button>
 				))
 			}
@@ -123,6 +237,70 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			সম্পন্ন করার শর্ত: {firstLesson.criteria}
 		</p>
 
+		<!-- Live challenge strip: countdown, speed and accuracy while a game is running -->
+		<div id="challenge-banner" hidden class="bp-challenge mt-4" data-state="normal">
+			<div class="flex flex-wrap items-center justify-between gap-2">
+				<div class="min-w-0">
+					<p id="challenge-title" class="text-[13.5px] font-semibold text-ink"></p>
+					<p id="challenge-hint" class="mt-0.5 text-[12.5px] leading-relaxed text-body"></p>
+				</div>
+				<span id="challenge-badge" class="bp-pill bp-pill-orange">চ্যালেঞ্জ</span>
+			</div>
+			<dl class="bp-challenge-metrics mt-3" aria-label="চ্যালেঞ্জের লাইভ হিসাব">
+				<div class="bp-challenge-metric">
+					<dt>গতি (শব্দ/মিনিট)</dt>
+					<dd id="challenge-wpm" class="tabular-nums">—</dd>
+				</div>
+				<div class="bp-challenge-metric">
+					<dt>নির্ভুলতা</dt>
+					<dd id="challenge-accuracy" class="tabular-nums">—</dd>
+				</div>
+				<div class="bp-challenge-metric">
+					<dt id="challenge-extra-label">বাকি সময়</dt>
+					<dd id="challenge-extra" class="tabular-nums">—</dd>
+				</div>
+			</dl>
+		</div>
+
+		<div id="lesson-brief" class="bp-inset bp-inset-mint mt-4">
+			<p class="text-[12.5px] font-medium text-mute">এই পাঠে যা শিখবেন</p>
+			<p id="lesson-explanation" class="mt-1 text-[13.5px] leading-relaxed text-body">
+				{firstLesson.explanation}
+			</p>
+		</div>
+
+		<!-- Layout-specific typing guidance, swapped when the keyboard changes -->
+		<div id="layout-guide" class="bp-layout-guide mt-4">
+			<div class="flex flex-wrap items-center justify-between gap-2">
+				<p id="layout-guide-title" class="text-[12.5px] font-medium text-mute">
+					অভ্র ফোনেটিকে যেভাবে লিখবেন
+				</p>
+				<span id="layout-guide-badge" class="bp-pill bp-pill-mint">অভ্র ফোনেটিক</span>
+			</div>
+			<p id="layout-guide-note" class="mt-1.5 text-[13px] leading-relaxed text-body">
+				{firstGuidance.note}
+			</p>
+			<ul
+				id="layout-guide-examples"
+				class="mt-2.5 flex flex-wrap gap-2"
+				aria-label="কী ও অক্ষরের উদাহরণ"
+			>
+				{
+					firstGuidance.examples.map((example) => (
+						<li class="bp-key-chip">
+							<span class="bp-key-chip-input">{example.input}</span>
+							<span class="bp-key-chip-arrow" aria-hidden="true">
+								→
+							</span>
+							<span class="bp-key-chip-output" lang="bn">
+								{example.output}
+							</span>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
 		<dl class="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
 			<div class="bp-metric" data-tone="mint">
 				<dt class="text-[12px] font-medium text-mute">গতি (অক্ষর/মিনিট)</dt>
@@ -192,29 +370,150 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			placeholder="আপনার ইনস্টল করা অভ্র, বিজয় বা অন্য ইউনিকোড বাংলা ইনপুট পদ্ধতি দিয়ে টাইপ শুরু করুন…"
 		></textarea>
 
+		<!-- Grapheme-level live status: where the learner is and what went wrong -->
+		<dl class="bp-feedback mt-3" aria-label="টাইপিংয়ের লাইভ অবস্থা">
+			<div class="bp-feedback-item" data-tone="mint">
+				<dt>অবস্থান</dt>
+				<dd id="feedback-position" class="tabular-nums">০ / ০</dd>
+			</div>
+			<div class="bp-feedback-item" data-tone="mint">
+				<dt>সঠিক অক্ষর</dt>
+				<dd id="feedback-correct" class="tabular-nums">০</dd>
+			</div>
+			<div class="bp-feedback-item" data-tone="orange">
+				<dt>ভুল অক্ষর</dt>
+				<dd id="feedback-wrong" class="tabular-nums">০</dd>
+			</div>
+			<div class="bp-feedback-item" data-tone="sand">
+				<dt id="feedback-missing-label">বাকি অক্ষর</dt>
+				<dd id="feedback-missing" class="tabular-nums">০</dd>
+			</div>
+			<div class="bp-feedback-item" data-tone="orange">
+				<dt>অতিরিক্ত অক্ষর</dt>
+				<dd id="feedback-extra" class="tabular-nums">০</dd>
+			</div>
+		</dl>
+
+		<p id="pause-note" hidden class="bp-pause-note mt-3" role="status" aria-live="polite">
+			অনুশীলন থামানো আছে। আবার শুরু করতে "চালিয়ে যান" চাপুন।
+		</p>
+
+		<!-- Live error feedback for the first mismatch in the current attempt -->
+		<p id="live-hint" hidden class="bp-live-hint mt-3" role="status" aria-live="polite"></p>
+
+		<!-- Session error summary: mistaken graphemes and difficult words feeding targeted practice -->
+		<div id="mistake-drill" hidden class="bp-inset bp-inset-orange mt-3">
+			<p id="mistake-drill-text" class="text-[13.5px] leading-relaxed text-body"></p>
+			<div id="mistake-glyph-block" hidden class="mt-2.5">
+				<p class="text-[12px] font-medium text-mute">সবচেয়ে বেশি ভুল হওয়া অক্ষর</p>
+				<div
+					id="mistake-drill-glyphs"
+					class="bp-chip-row mt-1.5"
+					aria-label="এই সেশনে সবচেয়ে বেশি ভুল হওয়া অক্ষর"
+					lang="bn"
+				></div>
+			</div>
+			<div id="mistake-word-block" hidden class="mt-2.5">
+				<p class="text-[12px] font-medium text-mute">কঠিন শব্দ</p>
+				<div
+					id="mistake-drill-words"
+					class="bp-chip-row mt-1.5"
+					aria-label="এই সেশনে যে শব্দগুলোতে ভুল হয়েছে"
+					lang="bn"
+				></div>
+			</div>
+			<button type="button" id="btn-mistake-drill" class="bp-action bp-action-secondary mt-2.5">
+				এই ভুলগুলো নিয়ে ড্রিল করুন
+			</button>
+		</div>
+
 		<div class="mt-4 flex flex-wrap items-center gap-2.5">
 			<button type="button" id="btn-restart" class="bp-action bp-action-primary">আবার শুরু করুন</button>
+			<button
+				type="button"
+				id="btn-pause"
+				class="bp-action bp-action-secondary"
+				aria-pressed="false"
+				disabled
+			>
+				পজ করুন
+			</button>
+			<button
+				type="button"
+				id="btn-toggle-target"
+				class="bp-action bp-action-secondary"
+				aria-pressed="false"
+			>
+				লক্ষ্য লেখা লুকান
+			</button>
 			<button type="button" id="btn-next-lesson" class="bp-action bp-action-secondary">পরের পাঠ</button>
 			<button type="button" id="btn-new-drill" hidden class="bp-action bp-action-secondary">নতুন ড্রিল</button>
 		</div>
 
+		<!-- Lesson / attempt result -->
+		<div id="completion-card" hidden class="bp-result mt-4" data-state="success">
+			<p id="completion-label" class="text-[12.5px] font-medium text-mute">পাঠের ফলাফল</p>
+			<p id="completion-title" class="mt-1 text-[16px] leading-[24px] font-semibold text-ink"></p>
+			<dl class="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+				<div class="bp-result-metric">
+					<dt class="text-[12px] font-medium text-mute">নির্ভুলতা</dt>
+					<dd id="completion-accuracy" class="bp-result-value tabular-nums">—</dd>
+				</div>
+				<div class="bp-result-metric">
+					<dt class="text-[12px] font-medium text-mute">গতি (অক্ষর/মিনিট)</dt>
+					<dd id="completion-speed" class="bp-result-value tabular-nums">—</dd>
+				</div>
+				<div class="bp-result-metric">
+					<dt class="text-[12px] font-medium text-mute">সময়</dt>
+					<dd id="completion-time" class="bp-result-value tabular-nums">—</dd>
+				</div>
+				<div class="bp-result-metric">
+					<dt class="text-[12px] font-medium text-mute">ভুল</dt>
+					<dd id="completion-mistakes" class="bp-result-value tabular-nums">—</dd>
+				</div>
+			</dl>
+			<p id="completion-next" class="mt-2 text-[12.5px] leading-relaxed text-mute"></p>
+			<p id="result-details" hidden class="mt-1 text-[13px] leading-relaxed text-mute tabular-nums"></p>
+		</div>
+
 		<p id="practice-status" class="mt-3 min-h-[22px] text-[14px] leading-relaxed text-body" role="status" aria-live="polite"></p>
-		<p id="result-details" hidden class="mt-1 text-[13px] leading-relaxed text-mute tabular-nums"></p>
 	</div>
 
 	<!-- Lesson list: no locks, any lesson can be opened -->
 	<div class="mt-7 border-t border-hairline pt-5">
-		<h3 class="text-[15px] font-semibold text-ink">১২টি পাঠ</h3>
-		<p class="mt-1 text-[13.5px] leading-relaxed text-body">
-			যেকোনো পাঠ থেকে শুরু করতে পারেন, কোনো পাঠ লক করা নেই।
-		</p>
-		<div class="mt-4 grid gap-5 md:grid-cols-3">
+		<div class="flex flex-wrap items-end justify-between gap-2">
+			<div class="min-w-0">
+				<h3 class="text-[15px] font-semibold text-ink">
+					{bengaliDigits(BANGLA_LESSONS.length)}টি পাঠ
+				</h3>
+				<p class="mt-1 text-[13.5px] leading-relaxed text-body">
+					স্তর অনুযায়ী সাজানো পাঠ—কোনো পাঠ লক করা নেই, যেকোনো পাঠ থেকে শুরু করতে পারেন।
+				</p>
+			</div>
+			<button
+				type="button"
+				id="btn-toggle-all-lessons"
+				class="bp-action bp-action-secondary"
+				aria-pressed="false"
+			>
+				সব পাঠ দেখুন
+			</button>
+		</div>
+		<div id="lesson-list" class="mt-4 grid gap-5">
 			{
-				lessonsByLevel.map((level) => (
-					<div class="bp-level" data-tone={levelTones[level.id]}>
+				lessonsByLevel.map((level, index) => (
+					<div
+						class="bp-level"
+						data-tone={levelTones[level.id]}
+						data-level-group={level.id}
+						data-selected={index === 0 ? 'true' : 'false'}
+					>
 						<p class="bp-level-title text-[13px] font-semibold text-ink">
 							<span class="bp-dot" aria-hidden="true" />
 							<span>{level.label}</span>
+							<span class="bp-level-count tabular-nums" data-level-progress={level.id}>
+								০ / {bengaliDigits(level.lessons.length)}
+							</span>
 						</p>
 						<p class="mt-1 text-[12.5px] leading-relaxed text-mute">{level.description}</p>
 						<div class="mt-2.5 flex flex-col gap-2">
@@ -230,6 +529,14 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 										{lesson.number}
 									</span>
 									<span class="min-w-0 flex-1 break-words">{lesson.title}</span>
+									<span
+										class="bp-lesson-check shrink-0"
+										data-lesson-check
+										aria-hidden="true"
+										hidden
+									>
+										✓
+									</span>
 									<span class="shrink-0 text-[11.5px] text-mute">{lesson.difficulty}</span>
 								</button>
 							))}
@@ -321,12 +628,45 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			<div id="progress-lesson-bar" class="h-full w-0 rounded-full"></div>
 		</div>
 
-		<div class="mt-4">
+		<!-- Recent activity: seven plain CSS bars, no chart library -->
+		<div class="bp-dashboard-block mt-4">
+			<div class="flex flex-wrap items-baseline justify-between gap-2">
+				<p class="text-[12.5px] font-medium text-mute">গত ৭ দিনের অনুশীলন (মিনিট)</p>
+				<p id="week-summary" class="text-[12.5px] text-mute tabular-nums">—</p>
+			</div>
+			<ol id="week-chart" class="bp-week mt-2.5" aria-label="গত সাত দিনের অনুশীলন"></ol>
+			<p id="week-empty" class="mt-2 text-[13px] leading-relaxed text-mute">
+				প্রথম সেশন শেষ করলেই এখানে প্রতিদিনের হিসাব দেখা যাবে।
+			</p>
+		</div>
+
+		<div class="bp-dashboard-block mt-4">
 			<p class="text-[12.5px] font-medium text-mute">সবচেয়ে বেশি ভুল হওয়া অক্ষর</p>
 			<div id="weak-glyphs" class="mt-2 flex flex-wrap gap-2"></div>
 			<p id="weak-empty" class="mt-1 text-[13px] leading-relaxed text-mute">
 				এখনো ভুলের তথ্য জমা হয়নি। ভুল টাইপ করলে অক্ষরগুলো এখানে দেখা যাবে।
 			</p>
+		</div>
+
+		<div class="bp-dashboard-block mt-4">
+			<div class="flex flex-wrap items-baseline justify-between gap-2">
+				<p class="text-[12.5px] font-medium text-mute">ব্যাজ ও মাইলফলক</p>
+				<p id="milestone-summary" class="text-[12.5px] text-mute tabular-nums">০ / ৮ ব্যাজ</p>
+			</div>
+			<ul id="milestone-list" class="bp-milestone-list" aria-label="অর্জিত ও বাকি ব্যাজ"></ul>
+			<p id="milestone-empty" class="mt-2 text-[13px] leading-relaxed text-mute">
+				প্রথম পাঠ শেষ করলেই প্রথম ব্যাজ পাবেন। ব্যাজগুলো আপনার সংরক্ষিত অগ্রগতি থেকেই তৈরি হয়।
+			</p>
+		</div>
+
+		<!-- Dashboard actions connect the numbers back to practice -->
+		<div class="bp-dashboard-block mt-4 flex flex-wrap gap-2">
+			<button type="button" id="btn-progress-continue" class="bp-action bp-action-primary">
+				পাঠ ০১ শুরু করুন
+			</button>
+			<button type="button" id="btn-progress-weak" class="bp-action bp-action-secondary">
+				বর্ণ অনুশীলন শুরু করুন
+			</button>
 		</div>
 
 		<p id="progress-status" class="mt-3 text-[13px] leading-relaxed text-mute" role="status" aria-live="polite"></p>
@@ -498,6 +838,135 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		--tone-line: var(--bp-orange-line, #f4cba9);
 	}
 
+	.bangla-practice .bp-inset-mint {
+		--tone: var(--bp-mint, #afe3d0);
+		--tone-ink: var(--bp-mint-ink, #0f2e26);
+		--tone-soft: var(--bp-mint-soft, #e4f4ec);
+		--tone-line: var(--bp-mint-line, #bfe6d5);
+	}
+
+	/* Counters inside the keyboard / level choices */
+	.bangla-practice .bp-choice-count,
+	.bangla-practice .bp-level-count {
+		font-size: 11.5px;
+		font-weight: 500;
+		opacity: 0.85;
+		white-space: nowrap;
+	}
+
+	.bangla-practice .bp-level-count {
+		margin-left: 0.15rem;
+		color: var(--tone-ink);
+	}
+
+	/* Selected level stays visible while every level is shown */
+	.bangla-practice .bp-level[data-selected='true'] .bp-level-title {
+		outline: 2px solid var(--tone);
+		outline-offset: 3px;
+	}
+
+	/* Auto-fit so a filtered single level stretches while all three sit side by side */
+	.bangla-practice #lesson-list {
+		grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+	}
+
+	.bangla-practice .bp-lesson-check {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 18px;
+		height: 18px;
+		border-radius: 999px;
+		background: var(--tone);
+		color: var(--tone-ink);
+		font-size: 11px;
+		font-weight: 700;
+	}
+
+	/* Layout guidance sits on a hairline divider, not in another card */
+	.bangla-practice .bp-layout-guide {
+		padding-top: 0.9rem;
+		border-top: 1px dashed var(--bp-sand-line, #e6d6c1);
+	}
+
+	.bangla-practice .bp-key-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		max-width: 100%;
+		min-height: 32px;
+		padding: 0.2rem 0.65rem;
+		border: 1px solid var(--bp-line, #e2d9cb);
+		border-radius: 999px;
+		background: var(--bp-paper, #fdfaf4);
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	.bangla-practice .bp-key-chip-input {
+		color: var(--c-body);
+		font-weight: 500;
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-practice .bp-key-chip-arrow {
+		color: var(--c-faint);
+	}
+
+	.bangla-practice .bp-key-chip-output {
+		color: var(--c-ink);
+		font-weight: 500;
+		overflow-wrap: anywhere;
+	}
+
+	/* Live mismatch hint */
+	.bangla-practice .bp-live-hint {
+		padding: 0.5rem 0.8rem;
+		border-radius: 0 10px 10px 0;
+		box-shadow: inset 3px 0 0 0 #b42318;
+		background: rgba(180, 35, 24, 0.07);
+		color: #b42318;
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 1.6;
+		overflow-wrap: anywhere;
+	}
+
+	.dark .bangla-practice .bp-live-hint {
+		box-shadow: inset 3px 0 0 0 #fda29b;
+		background: rgba(253, 162, 155, 0.12);
+		color: #fda29b;
+	}
+
+	/* Completion summary */
+	.bangla-practice .bp-result {
+		padding: 0.9rem 1rem;
+		border: 1px solid var(--bp-mint-line, #bfe6d5);
+		border-radius: 14px;
+		background: var(--bp-mint-soft, #e4f4ec);
+	}
+
+	.bangla-practice .bp-result[data-state='retry'] {
+		border-color: var(--bp-orange-line, #f4cba9);
+		background: var(--bp-orange-soft, #fdece0);
+	}
+
+	.bangla-practice .bp-result-metric {
+		min-width: 0;
+		padding: 0.45rem 0.6rem;
+		border-radius: 10px;
+		background: var(--bp-paper, #fdfaf4);
+	}
+
+	.bangla-practice .bp-result-value {
+		margin-top: 0.1rem;
+		font-size: 16px;
+		line-height: 22px;
+		font-weight: 600;
+		color: var(--c-ink);
+		overflow-wrap: anywhere;
+	}
+
 	/* Small sentence-case badges */
 	.bangla-practice .bp-pill {
 		display: inline-flex;
@@ -524,6 +993,13 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		--tone-ink: var(--bp-orange-ink, #7a3a12);
 		--tone-soft: var(--bp-orange-soft, #fdece0);
 		--tone-line: var(--bp-orange-line, #f4cba9);
+	}
+
+	.bangla-practice .bp-pill-mint {
+		--tone: var(--bp-mint, #afe3d0);
+		--tone-ink: var(--bp-mint-ink, #0f2e26);
+		--tone-soft: var(--bp-mint-soft, #e4f4ec);
+		--tone-line: var(--bp-mint-line, #bfe6d5);
 	}
 
 	/* Metric tiles */
@@ -571,6 +1047,222 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 
 	.bangla-practice #progress-lesson-bar {
 		background: linear-gradient(90deg, var(--bp-mint, #afe3d0) 0%, var(--bp-orange, #f7bd90) 100%);
+	}
+
+	/* Dashboard sections sit on hairlines instead of inside more cards */
+	.bangla-practice .bp-dashboard-block {
+		padding-top: 1rem;
+		border-top: 1px solid var(--bp-mint-line, #bfe6d5);
+	}
+
+	/* Challenge picker: compact tone cards that still clear the 44px touch target */
+	.bangla-practice .bp-challenge-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		width: 100%;
+		min-height: 44px;
+		padding: 0.7rem 0.85rem;
+		border: 1px solid var(--tone-line);
+		border-radius: 14px;
+		background: var(--tone-soft);
+		text-align: left;
+		font-family: inherit;
+		cursor: pointer;
+		transition:
+			border-color 0.15s ease,
+			background-color 0.15s ease;
+	}
+
+	.bangla-practice .bp-challenge-card:hover {
+		border-color: var(--tone);
+		background: var(--bp-paper, #fdfaf4);
+	}
+
+	.bangla-practice .bp-challenge-card:focus-visible {
+		outline: 2px solid var(--c-ink);
+		outline-offset: 2px;
+	}
+
+	.dark .bangla-practice .bp-challenge-card:focus-visible {
+		outline-color: var(--c-primary);
+	}
+
+	.bangla-practice .bp-challenge-card.is-active {
+		border-color: var(--tone);
+		background: var(--tone);
+	}
+
+	.bangla-practice .bp-challenge-card-title {
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.45;
+		color: var(--c-ink);
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-practice .bp-challenge-card-note {
+		font-size: 12.5px;
+		line-height: 1.5;
+		color: var(--c-body);
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-practice .bp-challenge-card.is-active .bp-challenge-card-title,
+	.bangla-practice .bp-challenge-card.is-active .bp-challenge-card-note {
+		color: var(--tone-ink);
+	}
+
+	/* Live challenge strip inside the exercise panel */
+	.bangla-practice .bp-challenge {
+		padding: 0.85rem 0.95rem;
+		border: 1px solid var(--bp-sand-line, #e6d6c1);
+		border-radius: 14px;
+		background: var(--bp-sand-soft, #f7efe3);
+		box-shadow: inset 3px 0 0 0 var(--bp-orange, #f7bd90);
+	}
+
+	.bangla-practice .bp-challenge[data-state='urgent'] {
+		border-color: var(--bp-orange-line, #f4cba9);
+		background: var(--bp-orange-soft, #fdece0);
+	}
+
+	.bangla-practice .bp-challenge-metrics {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+		gap: 0.5rem;
+	}
+
+	.bangla-practice .bp-challenge-metric {
+		min-width: 0;
+		padding: 0.4rem 0.55rem;
+		border-radius: 10px;
+		background: var(--bp-paper, #fdfaf4);
+	}
+
+	.bangla-practice .bp-challenge-metric dt {
+		font-size: 11.5px;
+		font-weight: 500;
+		line-height: 1.5;
+		color: var(--c-mute);
+	}
+
+	.bangla-practice .bp-challenge-metric dd {
+		margin-top: 0.1rem;
+		font-size: 15px;
+		line-height: 1.4;
+		font-weight: 600;
+		color: var(--c-ink);
+		font-variant-numeric: tabular-nums;
+		overflow-wrap: anywhere;
+	}
+
+	/* Milestone chips: earned badges use their tone, locked ones stay a quiet dashed outline */
+	.bangla-practice .bp-milestone-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 0.625rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.bangla-practice .bp-milestone {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		max-width: 100%;
+		min-height: 32px;
+		padding: 0.25rem 0.7rem;
+		border: 1px solid var(--tone-line);
+		border-radius: 999px;
+		background: var(--tone-soft);
+		color: var(--tone-ink);
+		font-size: 12.5px;
+		font-weight: 600;
+		line-height: 1.5;
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-practice .bp-milestone[data-earned='false'] {
+		border-style: dashed;
+		border-color: var(--bp-sand-line, #e6d6c1);
+		background: transparent;
+		color: var(--c-mute);
+		font-weight: 500;
+	}
+
+	/* Seven-day activity: plain CSS bars, readable as a list without the colours */
+	.bangla-practice .bp-week {
+		display: grid;
+		grid-template-columns: repeat(7, minmax(0, 1fr));
+		gap: 0.4rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.bangla-practice .bp-week-day {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.3rem;
+		min-width: 0;
+	}
+
+	.bangla-practice .bp-week-value {
+		font-size: 11.5px;
+		line-height: 1.4;
+		font-weight: 600;
+		color: var(--c-mute);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.bangla-practice .bp-week-day[data-active='true'] .bp-week-value {
+		color: var(--c-ink);
+	}
+
+	.bangla-practice .bp-week-track {
+		display: flex;
+		align-items: flex-end;
+		width: 100%;
+		height: 64px;
+		border: 1px solid var(--bp-mint-line, #bfe6d5);
+		border-radius: 8px;
+		background: var(--bp-paper, #fdfaf4);
+		overflow: hidden;
+	}
+
+	.bangla-practice .bp-week-bar {
+		display: block;
+		width: 100%;
+		border-radius: 6px 6px 0 0;
+		background: linear-gradient(180deg, #afe3d0 0%, #f7bd90 100%);
+		transition: height 0.2s ease;
+	}
+
+	.dark .bangla-practice .bp-week-bar {
+		background: linear-gradient(180deg, #2f7f66 0%, #7a4a26 100%);
+	}
+
+	.bangla-practice .bp-week-day[data-today='true'] .bp-week-track {
+		box-shadow: 0 0 0 2px var(--bp-orange, #f7bd90);
+	}
+
+	.dark .bangla-practice .bp-week-day[data-today='true'] .bp-week-track {
+		box-shadow: 0 0 0 2px #f7bd90;
+	}
+
+	.bangla-practice .bp-week-label {
+		font-size: 11px;
+		line-height: 1.4;
+		color: var(--c-mute);
+		white-space: nowrap;
+	}
+
+	.bangla-practice .bp-week-day[data-today='true'] .bp-week-label {
+		font-weight: 600;
+		color: var(--c-ink);
 	}
 
 	/* Target paper and input field (the only nested writing surfaces) */
@@ -643,6 +1335,11 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		opacity: 0.9;
 	}
 
+	.bangla-practice .bp-action:disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+
 	.bangla-practice .bp-action:focus-visible,
 	.bangla-practice .bp-input:focus-visible {
 		outline: 2px solid var(--c-ink);
@@ -713,21 +1410,111 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 	.dark .bangla-practice .bp-glyph[data-state='current'] {
 		box-shadow: inset 0 -2px 0 0 #afe3d0;
 	}
+
+	/* Hidden target text: the paper keeps its height, the glyphs stop giving anything away */
+	.bangla-practice .bp-target.is-concealed .bp-glyph {
+		color: transparent !important;
+		background: transparent !important;
+		box-shadow: none !important;
+		text-decoration: none !important;
+	}
+
+	/* Live grapheme counts sit on a hairline divider, not in another card */
+	.bangla-practice .bp-feedback {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.5rem 0.9rem;
+		padding-top: 0.8rem;
+		border-top: 1px dashed var(--bp-sand-line, #e6d6c1);
+	}
+
+	@media (min-width: 560px) {
+		.bangla-practice .bp-feedback {
+			grid-template-columns: repeat(5, minmax(0, 1fr));
+		}
+	}
+
+	.bangla-practice .bp-feedback-item {
+		min-width: 0;
+	}
+
+	.bangla-practice .bp-feedback-item dt {
+		font-size: 12px;
+		font-weight: 500;
+		line-height: 1.5;
+		color: var(--c-mute);
+	}
+
+	.bangla-practice .bp-feedback-item dd {
+		margin-top: 0.1rem;
+		font-size: 15px;
+		line-height: 1.4;
+		font-weight: 600;
+		color: var(--tone-ink);
+		font-variant-numeric: tabular-nums;
+		overflow-wrap: anywhere;
+	}
+
+	/* Pause notice mirrors the live hint, in mint instead of red */
+	.bangla-practice .bp-pause-note {
+		padding: 0.5rem 0.8rem;
+		border-radius: 0 10px 10px 0;
+		box-shadow: inset 3px 0 0 0 var(--bp-mint, #afe3d0);
+		background: var(--bp-mint-soft, #e4f4ec);
+		color: var(--c-ink);
+		font-size: 13px;
+		line-height: 1.6;
+	}
+
+	/* Grapheme and word chips in the session error summary */
+	.bangla-practice .bp-chip-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+
+	.bangla-practice .bp-word-chip {
+		display: inline-flex;
+		align-items: center;
+		max-width: 100%;
+		min-height: 32px;
+		padding: 0.25rem 0.7rem;
+		border: 1px solid var(--bp-orange-line, #f4cba9);
+		border-radius: 10px;
+		background: var(--bp-paper, #fdfaf4);
+		color: var(--c-ink);
+		font-size: 14px;
+		line-height: 1.5;
+		overflow-wrap: anywhere;
+	}
 </style>
 
 <script>
 	import {
 		BANGLA_LESSONS,
+		GENERAL_LAYOUT_GUIDES,
+		KEYBOARD_CONTEXTS,
 		LESSON_LEVELS,
 		PRACTICE_MODES,
 		PRACTICE_POOLS,
+		type BanglaKeyboardId,
 		type BanglaPracticeMode,
 		type BanglaPracticeModeId,
 		type BanglaTypingLesson,
+		type BanglaTypingLevelId,
 	} from '../data/banglaTypingCurriculum';
+	import {
+		BANGLA_CHALLENGES,
+		BANGLA_MILESTONES,
+		type BanglaChallenge,
+		type BanglaChallengeId,
+		type BanglaMilestone,
+	} from '../data/banglaTypingChallenges';
 
 	const MISTAKE_STORE_KEY = 'wordora-bangla-typing-mistakes-v1';
 	const PROGRESS_STORE_KEY = 'wordora-bangla-typing-progress-v1';
+	const KEYBOARD_STORE_KEY = 'wordora-bangla-typing-keyboard-v1';
+	const LEVEL_STORE_KEY = 'wordora-bangla-typing-level-v1';
 	const MAX_CUSTOM_LENGTH = 1200;
 
 	interface Exercise {
@@ -740,6 +1527,8 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		summary: string;
 		criteria: string;
 		target: string;
+		/** Set when the drill came from one of the practice challenges. */
+		challengeId?: BanglaChallengeId;
 	}
 
 	type SegmenterCtor = new (
@@ -791,6 +1580,30 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			: splitClustersFallback(normalized);
 	}
 
+	interface WordSpan {
+		text: string;
+		start: number;
+		end: number;
+	}
+
+	/** Groups grapheme clusters into whitespace-delimited words, keeping their index ranges. */
+	function clusterWords(glyphs: string[]): WordSpan[] {
+		const words: WordSpan[] = [];
+		let start = -1;
+		for (let i = 0; i <= glyphs.length; i += 1) {
+			const isSpace = i === glyphs.length || glyphs[i].trim() === '';
+			if (isSpace) {
+				if (start !== -1) {
+					words.push({ text: glyphs.slice(start, i).join(''), start, end: i });
+					start = -1;
+				}
+			} else if (start === -1) {
+				start = i;
+			}
+		}
+		return words;
+	}
+
 	const BN_DIGITS = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
 
 	function bnNumber(value: number): string {
@@ -836,6 +1649,14 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		lastPracticedAt: string;
 	}
 
+	/** One day of finished sessions, keyed by a local `YYYY-MM-DD` date. */
+	interface DailyRecord {
+		sessions: number;
+		practiceMs: number;
+		correctChars: number;
+		accuracySum: number;
+	}
+
 	interface PracticeProgress {
 		sessions: number;
 		totalTimeMs: number;
@@ -847,7 +1668,10 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		streakCurrent: number;
 		streakBest: number;
 		streakLastDate: string;
+		days: Record<string, DailyRecord>;
 	}
+
+	const MAX_DAILY_RECORDS = 60;
 
 	function emptyProgress(): PracticeProgress {
 		return {
@@ -861,6 +1685,7 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			streakCurrent: 0,
 			streakBest: 0,
 			streakLastDate: '',
+			days: {},
 		};
 	}
 
@@ -915,6 +1740,21 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 				};
 			}
 
+			const days = data.days;
+			if (days && typeof days === 'object' && !Array.isArray(days)) {
+				for (const [key, entry] of Object.entries(days as Record<string, unknown>)) {
+					if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) continue;
+					if (!entry || typeof entry !== 'object' || Array.isArray(entry)) continue;
+					const record = entry as Record<string, unknown>;
+					progress.days[key] = {
+						sessions: Math.round(safeNumber(record.sessions)),
+						practiceMs: Math.round(safeNumber(record.practiceMs)),
+						correctChars: Math.round(safeNumber(record.correctChars)),
+						accuracySum: safeNumber(record.accuracySum),
+					};
+				}
+			}
+
 			return progress;
 		} catch {
 			return empty;
@@ -936,6 +1776,24 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		return `${year}-${month}-${day}`;
 	}
 
+	/** Reads a persisted single-choice preference, ignoring anything outside `allowed`. */
+	function readStoredChoice<T extends string>(key: string, allowed: readonly T[], fallback: T): T {
+		try {
+			const raw = window.localStorage.getItem(key);
+			return raw && (allowed as readonly string[]).includes(raw) ? (raw as T) : fallback;
+		} catch {
+			return fallback;
+		}
+	}
+
+	function storeChoice(key: string, value: string) {
+		try {
+			window.localStorage.setItem(key, value);
+		} catch {
+			// Preferences are optional; the in-memory choice keeps working without storage.
+		}
+	}
+
 	/** Whole-day gap between two `YYYY-MM-DD` keys; Infinity when the previous key is missing. */
 	function dayGap(from: string, to: string): number {
 		if (!/^\d{4}-\d{2}-\d{2}$/.test(from)) return Number.POSITIVE_INFINITY;
@@ -944,6 +1802,50 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			return Date.UTC(year, (month || 1) - 1, day || 1);
 		};
 		return Math.round((parse(to) - parse(from)) / 86400000);
+	}
+
+	const BN_WEEKDAYS = [
+		{ short: 'রবি', long: 'রবিবার' },
+		{ short: 'সোম', long: 'সোমবার' },
+		{ short: 'মঙ্গ', long: 'মঙ্গলবার' },
+		{ short: 'বুধ', long: 'বুধবার' },
+		{ short: 'বৃহঃ', long: 'বৃহস্পতিবার' },
+		{ short: 'শুক্র', long: 'শুক্রবার' },
+		{ short: 'শনি', long: 'শনিবার' },
+	];
+
+	interface RecentDay {
+		key: string;
+		short: string;
+		long: string;
+		minutes: number;
+		sessions: number;
+		isToday: boolean;
+	}
+
+	/** Oldest→newest slice of daily activity, so the bars read left to right like a calendar. */
+	function recentDays(progress: PracticeProgress, count = 7): RecentDay[] {
+		const today = new Date();
+		const days: RecentDay[] = [];
+		for (let offset = count - 1; offset >= 0; offset -= 1) {
+			const date = new Date(today.getFullYear(), today.getMonth(), today.getDate() - offset);
+			const key = localDateKey(date);
+			const record = progress.days[key];
+			const weekday = BN_WEEKDAYS[date.getDay()] ?? BN_WEEKDAYS[0];
+			days.push({
+				key,
+				short: weekday.short,
+				long: weekday.long,
+				// Any finished session counts as at least a minute, so a short drill still shows a bar.
+				minutes:
+					record && record.sessions > 0
+						? Math.max(1, Math.round(record.practiceMs / 60000))
+						: 0,
+				sessions: record?.sessions ?? 0,
+				isToday: offset === 0,
+			});
+		}
+		return days;
 	}
 
 	function samplePool(pool: readonly string[], size: number): string[] {
@@ -975,6 +1877,64 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		const pool = PRACTICE_POOLS[mode.poolKey];
 		const size = mode.sampleSize ?? Math.min(8, pool.length);
 		return samplePool(pool, size).join(' ');
+	}
+
+	/** Builds challenge text from the existing pools, padding timed runs with short sentences. */
+	function buildChallengeTarget(challenge: BanglaChallenge): string {
+		const items: string[] = [];
+		for (const poolKey of challenge.poolKeys) {
+			items.push(...samplePool(PRACTICE_POOLS[poolKey], challenge.sampleSize));
+		}
+		let text = samplePool(items, items.length).join(' ');
+
+		const minClusters = challenge.minClusters ?? 0;
+		const fillers = PRACTICE_POOLS.sentences;
+		let added = 0;
+		while (splitGraphemes(text).length < minClusters && added < 40) {
+			text += ` ${fillers[added % fillers.length]}`;
+			added += 1;
+		}
+		return text;
+	}
+
+	/** Standard WPM treats five typed characters as one word. */
+	function wordsPerMinute(correct: number, ms: number): number | null {
+		if (ms < 1000) return null;
+		return Math.round(correct / 5 / (ms / 60000));
+	}
+
+	function challengeExercise(challenge: BanglaChallenge): Exercise {
+		return {
+			key: `${challenge.id}-${Date.now()}`,
+			kind: 'drill',
+			challengeId: challenge.id,
+			title: challenge.label,
+			source: 'প্র্যাকটিস চ্যালেঞ্জ',
+			difficulty: challenge.badge,
+			minAccuracy: challenge.minAccuracy,
+			summary: challenge.summary,
+			criteria: challenge.criteria,
+			target: buildChallengeTarget(challenge),
+		};
+	}
+
+	function completedLessonCount(progress: PracticeProgress): number {
+		return BANGLA_LESSONS.filter((lesson) => progress.lessons[lesson.id]?.completed).length;
+	}
+
+	function milestoneValue(milestone: BanglaMilestone, progress: PracticeProgress): number {
+		switch (milestone.metric) {
+			case 'lessons':
+				return completedLessonCount(progress);
+			case 'streak':
+				return progress.streakBest;
+			case 'accuracy':
+				return progress.bestSession?.accuracy ?? 0;
+			case 'sessions':
+				return progress.sessions;
+			default:
+				return 0;
+		}
 	}
 
 	const root = document.querySelector<HTMLElement>('[data-bangla-practice]');
@@ -1026,10 +1986,68 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		const weakGlyphsEl = requireElement<HTMLDivElement>('weak-glyphs');
 		const weakEmptyEl = requireElement<HTMLParagraphElement>('weak-empty');
 		const progressStatusEl = requireElement<HTMLParagraphElement>('progress-status');
+		const weekChartEl = requireElement<HTMLOListElement>('week-chart');
+		const weekSummaryEl = requireElement<HTMLParagraphElement>('week-summary');
+		const weekEmptyEl = requireElement<HTMLParagraphElement>('week-empty');
+		const progressContinueBtn = requireElement<HTMLButtonElement>('btn-progress-continue');
+		const progressWeakBtn = requireElement<HTMLButtonElement>('btn-progress-weak');
 		const resetBtn = requireElement<HTMLButtonElement>('btn-reset-progress');
 		const resetConfirm = requireElement<HTMLDivElement>('reset-confirm');
 		const resetConfirmBtn = requireElement<HTMLButtonElement>('btn-reset-confirm');
 		const resetCancelBtn = requireElement<HTMLButtonElement>('btn-reset-cancel');
+
+		// Learning path + lesson flow
+		const pathProgressEl = requireElement<HTMLSpanElement>('path-progress');
+		const keyboardNoteEl = requireElement<HTMLParagraphElement>('keyboard-note');
+		const levelNoteEl = requireElement<HTMLParagraphElement>('level-note');
+		const continueBtn = requireElement<HTMLButtonElement>('btn-continue');
+		const toggleAllBtn = requireElement<HTMLButtonElement>('btn-toggle-all-lessons');
+		const quickWordsBtn = requireElement<HTMLButtonElement>('btn-quick-words');
+		const quickSentencesBtn = requireElement<HTMLButtonElement>('btn-quick-sentences');
+		const quickParagraphsBtn = requireElement<HTMLButtonElement>('btn-quick-paragraphs');
+		const quickCustomBtn = requireElement<HTMLButtonElement>('btn-quick-custom');
+		const lessonBrief = requireElement<HTMLDivElement>('lesson-brief');
+		const lessonExplanationEl = requireElement<HTMLParagraphElement>('lesson-explanation');
+		const layoutGuideTitleEl = requireElement<HTMLParagraphElement>('layout-guide-title');
+		const layoutGuideBadgeEl = requireElement<HTMLSpanElement>('layout-guide-badge');
+		const layoutGuideNoteEl = requireElement<HTMLParagraphElement>('layout-guide-note');
+		const layoutGuideExamplesEl = requireElement<HTMLUListElement>('layout-guide-examples');
+		const liveHint = requireElement<HTMLParagraphElement>('live-hint');
+		const pauseNote = requireElement<HTMLParagraphElement>('pause-note');
+		const pauseBtn = requireElement<HTMLButtonElement>('btn-pause');
+		const toggleTargetBtn = requireElement<HTMLButtonElement>('btn-toggle-target');
+		const feedbackPositionEl = requireElement<HTMLElement>('feedback-position');
+		const feedbackCorrectEl = requireElement<HTMLElement>('feedback-correct');
+		const feedbackWrongEl = requireElement<HTMLElement>('feedback-wrong');
+		const feedbackMissingEl = requireElement<HTMLElement>('feedback-missing');
+		const feedbackMissingLabelEl = requireElement<HTMLElement>('feedback-missing-label');
+		const feedbackExtraEl = requireElement<HTMLElement>('feedback-extra');
+		const mistakeDrillEl = requireElement<HTMLDivElement>('mistake-drill');
+		const mistakeDrillTextEl = requireElement<HTMLParagraphElement>('mistake-drill-text');
+		const mistakeGlyphBlock = requireElement<HTMLDivElement>('mistake-glyph-block');
+		const mistakeGlyphsEl = requireElement<HTMLDivElement>('mistake-drill-glyphs');
+		const mistakeWordBlock = requireElement<HTMLDivElement>('mistake-word-block');
+		const mistakeWordsEl = requireElement<HTMLDivElement>('mistake-drill-words');
+		const mistakeDrillBtn = requireElement<HTMLButtonElement>('btn-mistake-drill');
+		const completionCard = requireElement<HTMLDivElement>('completion-card');
+		const completionLabelEl = requireElement<HTMLParagraphElement>('completion-label');
+		const completionTitleEl = requireElement<HTMLParagraphElement>('completion-title');
+		const completionAccuracyEl = requireElement<HTMLElement>('completion-accuracy');
+		const completionSpeedEl = requireElement<HTMLElement>('completion-speed');
+		const completionTimeEl = requireElement<HTMLElement>('completion-time');
+		const completionMistakesEl = requireElement<HTMLElement>('completion-mistakes');
+		const completionNextEl = requireElement<HTMLParagraphElement>('completion-next');
+		const challengeBanner = requireElement<HTMLDivElement>('challenge-banner');
+		const challengeTitleEl = requireElement<HTMLParagraphElement>('challenge-title');
+		const challengeHintEl = requireElement<HTMLParagraphElement>('challenge-hint');
+		const challengeBadgeEl = requireElement<HTMLSpanElement>('challenge-badge');
+		const challengeWpmEl = requireElement<HTMLElement>('challenge-wpm');
+		const challengeAccuracyEl = requireElement<HTMLElement>('challenge-accuracy');
+		const challengeExtraLabelEl = requireElement<HTMLElement>('challenge-extra-label');
+		const challengeExtraEl = requireElement<HTMLElement>('challenge-extra');
+		const milestoneListEl = requireElement<HTMLUListElement>('milestone-list');
+		const milestoneSummaryEl = requireElement<HTMLParagraphElement>('milestone-summary');
+		const milestoneEmptyEl = requireElement<HTMLParagraphElement>('milestone-empty');
 
 		// Optional only because they live in panels that may be re-styled later.
 		const customError = optionalElement<HTMLParagraphElement>('custom-error');
@@ -1040,6 +2058,19 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 
 		const lessonButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-lesson-id]'));
 		const modeButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-mode-id]'));
+		const challengeButtons = Array.from(
+			root.querySelectorAll<HTMLButtonElement>('[data-challenge-id]')
+		);
+		const keyboardButtons = Array.from(
+			root.querySelectorAll<HTMLButtonElement>('[data-keyboard-id]')
+		);
+		const levelButtons = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-level-id]'));
+		const levelGroups = Array.from(root.querySelectorAll<HTMLElement>('[data-level-group]'));
+		const levelChipEls = Array.from(root.querySelectorAll<HTMLElement>('[data-level-count]'));
+		const levelProgressEls = Array.from(
+			root.querySelectorAll<HTMLElement>('[data-level-progress]')
+		);
+		const lessonCheckEls = Array.from(root.querySelectorAll<HTMLElement>('[data-lesson-check]'));
 
 		let current: Exercise | null = null;
 		let currentModeId: BanglaPracticeModeId | null = null;
@@ -1048,10 +2079,31 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		let glyphEls: HTMLSpanElement[] = [];
 		let startedAt: number | null = null;
 		let finishedAt: number | null = null;
+		let pausedAt: number | null = null;
+		let pausedTotalMs = 0;
+		let targetHidden = false;
 		let finished = false;
 		let composing = false;
 		let timerId: number | null = null;
 		const recordedMistakes = new Set<number>();
+		const sessionMistakes = new Map<string, number>();
+		const sessionWrongWords = new Map<string, number>();
+		let targetWords: WordSpan[] = [];
+		/** Target grapheme index → owning word index, so a mismatch maps back to its word. */
+		let glyphWordIndex: number[] = [];
+		let keyboardId = readStoredChoice<BanglaKeyboardId>(
+			KEYBOARD_STORE_KEY,
+			KEYBOARD_CONTEXTS.map((entry) => entry.id),
+			'avro'
+		);
+		let levelId = readStoredChoice<BanglaTypingLevelId>(
+			LEVEL_STORE_KEY,
+			LESSON_LEVELS.map((entry) => entry.id),
+			'beginner'
+		);
+		let showAllLessons = false;
+		/** Resolved challenge for the exercise currently on screen. */
+		let currentChallenge: BanglaChallenge | null = null;
 
 		function setStatus(message: string) {
 			statusEl.textContent = message;
@@ -1063,7 +2115,120 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			resultEl.hidden = details === null;
 		}
 
-		function renderWeakGlyphs() {
+		function currentKeyboard() {
+			return KEYBOARD_CONTEXTS.find((entry) => entry.id === keyboardId) ?? KEYBOARD_CONTEXTS[0];
+		}
+
+		/** Swaps the guidance block to the keyboard and lesson the learner is actually on. */
+		function renderLayoutGuide() {
+			const keyboard = currentKeyboard();
+			const lesson =
+				current?.kind === 'lesson'
+					? BANGLA_LESSONS.find((entry) => entry.id === current?.key)
+					: undefined;
+			const guide = lesson?.guidance[keyboard.id] ?? GENERAL_LAYOUT_GUIDES[keyboard.id];
+
+			layoutGuideTitleEl.textContent = `${keyboard.label}-এ যেভাবে লিখবেন`;
+			layoutGuideBadgeEl.textContent = keyboard.label;
+			layoutGuideNoteEl.textContent = guide.note;
+			layoutGuideExamplesEl.textContent = '';
+
+			for (const example of guide.examples) {
+				const item = document.createElement('li');
+				item.className = 'bp-key-chip';
+
+				const source = document.createElement('span');
+				source.className = 'bp-key-chip-input';
+				source.textContent = example.input;
+
+				const arrow = document.createElement('span');
+				arrow.className = 'bp-key-chip-arrow';
+				arrow.setAttribute('aria-hidden', 'true');
+				arrow.textContent = '→';
+
+				const output = document.createElement('span');
+				output.className = 'bp-key-chip-output';
+				output.lang = 'bn';
+				output.textContent = example.output;
+
+				item.append(source, arrow, output);
+				layoutGuideExamplesEl.append(item);
+			}
+		}
+
+		function renderKeyboard() {
+			const keyboard = currentKeyboard();
+			for (const button of keyboardButtons) {
+				const active = button.dataset.keyboardId === keyboardId;
+				button.classList.toggle('is-active', active);
+				button.setAttribute('aria-pressed', active ? 'true' : 'false');
+			}
+			keyboardNoteEl.textContent = keyboard.summary;
+			input.placeholder = `${keyboard.label} দিয়ে টাইপ শুরু করুন…`;
+			renderLayoutGuide();
+		}
+
+		/** First unfinished lesson, else the last one so the path always has a next step. */
+		function nextLessonFor(progress: PracticeProgress): BanglaTypingLesson {
+			return (
+				BANGLA_LESSONS.find((lesson) => !progress.lessons[lesson.id]?.completed) ??
+				BANGLA_LESSONS[BANGLA_LESSONS.length - 1] ??
+				BANGLA_LESSONS[0]
+			);
+		}
+
+		function renderCurriculum() {
+			const progress = readProgress();
+			const completed = BANGLA_LESSONS.filter(
+				(lesson) => progress.lessons[lesson.id]?.completed
+			).length;
+			pathProgressEl.textContent = `${bnNumber(completed)} / ${bnNumber(
+				BANGLA_LESSONS.length
+			)} পাঠ সম্পন্ন`;
+
+			for (const el of [...levelChipEls, ...levelProgressEls]) {
+				const levelKey = (el.dataset.levelCount ?? el.dataset.levelProgress) as
+					| BanglaTypingLevelId
+					| undefined;
+				if (!levelKey) continue;
+				const lessons = BANGLA_LESSONS.filter((lesson) => lesson.level === levelKey);
+				const done = lessons.filter((lesson) => progress.lessons[lesson.id]?.completed).length;
+				el.textContent = `${bnNumber(done)} / ${bnNumber(lessons.length)}`;
+			}
+
+			for (const el of lessonCheckEls) {
+				const lessonId = el.closest<HTMLButtonElement>('[data-lesson-id]')?.dataset.lessonId;
+				el.hidden = !(lessonId && progress.lessons[lessonId]?.completed);
+			}
+
+			const nextLesson = nextLessonFor(progress);
+			const hasProgress = Object.keys(progress.lessons).length > 0;
+			continueBtn.textContent = hasProgress
+				? `শেখা চালিয়ে যান — পাঠ ${nextLesson.number}`
+				: `পাঠ ${nextLesson.number} শুরু করুন`;
+		}
+
+		function renderLevel() {
+			const level = LESSON_LEVELS.find((entry) => entry.id === levelId) ?? LESSON_LEVELS[0];
+			for (const button of levelButtons) {
+				const active = button.dataset.levelId === levelId;
+				button.classList.toggle('is-active', active);
+				button.setAttribute('aria-pressed', active ? 'true' : 'false');
+			}
+			levelNoteEl.textContent = level.description;
+
+			for (const group of levelGroups) {
+				const selected = group.dataset.levelGroup === levelId;
+				group.dataset.selected = selected ? 'true' : 'false';
+				group.hidden = !showAllLessons && !selected;
+			}
+
+			toggleAllBtn.textContent = showAllLessons ? 'শুধু নির্বাচিত স্তর' : 'সব পাঠ দেখুন';
+			toggleAllBtn.setAttribute('aria-pressed', showAllLessons ? 'true' : 'false');
+			renderCurriculum();
+		}
+
+		function renderWeakGlyphs(): number {
 			const entries = Object.entries(readMistakes())
 				.filter(([glyph]) => glyph.trim().length > 0)
 				.sort((a, b) => b[1] - a[1])
@@ -1078,6 +2243,103 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 				chip.textContent = `${glyph} · ${bnNumber(count)}`;
 				weakGlyphsEl.append(chip);
 			}
+			return entries.length;
+		}
+
+		/** Seven-day activity bars; every value is also written as text for screen readers. */
+		function renderWeekChart(progress: PracticeProgress) {
+			const days = recentDays(progress, 7);
+			const totalMinutes = days.reduce((sum, day) => sum + day.minutes, 0);
+			const totalSessions = days.reduce((sum, day) => sum + day.sessions, 0);
+			const maxMinutes = Math.max(1, ...days.map((day) => day.minutes));
+
+			weekSummaryEl.textContent =
+				totalSessions > 0
+					? `${bnNumber(totalMinutes)} মিনিট · ${bnNumber(totalSessions)} সেশন`
+					: 'এখনো কোনো সেশন নেই';
+			weekEmptyEl.hidden = progress.sessions > 0;
+
+			weekChartEl.textContent = '';
+			const fragment = document.createDocumentFragment();
+			for (const day of days) {
+				const item = document.createElement('li');
+				item.className = 'bp-week-day';
+				item.dataset.active = day.sessions > 0 ? 'true' : 'false';
+				item.dataset.today = day.isToday ? 'true' : 'false';
+				item.setAttribute(
+					'aria-label',
+					`${day.isToday ? 'আজ' : day.long}, ${bnNumber(day.minutes)} মিনিট, ${bnNumber(
+						day.sessions
+					)} সেশন`
+				);
+
+				const value = document.createElement('span');
+				value.className = 'bp-week-value';
+				value.textContent = bnNumber(day.minutes);
+
+				const track = document.createElement('span');
+				track.className = 'bp-week-track';
+				track.setAttribute('aria-hidden', 'true');
+				const bar = document.createElement('span');
+				bar.className = 'bp-week-bar';
+				bar.style.height =
+					day.minutes > 0
+						? `${Math.max(8, (day.minutes / maxMinutes) * 100).toFixed(1)}%`
+						: '0%';
+				track.append(bar);
+
+				const label = document.createElement('span');
+				label.className = 'bp-week-label';
+				label.textContent = day.isToday ? 'আজ' : day.short;
+
+				item.append(value, track, label);
+				fragment.append(item);
+			}
+			weekChartEl.append(fragment);
+		}
+
+		/** Badges are computed from saved progress, so there is nothing extra to store. */
+		function renderMilestones(progress: PracticeProgress) {
+			const fragment = document.createDocumentFragment();
+			let earned = 0;
+
+			for (const milestone of BANGLA_MILESTONES) {
+				const value = milestoneValue(milestone, progress);
+				const done = value >= milestone.target;
+				if (done) earned += 1;
+
+				const chip = document.createElement('li');
+				chip.className = 'bp-milestone';
+				chip.dataset.tone = milestone.tone;
+				chip.dataset.earned = done ? 'true' : 'false';
+				chip.textContent = done ? `✓ ${milestone.label}` : milestone.label;
+				chip.setAttribute(
+					'aria-label',
+					done
+						? `${milestone.label} — অর্জিত। ${milestone.description}।`
+						: `${milestone.label} — এখনো অর্জিত হয়নি। ${milestone.description}।`
+				);
+				fragment.append(chip);
+			}
+
+			milestoneListEl.textContent = '';
+			milestoneListEl.append(fragment);
+			milestoneSummaryEl.textContent = `${bnNumber(earned)} / ${bnNumber(
+				BANGLA_MILESTONES.length
+			)} ব্যাজ`;
+			milestoneEmptyEl.hidden = earned > 0;
+		}
+
+		/** Keeps the dashboard buttons pointed at the next real step. */
+		function renderProgressActions(progress: PracticeProgress, weakCount: number) {
+			const nextLesson = nextLessonFor(progress);
+			const hasProgress = Object.keys(progress.lessons).length > 0;
+			progressContinueBtn.textContent = hasProgress
+				? `শেখা চালিয়ে যান — পাঠ ${nextLesson.number}`
+				: `পাঠ ${nextLesson.number} শুরু করুন`;
+			progressWeakBtn.textContent =
+				weakCount > 0 ? 'দুর্বল অক্ষর নিয়ে অনুশীলন' : 'বর্ণ অনুশীলন শুরু করুন';
+			progressWeakBtn.dataset.intent = weakCount > 0 ? 'revision' : 'letters';
 		}
 
 		function renderProgress() {
@@ -1096,9 +2358,15 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 				averageAccuracy === null ? '—' : `${bnNumber(averageAccuracy)}%`;
 			progressTimeEl.textContent = formatDuration(progress.totalTimeMs);
 			progressWordsEl.textContent = bnNumber(progress.totalWords);
+
+			// Yesterday still counts as an alive streak; a gap of two days means it lapsed.
+			const streakGap = progress.streakLastDate
+				? dayGap(progress.streakLastDate, localDateKey())
+				: Number.POSITIVE_INFINITY;
+			const liveStreak = streakGap <= 1 ? Math.max(1, progress.streakCurrent) : 0;
 			progressStreakEl.textContent =
-				progress.streakCurrent > 0
-					? `${bnNumber(progress.streakCurrent)} দিন (সেরা ${bnNumber(progress.streakBest)})`
+				liveStreak > 0
+					? `${bnNumber(liveStreak)} দিন (সেরা ${bnNumber(progress.streakBest)})`
 					: '—';
 			progressBestEl.textContent = progress.bestSession
 				? progress.bestSession.cpm > 0
@@ -1109,7 +2377,11 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			progressBarEl.style.width = `${percent.toFixed(1)}%`;
 			progressTrackEl.setAttribute('aria-valuenow', String(Math.round(percent)));
 
-			renderWeakGlyphs();
+			renderWeekChart(progress);
+			renderMilestones(progress);
+			const weakCount = renderWeakGlyphs();
+			renderProgressActions(progress, weakCount);
+			renderCurriculum();
 		}
 
 		function recordSession(
@@ -1153,6 +2425,26 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			progress.streakLastDate = today;
 			progress.streakBest = Math.max(progress.streakBest, progress.streakCurrent);
 
+			const day = progress.days[today] ?? {
+				sessions: 0,
+				practiceMs: 0,
+				correctChars: 0,
+				accuracySum: 0,
+			};
+			day.sessions += 1;
+			day.practiceMs += Math.max(0, stats.ms);
+			day.correctChars += Math.max(0, stats.correct);
+			day.accuracySum += stats.accuracy;
+			progress.days[today] = day;
+
+			// Keep the daily history bounded so long-term use cannot grow storage forever.
+			const dayKeys = Object.keys(progress.days).sort();
+			if (dayKeys.length > MAX_DAILY_RECORDS) {
+				for (const key of dayKeys.slice(0, dayKeys.length - MAX_DAILY_RECORDS)) {
+					delete progress.days[key];
+				}
+			}
+
 			if (lessonId) {
 				const existing = progress.lessons[lessonId] ?? {
 					attempts: 0,
@@ -1175,7 +2467,21 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 
 		function elapsedMs(): number {
 			if (startedAt === null) return 0;
-			return (finishedAt ?? Date.now()) - startedAt;
+			const end = finishedAt ?? pausedAt ?? Date.now();
+			return Math.max(0, end - startedAt - pausedTotalMs);
+		}
+
+		/** Remaining time for timed challenges; null when the drill has no clock. */
+		function timeRemainingMs(): number | null {
+			if (!currentChallenge || currentChallenge.timeLimitSec <= 0) return null;
+			return Math.max(0, currentChallenge.timeLimitSec * 1000 - elapsedMs());
+		}
+
+		function checkTimeLimit() {
+			if (finished || composing || pausedAt !== null || startedAt === null) return;
+			const remaining = timeRemainingMs();
+			if (remaining === null || remaining > 0) return;
+			finishAttempt('time');
 		}
 
 		function stopTimer() {
@@ -1188,8 +2494,37 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		function startTimer() {
 			if (timerId !== null) return;
 			timerId = window.setInterval(() => {
-				if (!finished) updateMetrics();
+				if (finished || pausedAt !== null) return;
+				updateMetrics();
+				checkTimeLimit();
 			}, 250);
+		}
+
+		/** Pause freezes the clock and locks the field; resume adds the idle span back to the paused total. */
+		function setPaused(paused: boolean) {
+			if (!current || finished) return;
+			if (paused) {
+				if (pausedAt !== null || startedAt === null) return;
+				pausedAt = Date.now();
+				stopTimer();
+			} else {
+				if (pausedAt === null) return;
+				pausedTotalMs += Math.max(0, Date.now() - pausedAt);
+				pausedAt = null;
+				startTimer();
+			}
+			input.readOnly = paused;
+			pauseNote.hidden = !paused;
+			pauseBtn.textContent = paused ? 'চালিয়ে যান' : 'পজ করুন';
+			pauseBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+			liveHint.hidden = true;
+			setStatus(
+				paused
+					? 'অনুশীলন থামানো আছে। প্রস্তুত হলে "চালিয়ে যান" চাপুন।'
+					: 'আবার শুরু হয়েছে—যেখানে ছিলেন সেখান থেকেই টাইপ করুন।'
+			);
+			updateMetrics();
+			if (!paused) input.focus({ preventScroll: true });
 		}
 
 		/**
@@ -1214,7 +2549,33 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			const ms = elapsedMs();
 			// Speed only becomes meaningful after a full second; shorter spans report null, not a fake number.
 			const cpm = ms >= 1000 ? correct / (ms / 60000) : null;
-			return { typed, total, correct, incorrect, mismatched, extra, missing, accuracy, progress, ms, cpm };
+
+			// A wrong grapheme is traced back to its target word, so word feedback never breaks on spacing.
+			const wrongWordIndexes = new Set<number>();
+			for (let i = 0; i < overlap; i += 1) {
+				if (typed[i] === targetGlyphs[i]) continue;
+				const wordIndex = glyphWordIndex[i] ?? -1;
+				if (wordIndex >= 0) wrongWordIndexes.add(wordIndex);
+			}
+			const wrongWords = [...wrongWordIndexes]
+				.map((index) => targetWords[index]?.text ?? '')
+				.filter((word) => word.length > 0);
+
+			return {
+				typed,
+				total,
+				correct,
+				incorrect,
+				mismatched,
+				extra,
+				missing,
+				accuracy,
+				progress,
+				ms,
+				cpm,
+				position: Math.min(typed.length, total),
+				wrongWords,
+			};
 		}
 
 		function paintTarget(typed: string[]) {
@@ -1232,20 +2593,93 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			}
 		}
 
+		/** Names the first mismatch so the learner knows exactly what to fix. */
+		function updateLiveHint() {
+			// Concealed targets must not reappear through the hint text.
+			if (finished || !current || targetHidden) {
+				liveHint.hidden = true;
+				return;
+			}
+			const typed = splitGraphemes(input.value);
+			let message = '';
+			for (let i = 0; i < typed.length; i += 1) {
+				if (i >= targetGlyphs.length) {
+					message = `অতিরিক্ত অক্ষর "${typed[i]}" টাইপ হয়েছে—মুছে ফেলুন।`;
+					break;
+				}
+				if (typed[i] !== targetGlyphs[i]) {
+					message = `লক্ষ্য "${targetGlyphs[i]}" · আপনি টাইপ করেছেন "${typed[i]}"`;
+					break;
+				}
+			}
+			liveHint.textContent = message;
+			liveHint.hidden = message === '';
+		}
+
+		/** Mirrors the live challenge state: countdown, WPM and accuracy, or mistake count. */
+		function updateChallengeBanner(stats: ReturnType<typeof analyze>) {
+			if (!currentChallenge) {
+				challengeBanner.hidden = true;
+				return;
+			}
+			challengeBanner.hidden = false;
+
+			const timed = currentChallenge.timeLimitSec > 0;
+			const remaining = timeRemainingMs();
+			const wpm = wordsPerMinute(stats.correct, stats.ms);
+
+			challengeTitleEl.textContent = currentChallenge.label;
+			challengeHintEl.textContent = currentChallenge.hint;
+			challengeBadgeEl.textContent = currentChallenge.badge;
+			challengeWpmEl.textContent = wpm === null ? '—' : bnNumber(wpm);
+			challengeAccuracyEl.textContent =
+				stats.typed.length > 0 ? `${bnNumber(stats.accuracy)}%` : '—';
+			challengeExtraLabelEl.textContent = timed ? 'বাকি সময়' : 'ভুল অক্ষর';
+			challengeExtraEl.textContent = timed
+				? formatDuration(remaining ?? 0)
+				: bnNumber(stats.incorrect);
+			challengeBanner.dataset.state =
+				timed && !finished && (remaining ?? 0) <= 10000 ? 'urgent' : 'normal';
+		}
+
 		function updateMetrics() {
 			const stats = analyze();
 			speedEl.textContent = stats.cpm === null ? '—' : bnNumber(stats.cpm);
 			metricAccuracyEl.textContent = `${bnNumber(stats.accuracy)}%`;
 			timeEl.textContent = formatDuration(stats.ms);
-			progressEl.textContent = `${bnNumber(stats.total - stats.missing)} / ${bnNumber(stats.total)}`;
+			progressEl.textContent = `${bnNumber(stats.position)} / ${bnNumber(stats.total)}`;
 			progressTrack.setAttribute('aria-valuenow', String(Math.round(stats.progress * 100)));
 			progressBar.style.width = `${(stats.progress * 100).toFixed(1)}%`;
 
+			feedbackPositionEl.textContent = `${bnNumber(stats.position)} / ${bnNumber(stats.total)}`;
+			feedbackCorrectEl.textContent = bnNumber(stats.correct);
+			feedbackWrongEl.textContent = bnNumber(stats.mismatched);
+			feedbackMissingEl.textContent = bnNumber(stats.missing);
+			// While typing the remainder is just "left"; once finished it really was missed.
+			feedbackMissingLabelEl.textContent = finished ? 'বাদ পড়া অক্ষর' : 'বাকি অক্ষর';
+			feedbackExtraEl.textContent = bnNumber(stats.extra);
+
 			paintTarget(stats.typed);
+			updateLiveHint();
+			updateChallengeBanner(stats);
+		}
+
+		/** Hiding the target keeps its height so nothing shifts, while glyph colours stop leaking answers. */
+		function renderTargetVisibility() {
+			targetEl.classList.toggle('is-concealed', targetHidden);
+			targetEl.setAttribute('aria-hidden', targetHidden ? 'true' : 'false');
+			toggleTargetBtn.textContent = targetHidden ? 'লক্ষ্য লেখা দেখান' : 'লক্ষ্য লেখা লুকান';
+			toggleTargetBtn.setAttribute('aria-pressed', targetHidden ? 'true' : 'false');
 		}
 
 		function renderTarget(text: string) {
 			targetGlyphs = splitGraphemes(text);
+			targetWords = clusterWords(targetGlyphs);
+			glyphWordIndex = new Array(targetGlyphs.length).fill(-1);
+			targetWords.forEach((word, wordIndex) => {
+				for (let i = word.start; i < word.end; i += 1) glyphWordIndex[i] = wordIndex;
+			});
+
 			glyphEls = [];
 			const fragment = document.createDocumentFragment();
 			for (const glyph of targetGlyphs) {
@@ -1258,6 +2692,7 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			}
 			targetEl.textContent = '';
 			targetEl.append(fragment);
+			renderTargetVisibility();
 		}
 
 		function addMistake(glyph: string) {
@@ -1268,15 +2703,126 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		}
 
 		function recordMistakes(typed: string[]) {
+			let changed = false;
 			for (let i = 0; i < typed.length && i < targetGlyphs.length; i += 1) {
 				if (typed[i] !== targetGlyphs[i] && !recordedMistakes.has(i)) {
 					recordedMistakes.add(i);
 					addMistake(targetGlyphs[i]);
+					sessionMistakes.set(targetGlyphs[i], (sessionMistakes.get(targetGlyphs[i]) ?? 0) + 1);
+					const wordIndex = glyphWordIndex[i] ?? -1;
+					const word = wordIndex >= 0 ? targetWords[wordIndex]?.text : '';
+					if (word) sessionWrongWords.set(word, (sessionWrongWords.get(word) ?? 0) + 1);
+					changed = true;
 				}
 			}
+			if (changed) renderMistakeDrill();
 		}
 
-		function syncSelection(source: { kind: 'lesson' | 'mode'; id: string } | null) {
+		/** Glyphs missed in this attempt, most frequent first. */
+		function focusedMistakes(): Array<[string, number]> {
+			return [...sessionMistakes.entries()]
+				.filter(([glyph, count]) => glyph.trim().length > 0 && count > 0)
+				.sort((a, b) => b[1] - a[1]);
+		}
+
+		/** Words missed in this attempt, most frequent first. */
+		function sortedSessionWords(): Array<[string, number]> {
+			return [...sessionWrongWords.entries()]
+				.filter(([word, count]) => word.trim().length > 0 && count > 0)
+				.sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'bn'));
+		}
+
+		function fillChips(container: HTMLElement, chips: Array<{ text: string; className: string }>) {
+			container.textContent = '';
+			const fragment = document.createDocumentFragment();
+			for (const chip of chips) {
+				const span = document.createElement('span');
+				span.className = chip.className;
+				span.textContent = chip.text;
+				fragment.append(span);
+			}
+			container.append(fragment);
+		}
+
+		/** Session error summary: graphemes plus the words they belonged to. */
+		function renderMistakeDrill() {
+			if (!current) {
+				mistakeDrillEl.hidden = true;
+				return;
+			}
+			const glyphs = focusedMistakes().slice(0, 6);
+			const words = sortedSessionWords()
+				.slice(0, 6)
+				.map(([word]) => word);
+
+			if (glyphs.length === 0 && words.length === 0) {
+				mistakeDrillEl.hidden = true;
+				return;
+			}
+
+			const scope: string[] = [];
+			if (glyphs.length > 0) scope.push(`${bnNumber(glyphs.length)}টি অক্ষরে`);
+			if (words.length > 0) scope.push(`${bnNumber(words.length)}টি শব্দে`);
+			mistakeDrillTextEl.textContent = `${scope.join(
+				' ও '
+			)} ভুল হয়েছে। নিচের ভুলগুলো আলাদা করে অনুশীলন করলে সংশোধন দ্রুত হবে।`;
+
+			fillChips(
+				mistakeGlyphsEl,
+				glyphs.map(([glyph, count]) => ({
+					text: `${glyph} · ${bnNumber(count)}`,
+					className: 'bp-weak-chip',
+				}))
+			);
+			mistakeGlyphBlock.hidden = glyphs.length === 0;
+
+			fillChips(
+				mistakeWordsEl,
+				words.map((word) => ({ text: word, className: 'bp-word-chip' }))
+			);
+			mistakeWordBlock.hidden = words.length === 0;
+
+			mistakeDrillEl.hidden = false;
+		}
+
+		function startMistakeDrill() {
+			if (!current) return;
+			const glyphs = focusedMistakes()
+				.slice(0, 6)
+				.map(([glyph]) => glyph);
+			const words = sortedSessionWords()
+				.slice(0, 6)
+				.map(([word]) => word);
+			const target = words.length > 0 ? words.join(' ') : glyphs.join(' ');
+			if (!target) return;
+
+			const minAccuracy = current.minAccuracy;
+			const summaryParts: string[] = [];
+			if (words.length > 0) summaryParts.push(words.map((word) => `"${word}"`).join(', '));
+			if (glyphs.length > 0) summaryParts.push(glyphs.map((glyph) => `"${glyph}"`).join(', '));
+
+			startExercise(
+				{
+					key: `mistake-${Date.now()}`,
+					kind: 'drill',
+					title: 'ভুল অক্ষর ও শব্দের ড্রিল',
+					source: 'অতিরিক্ত অনুশীলন',
+					difficulty: 'লক্ষ্যভিত্তিক',
+					minAccuracy,
+					summary: `${summaryParts.join(
+						' · '
+					)} — এই ভুলগুলো আপনার এই সেশনে বারবার হয়েছে। ছোট এই ড্রিলে ঠিকভাবে টাইপ করলেই সংশোধন হয়ে যাবে।`,
+					criteria: `ড্রিলটি সম্পূর্ণ টাইপ করুন, ন্যূনতম ${bnNumber(minAccuracy)}% নির্ভুলতায়।`,
+					target,
+				},
+				{ scroll: true }
+			);
+			setStatus(
+				`${bnNumber(words.length + glyphs.length)}টি লক্ষ্য নিয়ে নতুন ড্রিল তৈরি হয়েছে—শুধু আপনার ভুলগুলোই এতে আছে।`
+			);
+		}
+
+		function syncSelection(source: { kind: 'lesson' | 'mode' | 'challenge'; id: string } | null) {
 			for (const button of lessonButtons) {
 				const active = source?.kind === 'lesson' && button.dataset.lessonId === source.id;
 				button.classList.toggle('is-active', active);
@@ -1287,26 +2833,52 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 				button.classList.toggle('is-active', active);
 				button.setAttribute('aria-pressed', active ? 'true' : 'false');
 			}
+			for (const button of challengeButtons) {
+				const active = source?.kind === 'challenge' && button.dataset.challengeId === source.id;
+				button.classList.toggle('is-active', active);
+				button.setAttribute('aria-pressed', active ? 'true' : 'false');
+			}
 		}
 
 		function updateActionVisibility() {
+			const timedChallenge = currentChallenge !== null && currentChallenge.timeLimitSec > 0;
 			nextLessonBtn.hidden = !(
 				current?.kind === 'lesson' &&
 				currentLessonIndex >= 0 &&
 				currentLessonIndex < BANGLA_LESSONS.length - 1
 			);
-			newDrillBtn.hidden = !(current?.kind === 'drill' && currentModeId !== null);
+			newDrillBtn.hidden = !(
+				current?.kind === 'drill' &&
+				(currentModeId !== null || current.challengeId !== undefined)
+			);
+			// A running countdown cannot be paused without handing out free time.
+			pauseBtn.hidden = !current || finished || timedChallenge;
+			// Pausing before a single keystroke would leave nothing to resume.
+			pauseBtn.disabled = startedAt === null;
+			toggleTargetBtn.disabled = !current;
 		}
 
-		function startExercise(exercise: Exercise, options: { focus?: boolean } = {}) {
+		function startExercise(
+			exercise: Exercise,
+			options: { focus?: boolean; scroll?: boolean } = {}
+		) {
 			current = exercise;
+			currentChallenge =
+				BANGLA_CHALLENGES.find((entry) => entry.id === exercise.challengeId) ?? null;
 			targetGlyphs = [];
 			recordedMistakes.clear();
+			sessionMistakes.clear();
+			sessionWrongWords.clear();
 			finished = false;
 			composing = false;
 			startedAt = null;
 			finishedAt = null;
+			pausedAt = null;
+			pausedTotalMs = 0;
 			stopTimer();
+			pauseNote.hidden = true;
+			pauseBtn.textContent = 'পজ করুন';
+			pauseBtn.setAttribute('aria-pressed', 'false');
 
 			titleEl.textContent = exercise.title;
 			sourceEl.textContent = exercise.source;
@@ -1314,69 +2886,184 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			accuracyEl.textContent = `ন্যূনতম নির্ভুলতা ${bnNumber(exercise.minAccuracy)}%`;
 			summaryEl.textContent = exercise.summary;
 			criteriaEl.textContent = `সম্পন্ন করার শর্ত: ${exercise.criteria}`;
+			completionLabelEl.textContent = currentChallenge ? 'চ্যালেঞ্জের ফলাফল' : 'পাঠের ফলাফল';
+
+			const lesson =
+				exercise.kind === 'lesson'
+					? BANGLA_LESSONS.find((entry) => entry.id === exercise.key)
+					: undefined;
+			lessonBrief.hidden = !lesson;
+			if (lesson) lessonExplanationEl.textContent = lesson.explanation;
+			renderLayoutGuide();
 
 			input.value = '';
 			input.readOnly = false;
 			renderTarget(exercise.target);
 			exercisePanel.hidden = false;
+			completionCard.hidden = true;
+			liveHint.hidden = true;
+			liveHint.textContent = '';
+			mistakeDrillEl.hidden = true;
 			setStatus('');
 			setResult(null);
 			updateMetrics();
 			updateActionVisibility();
-			if (options.focus !== false) input.focus();
+			if (options.focus !== false) input.focus({ preventScroll: true });
+			if (options.scroll) {
+				exercisePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
 		}
 
 		function checkCompletion() {
 			if (finished || !current || targetGlyphs.length === 0) return;
 			const typed = splitGraphemes(input.value);
 			if (typed.length < targetGlyphs.length) return;
+			finishAttempt('complete');
+		}
+
+		function finishAttempt(reason: 'complete' | 'time') {
+			if (finished || !current || targetGlyphs.length === 0) return;
 
 			finished = true;
 			finishedAt = Date.now();
 			stopTimer();
 			input.readOnly = true;
 			updateMetrics();
+			updateActionVisibility();
 
 			const stats = analyze();
-			const success = stats.accuracy >= current.minAccuracy;
+			const typedCount = stats.typed.length;
+			const success = typedCount > 0 && stats.accuracy >= current.minAccuracy;
+			const isChallenge = currentChallenge !== null;
+			const timedOut = reason === 'time';
 			const speedSummary =
 				stats.cpm === null
 					? 'গতি পরিমাপ হয়নি (১ সেকেন্ডের কম সময়)'
 					: `গতি ${bnNumber(stats.cpm)} অক্ষর/মিনিট`;
-			setStatus(
-				success
-					? `${current.title} সম্পন্ন হয়েছে। নির্ভুলতা ${bnNumber(stats.accuracy)}%। চাইলে পরের পাঠে যান বা একই পাঠ আবার করুন।`
-					: `লেখাটি শেষ হয়েছে, তবে নির্ভুলতা ${bnNumber(stats.accuracy)}% — লক্ষ্য ${bnNumber(current.minAccuracy)}%। "আবার শুরু করুন" চেপে আবার চেষ্টা করুন।`
-			);
+			const wpm = wordsPerMinute(stats.correct, stats.ms);
+			const wpmSummary = isChallenge && wpm !== null ? ` · ${bnNumber(wpm)} শব্দ/মিনিট` : '';
+
+			liveHint.hidden = true;
+			completionCard.hidden = false;
+			completionCard.dataset.state = success ? 'success' : 'retry';
+
+			if (isChallenge) {
+				completionTitleEl.textContent = timedOut
+					? 'সময় শেষ—এই এক মিনিটের ফলাফল'
+					: success
+						? `${current.title} সম্পন্ন হয়েছে`
+						: `${current.title}—আরেকটু নির্ভুলতা দরকার`;
+			} else {
+				completionTitleEl.textContent = success
+					? `${current.title} সম্পন্ন হয়েছে`
+					: 'এখনো সম্পন্ন হয়নি';
+			}
+
+			completionAccuracyEl.textContent =
+				typedCount > 0 ? `${bnNumber(stats.accuracy)}%` : '—';
+			completionSpeedEl.textContent = stats.cpm === null ? '—' : bnNumber(stats.cpm);
+			completionTimeEl.textContent = formatDuration(stats.ms);
+			completionMistakesEl.textContent = bnNumber(stats.incorrect);
+
+			if (isChallenge) {
+				if (timedOut) {
+					completionNextEl.textContent = `৬০ সেকেন্ডে ${bnNumber(
+						stats.correct
+					)}টি সঠিক অক্ষর। "আবার শুরু করুন" চেপে আরেকবার চেষ্টা করুন।`;
+				} else if (success) {
+					completionNextEl.textContent = `নির্ভুলতা ${bnNumber(
+						stats.accuracy
+					)}% — চমৎকার! চাইলে একই চ্যালেঞ্জ আবার খেলুন বা নতুন ড্রিল নিন।`;
+				} else {
+					completionNextEl.textContent = `লক্ষ্য ${bnNumber(
+						current.minAccuracy
+					)}% নির্ভুলতা, আপনি পেয়েছেন ${bnNumber(
+						stats.accuracy
+					)}%। "আবার শুরু করুন" চেপে আবার চেষ্টা করুন।`;
+				}
+			} else {
+				const nextLesson = BANGLA_LESSONS[currentLessonIndex + 1];
+				completionNextEl.textContent = success
+					? nextLesson
+						? `পরের পাঠ: ${nextLesson.number} · ${nextLesson.title}`
+						: 'সব পাঠ শেষ—যেকোনো পাঠ আবার অনুশীলন করতে পারেন।'
+					: `লক্ষ্য ${bnNumber(
+							current.minAccuracy
+					  )}% নির্ভুলতা। "আবার শুরু করুন" চেপে আবার চেষ্টা করুন।`;
+			}
+
+			if (isChallenge) {
+				setStatus(
+					timedOut
+						? `সময় শেষ। ${bnNumber(stats.correct)}টি সঠিক অক্ষর, নির্ভুলতা ${bnNumber(
+								stats.accuracy
+						  )}%। "আবার শুরু করুন" চেপে আবার চেষ্টা করুন।`
+						: success
+							? `${current.title} সম্পন্ন হয়েছে। নির্ভুলতা ${bnNumber(
+									stats.accuracy
+							  )}%। চাইলে একই চ্যালেঞ্জ আবার খেলুন বা নতুন ড্রিল নিন।`
+							: `ড্রিলটি শেষ হয়েছে, তবে নির্ভুলতা ${bnNumber(
+									stats.accuracy
+							  )}% — লক্ষ্য ${bnNumber(
+									current.minAccuracy
+							  )}%। "আবার শুরু করুন" চেপে আবার চেষ্টা করুন।`
+				);
+			} else {
+				setStatus(
+					success
+						? `${current.title} সম্পন্ন হয়েছে। নির্ভুলতা ${bnNumber(stats.accuracy)}%। চাইলে পরের পাঠে যান বা একই পাঠ আবার করুন।`
+						: `লেখাটি শেষ হয়েছে, তবে নির্ভুলতা ${bnNumber(stats.accuracy)}% — লক্ষ্য ${bnNumber(current.minAccuracy)}%। "আবার শুরু করুন" চেপে আবার চেষ্টা করুন।`
+				);
+			}
+
+			const wordSummary =
+				stats.wrongWords.length > 0
+					? ` · ভুল শব্দ ${bnNumber(stats.wrongWords.length)}টি`
+					: '';
 			setResult(
-				`${speedSummary} · সময় ${formatDuration(stats.ms)} · ভুল ${bnNumber(
+				`${speedSummary}${wpmSummary} · সময় ${formatDuration(stats.ms)} · ভুল ${bnNumber(
 					stats.incorrect
-				)}টি · সঠিক ${bnNumber(stats.correct)} / ${bnNumber(stats.total)} অক্ষর`
+				)}টি${wordSummary} · সঠিক ${bnNumber(stats.correct)} / ${bnNumber(stats.total)} অক্ষর`
 			);
 
-			recordSession(stats, current.kind === 'lesson' ? current.key : null, success, current.target);
+			renderMistakeDrill();
+			// A timed run that ended before a single keystroke is not a real session.
+			if (typedCount > 0) {
+				recordSession(
+					stats,
+					current.kind === 'lesson' ? current.key : null,
+					success,
+					timedOut ? stats.typed.join('') : current.target
+				);
+			}
 		}
 
 		function handleInput() {
-			if (finished || composing) return;
+			if (finished || composing || pausedAt !== null) return;
 			const typed = splitGraphemes(input.value);
 
-			if (typed.length === 0) {
+			if (typed.length === 0 && !(currentChallenge && currentChallenge.timeLimitSec > 0)) {
 				// Clearing the field restarts the clock instead of leaving a stalled timer behind.
 				stopTimer();
 				startedAt = null;
 				finishedAt = null;
+				updateActionVisibility();
 			} else if (startedAt === null) {
 				startedAt = Date.now();
 				startTimer();
+				updateActionVisibility();
 			}
 
 			recordMistakes(typed);
 			updateMetrics();
+			checkTimeLimit();
 			checkCompletion();
 		}
 
-		function selectLesson(lessonId: string, focus = true) {
+		function selectLesson(
+			lessonId: string,
+			options: { focus?: boolean; scroll?: boolean; syncLevel?: boolean } = {}
+		) {
 			const index = BANGLA_LESSONS.findIndex((lesson) => lesson.id === lessonId);
 			if (index === -1) return;
 			const lesson = BANGLA_LESSONS[index];
@@ -1384,8 +3071,14 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			currentModeId = null;
 			customPanel.hidden = true;
 			revisionEmpty.hidden = true;
+			// Follow the lesson's level so the curriculum always highlights the lesson being practised.
+			if (options.syncLevel !== false && lesson.level !== levelId) {
+				levelId = lesson.level;
+				storeChoice(LEVEL_STORE_KEY, levelId);
+				renderLevel();
+			}
 			syncSelection({ kind: 'lesson', id: lesson.id });
-			startExercise(lessonExercise(lesson), { focus });
+			startExercise(lessonExercise(lesson), options);
 		}
 
 		function getRevisionGlyphs(): string[] {
@@ -1396,12 +3089,13 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 				.map(([glyph]) => glyph);
 		}
 
-		function selectMode(modeId: BanglaPracticeModeId) {
+		function selectMode(modeId: BanglaPracticeModeId, options: { scroll?: boolean } = {}) {
 			const mode = PRACTICE_MODES.find((entry) => entry.id === modeId);
 			if (!mode) return;
 
 			currentModeId = mode.id;
 			currentLessonIndex = -1;
+			currentChallenge = null;
 			customPanel.hidden = mode.kind !== 'custom';
 			revisionEmpty.hidden = true;
 			syncSelection({ kind: 'mode', id: mode.id });
@@ -1427,38 +3121,66 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 					revisionEmpty.hidden = false;
 					return;
 				}
-				startExercise({
-					key: `revision-${Date.now()}`,
-					kind: 'revision',
-					title: mode.label,
-					source: 'অনুশীলন মোড',
-					difficulty: mode.difficulty,
-					minAccuracy: mode.minAccuracy,
-					summary: mode.summary,
-					criteria: `আপনার জমে থাকা ভুল অক্ষরগুলো সম্পূর্ণ টাইপ করুন, ন্যূনতম ${bnNumber(
-						mode.minAccuracy
-					)}% নির্ভুলতায়।`,
-					target: glyphs.join(' '),
-				});
+				startExercise(
+					{
+						key: `revision-${Date.now()}`,
+						kind: 'revision',
+						title: mode.label,
+						source: 'অনুশীলন মোড',
+						difficulty: mode.difficulty,
+						minAccuracy: mode.minAccuracy,
+						summary: mode.summary,
+						criteria: `আপনার জমে থাকা ভুল অক্ষরগুলো সম্পূর্ণ টাইপ করুন, ন্যূনতম ${bnNumber(
+							mode.minAccuracy
+						)}% নির্ভুলতায়।`,
+						target: glyphs.join(' '),
+					},
+					options
+				);
 				setStatus(
 					`আপনার জমে থাকা ${bnNumber(glyphs.length)}টি ভুল অক্ষর থেকে ড্রিল তৈরি হয়েছে। যেগুলো বেশি ভুল হয়েছে সেগুলো আগে আছে।`
 				);
 				return;
 			}
 
-			startExercise({
-				key: `${mode.id}-${Date.now()}`,
-				kind: 'drill',
-				title: mode.label,
-				source: 'অনুশীলন মোড',
-				difficulty: mode.difficulty,
-				minAccuracy: mode.minAccuracy,
-				summary: mode.summary,
-				criteria: `পুরো ড্রিলটি সম্পূর্ণ টাইপ করুন, ন্যূনতম ${bnNumber(
-					mode.minAccuracy
-				)}% নির্ভুলতায়।`,
-				target: generateDrill(mode),
-			});
+			startExercise(
+				{
+					key: `${mode.id}-${Date.now()}`,
+					kind: 'drill',
+					title: mode.label,
+					source: 'অনুশীলন মোড',
+					difficulty: mode.difficulty,
+					minAccuracy: mode.minAccuracy,
+					summary: mode.summary,
+					criteria: `পুরো ড্রিলটি সম্পূর্ণ টাইপ করুন, ন্যূনতম ${bnNumber(
+						mode.minAccuracy
+					)}% নির্ভুলতায়।`,
+					target: generateDrill(mode),
+				},
+				options
+			);
+		}
+
+		function selectChallenge(
+			challengeId: BanglaChallengeId,
+			options: { scroll?: boolean } = {}
+		) {
+			const challenge = BANGLA_CHALLENGES.find((entry) => entry.id === challengeId);
+			if (!challenge) return;
+
+			currentModeId = null;
+			currentLessonIndex = -1;
+			customPanel.hidden = true;
+			revisionEmpty.hidden = true;
+			syncSelection({ kind: 'challenge', id: challenge.id });
+			startExercise(challengeExercise(challenge), options);
+			setStatus(
+				challenge.timeLimitSec > 0
+					? `${challenge.label} শুরু হয়েছে। টাইপ শুরু করলেই ${bnNumber(
+							challenge.timeLimitSec
+					  )} সেকেন্ডের ঘড়ি চলবে।`
+					: `${challenge.label} শুরু হয়েছে। ${challenge.hint}`
+			);
 		}
 
 		function startCustomText() {
@@ -1508,6 +3230,63 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			});
 		}
 
+		for (const button of challengeButtons) {
+			button.addEventListener('click', () => {
+				const challengeId = button.dataset.challengeId as BanglaChallengeId | undefined;
+				if (challengeId) selectChallenge(challengeId, { scroll: true });
+			});
+		}
+
+		for (const button of keyboardButtons) {
+			button.addEventListener('click', () => {
+				const id = button.dataset.keyboardId as BanglaKeyboardId | undefined;
+				if (!id || id === keyboardId) return;
+				keyboardId = id;
+				storeChoice(KEYBOARD_STORE_KEY, id);
+				renderKeyboard();
+			});
+		}
+
+		for (const button of levelButtons) {
+			button.addEventListener('click', () => {
+				const id = button.dataset.levelId as BanglaTypingLevelId | undefined;
+				if (!id) return;
+				levelId = id;
+				storeChoice(LEVEL_STORE_KEY, id);
+				renderLevel();
+			});
+		}
+
+		toggleAllBtn.addEventListener('click', () => {
+			showAllLessons = !showAllLessons;
+			renderLevel();
+		});
+
+		continueBtn.addEventListener('click', () => {
+			selectLesson(nextLessonFor(readProgress()).id, { scroll: true });
+		});
+
+		progressContinueBtn.addEventListener('click', () => {
+			selectLesson(nextLessonFor(readProgress()).id, { scroll: true });
+		});
+
+		progressWeakBtn.addEventListener('click', () => {
+			const intent = progressWeakBtn.dataset.intent === 'revision' ? 'revision' : 'letters';
+			selectMode(intent, { scroll: true });
+			progressStatusEl.textContent =
+				intent === 'revision'
+					? 'আপনার জমে থাকা ভুল অক্ষর দিয়ে ড্রিল শুরু হয়েছে।'
+					: 'এখনো ভুলের তথ্য নেই, তাই বর্ণ অনুশীলন দিয়ে শুরু করুন।';
+		});
+
+		quickWordsBtn.addEventListener('click', () => selectMode('words', { scroll: true }));
+		quickSentencesBtn.addEventListener('click', () => selectMode('sentences', { scroll: true }));
+		quickParagraphsBtn.addEventListener('click', () =>
+			selectMode('paragraphs', { scroll: true })
+		);
+		quickCustomBtn.addEventListener('click', () => selectMode('custom', { scroll: true }));
+		mistakeDrillBtn.addEventListener('click', startMistakeDrill);
+
 		input.addEventListener('input', (event) => {
 			// IME (Avro/Bijoy/Ridmik) commits arrive as composition events; never score uncommitted text.
 			if (event.isComposing || composing) return;
@@ -1533,13 +3312,23 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 			startExercise(current);
 		});
 
+		pauseBtn.addEventListener('click', () => setPaused(pausedAt === null));
+
+		toggleTargetBtn.addEventListener('click', () => {
+			targetHidden = !targetHidden;
+			renderTargetVisibility();
+			updateLiveHint();
+		});
+
 		nextLessonBtn.addEventListener('click', () => {
 			const next = BANGLA_LESSONS[currentLessonIndex + 1];
-			if (next) selectLesson(next.id);
+			if (next) selectLesson(next.id, { scroll: true });
 		});
 
 		newDrillBtn.addEventListener('click', () => {
-			if (currentModeId) selectMode(currentModeId);
+			const activeChallengeId = current?.challengeId;
+			if (activeChallengeId) selectChallenge(activeChallengeId);
+			else if (currentModeId) selectMode(currentModeId);
 		});
 
 		useCustomBtn?.addEventListener('click', startCustomText);
@@ -1576,7 +3365,9 @@ const levelTones: Record<string, "mint" | "sand" | "orange"> = {
 		});
 
 		// Start on lesson 01 so the workspace is usable immediately (without stealing focus on load).
-		selectLesson(BANGLA_LESSONS[0].id, false);
+		renderKeyboard();
+		renderLevel();
+		selectLesson(BANGLA_LESSONS[0].id, { focus: false, scroll: false, syncLevel: false });
 		renderProgress();
 	}
 </script>

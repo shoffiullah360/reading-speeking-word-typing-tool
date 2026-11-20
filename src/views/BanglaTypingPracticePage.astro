@@ -5,6 +5,11 @@ import BanglaTypingPractice from "../components/BanglaTypingPractice.astro";
 import RelatedTools from "../components/RelatedTools.astro";
 import Footer from "../components/Footer.astro";
 import { resolveCanonicalUrl, STANDALONE_TOOLS } from "../config/site";
+import {
+	BIJOY_SIGN_EXAMPLES,
+	INPUT_SETUP_STEPS,
+	TYPING_MISTAKES,
+} from "../data/banglaKeyboardGuide";
 
 // Root-level Bengali page: single canonical URL, <html lang="bn">, no hreflang alternates.
 const pageTitle = "বাংলা টাইপিং প্র্যাকটিস – শিখুন ও অনুশীলন করুন | Wordora";
@@ -13,6 +18,9 @@ const pageDescription =
 const canonicalUrl = resolveCanonicalUrl("/bangla-typing-practice/");
 const practiceTool = STANDALONE_TOOLS.find((tool) => tool.id === "bangla-typing-practice");
 
+const bengaliDigits = (value: number) =>
+	String(value).replace(/[0-9]/g, (digit) => "০১২৩৪৫৬৭৮৯"[Number(digit)]);
+
 /** Avro phonetic examples only — Wordora itself does not convert Latin input to Bengali. */
 const phoneticExamples = [
 	{ input: "ami", output: "আমি" },
@@ -20,6 +28,9 @@ const phoneticExamples = [
 	{ input: "amar", output: "আমার" },
 	{ input: "tumi", output: "তুমি" },
 ];
+
+/** Rotating palette tone for the mistakes grid. */
+const guideTones = ["mint", "sand", "orange"] as const;
 
 /**
  * Avro phonetic key → Bengali, on a US QWERTY board.
@@ -325,7 +336,7 @@ const structuredData = {
 					অনুশীলন ক্ষেত্র
 				</h2>
 				<p class="bangla-copy text-[13px] text-mute">
-					আগে মোড বেছে নিন, তারপর নিচের পাঠ থেকে শুরু করুন।
+					আগে স্তর ও কীবোর্ড বেছে নিন, তারপর পাঠ শুরু করুন বা অনুশীলনের ধরন বেছে নিন।
 				</p>
 			</div>
 
@@ -353,6 +364,23 @@ const structuredData = {
 					কিবোর্ড ইনস্টল করে না বা বদলায় না—আপনার কম্পিউটারে থাকা অভ্র, বিজয় বা অন্য ইউনিকোড বাংলা
 					ইনপুট পদ্ধতিই বাংলা অক্ষর তৈরি করে।
 				</p>
+
+				<h3 class="bangla-copy mt-6 text-[16px] font-semibold text-ink">বাংলা ইনপুট চালু করার ধাপ</h3>
+				<ol class="bp-setup" aria-label="বাংলা ইনপুট চালু করার চার ধাপ">
+					{
+						INPUT_SETUP_STEPS.map((step, index) => (
+							<li class="bp-setup-item">
+								<span class="bp-setup-num tabular-nums" aria-hidden="true">
+									{bengaliDigits(index + 1)}
+								</span>
+								<div class="min-w-0">
+									<p class="bp-setup-title">{step.title}</p>
+									<p class="bp-setup-body">{step.body}</p>
+								</div>
+							</li>
+						))
+					}
+				</ol>
 			</div>
 
 			<div class="mt-6 flex flex-col gap-5">
@@ -398,7 +426,10 @@ const structuredData = {
 					<div class="bp-map-stack">
 						<div class="bp-map-block">
 							<h4 class="bp-map-title">স্বরবর্ণ</h4>
-							<p class="bp-map-desc">শব্দের শুরুতে বা অন্য স্বরের পরে এই পূর্ণ রূপগুলো আসে।</p>
+							<p class="bp-map-desc">
+								শব্দের শুরুতে বা অন্য স্বরের পরে এই পূর্ণ রূপগুলো আসে। ব্যঞ্জনের পরে একই কী কার
+								হিসেবে বসে—নিচের কারচিহ্ন তালিকা দেখুন।
+							</p>
 							<ul class="bp-map-list">
 								{
 									avroVowels.map((item) => (
@@ -443,7 +474,10 @@ const structuredData = {
 
 						<div class="bp-map-block">
 							<h4 class="bp-map-title">ব্যঞ্জনবর্ণ</h4>
-							<p class="bp-map-desc">প্রতিটি সারিতে বাঁ দিকে যা টাইপ করবেন, ডানে যা আসবে।</p>
+							<p class="bp-map-desc">
+								প্রতিটি সারিতে বাঁ দিকে যা টাইপ করবেন, ডানে যা আসবে। ছোট-বড় হাতের পার্থক্য বর্ণ
+								বদলে দেয়—<span class="bp-inkey">t</span> = ত, <span class="bp-inkey">T</span> = ট।
+							</p>
 							<ul class="bp-map-list">
 								{
 									avroConsonants.map((item) => (
@@ -589,7 +623,9 @@ const structuredData = {
 						<p class="bp-kb-note">
 							◌ চিহ্নটির মানে, ওই জায়গায় একটি ব্যঞ্জনবর্ণ বসবে। বিজয়ে
 							<span class="bp-inkey">ি</span> ও <span class="bp-inkey">ে</span> কার আগে লিখে তারপর
-							ব্যঞ্জনবর্ণ লিখতে হয়—<span class="bp-inkey">ি</span> + ক = কি।
+							ব্যঞ্জনবর্ণ লিখতে হয়—<span class="bp-inkey">ি</span> + ক = কি। স্বর ও ব্যঞ্জন একই
+							কী-এর দুই স্তরে ভাগ থাকে: <span class="bp-inkey">O</span> = গ,
+							<span class="bp-inkey">Shift+O</span> = ঘ।
 						</p>
 					</div>
 
@@ -619,6 +655,34 @@ const structuredData = {
 								</div>
 							))
 						}
+						<div class="bp-map-block">
+							<h4 class="bp-map-title">কার, ফলা ও যুক্তবর্ণ</h4>
+							<p class="bp-map-desc">
+								◌ চিহ্নের জায়গায় একটি ব্যঞ্জন বসবে। ি ও ে কার ব্যঞ্জনের আগে, া কার পরে লিখুন;
+								হসন্ত (G) দিয়ে যুক্তবর্ণ জোড়া লাগে।
+							</p>
+							<table class="bp-map-table">
+								<thead>
+									<tr>
+										<th scope="col">Key</th>
+										<th scope="col">চিহ্ন</th>
+										<th scope="col">উদাহরণ</th>
+									</tr>
+								</thead>
+								<tbody>
+									{BIJOY_SIGN_EXAMPLES.map((row) => (
+										<tr>
+											<td class="bp-map-input">{row.keys}</td>
+											<td class="bp-key-glyph" lang="bn">{row.sign}</td>
+											<td class="bp-key-example" lang="bn">{row.example}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+							<p class="bp-map-note">
+								উদাহরণে J = ক ও K = ত ধরা হয়েছে। Shift+A (র্) ব্যঞ্জনের আগে বসে—Shift+A J = র্ক।
+							</p>
+						</div>
 					</div>
 
 					<p class="bangla-copy bp-map-note mt-4">
@@ -632,6 +696,39 @@ const structuredData = {
 					</p>
 				</article>
 			</div>
+
+			<!-- Common typing mistakes -->
+			<div class="mt-9">
+				<h3 class="bangla-copy text-[17px] font-semibold text-ink">সাধারণ টাইপিং ভুল</h3>
+				<p class="bangla-copy mt-1 max-w-3xl text-[13.5px] leading-relaxed text-body">
+					এই ভুলগুলোই বেশি হয়। প্রতিটির পাশে সঠিক কী ও বর্ণের উদাহরণ দেখে নিন, তারপর অনুশীলনে
+					মিলিয়ে নিন।
+				</p>
+				<ul class="bp-mistake-grid">
+					{
+						TYPING_MISTAKES.map((mistake, index) => (
+							<li class="bp-mistake" data-tone={guideTones[index % guideTones.length]}>
+								<span class="bp-mistake-tag">{mistake.tag}</span>
+								<p class="bp-mistake-title">{mistake.title}</p>
+								<p class="bp-mistake-body">{mistake.body}</p>
+								<ul class="bp-mistake-pairs">
+									{mistake.pairs.map((pair) => (
+										<li class="bp-mistake-pair">
+											<span class="bp-mistake-input">{pair.input}</span>
+											<span class="bp-mistake-arrow" aria-hidden="true">
+												→
+											</span>
+											<span class="bp-mistake-output" lang="bn">
+												{pair.output}
+											</span>
+										</li>
+									))}
+								</ul>
+							</li>
+						))
+					}
+				</ul>
+			</div>
 		</section>
 
 		<!-- Topical cluster interlinking (English card labels follow the global chrome) -->
@@ -1052,6 +1149,148 @@ const structuredData = {
 		border: 1px solid var(--bp-sand-line);
 		border-radius: 12px;
 		background: var(--bp-paper);
+	}
+
+	/* Bangla input setup steps */
+	.bangla-page .bp-setup {
+		display: grid;
+		gap: 0.55rem;
+		margin: 0.9rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.bangla-page .bp-setup-item {
+		display: grid;
+		grid-template-columns: 26px minmax(0, 1fr);
+		gap: 0.65rem;
+		padding: 0.7rem 0.85rem;
+		border: 1px solid var(--bp-sand-line);
+		border-radius: 12px;
+		background: var(--bp-paper);
+	}
+
+	.bangla-page .bp-setup-num {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 26px;
+		height: 26px;
+		border-radius: 999px;
+		background: var(--bp-mint);
+		color: var(--bp-mint-ink);
+		font-size: 12.5px;
+		font-weight: 600;
+	}
+
+	.bangla-page .bp-setup-title {
+		font-size: 13.5px;
+		font-weight: 600;
+		line-height: 1.5;
+		color: var(--c-ink);
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-page .bp-setup-body {
+		margin-top: 0.2rem;
+		font-size: 12.5px;
+		line-height: 1.7;
+		color: var(--c-body);
+		overflow-wrap: anywhere;
+	}
+
+	/* Common typing mistakes */
+	.bangla-page .bp-mistake-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 0.75rem;
+		margin: 0.9rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.bangla-page .bp-mistake {
+		min-width: 0;
+		padding: 0.85rem 0.95rem;
+		border: 1px solid var(--bp-line);
+		border-radius: 14px;
+		background: var(--bp-paper);
+		box-shadow: inset 3px 0 0 0 var(--mistake-tone, var(--bp-mint));
+	}
+
+	.bangla-page .bp-mistake[data-tone='sand'] {
+		--mistake-tone: var(--bp-sand);
+	}
+
+	.bangla-page .bp-mistake[data-tone='orange'] {
+		--mistake-tone: var(--bp-orange);
+	}
+
+	.bangla-page .bp-mistake-tag {
+		display: inline-flex;
+		align-items: center;
+		min-height: 24px;
+		padding: 0.1rem 0.55rem;
+		border: 1px solid var(--bp-line);
+		border-radius: 999px;
+		background: var(--bp-sand-soft);
+		color: var(--c-mute);
+		font-size: 11.5px;
+		font-weight: 500;
+	}
+
+	.bangla-page .bp-mistake-title {
+		margin-top: 0.45rem;
+		font-size: 13.5px;
+		font-weight: 600;
+		line-height: 1.5;
+		color: var(--c-ink);
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-page .bp-mistake-body {
+		margin-top: 0.2rem;
+		font-size: 12.5px;
+		line-height: 1.7;
+		color: var(--c-body);
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-page .bp-mistake-pairs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.3rem 0.45rem;
+		margin: 0.6rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.bangla-page .bp-mistake-pair {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 0.3rem;
+		max-width: 100%;
+		padding: 0.1rem 0.5rem;
+		border: 1px solid var(--bp-sand-line);
+		border-radius: 8px;
+		background: var(--bp-sand-soft);
+		font-size: 12.5px;
+	}
+
+	.bangla-page .bp-mistake-input {
+		font-weight: 500;
+		color: var(--c-body);
+		overflow-wrap: anywhere;
+	}
+
+	.bangla-page .bp-mistake-arrow {
+		color: var(--c-faint);
+	}
+
+	.bangla-page .bp-mistake-output {
+		font-size: 13.5px;
+		color: var(--c-ink);
+		overflow-wrap: anywhere;
 	}
 
 	/* Keep the shared related-tools cards in the page palette (this page only). */
