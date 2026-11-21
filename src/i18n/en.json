@@ -2008,8 +2008,8 @@
 		"shortName": "Audiobook Speed Calculator",
 		"description": "Calculate exact audiobook listening duration across 0.75x to 3.0x playback speeds, time saved, and daily listening schedules by length or word count.",
 		"metric": "0.5x – 3.0x Playback Speed",
-		"title": "Audiobook Speed, Length & Percentage Calculator | Wordora",
-		"metaDescription": "Free audiobook calculator, audiobook length calculator, and audiobook percentage calculator. Check exact listening time left at 1.25x, 1.5x, 1.75x, or 2x playback speed.",
+		"title": "Audiobook Speed Calculator – Find Your Listening Time | Wordora",
+		"metaDescription": "Calculate your audiobook listening time with our Audiobook Speed Calculator. Adjust playback speed, discover time saved, and finish your favorite books faster!",
 		"h1": "Audiobook Calculator",
 		"ui": {
 			"workspaceAriaLabel": "Audiobook Speed and Listening Time Calculator Workspace",
