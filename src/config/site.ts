@@ -19,6 +19,8 @@ export interface ToolDefinition {
 
 export interface StandaloneToolDefinition {
 	id: string;
+	/** Section key inside src/i18n/*.json holding this page's translated card copy. */
+	dictKey?: string;
 	slug: `/${string}/`;
 	name: string;
 	shortName: string;
@@ -214,6 +216,7 @@ export const TOOLS_REGISTRY: ToolDefinition[] = [
 export const STANDALONE_TOOLS: StandaloneToolDefinition[] = [
 	{
 		id: 'bangla-typing-practice',
+		dictKey: 'banglaTypingPractice',
 		slug: '/bangla-typing-practice/',
 		name: 'বাংলা টাইপিং প্র্যাকটিস',
 		shortName: 'Bangla Typing Practice',

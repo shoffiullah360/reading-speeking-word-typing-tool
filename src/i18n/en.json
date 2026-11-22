@@ -7278,6 +7278,12 @@
 			}
 		]
 	},
+	"banglaTypingPractice": {
+		"name": "Bangla Typing Practice",
+		"shortName": "Bangla Typing Practice",
+		"description": "Practice Bengali typing step by step — letters, words, sentences, and full paragraphs, with instant error feedback and progress saved in your browser.",
+		"metric": "১২টি লেসন · ৬টি মোড"
+	},
 	"about": {
 		"name": "About Wordora",
 		"shortName": "About",

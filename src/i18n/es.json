@@ -7278,6 +7278,12 @@
 			}
 		]
 	},
+	"banglaTypingPractice": {
+		"name": "Práctica de mecanografía en bengalí",
+		"shortName": "Práctica de mecanografía en bengalí",
+		"description": "Practica escritura en bengalí paso a paso: letras, palabras, oraciones y párrafos completos con retroalimentación instantánea en tu navegador.",
+		"metric": "12 lecciones · 6 modos"
+	},
 	"about": {
 		"name": "Acerca de Wordora",
 		"shortName": "Acerca de",

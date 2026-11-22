@@ -3289,7 +3289,7 @@ const firstGuidance = firstLesson.guidance.avro;
 
 		input.addEventListener('input', (event) => {
 			// IME (Avro/Bijoy/Ridmik) commits arrive as composition events; never score uncommitted text.
-			if (event.isComposing || composing) return;
+			if ((event as InputEvent).isComposing || composing) return;
 			handleInput();
 		});
 		input.addEventListener('compositionstart', () => {
