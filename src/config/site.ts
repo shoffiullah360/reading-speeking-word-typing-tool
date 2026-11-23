@@ -230,6 +230,22 @@ export const STANDALONE_TOOLS: StandaloneToolDefinition[] = [
 		summary:
 			'Practice Bengali typing step by step — letters, words, sentences, and full paragraphs, with instant error feedback and progress saved in your browser.',
 	},
+	{
+		id: 'bangla-typing-test',
+		dictKey: 'banglaTypingTest',
+		slug: '/bangla-typing-test/',
+		name: 'বাংলা টাইপিং পরীক্ষা',
+		shortName: 'Bangla Typing Test',
+		description:
+			'সময় বা প্যাসেজভিত্তিক বাংলা টাইপিং পরীক্ষা দিন। গতি, নির্ভুলতা, ভুল বিশ্লেষণ এবং ব্যক্তিগত রেকর্ড নিজ ব্রাউজারেই দেখুন।',
+		category: 'Typing',
+		status: 'live',
+		htmlLang: 'bn',
+		availableLocales: ['en'],
+		metricPreview: 'গতি · নির্ভুলতা · ব্যক্তিগত রেকর্ড',
+		summary:
+			'সহজ থেকে জটিল প্যাসেজে বাংলা টাইপিংয়ের গতি ও নির্ভুলতা পরীক্ষা করুন।',
+	},
 ];
 
 export const STATIC_PAGES: StaticPageDefinition[] = [

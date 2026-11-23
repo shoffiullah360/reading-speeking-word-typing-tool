@@ -23,6 +23,7 @@ const TOPICAL_CLUSTERS: Record<string, readonly [string, string]> = {
 	'text-reverser': ['case-converter', 'text-repeater'],
 	'typing-speed-test': ['reading-speed-test', 'word-counter'],
 	'bangla-typing-practice': ['typing-speed-test', 'word-counter'],
+	'bangla-typing-test': ['bangla-typing-practice', 'typing-speed-test'],
 };
 
 /** Extra contextual tool used when a spotlight slot is already occupied. */
@@ -30,6 +31,7 @@ const BALANCE_FILLERS: Record<string, string> = {
 	'random-topic-generator': 'word-counter',
 	'typing-speed-test': 'speech-time-calculator',
 	'bangla-typing-practice': 'reading-speed-test',
+	'bangla-typing-test': 'word-counter',
 };
 
 /** Stable global fallback order, used only when a page still needs more cards. */
@@ -45,6 +47,8 @@ const FALLBACK_ORDER = [
 	'text-reverser',
 	'random-topic-generator',
 	'typing-speed-test',
+	'bangla-typing-test',
+	'bangla-typing-practice',
 ];
 
 /** Returns exactly four unique related tool IDs for a page (never the page itself). */

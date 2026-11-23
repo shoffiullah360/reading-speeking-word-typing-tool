@@ -1,0 +1,1161 @@
+---
+interface Passage {
+	text: string;
+}
+
+const passages: Record<string, Record<string, Passage[]>> = {
+	general: {
+		beginner: [
+			{ text: "আজ আকাশে মেঘ আছে। আমি উঠোনে দাঁড়িয়ে দেখছি নতুন দিনের আলো। ভালো লেখা মানে স্পষ্ট ভাব প্রকাশ করা।" },
+			{ text: "বাংলা বই পড়তে পড়তে নতুন শব্দ শিখি। নিয়মিত অনুশীলন করলে হাত দ্রুত চলে।" },
+			{ text: "সকালে ভালো ফল খাবেন। পরে পানি পান করুন। শান্ত মনেই বড় কাজ করা যায়।" },
+		],
+		intermediate: [
+			{ text: "নিয়মিত অনুশীলন আমাদের মনোযোগ বাড়ায় এবং টাইপ করার গতি উন্নত করে। প্রতিদিন ছোট ছোট লক্ষ্য রাখলেই বড় অগ্রগতি সম্ভব।" },
+			{ text: "একটি সুন্দর শহর শুধু বড় ভবন দিয়ে হয় না; মানবিকতা, পরিষ্কার রাস্তা এবং নিরাপদ পথচারী হতেই তার প্রকৃত পরিচয় ফুটে ওঠে।" },
+		],
+		advanced: [
+			{ text: "প্রযুক্তির ব্যবহারে সুবিধা যতই বাড়ুক, মানবিক বিচার-বুদ্ধি ও নৈতিক দায়িত্ব তারই চেয়ে অপরিহার্য। দ্রুততার পেছনে ছুটতে গিয়েও সততা, ধৈর্য এবং পর্যালোচনার প্রয়োজন সর্বদা আছে।" },
+		],
+	},
+	education: {
+		beginner: [
+			{ text: "পাঠশালায় সবাই নতুন কিছু শেখে। শিক্ষক গল্প বলেন এবং শিক্ষার্থীরা মন দিয়ে শুনে।" },
+			{ text: "বইয়ের প্রথম পাতায় একটি সুন্দর কবিতা আছে। সবাই মিলে এটি পড়বে।" },
+		],
+		intermediate: [
+			{ text: "ভালো শিক্ষার উদ্দেশ্য শুধু পরীক্ষায় ভালো ফল করা নয়; বরং বিশ্বকে বুঝে চলা, প্রশ্ন করতে শেখা এবং মানুষকে শ্রদ্ধা করা।" },
+			{ text: "বিদ্যালয়ের লাইব্রেরিতে নানা বিষয়ের বই রয়েছে। নিয়মিত পড়লে কল্পনা শক্তি এবং শব্দভাণ্ডার দুই-ই সমৃদ্ধ হয়।" },
+		],
+		advanced: [
+			{ text: "শিক্ষা হলো সেই প্রক্রিয়া, যেখানে সন্দেহকে আলোচনার মাধ্যমে পরিশীলিত করা হয় এবং বিভিন্ন তথ্যের ভিত্তিতে যুক্তিসংগত সিদ্ধান্ত গ্রহণের দক্ষতা গড়ে ওঠে।" },
+		],
+	},
+	conversation: {
+		beginner: [
+			{ text: "এখন সন্ধ্যা হয়েছে। আমরা কোথায় যাব? আগে হাটে গিয়ে ফল কিনি।" },
+			{ text: "তোমার নতুন বইটি কি শেষ হয়েছে? আমাকে একটু বলতে পারবে?" },
+		],
+		intermediate: [
+			{ text: "তুমি কি আগামীকাল আমাদের গ্রামের বাড়িতে আসতে পারবে? খাবারের পরে আমরা সবাই নদীর ধারে হাঁটব।" },
+			{ text: "আগের পরিকল্পনাটি বদলেছে বলে শুনলাম। নতুন দিন ও সময়টা আমাকে লিখে পাঠালে সুবিধা হবে।" },
+		],
+		advanced: [
+			{ text: "মতবিরোধ থাকতেই পারে, কিন্তু কথা বলার ভঙ্গি ও শ্রবণ রসিকতা যদি সম্মানজনক হয়, তবেই পারস্পরিক সমঝোতা সম্ভব; তাই একে অপরের কথা ধৈর্য নিয়ে শুনি।" },
+		],
+	},
+	professional: {
+		beginner: [
+			{ text: "কর্মদিবস শুরু হয়েছে। আগে কাজের তালিকা তৈরি করি। তারপর সহজ কাজ থেকে শুরু করি।" },
+			{ text: "আজ বিকেলে একটি সংক্ষিপ্ত সভা আছে। সবাই সময়মতো উপস্থিত থাকবেন।" },
+		],
+		intermediate: [
+			{ text: "প্রকল্পটি সময়মতো শেষ করতে দরকার সুনির্দিষ্ট দায়িত্ব, নিয়মিত অগ্রগতি যাচাই এবং দলের মধ্যে স্বচ্ছ যোগাযোগ।" },
+			{ text: "গ্রাহকের মতামত সংগ্রহ করে সেবার দুর্বলতা চিহ্নিত করলে সমস্যার মূলে পৌঁছানো সহজ হয় এবং উন্নতির পরিকল্পনা বাস্তবসম্মত হয়।" },
+		],
+		advanced: [
+			{ text: "প্রাতিষ্ঠানিক সিদ্ধান্ত কেবল বর্তমান ফলাফলের ওপর নির্ভর করে না; ঝুঁকি ব্যবস্থাপনা, কর্মীদের দক্ষতা, অংশীদারদের বিশ্বাস এবং ভবিষ্যৎ স্থিতিশীলতা—এই সব উপাদানকেই বিবেচনা করতে হয়।" },
+		],
+	},
+	news: {
+		beginner: [
+			{ text: "সকালের খবর অনুযায়ী আজ বৃষ্টি হতে পারে। মানুষকে প্রয়োজনীয় জিনিস সঙ্গে নিতে বলা হয়েছে।" },
+			{ text: "শহরের প্রধান সড়ক পরিষ্কার করার কাজ শুরু হয়েছে। পথচারীদের সতর্ক থাকার অনুরোধ করা হলো।" },
+		],
+		intermediate: [
+			{ text: "স্থানীয় প্রশাসন সব শিক্ষাপ্রতিষ্ঠানকে নিরাপত্তা নির্দেশনা অনুসরণে বলেছে। তীব্র বৃষ্টির কারণে কিছু এলাকায় যান চলাচল সীমিত রয়েছে।" },
+			{ text: "একটি উন্নয়নমূলক প্রকল্পের সূচনা করেছে স্থানীয় স্বেচ্ছাসেবী সংগঠনটি। প্রকল্পটি শহরের ঝুঁকিপূর্ণ পরিবারকে আশ্রয় ও প্রশিক্ষণ দেবে।" },
+		],
+		advanced: [
+			{ text: "সংবাদ মাধ্যমের দায়িত্ব তথ্য সংগ্রহের সঙ্গে সঙ্গে তা যাচাই করা; অসম্পূর্ণ তথ্য প্রকাশ থেকে বিরত থাকা এবং প্রতিটি পক্ষের যুক্তি ও প্রাসঙ্গিক প্রেক্ষাপট পাঠকের সামনে রাখাই বিশ্বস্ততার ভিত্তি।" },
+		],
+	},
+	literature: {
+		beginner: [
+			{ text: "একটি ছোট নৌকা নদীর শান্ত জলে ভাসছে। দূরে সবুজ গাছ দেখা যায়।" },
+			{ text: "শীতের সকালে ঘরের জানালা দিয়ে সূর্যের আলো আসে। মা পিঠা বানাচ্ছেন।" },
+		],
+		intermediate: [
+			{ text: "গ্রামের পথ ধরে সন্ধ্যার আলো যখন পড়তে থাকে, ধুলায় মিশে থাকা ওই নীরবতা যেন অনেক পুরোনো স্মৃতির কাছে ফিরে যায়।" },
+			{ text: "বাতাসে শুকনো পাতার গন্ধ আর দূরের পদধ্বনি মিশে একটি বুকের গভীরতা স্পর্শ করে। লালিত্য তখন শব্দে নয়, মনের নীরবতায় জন্ম নেয়।" },
+		],
+		advanced: [
+			{ text: "জীবনের প্রতিটি ক্ষণভঙ্গুর মুহূর্তে স্মৃতির ছবি ধীরে ধীরে নিখুঁত হয় না, বরং ব্যক্তিগত ব্যাখ্যা ও কল্পনার রঙে বদলে যায়; কবিতা সেই পরিবর্তনকেই ভাষার ছন্দে ধারণ করে।" },
+		],
+	},
+};
+
+const categoryLabels: Record<string, string> = {
+	general: "সাধারণ",
+	education: "শিক্ষা",
+	conversation: "কথোপকথন",
+	professional: "পেশাগত",
+	news: "সংবাদ",
+	literature: "সাহিত্য",
+};
+
+const levelLabels: Record<string, string> = {
+	beginner: "সহজ",
+	intermediate: "মিশ্র",
+	advanced: "জটিল",
+};
+---
+
+<div class="bangla-test" data-bangla-test>
+	<div class="rounded-2xl border border-hairline bg-card p-4 shadow-[0_2px_6px_rgba(15,23,42,0.06)] sm:p-5">
+		<div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_280px]">
+			<div class="min-w-0">
+				<section aria-labelledby="duration-heading">
+					<h3 id="duration-heading" class="text-[14px] font-semibold text-ink">পরীক্ষার সময়</h3>
+					<div id="duration-options" class="mt-2 flex flex-wrap gap-2" role="group" aria-label="পরীক্ষার সময় বেছে নিন">
+						{[1, 2, 3, 5, 10].map((minutes, index) => (
+							<button type="button" class:list={["btt-choice", index === 0 && "is-active"]} data-duration={minutes} aria-pressed={index === 0 ? "true" : "false"}>
+								{minutes === 1 ? "১ মিনিট" : minutes === 2 ? "২ মিনিট" : minutes === 3 ? "৩ মিনিট" : minutes === 5 ? "৫ মিনিট" : "১০ মিনিট"}
+							</button>
+						))}
+					</div>
+				</section>
+
+				<section class="mt-5 border-t border-hairline pt-5" aria-labelledby="difficulty-heading">
+					<h3 id="difficulty-heading" class="text-[14px] font-semibold text-ink">কঠিনতার স্তর</h3>
+					<div id="difficulty-options" class="mt-2 grid gap-2 sm:grid-cols-3" role="group" aria-label="কঠিনতার স্তর বেছে নিন">
+						<button type="button" class="btt-option is-active" data-difficulty="beginner" aria-pressed="true">
+							<span>সহজ</span><small>সাধারণ শব্দ ও বাক্য</small>
+						</button>
+						<button type="button" class="btt-option" data-difficulty="intermediate" aria-pressed="false">
+							<span>মিশ্র</span><small>মিশ্র বাক্য ও সাধারণ যুক্তবর্ণ</small>
+						</button>
+						<button type="button" class="btt-option" data-difficulty="advanced" aria-pressed="false">
+							<span>জটিল</span><small>জটিল যুক্তবর্ণ, কারচিহ্ন ও যতিচিহ্নসমৃদ্ধ প্যাসেজ</small>
+						</button>
+					</div>
+				</section>
+
+				<section class="mt-5 border-t border-hairline pt-5" aria-labelledby="mode-heading">
+					<h3 id="mode-heading" class="text-[14px] font-semibold text-ink">পরীক্ষার ধরন</h3>
+					<div id="mode-options" class="mt-2 flex flex-wrap gap-2" role="group" aria-label="পরীক্ষার ধরন বেছে নিন">
+						<button type="button" class="btt-choice is-active" data-mode="time" aria-pressed="true">সময়ভিত্তিক পরীক্ষা</button>
+						<button type="button" class="btt-choice" data-mode="passage" aria-pressed="false">প্যাসেজভিত্তিক পরীক্ষা</button>
+						<button type="button" class="btt-choice" data-mode="custom" aria-pressed="false">নিজের প্যাসেজ</button>
+					</div>
+				</section>
+
+				<section id="btt-custom-panel" hidden class="mt-4 rounded-xl border border-hairline bg-surface p-4" aria-labelledby="custom-heading">
+					<label id="custom-heading" for="btt-custom-text" class="block text-[13.5px] font-semibold text-ink">নিজের বাংলা প্যাসেজ</label>
+					<textarea
+						id="btt-custom-text"
+						rows="5"
+						lang="bn"
+						spellcheck="false"
+						class="mt-2 w-full rounded-xl border border-hairline bg-card px-3.5 py-3 text-[16px] leading-[1.8] text-ink outline-none focus:border-[#2F7D61]"
+						placeholder="এখানে আপনার বাংলা লেখা দিন..."
+					></textarea>
+					<div class="mt-3 flex flex-wrap gap-2">
+						<button type="button" id="btt-use-custom" class="btt-action btt-primary">এই প্যাসেজ ব্যবহার করুন</button>
+						<button type="button" id="btt-clear-custom" class="btt-action btt-secondary">লেখা মুছুন</button>
+					</div>
+					<p id="btt-custom-error" hidden class="mt-2 text-[12.5px] font-semibold text-[#9E2F27] dark:text-[#FDA29B]" role="alert"></p>
+				</section>
+
+				<section class="mt-5 border-t border-hairline pt-5" aria-labelledby="category-heading">
+					<h3 id="category-heading" class="text-[14px] font-semibold text-ink">প্যাসেজের বিষয়</h3>
+					<div id="category-options" class="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3" role="group" aria-label="প্যাসেজের বিষয় বেছে নিন">
+						{Object.entries(categoryLabels).map(([id, label], index) => (
+							<button type="button" class:list={["btt-category", index === 0 && "is-active"]} data-category={id} aria-pressed={index === 0 ? "true" : "false"}>{label}</button>
+						))}
+					</div>
+				</section>
+			</div>
+
+			<aside class="min-w-0 rounded-xl border border-hairline bg-surface p-4" aria-label="পরীক্ষার সংক্ষিপ্ত তথ্য">
+				<p class="text-[12.5px] font-medium text-mute">লাইভ হিসাব</p>
+				<dl class="mt-3 grid grid-cols-2 gap-2.5">
+					<div class="btt-stat"><dt>মিনিটপ্রতি শব্দ</dt><dd id="btt-wpm" class="tabular-nums">০</dd></div>
+					<div class="btt-stat"><dt>মিনিটপ্রতি বর্ণ</dt><dd id="btt-cpm" class="tabular-nums">০</dd></div>
+					<div class="btt-stat"><dt>নির্ভুলতা</dt><dd id="btt-accuracy" class="tabular-nums">১০০%</dd></div>
+					<div class="btt-stat"><dt>ভুল</dt><dd id="btt-errors" class="tabular-nums">০</dd></div>
+					<div class="btt-stat col-span-2"><dt id="btt-time-label">অবশিষ্ট সময়</dt><dd id="btt-time" class="tabular-nums">১:০০</dd></div>
+				</dl>
+			</aside>
+		</div>
+
+		<section class="mt-5 border-t border-hairline pt-5" aria-labelledby="workspace-heading">
+			<div class="flex flex-wrap items-center justify-between gap-2">
+				<div>
+					<h3 id="workspace-heading" class="text-[15px] font-semibold text-ink">টাইপিং কক্ষ</h3>
+					<p id="btt-passage-meta" class="mt-1 text-[12.5px] text-mute">সাধারণ • সহজ</p>
+				</div>
+				<div class="flex gap-2">
+					<button type="button" id="btt-start" class="btt-action btt-primary">পরীক্ষা শুরু করুন</button>
+					<button type="button" id="btt-restart" class="btt-action btt-secondary">আবার শুরু করুন</button>
+					<button type="button" id="btt-fullscreen" class="btt-action btt-secondary" aria-pressed="false">পূর্ণ পর্দা</button>
+				</div>
+			</div>
+			<p class="mt-3 text-[12px] leading-relaxed text-mute">
+				কীবোর্ডের সহায়তা: শুরু করতে <kbd class="btt-key">কন্ট্রোল + এন্টার</kbd>, আবার শুরু করতে <kbd class="btt-key">কন্ট্রোল + শিফট + আর</kbd>।
+			</p>
+
+			<div class="mt-4">
+				<div class="flex items-center justify-between gap-3 text-[12.5px] text-mute">
+					<span>অগ্রগতি</span>
+					<span id="btt-progress-value" class="tabular-nums">০%</span>
+				</div>
+				<div id="btt-progress-track" class="mt-2 h-2 overflow-hidden rounded-full bg-hairline-soft" role="progressbar" aria-label="টাইপিং অগ্রগতি" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+					<div id="btt-progress-bar" class="h-full w-0 rounded-full bg-[#2F7D61] transition-[width] duration-150"></div>
+				</div>
+			</div>
+
+			<p id="btt-live-status" class="mt-3 min-h-5 text-[13px] text-body" role="status" aria-live="polite">পরীক্ষা শুরু করতে বা লেখার ঘরে টাইপ করতে পারেন।</p>
+
+			<div
+				id="btt-passage"
+				class="mt-3 min-h-[126px] rounded-xl border border-hairline bg-[#EDF5F1] p-4 text-[20px] leading-[1.95] text-[#15382A] dark:bg-[#101D18] dark:text-[#D8EEE4]"
+				lang="bn"
+				aria-label="টাইপ করার প্যাসেজ"
+			></div>
+
+			<label for="btt-input" class="mt-4 block text-[12.5px] font-medium text-mute">এখানে টাইপ করুন</label>
+			<textarea
+				id="btt-input"
+				rows="4"
+				lang="bn"
+				spellcheck="false"
+				autocomplete="off"
+				autocapitalize="off"
+				autocorrect="off"
+				class="mt-2 w-full resize-y rounded-xl border border-hairline bg-card px-4 py-3 text-[17px] leading-[1.8] text-ink outline-none transition focus:border-[#2F7D61] focus:ring-2 focus:ring-[#2F7D61]/20"
+				placeholder="অভ্র বা বিজয় ইউনিকোড কীবোর্ডে বাংলা টাইপ করুন…"
+			></textarea>
+
+			<p class="mt-3 rounded-lg border border-[#A9CDBB] bg-[#EDF5F1] px-3 py-2.5 text-[12.5px] leading-relaxed text-[#315846] dark:border-[#315846] dark:bg-[#101D18] dark:text-[#B8D6C7]">
+				অভ্র ফোনেটিক বা বিজয় ইউনিকোড বাংলা লিখতে পারেন। যুক্তবর্ণ ও কারচিহ্ন প্রস্তুত না হওয়া পর্যন্ত টাইপ করে যান; অক্ষর গঠনের মাঝখানে কক্ষটি বদলাবে না।
+			</p>
+
+			<div id="btt-completion" hidden class="mt-5 rounded-xl border border-[#9EC8B4] bg-[#EDF5F1] p-4 dark:border-[#315846] dark:bg-[#101D18]" role="status" aria-live="polite">
+				<p class="text-[13px] font-semibold text-[#244C3A] dark:text-[#B8D6C7]">পরীক্ষার ফলাফল</p>
+				<dl class="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+					<div class="btt-result"><dt>মিনিটপ্রতি শব্দ</dt><dd id="result-wpm" class="tabular-nums">০</dd></div>
+					<div class="btt-result"><dt>মিনিটপ্রতি বর্ণ</dt><dd id="result-cpm" class="tabular-nums">০</dd></div>
+					<div class="btt-result"><dt>নির্ভুলতা</dt><dd id="result-accuracy" class="tabular-nums">০%</dd></div>
+					<div class="btt-result"><dt>সঠিক বর্ণ</dt><dd id="result-correct" class="tabular-nums">০</dd></div>
+					<div class="btt-result"><dt>ভুল বর্ণ</dt><dd id="result-errors" class="tabular-nums">০</dd></div>
+					<div class="btt-result"><dt>সঠিক শব্দ / মোট শব্দ</dt><dd id="result-words" class="tabular-nums">০ / ০</dd></div>
+				</dl>
+
+				<section class="mt-5 border-t border-[#BFD8CB] pt-5 dark:border-[#315846]" aria-labelledby="dashboard-heading">
+					<h3 id="dashboard-heading" class="text-[15px] font-semibold text-ink">বিস্তারিত ফলাফল</h3>
+					<dl class="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-5">
+						<div class="btt-result"><dt>মোট গতি</dt><dd id="dashboard-gross-wpm" class="tabular-nums">০</dd></div>
+						<div class="btt-result"><dt>নেট গতি</dt><dd id="dashboard-net-wpm" class="tabular-nums">০</dd></div>
+						<div class="btt-result"><dt>মিনিটপ্রতি শব্দ</dt><dd id="dashboard-wpm" class="tabular-nums">০</dd></div>
+						<div class="btt-result"><dt>মিনিটপ্রতি বর্ণ</dt><dd id="dashboard-cpm" class="tabular-nums">০</dd></div>
+						<div class="btt-result"><dt>নির্ভুলতা</dt><dd id="dashboard-accuracy" class="tabular-nums">০%</dd></div>
+					</dl>
+
+					<div class="mt-5">
+						<p class="text-[12.5px] font-medium text-mute">সময়ভিত্তিক গতি</p>
+						<div class="mt-2 h-[170px] w-full overflow-hidden rounded-xl border border-hairline bg-card p-2">
+							<svg id="btt-speed-chart" viewBox="0 0 700 150" preserveAspectRatio="none" class="h-full w-full" role="img" aria-label="পরীক্ষার সময়ভিত্তিক গতি"></svg>
+						</div>
+						<p id="btt-chart-empty" class="mt-2 text-[12.5px] text-mute">আরও সময় ধরে লিখলে এখানে গতি ভিন্ন সময়ে দেখা যাবে।</p>
+					</div>
+
+					<div class="mt-5 grid gap-3 lg:grid-cols-2">
+						<section class="rounded-xl border border-hairline bg-card p-3" aria-labelledby="mistake-heading">
+							<h4 id="mistake-heading" class="text-[13.5px] font-semibold text-ink">ভুলের বিশ্লেষণ</h4>
+							<dl class="mt-2 grid grid-cols-3 gap-2">
+								<div><dt class="text-[12px] text-mute">ভুল বর্ণ</dt><dd id="mistake-glyphs" class="mt-1 text-[13px] font-semibold text-ink">কোনো ভুল নেই</dd></div>
+								<div><dt class="text-[12px] text-mute">ভুল শব্দ</dt><dd id="mistake-words" class="mt-1 text-[13px] font-semibold text-ink">কোনো ভুল নেই</dd></div>
+								<div><dt class="text-[12px] text-mute">ভুল যতিচিহ্ন</dt><dd id="mistake-punctuation" class="mt-1 text-[13px] font-semibold text-ink">কোনো ভুল নেই</dd></div>
+							</dl>
+						</section>
+
+						<section class="rounded-xl border border-hairline bg-card p-3" aria-labelledby="review-heading">
+							<h4 id="review-heading" class="text-[13.5px] font-semibold text-ink">ভুলগুলো দেখুন</h4>
+							<div id="btt-review" class="mt-2 max-h-32 overflow-y-auto text-[14px] leading-[1.9] text-ink" lang="bn"></div>
+							<p class="mt-2 text-[11.5px] text-mute"><span class="text-[#9E2F27]">লাল</span>: ভুল বর্ণ; <span class="text-[#1F6B4F]">সবুজ</span>: সঠিক বর্ণ</p>
+						</section>
+					</div>
+
+					<div class="mt-5 grid gap-3 lg:grid-cols-2">
+						<section class="rounded-xl border border-hairline bg-card p-3" aria-labelledby="best-heading">
+							<h4 id="best-heading" class="text-[13.5px] font-semibold text-ink">সেরা ব্যক্তিগত রেকর্ড</h4>
+							<dl class="mt-2 grid grid-cols-2 gap-2">
+								<div><dt class="text-[12px] text-mute">সর্বোচ্চ গতি</dt><dd id="best-speed" class="mt-1 text-[18px] font-bold text-[#15382A] tabular-nums dark:text-[#D8EEE4]">—</dd></div>
+								<div><dt class="text-[12px] text-mute">সর্বোচ্চ নির্ভুলতা</dt><dd id="best-accuracy" class="mt-1 text-[18px] font-bold text-[#15382A] tabular-nums dark:text-[#D8EEE4]">—</dd></div>
+							</dl>
+						</section>
+
+						<section class="rounded-xl border border-hairline bg-card p-3" aria-labelledby="comparison-heading">
+							<h4 id="comparison-heading" class="text-[13.5px] font-semibold text-ink">আগের ও বর্তমান তুলনা</h4>
+							<dl class="mt-2 grid grid-cols-2 gap-2">
+								<div><dt class="text-[12px] text-mute">আগের পরীক্ষা</dt><dd id="comparison-previous" class="mt-1 text-[13px] font-semibold text-ink tabular-nums">প্রথম পরীক্ষা</dd></div>
+								<div><dt class="text-[12px] text-mute">বর্তমান পরীক্ষা</dt><dd id="comparison-latest" class="mt-1 text-[13px] font-semibold text-ink tabular-nums">—</dd></div>
+							</dl>
+						</section>
+					</div>
+
+					<section class="mt-5" aria-labelledby="history-heading">
+						<div class="flex items-center justify-between gap-2">
+							<h4 id="history-heading" class="text-[13.5px] font-semibold text-ink">গত পরীক্ষার ইতিহাস</h4>
+							<button type="button" id="btt-clear-history" class="btt-action btt-secondary !min-h-[40px] !py-1.5">ইতিহাস মুছুন</button>
+						</div>
+						<div id="btt-history" class="mt-2 grid gap-2"></div>
+					</section>
+				</section>
+				<div class="mt-4 flex flex-wrap gap-2">
+					<button type="button" id="btt-result-restart" class="btt-action btt-primary">আবার শুরু করুন</button>
+					<button type="button" id="btt-share-result" class="btt-action btt-secondary">ফলাফল শেয়ার করুন</button>
+					<button type="button" id="btt-download-result" class="btt-action btt-secondary">ছবি হিসেবে ডাউনলোড</button>
+					<button type="button" id="btt-print-result" class="btt-action btt-secondary">পিডিএফ বা মুদ্রণ</button>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<script define:vars={{ passages, categoryLabels, levelLabels }}>
+		function initBanglaTypingTest() {
+			const root = document.querySelector("[data-bangla-test]");
+			if (!(root instanceof HTMLElement) || root.dataset.initialized === "true") return;
+			root.dataset.initialized = "true";
+
+			const passageElement = root.querySelector("#btt-passage");
+			const input = root.querySelector("#btt-input");
+			const startButton = root.querySelector("#btt-start");
+			const restartButton = root.querySelector("#btt-restart");
+			const resultRestart = root.querySelector("#btt-result-restart");
+			const progressBar = root.querySelector("#btt-progress-bar");
+			const progressTrack = root.querySelector("#btt-progress-track");
+			const progressValue = root.querySelector("#btt-progress-value");
+			const liveStatus = root.querySelector("#btt-live-status");
+			const completion = root.querySelector("#btt-completion");
+			if (!(passageElement instanceof HTMLElement) || !(input instanceof HTMLTextAreaElement)) return;
+			if (!(startButton instanceof HTMLButtonElement) || !(restartButton instanceof HTMLButtonElement) || !(resultRestart instanceof HTMLButtonElement)) return;
+			if (!(progressBar instanceof HTMLElement) || !(progressTrack instanceof HTMLElement) || !(progressValue instanceof HTMLElement)) return;
+			if (!(liveStatus instanceof HTMLElement) || !(completion instanceof HTMLElement)) return;
+
+			const Segmenter = Intl.Segmenter;
+			const segmenter = Segmenter ? new Segmenter("bn", { granularity: "grapheme" }) : null;
+
+			function normalize(value) {
+				try { return value.normalize("NFC"); } catch { return value; }
+			}
+
+			function splitClusters(text) {
+				const normalized = normalize(text);
+				if (segmenter) return Array.from(segmenter.segment(normalized), (part) => part.segment);
+				const marks = /[\u09BC\u09BE-\u09CD\u09D7\u09E2\u09E3\u200C\u200D\uFE00-\uFE0F]/;
+				const clusters = [];
+				let joinsNext = false;
+				for (const char of Array.from(normalized)) {
+					if (clusters.length > 0 && (joinsNext || marks.test(char))) clusters[clusters.length - 1] += char;
+					else clusters.push(char);
+					joinsNext = char === "\u09CD" || char === "\u200D";
+				}
+				return clusters;
+			}
+
+			const banglaDigits = (value) => String(Math.max(0, Math.round(value))).replace(/[0-9]/g, (digit) => "০১২৩৪৫৬৭৮৯"[Number(digit)]);
+			const secondsToBangla = (seconds) => {
+				const safe = Math.max(0, Math.floor(seconds));
+				const minutes = Math.floor(safe / 60);
+				return `${banglaDigits(minutes)}:${banglaDigits(safe % 60).padStart(2, "০")}`;
+			};
+
+			let duration = 1;
+			let difficulty = "beginner";
+			let mode = "time";
+			let category = "general";
+			let passageIndex = 0;
+			let passageText = "";
+			let targetClusters = [];
+			let customPassage = "";
+			let isRunning = false;
+			let isComposing = false;
+			let timerId;
+			let startedAt = 0;
+			let remainingSeconds = 60;
+			let elapsedBeforePause = 0;
+			let speedPoints = [];
+			let lastSpeedSnapshot = -5;
+			let latestResult = null;
+
+			const HISTORY_KEY = "wordora-bangla-typing-test-history-v1";
+			const BEST_KEY = "wordora-bangla-typing-test-best-v1";
+
+			function readHistory() {
+				try {
+					const value = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+					return Array.isArray(value) ? value : [];
+				} catch {
+					return [];
+				}
+			}
+
+			function readBest() {
+				try {
+					const value = JSON.parse(localStorage.getItem(BEST_KEY) || '{"speed":0,"accuracy":0}');
+					return {
+						speed: typeof value.speed === "number" ? value.speed : 0,
+						accuracy: typeof value.accuracy === "number" ? value.accuracy : 0,
+					};
+				} catch {
+					return { speed: 0, accuracy: 0 };
+				}
+			}
+
+			function formatTestDate(timestamp) {
+				try {
+					const date = new Date(timestamp).toLocaleString("bn-BD", {
+						year: "numeric",
+						month: "short",
+						day: "numeric",
+						hour: "2-digit",
+						minute: "2-digit",
+					});
+					return date;
+				} catch {
+					return "সংরক্ষিত পরীক্ষা";
+				}
+			}
+
+			const getElement = (id) => {
+				const element = root.querySelector("#" + id);
+				if (!(element instanceof Element)) throw new Error("উপাদানটি পাওয়া যায়নি");
+				return element;
+			};
+
+			function setPressed(group, active) {
+				root.querySelectorAll(group + " [aria-pressed]").forEach((button) => {
+					button.setAttribute("aria-pressed", "false");
+					button.classList.remove("is-active");
+				});
+				active.setAttribute("aria-pressed", "true");
+				active.classList.add("is-active");
+			}
+
+			function choosePassage() {
+				if (mode === "custom" && customPassage.trim()) {
+					passageText = normalize(customPassage.trim());
+				} else {
+					const pool = passages[category]?.[difficulty] ?? passages.general.beginner;
+					passageIndex = passageIndex >= pool.length ? 0 : passageIndex;
+					passageText = normalize(pool[passageIndex].text);
+				}
+				targetClusters = splitClusters(passageText);
+				passageElement.innerHTML = "";
+				targetClusters.forEach((glyph, index) => {
+					const span = document.createElement("span");
+					span.className = "btt-glyph";
+					span.dataset.index = String(index);
+					span.dataset.state = "pending";
+					span.textContent = glyph;
+					passageElement.appendChild(span);
+				});
+				getElement("btt-passage-meta").textContent =
+					mode === "custom" ? "নিজের প্যাসেজ • মুক্ত অভ্যাস" : `${categoryLabels[category]} • ${levelLabels[difficulty]}`;
+			}
+
+			function resetTest() {
+				if (timerId !== undefined) window.clearInterval(timerId);
+				timerId = undefined;
+				isRunning = false;
+				isComposing = false;
+				startedAt = 0;
+				elapsedBeforePause = 0;
+				remainingSeconds = duration * 60;
+				speedPoints = [];
+				lastSpeedSnapshot = -5;
+				input.value = "";
+				completion.hidden = true;
+				const customPanel = root.querySelector("#btt-custom-panel");
+				if (customPanel instanceof HTMLElement) customPanel.hidden = mode !== "custom";
+				getElement("btt-time-label").textContent = mode === "time" ? "অবশিষ্ট সময়" : "পরীক্ষার সময়";
+				getElement("btt-time").textContent = mode === "time" ? secondsToBangla(remainingSeconds) : "প্যাসেজভিত্তিক";
+				getElement("btt-wpm").textContent = "০";
+				getElement("btt-cpm").textContent = "০";
+				getElement("btt-accuracy").textContent = "১০০%";
+				getElement("btt-errors").textContent = "০";
+				progressBar.style.width = "0%";
+				progressTrack.setAttribute("aria-valuenow", "0");
+				progressValue.textContent = "০%";
+				liveStatus.textContent = "পরীক্ষা শুরু করতে বা লেখার ঘরে টাইপ করতে পারেন।";
+				choosePassage();
+				updateHighlight("");
+				renderHistory();
+				input.focus();
+			}
+
+			function elapsedSeconds() {
+				if (!isRunning && startedAt === 0) return elapsedBeforePause;
+				return elapsedBeforePause + (startedAt ? (Date.now() - startedAt) / 1000 : 0);
+			}
+
+			function recordSpeedPoint(correctCharacters) {
+				const elapsed = elapsedSeconds();
+				const secondsBucket = Math.floor(elapsed / 5) * 5;
+				if (secondsBucket <= lastSpeedSnapshot || elapsed < 1) return;
+				lastSpeedSnapshot = secondsBucket;
+				const wpm = Math.round((correctCharacters / 5) / (Math.max(elapsed, 1) / 60));
+				speedPoints.push({ seconds: secondsBucket || 1, wpm });
+			}
+
+			function renderSpeedGraph() {
+				const chart = getElement("btt-speed-chart");
+				chart.replaceChildren();
+				if (speedPoints.length < 2) {
+					getElement("btt-chart-empty").hidden = false;
+					return;
+				}
+				getElement("btt-chart-empty").hidden = true;
+				const width = 700;
+				const height = 150;
+				const padding = 28;
+				const maxWpm = Math.max(20, ...speedPoints.map((point) => point.wpm));
+				const maxSeconds = Math.max(5, ...speedPoints.map((point) => point.seconds));
+
+				for (let index = 0; index <= 4; index++) {
+					const y = padding + ((height - padding * 2) * index) / 4;
+					const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+					line.setAttribute("x1", String(padding));
+					line.setAttribute("x2", String(width - padding));
+					line.setAttribute("y1", String(y));
+					line.setAttribute("y2", String(y));
+					line.setAttribute("stroke", "#C4CFDD");
+					line.setAttribute("stroke-width", "1");
+					chart.appendChild(line);
+
+					const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+					label.setAttribute("x", "2");
+					label.setAttribute("y", String(y + 4));
+					label.setAttribute("fill", "#5B6B80");
+					label.setAttribute("font-size", "11");
+					label.textContent = banglaDigits(Math.round(maxWpm * (4 - index) / 4));
+					chart.appendChild(label);
+				}
+
+				const points = speedPoints.map((point) => {
+					const x = padding + (point.seconds / maxSeconds) * (width - padding * 2);
+					const y = height - padding - (point.wpm / maxWpm) * (height - padding * 2);
+					return `${x},${y}`;
+				}).join(" ");
+
+				const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+				polyline.setAttribute("points", points);
+				polyline.setAttribute("fill", "none");
+				polyline.setAttribute("stroke", "#2F7D61");
+				polyline.setAttribute("stroke-width", "3");
+				polyline.setAttribute("stroke-linecap", "round");
+				polyline.setAttribute("stroke-linejoin", "round");
+				chart.appendChild(polyline);
+
+				speedPoints.forEach((point) => {
+					const x = padding + (point.seconds / maxSeconds) * (width - padding * 2);
+					const y = height - padding - (point.wpm / maxWpm) * (height - padding * 2);
+					const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+					circle.setAttribute("cx", String(x));
+					circle.setAttribute("cy", String(y));
+					circle.setAttribute("r", "4");
+					circle.setAttribute("fill", "#15382A");
+					chart.appendChild(circle);
+				});
+			}
+
+			function renderMistakesAndReview(typed) {
+				const glyphCounts = new Map();
+				const wrongWords = new Map();
+				const wrongPunctuation = new Map();
+				const targetWords = splitWords(passageText);
+				const typedWords = splitWords(input.value);
+
+				targetClusters.forEach((glyph, index) => {
+					if (index < typed.length && typed[index] !== glyph) {
+						glyphCounts.set(glyph, (glyphCounts.get(glyph) || 0) + 1);
+						if (/[\u0964\u0965।!?,:;:"“”‘’(){}\[\]—-]/u.test(glyph)) {
+							wrongPunctuation.set(glyph, (wrongPunctuation.get(glyph) || 0) + 1);
+						}
+					}
+				});
+
+				targetWords.forEach((word, index) => {
+					if (typedWords[index] !== undefined && typedWords[index] !== word) {
+						wrongWords.set(word, (wrongWords.get(word) || 0) + 1);
+					}
+				});
+
+				const topGlyphs = Array.from(glyphCounts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 6);
+				const topWords = Array.from(wrongWords.entries()).sort((a, b) => b[1] - a[1]).slice(0, 6);
+				const topPunctuation = Array.from(wrongPunctuation.entries()).sort((a, b) => b[1] - a[1]).slice(0, 6);
+				getElement("mistake-glyphs").textContent = topGlyphs.length ? topGlyphs.map(([glyph, count]) => `${glyph} × ${banglaDigits(count)}`).join(" · ") : "কোনো ভুল নেই";
+				getElement("mistake-words").textContent = topWords.length ? topWords.map(([word, count]) => `${word} × ${banglaDigits(count)}`).join(" · ") : "কোনো ভুল নেই";
+				getElement("mistake-punctuation").textContent = topPunctuation.length ? topPunctuation.map(([mark, count]) => `${mark} × ${banglaDigits(count)}`).join(" · ") : "কোনো ভুল নেই";
+
+				const review = getElement("btt-review");
+				review.replaceChildren();
+				targetClusters.forEach((glyph, index) => {
+					const span = document.createElement("span");
+					if (index < typed.length) {
+						span.className = typed[index] === glyph ? "text-[#1F6B4F] dark:text-[#86C9A9]" : "text-[#9E2F27] underline decoration-wavy dark:text-[#FDA29B]";
+					}
+					span.textContent = glyph;
+					review.appendChild(span);
+				});
+			}
+
+			function renderHistory(latest) {
+				const history = readHistory();
+				const historyElement = getElement("btt-history");
+				historyElement.replaceChildren();
+				if (history.length === 0) {
+					const empty = document.createElement("p");
+					empty.className = "text-[13px] text-mute";
+					empty.textContent = "এখনো সংরক্ষিত পরীক্ষা নেই।";
+					historyElement.appendChild(empty);
+				} else {
+					history.slice(0, 8).forEach((record, index) => {
+						const row = document.createElement("div");
+						row.className = "flex flex-wrap items-center justify-between gap-2 rounded-lg border border-hairline bg-card px-3 py-2.5";
+						const title = document.createElement("div");
+						title.className = "min-w-0";
+						title.innerHTML = `<span class="block text-[12.5px] font-semibold text-ink">${index === 0 ? "সর্বশেষ পরীক্ষা" : formatTestDate(record.timestamp)}</span><span class="mt-0.5 block text-[11.5px] text-mute">${categoryLabels[record.category] || "সাধারণ"} • ${levelLabels[record.difficulty] || "সহজ"}</span>`;
+						const metrics = document.createElement("span");
+						metrics.className = "text-[12.5px] font-semibold text-[#315846] tabular-nums dark:text-[#B8D6C7]";
+						metrics.textContent = `${banglaDigits(record.wpm)} শব্দ/মিনিট • ${banglaDigits(record.accuracy)}% নির্ভুল`;
+						row.append(title, metrics);
+						historyElement.appendChild(row);
+					});
+				}
+
+				const best = readBest();
+				getElement("best-speed").textContent = `${banglaDigits(best.speed)} শব্দ/মিনিট`;
+				getElement("best-accuracy").textContent = `${banglaDigits(best.accuracy)}%`;
+
+				const latestRecord = latest || history[0];
+				if (history.length > 1) {
+					const previous = latest ? history[1] : history[1];
+					getElement("comparison-previous").textContent = `${banglaDigits(previous.wpm)} শব্দ/মিনিট • ${banglaDigits(previous.accuracy)}%`;
+					getElement("comparison-latest").textContent = latestRecord ? `${banglaDigits(latestRecord.wpm)} শব্দ/মিনিট • ${banglaDigits(latestRecord.accuracy)}%` : "কোনো পরীক্ষা হয়নি";
+				} else {
+					getElement("comparison-previous").textContent = "প্রথম পরীক্ষা";
+					getElement("comparison-latest").textContent = latestRecord ? `${banglaDigits(latestRecord.wpm)} শব্দ/মিনিট • ${banglaDigits(latestRecord.accuracy)}%` : "কোনো পরীক্ষা হয়নি";
+				}
+		 }
+
+			function updateHighlight(rawValue) {
+				if (isComposing) return;
+				const typed = splitClusters(normalize(rawValue));
+				let correct = 0;
+				let errors = 0;
+				targetClusters.forEach((glyph, index) => {
+					const span = passageElement.querySelector(`[data-index="${index}"]`);
+					if (!span) return;
+					if (index >= typed.length) {
+						span.dataset.state = index === typed.length ? "current" : "pending";
+					} else if (typed[index] === glyph) {
+						span.dataset.state = "correct";
+						correct++;
+					} else {
+						span.dataset.state = "incorrect";
+						errors++;
+					}
+				});
+
+				const extra = Math.max(0, typed.length - targetClusters.length);
+				errors += extra;
+				const compared = Math.min(typed.length, targetClusters.length);
+				const accuracy = compared === 0 ? 100 : Math.max(0, (correct / compared) * 100);
+				const elapsed = Math.max(elapsedSeconds(), 1);
+				const wpm = Math.round((correct / 5) / (elapsed / 60));
+				const cpm = Math.round(correct / (elapsed / 60));
+				const progress = targetClusters.length ? Math.min(100, (typed.length / targetClusters.length) * 100) : 0;
+
+				getElement("btt-wpm").textContent = banglaDigits(wpm);
+				getElement("btt-cpm").textContent = banglaDigits(cpm);
+				getElement("btt-accuracy").textContent = `${banglaDigits(Math.round(accuracy))}%`;
+				getElement("btt-errors").textContent = banglaDigits(errors);
+				progressBar.style.width = `${progress}%`;
+				progressTrack.setAttribute("aria-valuenow", String(Math.round(progress)));
+				progressValue.textContent = `${banglaDigits(Math.round(progress))}%`;
+				recordSpeedPoint(correct);
+
+				if (typed.length >= targetClusters.length && isRunning) finishTest();
+			}
+
+			function startTest(preserveInput = false) {
+				if (mode === "custom" && !customPassage.trim()) {
+					liveStatus.textContent = "আগে নিজের বাংলা প্যাসেজ লিখে ব্যবহার করুন।";
+					const customText = root.querySelector("#btt-custom-text");
+					if (customText instanceof HTMLTextAreaElement) customText.focus();
+					return;
+				}
+				if (isRunning) {
+					resetTest();
+					isRunning = true;
+				} else {
+					completion.hidden = true;
+					if (!preserveInput) input.value = "";
+					updateHighlight("");
+					isRunning = true;
+				}
+				startedAt = Date.now();
+				elapsedBeforePause = 0;
+				remainingSeconds = duration * 60;
+				liveStatus.textContent = "পরীক্ষা চলমান। এখন প্যাসেজটি টাইপ করুন।";
+				input.focus();
+				if (mode === "time") {
+					if (timerId !== undefined) window.clearInterval(timerId);
+					timerId = window.setInterval(() => {
+						const elapsed = elapsedSeconds();
+						remainingSeconds = Math.max(0, duration * 60 - elapsed);
+						getElement("btt-time").textContent = secondsToBangla(remainingSeconds);
+						const liveTyped = splitClusters(normalize(input.value));
+						let liveCorrect = 0;
+						targetClusters.forEach((glyph, index) => {
+							if (liveTyped[index] === glyph) liveCorrect++;
+						});
+						recordSpeedPoint(liveCorrect);
+						if (remainingSeconds <= 0) finishTest();
+					}, 250);
+				}
+			}
+
+			function splitWords(text) {
+				return normalize(text).trim().split(/\s+/u).filter(Boolean);
+			}
+
+			function finishTest() {
+				if (!isRunning) return;
+				isRunning = false;
+				if (timerId !== undefined) window.clearInterval(timerId);
+				timerId = undefined;
+				elapsedBeforePause = elapsedSeconds();
+				startedAt = 0;
+
+				const typed = splitClusters(normalize(input.value));
+				let correct = 0;
+				let errors = 0;
+				targetClusters.forEach((glyph, index) => {
+					if (index < typed.length) {
+						if (typed[index] === glyph) correct++;
+						else errors++;
+					}
+				});
+				errors += Math.max(0, typed.length - targetClusters.length);
+				const compared = Math.min(typed.length, targetClusters.length);
+				const accuracy = compared === 0 ? 100 : Math.max(0, (correct / compared) * 100);
+				const elapsed = Math.max(elapsedBeforePause, 1);
+				const grossWpm = Math.round((typed.length / 5) / (elapsed / 60));
+				const netWpm = Math.round((correct / 5) / (elapsed / 60));
+				const wpm = netWpm;
+				const cpm = Math.round(correct / (elapsed / 60));
+				const roundedAccuracy = Math.round(accuracy);
+
+				const targetWords = splitWords(passageText);
+				const typedWords = splitWords(input.value);
+				let correctWords = 0;
+				targetWords.forEach((word, index) => {
+					if (typedWords[index] === word) correctWords++;
+				});
+
+				getElement("result-wpm").textContent = banglaDigits(wpm);
+				getElement("result-cpm").textContent = banglaDigits(cpm);
+				getElement("result-accuracy").textContent = `${banglaDigits(roundedAccuracy)}%`;
+				getElement("result-correct").textContent = banglaDigits(correct);
+				getElement("result-errors").textContent = banglaDigits(errors);
+				getElement("result-words").textContent = `${banglaDigits(correctWords)} / ${banglaDigits(targetWords.length)}`;
+				getElement("dashboard-gross-wpm").textContent = banglaDigits(grossWpm);
+				getElement("dashboard-net-wpm").textContent = banglaDigits(netWpm);
+				getElement("dashboard-wpm").textContent = banglaDigits(wpm);
+				getElement("dashboard-cpm").textContent = banglaDigits(cpm);
+				getElement("dashboard-accuracy").textContent = `${banglaDigits(roundedAccuracy)}%`;
+
+				recordSpeedPoint(correct);
+				if (speedPoints.length === 0) {
+					speedPoints.push({ seconds: Math.max(1, Math.round(elapsed)), wpm });
+				}
+				renderSpeedGraph();
+				renderMistakesAndReview(typed.map((cluster) => cluster));
+
+				const record = {
+					timestamp: Date.now(),
+					grossWpm,
+					netWpm,
+					wpm,
+					cpm,
+					accuracy: roundedAccuracy,
+					correctCharacters: correct,
+					errors,
+					correctWords,
+					totalWords: targetWords.length,
+					elapsedSeconds: Math.round(elapsed),
+					category,
+					difficulty,
+					mode,
+				};
+				latestResult = record;
+				const history = [record, ...readHistory()].slice(0, 20);
+				try {
+					localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+				} catch {
+					liveStatus.textContent = "পরীক্ষা সম্পন্ন হয়েছে। এ ব্রাউজারেই পুরোনো ফলাফল সংরক্ষণ করা যাচ্ছে না।";
+				}
+				const previousBest = readBest();
+				const best = {
+					speed: Math.max(previousBest.speed, netWpm),
+					accuracy: Math.max(previousBest.accuracy, roundedAccuracy),
+				};
+				try {
+					localStorage.setItem(BEST_KEY, JSON.stringify(best));
+				} catch {
+					// ব্রাউজারের গোপনতা সেটিংসের কারণে সেরা রেকর্ড সংরক্ষণ না হলে ফলাফল তবু দেখানো হবে।
+				}
+				renderHistory(record);
+				completion.hidden = false;
+				liveStatus.textContent = "পরীক্ষা সম্পন্ন হয়েছে। নিচে ফলাফল দেখুন।";
+				completion.scrollIntoView({ behavior: "smooth", block: "nearest" });
+			}
+
+			root.querySelectorAll("[data-duration]").forEach((button) => {
+				button.addEventListener("click", () => {
+					duration = Number(button.dataset.duration || 1);
+					setPressed("#duration-options", button);
+					resetTest();
+				});
+			});
+			root.querySelectorAll("[data-difficulty]").forEach((button) => {
+				button.addEventListener("click", () => {
+					difficulty = button.dataset.difficulty || "beginner";
+					passageIndex = 0;
+					setPressed("#difficulty-options", button);
+					resetTest();
+				});
+			});
+			root.querySelectorAll("[data-mode]").forEach((button) => {
+				button.addEventListener("click", () => {
+					mode = button.dataset.mode || "time";
+					setPressed("#mode-options", button);
+					resetTest();
+				});
+			});
+			root.querySelectorAll("[data-category]").forEach((button) => {
+				button.addEventListener("click", () => {
+					category = button.dataset.category || "general";
+					passageIndex = 0;
+					setPressed("#category-options", button);
+					resetTest();
+				});
+			});
+
+			input.addEventListener("compositionstart", () => {
+				isComposing = true;
+			});
+			input.addEventListener("compositionupdate", () => {
+				isComposing = true;
+			});
+			input.addEventListener("compositionend", () => {
+				isComposing = false;
+				updateHighlight(input.value);
+			});
+			input.addEventListener("beforeinput", (event) => {
+				if (event instanceof InputEvent && event.isComposing) isComposing = true;
+			});
+			input.addEventListener("input", () => {
+				if (!isRunning) startTest(true);
+				if (!isComposing) updateHighlight(input.value);
+			});
+			input.addEventListener("paste", (event) => {
+				if (!event.clipboardData) return;
+				event.preventDefault();
+				if (!isRunning) startTest();
+				const pasted = normalize(event.clipboardData.getData("text").replace(/[\r\n]+/g, " "));
+				const start = input.selectionStart;
+				const end = input.selectionEnd;
+				input.setRangeText(pasted, start, end, "end");
+				updateHighlight(input.value);
+			});
+			input.addEventListener("keydown", (event) => {
+				if (event.key === "Backspace" && !isComposing) {
+					window.requestAnimationFrame(() => updateHighlight(input.value));
+				}
+				if (event.key === "Enter" && mode !== "time") {
+					event.preventDefault();
+				}
+			});
+
+			startButton.addEventListener("click", startTest);
+			restartButton.addEventListener("click", resetTest);
+			resultRestart.addEventListener("click", resetTest);
+			const clearHistoryButton = root.querySelector("#btt-clear-history");
+			if (clearHistoryButton instanceof HTMLButtonElement) {
+				clearHistoryButton.addEventListener("click", () => {
+					try {
+						localStorage.removeItem(HISTORY_KEY);
+						localStorage.removeItem(BEST_KEY);
+						renderHistory();
+						liveStatus.textContent = "সংরক্ষিত পরীক্ষা ও সেরা রেকর্ড মুছে ফেলা হয়েছে।";
+					} catch {
+						liveStatus.textContent = "এই ব্রাউজার থেকে সংরক্ষিত তথ্য মুছে ফেলা যায়নি।";
+					}
+				});
+			}
+
+			const customText = root.querySelector("#btt-custom-text");
+			const useCustomButton = root.querySelector("#btt-use-custom");
+			const clearCustomButton = root.querySelector("#btt-clear-custom");
+			const customError = root.querySelector("#btt-custom-error");
+			if (customText instanceof HTMLTextAreaElement && useCustomButton instanceof HTMLButtonElement && clearCustomButton instanceof HTMLButtonElement && customError instanceof HTMLElement) {
+				useCustomButton.addEventListener("click", () => {
+					const text = normalize(customText.value).replace(/\r\n/g, "\n").trim();
+					const hasBangla = /[\u0980-\u09FF]/u.test(text);
+					if (!hasBangla || text.length < 5) {
+						customError.hidden = false;
+						customError.textContent = "কমপক্ষে পাঁচটি বাংলা অক্ষরবিশিষ্ট প্যাসেজ লিখুন।";
+						customText.focus();
+						return;
+					}
+					customError.hidden = true;
+					customPassage = text;
+					resetTest();
+					liveStatus.textContent = "নিজের প্যাসেজ প্রস্তুত। পরীক্ষা শুরু করতে প্রস্তুত।";
+				});
+				clearCustomButton.addEventListener("click", () => {
+					customText.value = "";
+					customPassage = "";
+					customError.hidden = true;
+					resetTest();
+				});
+			}
+
+			const fullscreenButton = root.querySelector("#btt-fullscreen");
+			if (fullscreenButton instanceof HTMLButtonElement) {
+				fullscreenButton.addEventListener("click", async () => {
+					try {
+						if (!document.fullscreenElement) {
+							await root.requestFullscreen();
+							fullscreenButton.setAttribute("aria-pressed", "true");
+							fullscreenButton.textContent = "পূর্ণ পর্দা বন্ধ করুন";
+						} else {
+							await document.exitFullscreen();
+							fullscreenButton.setAttribute("aria-pressed", "false");
+							fullscreenButton.textContent = "পূর্ণ পর্দা";
+						}
+					} catch {
+						liveStatus.textContent = "এই ব্রাউজারে পূর্ণ পর্দা চালু করা যায়নি।";
+					}
+				});
+				document.addEventListener("fullscreenchange", () => {
+					if (!document.fullscreenElement) {
+						fullscreenButton.setAttribute("aria-pressed", "false");
+						fullscreenButton.textContent = "পূর্ণ পর্দা";
+					}
+				});
+			}
+
+			function resultSummaryText() {
+				if (!latestResult) return "বাংলা টাইপিং পরীক্ষার ফলাফল";
+				return `বাংলা টাইপিং পরীক্ষার ফলাফল\nমোট গতি: ${banglaDigits(latestResult.grossWpm)} শব্দ/মিনিট\nনেট গতি: ${banglaDigits(latestResult.netWpm)} শব্দ/মিনিট\nনির্ভুলতা: ${banglaDigits(latestResult.accuracy)}%\nভুল বর্ণ: ${banglaDigits(latestResult.errors)}\nWordora`;
+			}
+
+			const shareButton = root.querySelector("#btt-share-result");
+			if (shareButton instanceof HTMLButtonElement) {
+				shareButton.addEventListener("click", async () => {
+					if (!latestResult) return;
+					const summary = resultSummaryText();
+					try {
+						if (navigator.share) {
+							await navigator.share({ title: "বাংলা টাইপিং পরীক্ষার ফলাফল", text: summary });
+							liveStatus.textContent = "ফলাফল শেয়ার করার অনুরোধ পাঠানো হয়েছে।";
+						} else if (navigator.clipboard) {
+							await navigator.clipboard.writeText(summary);
+							liveStatus.textContent = "ফলাফলের বিবরণ ক্লিপবোর্ডে কপি হয়েছে।";
+						} else {
+							liveStatus.textContent = "এই ব্রাউজারে শেয়ার বা ক্লিপবোর্ড ব্যবহার করা যাবে না।";
+						}
+					} catch {
+						liveStatus.textContent = "ফলাফল শেয়ার করা হয়নি।";
+					}
+				});
+			}
+
+			const downloadButton = root.querySelector("#btt-download-result");
+			if (downloadButton instanceof HTMLButtonElement) {
+				downloadButton.addEventListener("click", () => {
+					if (!latestResult) return;
+					const canvas = document.createElement("canvas");
+					canvas.width = 1000;
+					canvas.height = 620;
+					const context = canvas.getContext("2d");
+					if (!context) {
+						liveStatus.textContent = "ছবি তৈরি করা যায়নি।";
+						return;
+					}
+					context.fillStyle = "#E8EDF3";
+					context.fillRect(0, 0, canvas.width, canvas.height);
+					context.fillStyle = "#15382A";
+					context.fillRect(0, 0, canvas.width, 110);
+					context.fillStyle = "#F3F9F6";
+					context.font = "600 46px 'Noto Sans Bengali', sans-serif";
+					context.fillText("বাংলা টাইপিং পরীক্ষার ফলাফল", 52, 72);
+					context.fillStyle = "#15382A";
+					context.font = "700 72px 'Noto Sans Bengali', sans-serif";
+					context.fillText(`${banglaDigits(latestResult.wpm)} শব্দ/মিনিট`, 52, 205);
+					context.font = "500 28px 'Noto Sans Bengali', sans-serif";
+					context.fillStyle = "#315846";
+					context.fillText(`মোট গতি: ${banglaDigits(latestResult.grossWpm)}  •  নেট গতি: ${banglaDigits(latestResult.netWpm)}`, 52, 270);
+					context.fillText(`নির্ভুলতা: ${banglaDigits(latestResult.accuracy)}%  •  ভুল বর্ণ: ${banglaDigits(latestResult.errors)}`, 52, 325);
+					context.fillText(`সঠিক বর্ণ: ${banglaDigits(latestResult.correctCharacters)}  •  সঠিক শব্দ: ${banglaDigits(latestResult.correctWords)}`, 52, 380);
+					context.fillStyle = "#F3F6FA";
+					context.fillRect(52, 435, 896, 105);
+					context.fillStyle = "#15382A";
+					context.font = "600 30px 'Noto Sans Bengali', sans-serif";
+					context.fillText("Wordora • wordora.site", 82, 500);
+					const link = document.createElement("a");
+					link.download = "wordora-bangla-typing-result.png";
+					link.href = canvas.toDataURL("image/png");
+					link.click();
+					liveStatus.textContent = "ফলাফলের ছবি ডাউনলোড করা হয়েছে।";
+				});
+			}
+
+			const printButton = root.querySelector("#btt-print-result");
+			if (printButton instanceof HTMLButtonElement) {
+				printButton.addEventListener("click", () => window.print());
+			}
+
+			document.addEventListener("keydown", (event) => {
+				if (event.isComposing || isComposing) return;
+				if (event.ctrlKey && event.key === "Enter") {
+					event.preventDefault();
+					startTest();
+				}
+				if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "r") {
+					event.preventDefault();
+					resetTest();
+				}
+			});
+
+			resetTest();
+		}
+
+		document.addEventListener("astro:page-load", initBanglaTypingTest);
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", initBanglaTypingTest, { once: true });
+		} else {
+			initBanglaTypingTest();
+		}
+	</script>
+</div>
+
+<style is:global>
+	.bangla-test {
+		font-family: "Noto Sans Bengali", "Hind Siliguri", "Nirmala UI", "Vrinda", "Geist", "Inter", sans-serif;
+	}
+	.bangla-test [hidden] { display: none !important; }
+	.bangla-test .btt-choice,
+	.bangla-test .btt-category,
+	.bangla-test .btt-action {
+		min-height: 44px;
+		border: 1px solid #C4CFDD;
+		border-radius: 999px;
+		background: #EDF5F1;
+		color: #315846;
+		font-size: 13.5px;
+		font-weight: 600;
+		padding: 0.55rem 0.9rem;
+		cursor: pointer;
+		transition: 150ms ease;
+	}
+	.dark .bangla-test .btt-choice,
+	.dark .bangla-test .btt-category,
+	.dark .bangla-test .btt-action {
+		border-color: #315846;
+		background: #102018;
+		color: #B8D6C7;
+	}
+	.bangla-test .btt-choice:hover,
+	.bangla-test .btt-category:hover,
+	.bangla-test .btt-action:hover {
+		border-color: #2F7D61;
+	}
+	.bangla-test .btt-choice.is-active,
+	.bangla-test .btt-category.is-active {
+		border-color: #2F7D61;
+		background: #2F7D61;
+		color: #F3F9F6;
+	}
+	.bangla-test .btt-option {
+		min-height: 68px;
+		border: 1px solid #C4CFDD;
+		border-radius: 12px;
+		background: #EDF5F1;
+		color: #315846;
+		padding: 0.7rem;
+		text-align: left;
+		cursor: pointer;
+	}
+	.dark .bangla-test .btt-option { border-color: #315846; background: #102018; color: #B8D6C7; }
+	.bangla-test .btt-option span { display: block; font-size: 14px; font-weight: 700; }
+	.bangla-test .btt-option small { display: block; margin-top: 0.25rem; font-size: 12px; line-height: 1.5; }
+	.bangla-test .btt-option.is-active { border-color: #2F7D61; background: #DCEDE5; color: #15382A; }
+	.dark .bangla-test .btt-option.is-active { background: #183728; color: #D8EEE4; }
+	.bangla-test .btt-stat,
+	.bangla-test .btt-result {
+		min-width: 0;
+		border-top: 1px solid #C4CFDD;
+		padding-top: 0.5rem;
+	}
+	.dark .bangla-test .btt-stat,
+	.dark .bangla-test .btt-result { border-color: #315846; }
+	.bangla-test .btt-stat dt,
+	.bangla-test .btt-result dt { color: #5B6B80; font-size: 12px; line-height: 1.4; }
+	.dark .bangla-test .btt-stat dt,
+	.dark .bangla-test .btt-result dt { color: #878787; }
+	.bangla-test .btt-stat dd,
+	.bangla-test .btt-result dd { margin-top: 0.15rem; color: #15382A; font-size: 20px; font-weight: 700; }
+	.dark .bangla-test .btt-stat dd,
+	.dark .bangla-test .btt-result dd { color: #D8EEE4; }
+	.bangla-test .btt-primary { border-color: #15382A; background: #15382A; color: #F3F9F6; }
+	.bangla-test .btt-primary:hover { border-color: #2F7D61; background: #2F7D61; }
+	.dark .bangla-test .btt-primary { border-color: #7FB69A; background: #2F7D61; color: #F3F9F6; }
+	.bangla-test .btt-secondary { border-radius: 999px; }
+	.bangla-test .btt-glyph {
+		display: inline;
+		border-radius: 3px;
+		transition: background-color 100ms ease, color 100ms ease;
+	}
+	.bangla-test .btt-glyph[data-state="correct"] { color: #1F6B4F; background: #CDE8DA; }
+	.bangla-test .btt-glyph[data-state="incorrect"] { color: #9E2F27; background: #F4CECA; text-decoration: underline; text-decoration-style: wavy; }
+	.bangla-test .btt-glyph[data-state="current"] {
+		background: #E0B95B;
+		box-shadow: inset 2px 0 0 #15382A;
+	}
+	.bangla-test .btt-key {
+		display: inline-block;
+		border: 1px solid #C4CFDD;
+		border-bottom-width: 2px;
+		border-radius: 5px;
+		background: #F3F6FA;
+		color: #15382A;
+		padding: 0.05rem 0.35rem;
+		font-size: 11.5px;
+	}
+	.dark .bangla-test .btt-key { border-color: #315846; background: #101D18; color: #D8EEE4; }
+	.bangla-test:fullscreen {
+		overflow-y: auto;
+		background: #E8EDF3;
+		padding: 1rem;
+	}
+	.dark .bangla-test:fullscreen { background: #0a0a0a; }
+	@media print {
+		body * { visibility: hidden !important; }
+		#btt-completion,
+		#btt-completion * { visibility: visible !important; }
+		#btt-completion {
+			position: absolute;
+			inset: 0;
+			margin: 0;
+			border: 0;
+			background: #FFFFFF;
+		}
+	}
+</style>
