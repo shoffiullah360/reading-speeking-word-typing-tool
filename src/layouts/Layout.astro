@@ -18,6 +18,7 @@ interface Props {
 
 const locale: Locale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
+const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID?.trim() || 'G-8BERM1FJ0Q';
 
 const {
 	title = t('meta.siteTitle'),
@@ -71,6 +72,22 @@ const hreflangLinks = getVerifiedHreflangLinks(Astro.url.pathname);
 			href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap"
 			rel="stylesheet"
 		/>
+
+		<script
+			is:inline
+			async
+			src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+		></script>
+		<script is:inline define:vars={{ gaMeasurementId }}>
+			window.dataLayer = window.dataLayer || [];
+			window.gtag =
+				window.gtag ||
+				function () {
+					window.dataLayer.push(arguments);
+				};
+			window.gtag('js', new Date());
+			window.gtag('config', gaMeasurementId);
+		</script>
 
 		<!-- Prevent Flash of Incorrect Theme (FOUC) — Light Mode is default for first-time visitors -->
 		<script is:inline>

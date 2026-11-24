@@ -7394,7 +7394,7 @@
 				},
 				"logsAnalytics": {
 					"heading": "4. Registros padrão do servidor e análise de tráfego",
-					"body": "Como na maioria dos sites estáticos, nosso provedor de hospedagem pode coletar automaticamente informações técnicas padrão e não identificáveis quando o seu navegador solicita uma página (como tipo de navegador, sistema operacional, página de origem e endereço IP anonimizado) para fins de segurança, cache e medição agregada de tráfego. Esses dados técnicos de registro nunca incluem o texto inserido em qualquer calculadora da Wordora."
+					"body": "Usamos o Google Analytics 4 (GA4), fornecido pelo Google, para entender como as pessoas usam a Wordora. Ele pode coletar informações como páginas visitadas, páginas de origem e detalhes do navegador ou dispositivo, além de usar cookies ou tecnologias semelhantes. Nosso provedor de hospedagem também pode coletar registros técnicos padrão das solicitações para fins de segurança e operação do serviço. Esses dados de análise e registros não incluem o texto que você digita nas ferramentas da Wordora; todo o processamento de texto é feito no seu navegador."
 				},
 				"contact": {
 					"heading": "5. Contato sobre privacidade",

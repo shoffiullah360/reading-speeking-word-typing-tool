@@ -7394,7 +7394,7 @@
 				},
 				"logsAnalytics": {
 					"heading": "4. Standard server logs & analytics",
-					"body": "Like most static websites, our hosting provider may automatically collect standard, non-identifying technical information when your browser requests a page (such as browser type, operating system, referring page, and anonymized IP address) for security, caching, and aggregate traffic measurement. This technical log data never includes the text entered into any calculator on Wordora."
+					"body": "We use Google Analytics 4 (GA4), provided by Google, to understand how visitors use Wordora. It may collect information such as pages viewed, referring pages, and browser or device details, and may use cookies or similar technologies. Our hosting provider may also collect standard technical request logs for security and service operation. These analytics and logs do not include the text you enter into Wordora's tools; all tool text processing remains in your browser."
 				},
 				"contact": {
 					"heading": "5. Contact regarding privacy",
