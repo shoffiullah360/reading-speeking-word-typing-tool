@@ -167,7 +167,7 @@ const levelLabels: Record<string, string> = {
 				</section>
 			</div>
 
-			<aside class="min-w-0 rounded-xl border border-hairline bg-surface p-4" aria-label="পরীক্ষার সংক্ষিপ্ত তথ্য">
+			<aside class="min-w-0 rounded-xl border border-hairline bg-surface p-4 lg:sticky lg:top-20 lg:self-start" aria-label="পরীক্ষার সংক্ষিপ্ত তথ্য">
 				<p class="text-[12.5px] font-medium text-mute">লাইভ হিসাব</p>
 				<dl class="mt-3 grid grid-cols-2 gap-2.5">
 					<div class="btt-stat"><dt>মিনিটপ্রতি শব্দ</dt><dd id="btt-wpm" class="tabular-nums">০</dd></div>
@@ -188,6 +188,27 @@ const levelLabels: Record<string, string> = {
 					<button type="button" id="btt-restart" class="btt-action btt-secondary">আবার শুরু করুন</button>
 					<button type="button" id="btt-fullscreen" class="btt-action btt-secondary" aria-pressed="false">পূর্ণ পর্দা</button>
 				</div>
+			</div>
+
+			<div class="btt-live-strip sticky top-16 z-20 mt-4 rounded-xl border border-hairline bg-surface px-3 py-2.5 shadow-[0_2px_6px_rgba(15,23,42,0.06)] sm:top-20">
+				<dl class="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-4" aria-label="টাইপিং পরীক্ষার লাইভ হিসাব">
+					<div class="min-w-0">
+						<dt id="btt-time-inline-label" data-live-mirror="btt-time-label" class="text-[12px] leading-snug text-mute">অবশিষ্ট সময়</dt>
+						<dd id="btt-time-inline" data-live-mirror="btt-time" class="mt-0.5 text-[20px] font-bold text-ink tabular-nums" role="timer" aria-labelledby="btt-time-inline-label">১:০০</dd>
+					</div>
+					<div class="min-w-0">
+						<dt class="text-[12px] leading-snug text-mute">মিনিটপ্রতি শব্দ</dt>
+						<dd id="btt-wpm-inline" data-live-mirror="btt-wpm" class="mt-0.5 text-[16px] font-semibold text-ink tabular-nums">০</dd>
+					</div>
+					<div class="min-w-0">
+						<dt class="text-[12px] leading-snug text-mute">নির্ভুলতা</dt>
+						<dd id="btt-accuracy-inline" data-live-mirror="btt-accuracy" class="mt-0.5 text-[16px] font-semibold text-ink tabular-nums">১০০%</dd>
+					</div>
+					<div class="min-w-0">
+						<dt class="text-[12px] leading-snug text-mute">ভুল</dt>
+						<dd id="btt-errors-inline" data-live-mirror="btt-errors" class="mt-0.5 text-[16px] font-semibold text-ink tabular-nums">০</dd>
+					</div>
+				</dl>
 			</div>
 
 			<div class="mt-4">
@@ -421,6 +442,13 @@ const levelLabels: Record<string, string> = {
 				return element;
 			};
 
+			function setLiveText(id, value) {
+				getElement(id).textContent = value;
+				root.querySelectorAll(`[data-live-mirror="${id}"]`).forEach((mirror) => {
+					if (mirror instanceof HTMLElement) mirror.textContent = value;
+				});
+			}
+
 			function setPressed(group, active) {
 				root.querySelectorAll(group + " [aria-pressed]").forEach((button) => {
 					button.setAttribute("aria-pressed", "false");
@@ -468,12 +496,12 @@ const levelLabels: Record<string, string> = {
 				completion.hidden = true;
 				const customPanel = root.querySelector("#btt-custom-panel");
 				if (customPanel instanceof HTMLElement) customPanel.hidden = mode !== "custom";
-				getElement("btt-time-label").textContent = mode === "time" ? "অবশিষ্ট সময়" : "পরীক্ষার সময়";
-				getElement("btt-time").textContent = mode === "time" ? secondsToBangla(remainingSeconds) : "প্যাসেজভিত্তিক";
-				getElement("btt-wpm").textContent = "০";
+				setLiveText("btt-time-label", mode === "time" ? "অবশিষ্ট সময়" : "পরীক্ষার সময়");
+				setLiveText("btt-time", mode === "time" ? secondsToBangla(remainingSeconds) : "প্যাসেজভিত্তিক");
+				setLiveText("btt-wpm", "০");
 				getElement("btt-cpm").textContent = "০";
-				getElement("btt-accuracy").textContent = "১০০%";
-				getElement("btt-errors").textContent = "০";
+				setLiveText("btt-accuracy", "১০০%");
+				setLiveText("btt-errors", "০");
 				progressBar.style.width = "0%";
 				progressTrack.setAttribute("aria-valuenow", "0");
 				progressValue.textContent = "০%";
@@ -666,10 +694,10 @@ const levelLabels: Record<string, string> = {
 				const cpm = Math.round(correct / (elapsed / 60));
 				const progress = targetClusters.length ? Math.min(100, (typed.length / targetClusters.length) * 100) : 0;
 
-				getElement("btt-wpm").textContent = banglaDigits(wpm);
+				setLiveText("btt-wpm", banglaDigits(wpm));
 				getElement("btt-cpm").textContent = banglaDigits(cpm);
-				getElement("btt-accuracy").textContent = `${banglaDigits(Math.round(accuracy))}%`;
-				getElement("btt-errors").textContent = banglaDigits(errors);
+				setLiveText("btt-accuracy", `${banglaDigits(Math.round(accuracy))}%`);
+				setLiveText("btt-errors", banglaDigits(errors));
 				progressBar.style.width = `${progress}%`;
 				progressTrack.setAttribute("aria-valuenow", String(Math.round(progress)));
 				progressValue.textContent = `${banglaDigits(Math.round(progress))}%`;
@@ -700,7 +728,7 @@ const levelLabels: Record<string, string> = {
 					timerId = window.setInterval(() => {
 						const elapsed = elapsedSeconds();
 						remainingSeconds = Math.max(0, duration * 60 - elapsed);
-						getElement("btt-time").textContent = secondsToBangla(remainingSeconds);
+						setLiveText("btt-time", secondsToBangla(remainingSeconds));
 						const liveTyped = splitClusters(normalize(input.value));
 						let liveCorrect = 0;
 						targetClusters.forEach((glyph, index) => {
@@ -1145,6 +1173,7 @@ const levelLabels: Record<string, string> = {
 		background: #E8EDF3;
 		padding: 1rem;
 	}
+	.bangla-test:fullscreen .btt-live-strip { top: 1rem; }
 	.dark .bangla-test:fullscreen { background: #0a0a0a; }
 	@media print {
 		body * { visibility: hidden !important; }
