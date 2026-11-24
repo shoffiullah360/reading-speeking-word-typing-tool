@@ -186,7 +186,6 @@ const levelLabels: Record<string, string> = {
 					<p id="btt-passage-meta" class="mt-1 text-[12.5px] text-mute">সাধারণ • সহজ</p>
 				</div>
 				<div class="flex gap-2">
-					<button type="button" id="btt-start" class="btt-action btt-primary">পরীক্ষা শুরু করুন</button>
 					<button type="button" id="btt-restart" class="btt-action btt-secondary">আবার শুরু করুন</button>
 					<button type="button" id="btt-fullscreen" class="btt-action btt-secondary" aria-pressed="false">পূর্ণ পর্দা</button>
 				</div>
@@ -205,7 +204,7 @@ const levelLabels: Record<string, string> = {
 				</div>
 			</div>
 
-			<p id="btt-live-status" class="mt-3 min-h-5 text-[13px] text-body" role="status" aria-live="polite">পরীক্ষা শুরু করতে বা লেখার ঘরে টাইপ করতে পারেন।</p>
+			<p id="btt-live-status" class="mt-3 min-h-5 text-[13px] text-body" role="status" aria-live="polite">পরীক্ষা শুরু করুন, তারপর লেখার ঘরে টাইপ করুন।</p>
 
 			<div
 				id="btt-passage"
@@ -214,16 +213,23 @@ const levelLabels: Record<string, string> = {
 				aria-label="টাইপ করার প্যাসেজ"
 			></div>
 
+			<div class="mt-4">
+				<button type="button" id="btt-start" class="btt-action btt-primary !min-h-[52px] !px-6 !py-3 text-[15px]">
+					পরীক্ষা শুরু করুন
+				</button>
+			</div>
+
 			<label for="btt-input" class="mt-4 block text-[12.5px] font-medium text-mute">এখানে টাইপ করুন</label>
 			<textarea
 				id="btt-input"
 				rows="4"
 				lang="bn"
+				disabled
 				spellcheck="false"
 				autocomplete="off"
 				autocapitalize="off"
 				autocorrect="off"
-				class="mt-2 w-full resize-y rounded-xl border border-hairline bg-card px-4 py-3 text-[17px] leading-[1.8] text-ink outline-none transition focus:border-[#2F7D61] focus:ring-2 focus:ring-[#2F7D61]/20"
+				class="mt-2 w-full resize-y rounded-xl border border-hairline bg-card px-4 py-3 text-[17px] leading-[1.8] text-ink outline-none transition disabled:cursor-not-allowed disabled:bg-surface disabled:text-mute disabled:placeholder:text-faint focus:border-[#2F7D61] focus:ring-2 focus:ring-[#2F7D61]/20"
 				placeholder="অভ্র বা বিজয় ইউনিকোড কীবোর্ডে বাংলা টাইপ করুন…"
 			></textarea>
 
@@ -425,6 +431,11 @@ const levelLabels: Record<string, string> = {
 				return element;
 			};
 
+			function updatePassageMeta() {
+				getElement("btt-passage-meta").textContent =
+					mode === "custom" ? "নিজের প্যাসেজ • মুক্ত অভ্যাস" : `${categoryLabels[category]} • ${levelLabels[difficulty]}`;
+			}
+
 			function setPressed(group, active) {
 				root.querySelectorAll(group + " [aria-pressed]").forEach((button) => {
 					button.setAttribute("aria-pressed", "false");
@@ -452,11 +463,10 @@ const levelLabels: Record<string, string> = {
 					span.textContent = glyph;
 					passageElement.appendChild(span);
 				});
-				getElement("btt-passage-meta").textContent =
-					mode === "custom" ? "নিজের প্যাসেজ • মুক্ত অভ্যাস" : `${categoryLabels[category]} • ${levelLabels[difficulty]}`;
+				updatePassageMeta();
 			}
 
-			function resetTest(focusInput = false) {
+			function resetTest(focusStartButton = false) {
 				if (timerId !== undefined) window.clearInterval(timerId);
 				timerId = undefined;
 				isRunning = false;
@@ -467,6 +477,10 @@ const levelLabels: Record<string, string> = {
 				speedPoints = [];
 				lastSpeedSnapshot = -5;
 				input.value = "";
+				input.disabled = true;
+				passageText = "";
+				targetClusters = [];
+				passageElement.replaceChildren();
 				completion.hidden = true;
 				const customPanel = root.querySelector("#btt-custom-panel");
 				if (customPanel instanceof HTMLElement) customPanel.hidden = mode !== "custom";
@@ -479,11 +493,11 @@ const levelLabels: Record<string, string> = {
 				progressBar.style.width = "0%";
 				progressTrack.setAttribute("aria-valuenow", "0");
 				progressValue.textContent = "০%";
-				liveStatus.textContent = "পরীক্ষা শুরু করতে বা লেখার ঘরে টাইপ করতে পারেন।";
-				choosePassage();
+				liveStatus.textContent = "পরীক্ষা শুরু করুন, তারপর লেখার ঘরে টাইপ করুন।";
+				updatePassageMeta();
 				updateHighlight("");
 				renderHistory();
-				if (focusInput) input.focus();
+				if (focusStartButton) startButton.focus();
 			}
 
 			function elapsedSeconds() {
@@ -681,26 +695,22 @@ const levelLabels: Record<string, string> = {
 				if (typed.length >= targetClusters.length && isRunning) finishTest();
 			}
 
-			function startTest(preserveInput = false) {
+			function startTest() {
 				if (mode === "custom" && !customPassage.trim()) {
 					liveStatus.textContent = "আগে নিজের বাংলা প্যাসেজ লিখে ব্যবহার করুন।";
 					const customText = root.querySelector("#btt-custom-text");
 					if (customText instanceof HTMLTextAreaElement) customText.focus({ preventScroll: true });
 					return;
 				}
-				if (isRunning) {
-					resetTest();
-					isRunning = true;
-				} else {
-					completion.hidden = true;
-					if (!preserveInput) input.value = "";
-					updateHighlight("");
-					isRunning = true;
-				}
+				resetTest();
+				choosePassage();
+				input.disabled = false;
+				isRunning = true;
 				startedAt = Date.now();
 				elapsedBeforePause = 0;
 				remainingSeconds = duration * 60;
 				liveStatus.textContent = "পরীক্ষা চলমান। এখন প্যাসেজটি টাইপ করুন।";
+				updateHighlight("");
 				input.focus();
 				if (mode === "time") {
 					if (timerId !== undefined) window.clearInterval(timerId);
@@ -726,6 +736,7 @@ const levelLabels: Record<string, string> = {
 			function finishTest() {
 				if (!isRunning) return;
 				isRunning = false;
+				if (!isComposing) input.disabled = true;
 				if (timerId !== undefined) window.clearInterval(timerId);
 				timerId = undefined;
 				elapsedBeforePause = elapsedSeconds();
@@ -854,19 +865,25 @@ const levelLabels: Record<string, string> = {
 			});
 			input.addEventListener("compositionend", () => {
 				isComposing = false;
+				if (!isRunning) {
+					input.disabled = true;
+					return;
+				}
 				updateHighlight(input.value);
 			});
 			input.addEventListener("beforeinput", (event) => {
 				if (event instanceof InputEvent && event.isComposing) isComposing = true;
 			});
 			input.addEventListener("input", () => {
-				if (!isRunning) startTest(true);
-				if (!isComposing) updateHighlight(input.value);
+				if (isRunning && !isComposing) updateHighlight(input.value);
 			});
 			input.addEventListener("paste", (event) => {
+				if (!isRunning) {
+					event.preventDefault();
+					return;
+				}
 				if (!event.clipboardData) return;
 				event.preventDefault();
-				if (!isRunning) startTest();
 				const pasted = normalize(event.clipboardData.getData("text").replace(/[\r\n]+/g, " "));
 				const start = input.selectionStart;
 				const end = input.selectionEnd;
