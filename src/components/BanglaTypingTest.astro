@@ -456,7 +456,7 @@ const levelLabels: Record<string, string> = {
 					mode === "custom" ? "নিজের প্যাসেজ • মুক্ত অভ্যাস" : `${categoryLabels[category]} • ${levelLabels[difficulty]}`;
 			}
 
-			function resetTest() {
+			function resetTest(focusInput = false) {
 				if (timerId !== undefined) window.clearInterval(timerId);
 				timerId = undefined;
 				isRunning = false;
@@ -483,7 +483,7 @@ const levelLabels: Record<string, string> = {
 				choosePassage();
 				updateHighlight("");
 				renderHistory();
-				input.focus();
+				if (focusInput) input.focus();
 			}
 
 			function elapsedSeconds() {
@@ -685,7 +685,7 @@ const levelLabels: Record<string, string> = {
 				if (mode === "custom" && !customPassage.trim()) {
 					liveStatus.textContent = "আগে নিজের বাংলা প্যাসেজ লিখে ব্যবহার করুন।";
 					const customText = root.querySelector("#btt-custom-text");
-					if (customText instanceof HTMLTextAreaElement) customText.focus();
+					if (customText instanceof HTMLTextAreaElement) customText.focus({ preventScroll: true });
 					return;
 				}
 				if (isRunning) {
@@ -883,8 +883,8 @@ const levelLabels: Record<string, string> = {
 			});
 
 			startButton.addEventListener("click", startTest);
-			restartButton.addEventListener("click", resetTest);
-			resultRestart.addEventListener("click", resetTest);
+			restartButton.addEventListener("click", () => resetTest(true));
+			resultRestart.addEventListener("click", () => resetTest(true));
 			const clearHistoryButton = root.querySelector("#btt-clear-history");
 			if (clearHistoryButton instanceof HTMLButtonElement) {
 				clearHistoryButton.addEventListener("click", () => {
@@ -910,7 +910,7 @@ const levelLabels: Record<string, string> = {
 					if (!hasBangla || text.length < 5) {
 						customError.hidden = false;
 						customError.textContent = "কমপক্ষে পাঁচটি বাংলা অক্ষরবিশিষ্ট প্যাসেজ লিখুন।";
-						customText.focus();
+						customText.focus({ preventScroll: true });
 						return;
 					}
 					customError.hidden = true;
@@ -1030,7 +1030,7 @@ const levelLabels: Record<string, string> = {
 				}
 				if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "r") {
 					event.preventDefault();
-					resetTest();
+					resetTest(true);
 				}
 			});
 
