@@ -7278,12 +7278,6 @@
 			}
 		]
 	},
-	"banglaTypingPractice": {
-		"name": "Prática de digitação em bengali",
-		"shortName": "Prática de digitação em bengali",
-		"description": "Pratique digitação em bengali passo a paso: letras, palavras, frases e parágrafos completos com feedback instantâneo no seu navegador.",
-		"metric": "12 lições · 6 modos"
-	},
 	"about": {
 		"name": "Sobre a Wordora",
 		"shortName": "Sobre",

@@ -2,7 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import BanglaTypingPractice from "../components/BanglaTypingPractice.astro";
-import RelatedTools from "../components/RelatedTools.astro";
 import Footer from "../components/Footer.astro";
 import { resolveCanonicalUrl, STANDALONE_TOOLS } from "../config/site";
 import {
@@ -731,10 +730,27 @@ const structuredData = {
 			</div>
 		</section>
 
-		<!-- Topical cluster interlinking (English card labels follow the global chrome) -->
-		<div class="bp-related">
-			<RelatedTools toolId="bangla-typing-practice" locale="en" maxWidthClass="max-w-[1100px]" />
-		</div>
+		<!-- Related tools section in authentic Bengali matching BanglaTypingTestPage -->
+		<section aria-labelledby="related-heading" class="mx-auto max-w-[1100px] border-t border-hairline px-4 pt-10 pb-14 sm:px-6">
+			<h2 id="related-heading" class="text-[24px] font-semibold tracking-[-0.6px] text-ink">সম্পর্কিত সরঞ্জাম</h2>
+			<div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+				<a href="/bangla-typing-test/" class="rounded-xl border border-hairline bg-card p-5 transition hover:-translate-y-0.5 hover:border-ink">
+					<span class="text-[12px] text-mute">টাইপিং</span>
+					<h3 class="mt-2 text-[16px] font-semibold text-ink">বাংলা টাইপিং পরীক্ষা</h3>
+					<p class="mt-1 text-[13.5px] text-body">গতি ও নির্ভুলতা যাচাই করতে পরীক্ষা দিন।</p>
+				</a>
+				<a href="/typing-speed-test/" class="rounded-xl border border-hairline bg-card p-5 transition hover:-translate-y-0.5 hover:border-ink">
+					<span class="text-[12px] text-mute">টাইপিং</span>
+					<h3 class="mt-2 text-[16px] font-semibold text-ink">ইংরেজি টাইপিং পরীক্ষা</h3>
+					<p class="mt-1 text-[13.5px] text-body">সময়ভিত্তিক ইংরেজি টাইপিংয়ের গতি যাচাই করুন।</p>
+				</a>
+				<a href="/word-counter/" class="rounded-xl border border-hairline bg-card p-5 transition hover:-translate-y-0.5 hover:border-ink">
+					<span class="text-[12px] text-mute">লেখা</span>
+					<h3 class="mt-2 text-[16px] font-semibold text-ink">শব্দ ও বর্ণ গণনা</h3>
+					<p class="mt-1 text-[13.5px] text-body">শব্দ, বর্ণ, বাক্য ও অনুচ্ছেদ হিসাব করুন।</p>
+				</a>
+			</div>
+		</section>
 
 		{/*
 			Editorial content slot — owner-managed.

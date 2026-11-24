@@ -1,6 +1,8 @@
 ---
 import {
+	STANDALONE_TOOLS,
 	getAvailableLocalesForSlug,
+	normalizeTrailingSlashPath,
 	stripLocalePrefix,
 } from '../config/site';
 import {
@@ -22,16 +24,54 @@ const { variant = 'desktop' } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 
+const currentPath = normalizeTrailingSlashPath(Astro.url.pathname);
+const isStandaloneBangla = STANDALONE_TOOLS.some((tool) => tool.slug === currentPath);
+
 // Equivalent page in each locale; fall back to that locale's home for unknown routes (e.g. 404).
 const baseSlug = stripLocalePrefix(Astro.url.pathname);
 const available = getAvailableLocalesForSlug(baseSlug);
-const items = locales.map((code: Locale) => ({
-	code,
-	label: languages[code],
-	name: languageNames[code],
-	href: getLocalizedPath(available.includes(code) ? baseSlug : '/', code),
-	active: code === locale,
-}));
+
+const items = isStandaloneBangla
+	? [
+			{
+				code: 'bn',
+				label: 'BN',
+				name: 'বাংলা',
+				href: currentPath,
+				active: true,
+			},
+			{
+				code: 'en',
+				label: 'EN',
+				name: 'English (Home)',
+				href: '/',
+				active: false,
+			},
+			{
+				code: 'es',
+				label: 'ES',
+				name: 'Español (Inicio)',
+				href: '/es/',
+				active: false,
+			},
+			{
+				code: 'pt',
+				label: 'PT',
+				name: 'Português (Início)',
+				href: '/pt/',
+				active: false,
+			},
+	  ]
+	: locales.map((code: Locale) => ({
+			code,
+			label: languages[code],
+			name: languageNames[code],
+			href: getLocalizedPath(available.includes(code) ? baseSlug : '/', code),
+			active: code === locale,
+	  }));
+
+const activeLabel = isStandaloneBangla ? 'BN' : languages[locale];
+const switcherAriaLabel = isStandaloneBangla ? 'ভাষা / Language' : t('nav.language');
 
 const isMobile = variant === 'mobile';
 ---
@@ -49,7 +89,7 @@ const isMobile = variant === 'mobile';
 					data-lang-trigger
 					aria-expanded="false"
 					aria-haspopup="true"
-					aria-label={t('nav.language')}
+					aria-label={switcherAriaLabel}
 					class="inline-flex h-11 cursor-pointer items-center gap-1.5 rounded-sm border border-[#e2e8e5] bg-[#ffffff] px-3 text-[13px] font-semibold text-[#0f172a] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
 				>
 					<svg
@@ -66,7 +106,7 @@ const isMobile = variant === 'mobile';
 						<path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
 						<path d="M2 12h20" />
 					</svg>
-					<span class="tracking-wide">{languages[locale]}</span>
+					<span class="tracking-wide">{activeLabel}</span>
 					<svg
 						data-lang-chevron
 						class="h-3.5 w-3.5 shrink-0 text-[#334155] transition-transform duration-150 dark:text-mute"
@@ -137,7 +177,7 @@ const isMobile = variant === 'mobile';
 				data-lang-trigger
 				aria-expanded="false"
 				aria-haspopup="true"
-				aria-label={t('nav.language')}
+				aria-label={switcherAriaLabel}
 				class="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-sm border border-[#e2e8e5] bg-[#ffffff] px-2.5 text-[12px] font-semibold text-[#0f172a] transition-colors hover:bg-[#e6f7f1] hover:text-[#0f2e26] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0f2e26] dark:border-hairline dark:bg-canvas-elevated dark:text-ink dark:hover:bg-hairline-soft dark:focus-visible:outline-vercel-blue"
 			>
 				<svg
@@ -154,7 +194,7 @@ const isMobile = variant === 'mobile';
 					<path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
 					<path d="M2 12h20" />
 				</svg>
-				<span class="tracking-wide">{languages[locale]}</span>
+				<span class="tracking-wide">{activeLabel}</span>
 				<svg
 					data-lang-chevron
 					class="h-3.5 w-3.5 shrink-0 text-[#334155] transition-transform duration-150 dark:text-mute"

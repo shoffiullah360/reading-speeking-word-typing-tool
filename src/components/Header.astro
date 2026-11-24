@@ -3,6 +3,7 @@ import {
 	SITE_CONFIG,
 	STANDALONE_TOOLS,
 	getLiveTools,
+	getStandaloneToolsForLocale,
 	normalizeTrailingSlashPath,
 } from '../config/site';
 import LanguageSwitcher from './LanguageSwitcher.astro';
@@ -12,7 +13,7 @@ const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 const currentPath = normalizeTrailingSlashPath(Astro.url.pathname);
 const liveTools = getLiveTools();
-const liveStandaloneTools = STANDALONE_TOOLS.filter((tool) => tool.status === 'live');
+const liveStandaloneTools = getStandaloneToolsForLocale(locale);
 
 interface NavToolLink {
 	slug: string;

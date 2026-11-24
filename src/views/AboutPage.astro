@@ -3,7 +3,13 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SpotlightTools from "../components/SpotlightTools.astro";
-import { SITE_CONFIG, STANDALONE_TOOLS, getLiveTools, resolveCanonicalUrl } from "../config/site";
+import {
+	SITE_CONFIG,
+	STANDALONE_TOOLS,
+	getLiveTools,
+	getStandaloneToolsForLocale,
+	resolveCanonicalUrl,
+} from "../config/site";
 
 import {
 	getLocaleFromUrl,
@@ -24,7 +30,7 @@ const pageTitle = t("about.title");
 const pageDescription = t("about.metaDescription");
 const canonicalUrl = resolveCanonicalUrl(getLocalizedPath("/about/", locale));
 const liveTools = getLiveTools();
-const liveStandaloneTools = STANDALONE_TOOLS.filter((tool) => tool.status === "live");
+const liveStandaloneTools = getStandaloneToolsForLocale(locale);
 const principles = t.raw<PrincipleItem[]>("about.page.principles") ?? [];
 ---
 

@@ -216,7 +216,6 @@ export const TOOLS_REGISTRY: ToolDefinition[] = [
 export const STANDALONE_TOOLS: StandaloneToolDefinition[] = [
 	{
 		id: 'bangla-typing-practice',
-		dictKey: 'banglaTypingPractice',
 		slug: '/bangla-typing-practice/',
 		name: 'বাংলা টাইপিং প্র্যাকটিস',
 		shortName: 'Bangla Typing Practice',
@@ -232,7 +231,6 @@ export const STANDALONE_TOOLS: StandaloneToolDefinition[] = [
 	},
 	{
 		id: 'bangla-typing-test',
-		dictKey: 'banglaTypingTest',
 		slug: '/bangla-typing-test/',
 		name: 'বাংলা টাইপিং পরীক্ষা',
 		shortName: 'Bangla Typing Test',
@@ -244,7 +242,7 @@ export const STANDALONE_TOOLS: StandaloneToolDefinition[] = [
 		availableLocales: ['en'],
 		metricPreview: 'গতি · নির্ভুলতা · ব্যক্তিগত রেকর্ড',
 		summary:
-			'সহজ থেকে জটিল প্যাসেজে বাংলা টাইপিংয়ের গতি ও নির্ভুলতা পরীক্ষা করুন।',
+			'Test your Bengali typing speed and accuracy across timed passages with instant error feedback and personal records.',
 	},
 ];
 
@@ -306,6 +304,17 @@ export function resolveCanonicalUrl(pathname: string): string {
  */
 export function getLiveTools(): ToolDefinition[] {
 	return TOOLS_REGISTRY.filter((tool) => tool.status === 'live');
+}
+
+/**
+ * Returns standalone tools available for a given locale.
+ * Standalone Bangla tools are served only from the default (root) site,
+ * and are strictly isolated from non-Bangla locales ('es', 'pt').
+ */
+export function getStandaloneToolsForLocale(locale: LocaleCode): StandaloneToolDefinition[] {
+	return STANDALONE_TOOLS.filter(
+		(tool) => tool.status === 'live' && tool.availableLocales.includes(locale)
+	);
 }
 
 /**

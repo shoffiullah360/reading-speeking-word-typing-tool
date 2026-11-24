@@ -47,8 +47,6 @@ const FALLBACK_ORDER = [
 	'text-reverser',
 	'random-topic-generator',
 	'typing-speed-test',
-	'bangla-typing-test',
-	'bangla-typing-practice',
 ];
 
 /** Returns exactly four unique related tool IDs for a page (never the page itself). */

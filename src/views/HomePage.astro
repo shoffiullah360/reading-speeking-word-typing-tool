@@ -7,13 +7,14 @@ import {
 	SITE_CONFIG,
 	STANDALONE_TOOLS,
 	TOOLS_REGISTRY,
+	getStandaloneToolsForLocale,
 	resolveCanonicalUrl,
 } from "../config/site";
 import { getLocaleFromUrl, getLocalizedPath, useTranslations } from "../i18n/ui";
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
-const liveStandaloneTools = STANDALONE_TOOLS.filter((tool) => tool.status === "live");
+const liveStandaloneTools = getStandaloneToolsForLocale(locale);
 
 const pageTitle = t("home.title");
 const pageDescription = t("home.metaDescription");
@@ -236,17 +237,17 @@ const webSiteSchema = {
 								</div>
 
 								<h3 class="mt-3 text-[19px] leading-[26px] font-semibold tracking-[-0.3px] text-white group-hover:text-[#afe3d0] transition-colors dark:text-ink dark:group-hover:text-vercel-blue">
-									{tool.dictKey ? t(`${tool.dictKey}.shortName`) : tool.shortName}
+									{tool.dictKey && t.raw(tool.dictKey) ? t(`${tool.dictKey}.shortName`) : tool.shortName}
 								</h3>
 
 								<p class="mt-2 text-[14px] leading-[22px] text-[#e2f5ee]/85 dark:text-body">
-									{tool.dictKey ? t(`${tool.dictKey}.description`) : (tool.summary ?? tool.description)}
+									{tool.dictKey && t.raw(tool.dictKey) ? t(`${tool.dictKey}.description`) : (tool.summary ?? tool.description)}
 								</p>
 							</div>
 
 							<div class="mt-6 flex items-center justify-between border-t border-[#1d463b] pt-4 dark:border-hairline">
 								<span class="text-[13px] font-semibold text-[#afe3d0] tabular-nums dark:font-normal dark:text-mute">
-									{tool.dictKey ? t(`${tool.dictKey}.metric`) : tool.metricPreview}
+									{tool.dictKey && t.raw(tool.dictKey) ? t(`${tool.dictKey}.metric`) : (tool.metricPreview ?? '')}
 								</span>
 								<span class="inline-flex items-center gap-1 rounded-full bg-[#afe3d0] px-3 py-1 text-[12px] font-semibold text-[#0f2e26] group-hover:translate-x-0.5 transition-transform dark:bg-transparent dark:p-0 dark:text-[13px] dark:font-medium dark:text-ink">
 									<span>{t("common.openTool")}</span>

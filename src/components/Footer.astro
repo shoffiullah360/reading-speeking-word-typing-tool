@@ -1,10 +1,17 @@
 ---
-import { SITE_CONFIG, STANDALONE_TOOLS, TOOLS_REGISTRY, STATIC_PAGES } from '../config/site';
+import {
+	SITE_CONFIG,
+	STANDALONE_TOOLS,
+	TOOLS_REGISTRY,
+	STATIC_PAGES,
+	getStandaloneToolsForLocale,
+} from '../config/site';
 import { getLocaleFromUrl, getLocalizedPath, useTranslations } from '../i18n/ui';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 const homeHref = getLocalizedPath('/', locale);
+const liveStandaloneTools = getStandaloneToolsForLocale(locale);
 
 const currentYear = new Date().getFullYear();
 
@@ -17,7 +24,7 @@ const categorizedTools = SITE_CONFIG.categories.map((category) => ({
 			isLive: tool.status === 'live',
 		})),
 		// Standalone tools keep a single root URL, so their slug is never locale-prefixed.
-		...STANDALONE_TOOLS.filter((tool) => tool.status === 'live' && tool.category === category).map(
+		...liveStandaloneTools.filter((tool) => tool.status === 'live' && tool.category === category).map(
 			(tool) => ({ slug: tool.slug, label: tool.shortName, isLive: true })
 		),
 	],
