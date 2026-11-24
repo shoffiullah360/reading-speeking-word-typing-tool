@@ -179,20 +179,16 @@ const levelLabels: Record<string, string> = {
 			</aside>
 		</div>
 
-		<section class="mt-5 border-t border-hairline pt-5" aria-labelledby="workspace-heading">
-			<div class="flex flex-wrap items-center justify-between gap-2">
-				<div>
-					<h3 id="workspace-heading" class="text-[15px] font-semibold text-ink">টাইপিং কক্ষ</h3>
-					<p id="btt-passage-meta" class="mt-1 text-[12.5px] text-mute">সাধারণ • সহজ</p>
-				</div>
-				<div class="flex gap-2">
+		<section class="mt-5 border-t border-hairline pt-5" aria-label="টাইপিং পরীক্ষা">
+			<div class="grid gap-2 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+				<button type="button" id="btt-start" class="btt-action btt-primary mx-auto !min-h-[52px] !px-6 !py-3 text-[15px] sm:col-start-2 sm:row-start-1">
+					পরীক্ষা শুরু করুন
+				</button>
+				<div class="flex justify-center gap-2 sm:col-start-3 sm:row-start-1 sm:justify-self-end">
 					<button type="button" id="btt-restart" class="btt-action btt-secondary">আবার শুরু করুন</button>
 					<button type="button" id="btt-fullscreen" class="btt-action btt-secondary" aria-pressed="false">পূর্ণ পর্দা</button>
 				</div>
 			</div>
-			<p class="mt-3 text-[12px] leading-relaxed text-mute">
-				কীবোর্ডের সহায়তা: শুরু করতে <kbd class="btt-key">কন্ট্রোল + এন্টার</kbd>, আবার শুরু করতে <kbd class="btt-key">কন্ট্রোল + শিফট + আর</kbd>।
-			</p>
 
 			<div class="mt-4">
 				<div class="flex items-center justify-between gap-3 text-[12.5px] text-mute">
@@ -204,7 +200,7 @@ const levelLabels: Record<string, string> = {
 				</div>
 			</div>
 
-			<p id="btt-live-status" class="mt-3 min-h-5 text-[13px] text-body" role="status" aria-live="polite">পরীক্ষা শুরু করুন, তারপর লেখার ঘরে টাইপ করুন।</p>
+			<p id="btt-live-status" class="mt-3 min-h-6 text-center text-[15px] leading-relaxed font-semibold text-[#315846] dark:text-[#B8D6C7]" role="status" aria-live="polite">পরীক্ষা শুরু করুন, তারপর লেখার ঘরে টাইপ করুন।</p>
 
 			<div
 				id="btt-passage"
@@ -212,12 +208,6 @@ const levelLabels: Record<string, string> = {
 				lang="bn"
 				aria-label="টাইপ করার প্যাসেজ"
 			></div>
-
-			<div class="mt-4">
-				<button type="button" id="btt-start" class="btt-action btt-primary !min-h-[52px] !px-6 !py-3 text-[15px]">
-					পরীক্ষা শুরু করুন
-				</button>
-			</div>
 
 			<label for="btt-input" class="mt-4 block text-[12.5px] font-medium text-mute">এখানে টাইপ করুন</label>
 			<textarea
@@ -431,11 +421,6 @@ const levelLabels: Record<string, string> = {
 				return element;
 			};
 
-			function updatePassageMeta() {
-				getElement("btt-passage-meta").textContent =
-					mode === "custom" ? "নিজের প্যাসেজ • মুক্ত অভ্যাস" : `${categoryLabels[category]} • ${levelLabels[difficulty]}`;
-			}
-
 			function setPressed(group, active) {
 				root.querySelectorAll(group + " [aria-pressed]").forEach((button) => {
 					button.setAttribute("aria-pressed", "false");
@@ -463,7 +448,6 @@ const levelLabels: Record<string, string> = {
 					span.textContent = glyph;
 					passageElement.appendChild(span);
 				});
-				updatePassageMeta();
 			}
 
 			function resetTest(focusStartButton = false) {
@@ -494,7 +478,6 @@ const levelLabels: Record<string, string> = {
 				progressTrack.setAttribute("aria-valuenow", "0");
 				progressValue.textContent = "০%";
 				liveStatus.textContent = "পরীক্ষা শুরু করুন, তারপর লেখার ঘরে টাইপ করুন।";
-				updatePassageMeta();
 				updateHighlight("");
 				renderHistory();
 				if (focusStartButton) startButton.focus();
